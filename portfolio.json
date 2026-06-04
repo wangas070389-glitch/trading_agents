@@ -1,0 +1,30 @@
+{
+  "total_capital": 20000.0,
+  "cash_balance": 13909.34,
+  "holdings": [
+    {
+      "ticker": "KIMBERA.MX",
+      "shares": 62,
+      "buy_price": 38.09,
+      "intrinsic_value": 62.53,
+      "scale_out_price": 56.28,
+      "last_price": 38.09
+    },
+    {
+      "ticker": "PINFRA.MX",
+      "shares": 8,
+      "buy_price": 276.19,
+      "intrinsic_value": 441.26,
+      "scale_out_price": 397.13,
+      "last_price": 276.19
+    },
+    {
+      "ticker": "CUERVO.MX",
+      "shares": 108,
+      "buy_price": 14.07,
+      "intrinsic_value": 19.93,
+      "scale_out_price": 17.94,
+      "last_price": 14.07
+    }
+  ]
+}
