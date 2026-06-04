@@ -1,39 +1,39 @@
 # MEXICAN VALUE EQUITY EVALUATION REPORT
-**Execution Date:** 2026-06-03 | **Universe:** BMV Active Equities
+**Execution Date:** 2026-06-04 | **Universe:** BMV Active Equities
 
 ## 1. Top Qualified Value Candidates
 | Ticker | Computed P/E | EV/EBITDA | Margin of Safety (DCF) | 30D ADTV (MXN) |
 | :--- | :--- | :--- | :--- | :--- |
-| KIMBERA.MX | 7.7x | 5.0x | +64.2% | 192.6M |
-| PINFRA.MX | 5.9x | 2.5x | +59.8% | 113.4M |
-| CUERVO.MX | 6.4x | 6.3x | +41.6% | 27.4M |
+| KIMBERA.MX | 7.6x | 5.0x | +66.4% | 190.1M |
+| PINFRA.MX | 5.8x | 2.5x | +61.8% | 112.4M |
+| CUERVO.MX | 6.4x | 6.3x | +41.2% | 27.0M |
 
 ## 2. Structural Deconstruction & Catalysts
-* **KIMBERA.MX**: Consumer paper products. Stable domestic demand, but raw pulp price cycles create margin volatility. Implied margin of safety is 64.2% post-stress-testing.
-* **PINFRA.MX**: Toll roads infrastructure. Defensive cash streams, concessions linked directly to domestic inflation, but faces government toll review threats. Implied margin of safety is 59.8% post-stress-testing.
-* **CUERVO.MX**: Jose Cuervo tequila. High brand power, but export margins hurt by strong Peso swings and agave crop pricing cycles. Implied margin of safety is 41.6% post-stress-testing.
+* **KIMBERA.MX**: Consumer paper products. Stable domestic demand, but raw pulp price cycles create margin volatility. Implied margin of safety is 66.4% post-stress-testing.
+* **PINFRA.MX**: Toll roads infrastructure. Defensive cash streams, concessions linked directly to domestic inflation, but faces government toll review threats. Implied margin of safety is 61.8% post-stress-testing.
+* **CUERVO.MX**: Jose Cuervo tequila. High brand power, but export margins hurt by strong Peso swings and agave crop pricing cycles. Implied margin of safety is 41.2% post-stress-testing.
 
 ## 4. Execution Order Blotter (Opening Positions)
 **Investment Capital:** 10,000,000.00 MXN | **Concentration Constraint:** Max 40.0% weight per stock
 
 | Ticker | Target Weight | Allocated Capital (MXN) | Buy Price (MXN) | Target Shares to Buy |
 | :--- | :---: | :---: | :---: | :---: |
-| KIMBERA.MX | 38.8% | 3,875,541.77 | 38.09 | 101,746 |
-| PINFRA.MX | 36.1% | 3,609,261.21 | 276.19 | 13,068 |
-| CUERVO.MX | 25.2% | 2,515,197.02 | 14.07 | 178,763 |
+| KIMBERA.MX | 39.2% | 3,920,831.20 | 37.64 | 104,166 |
+| PINFRA.MX | 36.5% | 3,647,012.46 | 272.89 | 13,364 |
+| CUERVO.MX | 24.3% | 2,432,156.33 | 14.11 | 172,371 |
 
-* **Total Capital Allocated**: 9,999,951.46 MXN (100.0%)
-* **Cash Reserve / Unallocated Capital**: 48.54 MXN (0.0%)
+* **Total Capital Allocated**: 9,999,865.08 MXN (100.0%)
+* **Cash Reserve / Unallocated Capital**: 134.92 MXN (0.0%)
 
 ## 5. Exit Target & Sell Trigger Blotter
 | Ticker | Current Price (MXN) | Target Exit Price (MXN) | Return Potential | Target Capitalization Value (MXN) | Profit Target (MXN) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| KIMBERA.MX | 38.09 | 62.53 | +64.2% | 6,362,618.02 | 2,487,112.87 |
-| PINFRA.MX | 276.19 | 441.26 | +59.8% | 5,766,350.30 | 2,157,099.34 |
-| CUERVO.MX | 14.07 | 19.93 | +41.6% | 3,562,754.34 | 1,047,558.99 |
+| KIMBERA.MX | 37.64 | 62.64 | +66.4% | 6,524,918.83 | 2,604,110.65 |
+| PINFRA.MX | 272.89 | 441.48 | +61.8% | 5,899,932.56 | 2,253,030.40 |
+| CUERVO.MX | 14.11 | 19.92 | +41.2% | 3,434,202.42 | 1,002,047.67 |
 
-* **Target Portfolio Value at Exit**: 15,691,771.20 MXN
-* **Total Target Capitalized Profit**: 5,691,771.20 MXN (Implied Return: +56.9%)
+* **Target Portfolio Value at Exit**: 15,859,188.73 MXN
+* **Total Target Capitalized Profit**: 5,859,188.73 MXN (Implied Return: +58.6%)
 
 ### Portfolio Exit & Rebalancing Triggers:
 1. **Capitalize Profit (Full Take-Profit)**: Place GTC (Good-Til-Cancelled) limit orders to sell 100% of holdings when market price meets or exceeds the **Target Exit Price** (re-evaluating margin of safety to 0%).
