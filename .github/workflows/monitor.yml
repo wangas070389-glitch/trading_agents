@@ -46,8 +46,8 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         
-        # Add updated database, performance log, and evaluation report
-        git add portfolio.json portfolio_status.md mexican_value_equity_report_live.md
+        # Add updated database, performance log, evaluation report, transaction ledger, and history
+        git add portfolio.json portfolio_status.md mexican_value_equity_report_live.md transactions.md evaluation_history.md
         
         # Commit only if files have changed (to prevent error crashes on identical runs)
-        git diff-index --quiet HEAD || (git commit -m "Auto-update: Portfolio P/L & Live BMV Value Report" && git push)
+        git diff-index --quiet HEAD || (git commit -m "Auto-update: Portfolio trades, P/L monitoring & BMV evaluation [$(date -u +%Y-%m-%d)]" && git push)

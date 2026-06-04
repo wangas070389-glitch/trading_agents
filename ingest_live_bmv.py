@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import datetime
 import yfinance as yf
 
@@ -184,7 +185,249 @@ def fetch_live_metrics(ticker_symbol: str) -> dict:
         "cost_of_debt": cost_of_debt
     }
 
+def load_portfolio(dir_path):
+    """Load portfolio.json from project root."""
+    portfolio_path = os.path.join(dir_path, "portfolio.json")
+    if os.path.exists(portfolio_path):
+        with open(portfolio_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return None
+
+def save_portfolio(dir_path, portfolio):
+    """Save portfolio.json."""
+    portfolio_path = os.path.join(dir_path, "portfolio.json")
+    with open(portfolio_path, "w", encoding="utf-8") as f:
+        json.dump(portfolio, f, indent=2)
+
+def log_transaction(dir_path, date_str, ticker, action, shares, price, note):
+    """Append a transaction row to transactions.md."""
+    transactions_path = os.path.join(dir_path, "transactions.md")
+    cash_flow = shares * price
+    if action == "BUY":
+        cash_flow_str = f"-{cash_flow:,.2f}"
+    else:
+        cash_flow_str = f"+{cash_flow:,.2f}"
+
+    row = f"| {date_str} | {ticker} | {action} | {shares} | {price:.2f} | {cash_flow_str} | Market | FILLED | {note} |"
+
+    with open(transactions_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    lines = content.split("\n")
+    insert_idx = None
+    for i, line in enumerate(lines):
+        if line.strip() == "---":
+            insert_idx = i
+            break
+
+    if insert_idx is not None:
+        lines.insert(insert_idx, row)
+    else:
+        lines.append(row)
+
+    with open(transactions_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+
+def update_capital_reconciliation(dir_path, portfolio):
+    """Update the capital reconciliation section in transactions.md."""
+    transactions_path = os.path.join(dir_path, "transactions.md")
+    with open(transactions_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    lines = content.split("\n")
+    recon_start = None
+    for i, line in enumerate(lines):
+        if "## Portfolio Capital Reconciliation" in line:
+            recon_start = i
+            break
+
+    total_capital = portfolio["total_capital"]
+    cash = portfolio["cash_balance"]
+    invested = sum(h["shares"] * h["buy_price"] for h in portfolio["holdings"])
+    total_value = cash + sum(h["shares"] * h.get("last_price", h["buy_price"]) for h in portfolio["holdings"])
+
+    recon_lines = [
+        "## Portfolio Capital Reconciliation",
+        "",
+        f"* **Initial Starting Capital (2026-06-03)**: {total_capital:,.2f} MXN",
+        f"* **Total Deployed Capital**: -{invested:,.2f} MXN ({invested/total_capital*100:.1f}% invested)",
+        f"* **Unallocated Cash Reserves**: {cash:,.2f} MXN ({cash/total_capital*100:.1f}% cash)",
+        f"* **Current Portfolio Market Value**: {total_value:,.2f} MXN (including cash)",
+        ""
+    ]
+
+    if recon_start is not None:
+        lines = lines[:recon_start] + recon_lines
+    else:
+        lines.extend(["", "---", ""] + recon_lines)
+
+    with open(transactions_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+
+def append_evaluation_history(dir_path, execution_date, qualified, traps, anon_to_ticker_map):
+    """Append this run's evaluation results to evaluation_history.md."""
+    history_path = os.path.join(dir_path, "evaluation_history.md")
+
+    entry_lines = []
+    entry_lines.append(f"\n## Run: {execution_date} @ {datetime.datetime.now().strftime('%H:%M:%S')}")
+    entry_lines.append("")
+
+    if qualified:
+        entry_lines.append("### Qualified Candidates")
+        entry_lines.append("| Ticker | P/E | EV/EBITDA | MOS (Post-Stress) | Price |")
+        entry_lines.append("| :--- | :---: | :---: | :---: | :---: |")
+        for asset in qualified:
+            real_ticker = anon_to_ticker_map.get(asset["anon_id"], asset["anon_id"])
+            pe_str = f"{asset['pe_ratio']:.1f}x" if asset['pe_ratio'] is not None else "N/A"
+            ev_str = f"{asset['ev_ebitda']:.1f}x" if asset['ev_ebitda'] is not None else "N/A"
+            mos_str = f"+{asset['margin_of_safety']*100:.1f}%"
+            entry_lines.append(f"| {real_ticker} | {pe_str} | {ev_str} | {mos_str} | {asset['current_price']:.2f} |")
+    else:
+        entry_lines.append("### Qualified Candidates")
+        entry_lines.append("*No candidates qualified this run.*")
+
+    if traps:
+        entry_lines.append("")
+        entry_lines.append("### Discarded (Value Traps)")
+        for trap in traps:
+            real_ticker = anon_to_ticker_map.get(trap["anon_id"], trap["anon_id"])
+            entry_lines.append(f"- {real_ticker}: MOS {trap['margin_of_safety']*100:.1f}% (failed stress test)")
+
+    entry_lines.append("")
+    entry_lines.append("---")
+
+    if not os.path.exists(history_path):
+        header = "# Evaluation History Log\n\nRolling record of every DAG pipeline evaluation run.\n\n---\n"
+        with open(history_path, "w", encoding="utf-8") as f:
+            f.write(header + "\n".join(entry_lines))
+    else:
+        with open(history_path, "a", encoding="utf-8") as f:
+            f.write("\n".join(entry_lines))
+
+    print(f"[History] Appended evaluation record to: {history_path}")
+
+def auto_buy_candidates(dir_path, qualified_portfolio, anon_to_ticker_map, execution_date):
+    """
+    Automatically open paper trading positions for qualified candidates
+    that are NOT already in the portfolio.
+
+    Rules:
+    - Max 40% concentration per stock
+    - Allocate proportionally by margin of safety
+    - Only buy if cash_balance > 500 MXN (minimum meaningful position)
+    - Skip tickers already held
+    """
+    portfolio = load_portfolio(dir_path)
+    if portfolio is None:
+        print("[Auto-Buy] No portfolio.json found. Skipping auto-buy.")
+        return
+
+    cash = portfolio["cash_balance"]
+    holdings = portfolio["holdings"]
+    total_capital = portfolio["total_capital"]
+
+    # Get set of currently held tickers
+    held_tickers = {h["ticker"] for h in holdings}
+
+    # Filter to candidates not already held
+    new_candidates = []
+    for asset in qualified_portfolio:
+        real_ticker = anon_to_ticker_map.get(asset["anon_id"], asset["anon_id"])
+        if real_ticker not in held_tickers and asset["margin_of_safety"] > 0.15:
+            new_candidates.append(asset)
+
+    if not new_candidates:
+        print("[Auto-Buy] No new candidates to buy (all qualified stocks already held or none qualified).")
+        return
+
+    if cash < 500.0:
+        print(f"[Auto-Buy] Insufficient cash ({cash:.2f} MXN). Skipping auto-buy.")
+        return
+
+    # Calculate how much cash to deploy
+    # Current investment ratio
+    current_invested = sum(h["shares"] * h.get("last_price", h["buy_price"]) for h in holdings)
+    current_invest_ratio = current_invested / total_capital if total_capital > 0 else 0
+
+    # Determine deployable cash: use up to 50% of available cash per run
+    # to avoid going all-in on a single evaluation
+    deployable_cash = min(cash * 0.5, cash - 500.0)  # Keep at least 500 MXN reserve
+    if deployable_cash < 300.0:
+        print(f"[Auto-Buy] Deployable cash too low ({deployable_cash:.2f} MXN). Skipping.")
+        return
+
+    print(f"\n[Auto-Buy] Found {len(new_candidates)} new candidate(s). Deploying up to {deployable_cash:,.2f} MXN.")
+
+    # Calculate weights by margin of safety
+    total_mos = sum(c["margin_of_safety"] for c in new_candidates)
+    if total_mos <= 0:
+        return
+
+    trades_executed = []
+
+    for asset in new_candidates:
+        anon_id = asset["anon_id"]
+        real_ticker = anon_to_ticker_map.get(anon_id, anon_id)
+
+        # Proportional weight, capped at 40% of total capital
+        raw_weight = asset["margin_of_safety"] / total_mos
+        allocated_cash = deployable_cash * raw_weight
+
+        # Enforce 40% concentration cap on total portfolio
+        max_position_value = total_capital * 0.40
+        current_position_value = 0.0
+        for h in holdings:
+            if h["ticker"] == real_ticker:
+                current_position_value = h["shares"] * h.get("last_price", h["buy_price"])
+
+        remaining_capacity = max_position_value - current_position_value
+        allocated_cash = min(allocated_cash, remaining_capacity, cash - 500.0)
+
+        if allocated_cash < 200.0:
+            print(f"  |-- {real_ticker}: Allocation too small ({allocated_cash:.2f} MXN). Skipping.")
+            continue
+
+        price = asset["current_price"]
+        if price <= 0:
+            continue
+
+        shares_to_buy = int(allocated_cash / price)
+        if shares_to_buy <= 0:
+            continue
+
+        cost = shares_to_buy * price
+
+        # Execute paper buy
+        new_holding = {
+            "ticker": real_ticker,
+            "shares": shares_to_buy,
+            "buy_price": round(price, 2),
+            "intrinsic_value": round(asset.get("intrinsic_value", price * 1.3), 2),
+            "scale_out_price": round(asset.get("intrinsic_value", price * 1.3) * 0.9, 2),
+            "last_price": round(price, 2)
+        }
+
+        holdings.append(new_holding)
+        cash -= cost
+
+        note = f"Auto-buy by DAG pipeline. MOS: +{asset['margin_of_safety']*100:.1f}%"
+        log_transaction(dir_path, execution_date, real_ticker, "BUY", shares_to_buy, price, note)
+        trades_executed.append((real_ticker, shares_to_buy, price))
+
+        print(f"  +-- [AUTO-BUY] {real_ticker}: {shares_to_buy} shares @ {price:.2f} MXN = {cost:,.2f} MXN (MOS: +{asset['margin_of_safety']*100:.1f}%)")
+
+    if trades_executed:
+        portfolio["holdings"] = holdings
+        portfolio["cash_balance"] = round(cash, 2)
+        save_portfolio(dir_path, portfolio)
+        update_capital_reconciliation(dir_path, portfolio)
+        print(f"\n[Auto-Buy] Executed {len(trades_executed)} paper buy(s). Cash remaining: {cash:,.2f} MXN")
+    else:
+        print("[Auto-Buy] No trades executed this run.")
+
+
 def main():
+    dir_path = os.path.dirname(os.path.abspath(__file__))
     execution_date = datetime.date.today().strftime("%Y-%m-%d")
     print("=" * 80)
     print(f"STARTING LIVE S&P/BMV IPC VALUE STOCK EVALUATION PIPELINE | DATE: {execution_date}")
@@ -322,11 +565,24 @@ def main():
     
     # Save Report
     output_filename = "mexican_value_equity_report_live.md"
-    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), output_filename)
+    output_path = os.path.join(dir_path, output_filename)
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(report_markdown)
         
     print(f"\n[Export] Saved live report to: {output_path}")
+
+    # Separate qualified vs traps for history and auto-buy
+    qualified_portfolio = [a for a in stressed_candidates if a["margin_of_safety"] > 0.15]
+    value_traps = [a for a in stressed_candidates if a["margin_of_safety"] <= 0.15]
+
+    # Phase 5: Append to Evaluation History Log
+    print("\n--- PHASE 5: EVALUATION HISTORY LOG ---")
+    append_evaluation_history(dir_path, execution_date, qualified_portfolio, value_traps, anon_to_ticker_map)
+
+    # Phase 6: Auto-Buy qualified candidates into portfolio
+    print("\n--- PHASE 6: AUTO-BUY PAPER TRADING ---")
+    auto_buy_candidates(dir_path, qualified_portfolio, anon_to_ticker_map, execution_date)
+
     print("\n--- LIVE REPORT OUTPUT ---")
     print(report_markdown)
     print("=" * 80)
