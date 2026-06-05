@@ -24,3 +24,13 @@ Rolling record of every DAG pipeline evaluation run.
 | CUERVO.MX | 6.4x | 6.3x | +41.2% | 14.11 |
 
 ---
+## Run: 2026-06-05 @ 19:53:10
+
+### Qualified Candidates
+| Ticker | P/E | EV/EBITDA | MOS (Post-Stress) | Price |
+| :--- | :---: | :---: | :---: | :---: |
+| KIMBERA.MX | 7.4x | 4.9x | +72.5% | 36.97 |
+| PINFRA.MX | 5.7x | 2.4x | +66.9% | 267.02 |
+| CUERVO.MX | 6.4x | 6.3x | +42.2% | 14.03 |
+
+---
