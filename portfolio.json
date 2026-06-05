@@ -8,7 +8,7 @@
       "buy_price": 38.09,
       "intrinsic_value": 62.53,
       "scale_out_price": 56.28,
-      "last_price": 36.99
+      "last_price": 36.91
     },
     {
       "ticker": "PINFRA.MX",
@@ -16,7 +16,7 @@
       "buy_price": 276.19,
       "intrinsic_value": 441.26,
       "scale_out_price": 397.13,
-      "last_price": 267.02
+      "last_price": 267.08
     },
     {
       "ticker": "CUERVO.MX",
@@ -24,7 +24,7 @@
       "buy_price": 14.07,
       "intrinsic_value": 19.93,
       "scale_out_price": 17.94,
-      "last_price": 14.0
+      "last_price": 14.02
     }
   ]
 }
