@@ -72,16 +72,10 @@
 | GRUMAB.MX | -0.9948 | 1.13 | DCS below entry threshold (-0.99 < 0.25), Relative volume below threshold (1.13 < 1.2) |
 
 ## 4. Rebalancing Trade Blotter
-| Ticker | Action | Shares | Execution Price | Fee Paid | Net Capital Impact | Note |
-| :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| KIMBERA.MX | SELL | 62 | $36.92 | $6.64 | +2,282.40 MXN | V3 Dynamic Rebalance (Target Weight: 0.0%, DCS: 0.00) |
-| PINFRA.MX | SELL | 8 | $266.06 | $6.17 | +2,122.31 MXN | V3 Dynamic Rebalance (Target Weight: 0.0%, DCS: -0.00) |
-| CUERVO.MX | SELL | 108 | $14.00 | $4.38 | +1,507.62 MXN | V3 Dynamic Rebalance (Target Weight: 0.0%, DCS: -0.01) |
-
-* **Total Transaction Fees Paid**: $17.20 MXN (0.29% flat rate)
+*No trades required. Portfolio holdings match optimal target allocations.*
 
 ## 5. Active Cash Routing & Capital Allocation
-* **Total Capital Value**: $19,838.86 MXN
+* **Total Capital Value**: $19,821.68 MXN
 * **Total Invested in Equities**: $0.00 MXN (0.00%)
-* **Bondia Cash Routing Reserves (11% APR)**: $19,821.66 MXN (100.00%)
+* **Bondia Cash Routing Reserves (11% APR)**: $19,821.68 MXN (100.00%)
 * **Expected Nightly Yield on Cash**: $8.6523 MXN

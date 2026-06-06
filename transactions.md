@@ -13,11 +13,12 @@ This file tracks all buy and sell transactions executed by the Mexican Value Sto
 | 2026-06-06 | KIMBERA.MX | SELL | 62 | 36.92 | +2,289.04 | Market | FILLED | V3 Dynamic Rebalance |
 | 2026-06-06 | PINFRA.MX | SELL | 8 | 266.06 | +2,128.48 | Market | FILLED | V3 Dynamic Rebalance |
 | 2026-06-06 | CUERVO.MX | SELL | 108 | 14.00 | +1,512.00 | Market | FILLED | V3 Dynamic Rebalance |
+| 2026-06-06 | BONDIA | INTEREST | 1 | 0.0227 | +0.0227 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0037 days. |
 ---
 
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
 * **Total Deployed Capital**: 0.00 MXN (0.0% invested)
-* **Unallocated Cash Reserves**: 19,821.66 MXN (100.0% cash)
-* **Current Portfolio Market Value**: 19,821.66 MXN (including cash)
+* **Unallocated Cash Reserves**: 19,821.68 MXN (100.0% cash)
+* **Current Portfolio Market Value**: 19,821.68 MXN (including cash)
