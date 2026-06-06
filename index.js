@@ -75,13 +75,25 @@ function renderDashboard(portfolio) {
         const plSign = pl >= 0 ? '+' : '';
         const plClass = pl >= 0 ? 'positive' : 'negative';
 
-        // Calculate exit target progress
-        // BuyPrice (0%) to IntrinsicValue (100%)
-        let progress = 0;
-        if (h.intrinsic_value > h.buy_price) {
-            progress = ((h.last_price - h.buy_price) / (h.intrinsic_value - h.buy_price)) * 100;
-            progress = Math.min(100, Math.max(0, progress)); // Constrain between 0% and 100%
+        // V3 Specific Metrics
+        const targetWeightVal = h.target_weight !== undefined ? h.target_weight : 0.0;
+        const dcsVal = h.dcs !== undefined ? h.dcs : 0.0;
+        const hmmStateVal = h.hmm_state !== undefined ? h.hmm_state : 0;
+        
+        const targetWeightPct = (targetWeightVal * 100).toFixed(1) + '%';
+        const dcsStr = dcsVal.toFixed(4);
+        
+        let hmmStateStr = 'Sideways (0)';
+        let hmmClass = 'neutral';
+        if (hmmStateVal === 1) {
+            hmmStateStr = 'Bull (1)';
+            hmmClass = 'positive';
+        } else if (hmmStateVal === -1) {
+            hmmStateStr = 'Bear (-1)';
+            hmmClass = 'negative';
         }
+        
+        const dcsClass = dcsVal >= 0.25 ? 'positive' : 'negative';
 
         tr.innerHTML = `
             <td><strong>${h.ticker}</strong></td>
@@ -91,18 +103,9 @@ function renderDashboard(portfolio) {
             <td>$${formatCurrency(mktVal)}</td>
             <td class="${plClass}">${plSign}$${formatCurrency(pl)}</td>
             <td class="${plClass}">${plSign}${plPct.toFixed(2)}%</td>
-            <td>
-                <div class="progress-bar-container">
-                    <div class="progress-labels">
-                        <span>Buy</span>
-                        <span><strong>${progress.toFixed(0)}%</strong></span>
-                        <span>Target</span>
-                    </div>
-                    <div class="progress-track">
-                        <div class="progress-fill" style="width: ${progress}%"></div>
-                    </div>
-                </div>
-            </td>
+            <td><strong>${targetWeightPct}</strong></td>
+            <td class="${dcsClass}">${dcsStr}</td>
+            <td><span class="hmm-state-badge ${hmmClass}">${hmmStateStr}</span></td>
         `;
         tbody.appendChild(tr);
     });
@@ -113,39 +116,44 @@ function renderDashboard(portfolio) {
     let alertsCount = 0;
 
     holdings.forEach(h => {
-        if (h.last_price >= h.intrinsic_value) {
+        const hmmStateVal = h.hmm_state !== undefined ? h.hmm_state : 0;
+        const dcsVal = h.dcs !== undefined ? h.dcs : 0.0;
+
+        if (hmmStateVal === -1) {
             alertsCount++;
             const div = document.createElement('div');
             div.className = 'alert-item alert-danger';
             div.innerHTML = `
                 <span class="alert-icon">🚨</span>
                 <div class="alert-text">
-                    <strong>[SELL TRIGGER: TAKE PROFIT]</strong> ${h.ticker} has reached fair intrinsic value of <strong>$${h.intrinsic_value.toFixed(2)} MXN</strong> (Current: $${h.last_price.toFixed(2)}). Sell 100% to capitalize profit!
+                    <strong>[BEAR REGIME ALERT]</strong> ${h.ticker} has transitioned into a Bearish HMM market regime. The model suggests reducing exposure.
                 </div>
             `;
             alertsContainer.appendChild(div);
-        } else if (h.last_price >= h.scale_out_price) {
+        } else if (dcsVal < 0.25) {
             alertsCount++;
             const div = document.createElement('div');
             div.className = 'alert-item alert-warning';
             div.innerHTML = `
                 <span class="alert-icon">⚠️</span>
                 <div class="alert-text">
-                    <strong>[SELL TRIGGER: SCALE OUT]</strong> ${h.ticker} has reached the 90% scale-out limit of <strong>$${h.scale_out_price.toFixed(2)} MXN</strong> (Current: $${h.last_price.toFixed(2)}). Sell 50% to secure profits!
+                    <strong>[SIGNAL WEAKNESS]</strong> ${h.ticker} Differential Quantitative Signal is weak (DCS: <strong>${dcsVal.toFixed(4)}</strong> < 0.25). Target weight is capped.
                 </div>
             `;
             alertsContainer.appendChild(div);
         }
     });
 
-    if (alertsCount === 0) {
-        alertsContainer.innerHTML = `
-            <div class="alert-item empty-state">
-                <span class="alert-icon">✨</span>
-                <p>No active sell triggers hit. Open positions are moving within target boundaries.</p>
-            </div>
-        `;
-    }
+    // Always append Bondia status
+    const bondiaDiv = document.createElement('div');
+    bondiaDiv.className = 'alert-item alert-info';
+    bondiaDiv.innerHTML = `
+        <span class="alert-icon">💸</span>
+        <div class="alert-text">
+            <strong>[BONDIA CASH ROUTING]</strong> Cash reserves are parked at 11% APR. Nightly interest accrues automatically.
+        </div>
+    `;
+    alertsContainer.appendChild(bondiaDiv);
 
     // 5. Render Allocation Donut Chart
     renderChart(cash, holdings);

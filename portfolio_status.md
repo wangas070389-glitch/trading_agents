@@ -1,21 +1,18 @@
 # PORTFOLIO PERFORMANCE MONITOR
-**Status Check Time:** 2026-06-05 23:46:07
+**Status Check Time:** 2026-06-06 00:23:13
 
 ## 1. Current Holdings Value
-| Ticker | Shares Held | Buy Price (MXN) | Current Price (MXN) | Market Value (MXN) | Unrealized P/L | P/L % |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| KIMBERA.MX | 62 | 38.09 | 36.91 | 2,288.42 | **-73.16** | **-3.10%** |
-| PINFRA.MX | 8 | 276.19 | 267.08 | 2,136.64 | **-72.88** | **-3.30%** |
-| CUERVO.MX | 108 | 14.07 | 14.02 | 1,514.16 | **-5.40** | **-0.36%** |
+| Ticker | Shares Held | Buy Price (MXN) | Current Price (MXN) | Market Value (MXN) | Unrealized P/L | P/L % | DCS | HMM State | Target Weight |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| KIMBERA.MX | 62 | 38.09 | 36.92 | 2,289.04 | **-72.54** | **-3.07%** | 0.0000 | Sideways | 0.0% |
+| PINFRA.MX | 8 | 276.19 | 266.06 | 2,128.48 | **-81.04** | **-3.67%** | 0.0000 | Sideways | 0.0% |
+| CUERVO.MX | 108 | 14.07 | 14.00 | 1,512.00 | **-7.56** | **-0.50%** | 0.0000 | Sideways | 0.0% |
 
-* **Current Market Value of Shares**: 5,939.22 MXN (29.9% allocation)
-* **Cash Balance**: 13,909.34 MXN (70.1% cash reserve)
-* **Total Portfolio Value**: **19,848.56 MXN**
-* **Total Unrealized Profit/Loss**: **-151.44 MXN (-0.76%)**
+* **Current Market Value of Shares**: 5,929.52 MXN (29.9% allocation)
+* **Bondia Cash Routing Reserves (11% APR)**: 13,909.34 MXN (70.1% cash reserve)
+* **Total Portfolio Value**: **19,838.86 MXN**
+* **Total Unrealized Profit/Loss**: **-161.14 MXN (-0.81%)**
 
-## 2. Active Trading Triggers
-* No trade triggers hit. All holdings are moving within target boundaries.
-
-## 3. Position Sizing & Rebalancing Bounds
-* **Total Invested Ratio**: 29.7% (Initial target was at least 30%, currently at 29.7%)
-* **Cash Cover**: Liquid cash buffer protects portfolio volatility.
+## 2. Active Cash Routing & Yield Generation
+* No overnight interest accrued in this check (last checked 0.0 minutes ago)
+* Expected daily interest accrual at 11% APR: **+4.2501 MXN**
