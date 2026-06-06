@@ -95,6 +95,30 @@ class DashboardAPIHandler(SimpleHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(json.dumps(response).encode('utf-8'))
             return
+
+        # API: POST /api/backtest
+        if self.path == '/api/backtest':
+            try:
+                # Import backtest runner
+                from backtest import run_backtest_simulation
+                
+                # Execute simulation
+                results = run_backtest_simulation()
+                
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(results).encode('utf-8'))
+            except Exception as e:
+                response = {
+                    "status": "error",
+                    "message": str(e)
+                }
+                self.send_response(500)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(response).encode('utf-8'))
+            return
             
         self.send_error(404, "Endpoint not found")
 

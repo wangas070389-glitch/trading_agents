@@ -98,6 +98,50 @@
             </div>
         </div>
 
+        <!-- Backtest Section -->
+        <div class="glass-card backtest-card" style="margin-top: 1.25rem;">
+            <div class="backtest-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <h3 style="margin-bottom: 0;">60-Day Walk-Forward Strategy Backtest</h3>
+                <button id="backtest-btn" class="btn primary-btn" style="background: linear-gradient(135deg, #6366f1, #4f46e5); color: white;">
+                    <span class="btn-icon">📈</span> Run Backtest Simulation
+                </button>
+            </div>
+            <div class="backtest-content-grid" style="display: grid; grid-template-columns: 1.8fr 1fr; gap: 1.5rem;">
+                <!-- Line Chart -->
+                <div class="backtest-chart-container" style="height: 300px; position: relative;">
+                    <canvas id="backtestChart"></canvas>
+                </div>
+                <!-- Backtest Metrics -->
+                <div class="backtest-metrics-panel" style="display: flex; flex-direction: column; justify-content: center; gap: 1rem; padding: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px;">
+                    <h4 style="margin: 0; font-size: 0.95rem; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.5px;">Simulation Performance</h4>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span>V3 Strategy Return:</span>
+                        <strong id="bt-strat-ret" class="positive" style="color: #10b981;">--</strong>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span>Bondia Cash Yield (11%):</span>
+                        <strong id="bt-cash-ret" style="color: #0ea5e9;">--</strong>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span>SPY Index Return:</span>
+                        <strong id="bt-spy-ret" style="color: #a855f7;">--</strong>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span>Ann. Sharpe Ratio (vs Cash):</span>
+                        <strong id="bt-sharpe" style="color: #fbbf24;">--</strong>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span>Max Drawdown:</span>
+                        <strong id="bt-drawdown" class="negative" style="color: #ef4444;">--</strong>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                        <span>Total Trading Fees Paid:</span>
+                        <strong id="bt-fees" style="color: #8f9cae;">--</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Footer -->
         <footer class="footer-info">
             <p>Executed by Antigravity AI | Valuation Date: 2026-06-03 | Active Universe: S&P/BMV IPC Index</p>

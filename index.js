@@ -251,5 +251,118 @@ document.getElementById('refresh-btn').addEventListener('click', async () => {
     }
 });
 
+let backtestChartInstance = null;
+
+function renderBacktestChart(dates, strategy, cash, benchmark) {
+    const ctx = document.getElementById('backtestChart').getContext('2d');
+    if (backtestChartInstance) {
+        backtestChartInstance.destroy();
+    }
+    
+    backtestChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [
+                {
+                    label: 'V3 Active Strategy',
+                    data: strategy,
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                    borderWidth: 2,
+                    pointRadius: 1,
+                    tension: 0.1,
+                    fill: true
+                },
+                {
+                    label: 'Bondia Cash (11% APR)',
+                    data: cash,
+                    borderColor: '#0ea5e9',
+                    backgroundColor: 'transparent',
+                    borderWidth: 1.5,
+                    pointRadius: 0,
+                    borderDash: [4, 4],
+                    tension: 0.1
+                },
+                {
+                    label: 'SPY Buy & Hold',
+                    data: benchmark,
+                    borderColor: '#a855f7',
+                    backgroundColor: 'transparent',
+                    borderWidth: 1.5,
+                    pointRadius: 0,
+                    tension: 0.1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: '#8f9cae',
+                        font: { family: 'Outfit', size: 10 }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { color: 'rgba(255, 255, 255, 0.03)' },
+                    ticks: {
+                        color: '#8f9cae',
+                        font: { family: 'Outfit', size: 9 },
+                        maxTicksLimit: 8
+                    }
+                },
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.03)' },
+                    ticks: {
+                        color: '#8f9cae',
+                        font: { family: 'Outfit', size: 9 },
+                        callback: function(value) { return '$' + value.toLocaleString(); }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Bind backtest button action
+document.getElementById('backtest-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('backtest-btn');
+    btn.disabled = true;
+    btn.innerHTML = `<span class="btn-icon">⏳</span> Running walk-forward...`;
+    
+    try {
+        const response = await fetch('/api/backtest', { method: 'POST' });
+        if (!response.ok) {
+            throw new Error(`Simulation failed: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        // Update Metrics Panel
+        const metrics = data.metrics;
+        document.getElementById('bt-strat-ret').textContent = `${metrics.strategy_return >= 0 ? '+' : ''}${metrics.strategy_return.toFixed(2)}%`;
+        document.getElementById('bt-cash-ret').textContent = `+${metrics.cash_return.toFixed(2)}%`;
+        document.getElementById('bt-spy-ret').textContent = `${metrics.benchmark_return >= 0 ? '+' : ''}${metrics.benchmark_return.toFixed(2)}%`;
+        document.getElementById('bt-sharpe').textContent = metrics.sharpe.toFixed(2);
+        document.getElementById('bt-drawdown').textContent = `${metrics.drawdown.toFixed(2)}%`;
+        document.getElementById('bt-fees').textContent = `$${formatCurrency(metrics.fees)} MXN`;
+        
+        // Render Chart
+        renderBacktestChart(data.dates, data.strategy, data.cash, data.benchmark);
+        
+    } catch (err) {
+        console.error("Backtest Error:", err);
+        alert(`Backtest execution error: ${err.message}`);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span class="btn-icon">📈</span> Run Backtest Simulation`;
+    }
+});
+
 // Load on DOM ready
 document.addEventListener('DOMContentLoaded', loadDashboard);
