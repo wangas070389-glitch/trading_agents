@@ -132,6 +132,16 @@ def monitor_portfolio():
             print(f"  |-- [WARNING] Failed to accrue Bondia interest: {e}")
 
     # 2. Fetch live prices for stock holdings
+    # Fetch current USD/MXN rate once in case we have U.S. holdings
+    try:
+        fx = yf.Ticker("MXN=X").history(period="1d")
+        if not fx.empty:
+            current_usd_mxn = float(fx["Close"].iloc[-1])
+        else:
+            current_usd_mxn = float(yf.Ticker("MXN=X").info.get("regularMarketPrice", 20.0))
+    except Exception:
+        current_usd_mxn = 20.0
+        
     updated_holdings = []
     total_market_value = 0.0
 
@@ -162,6 +172,10 @@ def monitor_portfolio():
         except Exception as e:
             print(f"Warning: Failed to fetch live price for {ticker}: {e}. Using last cached price.")
             current_price = h["last_price"]
+
+        # Convert to MXN if it is a U.S. stock (doesn't end in .MX)
+        if not ticker.endswith(".MX"):
+            current_price = current_price * current_usd_mxn
 
         current_price = round(current_price, 2)
         market_value = shares * current_price

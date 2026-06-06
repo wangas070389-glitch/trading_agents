@@ -127,6 +127,31 @@ MACRO_RISK_REGISTRY = {
         "description": "Industrial real estate (warehouses). Prime beneficiary of nearshoring warehouses demand, near zero vacancy rates in Northern Mexico. High pricing power.",
         "wacc_adjustment": -0.005,  # -50 bps nearshoring tailwind
         "growth_adjustment": 0.020  # +200 bps growth bump
+    },
+    "NVDA": {
+        "description": "Global AI chip leader. Strong growth catalyst from hyperscaler capex, but high volatility and exposure to international export restrictions.",
+        "wacc_adjustment": 0.005,  # +50 bps regulatory/valuation risk premium
+        "growth_adjustment": 0.015 # +150 bps growth rate bump due to AI demand
+    },
+    "AAPL": {
+        "description": "Consumer hardware giant. Highly stable premium pricing cash flows, but faces antitrust lawsuits and longer smartphone replacement cycles.",
+        "wacc_adjustment": 0.00,   # Baseline risk
+        "growth_adjustment": 0.00  # Baseline growth
+    },
+    "MSFT": {
+        "description": "Enterprise software and cloud infrastructure leader. Solid recurring SaaS revenues, defensive positioning with low leverage.",
+        "wacc_adjustment": -0.002, # -20 bps (defensive play)
+        "growth_adjustment": 0.005  # +50 bps growth adjustment from AI integration
+    },
+    "AMZN": {
+        "description": "E-commerce and cloud (AWS) giant. Exposed to consumer spending cycles, but AWS margins provide substantial cash flow buffer.",
+        "wacc_adjustment": 0.002,  # +20 bps
+        "growth_adjustment": 0.00
+    },
+    "GOOGL": {
+        "description": "Search and digital ads leader. Highly cash-generative search monopoly, but faces regulatory antitrust breaking-up risks.",
+        "wacc_adjustment": 0.005,  # +50 bps antitrust premium
+        "growth_adjustment": -0.005 # -50 bps growth drag from antitrust pressure
     }
 }
 

@@ -38,10 +38,19 @@ BMV_TICKERS = [
     "VESTA.MX"       # Vesta (Industrial Real Estate warehouses)
 ]
 
-def fetch_historical_exogenous() -> pd.DataFrame:
+# Major US components to query
+US_TICKERS = [
+    "NVDA",
+    "AAPL",
+    "MSFT",
+    "AMZN",
+    "GOOGL"
+]
+
+def fetch_historical_exogenous() -> tuple[pd.DataFrame, pd.Series]:
     """
     Downloads 5 years of historical closing prices for SPY and USD/MXN (MXN=X).
-    Computes daily log returns and returns a cleaned DataFrame.
+    Computes daily log returns and returns a cleaned DataFrame plus raw USD/MXN rate.
     """
     print("Fetching historical exogenous regressors (SPY and USD/MXN)...")
     spy = yf.Ticker("SPY").history(period="5y")
@@ -60,7 +69,10 @@ def fetch_historical_exogenous() -> pd.DataFrame:
         "SPY_Ret": spy_ret,
         "USDMXN_Ret": usdmxn_ret
     }).dropna()
-    return df
+    
+    # Raw exchange rate (aligned index)
+    raw_rate = usdmxn["Close"].rename("USDMXN_Rate")
+    return df, raw_rate
 
 def fetch_historical_asset(ticker_symbol: str) -> pd.DataFrame:
     """
@@ -196,15 +208,17 @@ def main():
 
     # 1. Fetch exogenous regressors (SPY and USD/MXN exchange rate)
     try:
-        df_exog = fetch_historical_exogenous()
+        df_exog, raw_rate = fetch_historical_exogenous()
     except Exception as e:
         print(f"Critical error fetching exogenous regressors: {e}")
         return
 
-    # 2. Gather historical data for BMV universe and align indices
+    # 2. Gather historical data for BMV universe and US stocks, and align indices
     universe_data = {}
     
     print("\n--- PHASE 1: HISTORICAL DATA INGESTION & ALIGNMENT ---")
+    
+    # Process BMV (Mexican) stocks
     for ticker in BMV_TICKERS:
         try:
             # Download asset data
@@ -250,6 +264,66 @@ def main():
             
         except Exception as e:
             print(f"  +-- [ERROR] Failed to ingest {ticker}: {e}")
+            continue
+
+    # Process US stocks (converting to MXN)
+    for ticker in US_TICKERS:
+        try:
+            # Download asset data
+            hist = fetch_historical_asset(ticker)
+            if len(hist) < 30:
+                print(f"  |-- {ticker}: Skipping (insufficient data: {len(hist)} days)")
+                continue
+                
+            hist.index = hist.index.tz_localize(None)
+            
+            # Align with raw exchange rate to convert to MXN
+            df_usd = pd.DataFrame({
+                "Close_USD": hist["Close"],
+                "Volume": hist["Volume"]
+            }).join(raw_rate, how="inner")
+            
+            if df_usd.empty:
+                print(f"  |-- {ticker}: Skipping (failed to align with exchange rate history)")
+                continue
+                
+            df_usd["Close_MXN"] = df_usd["Close_USD"] * df_usd["USDMXN_Rate"]
+            
+            # Filter through liquidity gatekeeper first (using 30-day ADTV in MXN)
+            prices_mxn_30 = df_usd["Close_MXN"].iloc[-30:].tolist()
+            volumes_30 = df_usd["Volume"].iloc[-30:].tolist()
+            adtv = calculate_adtv(prices_mxn_30, volumes_30)
+            
+            if not passes_liquidity_gate(adtv, threshold=5000000.0):
+                print(f"  +-- [REJECTED] {ticker} failed liquidity gate (ADTV: {adtv:,.2f} MXN < 5M)")
+                continue
+                
+            # Calculate returns in MXN
+            asset_ret_mxn = np.log(df_usd["Close_MXN"] / df_usd["Close_MXN"].shift(1)).fillna(0.0)
+            
+            # Combine returns, prices in MXN, volumes, and join with exogenous returns
+            df_asset = pd.DataFrame({
+                "Asset_Price": df_usd["Close_MXN"],
+                "Asset_Vol": df_usd["Volume"],
+                "Asset_Ret": asset_ret_mxn
+            })
+            
+            # Inner join to synchronize dates with SPY & USDMXN returns
+            df_aligned = df_asset.join(df_exog, how="inner").fillna(0.0)
+            
+            if len(df_aligned) < 60:
+                print(f"  |-- {ticker}: Skipping (insufficient aligned dates: {len(df_aligned)})")
+                continue
+                
+            universe_data[ticker] = {
+                "prices": df_aligned["Asset_Price"].values,
+                "volumes": df_aligned["Asset_Vol"].values,
+                "exogenous": df_aligned[["SPY_Ret", "USDMXN_Ret"]].values
+            }
+            print(f"  +-- Ingested & aligned US stock {ticker} (Converted to MXN: {len(df_aligned)} business days)")
+            
+        except Exception as e:
+            print(f"  +-- [ERROR] Failed to ingest US stock {ticker}: {e}")
             continue
 
     if not universe_data:

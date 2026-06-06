@@ -1,6 +1,29 @@
 {
   "total_capital": 20000.0,
-  "cash_balance": 19821.68,
-  "holdings": [],
-  "last_updated": "2026-06-06 00:29:21"
+  "cash_balance": 7388.3,
+  "holdings": [
+    {
+      "ticker": "NVDA",
+      "shares": 2,
+      "buy_price": 3543.66,
+      "last_price": 3581.66,
+      "target_weight": 0.4,
+      "dcs": 0.9569568822553898,
+      "garch_vol": 0.030775787016854923,
+      "hmm_state": 0,
+      "vol_relative": 1.229272456439114
+    },
+    {
+      "ticker": "AAPL",
+      "shares": 1,
+      "buy_price": 5310.13,
+      "last_price": 5367.08,
+      "target_weight": 0.4,
+      "dcs": 0.9504132231404959,
+      "garch_vol": 0.012860412466935851,
+      "hmm_state": 0,
+      "vol_relative": 1.3647544635480224
+    }
+  ],
+  "last_updated": "2026-06-06 00:33:38"
 }
