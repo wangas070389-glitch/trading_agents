@@ -17,11 +17,14 @@ This file tracks all buy and sell transactions executed by the Mexican Value Sto
 | 2026-06-06 | BONDIA | INTEREST | 1 | 0.0066 | +0.0066 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0011 days. |
 | 2026-06-06 | NVDA | BUY | 2 | 3543.66 | -7,087.31 | Market | FILLED | V3 Dynamic Rebalance (Target Weight: 40.0%, DCS: 0.96) |
 | 2026-06-06 | AAPL | BUY | 1 | 5310.13 | -5,310.13 | Market | FILLED | V3 Dynamic Rebalance (Target Weight: 40.0%, DCS: 0.95) |
+| 2026-06-08 | BONDIA | INTEREST | 1 | 6.1904 | +6.1904 | Market | FILLED | Bondia overnight yield on cash reserves for 2.7421 days. |
+| 2026-06-08 | NVDA | SELL | 2 | 3649.11 | +7,298.23 | Market | FILLED | V3 Dynamic Rebalance |
+| 2026-06-08 | AAPL | SELL | 1 | 5322.59 | +5,322.59 | Market | FILLED | V3 Dynamic Rebalance |
 ---
 
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
-* **Total Deployed Capital**: 12,397.45 MXN (62.2% invested)
-* **Unallocated Cash Reserves**: 7,388.30 MXN (37.1% cash)
-* **Current Portfolio Market Value**: 19,918.70 MXN (including cash)
+* **Total Deployed Capital**: 0.00 MXN (0.0% invested)
+* **Unallocated Cash Reserves**: 19,978.71 MXN (100.0% cash)
+* **Current Portfolio Market Value**: 19,978.71 MXN (including cash)
