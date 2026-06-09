@@ -9,9 +9,9 @@
 | KIMBERA.MX | 0.9948 | 0.0132 | 0.77 | Sideways (0) | 0.0% | 36.24 |
 | GMEXICOB.MX | 0.9700 | 0.0227 | 1.10 | Bull (1) | 0.0% | 202.44 |
 | GAPB.MX | 0.9659 | 0.0204 | 0.87 | Sideways (0) | 0.0% | 395.16 |
-| NVDA | 0.9570 | 0.0309 | 1.00 | Sideways (0) | 0.0% | 3626.25 |
+| NVDA | 0.9570 | 0.0309 | 1.00 | Sideways (0) | 0.0% | 3636.60 |
 | ORBIA.MX | 0.9543 | 0.0188 | 0.91 | Sideways (0) | 0.0% | 21.52 |
-| AAPL | 0.9488 | 0.0155 | 1.39 | Sideways (0) | 40.0% | 5060.80 |
+| AAPL | 0.9488 | 0.0151 | 1.39 | Sideways (0) | 40.0% | 5075.24 |
 | WALMEX.MX | 0.9253 | 0.0140 | 0.63 | Bear (-1) | 0.0% | 50.62 |
 | GENTERA.MX | 0.1127 | 0.0285 | 1.00 | Bear (-1) | 0.0% | 38.49 |
 | FEMSAUBD.MX | 0.0285 | 0.0110 | 0.98 | Bull (1) | 0.0% | 213.28 |
@@ -19,13 +19,13 @@
 | GCC.MX | 0.0057 | 0.0145 | 1.09 | Sideways (0) | 0.0% | 198.87 |
 | GFNORTEO.MX | -0.0002 | 0.0184 | 0.68 | Sideways (0) | 0.0% | 174.81 |
 | PINFRA.MX | -0.0026 | 0.0146 | 0.84 | Sideways (0) | 0.0% | 269.37 |
-| MSFT | -0.0042 | 0.0240 | 0.93 | Sideways (0) | 0.0% | 7026.60 |
-| GOOGL | -0.0067 | 0.0201 | 0.93 | Sideways (0) | 0.0% | 6344.68 |
+| MSFT | -0.0042 | 0.0239 | 0.93 | Sideways (0) | 0.0% | 7046.64 |
+| GOOGL | -0.0042 | 0.0201 | 0.93 | Sideways (0) | 0.0% | 6362.78 |
 | AC.MX | -0.0078 | 0.0125 | 1.10 | Sideways (0) | 0.0% | 211.38 |
 | AMXB.MX | -0.0122 | 0.0092 | 0.74 | Sideways (0) | 0.0% | 22.06 |
 | OMAB.MX | -0.0126 | 0.0139 | 0.72 | Sideways (0) | 0.0% | 210.65 |
 | ASURB.MX | -0.0246 | 0.0184 | 2.73 | Sideways (0) | 0.0% | 485.44 |
-| AMZN | -0.5142 | 0.0193 | 1.01 | Bear (-1) | 0.0% | 4253.30 |
+| AMZN | -0.5000 | 0.0193 | 1.01 | Bear (-1) | 0.0% | 4265.44 |
 | PE&OLES.MX | -0.9601 | 0.0361 | 0.75 | Sideways (0) | 0.0% | 812.66 |
 | GRUMAB.MX | -0.9693 | 0.0081 | 0.78 | Bull (1) | 0.0% | 291.71 |
 | BIMBOA.MX | -0.9947 | 0.0174 | 0.60 | Sideways (0) | 0.0% | 55.61 |
@@ -73,26 +73,22 @@
 | GFNORTEO.MX | -0.0002 | 0.68 | DCS below entry threshold (-0.00 < 0.25), Relative volume below threshold (0.68 < 1.2) |
 | PINFRA.MX | -0.0026 | 0.84 | DCS below entry threshold (-0.00 < 0.25), Relative volume below threshold (0.84 < 1.2) |
 | MSFT | -0.0042 | 0.93 | DCS below entry threshold (-0.00 < 0.25), Relative volume below threshold (0.93 < 1.2) |
-| GOOGL | -0.0067 | 0.93 | DCS below entry threshold (-0.01 < 0.25), Relative volume below threshold (0.93 < 1.2) |
+| GOOGL | -0.0042 | 0.93 | DCS below entry threshold (-0.00 < 0.25), Relative volume below threshold (0.93 < 1.2) |
 | AC.MX | -0.0078 | 1.10 | DCS below entry threshold (-0.01 < 0.25), Relative volume below threshold (1.10 < 1.2) |
 | AMXB.MX | -0.0122 | 0.74 | DCS below entry threshold (-0.01 < 0.25), Relative volume below threshold (0.74 < 1.2) |
 | OMAB.MX | -0.0126 | 0.72 | DCS below entry threshold (-0.01 < 0.25), Relative volume below threshold (0.72 < 1.2) |
 | ASURB.MX | -0.0246 | 2.73 | DCS below entry threshold (-0.02 < 0.25) |
-| AMZN | -0.5142 | 1.01 | DCS below entry threshold (-0.51 < 0.25), Relative volume below threshold (1.01 < 1.2) |
+| AMZN | -0.5000 | 1.01 | DCS below entry threshold (-0.50 < 0.25), Relative volume below threshold (1.01 < 1.2) |
 | PE&OLES.MX | -0.9601 | 0.75 | DCS below entry threshold (-0.96 < 0.25), Relative volume below threshold (0.75 < 1.2) |
 | GRUMAB.MX | -0.9693 | 0.78 | DCS below entry threshold (-0.97 < 0.25), Relative volume below threshold (0.78 < 1.2) |
 | BIMBOA.MX | -0.9947 | 0.60 | DCS below entry threshold (-0.99 < 0.25), Relative volume below threshold (0.60 < 1.2) |
 | CUERVO.MX | -0.9947 | 0.62 | DCS below entry threshold (-0.99 < 0.25), Relative volume below threshold (0.62 < 1.2) |
 
 ## 4. Rebalancing Trade Blotter
-| Ticker | Action | Shares | Execution Price | Fee Paid | Net Capital Impact | Note |
-| :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| AAPL | BUY | 1 | $5060.80 | $14.68 | -5,075.48 MXN | V3 Dynamic Rebalance (Target Weight: 40.0%, DCS: 0.95) |
-
-* **Total Transaction Fees Paid**: $14.68 MXN (0.29% flat rate)
+*No trades required. Portfolio holdings match optimal target allocations.*
 
 ## 5. Active Cash Routing & Capital Allocation
-* **Total Capital Value**: $19,985.64 MXN
-* **Total Invested in Equities**: $5,060.80 MXN (25.32%)
-* **Bondia Cash Routing Reserves (11% APR)**: $14,910.16 MXN (74.68%)
-* **Expected Nightly Yield on Cash**: $6.5084 MXN
+* **Total Capital Value**: $19,985.82 MXN
+* **Total Invested in Equities**: $5,075.24 MXN (25.39%)
+* **Bondia Cash Routing Reserves (11% APR)**: $14,910.58 MXN (74.61%)
+* **Expected Nightly Yield on Cash**: $6.5086 MXN
