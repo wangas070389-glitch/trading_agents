@@ -1,6 +1,18 @@
 {
   "total_capital": 20000.0,
-  "cash_balance": 19980.08,
-  "holdings": [],
-  "last_updated": "2026-06-08 23:46:36"
+  "cash_balance": 14910.16,
+  "holdings": [
+    {
+      "ticker": "AAPL",
+      "shares": 1,
+      "buy_price": 5060.8,
+      "last_price": 5060.799474572763,
+      "target_weight": 0.4,
+      "dcs": 0.9488448844884488,
+      "garch_vol": 0.0154508170962471,
+      "hmm_state": 0,
+      "vol_relative": 1.3858957700106282
+    }
+  ],
+  "last_updated": "2026-06-09 21:38:41"
 }
