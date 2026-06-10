@@ -258,3 +258,35 @@ Rolling record of every DAG pipeline evaluation run.
 | CUERVO.MX | -0.9947 | 0.0101 | 0.62 | Sideways | 0.0% | 14.39 |
 
 ---
+## Run: 2026-06-10 @ 23:56:28 (V3 Quantitative Model)
+
+| Ticker | DCS | GARCH Vol | Relative Vol | HMM State | Target Weight | Price |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| VESTA.MX | 1.0000 | 0.0089 | 0.30 | Sideways | 0.0% | 58.77 |
+| CEMEXCPO.MX | 0.9969 | 0.0189 | 0.34 | Bull | 0.0% | 20.63 |
+| AAPL | 0.9817 | 0.0150 | 0.97 | Bull | 0.0% | 5089.24 |
+| GENTERA.MX | 0.1088 | 0.0302 | 1.75 | Bear | 0.0% | 36.44 |
+| AMZN | 0.0308 | 0.0199 | 0.94 | Bear | 0.0% | 4154.06 |
+| FEMSAUBD.MX | 0.0285 | 0.0106 | 0.82 | Bull | 0.0% | 214.74 |
+| GRUMAB.MX | 0.0191 | 0.0082 | 1.07 | Bear | 0.0% | 290.02 |
+| NVDA | 0.0183 | 0.0320 | 0.84 | Sideways | 0.0% | 3498.13 |
+| BIMBOA.MX | 0.0155 | 0.0177 | 0.99 | Bear | 0.0% | 56.67 |
+| GFNORTEO.MX | 0.0111 | 0.0185 | 0.79 | Sideways | 0.0% | 175.13 |
+| MSFT | 0.0083 | 0.0240 | 0.83 | Sideways | 0.0% | 6935.53 |
+| BBAJIOO.MX | 0.0057 | 0.0146 | 2.27 | Sideways | 0.0% | 54.44 |
+| ASURB.MX | 0.0025 | 0.0185 | 0.74 | Bull | 0.0% | 479.72 |
+| GOOGL | 0.0024 | 0.0206 | 0.99 | Sideways | 0.0% | 6220.26 |
+| GCC.MX | -0.0020 | 0.0147 | 0.75 | Bull | 0.0% | 194.65 |
+| PINFRA.MX | -0.0026 | 0.0140 | 0.66 | Sideways | 0.0% | 268.69 |
+| AC.MX | -0.0087 | 0.0122 | 1.02 | Sideways | 0.0% | 209.47 |
+| OMAB.MX | -0.0100 | 0.0139 | 0.60 | Bull | 0.0% | 208.85 |
+| AMXB.MX | -0.0122 | 0.0090 | 0.31 | Sideways | 0.0% | 22.12 |
+| GAPB.MX | -0.0150 | 0.0209 | 0.55 | Bull | 0.0% | 386.05 |
+| PE&OLES.MX | -0.0152 | 0.0364 | 0.72 | Sideways | 0.0% | 782.08 |
+| GMEXICOB.MX | -0.0204 | 0.0228 | 0.66 | Bull | 0.0% | 198.42 |
+| ORBIA.MX | -0.0306 | 0.0187 | 0.79 | Bull | 0.0% | 21.72 |
+| CUERVO.MX | -0.9452 | 0.0100 | 0.58 | Sideways | 0.0% | 14.36 |
+| WALMEX.MX | -0.9947 | 0.0128 | 1.44 | Bull | 0.0% | 50.21 |
+| KIMBERA.MX | -0.9948 | 0.0135 | 1.08 | Sideways | 0.0% | 35.69 |
+
+---
