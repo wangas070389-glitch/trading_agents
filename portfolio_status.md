@@ -1,17 +1,17 @@
 # PORTFOLIO PERFORMANCE MONITOR
-**Status Check Time:** 2026-06-06 00:33:38
+**Status Check Time:** 2026-06-11 21:57:36
 
 ## 1. Current Holdings Value
 | Ticker | Shares Held | Buy Price (MXN) | Current Price (MXN) | Market Value (MXN) | Unrealized P/L | P/L % | DCS | HMM State | Target Weight |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| NVDA | 2 | 3543.66 | 3581.66 | 7,163.32 | **+76.00** | **+1.07%** | 0.9570 | Sideways | 40.0% |
-| AAPL | 1 | 5310.13 | 5367.08 | 5,367.08 | **+56.95** | **+1.07%** | 0.9504 | Sideways | 40.0% |
+| GRUMAB.MX | 26 | 293.50 | 293.50 | 7,631.00 | **+0.00** | **+0.00%** | 0.9931 | Bear | 40.0% |
+| BBAJIOO.MX | 149 | 52.74 | 52.74 | 7,858.26 | **+0.00** | **+0.00%** | 1.0000 | Sideways | 40.0% |
 
-* **Current Market Value of Shares**: 12,530.40 MXN (62.9% allocation)
-* **Bondia Cash Routing Reserves (11% APR)**: 7,388.30 MXN (37.1% cash reserve)
-* **Total Portfolio Value**: **19,918.70 MXN**
-* **Total Unrealized Profit/Loss**: **-81.30 MXN (-0.41%)**
+* **Current Market Value of Shares**: 15,489.26 MXN (79.0% allocation)
+* **Bondia Cash Routing Reserves (11% APR)**: 4,106.81 MXN (21.0% cash reserve)
+* **Total Portfolio Value**: **19,596.07 MXN**
+* **Total Unrealized Profit/Loss**: **-403.93 MXN (-2.02%)**
 
 ## 2. Active Cash Routing & Yield Generation
-* No overnight interest accrued in this check (last checked 0.5 minutes ago)
-* Expected daily interest accrual at 11% APR: **+2.2575 MXN**
+* No overnight interest accrued in this check (last checked 1.2 minutes ago)
+* Expected daily interest accrual at 11% APR: **+1.2549 MXN**

@@ -354,7 +354,8 @@ def main():
         print("  |-- portfolio.json missing. Initialized default empty portfolio with $20,000.00 MXN.")
 
     reconciler = PortfolioReconciler()
-    updated_portfolio, report_markdown = reconciler.reconcile(adjusted_metrics, portfolio, execution_date)
+    universe_prices_dict = {t: data["prices"] for t, data in universe_data.items()}
+    updated_portfolio, report_markdown = reconciler.reconcile(adjusted_metrics, portfolio, execution_date, universe_prices_dict)
 
     # 6. Execute paper trades & write logs
     print("\n--- PHASE 5: EXECUTING REBALANCING LOGS ---")

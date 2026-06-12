@@ -61,6 +61,9 @@ function renderDashboard(portfolio) {
     document.getElementById('cash-val').innerHTML = `${formatCurrency(cash)} <span class="currency">MXN</span>`;
     document.getElementById('cash-pct').textContent = `${((cash / totalPortfolioValue) * 100).toFixed(1)}% cash reserve`;
 
+    const slippageSavings = portfolio.slippage_savings !== undefined ? portfolio.slippage_savings : 0.0;
+    document.getElementById('dqn-savings').innerHTML = `$${formatCurrency(slippageSavings)} <span class="currency">MXN</span>`;
+
     // 3. Render Positions Table
     const tbody = document.getElementById('portfolio-body');
     tbody.innerHTML = '';
@@ -75,13 +78,16 @@ function renderDashboard(portfolio) {
         const plSign = pl >= 0 ? '+' : '';
         const plClass = pl >= 0 ? 'positive' : 'negative';
 
-        // V3 Specific Metrics
+        // V4 Specific Metrics
         const targetWeightVal = h.target_weight !== undefined ? h.target_weight : 0.0;
         const dcsVal = h.dcs !== undefined ? h.dcs : 0.0;
+        const zgVal = h.zg_t !== undefined ? h.zg_t : 0.0;
         const hmmStateVal = h.hmm_state !== undefined ? h.hmm_state : 0;
         
         const targetWeightPct = (targetWeightVal * 100).toFixed(1) + '%';
         const dcsStr = dcsVal.toFixed(4);
+        const zgStr = (zgVal >= 0 ? '+' : '') + zgVal.toFixed(2);
+        const zgClass = zgVal >= 1.5 ? 'positive' : (zgVal <= -1.5 ? 'negative' : 'neutral');
         
         let hmmStateStr = 'Sideways (0)';
         let hmmClass = 'neutral';
@@ -105,6 +111,7 @@ function renderDashboard(portfolio) {
             <td class="${plClass}">${plSign}${plPct.toFixed(2)}%</td>
             <td><strong>${targetWeightPct}</strong></td>
             <td class="${dcsClass}">${dcsStr}</td>
+            <td class="${zgClass}">${zgStr}</td>
             <td><span class="hmm-state-badge ${hmmClass}">${hmmStateStr}</span></td>
         `;
         tbody.appendChild(tr);
