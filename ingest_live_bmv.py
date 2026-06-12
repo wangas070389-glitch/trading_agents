@@ -10,6 +10,9 @@ import yfinance as yf
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from skills.liquidity_gatekeeper import calculate_adtv, passes_liquidity_gate
+from skills.adaptive_learning import (
+    SignalPerformanceTracker, DrawdownGovernor, load_learned_params,
+)
 from agents.agents import FundamentalScreener, MacroRiskAnalyst, PortfolioReconciler
 
 # Major S&P/BMV IPC components to query
@@ -97,14 +100,14 @@ def save_portfolio(dir_path, portfolio):
     with open(portfolio_path, "w", encoding="utf-8") as f:
         json.dump(portfolio, f, indent=2)
 
-def log_transaction(dir_path, date_str, ticker, action, shares, price, note):
-    """Append a transaction row to transactions.md."""
+def log_transaction(dir_path, date_str, ticker, action, shares, price, note, fee=0.0):
+    """Append a transaction row to transactions.md. Net capital impact includes fees."""
     transactions_path = os.path.join(dir_path, "transactions.md")
-    cash_flow = shares * price
+    gross = shares * price
     if action == "BUY":
-        cash_flow_str = f"-{cash_flow:,.2f}"
+        cash_flow_str = f"-{gross + fee:,.2f}"
     else:
-        cash_flow_str = f"+{cash_flow:,.2f}"
+        cash_flow_str = f"+{gross - fee:,.2f}"
 
     row = f"| {date_str} | {ticker} | {action} | {shares} | {price:.2f} | {cash_flow_str} | Market | FILLED | {note} |"
 
@@ -353,44 +356,79 @@ def main():
         }
         print("  |-- portfolio.json missing. Initialized default empty portfolio with $20,000.00 MXN.")
 
+    # 5b. Adaptive learning context: resolve past signal outcomes, compute
+    # confidence multipliers, load learned thresholds, apply drawdown brake.
+    print("\n--- PHASE 4b: ADAPTIVE LEARNING CONTEXT ---")
+    tracker = SignalPerformanceTracker(dir_path)
+    price_lookup = {t: m["current_price"] for t, m in adjusted_metrics.items()}
+    resolved = tracker.update_outcomes(execution_date, price_lookup)
+    print(f"  |-- Resolved {resolved} pending signal outcome(s). "
+          f"Bucket stats: {tracker.bucket_stats() or 'no resolved samples yet'}")
+
+    learned = load_learned_params(dir_path)
+    if learned.get("trained_on"):
+        print(f"  |-- Learned thresholds in use (trained {learned['trained_on']}, "
+              f"val Sharpe {learned.get('validation_sharpe')}): "
+              f"DCS>={learned['dcs_threshold']}, VR>={learned['vr_threshold']}")
+    else:
+        print("  |-- No learned_params.json found. Using default thresholds "
+              "(run learn_parameters.py to train).")
+
+    governor = DrawdownGovernor(dir_path)
+    exposure = governor.exposure_scalar()
+
+    confidence = {
+        t: tracker.confidence_multiplier(m["hmm_state"], m["dcs_adjusted"])
+        for t, m in adjusted_metrics.items()
+    }
+
+    learning_context = {
+        "dcs_threshold": learned["dcs_threshold"],
+        "vr_threshold": learned["vr_threshold"],
+        "confidence": confidence,
+        "exposure_scalar": exposure,
+    }
+
     reconciler = PortfolioReconciler()
-    updated_portfolio, report_markdown = reconciler.reconcile(adjusted_metrics, portfolio, execution_date)
+    updated_portfolio, report_markdown, rebalancing_trades = reconciler.reconcile(
+        adjusted_metrics, portfolio, execution_date, learning_context
+    )
 
     # 6. Execute paper trades & write logs
     print("\n--- PHASE 5: EXECUTING REBALANCING LOGS ---")
     
     # Extract optimal weights dictionary
-    pesos_asignados = {t: updated_portfolio["holdings"][i]["target_weight"] for i, h in enumerate(updated_portfolio["holdings"]) for t in [h["ticker"]]}
+    pesos_asignados = {h["ticker"]: h["target_weight"] for h in updated_portfolio["holdings"]}
     for t in adjusted_metrics:
         if t not in pesos_asignados:
             pesos_asignados[t] = 0.0
 
-    # Compare old and new holdings to log trades
-    old_holdings_dict = {h["ticker"]: h for h in portfolio["holdings"]}
-    new_holdings_dict = {h["ticker"]: h for h in updated_portfolio["holdings"]}
-    all_tickers = set(old_holdings_dict.keys()).union(new_holdings_dict.keys())
-    
-    trades_executed = 0
-    for t in all_tickers:
-        old_shares = old_holdings_dict.get(t, {}).get("shares", 0)
-        new_shares = new_holdings_dict.get(t, {}).get("shares", 0)
-        
-        if old_shares != new_shares:
-            trades_executed += 1
-            current_price = adjusted_metrics[t]["current_price"]
-            
-            if new_shares > old_shares:
-                shares_traded = new_shares - old_shares
-                note = f"V3 Dynamic Rebalance (Target Weight: {pesos_asignados[t]:.1%}, DCS: {adjusted_metrics[t]['dcs_adjusted']:.2f})"
-                log_transaction(dir_path, execution_date, t, "BUY", shares_traded, current_price, note)
-            else:
-                shares_traded = old_shares - new_shares
-                note = f"V3 Dynamic Rebalance"
-                log_transaction(dir_path, execution_date, t, "SELL", shares_traded, current_price, note)
+    # BUGFIX: previously trades were re-derived here by diffing old vs new holdings,
+    # ignoring fees — so transactions.md never reconciled with portfolio.json cash.
+    # Now we log the exact blotter the reconciler executed, fees included.
+    trades_executed = len(rebalancing_trades)
+    for trade in rebalancing_trades:
+        log_transaction(
+            dir_path, execution_date,
+            trade["ticker"], trade["action"], trade["shares"],
+            trade["price"], trade["note"], fee=trade["fee"]
+        )
 
     # Save new portfolio.json
     save_portfolio(dir_path, updated_portfolio)
     update_capital_reconciliation(dir_path, updated_portfolio)
+
+    # 6b. Feed the learning loop: log today's acted-on signals as pending
+    # outcomes, and append today's total value to the equity curve so the
+    # drawdown governor sees it on the next run.
+    logged = tracker.record_signals(execution_date, adjusted_metrics, pesos_asignados)
+    total_value_now = updated_portfolio["cash_balance"] + sum(
+        h["shares"] * h["last_price"] for h in updated_portfolio["holdings"]
+    )
+    governor.record_value(execution_date, total_value_now)
+    print(f"  |-- [Learning] Logged {logged} signal(s) for future scoring. "
+          f"Equity curve point: {total_value_now:,.2f} MXN "
+          f"(drawdown {governor.current_drawdown():+.2%}, next-run exposure {governor.exposure_scalar():.0%}).")
 
     if trades_executed > 0:
         print(f"  |-- Processed and logged {trades_executed} transaction(s) in transactions.md.")

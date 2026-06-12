@@ -34,10 +34,12 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
                 "Asset_Ret": asset_ret
             })
             df_aligned = df_asset.join(df_exog, how="right")
-            df_aligned["Asset_Price"] = df_aligned["Asset_Price"].ffill().bfill()
+            # BUGFIX: .bfill() leaked FUTURE prices into the past (look-ahead bias).
+            # Forward-fill only; rows before the ticker's first real quote stay NaN
+            # and are excluded from each rebalance lookback below.
+            df_aligned["Asset_Price"] = df_aligned["Asset_Price"].ffill()
             df_aligned["Asset_Vol"] = df_aligned["Asset_Vol"].fillna(0.0)
             df_aligned["Asset_Ret"] = df_aligned["Asset_Ret"].fillna(0.0)
-            df_aligned = df_aligned.fillna(0.0)
             universe_history[ticker] = df_aligned
         except Exception:
             continue
@@ -62,10 +64,12 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
                 "Asset_Ret": asset_ret_mxn
             })
             df_aligned = df_asset.join(df_exog, how="right")
-            df_aligned["Asset_Price"] = df_aligned["Asset_Price"].ffill().bfill()
+            # BUGFIX: .bfill() leaked FUTURE prices into the past (look-ahead bias).
+            # Forward-fill only; rows before the ticker's first real quote stay NaN
+            # and are excluded from each rebalance lookback below.
+            df_aligned["Asset_Price"] = df_aligned["Asset_Price"].ffill()
             df_aligned["Asset_Vol"] = df_aligned["Asset_Vol"].fillna(0.0)
             df_aligned["Asset_Ret"] = df_aligned["Asset_Ret"].fillna(0.0)
-            df_aligned = df_aligned.fillna(0.0)
             universe_history[ticker] = df_aligned
         except Exception:
             continue
@@ -90,7 +94,9 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
     spy_history = yf.Ticker("SPY").history(period="5y")
     spy_history.index = spy_history.index.tz_localize(None)
     spy_mxn_series = spy_history["Close"] * raw_rate
-    spy_mxn_series = spy_mxn_series.reindex(backtest_dates).ffill().bfill()
+    spy_mxn_series = spy_mxn_series.reindex(backtest_dates).ffill()
+    if spy_mxn_series.isna().any():
+        raise ValueError("SPY benchmark series has gaps at the start of the backtest window.")
     
     # Buy SPY on day 0
     spy_start_price = spy_mxn_series.iloc[0]
@@ -161,6 +167,7 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             for ticker, df_ticker in universe_history.items():
                 # Get df rows before/on current_date
                 df_lookback = df_ticker.loc[df_ticker.index <= current_date]
+                df_lookback = df_lookback.dropna(subset=["Asset_Price"])
                 if len(df_lookback) < 50: continue
                 
                 # Check liquidity gate on lookback data
@@ -189,7 +196,7 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             adjusted_metrics = analyst.stress_test(raw_metrics, {})
             
             # Optimize and calculate weights
-            updated_portfolio_sim, _ = reconciler.reconcile(adjusted_metrics, portfolio_sim, current_date.strftime("%Y-%m-%d"))
+            updated_portfolio_sim, _, _ = reconciler.reconcile(adjusted_metrics, portfolio_sim, current_date.strftime("%Y-%m-%d"))
             
             # Apply rebalanced holdings to simulation
             new_holdings = {h["ticker"]: h["shares"] for h in updated_portfolio_sim["holdings"]}

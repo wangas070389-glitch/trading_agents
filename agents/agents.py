@@ -174,10 +174,18 @@ class FundamentalScreener:
         retornos[0] = 0.0
         
         # Fit GARCH(1,1) model
+        # NOTE: `show_warning` is NOT a valid kwarg of arch_model() (it belongs to .fit()).
+        # The previous code raised TypeError on every call, silently forcing the
+        # rolling-std fallback for ALL tickers — GARCH never actually ran.
         try:
-            am = arch_model(retornos * 100, vol='Garch', p=1, q=1, dist='Normal', show_warning=False)
-            res = am.fit(update_freq=0, disp='off')
-            vol_condicional = res.conditional_volatility / 100
+            am = arch_model(retornos * 100, vol='Garch', p=1, q=1, dist='Normal')
+            res = am.fit(update_freq=0, disp='off', show_warning=False)
+            vol_condicional = np.asarray(res.conditional_volatility) / 100
+            # Guard against zero/NaN conditional volatility
+            vol_condicional = np.where(
+                np.isfinite(vol_condicional) & (vol_condicional > 1e-8),
+                vol_condicional, 0.015
+            )
             retornos_estandarizados = retornos / vol_condicional
         except Exception as e:
             # Fallback to rolling standard deviation if GARCH fitting fails
@@ -358,15 +366,25 @@ class PortfolioReconciler:
             "costs, and draft the final production report."
         )
 
-    def reconcile(self, adjusted_metrics: dict, portfolio: dict, execution_date: str) -> tuple[dict, str]:
+    def reconcile(self, adjusted_metrics: dict, portfolio: dict, execution_date: str,
+                  learning_context: dict = None) -> tuple[dict, str, list]:
         print(f"\n[Agent 3: Portfolio Reconciler] Starting portfolio reconciliation and optimization...")
-        
-        # 1. Determine active eligible assets based on threshold rules
+
+        # Adaptive learning context (all optional, safe defaults = old behavior)
+        ctx = learning_context or {}
+        umbral_histeresis_entrada = ctx.get("dcs_threshold", 0.25)
+        umbral_vr = ctx.get("vr_threshold", 1.2)
+        confidence = ctx.get("confidence", {})          # ticker -> multiplier
+        exposure_scalar = ctx.get("exposure_scalar", 1.0)
+        if exposure_scalar < 1.0:
+            print(f"  |-- [Drawdown Governor] Gross exposure scaled to {exposure_scalar:.0%} "
+                  f"(strategy drawdown brake active).")
+
+        # 1. Determine active eligible assets based on (learned) threshold rules
         activos_elegibles = []
-        umbral_histeresis_entrada = 0.25
-        
+
         for t, met in adjusted_metrics.items():
-            if met["dcs_adjusted"] >= umbral_histeresis_entrada and met["relative_vol"] >= 1.2:
+            if met["dcs_adjusted"] >= umbral_histeresis_entrada and met["relative_vol"] >= umbral_vr:
                 activos_elegibles.append(t)
                 
         print(f"  |-- Eligible assets for long positions: {activos_elegibles}")
@@ -382,10 +400,16 @@ class PortfolioReconciler:
             inv_vol = {t: 1.0 / adjusted_metrics[t]["garch_vol_adjusted"] for t in activos_elegibles}
             suma_inv_vol = sum(inv_vol.values())
             
-            # Raw weights scaled by DCS view strength
+            # Raw weights scaled by DCS view strength, then by the learned
+            # confidence multiplier for this signal bucket (1.0 = no evidence
+            # yet), then by the drawdown-governor exposure scalar.
             raw_weights = {}
             for t in activos_elegibles:
-                raw_weights[t] = (inv_vol[t] / suma_inv_vol) * adjusted_metrics[t]["dcs_adjusted"]
+                mult = confidence.get(t, 1.0)
+                raw_weights[t] = (inv_vol[t] / suma_inv_vol) * adjusted_metrics[t]["dcs_adjusted"] * mult * exposure_scalar
+                if mult != 1.0:
+                    print(f"  |-- [Learned Confidence] {t}: weight x{mult:.2f} "
+                          f"(historical bucket expectancy)")
                 
             # Enforce 40% concentration limit (and redistribute excess)
             final_weights = {}
@@ -432,7 +456,19 @@ class PortfolioReconciler:
         # First Phase: Execute Sells (frees up cash)
         new_holdings_dict = {}
         cash_after_sells = cash
-        
+
+        # BUGFIX: previously, any held ticker missing from adjusted_metrics
+        # (yfinance failure, liquidity gate rejection, screening error) simply
+        # vanished from the new portfolio — no SELL was logged and no cash was
+        # credited. The position's value evaporated from portfolio.json.
+        # Data unavailability is NOT a sell signal: carry the position at its
+        # last known price and flag it for review.
+        for ticker, h in holdings.items():
+            if ticker not in adjusted_metrics:
+                print(f"  +-- [WARN] {ticker} held but absent from today's metrics. "
+                      f"Carrying position at last price {h['last_price']:.2f} (review manually).")
+                new_holdings_dict[ticker] = {**h, "target_weight": h.get("target_weight", 0.0)}
+
         for ticker, peso in pesos_asignados.items():
             current_price = adjusted_metrics[ticker]["current_price"]
             monto_teorico = total_value * peso
@@ -487,8 +523,17 @@ class PortfolioReconciler:
                 }
                 
         # Second Phase: Execute Buys
+        # BUGFIX: dict order is insertion order (ingestion order), so when cash ran
+        # out, low-conviction names ingested earlier got filled while the strongest
+        # signals were scaled down. Fill highest adjusted DCS first.
         cash_after_buys = cash_after_sells
-        for ticker, peso in pesos_asignados.items():
+        buy_order = sorted(
+            pesos_asignados.keys(),
+            key=lambda t: adjusted_metrics[t]["dcs_adjusted"],
+            reverse=True
+        )
+        for ticker in buy_order:
+            peso = pesos_asignados[ticker]
             current_price = adjusted_metrics[ticker]["current_price"]
             monto_teorico = total_value * peso
             target_shares = int(monto_teorico // current_price)
@@ -592,10 +637,10 @@ class PortfolioReconciler:
             for t in discarded_assets:
                 met = adjusted_metrics[t]
                 reasons = []
-                if met["dcs_adjusted"] < 0.25:
-                    reasons.append(f"DCS below entry threshold ({met['dcs_adjusted']:.2f} < 0.25)")
-                if met["relative_vol"] < 1.2:
-                    reasons.append(f"Relative volume below threshold ({met['relative_vol']:.2f} < 1.2)")
+                if met["dcs_adjusted"] < umbral_histeresis_entrada:
+                    reasons.append(f"DCS below entry threshold ({met['dcs_adjusted']:.2f} < {umbral_histeresis_entrada:.2f})")
+                if met["relative_vol"] < umbral_vr:
+                    reasons.append(f"Relative volume below threshold ({met['relative_vol']:.2f} < {umbral_vr:.2f})")
                 report.append(f"| {t} | {met['dcs_adjusted']:.4f} | {met['relative_vol']:.2f} | {', '.join(reasons)} |")
         else:
             report.append("*No assets were discarded this run.*")
@@ -624,4 +669,6 @@ class PortfolioReconciler:
         
         final_markdown = "\n".join(report)
         
-        return updated_portfolio, final_markdown
+        # Return the trade blotter so callers log EXACTLY the executed trades
+        # (with fees) instead of re-deriving them by diffing holdings.
+        return updated_portfolio, final_markdown, rebalancing_trades
