@@ -7,8 +7,9 @@ from hmmlearn import hmm
 from arch import arch_model
 
 # Import V4 Quantitative Modules
+# LSTM-Transformer (deep_regime_model) removed: insufficient data (~1.2k daily bars) to
+# justify the parameter count; was contributing pure noise in 50/50 blend with HMM-Markov.
 from skills.nlp_sentiment import NLPSentimentEngine
-from skills.deep_regime_model import train_and_predict_regime
 from skills.statistical_arbitrage import StatisticalArbitrageEngine
 from skills.rl_execution_agent import optimize_order_execution
 
@@ -169,9 +170,10 @@ class FundamentalScreener:
     """
     def __init__(self):
         self.system_prompt = (
-            "SYSTEM PROMPT: You are the Quantitative Screener Agent (V3). Your objective is to run "
-            "advanced mathematical models (GARCH(1,1), Multivariate HMM, 2nd-Order Markov transitions) "
-            "to extract volatility and trend signals (DCS) for each BMV stock relative to global macro drivers."
+            "SYSTEM PROMPT: You are the Quantitative Screener Agent. Your objective is to run "
+            "GARCH(1,1) standardization, Multivariate HMM regime inference, and 2nd-Order Markov "
+            "transition probabilities to extract a directional confidence signal (DCS) for each BMV "
+            "stock relative to global macro drivers (SPY and USD/MXN)."
         )
 
     def calcular_retornos_estandarizados_garch(self, precios):
@@ -271,38 +273,12 @@ class FundamentalScreener:
                 estados_hist = self.entrenar_hmm_multivariado(ret_est, exogenos)
                 current_state_pair = (estados_hist[-2], estados_hist[-1])
                 
-                # 3. Markov transition calculations & LSTM-Transformer Bias
+                # 3. Markov transition calculations (HMM-only, LSTM-Transformer removed)
                 M_2da, mapa_llaves = self.calcular_matriz_markov_segundo_orden(estados_hist)
-                
-                # Prepare deep features: [Asset_Ret, GARCH_Vol, SPY_Ret, USDMXN_Ret, Lagged_State]
-                hist_lagged_state = np.roll(estados_hist, 1)
-                hist_lagged_state[0] = estados_hist[0]
-                deep_features = np.column_stack([
-                    ret,
-                    vol_cond,
-                    exogenos[:, 0], # SPY_Ret
-                    exogenos[:, 1], # USDMXN_Ret
-                    hist_lagged_state
-                ])
-                
-                # Map states: estados_hist contains [-1, 0, 1] -> mapped target [2, 0, 1]
-                mapped_target_states = np.where(estados_hist == 1, 1, np.where(estados_hist == -1, 2, 0))
-                
-                seq_len = 10
-                next_window = deep_features[-seq_len:]
-                
-                try:
-                    deep_probs = train_and_predict_regime(deep_features, mapped_target_states, next_window, seq_len=seq_len, epochs=5)
-                    deep_p_bull = deep_probs[1]
-                    deep_p_bear = deep_probs[2]
-                except Exception as e:
-                    print(f"  [Deep Regime Model Error] {ticker}: {e}")
-                    deep_p_bull, deep_p_bear = 0.33, 0.33
-                
+
                 fila_actual = mapa_llaves[current_state_pair]
-                # Blend HMM-Markov with LSTM-Transformer (50/50)
-                p_bull = 0.5 * M_2da[fila_actual, 0] + 0.5 * deep_p_bull
-                p_bear = 0.5 * M_2da[fila_actual, 2] + 0.5 * deep_p_bear
+                p_bull = M_2da[fila_actual, 0]
+                p_bear = M_2da[fila_actual, 2]
                 dcs = p_bull - p_bear
                 
                 # 4. Volume Confirmation (Relative Volume)
@@ -391,7 +367,7 @@ class PortfolioReconciler:
     Agent 3: Rebalances the portfolio based on Black-Litterman weights and V4 optimizations.
     - Integrates Engle-Granger Cointegration & Regime Arbitrage on historical price graphs
     - Invokes DQN Reinforcement Learning agent to route order books and minimize trade slippage
-    - Enforces 40% concentration limit
+    - Enforces 20% concentration limit (reduced from 40% to improve diversification)
     - Deducts 0.29% transaction fees on all operations
     - Automatically routes cash to Bondia overnight sweeps
     """
@@ -431,25 +407,26 @@ class PortfolioReconciler:
             for t in activos_elegibles:
                 raw_weights[t] = (inv_vol[t] / suma_inv_vol) * adjusted_metrics[t]["dcs_adjusted"]
                 
-            # Enforce 40% concentration limit (and redistribute excess)
+            # Enforce 20% concentration limit (and redistribute excess)
+            CONCENTRATION_CAP = 0.20
             final_weights = {}
             excess = 0.0
             under_cap_sum = 0.0
-            
+
             for t, w in raw_weights.items():
-                if w > 0.40:
-                    final_weights[t] = 0.40
-                    excess += (w - 0.40)
+                if w > CONCENTRATION_CAP:
+                    final_weights[t] = CONCENTRATION_CAP
+                    excess += (w - CONCENTRATION_CAP)
                 else:
                     final_weights[t] = w
                     under_cap_sum += w
-                    
+
             if excess > 0 and under_cap_sum > 0:
                 for t in list(final_weights.keys()):
-                    if final_weights[t] < 0.40:
+                    if final_weights[t] < CONCENTRATION_CAP:
                         share = raw_weights[t] / under_cap_sum
                         extra = excess * share
-                        final_weights[t] = min(0.40, final_weights[t] + extra)
+                        final_weights[t] = min(CONCENTRATION_CAP, final_weights[t] + extra)
                         
             # Set final optimized weights
             for t in adjusted_metrics:
@@ -637,7 +614,7 @@ class PortfolioReconciler:
         report.append("# QUANTITATIVE PLATFORM REPORT (V4)")
         report.append(f"**Execution Date:** {execution_date} | **System Version:** Alpha Generation V4\n")
         
-        report.append("## 1. Top Quantitative Signals (LSTM-Transformer HMM + GARCH)")
+        report.append("## 1. Top Quantitative Signals (HMM Regime + 2nd-Order Markov + GARCH)")
         report.append("| Ticker | DCS (Biased) | ZG_t Sentiment | GARCH Vol | Relative Vol | HMM State | Target Weight | Price |")
         report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
         

@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import time
 import datetime
 import numpy as np
 import pandas as pd
@@ -8,6 +9,37 @@ import yfinance as yf
 
 # Add current directory to path to enable local imports
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+_RETRY_DELAYS = [5, 15, 30]  # seconds between attempts
+
+
+def _strip_tz(df: pd.DataFrame) -> pd.DataFrame:
+    """Remove timezone from a DataFrame's DatetimeIndex regardless of its current state."""
+    if df.index.tz is not None:
+        df.index = df.index.tz_convert("UTC").tz_localize(None)
+    return df
+
+
+def _fetch_ticker_history(ticker_symbol: str, period: str = "5y", max_retries: int = 3) -> pd.DataFrame:
+    """
+    Download historical OHLCV data from yfinance with retry/backoff.
+    Returns an empty DataFrame on permanent failure instead of raising.
+    """
+    last_exc = None
+    for attempt, delay in enumerate((_RETRY_DELAYS + [None])[:max_retries], start=1):
+        try:
+            hist = yf.Ticker(ticker_symbol).history(period=period, timeout=30)
+            if not hist.empty:
+                return hist
+            # Empty result is not an exception but still a failure worth retrying
+            raise ValueError(f"yfinance returned empty history for {ticker_symbol}")
+        except Exception as exc:
+            last_exc = exc
+            if delay is not None:
+                print(f"  [WARN] Attempt {attempt}/{max_retries} failed for {ticker_symbol}: {exc}. Retrying in {delay}s...")
+                time.sleep(delay)
+    print(f"  [ERROR] All {max_retries} attempts failed for {ticker_symbol}: {last_exc}")
+    return pd.DataFrame()
 
 from skills.liquidity_gatekeeper import calculate_adtv, passes_liquidity_gate
 from agents.agents import FundamentalScreener, MacroRiskAnalyst, PortfolioReconciler
@@ -51,37 +83,40 @@ def fetch_historical_exogenous() -> tuple[pd.DataFrame, pd.Series]:
     """
     Downloads 5 years of historical closing prices for SPY and USD/MXN (MXN=X).
     Computes daily log returns and returns a cleaned DataFrame plus raw USD/MXN rate.
+    Raises ValueError if either series cannot be fetched after retries.
     """
     print("Fetching historical exogenous regressors (SPY and USD/MXN)...")
-    spy = yf.Ticker("SPY").history(period="5y")
-    usdmxn = yf.Ticker("MXN=X").history(period="5y")
-    
+    spy = _fetch_ticker_history("SPY")
+    usdmxn = _fetch_ticker_history("MXN=X")
+
     if spy.empty or usdmxn.empty:
-        raise ValueError("Failed to fetch exogenous data from Yahoo Finance.")
-        
-    spy.index = spy.index.tz_localize(None)
-    usdmxn.index = usdmxn.index.tz_localize(None)
-    
+        raise ValueError(
+            "Failed to fetch exogenous data from Yahoo Finance after retries. "
+            "Check network connectivity and try again."
+        )
+
+    spy = _strip_tz(spy)
+    usdmxn = _strip_tz(usdmxn)
+
     spy_ret = np.log(spy["Close"] / spy["Close"].shift(1))
     usdmxn_ret = np.log(usdmxn["Close"] / usdmxn["Close"].shift(1))
-    
+
     df = pd.DataFrame({
         "SPY_Ret": spy_ret,
         "USDMXN_Ret": usdmxn_ret
     }).dropna()
-    
-    # Raw exchange rate (aligned index)
+
     raw_rate = usdmxn["Close"].rename("USDMXN_Rate")
     return df, raw_rate
+
 
 def fetch_historical_asset(ticker_symbol: str) -> pd.DataFrame:
     """
     Downloads 5 years of historical daily price and volume data for an asset.
+    Returns an empty DataFrame on failure.
     """
     print(f"Fetching historical data for {ticker_symbol} from Yahoo Finance...")
-    ticker = yf.Ticker(ticker_symbol)
-    hist = ticker.history(period="5y")
-    return hist
+    return _fetch_ticker_history(ticker_symbol)
 
 def load_portfolio(dir_path):
     """Load portfolio.json from project root."""
@@ -223,12 +258,12 @@ def main():
         try:
             # Download asset data
             hist = fetch_historical_asset(ticker)
-            if len(hist) < 30:
+            if hist.empty or len(hist) < 30:
                 print(f"  |-- {ticker}: Skipping (insufficient data: {len(hist)} days)")
                 continue
-                
-            hist.index = hist.index.tz_localize(None)
-                
+
+            hist = _strip_tz(hist)
+
             # Filter through liquidity gatekeeper first (using 30-day ADTV)
             prices_30 = hist["Close"].iloc[-30:].tolist()
             volumes_30 = hist["Volume"].iloc[-30:].tolist()
@@ -271,12 +306,12 @@ def main():
         try:
             # Download asset data
             hist = fetch_historical_asset(ticker)
-            if len(hist) < 30:
+            if hist.empty or len(hist) < 30:
                 print(f"  |-- {ticker}: Skipping (insufficient data: {len(hist)} days)")
                 continue
-                
-            hist.index = hist.index.tz_localize(None)
-            
+
+            hist = _strip_tz(hist)
+
             # Align with raw exchange rate to convert to MXN
             df_usd = pd.DataFrame({
                 "Close_USD": hist["Close"],

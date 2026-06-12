@@ -4,3 +4,4 @@ arch>=6.0.0
 hmmlearn>=0.3.0
 scikit-learn
 scipy
+pytest>=8.0.0
