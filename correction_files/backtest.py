@@ -43,7 +43,7 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             universe_history[ticker] = df_aligned
         except Exception:
             continue
-
+            
     for ticker in US_TICKERS:
         try:
             hist = fetch_historical_asset(ticker)
@@ -97,7 +97,7 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
     spy_mxn_series = spy_mxn_series.reindex(backtest_dates).ffill()
     if spy_mxn_series.isna().any():
         raise ValueError("SPY benchmark series has gaps at the start of the backtest window.")
-
+    
     # Buy SPY on day 0
     spy_start_price = spy_mxn_series.iloc[0]
     spy_shares = (starting_capital * (1.0 - 0.0029)) / spy_start_price
@@ -195,8 +195,8 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             raw_metrics = screener.screen(lookback_universe)
             adjusted_metrics = analyst.stress_test(raw_metrics, {})
             
-            universe_prices_dict = {t: data["prices"] for t, data in lookback_universe.items()}
-            updated_portfolio_sim, _, _ = reconciler.reconcile(adjusted_metrics, portfolio_sim, current_date.strftime("%Y-%m-%d"), universe_prices_dict)
+            # Optimize and calculate weights
+            updated_portfolio_sim, _, _ = reconciler.reconcile(adjusted_metrics, portfolio_sim, current_date.strftime("%Y-%m-%d"))
             
             # Apply rebalanced holdings to simulation
             new_holdings = {h["ticker"]: h["shares"] for h in updated_portfolio_sim["holdings"]}
@@ -250,14 +250,14 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
     
     # Save backtest report to markdown
     report = []
-    report.append("# BACKTEST ANALYSIS REPORT (Hedge Fund Method V4)")
+    report.append("# BACKTEST ANALYSIS REPORT (Hedge Fund Method V3)")
     report.append(f"**Analysis Period:** {backtest_dates[0].strftime('%Y-%m-%d')} to {backtest_dates[-1].strftime('%Y-%m-%d')} ({backtest_days} Business Days)")
     report.append(f"**Starting Capital:** ${starting_capital:,.2f} MXN | **Rebalancing Frequency:** every {rebalance_freq} Business Days\n")
     
     report.append("## 1. Performance Overview Comparison")
     report.append("| Portfolio Strategy | Cumulative Return | Final Capital | Sharpe Ratio | Max Drawdown |")
     report.append("| :--- | :---: | :---: | :---: | :---: |")
-    report.append(f"| **V4 Quantitative Strategy** | **{strat_cum_return:+.2f}%** | ${strat_vals[-1]:,.2f} MXN | {sharpe_strat:.2f} | {max_dd_strat:.2f}% |")
+    report.append(f"| **V3 Quantitative Strategy** | **{strat_cum_return:+.2f}%** | ${strat_vals[-1]:,.2f} MXN | {sharpe_strat:.2f} | {max_dd_strat:.2f}% |")
     report.append(f"| Bondia Cash Benchmark (11% APR) | {cash_cum_return:+.2f}% | ${cash_vals[-1]:,.2f} MXN | 0.00 | 0.00% |")
     report.append(f"| SPY Buy & Hold Index | {spy_cum_return:+.2f}% | ${spy_vals[-1]:,.2f} MXN | -- | {max_dd_spy:.2f}% |")
     

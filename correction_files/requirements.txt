@@ -6,4 +6,3 @@ scikit-learn
 scipy
 numpy>=1.26
 pandas>=2.0
-pytest>=8.0.0

@@ -1,0 +1,222 @@
+diff --git a/agents/agents.py b/agents/agents.py
+index 94b85e0..f974b5b 100644
+--- a/agents/agents.py
++++ b/agents/agents.py
+@@ -174,10 +174,18 @@ class FundamentalScreener:
+         retornos[0] = 0.0
+         
+         # Fit GARCH(1,1) model
++        # NOTE: `show_warning` is NOT a valid kwarg of arch_model() (it belongs to .fit()).
++        # The previous code raised TypeError on every call, silently forcing the
++        # rolling-std fallback for ALL tickers — GARCH never actually ran.
+         try:
+-            am = arch_model(retornos * 100, vol='Garch', p=1, q=1, dist='Normal', show_warning=False)
+-            res = am.fit(update_freq=0, disp='off')
+-            vol_condicional = res.conditional_volatility / 100
++            am = arch_model(retornos * 100, vol='Garch', p=1, q=1, dist='Normal')
++            res = am.fit(update_freq=0, disp='off', show_warning=False)
++            vol_condicional = np.asarray(res.conditional_volatility) / 100
++            # Guard against zero/NaN conditional volatility
++            vol_condicional = np.where(
++                np.isfinite(vol_condicional) & (vol_condicional > 1e-8),
++                vol_condicional, 0.015
++            )
+             retornos_estandarizados = retornos / vol_condicional
+         except Exception as e:
+             # Fallback to rolling standard deviation if GARCH fitting fails
+@@ -432,7 +440,19 @@ class PortfolioReconciler:
+         # First Phase: Execute Sells (frees up cash)
+         new_holdings_dict = {}
+         cash_after_sells = cash
+-        
++
++        # BUGFIX: previously, any held ticker missing from adjusted_metrics
++        # (yfinance failure, liquidity gate rejection, screening error) simply
++        # vanished from the new portfolio — no SELL was logged and no cash was
++        # credited. The position's value evaporated from portfolio.json.
++        # Data unavailability is NOT a sell signal: carry the position at its
++        # last known price and flag it for review.
++        for ticker, h in holdings.items():
++            if ticker not in adjusted_metrics:
++                print(f"  +-- [WARN] {ticker} held but absent from today's metrics. "
++                      f"Carrying position at last price {h['last_price']:.2f} (review manually).")
++                new_holdings_dict[ticker] = {**h, "target_weight": h.get("target_weight", 0.0)}
++
+         for ticker, peso in pesos_asignados.items():
+             current_price = adjusted_metrics[ticker]["current_price"]
+             monto_teorico = total_value * peso
+@@ -487,8 +507,17 @@ class PortfolioReconciler:
+                 }
+                 
+         # Second Phase: Execute Buys
++        # BUGFIX: dict order is insertion order (ingestion order), so when cash ran
++        # out, low-conviction names ingested earlier got filled while the strongest
++        # signals were scaled down. Fill highest adjusted DCS first.
+         cash_after_buys = cash_after_sells
+-        for ticker, peso in pesos_asignados.items():
++        buy_order = sorted(
++            pesos_asignados.keys(),
++            key=lambda t: adjusted_metrics[t]["dcs_adjusted"],
++            reverse=True
++        )
++        for ticker in buy_order:
++            peso = pesos_asignados[ticker]
+             current_price = adjusted_metrics[ticker]["current_price"]
+             monto_teorico = total_value * peso
+             target_shares = int(monto_teorico // current_price)
+@@ -624,4 +653,6 @@ class PortfolioReconciler:
+         
+         final_markdown = "\n".join(report)
+         
+-        return updated_portfolio, final_markdown
++        # Return the trade blotter so callers log EXACTLY the executed trades
++        # (with fees) instead of re-deriving them by diffing holdings.
++        return updated_portfolio, final_markdown, rebalancing_trades
+diff --git a/backtest.py b/backtest.py
+index 7699437..48b33cb 100644
+--- a/backtest.py
++++ b/backtest.py
+@@ -34,10 +34,12 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
+                 "Asset_Ret": asset_ret
+             })
+             df_aligned = df_asset.join(df_exog, how="right")
+-            df_aligned["Asset_Price"] = df_aligned["Asset_Price"].ffill().bfill()
++            # BUGFIX: .bfill() leaked FUTURE prices into the past (look-ahead bias).
++            # Forward-fill only; rows before the ticker's first real quote stay NaN
++            # and are excluded from each rebalance lookback below.
++            df_aligned["Asset_Price"] = df_aligned["Asset_Price"].ffill()
+             df_aligned["Asset_Vol"] = df_aligned["Asset_Vol"].fillna(0.0)
+             df_aligned["Asset_Ret"] = df_aligned["Asset_Ret"].fillna(0.0)
+-            df_aligned = df_aligned.fillna(0.0)
+             universe_history[ticker] = df_aligned
+         except Exception:
+             continue
+@@ -62,10 +64,12 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
+                 "Asset_Ret": asset_ret_mxn
+             })
+             df_aligned = df_asset.join(df_exog, how="right")
+-            df_aligned["Asset_Price"] = df_aligned["Asset_Price"].ffill().bfill()
++            # BUGFIX: .bfill() leaked FUTURE prices into the past (look-ahead bias).
++            # Forward-fill only; rows before the ticker's first real quote stay NaN
++            # and are excluded from each rebalance lookback below.
++            df_aligned["Asset_Price"] = df_aligned["Asset_Price"].ffill()
+             df_aligned["Asset_Vol"] = df_aligned["Asset_Vol"].fillna(0.0)
+             df_aligned["Asset_Ret"] = df_aligned["Asset_Ret"].fillna(0.0)
+-            df_aligned = df_aligned.fillna(0.0)
+             universe_history[ticker] = df_aligned
+         except Exception:
+             continue
+@@ -90,7 +94,9 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
+     spy_history = yf.Ticker("SPY").history(period="5y")
+     spy_history.index = spy_history.index.tz_localize(None)
+     spy_mxn_series = spy_history["Close"] * raw_rate
+-    spy_mxn_series = spy_mxn_series.reindex(backtest_dates).ffill().bfill()
++    spy_mxn_series = spy_mxn_series.reindex(backtest_dates).ffill()
++    if spy_mxn_series.isna().any():
++        raise ValueError("SPY benchmark series has gaps at the start of the backtest window.")
+     
+     # Buy SPY on day 0
+     spy_start_price = spy_mxn_series.iloc[0]
+@@ -161,6 +167,7 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
+             for ticker, df_ticker in universe_history.items():
+                 # Get df rows before/on current_date
+                 df_lookback = df_ticker.loc[df_ticker.index <= current_date]
++                df_lookback = df_lookback.dropna(subset=["Asset_Price"])
+                 if len(df_lookback) < 50: continue
+                 
+                 # Check liquidity gate on lookback data
+@@ -189,7 +196,7 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
+             adjusted_metrics = analyst.stress_test(raw_metrics, {})
+             
+             # Optimize and calculate weights
+-            updated_portfolio_sim, _ = reconciler.reconcile(adjusted_metrics, portfolio_sim, current_date.strftime("%Y-%m-%d"))
++            updated_portfolio_sim, _, _ = reconciler.reconcile(adjusted_metrics, portfolio_sim, current_date.strftime("%Y-%m-%d"))
+             
+             # Apply rebalanced holdings to simulation
+             new_holdings = {h["ticker"]: h["shares"] for h in updated_portfolio_sim["holdings"]}
+diff --git a/ingest_live_bmv.py b/ingest_live_bmv.py
+index 130e806..e0d55e2 100644
+--- a/ingest_live_bmv.py
++++ b/ingest_live_bmv.py
+@@ -97,14 +97,14 @@ def save_portfolio(dir_path, portfolio):
+     with open(portfolio_path, "w", encoding="utf-8") as f:
+         json.dump(portfolio, f, indent=2)
+ 
+-def log_transaction(dir_path, date_str, ticker, action, shares, price, note):
+-    """Append a transaction row to transactions.md."""
++def log_transaction(dir_path, date_str, ticker, action, shares, price, note, fee=0.0):
++    """Append a transaction row to transactions.md. Net capital impact includes fees."""
+     transactions_path = os.path.join(dir_path, "transactions.md")
+-    cash_flow = shares * price
++    gross = shares * price
+     if action == "BUY":
+-        cash_flow_str = f"-{cash_flow:,.2f}"
++        cash_flow_str = f"-{gross + fee:,.2f}"
+     else:
+-        cash_flow_str = f"+{cash_flow:,.2f}"
++        cash_flow_str = f"+{gross - fee:,.2f}"
+ 
+     row = f"| {date_str} | {ticker} | {action} | {shares} | {price:.2f} | {cash_flow_str} | Market | FILLED | {note} |"
+ 
+@@ -354,39 +354,27 @@ def main():
+         print("  |-- portfolio.json missing. Initialized default empty portfolio with $20,000.00 MXN.")
+ 
+     reconciler = PortfolioReconciler()
+-    updated_portfolio, report_markdown = reconciler.reconcile(adjusted_metrics, portfolio, execution_date)
++    updated_portfolio, report_markdown, rebalancing_trades = reconciler.reconcile(adjusted_metrics, portfolio, execution_date)
+ 
+     # 6. Execute paper trades & write logs
+     print("\n--- PHASE 5: EXECUTING REBALANCING LOGS ---")
+     
+     # Extract optimal weights dictionary
+-    pesos_asignados = {t: updated_portfolio["holdings"][i]["target_weight"] for i, h in enumerate(updated_portfolio["holdings"]) for t in [h["ticker"]]}
++    pesos_asignados = {h["ticker"]: h["target_weight"] for h in updated_portfolio["holdings"]}
+     for t in adjusted_metrics:
+         if t not in pesos_asignados:
+             pesos_asignados[t] = 0.0
+ 
+-    # Compare old and new holdings to log trades
+-    old_holdings_dict = {h["ticker"]: h for h in portfolio["holdings"]}
+-    new_holdings_dict = {h["ticker"]: h for h in updated_portfolio["holdings"]}
+-    all_tickers = set(old_holdings_dict.keys()).union(new_holdings_dict.keys())
+-    
+-    trades_executed = 0
+-    for t in all_tickers:
+-        old_shares = old_holdings_dict.get(t, {}).get("shares", 0)
+-        new_shares = new_holdings_dict.get(t, {}).get("shares", 0)
+-        
+-        if old_shares != new_shares:
+-            trades_executed += 1
+-            current_price = adjusted_metrics[t]["current_price"]
+-            
+-            if new_shares > old_shares:
+-                shares_traded = new_shares - old_shares
+-                note = f"V3 Dynamic Rebalance (Target Weight: {pesos_asignados[t]:.1%}, DCS: {adjusted_metrics[t]['dcs_adjusted']:.2f})"
+-                log_transaction(dir_path, execution_date, t, "BUY", shares_traded, current_price, note)
+-            else:
+-                shares_traded = old_shares - new_shares
+-                note = f"V3 Dynamic Rebalance"
+-                log_transaction(dir_path, execution_date, t, "SELL", shares_traded, current_price, note)
++    # BUGFIX: previously trades were re-derived here by diffing old vs new holdings,
++    # ignoring fees — so transactions.md never reconciled with portfolio.json cash.
++    # Now we log the exact blotter the reconciler executed, fees included.
++    trades_executed = len(rebalancing_trades)
++    for trade in rebalancing_trades:
++        log_transaction(
++            dir_path, execution_date,
++            trade["ticker"], trade["action"], trade["shares"],
++            trade["price"], trade["note"], fee=trade["fee"]
++        )
+ 
+     # Save new portfolio.json
+     save_portfolio(dir_path, updated_portfolio)
+diff --git a/requirements.txt b/requirements.txt
+index 5eadc86..7728b1b 100644
+--- a/requirements.txt
++++ b/requirements.txt
+@@ -4,3 +4,5 @@ arch>=6.0.0
+ hmmlearn>=0.3.0
+ scikit-learn
+ scipy
++numpy>=1.26
++pandas>=2.0
