@@ -200,6 +200,7 @@ class FundamentalScreener:
 
     def entrenar_hmm_multivariado(self, retornos_asset, exogenos):
         obs = np.column_stack([retornos_asset, exogenos])
+        model_hmm = None
         try:
             model_hmm = hmm.GaussianHMM(n_components=3, covariance_type="full", n_iter=100, random_state=42)
             model_hmm.fit(obs)
@@ -224,7 +225,7 @@ class FundamentalScreener:
                 elif val < -0.004:
                     estados_mapeados[i] = -1
             
-        return estados_mapeados
+        return estados_mapeados, model_hmm
 
     def calcular_matriz_markov_segundo_orden(self, estados):
         mapa_llaves = {
@@ -269,17 +270,38 @@ class FundamentalScreener:
                 ret, ret_est, vol_cond = self.calcular_retornos_estandarizados_garch(precios)
                 garch_vol_final = vol_cond[-1]
                 
-                # 2. HMM State Inference
-                estados_hist = self.entrenar_hmm_multivariado(ret_est, exogenos)
-                current_state_pair = (estados_hist[-2], estados_hist[-1])
+                # 2. HMM State Inference and DCS v2 calculation
+                estados_hist, model_hmm = self.entrenar_hmm_multivariado(ret_est, exogenos)
                 
-                # 3. Markov transition calculations
-                M_2da, mapa_llaves = self.calcular_matriz_markov_segundo_orden(estados_hist)
+                dcs = None
+                current_state = None
                 
-                fila_actual = mapa_llaves[current_state_pair]
-                p_bull = M_2da[fila_actual, 0]
-                p_bear = M_2da[fila_actual, 2]
-                dcs = p_bull - p_bear
+                if model_hmm is not None:
+                    try:
+                        obs = np.column_stack([ret_est, exogenos])
+                        gamma_T = model_hmm.predict_proba(obs)[-1]
+                        pi_next = gamma_T @ model_hmm.transmat_
+                        mu = model_hmm.means_[:, 0]
+                        e_ret = pi_next @ mu
+                        
+                        # Normalize expected return to [-1, 1]
+                        max_mu = max(abs(mu.min()), abs(mu.max()))
+                        dcs = e_ret / max_mu if max_mu > 0 else 0.0
+                        
+                        # Map argmax of gamma_T to regime label mapped through means
+                        bear_idx = np.argmin(mu)
+                        bull_idx = np.argmax(mu)
+                        sideways_idx = [idx for idx in range(3) if idx not in (bear_idx, bull_idx)][0]
+                        mapa_estados = {bear_idx: -1, bull_idx: 1, sideways_idx: 0}
+                        current_state = int(mapa_estados[np.argmax(gamma_T)])
+                    except Exception as inference_error:
+                        print(f"  [HMM Inference Fallback] Inference failed for {ticker}: {inference_error}")
+                        model_hmm = None
+                        
+                if model_hmm is None:
+                    # Fallback path (mean of last 10 standardized returns)
+                    dcs = float(np.clip(np.mean(ret_est[-10:]), -1.0, 1.0))
+                    current_state = int(estados_hist[-1])
                 
                 # 4. Volume Confirmation (Relative Volume)
                 vr = volumenes[-1] / np.mean(volumenes[-20:])
@@ -288,11 +310,11 @@ class FundamentalScreener:
                     "dcs": float(dcs),
                     "garch_vol": float(garch_vol_final),
                     "relative_vol": float(vr),
-                    "hmm_state": int(estados_hist[-1]),
+                    "hmm_state": int(current_state),
                     "current_price": float(precios[-1])
                 }
                 
-                print(f"  +-- {ticker}: DCS={dcs:.4f} | VR={vr:.2f} | Vol={garch_vol_final:.4f} | HMM State={estados_hist[-1]}")
+                print(f"  +-- {ticker}: DCS={dcs:.4f} | VR={vr:.2f} | Vol={garch_vol_final:.4f} | HMM State={current_state}")
                 
             except Exception as e:
                 print(f"  |-- [ERROR] Failed to run quantitative screening for {ticker}: {e}")
@@ -380,11 +402,14 @@ class PortfolioReconciler:
             print(f"  |-- [Drawdown Governor] Gross exposure scaled to {exposure_scalar:.0%} "
                   f"(strategy drawdown brake active).")
 
-        # 1. Determine active eligible assets based on (learned) threshold rules
+        # 1. Determine active eligible assets based on (learned) threshold rules with hysteresis
         activos_elegibles = []
+        currently_held = {h["ticker"] for h in portfolio.get("holdings", []) if h.get("shares", 0) > 0}
+        umbral_histeresis_salida = ctx.get("dcs_threshold_out", umbral_histeresis_entrada - 0.10)
 
         for t, met in adjusted_metrics.items():
-            if met["dcs_adjusted"] >= umbral_histeresis_entrada and met["relative_vol"] >= umbral_vr:
+            required_dcs = umbral_histeresis_salida if t in currently_held else umbral_histeresis_entrada
+            if met["dcs_adjusted"] >= required_dcs and met["relative_vol"] >= umbral_vr:
                 activos_elegibles.append(t)
                 
         print(f"  |-- Eligible assets for long positions: {activos_elegibles}")
@@ -612,7 +637,7 @@ class PortfolioReconciler:
         report.append(f"**Execution Date:** {execution_date} | **System Version:** Hedge Fund Method V3\n")
         
         report.append("## 1. Top Quantitative Signals (HMM + GARCH)")
-        report.append("| Ticker | DCS | GARCH Vol | Relative Vol | HMM State | Target Weight | Price |")
+        report.append("| Ticker | DCS v2 | GARCH Vol | Relative Vol | HMM State | Target Weight | Price |")
         report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: |")
         
         # Sort tickers by DCS adjusted descending
@@ -632,7 +657,7 @@ class PortfolioReconciler:
         report.append("\n## 3. Discarded Assets (Signal or Volume Suppressed)")
         discarded_assets = [t for t in sorted_tickers if pesos_asignados[t] == 0.0]
         if discarded_assets:
-            report.append("| Ticker | DCS Adjusted | Relative Vol | Reason |")
+            report.append("| Ticker | DCS v2 Adjusted | Relative Vol | Reason |")
             report.append("| :--- | :---: | :---: | :--- |")
             for t in discarded_assets:
                 met = adjusted_metrics[t]

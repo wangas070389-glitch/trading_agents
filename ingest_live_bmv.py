@@ -179,7 +179,7 @@ def append_evaluation_history(dir_path, execution_date, adjusted_metrics, pesos_
     entry_lines = []
     entry_lines.append(f"\n## Run: {execution_date} @ {datetime.datetime.now().strftime('%H:%M:%S')} (V3 Quantitative Model)")
     entry_lines.append("")
-    entry_lines.append("| Ticker | DCS | GARCH Vol | Relative Vol | HMM State | Target Weight | Price |")
+    entry_lines.append("| Ticker | DCS v2 | GARCH Vol | Relative Vol | HMM State | Target Weight | Price |")
     entry_lines.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: |")
     
     sorted_tickers = sorted(adjusted_metrics.keys(), key=lambda x: adjusted_metrics[x]["dcs_adjusted"], reverse=True)

@@ -6,6 +6,7 @@ import pandas as pd
 import yfinance as yf
 
 from skills.liquidity_gatekeeper import calculate_adtv, passes_liquidity_gate
+from skills.adaptive_learning import load_learned_params
 from agents.agents import FundamentalScreener, MacroRiskAnalyst, PortfolioReconciler
 from ingest_live_bmv import BMV_TICKERS, US_TICKERS, fetch_historical_exogenous, fetch_historical_asset
 
@@ -195,8 +196,21 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             raw_metrics = screener.screen(lookback_universe)
             adjusted_metrics = analyst.stress_test(raw_metrics, {})
             
+            # Load learned parameters (or defaults) and build context
+            dir_path = os.path.dirname(os.path.abspath(__file__))
+            learned = load_learned_params(dir_path)
+            learning_context = {
+                "dcs_threshold": learned["dcs_threshold"],
+                "vr_threshold": learned["vr_threshold"],
+                "confidence": {},
+                "exposure_scalar": 1.0
+            }
+            
             # Optimize and calculate weights
-            updated_portfolio_sim, _, _ = reconciler.reconcile(adjusted_metrics, portfolio_sim, current_date.strftime("%Y-%m-%d"))
+            updated_portfolio_sim, _, _ = reconciler.reconcile(
+                adjusted_metrics, portfolio_sim, current_date.strftime("%Y-%m-%d"),
+                learning_context=learning_context
+            )
             
             # Apply rebalanced holdings to simulation
             new_holdings = {h["ticker"]: h["shares"] for h in updated_portfolio_sim["holdings"]}

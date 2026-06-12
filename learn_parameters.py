@@ -42,7 +42,7 @@ FORWARD_HORIZON = 15         # business days a decision is held / scored
 FEE = 0.0029
 TRAIN_FRACTION = 0.6
 
-DCS_GRID = [0.10, 0.15, 0.20, 0.25, 0.30, 0.40]
+DCS_GRID = [0.05, 0.10, 0.15, 0.20, 0.30]
 VR_GRID = [1.0, 1.1, 1.2, 1.4]
 
 
@@ -141,13 +141,20 @@ def compute_snapshots(universe, df_exog):
 def simulate_combo(snapshots, dcs_thr, vr_thr):
     """Per-period portfolio returns for one threshold combo. Cheap step."""
     period_returns = []
+    currently_held = set()
     for snap in snapshots:
         met = snap["metrics"]
         fwd = snap["fwd_returns"]
-        eligible = [t for t in met
-                    if met[t]["dcs_adjusted"] >= dcs_thr
-                    and met[t]["relative_vol"] >= vr_thr
-                    and t in fwd]
+        eligible = []
+        for t in met:
+            if t not in fwd:
+                continue
+            dcs_threshold_required = dcs_thr - 0.10 if t in currently_held else dcs_thr
+            if met[t]["dcs_adjusted"] >= dcs_threshold_required and met[t]["relative_vol"] >= vr_thr:
+                eligible.append(t)
+        
+        currently_held = set(eligible)
+        
         if not eligible:
             period_returns.append(0.0)  # cash (ignore Bondia for comparison)
             continue

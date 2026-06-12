@@ -65,15 +65,15 @@ def load_learned_params(dir_path):
     values when learn_parameters.py has not been run yet.
     """
     defaults = {
-        "dcs_threshold": 0.25,
+        "dcs_threshold": 0.15,
         "vr_threshold": 1.2,
         "trained_on": None,
         "validation_sharpe": None,
     }
     params = _load_json(os.path.join(dir_path, LEARNED_PARAMS_FILE), defaults)
     # Never accept absurd values from a corrupted file
-    if not (0.0 <= params.get("dcs_threshold", 0.25) <= 0.9):
-        params["dcs_threshold"] = 0.25
+    if not (0.0 <= params.get("dcs_threshold", 0.15) <= 0.9):
+        params["dcs_threshold"] = 0.15
     if not (0.5 <= params.get("vr_threshold", 1.2) <= 3.0):
         params["vr_threshold"] = 1.2
     return params
