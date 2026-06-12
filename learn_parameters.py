@@ -196,8 +196,24 @@ def main():
                 "val_cum_return": round(float(np.prod(1 + va) - 1) * 100, 2),
             })
 
-    rows.sort(key=lambda r: r["score"], reverse=True)
+    # Tie-break toward the MOST CONSERVATIVE parameters: with identical
+    # scores (e.g. when a threshold doesn't bind), prefer the strictest
+    # entry rules, never the loosest.
+    rows.sort(key=lambda r: (r["score"], r["dcs_threshold"], r["vr_threshold"]),
+              reverse=True)
     best = rows[0]
+
+    # Degeneracy diagnostic: warn when a grid dimension has no effect.
+    by_vr = {}
+    for r in rows:
+        by_vr.setdefault(r["vr_threshold"], set()).add(
+            (r["train_sharpe"], r["val_sharpe"]))
+    if all(len(v) == 1 for v in by_vr.values()):
+        print("\n[DIAGNOSTIC] The DCS threshold has ZERO effect across the whole "
+              "grid: every asset passing the VR filter also clears the highest "
+              "DCS bar. The DCS signal is saturated (near +/-1) and acts as a "
+              "binary flag, not a graded score. Recalibrate the signal before "
+              "trusting threshold learning on it.")
 
     print("\nTop 5 combos (score = val_sharpe - 0.5*|train-val|):")
     for r in rows[:5]:
@@ -205,6 +221,23 @@ def main():
               f"train Sharpe {r['train_sharpe']:+.2f} | val Sharpe {r['val_sharpe']:+.2f} | "
               f"val return {r['val_cum_return']:+.2f}%")
 
+    # Gate 1: a negative TRAIN Sharpe with a positive validation Sharpe is a
+    # regime flip, not a validated edge — the strategy lost in-sample and the
+    # out-of-sample window happened to be favorable. Do not learn from luck.
+    if best["train_sharpe"] <= 0:
+        print(f"\nBest combo has NEGATIVE train Sharpe ({best['train_sharpe']:+.2f}) "
+              f"despite val Sharpe {best['val_sharpe']:+.2f}. That is a regime "
+              "flip, not an edge. Refusing to write learned parameters.")
+        params_file = os.path.join(dir_path, LEARNED_PARAMS_FILE)
+        if os.path.exists(params_file):
+            try:
+                os.remove(params_file)
+                print(f"Removed stale {LEARNED_PARAMS_FILE}; system falls back to defaults.")
+            except OSError as e:
+                print(f"Warning: Could not remove stale parameter file: {e}")
+        return
+
+    # Gate 2: validation must also be profitable.
     if best["val_sharpe"] <= 0:
         print("\nNo combo is profitable out-of-sample. Refusing to write 'learned' "
               "parameters — defaults stay in place. This is the system telling you "
