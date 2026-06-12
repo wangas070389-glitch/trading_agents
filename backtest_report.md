@@ -5,12 +5,12 @@
 ## 1. Performance Overview Comparison
 | Portfolio Strategy | Cumulative Return | Final Capital | Sharpe Ratio | Max Drawdown |
 | :--- | :---: | :---: | :---: | :---: |
-| **V3 Quantitative Strategy** | **+3.48%** | $20,696.78 MXN | 0.38 | -3.57% |
+| **V3 Quantitative Strategy** | **+3.75%** | $20,750.79 MXN | 0.44 | -3.97% |
 | Bondia Cash Benchmark (11% APR) | +2.66% | $20,532.36 MXN | 0.00 | 0.00% |
-| SPY Buy & Hold Index | +8.05% | $21,609.16 MXN | -- | -3.94% |
+| SPY Buy & Hold Index | +8.20% | $21,639.74 MXN | -- | -3.94% |
 
 ## 2. Operational Metrics
-* **Total Transaction Fees Paid (0.29% rate)**: $81.84 MXN
-* **Total Passive Bondia Yield Earned**: $321.12 MXN
-* **Active vs. Cash Outperformance**: +0.82%
-* **Active vs. SPY Outperformance**: -4.56%
+* **Total Transaction Fees Paid (0.29% rate)**: $111.84 MXN
+* **Total Passive Bondia Yield Earned**: $362.49 MXN
+* **Active vs. Cash Outperformance**: +1.09%
+* **Active vs. SPY Outperformance**: -4.44%

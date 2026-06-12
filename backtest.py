@@ -215,6 +215,11 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             else:
                 selected_us_tickers = []
                 
+            # Held US positions must ALWAYS reach the deep stage, even if the
+            # momentum funnel would cut them — otherwise the reconciler loses
+            # signal coverage on open positions (carry-warning territory).
+            held_us = {tick for tick in holdings.keys() if not tick.endswith(".MX") and holdings[tick] > 0}
+            selected_us_tickers = list(dict.fromkeys(selected_us_tickers + sorted(held_us)))
             candidates = bmv_tickers + selected_us_tickers
             
             # Slice historical lookback data (only up to current_date)
