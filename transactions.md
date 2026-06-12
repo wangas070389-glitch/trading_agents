@@ -34,11 +34,14 @@ This file tracks all buy and sell transactions executed by the Mexican Value Sto
 | 2026-06-12 | BONDIA | INTEREST | 1 | 0.0195 | +0.0195 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0157 days. |
 | 2026-06-12 | BONDIA | INTEREST | 1 | 0.0025 | +0.0025 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0020 days. |
 | 2026-06-12 | BONDIA | INTEREST | 1 | 0.0111 | +0.0111 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0090 days. |
+| 2026-06-12 | BONDIA | INTEREST | 1 | 0.0546 | +0.0546 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0440 days. |
+| 2026-06-12 | BONDIA | INTEREST | 1 | 0.0131 | +0.0131 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0105 days. |
+| 2026-06-12 | BONDIA | INTEREST | 1 | 0.0526 | +0.0526 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0424 days. |
 ---
 
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
-* **Total Deployed Capital**: 15,888.24 MXN (78.3% invested)
-* **Unallocated Cash Reserves**: 4,062.02 MXN (20.0% cash)
-* **Current Portfolio Market Value**: 20,300.94 MXN (including cash)
+* **Total Deployed Capital**: 15,888.24 MXN (78.0% invested)
+* **Unallocated Cash Reserves**: 4,062.13 MXN (19.9% cash)
+* **Current Portfolio Market Value**: 20,374.29 MXN (including cash)

@@ -13,7 +13,15 @@ from skills.liquidity_gatekeeper import calculate_adtv, passes_liquidity_gate
 from skills.adaptive_learning import (
     SignalPerformanceTracker, DrawdownGovernor, load_learned_params,
 )
+from skills.index_constituents import get_spx_tickers
+from skills.prefilter import prefilter_us_universe
 from agents.agents import FundamentalScreener, MacroRiskAnalyst, PortfolioReconciler
+
+
+def estimate_portfolio_value(dir_path):
+    """Current total value (cash + marked holdings) for affordability cuts."""
+    p = load_portfolio(dir_path)
+    return p["cash_balance"] + sum(h["shares"] * h["last_price"] for h in p["holdings"])
 
 # Major S&P/BMV IPC components to query
 BMV_TICKERS = [
@@ -270,7 +278,35 @@ def main():
             continue
 
     # Process US stocks (converting to MXN)
-    for ticker in US_TICKERS:
+    # SPX EXPANSION: the static 5-ticker US list is replaced by the full
+    # S&P 500 universe, funneled through a cheap pre-filter so the expensive
+    # GARCH/HMM stage only sees affordable, liquid, trending candidates.
+    us_candidates = list(US_TICKERS)  # static list = last-resort fallback
+    try:
+        spx_tickers = get_spx_tickers(dir_path)
+        portfolio_value_est = estimate_portfolio_value(dir_path)
+        current_fx = float(raw_rate.iloc[-1])
+        print(f"  |-- [Pre-filter] Batch-downloading 6mo history for "
+              f"{len(spx_tickers)} SPX tickers (single request)...")
+        batch = yf.download(spx_tickers, period="6mo", progress=False,
+                            auto_adjust=True, group_by="column", threads=True)
+        candidates = prefilter_us_universe(
+            batch["Close"], batch["Volume"],
+            usdmxn_rate=current_fx,
+            portfolio_value_mxn=portfolio_value_est,
+        )
+        if candidates:
+            # Held US positions must ALWAYS reach the deep stage, even if the
+            # momentum funnel would cut them — otherwise the reconciler loses
+            # signal coverage on open positions (carry-warning territory).
+            held_us = {h["ticker"] for h in load_portfolio(dir_path)["holdings"]
+                       if not h["ticker"].endswith(".MX")}
+            us_candidates = list(dict.fromkeys(list(candidates) + sorted(held_us)))
+    except Exception as e:
+        print(f"  |-- [Pre-filter] SPX funnel failed ({e}). "
+              f"Falling back to static US ticker list.")
+
+    for ticker in us_candidates:
         try:
             # Download asset data
             hist = fetch_historical_asset(ticker)

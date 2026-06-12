@@ -25,6 +25,7 @@ import os
 import json
 import datetime
 import numpy as np
+import yfinance as yf
 
 from skills.liquidity_gatekeeper import calculate_adtv, passes_liquidity_gate
 from skills.adaptive_learning import LEARNED_PARAMS_FILE
@@ -64,24 +65,48 @@ def build_universe_history():
             universe[ticker] = df
         except Exception:
             continue
-    for ticker in US_TICKERS:
+    print("Fetching S&P 500 tickers...")
+    from skills.index_constituents import get_spx_tickers
+    sp500_all = get_spx_tickers()
+    
+    print(f"Downloading historical data for {len(sp500_all)} S&P 500 components...")
+    sp500_data = yf.download(sp500_all, period="5y", progress=False)
+    sp500_close = sp500_data["Close"]
+    sp500_vol = sp500_data["Volume"]
+    
+    for ticker in sp500_all:
         try:
-            hist = fetch_historical_asset(ticker)
-            if len(hist) < 200:
+            if ticker not in sp500_close.columns or ticker not in sp500_vol.columns:
                 continue
-            hist.index = hist.index.tz_localize(None)
+            close_col = sp500_close[ticker].dropna()
+            vol_col = sp500_vol[ticker].reindex(close_col.index).fillna(0.0)
+            if len(close_col) < 200:
+                continue
+            
+            close_col.index = close_col.index.tz_localize(None)
+            vol_col.index = vol_col.index.tz_localize(None)
+            
             df_usd = pd.DataFrame({
-                "Close_USD": hist["Close"],
-                "Volume": hist["Volume"],
+                "Close_USD": close_col,
+                "Volume": vol_col,
             }).join(raw_rate, how="inner")
+            
             df_usd["Close_MXN"] = df_usd["Close_USD"] * df_usd["USDMXN_Rate"]
+            
             df = pd.DataFrame({
                 "Asset_Price": df_usd["Close_MXN"],
                 "Asset_Vol": df_usd["Volume"],
+                "Close_USD": df_usd["Close_USD"],
+                "USDMXN_Rate": df_usd["USDMXN_Rate"]
             }).join(df_exog, how="right")
+            
             df["Asset_Price"] = df["Asset_Price"].ffill()
             df["Asset_Vol"] = df["Asset_Vol"].fillna(0.0)
-            universe[ticker] = df
+            df["Close_USD"] = df["Close_USD"].ffill()
+            df["USDMXN_Rate"] = df["USDMXN_Rate"].ffill()
+            
+            if len(df.dropna(subset=["Asset_Price"])) >= 200:
+                universe[ticker] = df
         except Exception:
             continue
     return universe, df_exog
@@ -91,20 +116,63 @@ def compute_snapshots(universe, df_exog):
     """One (metrics, forward_returns) pair per snapshot date. Heavy step."""
     screener = FundamentalScreener()
     analyst = MacroRiskAnalyst()
+    from skills.prefilter import prefilter_us_universe
 
     all_dates = df_exog.index
     usable = all_dates[-(LOOKBACK_DAYS + FORWARD_HORIZON):]
     snapshot_dates = usable[::SNAPSHOT_EVERY]
-    # Need FORWARD_HORIZON days after each snapshot to score it
     snapshot_dates = [d for d in snapshot_dates
                       if all_dates.get_loc(d) + FORWARD_HORIZON < len(all_dates)]
+
+    # Separate BMV and US tickers
+    bmv_tickers = [t for t in universe.keys() if t.endswith(".MX")]
+    us_tickers = [t for t in universe.keys() if not t.endswith(".MX")]
 
     snapshots = []
     for i, date in enumerate(snapshot_dates):
         print(f"[{i+1}/{len(snapshot_dates)}] Snapshot {date.date()}")
+        
+        # Slice lookback close and volume for S&P 500 tickers for pre-filtering
+        us_close_dict = {}
+        us_vol_dict = {}
+        usdmxn_rate = None
+        
+        for ticker in us_tickers:
+            df = universe[ticker]
+            df_lb = df.loc[df.index <= date]
+            if len(df_lb) >= 100:
+                slice_lb = df_lb.iloc[-130:]
+                us_close_dict[ticker] = slice_lb["Close_USD"]
+                us_vol_dict[ticker] = slice_lb["Asset_Vol"]
+                if usdmxn_rate is None and not slice_lb["USDMXN_Rate"].isna().all():
+                    usdmxn_rate = float(slice_lb["USDMXN_Rate"].iloc[-1])
+        
+        if not us_close_dict or usdmxn_rate is None:
+            print(f"  |-- Skipping snapshot {date.date()}: No US data or exchange rate available.")
+            continue
+            
+        # Build wide DataFrames
+        batch_close = pd.DataFrame(us_close_dict)
+        batch_volume = pd.DataFrame(us_vol_dict)
+        
+        # Run S&P 500 pre-filter
+        selected_us = prefilter_us_universe(
+            batch_close=batch_close,
+            batch_volume=batch_volume,
+            usdmxn_rate=usdmxn_rate,
+            portfolio_value_mxn=20000.0 # Standard capital baseline
+        )
+        selected_us_tickers = list(selected_us.keys())
+        
+        # The candidates to screen are BMV tickers + selected US tickers
+        candidates = bmv_tickers + selected_us_tickers
+        
         lookback_universe = {}
         fwd_returns = {}
-        for ticker, df in universe.items():
+        for ticker in candidates:
+            if ticker not in universe:
+                continue
+            df = universe[ticker]
             df_lb = df.loc[df.index <= date].dropna(subset=["Asset_Price"])
             if len(df_lb) < 120:
                 continue
@@ -117,8 +185,7 @@ def compute_snapshots(universe, df_exog):
                 "volumes": df_lb["Asset_Vol"].values,
                 "exogenous": df_lb[["SPY_Ret", "USDMXN_Ret"]].values,
             }
-            # Forward return over the holding horizon (uses only future data
-            # for SCORING, never for signal computation)
+            
             loc = all_dates.get_loc(date)
             future_date = all_dates[loc + FORWARD_HORIZON]
             p_now = df["Asset_Price"].asof(date)
