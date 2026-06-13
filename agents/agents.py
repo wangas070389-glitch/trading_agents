@@ -6,13 +6,6 @@ import pandas as pd
 from hmmlearn import hmm
 from arch import arch_model
 
-# Import V4 Quantitative Modules
-# LSTM-Transformer (deep_regime_model) removed: insufficient data (~1.2k daily bars) to
-# justify the parameter count; was contributing pure noise in 50/50 blend with HMM-Markov.
-from skills.nlp_sentiment import NLPSentimentEngine
-from skills.statistical_arbitrage import StatisticalArbitrageEngine
-from skills.rl_execution_agent import optimize_order_execution
-
 # Qualitative macro news feeds representing forward-looking risks
 MACRO_RISK_REGISTRY = {
     "FEMSAUBD": {
@@ -170,10 +163,9 @@ class FundamentalScreener:
     """
     def __init__(self):
         self.system_prompt = (
-            "SYSTEM PROMPT: You are the Quantitative Screener Agent. Your objective is to run "
-            "GARCH(1,1) standardization, Multivariate HMM regime inference, and 2nd-Order Markov "
-            "transition probabilities to extract a directional confidence signal (DCS) for each BMV "
-            "stock relative to global macro drivers (SPY and USD/MXN)."
+            "SYSTEM PROMPT: You are the Quantitative Screener Agent (V3). Your objective is to run "
+            "advanced mathematical models (GARCH(1,1), Multivariate HMM, 2nd-Order Markov transitions) "
+            "to extract volatility and trend signals (DCS) for each BMV stock relative to global macro drivers."
         )
 
     def calcular_retornos_estandarizados_garch(self, precios):
@@ -208,6 +200,7 @@ class FundamentalScreener:
 
     def entrenar_hmm_multivariado(self, retornos_asset, exogenos):
         obs = np.column_stack([retornos_asset, exogenos])
+        model_hmm = None
         try:
             model_hmm = hmm.GaussianHMM(n_components=3, covariance_type="full", n_iter=100, random_state=42)
             model_hmm.fit(obs)
@@ -232,7 +225,7 @@ class FundamentalScreener:
                 elif val < -0.004:
                     estados_mapeados[i] = -1
             
-        return estados_mapeados
+        return estados_mapeados, model_hmm
 
     def calcular_matriz_markov_segundo_orden(self, estados):
         mapa_llaves = {
@@ -277,17 +270,38 @@ class FundamentalScreener:
                 ret, ret_est, vol_cond = self.calcular_retornos_estandarizados_garch(precios)
                 garch_vol_final = vol_cond[-1]
                 
-                # 2. HMM State Inference
-                estados_hist = self.entrenar_hmm_multivariado(ret_est, exogenos)
-                current_state_pair = (estados_hist[-2], estados_hist[-1])
+                # 2. HMM State Inference and DCS v2 calculation
+                estados_hist, model_hmm = self.entrenar_hmm_multivariado(ret_est, exogenos)
                 
-                # 3. Markov transition calculations (HMM-only, LSTM-Transformer removed)
-                M_2da, mapa_llaves = self.calcular_matriz_markov_segundo_orden(estados_hist)
-
-                fila_actual = mapa_llaves[current_state_pair]
-                p_bull = M_2da[fila_actual, 0]
-                p_bear = M_2da[fila_actual, 2]
-                dcs = p_bull - p_bear
+                dcs = None
+                current_state = None
+                
+                if model_hmm is not None:
+                    try:
+                        obs = np.column_stack([ret_est, exogenos])
+                        gamma_T = model_hmm.predict_proba(obs)[-1]
+                        pi_next = gamma_T @ model_hmm.transmat_
+                        mu = model_hmm.means_[:, 0]
+                        e_ret = pi_next @ mu
+                        
+                        # Normalize expected return to [-1, 1]
+                        max_mu = max(abs(mu.min()), abs(mu.max()))
+                        dcs = e_ret / max_mu if max_mu > 0 else 0.0
+                        
+                        # Map argmax of gamma_T to regime label mapped through means
+                        bear_idx = np.argmin(mu)
+                        bull_idx = np.argmax(mu)
+                        sideways_idx = [idx for idx in range(3) if idx not in (bear_idx, bull_idx)][0]
+                        mapa_estados = {bear_idx: -1, bull_idx: 1, sideways_idx: 0}
+                        current_state = int(mapa_estados[np.argmax(gamma_T)])
+                    except Exception as inference_error:
+                        print(f"  [HMM Inference Fallback] Inference failed for {ticker}: {inference_error}")
+                        model_hmm = None
+                        
+                if model_hmm is None:
+                    # Fallback path (mean of last 10 standardized returns)
+                    dcs = float(np.clip(np.mean(ret_est[-10:]), -1.0, 1.0))
+                    current_state = int(estados_hist[-1])
                 
                 # 4. Volume Confirmation (Relative Volume)
                 vr = volumenes[-1] / np.mean(volumenes[-20:])
@@ -296,11 +310,11 @@ class FundamentalScreener:
                     "dcs": float(dcs),
                     "garch_vol": float(garch_vol_final),
                     "relative_vol": float(vr),
-                    "hmm_state": int(estados_hist[-1]),
+                    "hmm_state": int(current_state),
                     "current_price": float(precios[-1])
                 }
                 
-                print(f"  +-- {ticker}: DCS={dcs:.4f} | VR={vr:.2f} | Vol={garch_vol_final:.4f} | HMM State={estados_hist[-1]}")
+                print(f"  +-- {ticker}: DCS={dcs:.4f} | VR={vr:.2f} | Vol={garch_vol_final:.4f} | HMM State={current_state}")
                 
             except Exception as e:
                 print(f"  |-- [ERROR] Failed to run quantitative screening for {ticker}: {e}")
@@ -322,12 +336,7 @@ class MacroRiskAnalyst:
         )
 
     def stress_test(self, quantitative_metrics: dict, ticker_map: dict) -> dict:
-        print(f"\n[Agent 2: Macro/Sovereign Risk Analyst] Refining signals with qualitative risk factors and NLP Sentiment...")
-        
-        # Instantiate NLP Sentiment Engine and fetch adjustments
-        nlp_engine = NLPSentimentEngine()
-        tickers = list(quantitative_metrics.keys())
-        nlp_adjustments = nlp_engine.get_black_litterman_adjustments(tickers)
+        print(f"\n[Agent 2: Macro/Sovereign Risk Analyst] Refining signals with qualitative risk factors...")
         
         adjusted_metrics = {}
         for ticker, metrics in quantitative_metrics.items():
@@ -338,63 +347,69 @@ class MacroRiskAnalyst:
                 {"description": "No macro adjustments.", "wacc_adjustment": 0.0, "growth_adjustment": 0.0}
             )
             
-            zg_t = nlp_adjustments.get(ticker, 0.0)
-            
             garch_vol = metrics["garch_vol"]
             dcs = metrics["dcs"]
             
-            # NLP Sentiment modifies the WACC (risk) and Growth multipliers
-            # Positive ZG_t sentiment reduces risk and increases growth signal
-            nlp_wacc_mod = -0.005 * zg_t
-            nlp_growth_mod = 0.05 * zg_t
+            # Volatility risk adjustment: scale up by risk factors (e.g. +1% WACC scales vol up by 5%)
+            adjusted_vol = garch_vol * (1.0 + risk_data["wacc_adjustment"] * 5.0)
             
-            effective_wacc = risk_data["wacc_adjustment"] + nlp_wacc_mod
-            adjusted_vol = garch_vol * (1.0 + effective_wacc * 5.0)
-            adjusted_vol = max(1e-4, adjusted_vol)
-            
-            effective_growth = risk_data["growth_adjustment"] + nlp_growth_mod
-            adjusted_dcs = np.clip(dcs + effective_growth, -1.0, 1.0)
+            # Signal strength adjustment (growth bump/penalty)
+            adjusted_dcs = np.clip(dcs + risk_data["growth_adjustment"], -1.0, 1.0)
             
             adjusted_metrics[ticker] = {
                 **metrics,
                 "garch_vol_adjusted": float(adjusted_vol),
                 "dcs_adjusted": float(adjusted_dcs),
-                "macro_description": f"{risk_data['description']} | Sentiment ZG_t = {zg_t:+.2f}",
+                "macro_description": risk_data["description"],
                 "wacc_adjustment": risk_data["wacc_adjustment"],
-                "growth_adjustment": risk_data["growth_adjustment"],
-                "zg_t": float(zg_t)
+                "growth_adjustment": risk_data["growth_adjustment"]
             }
             
-            print(f"  |-- {ticker}: Adjusted DCS {dcs:.4f} -> {adjusted_dcs:.4f} | Vol {garch_vol:.4f} -> {adjusted_vol:.4f} (ZG_t: {zg_t:+.2f})")
-            
+            if risk_data["wacc_adjustment"] != 0.0 or risk_data["growth_adjustment"] != 0.0:
+                print(f"  |-- {ticker}: Adjusted DCS {dcs:.4f} -> {adjusted_dcs:.4f} | Vol {garch_vol:.4f} -> {adjusted_vol:.4f} ({risk_data['description']})")
+                
         return adjusted_metrics
 
 
 class PortfolioReconciler:
     """
-    Agent 3: Rebalances the portfolio based on Black-Litterman weights and V4 optimizations.
-    - Integrates Engle-Granger Cointegration & Regime Arbitrage on historical price graphs
-    - Invokes DQN Reinforcement Learning agent to route order books and minimize trade slippage
-    - Enforces 20% concentration limit (reduced from 40% to improve diversification)
+    Agent 3: Rebalances the portfolio based on Black-Litterman weights and generates the execution report.
+    - Filters by DCS >= 0.25 and VR >= 1.2
+    - Performs inverse-volatility weighting scaled by the DCS strength
+    - Enforces 40% concentration limit
+    - Computes buying/selling transactions to adjust to target holdings
     - Deducts 0.29% transaction fees on all operations
-    - Automatically routes cash to Bondia overnight sweeps
+    - Automatically routes cash to Bondia
     """
     def __init__(self):
         self.system_prompt = (
-            "SYSTEM PROMPT: You are the Portfolio Reconciler Agent (V4). Your objective is to run "
-            "Black-Litterman optimization, apply dynamic Cointegration Regime Arbitrage offsets, "
-            "optimize execution routing via DQN RL agent, and draft the production execution report."
+            "SYSTEM PROMPT: You are the Portfolio Reconciler Agent (V3). Your objective is to run "
+            "Black-Litterman optimization, compute trade rebalancing vectors, apply execution friction "
+            "costs, and draft the final production report."
         )
 
-    def reconcile(self, adjusted_metrics: dict, portfolio: dict, execution_date: str, universe_prices_dict: dict = None) -> tuple[dict, str, list]:
-        print(f"\n[Agent 3: Portfolio Reconciler] Starting V4 portfolio reconciliation and optimization...")
-        
-        # 1. Determine active eligible assets based on threshold rules
+    def reconcile(self, adjusted_metrics: dict, portfolio: dict, execution_date: str,
+                  learning_context: dict = None) -> tuple[dict, str, list]:
+        print(f"\n[Agent 3: Portfolio Reconciler] Starting portfolio reconciliation and optimization...")
+
+        # Adaptive learning context (all optional, safe defaults = old behavior)
+        ctx = learning_context or {}
+        umbral_histeresis_entrada = ctx.get("dcs_threshold", 0.25)
+        umbral_vr = ctx.get("vr_threshold", 1.2)
+        confidence = ctx.get("confidence", {})          # ticker -> multiplier
+        exposure_scalar = ctx.get("exposure_scalar", 1.0)
+        if exposure_scalar < 1.0:
+            print(f"  |-- [Drawdown Governor] Gross exposure scaled to {exposure_scalar:.0%} "
+                  f"(strategy drawdown brake active).")
+
+        # 1. Determine active eligible assets based on (learned) threshold rules with hysteresis
         activos_elegibles = []
-        umbral_histeresis_entrada = 0.25
-        
+        currently_held = {h["ticker"] for h in portfolio.get("holdings", []) if h.get("shares", 0) > 0}
+        umbral_histeresis_salida = ctx.get("dcs_threshold_out", umbral_histeresis_entrada - 0.10)
+
         for t, met in adjusted_metrics.items():
-            if met["dcs_adjusted"] >= umbral_histeresis_entrada and met["relative_vol"] >= 1.2:
+            required_dcs = umbral_histeresis_salida if t in currently_held else umbral_histeresis_entrada
+            if met["dcs_adjusted"] >= required_dcs and met["relative_vol"] >= umbral_vr:
                 activos_elegibles.append(t)
                 
         print(f"  |-- Eligible assets for long positions: {activos_elegibles}")
@@ -410,54 +425,42 @@ class PortfolioReconciler:
             inv_vol = {t: 1.0 / adjusted_metrics[t]["garch_vol_adjusted"] for t in activos_elegibles}
             suma_inv_vol = sum(inv_vol.values())
             
-            # Raw weights scaled by DCS view strength
+            # Raw weights scaled by DCS view strength, then by the learned
+            # confidence multiplier for this signal bucket (1.0 = no evidence
+            # yet), then by the drawdown-governor exposure scalar.
             raw_weights = {}
             for t in activos_elegibles:
-                raw_weights[t] = (inv_vol[t] / suma_inv_vol) * adjusted_metrics[t]["dcs_adjusted"]
+                mult = confidence.get(t, 1.0)
+                raw_weights[t] = (inv_vol[t] / suma_inv_vol) * adjusted_metrics[t]["dcs_adjusted"] * mult * exposure_scalar
+                if mult != 1.0:
+                    print(f"  |-- [Learned Confidence] {t}: weight x{mult:.2f} "
+                          f"(historical bucket expectancy)")
                 
-            # Enforce 20% concentration limit (and redistribute excess)
-            CONCENTRATION_CAP = 0.20
+            # Enforce 40% concentration limit (and redistribute excess)
             final_weights = {}
             excess = 0.0
             under_cap_sum = 0.0
-
+            
             for t, w in raw_weights.items():
-                if w > CONCENTRATION_CAP:
-                    final_weights[t] = CONCENTRATION_CAP
-                    excess += (w - CONCENTRATION_CAP)
+                if w > 0.40:
+                    final_weights[t] = 0.40
+                    excess += (w - 0.40)
                 else:
                     final_weights[t] = w
                     under_cap_sum += w
-
+                    
             if excess > 0 and under_cap_sum > 0:
                 for t in list(final_weights.keys()):
-                    if final_weights[t] < CONCENTRATION_CAP:
+                    if final_weights[t] < 0.40:
                         share = raw_weights[t] / under_cap_sum
                         extra = excess * share
-                        final_weights[t] = min(CONCENTRATION_CAP, final_weights[t] + extra)
+                        final_weights[t] = min(0.40, final_weights[t] + extra)
                         
             # Set final optimized weights
             for t in adjusted_metrics:
                 pesos_asignados[t] = final_weights.get(t, 0.0)
-
-        # 3. Dynamic Cointegration & Regime Arbitrage Adjustments (V4 Upgrade)
-        arbitrage_reports = []
-        if universe_prices_dict:
-            arb_engine = StatisticalArbitrageEngine()
-            arb_engine.update_cointegration_graph(universe_prices_dict)
-            active_regimes = {t: met["hmm_state"] for t, met in adjusted_metrics.items()}
-            pesos_asignados, arbitrage_reports = arb_engine.apply_regime_arbitrage(pesos_asignados, active_regimes)
-
-        # 3b. HARD POST-CONDITION: enforce 20% concentration cap after ALL adjustments
-        # The stat arb engine or any future overlay can shift weights above the cap.
-        # This is the last gate before trade execution — no weight may exceed the cap.
-        CONCENTRATION_CAP_HARD = 0.20
-        for t in list(pesos_asignados.keys()):
-            if pesos_asignados[t] > CONCENTRATION_CAP_HARD:
-                print(f"  |-- [CAP] {t} weight {pesos_asignados[t]:.1%} -> {CONCENTRATION_CAP_HARD:.0%} (hard cap enforced)")
-                pesos_asignados[t] = CONCENTRATION_CAP_HARD
-            
-        # 4. Calculate portfolio value and execute trades with DQN Execution Routing
+                
+        # 3. Calculate portfolio value and execute trades
         cash = portfolio["cash_balance"]
         holdings = {h["ticker"]: h for h in portfolio["holdings"]}
         total_capital = portfolio["total_capital"]
@@ -473,8 +476,7 @@ class PortfolioReconciler:
         
         # Target shares and rebalancing trade vector
         rebalancing_trades = []
-        total_slippage_savings = 0.0
-        rl_traces = []
+        costo_corretaje = 0.0029 # 0.29% fee
         
         # First Phase: Execute Sells (frees up cash)
         new_holdings_dict = {}
@@ -492,55 +494,22 @@ class PortfolioReconciler:
                       f"Carrying position at last price {h['last_price']:.2f} (review manually).")
                 new_holdings_dict[ticker] = {**h, "target_weight": h.get("target_weight", 0.0)}
 
-        # REBALANCE DEAD-ZONE: skip trades where |current_weight - target_weight| < 5%
-        # This prevents the strategy from churning on marginal signal changes,
-        # which was responsible for 7.4% of capital eaten by fees in the backtest.
-        DEAD_ZONE_THRESHOLD = 0.05
-
         for ticker, peso in pesos_asignados.items():
             current_price = adjusted_metrics[ticker]["current_price"]
             monto_teorico = total_value * peso
             target_shares = int(monto_teorico // current_price)
             
             current_shares = holdings.get(ticker, {}).get("shares", 0)
-
-            # Dead-zone check: skip if weight delta is below threshold
-            current_weight = (current_shares * current_price) / total_value if total_value > 0 else 0.0
-            weight_delta = abs(peso - current_weight)
-            if weight_delta < DEAD_ZONE_THRESHOLD and current_shares > 0:
-                # Keep position as-is, don't trade
-                new_holdings_dict[ticker] = {
-                    "ticker": ticker,
-                    "shares": current_shares,
-                    "buy_price": holdings[ticker]["buy_price"],
-                    "last_price": current_price,
-                    "target_weight": peso,
-                    "dcs": adjusted_metrics[ticker]["dcs_adjusted"],
-                    "garch_vol": adjusted_metrics[ticker]["garch_vol_adjusted"],
-                    "hmm_state": adjusted_metrics[ticker]["hmm_state"],
-                    "vol_relative": adjusted_metrics[ticker]["relative_vol"]
-                }
-                print(f"  |-- [HOLD] {ticker}: weight delta {weight_delta:.1%} < {DEAD_ZONE_THRESHOLD:.0%} dead-zone. No trade.")
-                continue
             
             if current_shares > target_shares:
                 # Execute Sell
                 shares_to_sell = current_shares - target_shares
                 revenue = shares_to_sell * current_price
-                
-                # DQN Order Execution Routing Optimization
-                est_spread = max(0.002, min(0.015, adjusted_metrics[ticker]["garch_vol_adjusted"] * 0.5))
-                rl_results = optimize_order_execution(shares_to_sell, est_spread, market_volume_15m=shares_to_sell * 2.0)
-                
-                fee = rl_results["fees"]
-                net_revenue = revenue - fee + rl_results["interest_earned"]
+                fee = revenue * costo_corretaje
+                net_revenue = revenue - fee
                 cash_after_sells += net_revenue
-                total_slippage_savings += rl_results["slippage_savings"]
-                rl_traces.append(f"**{ticker} SELL (DQN Optimization)**:")
-                for step_line in rl_results["trace"]:
-                    rl_traces.append(f"  * {step_line}")
                 
-                note = f"V4 DQN Execution (Target Weight: {peso:.1%}, DCS: {adjusted_metrics[ticker]['dcs_adjusted']:.2f}, Saved: ${rl_results['slippage_savings']:.2f} MXN)"
+                note = f"V3 Dynamic Rebalance (Target Weight: {peso:.1%}, DCS: {adjusted_metrics[ticker]['dcs_adjusted']:.2f})"
                 rebalancing_trades.append({
                     "ticker": ticker,
                     "action": "SELL",
@@ -550,13 +519,13 @@ class PortfolioReconciler:
                     "net_cash": net_revenue,
                     "note": note
                 })
-                print(f"  +-- [SELL] {ticker}: {shares_to_sell} shares @ {current_price:.2f} (Net: +{net_revenue:,.2f} MXN, Saved: +{rl_results['slippage_savings']:.2f} MXN)")
+                print(f"  +-- [SELL] {ticker}: {shares_to_sell} shares @ {current_price:.2f} (Net: +{net_revenue:,.2f} MXN)")
                 
                 if target_shares > 0:
                     new_holdings_dict[ticker] = {
                         "ticker": ticker,
                         "shares": target_shares,
-                        "buy_price": holdings[ticker]["buy_price"],
+                        "buy_price": holdings[ticker]["buy_price"], # cost basis remains unchanged on sell
                         "last_price": current_price,
                         "target_weight": peso,
                         "dcs": adjusted_metrics[ticker]["dcs_adjusted"],
@@ -593,44 +562,31 @@ class PortfolioReconciler:
             current_price = adjusted_metrics[ticker]["current_price"]
             monto_teorico = total_value * peso
             target_shares = int(monto_teorico // current_price)
-
+            
             current_shares = holdings.get(ticker, {}).get("shares", 0)
-
-            # Dead-zone check for buys too
-            if ticker in new_holdings_dict and new_holdings_dict[ticker]["shares"] == current_shares:
-                continue  # Already kept via dead-zone
-
+            
             if target_shares > current_shares:
+                # Calculate maximum buyable shares within cash constraints
                 shares_to_buy = target_shares - current_shares
-                
-                # DQN Order Execution Routing Optimization
-                est_spread = max(0.002, min(0.015, adjusted_metrics[ticker]["garch_vol_adjusted"] * 0.5))
-                rl_results = optimize_order_execution(shares_to_buy, est_spread, market_volume_15m=shares_to_buy * 2.0)
-                
                 cost = shares_to_buy * current_price
-                fee = rl_results["fees"]
-                total_cost = cost + fee - rl_results["interest_earned"]
+                fee = cost * costo_corretaje
+                total_cost = cost + fee
                 
                 if total_cost > cash_after_buys:
                     # Scale down buy
-                    shares_to_buy = int(cash_after_buys // (current_price * (1.0 + 0.0029)))
-                    rl_results = optimize_order_execution(shares_to_buy, est_spread, market_volume_15m=shares_to_buy * 2.0)
+                    shares_to_buy = int(cash_after_buys // (current_price * (1.0 + costo_corretaje)))
                     cost = shares_to_buy * current_price
-                    fee = rl_results["fees"]
-                    total_cost = cost + fee - rl_results["interest_earned"]
+                    fee = cost * costo_corretaje
+                    total_cost = cost + fee
                     
                 if shares_to_buy > 0:
                     cash_after_buys -= total_cost
-                    total_slippage_savings += rl_results["slippage_savings"]
-                    rl_traces.append(f"**{ticker} BUY (DQN Optimization)**:")
-                    for step_line in rl_results["trace"]:
-                        rl_traces.append(f"  * {step_line}")
                     
                     # Update cost basis
                     old_buy_price = holdings.get(ticker, {}).get("buy_price", 0.0)
                     new_buy_price = ((current_shares * old_buy_price) + (shares_to_buy * current_price)) / (current_shares + shares_to_buy)
                     
-                    note = f"V4 DQN Execution (Target Weight: {peso:.1%}, DCS: {adjusted_metrics[ticker]['dcs_adjusted']:.2f}, Saved: ${rl_results['slippage_savings']:.2f} MXN)"
+                    note = f"V3 Dynamic Rebalance (Target Weight: {peso:.1%}, DCS: {adjusted_metrics[ticker]['dcs_adjusted']:.2f})"
                     rebalancing_trades.append({
                         "ticker": ticker,
                         "action": "BUY",
@@ -640,7 +596,7 @@ class PortfolioReconciler:
                         "net_cash": -total_cost,
                         "note": note
                     })
-                    print(f"  +-- [BUY] {ticker}: {shares_to_buy} shares @ {current_price:.2f} (Total Cost: {total_cost:,.2f} MXN, Saved: +{rl_results['slippage_savings']:.2f} MXN)")
+                    print(f"  +-- [BUY] {ticker}: {shares_to_buy} shares @ {current_price:.2f} (Total Cost: {total_cost:,.2f} MXN)")
                     
                     new_holdings_dict[ticker] = {
                         "ticker": ticker,
@@ -654,6 +610,7 @@ class PortfolioReconciler:
                         "vol_relative": adjusted_metrics[ticker]["relative_vol"]
                     }
                 elif current_shares > 0:
+                    # Fallback to keep existing shares if we can't buy any more
                     new_holdings_dict[ticker] = {
                         "ticker": ticker,
                         "shares": current_shares,
@@ -671,54 +628,49 @@ class PortfolioReconciler:
             "total_capital": total_capital,
             "cash_balance": round(cash_after_buys, 2),
             "holdings": list(new_holdings_dict.values()),
-            "last_updated": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "slippage_savings": round(total_slippage_savings, 2)
+            "last_updated": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
         
-        # 5. Generate Markdown V4 Execution Report
+        # 4. Generate Markdown Execution Report
         report = []
-        report.append("# QUANTITATIVE PLATFORM REPORT (V4)")
-        report.append(f"**Execution Date:** {execution_date} | **System Version:** Alpha Generation V4\n")
+        report.append("# MEXICAN QUANTITATIVE REPORT (V3)")
+        report.append(f"**Execution Date:** {execution_date} | **System Version:** Hedge Fund Method V3\n")
         
-        report.append("## 1. Top Quantitative Signals (HMM Regime + 2nd-Order Markov + GARCH)")
-        report.append("| Ticker | DCS (Biased) | ZG_t Sentiment | GARCH Vol | Relative Vol | HMM State | Target Weight | Price |")
-        report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
+        report.append("## 1. Top Quantitative Signals (HMM + GARCH)")
+        report.append("| Ticker | DCS v2 | GARCH Vol | Relative Vol | HMM State | Target Weight | Price |")
+        report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: |")
         
+        # Sort tickers by DCS adjusted descending
         sorted_tickers = sorted(adjusted_metrics.keys(), key=lambda x: adjusted_metrics[x]["dcs_adjusted"], reverse=True)
         for t in sorted_tickers:
             met = adjusted_metrics[t]
             state_str = "Bull (1)" if met["hmm_state"] == 1 else ("Bear (-1)" if met["hmm_state"] == -1 else "Sideways (0)")
             weight_str = f"{pesos_asignados[t]:.1%}"
-            report.append(f"| {t} | {met['dcs_adjusted']:.4f} | {met['zg_t']:+.2f} | {met['garch_vol_adjusted']:.4f} | {met['relative_vol']:.2f} | {state_str} | {weight_str} | {met['current_price']:.2f} |")
+            report.append(f"| {t} | {met['dcs_adjusted']:.4f} | {met['garch_vol_adjusted']:.4f} | {met['relative_vol']:.2f} | {state_str} | {weight_str} | {met['current_price']:.2f} |")
             
-        if arbitrage_reports:
-            report.append("\n## 2. Statistical Cointegration Regime Arbitrage")
-            for r_line in arbitrage_reports:
-                report.append(f"* {r_line}")
-                
-        report.append("\n## 3. Macro Sentiment & Catalyst Overrides")
+        report.append("\n## 2. Macro Catalyst Adjustments")
         for t in sorted_tickers:
             met = adjusted_metrics[t]
-            if met["wacc_adjustment"] != 0.0 or met["growth_adjustment"] != 0.0 or met["zg_t"] != 0.0:
+            if met["wacc_adjustment"] != 0.0 or met["growth_adjustment"] != 0.0:
                 report.append(f"* **{t}**: {met['macro_description']} Adjusted signal strength by {met['growth_adjustment']*100:+.1f}%. Adjusted volatility by {met['wacc_adjustment']*500:+.1f}%.")
                 
-        report.append("\n## 4. Discarded Assets (Signal or Volume Suppressed)")
+        report.append("\n## 3. Discarded Assets (Signal or Volume Suppressed)")
         discarded_assets = [t for t in sorted_tickers if pesos_asignados[t] == 0.0]
         if discarded_assets:
-            report.append("| Ticker | DCS Adjusted | Relative Vol | Reason |")
+            report.append("| Ticker | DCS v2 Adjusted | Relative Vol | Reason |")
             report.append("| :--- | :---: | :---: | :--- |")
             for t in discarded_assets:
                 met = adjusted_metrics[t]
                 reasons = []
-                if met["dcs_adjusted"] < 0.25:
-                    reasons.append(f"DCS below entry threshold ({met['dcs_adjusted']:.2f} < 0.25)")
-                if met["relative_vol"] < 1.2:
-                    reasons.append(f"Relative volume below threshold ({met['relative_vol']:.2f} < 1.2)")
+                if met["dcs_adjusted"] < umbral_histeresis_entrada:
+                    reasons.append(f"DCS below entry threshold ({met['dcs_adjusted']:.2f} < {umbral_histeresis_entrada:.2f})")
+                if met["relative_vol"] < umbral_vr:
+                    reasons.append(f"Relative volume below threshold ({met['relative_vol']:.2f} < {umbral_vr:.2f})")
                 report.append(f"| {t} | {met['dcs_adjusted']:.4f} | {met['relative_vol']:.2f} | {', '.join(reasons)} |")
         else:
             report.append("*No assets were discarded this run.*")
             
-        report.append("\n## 5. Rebalancing Trade Blotter (DQN Optimized)")
+        report.append("\n## 4. Rebalancing Trade Blotter")
         if rebalancing_trades:
             report.append("| Ticker | Action | Shares | Execution Price | Fee Paid | Net Capital Impact | Note |")
             report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :--- |")
@@ -728,26 +680,20 @@ class PortfolioReconciler:
                 cap_impact = f"{r['net_cash']:+,.2f} MXN"
                 report.append(f"| {r['ticker']} | {r['action']} | {r['shares']:,} | ${r['price']:.2f} | ${r['fee']:.2f} | {cap_impact} | {r['note']} |")
             report.append(f"\n* **Total Transaction Fees Paid**: ${total_fees:,.2f} MXN (0.29% flat rate)")
-            report.append(f"* **DQN Slippage Reduction Savings**: ${total_slippage_savings:,.2f} MXN")
         else:
             report.append("*No trades required. Portfolio holdings match optimal target allocations.*")
-            
-        if rl_traces:
-            report.append("\n## 6. DQN Reinforcement Order Routing Traces")
-            for trace_line in rl_traces:
-                report.append(trace_line)
             
         # Capital Reconciliation
         invested_capital = sum(h["shares"] * h["last_price"] for h in updated_portfolio["holdings"])
         eff_ratio = invested_capital / total_value
-        report.append(f"\n## 7. Active Cash Routing & Capital Allocation")
+        report.append(f"\n## 5. Active Cash Routing & Capital Allocation")
         report.append(f"* **Total Capital Value**: ${total_value:,.2f} MXN")
         report.append(f"* **Total Invested in Equities**: ${invested_capital:,.2f} MXN ({eff_ratio:.2%})")
         report.append(f"* **Bondia Cash Routing Reserves (11% APR)**: ${cash_after_buys:,.2f} MXN ({1.0 - eff_ratio:.2%})")
         report.append(f"* **Expected Nightly Yield on Cash**: ${cash_after_buys * (0.11 / 252):,.4f} MXN")
         
         final_markdown = "\n".join(report)
-
+        
         # Return the trade blotter so callers log EXACTLY the executed trades
         # (with fees) instead of re-deriving them by diffing holdings.
         return updated_portfolio, final_markdown, rebalancing_trades

@@ -6,6 +6,7 @@ import pandas as pd
 import yfinance as yf
 
 from skills.liquidity_gatekeeper import calculate_adtv, passes_liquidity_gate
+from skills.adaptive_learning import load_learned_params
 from agents.agents import FundamentalScreener, MacroRiskAnalyst, PortfolioReconciler
 from ingest_live_bmv import BMV_TICKERS, US_TICKERS, fetch_historical_exogenous, fetch_historical_asset
 
@@ -43,16 +44,30 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             universe_history[ticker] = df_aligned
         except Exception:
             continue
-
-    for ticker in US_TICKERS:
+            
+    print("Fetching S&P 500 tickers...")
+    from skills.index_constituents import get_spx_tickers
+    sp500_all = get_spx_tickers()
+    
+    print(f"Downloading historical data for {len(sp500_all)} S&P 500 components...")
+    sp500_data = yf.download(sp500_all, period="5y", progress=False)
+    sp500_close = sp500_data["Close"]
+    sp500_vol = sp500_data["Volume"]
+    
+    for ticker in sp500_all:
         try:
-            hist = fetch_historical_asset(ticker)
-            if len(hist) < 200: continue
-            hist.index = hist.index.tz_localize(None)
+            if ticker not in sp500_close.columns or ticker not in sp500_vol.columns:
+                continue
+            close_col = sp500_close[ticker].dropna()
+            vol_col = sp500_vol[ticker].reindex(close_col.index).fillna(0.0)
+            if len(close_col) < 200: continue
+            
+            close_col.index = close_col.index.tz_localize(None)
+            vol_col.index = vol_col.index.tz_localize(None)
             
             df_usd = pd.DataFrame({
-                "Close_USD": hist["Close"],
-                "Volume": hist["Volume"]
+                "Close_USD": close_col,
+                "Volume": vol_col
             }).join(raw_rate, how="inner")
             
             df_usd["Close_MXN"] = df_usd["Close_USD"] * df_usd["USDMXN_Rate"]
@@ -61,15 +76,17 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             df_asset = pd.DataFrame({
                 "Asset_Price": df_usd["Close_MXN"],
                 "Asset_Vol": df_usd["Volume"],
-                "Asset_Ret": asset_ret_mxn
+                "Asset_Ret": asset_ret_mxn,
+                "Close_USD": df_usd["Close_USD"],
+                "USDMXN_Rate": df_usd["USDMXN_Rate"]
             })
             df_aligned = df_asset.join(df_exog, how="right")
-            # BUGFIX: .bfill() leaked FUTURE prices into the past (look-ahead bias).
-            # Forward-fill only; rows before the ticker's first real quote stay NaN
-            # and are excluded from each rebalance lookback below.
             df_aligned["Asset_Price"] = df_aligned["Asset_Price"].ffill()
             df_aligned["Asset_Vol"] = df_aligned["Asset_Vol"].fillna(0.0)
             df_aligned["Asset_Ret"] = df_aligned["Asset_Ret"].fillna(0.0)
+            df_aligned["Close_USD"] = df_aligned["Close_USD"].ffill()
+            df_aligned["USDMXN_Rate"] = df_aligned["USDMXN_Rate"].ffill()
+            
             universe_history[ticker] = df_aligned
         except Exception:
             continue
@@ -97,7 +114,7 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
     spy_mxn_series = spy_mxn_series.reindex(backtest_dates).ffill()
     if spy_mxn_series.isna().any():
         raise ValueError("SPY benchmark series has gaps at the start of the backtest window.")
-
+    
     # Buy SPY on day 0
     spy_start_price = spy_mxn_series.iloc[0]
     spy_shares = (starting_capital * (1.0 - 0.0029)) / spy_start_price
@@ -161,11 +178,57 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
         if t_idx == 0 or t_idx % rebalance_freq == 0:
             print(f"  |-- Walk-Forward Rebalancing on {current_date.strftime('%Y-%m-%d')}...")
             
+            # Separate BMV and US tickers
+            bmv_tickers = [t for t in universe_history.keys() if t.endswith(".MX")]
+            us_tickers = [t for t in universe_history.keys() if not t.endswith(".MX")]
+            
+            # S&P 500 Pre-filtering for current_date
+            us_close_dict = {}
+            us_vol_dict = {}
+            usdmxn_rate = None
+            
+            for ticker in us_tickers:
+                df = universe_history[ticker]
+                df_lb = df.loc[df.index <= current_date]
+                if len(df_lb) >= 100:
+                    slice_lb = df_lb.iloc[-130:]
+                    us_close_dict[ticker] = slice_lb["Close_USD"]
+                    us_vol_dict[ticker] = slice_lb["Asset_Vol"]
+                    if usdmxn_rate is None and not slice_lb["USDMXN_Rate"].isna().all():
+                        usdmxn_rate = float(slice_lb["USDMXN_Rate"].iloc[-1])
+            
+            if us_close_dict and usdmxn_rate is not None:
+                batch_close = pd.DataFrame(us_close_dict)
+                batch_volume = pd.DataFrame(us_vol_dict)
+                
+                # Estimate current portfolio value for the pre-filter affordability check
+                portfolio_value_mxn = strat_value
+                
+                from skills.prefilter import prefilter_us_universe
+                selected_us = prefilter_us_universe(
+                    batch_close=batch_close,
+                    batch_volume=batch_volume,
+                    usdmxn_rate=usdmxn_rate,
+                    portfolio_value_mxn=portfolio_value_mxn
+                )
+                selected_us_tickers = list(selected_us.keys())
+            else:
+                selected_us_tickers = []
+                
+            # Held US positions must ALWAYS reach the deep stage, even if the
+            # momentum funnel would cut them — otherwise the reconciler loses
+            # signal coverage on open positions (carry-warning territory).
+            held_us = {tick for tick in holdings.keys() if not tick.endswith(".MX") and holdings[tick] > 0}
+            selected_us_tickers = list(dict.fromkeys(selected_us_tickers + sorted(held_us)))
+            candidates = bmv_tickers + selected_us_tickers
+            
             # Slice historical lookback data (only up to current_date)
             # This avoids lookahead bias in model training!
             lookback_universe = {}
-            for ticker, df_ticker in universe_history.items():
-                # Get df rows before/on current_date
+            for ticker in candidates:
+                if ticker not in universe_history:
+                    continue
+                df_ticker = universe_history[ticker]
                 df_lookback = df_ticker.loc[df_ticker.index <= current_date]
                 df_lookback = df_lookback.dropna(subset=["Asset_Price"])
                 if len(df_lookback) < 50: continue
@@ -195,8 +258,21 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             raw_metrics = screener.screen(lookback_universe)
             adjusted_metrics = analyst.stress_test(raw_metrics, {})
             
-            universe_prices_dict = {t: data["prices"] for t, data in lookback_universe.items()}
-            updated_portfolio_sim, _, _ = reconciler.reconcile(adjusted_metrics, portfolio_sim, current_date.strftime("%Y-%m-%d"), universe_prices_dict)
+            # Load learned parameters (or defaults) and build context
+            dir_path = os.path.dirname(os.path.abspath(__file__))
+            learned = load_learned_params(dir_path)
+            learning_context = {
+                "dcs_threshold": learned["dcs_threshold"],
+                "vr_threshold": learned["vr_threshold"],
+                "confidence": {},
+                "exposure_scalar": 1.0
+            }
+            
+            # Optimize and calculate weights
+            updated_portfolio_sim, _, _ = reconciler.reconcile(
+                adjusted_metrics, portfolio_sim, current_date.strftime("%Y-%m-%d"),
+                learning_context=learning_context
+            )
             
             # Apply rebalanced holdings to simulation
             new_holdings = {h["ticker"]: h["shares"] for h in updated_portfolio_sim["holdings"]}
@@ -250,14 +326,14 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
     
     # Save backtest report to markdown
     report = []
-    report.append("# BACKTEST ANALYSIS REPORT (Hedge Fund Method V4)")
+    report.append("# BACKTEST ANALYSIS REPORT (Hedge Fund Method V3)")
     report.append(f"**Analysis Period:** {backtest_dates[0].strftime('%Y-%m-%d')} to {backtest_dates[-1].strftime('%Y-%m-%d')} ({backtest_days} Business Days)")
     report.append(f"**Starting Capital:** ${starting_capital:,.2f} MXN | **Rebalancing Frequency:** every {rebalance_freq} Business Days\n")
     
     report.append("## 1. Performance Overview Comparison")
     report.append("| Portfolio Strategy | Cumulative Return | Final Capital | Sharpe Ratio | Max Drawdown |")
     report.append("| :--- | :---: | :---: | :---: | :---: |")
-    report.append(f"| **V4 Quantitative Strategy** | **{strat_cum_return:+.2f}%** | ${strat_vals[-1]:,.2f} MXN | {sharpe_strat:.2f} | {max_dd_strat:.2f}% |")
+    report.append(f"| **V3 Quantitative Strategy** | **{strat_cum_return:+.2f}%** | ${strat_vals[-1]:,.2f} MXN | {sharpe_strat:.2f} | {max_dd_strat:.2f}% |")
     report.append(f"| Bondia Cash Benchmark (11% APR) | {cash_cum_return:+.2f}% | ${cash_vals[-1]:,.2f} MXN | 0.00 | 0.00% |")
     report.append(f"| SPY Buy & Hold Index | {spy_cum_return:+.2f}% | ${spy_vals[-1]:,.2f} MXN | -- | {max_dd_spy:.2f}% |")
     

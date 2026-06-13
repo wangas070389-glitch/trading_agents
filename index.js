@@ -12,6 +12,7 @@ const formatCurrency = (val) => {
 };
 
 // Fetch data and build dashboard
+// Fetch data and build dashboard
 async function loadDashboard() {
     try {
         const response = await fetch('/api/portfolio');
@@ -19,14 +20,28 @@ async function loadDashboard() {
             throw new Error(`Failed to load data: ${response.statusText}`);
         }
         const data = await response.json();
-        renderDashboard(data);
+        
+        let dcsThreshold = 0.15; // default fallback
+        try {
+            const paramsResponse = await fetch('/learned_params.json');
+            if (paramsResponse.ok) {
+                const params = await paramsResponse.json();
+                if (params.dcs_threshold !== undefined) {
+                    dcsThreshold = params.dcs_threshold;
+                }
+            }
+        } catch (e) {
+            console.log("Could not load learned_params.json, using default threshold:", e);
+        }
+        
+        renderDashboard(data, dcsThreshold);
     } catch (err) {
         console.error("Dashboard Load Error:", err);
         alert(`Error loading portfolio: ${err.message}`);
     }
 }
 
-function renderDashboard(portfolio) {
+function renderDashboard(portfolio, dcsThreshold) {
     const cash = portfolio.cash_balance;
     const originalCapital = portfolio.total_capital;
     const holdings = portfolio.holdings;
@@ -99,7 +114,7 @@ function renderDashboard(portfolio) {
             hmmClass = 'negative';
         }
         
-        const dcsClass = dcsVal >= 0.25 ? 'positive' : 'negative';
+        const dcsClass = dcsVal >= dcsThreshold ? 'positive' : 'negative';
 
         tr.innerHTML = `
             <td><strong>${h.ticker}</strong></td>
@@ -137,14 +152,14 @@ function renderDashboard(portfolio) {
                 </div>
             `;
             alertsContainer.appendChild(div);
-        } else if (dcsVal < 0.25) {
+        } else if (dcsVal < dcsThreshold) {
             alertsCount++;
             const div = document.createElement('div');
             div.className = 'alert-item alert-warning';
             div.innerHTML = `
                 <span class="alert-icon">⚠️</span>
                 <div class="alert-text">
-                    <strong>[SIGNAL WEAKNESS]</strong> ${h.ticker} Differential Quantitative Signal is weak (DCS: <strong>${dcsVal.toFixed(4)}</strong> < 0.25). Target weight is capped.
+                    <strong>[SIGNAL WEAKNESS]</strong> ${h.ticker} Differential Quantitative Signal is weak (DCS v2: <strong>${dcsVal.toFixed(4)}</strong> &lt; ${dcsThreshold.toFixed(2)}). Target weight is capped.
                 </div>
             `;
             alertsContainer.appendChild(div);
