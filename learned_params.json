@@ -1,16 +1,16 @@
 {
   "dcs_threshold": 0.1,
   "vr_threshold": 1.1,
-  "trained_on": "2026-06-12",
-  "train_sharpe": 0.53,
+  "trained_on": "2026-06-13",
+  "train_sharpe": 0.597,
   "validation_sharpe": 1.277,
   "grid_results": [
     {
       "dcs_threshold": 0.1,
       "vr_threshold": 1.1,
-      "train_sharpe": 0.53,
+      "train_sharpe": 0.597,
       "val_sharpe": 1.277,
-      "score": 0.904,
+      "score": 0.937,
       "val_cum_return": 3.88
     },
     {
@@ -24,9 +24,9 @@
     {
       "dcs_threshold": 0.15,
       "vr_threshold": 1.1,
-      "train_sharpe": 0.707,
+      "train_sharpe": 0.767,
       "val_sharpe": 0.877,
-      "score": 0.792,
+      "score": 0.822,
       "val_cum_return": 2.68
     },
     {
@@ -40,17 +40,17 @@
     {
       "dcs_threshold": 0.3,
       "vr_threshold": 1.1,
-      "train_sharpe": -0.436,
+      "train_sharpe": -0.515,
       "val_sharpe": 1.698,
-      "score": 0.631,
+      "score": 0.591,
       "val_cum_return": 7.65
     },
     {
       "dcs_threshold": 0.1,
       "vr_threshold": 1.2,
-      "train_sharpe": 1.534,
-      "val_sharpe": 0.846,
-      "score": 0.501,
+      "train_sharpe": 1.593,
+      "val_sharpe": 0.845,
+      "score": 0.472,
       "val_cum_return": 2.05
     },
     {
@@ -72,58 +72,50 @@
     {
       "dcs_threshold": 0.1,
       "vr_threshold": 1.0,
-      "train_sharpe": 0.067,
+      "train_sharpe": 0.111,
       "val_sharpe": 0.483,
-      "score": 0.275,
+      "score": 0.297,
       "val_cum_return": 1.37
     },
     {
-      "dcs_threshold": 0.2,
-      "vr_threshold": 1.2,
-      "train_sharpe": 0.405,
-      "val_sharpe": 0.278,
-      "score": 0.215,
-      "val_cum_return": 0.72
-    },
-    {
-      "dcs_threshold": 0.3,
-      "vr_threshold": 1.0,
-      "train_sharpe": 0.034,
-      "val_sharpe": 0.349,
-      "score": 0.191,
-      "val_cum_return": 1.43
-    },
-    {
       "dcs_threshold": 0.3,
       "vr_threshold": 1.2,
-      "train_sharpe": -0.757,
+      "train_sharpe": -0.653,
       "val_sharpe": 1.133,
-      "score": 0.188,
+      "score": 0.24,
       "val_cum_return": 4.53
     },
     {
       "dcs_threshold": 0.2,
+      "vr_threshold": 1.2,
+      "train_sharpe": 0.464,
+      "val_sharpe": 0.278,
+      "score": 0.185,
+      "val_cum_return": 0.72
+    },
+    {
+      "dcs_threshold": 0.2,
       "vr_threshold": 1.1,
-      "train_sharpe": -0.693,
+      "train_sharpe": -0.644,
       "val_sharpe": 0.968,
-      "score": 0.138,
+      "score": 0.162,
       "val_cum_return": 3.36
+    },
+    {
+      "dcs_threshold": 0.3,
+      "vr_threshold": 1.0,
+      "train_sharpe": -0.052,
+      "val_sharpe": 0.349,
+      "score": 0.148,
+      "val_cum_return": 1.43
     },
     {
       "dcs_threshold": 0.15,
       "vr_threshold": 1.0,
-      "train_sharpe": 0.258,
+      "train_sharpe": 0.299,
       "val_sharpe": 0.168,
-      "score": 0.123,
+      "score": 0.102,
       "val_cum_return": 0.43
-    },
-    {
-      "dcs_threshold": 0.05,
-      "vr_threshold": 1.1,
-      "train_sharpe": 1.371,
-      "val_sharpe": 0.519,
-      "score": 0.093,
-      "val_cum_return": 0.78
     },
     {
       "dcs_threshold": 0.15,
@@ -134,35 +126,43 @@
       "val_cum_return": 2.86
     },
     {
+      "dcs_threshold": 0.05,
+      "vr_threshold": 1.1,
+      "train_sharpe": 1.447,
+      "val_sharpe": 0.519,
+      "score": 0.055,
+      "val_cum_return": 0.78
+    },
+    {
       "dcs_threshold": 0.15,
       "vr_threshold": 1.2,
-      "train_sharpe": 1.597,
+      "train_sharpe": 1.653,
       "val_sharpe": 0.465,
-      "score": -0.1,
+      "score": -0.129,
       "val_cum_return": 1.17
     },
     {
       "dcs_threshold": 0.05,
       "vr_threshold": 1.2,
-      "train_sharpe": 1.989,
+      "train_sharpe": 2.029,
       "val_sharpe": 0.448,
-      "score": -0.322,
+      "score": -0.342,
       "val_cum_return": 0.78
     },
     {
       "dcs_threshold": 0.2,
       "vr_threshold": 1.0,
-      "train_sharpe": -0.953,
+      "train_sharpe": -0.922,
       "val_sharpe": 0.208,
-      "score": -0.373,
+      "score": -0.357,
       "val_cum_return": 0.62
     },
     {
       "dcs_threshold": 0.05,
       "vr_threshold": 1.0,
-      "train_sharpe": 0.674,
+      "train_sharpe": 0.739,
       "val_sharpe": -0.595,
-      "score": -1.23,
+      "score": -1.262,
       "val_cum_return": -0.93
     }
   ]
