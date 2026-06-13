@@ -447,6 +447,15 @@ class PortfolioReconciler:
             arb_engine.update_cointegration_graph(universe_prices_dict)
             active_regimes = {t: met["hmm_state"] for t, met in adjusted_metrics.items()}
             pesos_asignados, arbitrage_reports = arb_engine.apply_regime_arbitrage(pesos_asignados, active_regimes)
+
+        # 3b. HARD POST-CONDITION: enforce 20% concentration cap after ALL adjustments
+        # The stat arb engine or any future overlay can shift weights above the cap.
+        # This is the last gate before trade execution — no weight may exceed the cap.
+        CONCENTRATION_CAP_HARD = 0.20
+        for t in list(pesos_asignados.keys()):
+            if pesos_asignados[t] > CONCENTRATION_CAP_HARD:
+                print(f"  |-- [CAP] {t} weight {pesos_asignados[t]:.1%} -> {CONCENTRATION_CAP_HARD:.0%} (hard cap enforced)")
+                pesos_asignados[t] = CONCENTRATION_CAP_HARD
             
         # 4. Calculate portfolio value and execute trades with DQN Execution Routing
         cash = portfolio["cash_balance"]
@@ -483,12 +492,36 @@ class PortfolioReconciler:
                       f"Carrying position at last price {h['last_price']:.2f} (review manually).")
                 new_holdings_dict[ticker] = {**h, "target_weight": h.get("target_weight", 0.0)}
 
+        # REBALANCE DEAD-ZONE: skip trades where |current_weight - target_weight| < 5%
+        # This prevents the strategy from churning on marginal signal changes,
+        # which was responsible for 7.4% of capital eaten by fees in the backtest.
+        DEAD_ZONE_THRESHOLD = 0.05
+
         for ticker, peso in pesos_asignados.items():
             current_price = adjusted_metrics[ticker]["current_price"]
             monto_teorico = total_value * peso
             target_shares = int(monto_teorico // current_price)
             
             current_shares = holdings.get(ticker, {}).get("shares", 0)
+
+            # Dead-zone check: skip if weight delta is below threshold
+            current_weight = (current_shares * current_price) / total_value if total_value > 0 else 0.0
+            weight_delta = abs(peso - current_weight)
+            if weight_delta < DEAD_ZONE_THRESHOLD and current_shares > 0:
+                # Keep position as-is, don't trade
+                new_holdings_dict[ticker] = {
+                    "ticker": ticker,
+                    "shares": current_shares,
+                    "buy_price": holdings[ticker]["buy_price"],
+                    "last_price": current_price,
+                    "target_weight": peso,
+                    "dcs": adjusted_metrics[ticker]["dcs_adjusted"],
+                    "garch_vol": adjusted_metrics[ticker]["garch_vol_adjusted"],
+                    "hmm_state": adjusted_metrics[ticker]["hmm_state"],
+                    "vol_relative": adjusted_metrics[ticker]["relative_vol"]
+                }
+                print(f"  |-- [HOLD] {ticker}: weight delta {weight_delta:.1%} < {DEAD_ZONE_THRESHOLD:.0%} dead-zone. No trade.")
+                continue
             
             if current_shares > target_shares:
                 # Execute Sell
@@ -562,6 +595,10 @@ class PortfolioReconciler:
             target_shares = int(monto_teorico // current_price)
 
             current_shares = holdings.get(ticker, {}).get("shares", 0)
+
+            # Dead-zone check for buys too
+            if ticker in new_holdings_dict and new_holdings_dict[ticker]["shares"] == current_shares:
+                continue  # Already kept via dead-zone
 
             if target_shares > current_shares:
                 shares_to_buy = target_shares - current_shares

@@ -16,7 +16,7 @@ _RETRY_DELAYS = [5, 15, 30]  # seconds between attempts
 def _strip_tz(df: pd.DataFrame) -> pd.DataFrame:
     """Remove timezone from a DataFrame's DatetimeIndex regardless of its current state."""
     if df.index.tz is not None:
-        df.index = df.index.tz_convert("UTC").tz_localize(None)
+        df.index = pd.to_datetime(df.index.date)
     return df
 
 
@@ -57,7 +57,7 @@ BMV_TICKERS = [
     "ASURB.MX",      # Grupo Aeroportuario del Sureste
     "OMAB.MX",       # Grupo Aeroportuario del Centro Norte
     "GRUMAB.MX",     # Gruma
-    "ALFAA.MX",      # Alfa
+    # "ALFAA.MX",      # Alfa — REMOVED: delisted (404 from yfinance since 2026-06)
     "KIMBERA.MX",    # Kimberly-Clark de México
     "AC.MX",         # Arca Continental
     "ORBIA.MX",      # Orbia Advance Corporation

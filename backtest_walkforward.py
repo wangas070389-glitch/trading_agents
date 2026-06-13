@@ -66,7 +66,7 @@ RELVOL_ENTRY_THRESHOLD = 1.2
 
 def _strip_tz(df: pd.DataFrame) -> pd.DataFrame:
     if df.index.tz is not None:
-        df.index = df.index.tz_convert("UTC").tz_localize(None)
+        df.index = pd.to_datetime(df.index.date)
     return df
 
 
@@ -116,7 +116,7 @@ def build_universe_data(asset_data: dict, exog: pd.DataFrame, as_of: pd.Timestam
     universe = {}
     for ticker, hist in asset_data.items():
         sliced = hist.loc[hist.index <= as_of]
-        if len(sliced) < MIN_HISTORY_DAYS:
+        if len(sliced) < 200:
             continue
         df = pd.DataFrame({
             "Price": sliced["Close"],
@@ -268,7 +268,11 @@ def main():
                             target_value = portfolio_value * target_weights.get(ticker, 0.0)
                             current_value = shares_held[ticker] * price_matrix[ticker].iloc[i]
                             delta_value = target_value - current_value
-                            if abs(delta_value) < 50.0:  # ignore sub-50 MXN moves
+                            # Dead-zone: skip if weight delta < 5% of portfolio value
+                            current_weight = current_value / portfolio_value if portfolio_value > 0 else 0.0
+                            target_weight_val = target_weights.get(ticker, 0.0)
+                            weight_delta = abs(target_weight_val - current_weight)
+                            if weight_delta < 0.05 and shares_held[ticker] > 0:
                                 continue
                             delta_shares = delta_value / price_matrix[ticker].iloc[i]
                             cost = abs(delta_value) * TRANSACTION_COST
@@ -367,7 +371,7 @@ def main():
     print("=" * 80)
     print("BACKTEST SUMMARY")
     print("=" * 80)
-    print(f"  Period:    {strategy_series.index[0].date()} → {strategy_series.index[-1].date()}")
+    print(f"  Period:    {strategy_series.index[0].date()} -> {strategy_series.index[-1].date()}")
     print(f"  Strategy:  CAGR={strategy_metrics['cagr']*100:+.2f}%  Sharpe={strategy_metrics['sharpe']:.2f}  MaxDD={strategy_metrics['max_drawdown']*100:.2f}%")
     print(f"  Benchmark: CAGR={benchmark_metrics['cagr']*100:+.2f}%  Sharpe={benchmark_metrics['sharpe']:.2f}  MaxDD={benchmark_metrics['max_drawdown']*100:.2f}%")
     print(f"  Excess CAGR: {(strategy_metrics['cagr']-benchmark_metrics['cagr'])*100:+.2f}%")
