@@ -1,29 +1,6 @@
 {
   "total_capital": 20000.0,
-  "cash_balance": 4062.13,
-  "holdings": [
-    {
-      "ticker": "GRUMAB.MX",
-      "shares": 27,
-      "buy_price": 293.5,
-      "last_price": 296.17,
-      "target_weight": 0.4,
-      "dcs": 0.9930915371329879,
-      "garch_vol": 0.008867197162571607,
-      "hmm_state": -1,
-      "vol_relative": 1.5146258087251867
-    },
-    {
-      "ticker": "BBAJIOO.MX",
-      "shares": 151,
-      "buy_price": 52.74,
-      "last_price": 55.07,
-      "target_weight": 0.4,
-      "dcs": 1.0,
-      "garch_vol": 0.016307093678182092,
-      "hmm_state": 0,
-      "vol_relative": 1.805211040923428
-    }
-  ],
-  "last_updated": "2026-06-12 13:40:08"
+  "cash_balance": 20360.69,
+  "holdings": [],
+  "last_updated": "2026-06-13 00:01:07"
 }
