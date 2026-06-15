@@ -3,50 +3,54 @@
   "cash_balance": 13650.51,
   "holdings": [
     {
-      "ticker": "ASURB.MX",
-      "shares": 5,
-      "buy_price": 516.37,
-      "last_price": 516.37,
-      "target_weight": 0.13316332891214952,
-      "dcs": 0.7052054141712532,
-      "garch_vol": 0.01954700227838722,
-      "hmm_state": -1,
-      "vol_relative": 1.8175623289131564
-    },
-    {
       "ticker": "WALMEX.MX",
       "shares": 49,
       "buy_price": 52.64,
-      "last_price": 52.64,
-      "target_weight": 0.12721078066504263,
-      "dcs": 0.5487142875348416,
-      "garch_vol": 0.01592104316821185,
+      "last_price": 52.63999938964844,
+      "target_weight": 0.12726072122459797,
+      "dcs": 0.5489296757321679,
+      "garch_vol": 0.01592104163079478,
       "hmm_state": -1,
-      "vol_relative": 1.1765471838419261
+      "vol_relative": 1.1765471838419261,
+      "zg_t": -0.12592592592592594
     },
     {
-      "ticker": "AC.MX",
-      "shares": 6,
-      "buy_price": 212.42,
-      "last_price": 212.42,
-      "target_weight": 0.06335220299450538,
-      "dcs": 0.19719548071478296,
-      "garch_vol": 0.011489057558943281,
-      "hmm_state": 0,
-      "vol_relative": 1.3676481125019824
+      "ticker": "ASURB.MX",
+      "shares": 5,
+      "buy_price": 516.37,
+      "last_price": 516.3699951171875,
+      "target_weight": 0.13315075594553702,
+      "dcs": 0.7051387304631916,
+      "garch_vol": 0.01954699857319485,
+      "hmm_state": -1,
+      "vol_relative": 1.8175623289131564,
+      "zg_t": -0.12592592592592594
     },
     {
       "ticker": "GRUMAB.MX",
       "shares": 1,
       "buy_price": 291.46,
-      "last_price": 291.46,
-      "target_weight": 0.027848741458931948,
-      "dcs": 0.10791133423599505,
-      "garch_vol": 0.014302457241091304,
+      "last_price": 291.4599914550781,
+      "target_weight": 0.027853008203029602,
+      "dcs": 0.10792792454714929,
+      "garch_vol": 0.014302464118323956,
       "hmm_state": -1,
-      "vol_relative": 1.3602385682222782
+      "vol_relative": 1.3602385682222782,
+      "zg_t": -0.12592592592592594
+    },
+    {
+      "ticker": "AC.MX",
+      "shares": 6,
+      "buy_price": 212.42,
+      "last_price": 212.4199981689453,
+      "target_weight": 0.06292807009565798,
+      "dcs": 0.19587522839954968,
+      "garch_vol": 0.011489053488625106,
+      "hmm_state": 0,
+      "vol_relative": 1.3676481125019824,
+      "zg_t": -0.12592592592592594
     }
   ],
-  "last_updated": "2026-06-15 15:23:00",
-  "slippage_savings": 1.2
+  "last_updated": "2026-06-15 15:30:07",
+  "slippage_savings": 0.0
 }

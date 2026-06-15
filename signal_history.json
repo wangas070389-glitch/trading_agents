@@ -42,5 +42,49 @@
     "exit_price": null,
     "fwd_return": null,
     "resolved": false
+  },
+  {
+    "date": "2026-06-15",
+    "ticker": "WALMEX.MX",
+    "dcs": 0.5489,
+    "hmm_state": -1,
+    "weight": 0.1273,
+    "entry_price": 52.63999938964844,
+    "exit_price": null,
+    "fwd_return": null,
+    "resolved": false
+  },
+  {
+    "date": "2026-06-15",
+    "ticker": "ASURB.MX",
+    "dcs": 0.7051,
+    "hmm_state": -1,
+    "weight": 0.1332,
+    "entry_price": 516.3699951171875,
+    "exit_price": null,
+    "fwd_return": null,
+    "resolved": false
+  },
+  {
+    "date": "2026-06-15",
+    "ticker": "GRUMAB.MX",
+    "dcs": 0.1079,
+    "hmm_state": -1,
+    "weight": 0.0279,
+    "entry_price": 291.4599914550781,
+    "exit_price": null,
+    "fwd_return": null,
+    "resolved": false
+  },
+  {
+    "date": "2026-06-15",
+    "ticker": "AC.MX",
+    "dcs": 0.1959,
+    "hmm_state": 0,
+    "weight": 0.0629,
+    "entry_price": 212.4199981689453,
+    "exit_price": null,
+    "fwd_return": null,
+    "resolved": false
   }
 ]

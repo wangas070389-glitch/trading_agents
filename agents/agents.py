@@ -544,7 +544,8 @@ class PortfolioReconciler:
                     "dcs": adjusted_metrics[ticker]["dcs_adjusted"],
                     "garch_vol": adjusted_metrics[ticker]["garch_vol_adjusted"],
                     "hmm_state": adjusted_metrics[ticker]["hmm_state"],
-                    "vol_relative": adjusted_metrics[ticker]["relative_vol"]
+                    "vol_relative": adjusted_metrics[ticker]["relative_vol"],
+                    "zg_t": adjusted_metrics[ticker].get("zg_t", 0.0)
                 }
                 print(f"  |-- [HOLD] {ticker}: weight delta {weight_delta:.1%} < {DEAD_ZONE_THRESHOLD:.0%} dead-zone. No trade.")
                 continue
@@ -589,7 +590,8 @@ class PortfolioReconciler:
                         "dcs": adjusted_metrics[ticker]["dcs_adjusted"],
                         "garch_vol": adjusted_metrics[ticker]["garch_vol_adjusted"],
                         "hmm_state": adjusted_metrics[ticker]["hmm_state"],
-                        "vol_relative": adjusted_metrics[ticker]["relative_vol"]
+                        "vol_relative": adjusted_metrics[ticker]["relative_vol"],
+                        "zg_t": adjusted_metrics[ticker].get("zg_t", 0.0)
                     }
             elif current_shares > 0 and current_shares == target_shares:
                 # Keep holding
@@ -602,7 +604,8 @@ class PortfolioReconciler:
                     "dcs": adjusted_metrics[ticker]["dcs_adjusted"],
                     "garch_vol": adjusted_metrics[ticker]["garch_vol_adjusted"],
                     "hmm_state": adjusted_metrics[ticker]["hmm_state"],
-                    "vol_relative": adjusted_metrics[ticker]["relative_vol"]
+                    "vol_relative": adjusted_metrics[ticker]["relative_vol"],
+                    "zg_t": adjusted_metrics[ticker].get("zg_t", 0.0)
                 }
                 
         # Second Phase: Execute Buys
@@ -676,7 +679,8 @@ class PortfolioReconciler:
                         "dcs": adjusted_metrics[ticker]["dcs_adjusted"],
                         "garch_vol": adjusted_metrics[ticker]["garch_vol_adjusted"],
                         "hmm_state": adjusted_metrics[ticker]["hmm_state"],
-                        "vol_relative": adjusted_metrics[ticker]["relative_vol"]
+                        "vol_relative": adjusted_metrics[ticker]["relative_vol"],
+                        "zg_t": adjusted_metrics[ticker].get("zg_t", 0.0)
                     }
                 elif current_shares > 0:
                     new_holdings_dict[ticker] = {
@@ -688,7 +692,8 @@ class PortfolioReconciler:
                         "dcs": adjusted_metrics[ticker]["dcs_adjusted"],
                         "garch_vol": adjusted_metrics[ticker]["garch_vol_adjusted"],
                         "hmm_state": adjusted_metrics[ticker]["hmm_state"],
-                        "vol_relative": adjusted_metrics[ticker]["relative_vol"]
+                        "vol_relative": adjusted_metrics[ticker]["relative_vol"],
+                        "zg_t": adjusted_metrics[ticker].get("zg_t", 0.0)
                     }
                     
         # Update portfolio object
