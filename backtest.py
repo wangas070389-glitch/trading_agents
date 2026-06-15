@@ -328,14 +328,14 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
     
     # Save backtest report to markdown
     report = []
-    report.append("# BACKTEST ANALYSIS REPORT (Hedge Fund Method V4)")
+    report.append("# BACKTEST ANALYSIS REPORT (Hedge Fund Method V5)")
     report.append(f"**Analysis Period:** {backtest_dates[0].strftime('%Y-%m-%d')} to {backtest_dates[-1].strftime('%Y-%m-%d')} ({backtest_days} Business Days)")
     report.append(f"**Starting Capital:** ${starting_capital:,.2f} MXN | **Rebalancing Frequency:** every {rebalance_freq} Business Days\n")
     
     report.append("## 1. Performance Overview Comparison")
     report.append("| Portfolio Strategy | Cumulative Return | Final Capital | Sharpe Ratio | Max Drawdown |")
     report.append("| :--- | :---: | :---: | :---: | :---: |")
-    report.append(f"| **V4 Quantitative Strategy** | **{strat_cum_return:+.2f}%** | ${strat_vals[-1]:,.2f} MXN | {sharpe_strat:.2f} | {max_dd_strat:.2f}% |")
+    report.append(f"| **V5 Quantitative Strategy** | **{strat_cum_return:+.2f}%** | ${strat_vals[-1]:,.2f} MXN | {sharpe_strat:.2f} | {max_dd_strat:.2f}% |")
     report.append(f"| Bondia Cash Benchmark (11% APR) | {cash_cum_return:+.2f}% | ${cash_vals[-1]:,.2f} MXN | 0.00 | 0.00% |")
     report.append(f"| SPY Buy & Hold Index | {spy_cum_return:+.2f}% | ${spy_vals[-1]:,.2f} MXN | -- | {max_dd_spy:.2f}% |")
     

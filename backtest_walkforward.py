@@ -48,7 +48,7 @@ class _StubNLPEngine:
 
 _nlp_module.NLPSentimentEngine = _StubNLPEngine
 
-from agents.agents import FundamentalScreener, MacroRiskAnalyst
+from agents.agents import FundamentalScreener, MacroRiskAnalyst, PortfolioReconciler
 from ingest_live_bmv import BMV_TICKERS, US_TICKERS
 
 
@@ -244,6 +244,7 @@ def main():
 
     screener = FundamentalScreener()
     analyst = MacroRiskAnalyst()
+    reconciler = PortfolioReconciler()
 
     t_start = time.time()
     for i, current_date in enumerate(price_matrix.index):
@@ -256,35 +257,54 @@ def main():
                     raw_metrics = screener.screen(universe)
                     if raw_metrics:
                         adjusted = analyst.stress_test(raw_metrics, {})
-                        target_weights = compute_target_weights(adjusted)
-
-                        # Compute portfolio value at today's prices
-                        portfolio_value = cash + sum(
-                            shares_held[t] * price_matrix[t].iloc[i] for t in shares_held
+                        
+                        # Build current portfolio state for reconciler
+                        portfolio_sim = {
+                            "total_capital": INITIAL_CAPITAL,
+                            "cash_balance": cash,
+                            "holdings": [{"ticker": tick, "shares": sh, "buy_price": price_matrix[tick].iloc[i], "last_price": price_matrix[tick].iloc[i]} for tick, sh in shares_held.items() if sh > 0]
+                        }
+                        
+                        # Build universe prices dict
+                        universe_prices_dict = {t: universe[t]["prices"] for t in universe}
+                        
+                        learning_context = {
+                            "dcs_threshold": DCS_ENTRY_THRESHOLD,
+                            "vr_threshold": RELVOL_ENTRY_THRESHOLD,
+                            "confidence": {},
+                            "exposure_scalar": 1.0
+                        }
+                        
+                        # Run the reconciler
+                        updated_portfolio_sim, _, _ = reconciler.reconcile(
+                            adjusted, portfolio_sim, current_date.strftime("%Y-%m-%d"),
+                            learning_context=learning_context,
+                            universe_prices_dict=universe_prices_dict
                         )
-
-                        # Compute trades
-                        for ticker in asset_data:
-                            target_value = portfolio_value * target_weights.get(ticker, 0.0)
-                            current_value = shares_held[ticker] * price_matrix[ticker].iloc[i]
-                            delta_value = target_value - current_value
-                            # Dead-zone: skip if weight delta < 5% of portfolio value
-                            current_weight = current_value / portfolio_value if portfolio_value > 0 else 0.0
-                            target_weight_val = target_weights.get(ticker, 0.0)
-                            weight_delta = abs(target_weight_val - current_weight)
-                            if weight_delta < 0.05 and shares_held[ticker] > 0:
-                                continue
-                            delta_shares = delta_value / price_matrix[ticker].iloc[i]
-                            cost = abs(delta_value) * TRANSACTION_COST
-                            cash -= (delta_value + cost)
-                            shares_held[ticker] += delta_shares
-                            total_traded_value += abs(delta_value)
-                            trade_log.append({
-                                "date": current_date,
-                                "ticker": ticker,
-                                "delta_value": delta_value,
-                                "cost": cost,
-                            })
+                        
+                        cash = updated_portfolio_sim["cash_balance"]
+                        new_shares_held = {t: 0.0 for t in asset_data}
+                        for h in updated_portfolio_sim["holdings"]:
+                            new_shares_held[h["ticker"]] = h["shares"]
+                            
+                        # Log trades based on actual position differences
+                        for t in asset_data:
+                            old_sh = shares_held.get(t, 0.0)
+                            new_sh = new_shares_held.get(t, 0.0)
+                            if old_sh != new_sh:
+                                delta_sh = new_sh - old_sh
+                                price_t = price_matrix[t].iloc[i]
+                                delta_val = delta_sh * price_t
+                                cost = abs(delta_val) * TRANSACTION_COST
+                                total_traded_value += abs(delta_val)
+                                trade_log.append({
+                                    "date": current_date,
+                                    "ticker": t,
+                                    "delta_value": delta_val,
+                                    "cost": cost,
+                                })
+                                
+                        shares_held = new_shares_held
             except Exception as exc:
                 print(f"    [WARN] rebalance failed: {exc}")
             rebalance_idx += 1

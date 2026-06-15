@@ -1,6 +1,6 @@
 # Walk-Forward Backtest Report
 
-**Generated:** 2026-06-15 15:52:50
+**Generated:** 2026-06-15 16:11:35
 
 ## Setup
 
@@ -17,21 +17,21 @@
 
 | Metric | Strategy | Equal-weight Benchmark |
 | :--- | ---: | ---: |
-| Total return | +8.55% | +110.95% |
-| CAGR | +2.05% | +20.33% |
-| Sharpe (annualized) | 0.43 | 1.17 |
-| Max drawdown | -4.93% | -13.50% |
-| Final NAV | $21,709.12 | $42,189.04 |
+| Total return | +2.84% | +110.97% |
+| CAGR | +0.70% | +20.34% |
+| Sharpe (annualized) | 0.12 | 1.17 |
+| Max drawdown | -18.05% | -13.50% |
+| Final NAV | $20,567.30 | $42,193.51 |
 
 ## Trading Activity
 
-- Total trades: 1247
-- Total dollar volume traded: $144,898.31 MXN
-- Total transaction costs paid: $420.21 MXN
-- Turnover (volume / initial capital): 7.24x
+- Total trades: 192
+- Total dollar volume traded: $625,364.26 MXN
+- Total transaction costs paid: $1,813.56 MXN
+- Turnover (volume / initial capital): 31.27x
 
 ## Verdict
 
-**Strategy underperformed** equal-weight by 18.28% CAGR. Risk-adjusted return is worse, so the active trading isn't earning its costs.
+**Strategy underperformed** equal-weight by 19.64% CAGR. Risk-adjusted return is worse, so the active trading isn't earning its costs.
 
 **Reading the result honestly:** in-sample backtests on a 27-ticker universe over 5 years with a strategy this complex have very wide confidence intervals. A 2-3% CAGR edge here is well within noise. Repeat on a held-out period and a wider universe (full BMV + S&P) before concluding anything.

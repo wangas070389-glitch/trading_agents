@@ -260,6 +260,32 @@ class FundamentalScreener:
     def screen(self, universe_data: dict) -> dict:
         print(f"\n[Agent 1: Quantitative Screener] Screening {len(universe_data)} assets in the universe...")
         
+        # Train HMM on SPY returns once to determine global market regime
+        spy_hmm_state = 0 # Default to Sideways
+        try:
+            if len(universe_data) > 0:
+                first_asset_data = next(iter(universe_data.values()))
+                exog = np.array(first_asset_data["exogenous"])
+                # SPY daily return is the first column in exogenous regressors
+                spy_rets = exog[:, 0]
+                if len(spy_rets) >= 20:
+                    obs_spy = spy_rets.reshape(-1, 1)
+                    model_spy = hmm.GaussianHMM(n_components=3, covariance_type="full", n_iter=100, random_state=42)
+                    model_spy.fit(obs_spy)
+                    spy_states = model_spy.predict(obs_spy)
+                    
+                    spy_means = model_spy.means_[:, 0]
+                    bear_idx = np.argmin(spy_means)
+                    bull_idx = np.argmax(spy_means)
+                    sideways_idx = [idx for idx in range(3) if idx not in (bear_idx, bull_idx)][0]
+                    
+                    state_map = {bear_idx: -1, bull_idx: 1, sideways_idx: 0}
+                    spy_hmm_state = int(state_map[spy_states[-1]])
+                    print(f"  |-- [SPY Market Regime] Fitted HMM on SPY. Current state: {spy_hmm_state} "
+                          f"(Bull/Sideways/Bear: {bull_idx}/{sideways_idx}/{bear_idx})")
+        except Exception as spy_err:
+            print(f"  |-- [WARN] Failed to fit HMM on SPY: {spy_err}")
+            
         quantitative_results = {}
         for ticker, data in universe_data.items():
             try:
@@ -317,7 +343,8 @@ class FundamentalScreener:
                     "garch_vol": float(garch_vol_final),
                     "relative_vol": float(vr),
                     "hmm_state": int(current_state),
-                    "current_price": float(precios[-1])
+                    "current_price": float(precios[-1]),
+                    "spy_hmm_state": spy_hmm_state
                 }
                 
                 print(f"  +-- {ticker}: DCS={dcs:.4f} | VR={vr:.2f} | Vol={garch_vol_final:.4f} | HMM State={current_state}")
@@ -421,61 +448,120 @@ class PortfolioReconciler:
             print(f"  |-- [Drawdown Governor] Gross exposure scaled to {exposure_scalar:.0%} "
                   f"(strategy drawdown brake active).")
 
-        # 1. Determine active eligible assets based on (learned) threshold rules with hysteresis
+        # Extract SPY HMM state from adjusted_metrics to apply the Broad Market Overlay
+        spy_state = 0
+        for met in adjusted_metrics.values():
+            if "spy_hmm_state" in met:
+                spy_state = met["spy_hmm_state"]
+                break
+
+        # 1a. Broad Market HMM Overlay (Dynamic Exposure Capping)
+        if spy_state == 1:
+            max_equity_exposure = 0.95
+            regime_name = "BULL"
+        elif spy_state == -1:
+            max_equity_exposure = 0.10
+            regime_name = "BEAR"
+        else:
+            max_equity_exposure = 0.50
+            regime_name = "SIDEWAYS"
+        print(f"  |-- [SPY HMM Regime Overlay] Regime: {regime_name} | Max Equity Exposure capped at {max_equity_exposure:.0%}")
+
+        # 1b. Adaptive Screener Gates (Dynamic Percentile-based Thresholds)
+        all_dcs = [met["dcs_adjusted"] for met in adjusted_metrics.values()]
+        all_vr = [met["relative_vol"] for met in adjusted_metrics.values()]
+        
+        if len(all_dcs) > 0:
+            adaptive_dcs_threshold = max(0.05, float(np.percentile(all_dcs, 30)))
+        else:
+            adaptive_dcs_threshold = umbral_histeresis_entrada
+            
+        if len(all_vr) > 0:
+            adaptive_vr_threshold = max(0.90, float(np.percentile(all_vr, 30)))
+        else:
+            adaptive_vr_threshold = umbral_vr
+            
+        print(f"  |-- [Adaptive Screener Gates] Dynamic DCS Threshold: {adaptive_dcs_threshold:.4f} | Dynamic VR Threshold: {adaptive_vr_threshold:.2f}")
+
+        # Determine active eligible assets based on adaptive percentile gates with exit hysteresis
         activos_elegibles = []
         currently_held = {h["ticker"] for h in portfolio.get("holdings", []) if h.get("shares", 0) > 0}
-        umbral_histeresis_salida = ctx.get("dcs_threshold_out", umbral_histeresis_entrada - 0.10)
-
+        
         for t, met in adjusted_metrics.items():
-            required_dcs = umbral_histeresis_salida if t in currently_held else umbral_histeresis_entrada
-            if met["dcs_adjusted"] >= required_dcs and met["relative_vol"] >= umbral_vr:
+            required_dcs = (adaptive_dcs_threshold - 0.05) if t in currently_held else adaptive_dcs_threshold
+            if met["dcs_adjusted"] >= required_dcs and met["relative_vol"] >= adaptive_vr_threshold:
                 activos_elegibles.append(t)
                 
         print(f"  |-- Eligible assets for long positions: {activos_elegibles}")
         
-        # 2. Black-Litterman Sizing
+        # 2. Black-Litterman Sizing with SLSQP and Turnover Penalties
         pesos_asignados = {}
+        CONCENTRATION_CAP_HARD = 0.20
+        
+        # Pre-calculate portfolio value for optimization sizing
+        cash = portfolio["cash_balance"]
+        holdings_dict = {h["ticker"]: h for h in portfolio["holdings"]}
+        holdings_value_opt = sum(h["shares"] * adjusted_metrics.get(t, {}).get("current_price", h["last_price"]) for t, h in holdings_dict.items())
+        total_value = cash + holdings_value_opt
+
         if len(activos_elegibles) == 0:
             print("  |-- No assets met the eligibility thresholds. Portfolio will hold 100% Cash.")
             for t in adjusted_metrics:
                 pesos_asignados[t] = 0.0
         else:
-            # Inverse volatility weights
-            inv_vol = {t: 1.0 / adjusted_metrics[t]["garch_vol_adjusted"] for t in activos_elegibles}
+            from scipy.optimize import minimize
+            
+            n = len(activos_elegibles)
+            
+            # Initial guess: inverse-volatility weights
+            inv_vol = {t: 1.0 / max(adjusted_metrics[t]["garch_vol_adjusted"], 1e-4) for t in activos_elegibles}
             suma_inv_vol = sum(inv_vol.values())
-            
-            # Raw weights scaled by DCS view strength, confidence, and drawdown-governor exposure scalar.
-            raw_weights = {}
-            for t in activos_elegibles:
-                mult = confidence.get(t, 1.0)
-                raw_weights[t] = (inv_vol[t] / suma_inv_vol) * adjusted_metrics[t]["dcs_adjusted"] * mult * exposure_scalar
-                if mult != 1.0:
-                    print(f"  |-- [Learned Confidence] {t}: weight x{mult:.2f} (historical bucket expectancy)")
+            w0 = np.array([(inv_vol[t] / suma_inv_vol) * adjusted_metrics[t]["dcs_adjusted"] * exposure_scalar for t in activos_elegibles])
+            w0 = np.clip(w0, 0.0, CONCENTRATION_CAP_HARD)
+            sum_w0 = sum(w0)
+            if sum_w0 > max_equity_exposure:
+                w0 = w0 * (max_equity_exposure / sum_w0)
                 
-            # Enforce 20% concentration limit (and redistribute excess)
-            CONCENTRATION_CAP = 0.20
-            final_weights = {}
-            excess = 0.0
-            under_cap_sum = 0.0
+            # Current weights for eligible assets
+            w_curr = np.zeros(n)
+            for i, t in enumerate(activos_elegibles):
+                current_shares = holdings_dict.get(t, {}).get("shares", 0)
+                current_price = adjusted_metrics[t]["current_price"]
+                w_curr[i] = (current_shares * current_price) / total_value if total_value > 0 else 0.0
+                
+            # Objective: Maximize expected return minus turnover penalty
+            dcs_arr = np.array([adjusted_metrics[t]["dcs_adjusted"] for t in activos_elegibles])
+            lambda_penalty = 3.0  # Turnover penalty scaling factor
+            fee_rate = 0.0029
             
-            for t, w in raw_weights.items():
-                if w > CONCENTRATION_CAP:
-                    final_weights[t] = CONCENTRATION_CAP
-                    excess += (w - CONCENTRATION_CAP)
-                else:
-                    final_weights[t] = w
-                    under_cap_sum += w
-                    
-            if excess > 0 and under_cap_sum > 0:
-                for t in list(final_weights.keys()):
-                    if final_weights[t] < CONCENTRATION_CAP:
-                        share = raw_weights[t] / under_cap_sum
-                        extra = excess * share
-                        final_weights[t] = min(CONCENTRATION_CAP, final_weights[t] + extra)
-                        
-            # Set final optimized weights
+            def objective(w):
+                expected_return = np.sum(w * dcs_arr)
+                turnover_cost = np.sum(np.abs(w - w_curr)) * fee_rate
+                utility = expected_return - lambda_penalty * turnover_cost
+                return -utility  # Minimize negative utility
+                
+            # Constraint: sum(w) <= max_equity_exposure
+            cons = ({'type': 'ineq', 'fun': lambda w: max_equity_exposure - np.sum(w)})
+            
+            # Bounds: 0 <= w_i <= CONCENTRATION_CAP_HARD
+            bounds = [(0.0, CONCENTRATION_CAP_HARD) for _ in range(n)]
+            
+            # Optimize weights
+            res = minimize(objective, w0, method='SLSQP', bounds=bounds, constraints=cons)
+            
+            if res.success:
+                opt_weights = res.x
+                print("  |-- SLSQP Weight Optimization converged successfully.")
+            else:
+                opt_weights = w0
+                print("  |-- [WARN] SLSQP optimization failed to converge. Falling back to initial inv-vol weights.")
+                
+            for i, t in enumerate(activos_elegibles):
+                pesos_asignados[t] = float(opt_weights[i])
+                
             for t in adjusted_metrics:
-                pesos_asignados[t] = final_weights.get(t, 0.0)
+                if t not in pesos_asignados:
+                    pesos_asignados[t] = 0.0
                 
         # 3. Dynamic Cointegration & Regime Arbitrage Adjustments (V4 Upgrade)
         arbitrage_reports = []
