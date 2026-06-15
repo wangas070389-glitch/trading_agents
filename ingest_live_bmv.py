@@ -2,13 +2,46 @@ import os
 import sys
 import json
 import datetime
+import time
 import numpy as np
 import pandas as pd
 import yfinance as yf
 
+
 # Add current directory to path to enable local imports
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
+_RETRY_DELAYS = [5, 15, 30]  # seconds between attempts
+
+
+def _strip_tz(df: pd.DataFrame) -> pd.DataFrame:
+    """Remove timezone from a DataFrame's DatetimeIndex regardless of its current state and normalize to midnight."""
+    if df.index.tz is not None:
+        df.index = df.index.tz_convert("UTC").tz_localize(None)
+    df.index = df.index.normalize()
+    return df
+
+
+def _fetch_ticker_history(ticker_symbol: str, period: str = "5y", max_retries: int = 3) -> pd.DataFrame:
+    """
+    Download historical OHLCV data from yfinance with retry/backoff.
+    Returns an empty DataFrame on permanent failure instead of raising.
+    """
+    last_exc = None
+    for attempt, delay in enumerate((_RETRY_DELAYS + [None])[:max_retries], start=1):
+        try:
+            hist = yf.Ticker(ticker_symbol).history(period=period, timeout=30)
+            if not hist.empty:
+                return hist
+            # Empty result is not an exception but still a failure worth retrying
+            raise ValueError(f"yfinance returned empty history for {ticker_symbol}")
+        except Exception as exc:
+            last_exc = exc
+            if delay is not None:
+                print(f"  [WARN] Attempt {attempt}/{max_retries} failed for {ticker_symbol}: {exc}. Retrying in {delay}s...")
+                time.sleep(delay)
+    print(f"  [ERROR] All {max_retries} attempts failed for {ticker_symbol}: {last_exc}")
+    return pd.DataFrame()
 from skills.liquidity_gatekeeper import calculate_adtv, passes_liquidity_gate
 from skills.adaptive_learning import (
     SignalPerformanceTracker, DrawdownGovernor, load_learned_params,
