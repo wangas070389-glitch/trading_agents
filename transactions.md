@@ -41,11 +41,16 @@ This file tracks all buy and sell transactions executed by the Mexican Value Sto
 | 2026-06-13 | GRUMAB.MX | SELL | 27 | 296.06 | +7,970.44 | Market | FILLED | V3 Dynamic Rebalance (Target Weight: 0.0%, DCS: 0.14) |
 | 2026-06-13 | BBAJIOO.MX | SELL | 151 | 55.31 | +8,327.59 | Market | FILLED | V3 Dynamic Rebalance (Target Weight: 0.0%, DCS: -0.00) |
 | 2026-06-15 | BONDIA | INTEREST | 1 | 17.1643 | +17.1643 | Market | FILLED | Bondia overnight yield on cash reserves for 2.7589 days. |
+| 2026-06-15 | ASURB.MX | BUY | 5 | 516.37 | -2,581.86 | Market | FILLED | V4 DQN Execution (Target Weight: 13.3%, DCS: 0.71, Saved: $0.00 MXN) |
+| 2026-06-15 | WALMEX.MX | BUY | 49 | 52.64 | -2,579.50 | Market | FILLED | V4 DQN Execution (Target Weight: 12.7%, DCS: 0.55, Saved: $1.05 MXN) |
+| 2026-06-15 | AC.MX | BUY | 6 | 212.42 | -1,274.54 | Market | FILLED | V4 DQN Execution (Target Weight: 6.3%, DCS: 0.20, Saved: $0.13 MXN) |
+| 2026-06-15 | GRUMAB.MX | BUY | 1 | 291.46 | -291.46 | Market | FILLED | V4 DQN Execution (Target Weight: 2.8%, DCS: 0.11, Saved: $0.02 MXN) |
+| 2026-06-15 | BONDIA | INTEREST | 1 | 0.0170 | +0.0170 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0041 days. |
 ---
 
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
-* **Total Deployed Capital**: 0.00 MXN (0.0% invested)
-* **Unallocated Cash Reserves**: 20,377.85 MXN (100.0% cash)
-* **Current Portfolio Market Value**: 20,377.85 MXN (including cash)
+* **Total Deployed Capital**: 6,727.19 MXN (33.0% invested)
+* **Unallocated Cash Reserves**: 13,650.51 MXN (67.0% cash)
+* **Current Portfolio Market Value**: 20,377.70 MXN (including cash)

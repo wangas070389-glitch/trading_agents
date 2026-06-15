@@ -459,8 +459,9 @@ def main():
     }
 
     reconciler = PortfolioReconciler()
+    universe_prices_dict = {t: data["prices"] for t, data in universe_data.items()}
     updated_portfolio, report_markdown, rebalancing_trades = reconciler.reconcile(
-        adjusted_metrics, portfolio, execution_date, learning_context
+        adjusted_metrics, portfolio, execution_date, learning_context, universe_prices_dict
     )
 
     # 6. Execute paper trades & write logs

@@ -287,7 +287,7 @@ function renderBacktestChart(dates, strategy, cash, benchmark) {
             labels: dates,
             datasets: [
                 {
-                    label: 'V3 Active Strategy',
+                    label: 'V4 Active Strategy',
                     data: strategy,
                     borderColor: '#10b981',
                     backgroundColor: 'rgba(16, 185, 129, 0.05)',
