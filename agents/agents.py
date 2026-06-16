@@ -486,12 +486,33 @@ class PortfolioReconciler:
         # Determine active eligible assets based on adaptive percentile gates with exit hysteresis
         activos_elegibles = []
         currently_held = {h["ticker"] for h in portfolio.get("holdings", []) if h.get("shares", 0) > 0}
+        max_posiciones = ctx.get("max_positions", 6)
         
         for t, met in adjusted_metrics.items():
             required_dcs = (adaptive_dcs_threshold - 0.05) if t in currently_held else adaptive_dcs_threshold
-            if met["dcs_adjusted"] >= required_dcs and met["relative_vol"] >= adaptive_vr_threshold:
-                activos_elegibles.append(t)
-                
+            if t in currently_held:
+                # HOLD CONDITION: signal only. Relative volume is an entry confirmation.
+                if met["dcs_adjusted"] >= required_dcs:
+                    activos_elegibles.append(t)
+            else:
+                # ENTRY CONDITION: signal strength and volume confirmation.
+                if met["dcs_adjusted"] >= required_dcs and met["relative_vol"] >= adaptive_vr_threshold:
+                    activos_elegibles.append(t)
+                    
+        # TOP-N SELECTION: cap total positions at max_posiciones, prioritizing held positions.
+        if len(activos_elegibles) > max_posiciones:
+            held_eligible = [t for t in activos_elegibles if t in currently_held]
+            new_eligible = sorted(
+                (t for t in activos_elegibles if t not in currently_held),
+                key=lambda t: adjusted_metrics[t]["dcs_adjusted"],
+                reverse=True
+            )
+            slots_for_new = max(0, max_posiciones - len(held_eligible))
+            activos_elegibles = held_eligible + new_eligible[:slots_for_new]
+            print(f"  |-- [Top-N] Kept {len(held_eligible)} held + "
+                  f"{min(slots_for_new, len(new_eligible))} new entries "
+                  f"(cap {max_posiciones}).")
+
         print(f"  |-- Eligible assets for long positions: {activos_elegibles}")
         
         # 2. Black-Litterman Sizing with SLSQP and Turnover Penalties

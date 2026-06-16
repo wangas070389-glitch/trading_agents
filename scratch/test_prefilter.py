@@ -16,7 +16,8 @@ def test_funnel():
     
     # 1. Fetch SPX constituents
     print("Fetching tickers...")
-    tickers = get_spx_tickers()
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    tickers = get_spx_tickers(root_dir)
     print(f"Total tickers fetched: {len(tickers)}")
     assert len(tickers) >= 10, "Error: Tickers count is too small"
     

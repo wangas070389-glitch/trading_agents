@@ -42,6 +42,7 @@ SNAPSHOT_EVERY = 10          # business days between snapshots
 FORWARD_HORIZON = 15         # business days a decision is held / scored
 FEE = 0.0029
 TRAIN_FRACTION = 0.6
+MAX_POSITIONS = 6   # must mirror the live reconciler default
 
 DCS_GRID = [0.05, 0.10, 0.15, 0.20, 0.30]
 VR_GRID = [1.0, 1.1, 1.2, 1.4]
@@ -216,9 +217,20 @@ def simulate_combo(snapshots, dcs_thr, vr_thr):
         for t in met:
             if t not in fwd:
                 continue
-            dcs_threshold_required = dcs_thr - 0.10 if t in currently_held else dcs_thr
-            if met[t]["dcs_adjusted"] >= dcs_threshold_required and met[t]["relative_vol"] >= vr_thr:
+            if t in currently_held:
+                # Mirror live reconciler: holds exempt from VR, lower DCS bar
+                if met[t]["dcs_adjusted"] >= dcs_thr - 0.10:
+                    eligible.append(t)
+            elif met[t]["dcs_adjusted"] >= dcs_thr and met[t]["relative_vol"] >= vr_thr:
                 eligible.append(t)
+
+        # Mirror live reconciler: top-N, protecting held positions
+        if len(eligible) > MAX_POSITIONS:
+            held_el = [t for t in eligible if t in currently_held]
+            new_el = sorted((t for t in eligible if t not in currently_held),
+                            key=lambda t: met[t]["dcs_adjusted"], reverse=True)
+            slots = max(0, MAX_POSITIONS - len(held_el))
+            eligible = held_el + new_el[:slots]
         
         currently_held = set(eligible)
         

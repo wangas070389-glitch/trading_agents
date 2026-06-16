@@ -47,7 +47,8 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             
     print("Fetching S&P 500 tickers...")
     from skills.index_constituents import get_spx_tickers
-    sp500_all = get_spx_tickers()
+    dir_path = os.path.dirname(os.path.abspath(__file__))
+    sp500_all = get_spx_tickers(dir_path)
     
     print(f"Downloading historical data for {len(sp500_all)} S&P 500 components...")
     sp500_data = yf.download(sp500_all, period="5y", progress=False)
@@ -258,9 +259,25 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             raw_metrics = screener.screen(lookback_universe)
             adjusted_metrics = analyst.stress_test(raw_metrics, {})
             
-            # Load learned parameters (or defaults) and build context
+            # CIRCULARITY GUARD: learned_params.json is trained on data that
+            # overlaps this backtest window, so using it here makes the
+            # backtest in-sample with respect to the learner and its numbers
+            # unquotable as independent evidence. Default to baseline params;
+            # opt in explicitly with BACKTEST_USE_LEARNED=1 (and a loud
+            # warning in the report) only for sensitivity checks.
             dir_path = os.path.dirname(os.path.abspath(__file__))
-            learned = load_learned_params(dir_path)
+            if os.environ.get("BACKTEST_USE_LEARNED") == "1":
+                learned = load_learned_params(dir_path)
+                if not globals().get("_warned_learned"):
+                    globals()["_warned_learned"] = True
+                    print("\n" + "!" * 70)
+                    print("WARNING: backtest is using LEARNED parameters trained on")
+                    print("overlapping data. Results are IN-SAMPLE — do not quote them")
+                    print("as evidence the learned thresholds work.")
+                    print("!" * 70)
+            else:
+                learned = {"dcs_threshold": 0.15, "vr_threshold": 1.2}
+                
             learning_context = {
                 "dcs_threshold": learned["dcs_threshold"],
                 "vr_threshold": learned["vr_threshold"],
