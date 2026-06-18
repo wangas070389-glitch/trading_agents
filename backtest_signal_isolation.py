@@ -352,7 +352,7 @@ def compute_metrics(nav_series):
 
 def main():
     print("=" * 80)
-    print("SIGNAL ISOLATION BACKTEST — PHASE 3")
+    print("SIGNAL ISOLATION BACKTEST - PHASE 3")
     print("=" * 80)
 
     asset_data, exog, fx_rate = download_universe()
@@ -382,10 +382,10 @@ def main():
     strategies = [
         ("1. Equal-Weight", strategy_equal_weight, False),
         ("2. DCS Momentum (current)", strategy_dcs_momentum, True),
-        ("3. DCS Mean-Reversion ⭐", strategy_dcs_mean_reversion, True),
+        ("3. DCS Mean-Reversion (Best-of)", strategy_dcs_mean_reversion, True),
         ("4. HMM Risk Filter", strategy_hmm_filter, True),
         ("5. GARCH Vol-Target", strategy_garch_vol_target, True),
-        ("6. 12-1 Momentum ⭐", strategy_momentum_12_1, False),
+        ("6. 12-1 Momentum (Classic)", strategy_momentum_12_1, False),
     ]
 
     results = []
@@ -405,8 +405,7 @@ def main():
             "fees": fees,
             **metrics,
         })
-        print(f"  → {name}: CAGR={metrics['cagr']:.2%}, Sharpe={metrics['sharpe']:.2f}, "
-              f"MaxDD={metrics['max_dd']:.2%}, Trades={trades}")
+        print(f"  -> {name}: CAGR={metrics['cagr']:.2%}, Sharpe={metrics['sharpe']:.2f}, MaxDD={metrics['max_dd']:.2%}, Trades={trades}")
 
     elapsed = time.time() - t_start
     print(f"\nAll variants completed in {elapsed:.0f}s")

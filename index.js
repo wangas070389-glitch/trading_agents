@@ -282,8 +282,13 @@ function renderBacktestChart(dates, strategy, cash, benchmark) {
         backtestChartInstance.destroy();
     }
     
-    const stratLabel = currentStrategy === 'macd_trend' ? 'MACD Systematic Strategy' : 'V5 Active Strategy';
-    const benchLabel = currentStrategy === 'macd_trend' ? `${document.getElementById('macd-ticker').value} Buy & Hold` : 'SPY Buy & Hold';
+    const tickerVal = document.getElementById('macd-ticker').value;
+    const stratLabel = currentStrategy === 'macd_trend' 
+        ? (tickerVal === 'ALL' ? 'MACD Multi-Asset Strategy' : 'MACD Systematic Strategy') 
+        : 'V5 Active Strategy';
+    const benchLabel = currentStrategy === 'macd_trend' 
+        ? (tickerVal === 'ALL' ? 'SPY Buy & Hold' : `${tickerVal} Buy & Hold`) 
+        : 'SPY Buy & Hold';
     const stratColor = currentStrategy === 'macd_trend' ? '#6366f1' : '#10b981';
     const stratBg = currentStrategy === 'macd_trend' ? 'rgba(99, 102, 241, 0.05)' : 'rgba(16, 185, 129, 0.05)';
     
@@ -401,7 +406,8 @@ document.getElementById('strat-macd-btn').addEventListener('click', () => {
     document.getElementById('label-strat-ret').textContent = 'MACD Strategy Return:';
     document.getElementById('label-cash-ret').textContent = 'Bondia Cash Yield (11%):';
     const ticker = document.getElementById('macd-ticker').value;
-    document.getElementById('label-spy-ret').textContent = `${ticker} Index Return:`;
+    const displayTicker = ticker === 'ALL' ? 'SPY' : ticker;
+    document.getElementById('label-spy-ret').textContent = `${displayTicker} Index Return:`;
     document.getElementById('label-fees-paid').textContent = 'Total Trans. Cost (Est):';
     
     resetBacktestUI();
@@ -410,7 +416,8 @@ document.getElementById('strat-macd-btn').addEventListener('click', () => {
 // Update label-spy-ret when dropdown changes
 document.getElementById('macd-ticker').addEventListener('change', () => {
     const ticker = document.getElementById('macd-ticker').value;
-    document.getElementById('label-spy-ret').textContent = `${ticker} Index Return:`;
+    const displayTicker = ticker === 'ALL' ? 'SPY' : ticker;
+    document.getElementById('label-spy-ret').textContent = `${displayTicker} Index Return:`;
     resetBacktestUI();
 });
 

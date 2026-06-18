@@ -202,6 +202,181 @@ def run_single_asset_simulation(df, ticker, params):
     nav_df = pd.DataFrame(daily_nav).set_index("Date")
     return nav_df, trades
 
+def run_multi_asset_simulation(data_dict, params):
+    """Runs systematic daily strategy simulation on a dictionary of asset dataframes.
+    Each asset is evaluated in parallel day-by-day.
+    Position sizing scales per asset (defaultQtyValue = 10% of total portfolio equity per position).
+    """
+    commission_rate = params.get("commission", 0.0010)
+    slippage = params.get("slippage_cents", 3) / 100.0
+    initial_capital = 10000.0
+    
+    # 1. Calculate indicators for each asset
+    asset_df_dict = {}
+    for ticker, df in data_dict.items():
+        try:
+            asset_df_dict[ticker] = calculate_all_indicators(df, params)
+        except Exception as e:
+            print(f"Error calculating indicators for {ticker}: {e}")
+            
+    if not asset_df_dict:
+        raise ValueError("No valid asset history to simulate.")
+        
+    # Find start date (union of dates where ma_long is valid)
+    valid_dates = None
+    for ticker, df_ind in asset_df_dict.items():
+        ticker_valid = df_ind["ma_long"].dropna().index
+        if valid_dates is None:
+            valid_dates = set(ticker_valid)
+        else:
+            valid_dates = valid_dates.intersection(set(ticker_valid))
+            
+    if not valid_dates:
+        valid_dates = set().union(*(df_ind["ma_long"].dropna().index for df_ind in asset_df_dict.values()))
+        
+    sim_dates = sorted(list(valid_dates))
+    if not sim_dates:
+        raise ValueError("Not enough history to run multi-asset simulation.")
+        
+    # Align and ffill dataframes
+    for ticker in list(asset_df_dict.keys()):
+        df_ind = asset_df_dict[ticker]
+        df_ind = df_ind.reindex(sim_dates).ffill()
+        asset_df_dict[ticker] = df_ind
+        
+    # Simulation state variables
+    cash = initial_capital
+    positions = {t: 0.0 for t in asset_df_dict}
+    positions_avg_price = {t: 0.0 for t in asset_df_dict}
+    highest_since_entry = {t: 0.0 for t in asset_df_dict}
+    trailing_stop_price = {t: None for t in asset_df_dict}
+    entry_dates = {t: None for t in asset_df_dict}
+    active_entries = {t: [] for t in asset_df_dict}
+    
+    trades = []
+    daily_nav = []
+    
+    for t_idx, current_date in enumerate(sim_dates):
+        # 1. Update/check open positions during the day for each asset
+        for ticker in asset_df_dict:
+            pos = positions[ticker]
+            if pos > 0:
+                row = asset_df_dict[ticker].iloc[t_idx]
+                o_t = row["open"]
+                h_t = row["high"]
+                l_t = row["low"]
+                c_t = row["close"]
+                
+                # Check trailing stop hit
+                stop_price = trailing_stop_price[ticker]
+                if stop_price is not None and l_t <= stop_price:
+                    # Stopped out
+                    fill_price = max(o_t, stop_price) - slippage
+                    gross_proceeds = pos * fill_price
+                    cost = pos * positions_avg_price[ticker]
+                    commission_total = (cost + gross_proceeds) * commission_rate
+                    profit = gross_proceeds - cost - commission_total
+                    
+                    trades.append({
+                        "ticker": ticker,
+                        "entry_date": entry_dates[ticker].strftime("%Y-%m-%d") if isinstance(entry_dates[ticker], (datetime.datetime, pd.Timestamp)) else str(entry_dates[ticker]),
+                        "exit_date": current_date.strftime("%Y-%m-%d"),
+                        "entry_price": positions_avg_price[ticker],
+                        "exit_price": fill_price,
+                        "shares": pos,
+                        "reason": "Trailing Stop Exit",
+                        "profit": profit
+                    })
+                    
+                    cash += gross_proceeds * (1.0 - commission_rate)
+                    positions[ticker] = 0.0
+                    positions_avg_price[ticker] = 0.0
+                    highest_since_entry[ticker] = 0.0
+                    trailing_stop_price[ticker] = None
+                    active_entries[ticker] = []
+                    entry_dates[ticker] = None
+                    
+                # If still open, update trailing stop parameters
+                if positions[ticker] > 0:
+                    highest_since_entry[ticker] = max(highest_since_entry[ticker], h_t)
+                    current_profit_pct = (c_t - positions_avg_price[ticker]) / positions_avg_price[ticker] * 100.0
+                    
+                    if current_profit_pct >= params["profitTriggerPercent"]:
+                        potential_stop = highest_since_entry[ticker] * (1.0 - params["trailingStopPercent"] / 100.0)
+                        if trailing_stop_price[ticker] is None:
+                            trailing_stop_price[ticker] = potential_stop
+                        else:
+                            trailing_stop_price[ticker] = max(trailing_stop_price[ticker], potential_stop)
+                            
+        # 2. Check for entry signal on close of bar t (to enter at open of bar t+1)
+        if t_idx > 0 and t_idx < len(sim_dates) - 1:
+            for ticker in asset_df_dict:
+                row_t = asset_df_dict[ticker].iloc[t_idx]
+                row_prev = asset_df_dict[ticker].iloc[t_idx - 1]
+                
+                macd_curr = row_t["macd"]
+                macd_prev = row_prev["macd"]
+                sig_curr = row_t["signal"]
+                sig_prev = row_prev["signal"]
+                
+                c_t = row_t["close"]
+                ma_long = row_t["ma_long"]
+                
+                if np.isnan(macd_curr) or np.isnan(macd_prev) or np.isnan(sig_curr) or np.isnan(sig_prev) or np.isnan(ma_long):
+                    continue
+                    
+                macd_buy = (macd_prev <= sig_prev) and (macd_curr > sig_curr)
+                is_bull = c_t > ma_long
+                
+                if macd_buy and is_bull:
+                    pyramiding_limit = params.get("pyramiding", 1)
+                    if len(active_entries[ticker]) < pyramiding_limit + 1:
+                        # Target next day's open
+                        row_next = asset_df_dict[ticker].iloc[t_idx + 1]
+                        entry_o = row_next["open"]
+                        entry_price = entry_o + slippage
+                        
+                        # Size based on percent of total portfolio equity
+                        current_equity = cash + sum(positions[tk] * asset_df_dict[tk].iloc[t_idx]["close"] for tk in asset_df_dict)
+                        qty_pct = params.get("defaultQtyValue", 10.0)
+                        target_val = current_equity * (qty_pct / 100.0)
+                        shares_to_buy = target_val / entry_price
+                        
+                        cost_per_share = entry_price * (1.0 + commission_rate)
+                        max_shares = cash / cost_per_share
+                        shares_to_buy = min(shares_to_buy, max_shares)
+                        
+                        if shares_to_buy > 0:
+                            cash -= shares_to_buy * cost_per_share
+                            
+                            active_entries[ticker].append({
+                                "shares": shares_to_buy,
+                                "price": entry_price,
+                                "date": sim_dates[t_idx + 1]
+                            })
+                            
+                            if positions[ticker] == 0.0:
+                                positions[ticker] = shares_to_buy
+                                positions_avg_price[ticker] = entry_price
+                                entry_dates[ticker] = sim_dates[t_idx + 1]
+                                highest_since_entry[ticker] = max(row_next["open"], row_next["high"])
+                                trailing_stop_price[ticker] = None
+                            else:
+                                new_total_shares = positions[ticker] + shares_to_buy
+                                positions_avg_price[ticker] = (positions[ticker] * positions_avg_price[ticker] + shares_to_buy * entry_price) / new_total_shares
+                                positions[ticker] = new_total_shares
+                                highest_since_entry[ticker] = max(highest_since_entry[ticker], row_next["high"])
+                                
+        # Track daily equity
+        current_equity = cash + sum(positions[tk] * asset_df_dict[tk].iloc[t_idx]["close"] for tk in asset_df_dict)
+        daily_nav.append({
+            "Date": current_date.strftime("%Y-%m-%d"),
+            "NAV": current_equity,
+        })
+        
+    nav_df = pd.DataFrame(daily_nav).set_index("Date")
+    return nav_df, trades
+
 def calculate_metrics(nav_series, label):
     """Calculates standard performance metrics."""
     returns = nav_series.pct_change().dropna()
@@ -240,18 +415,27 @@ def main():
     end_date = args.end
     
     print(f"Loading data for {ticker}...")
-    data_dict = download_data([ticker], start_date, end_date)
-    if ticker not in data_dict:
-        print(f"Failed to fetch data for {ticker}. Aborting.")
-        return
-        
-    df = data_dict[ticker]
-    print(f"Running simulation for {ticker}...")
-    nav_df, trades = run_single_asset_simulation(df, ticker, DEFAULT_PARAMS)
+    if ticker == "ALL":
+        tickers = ["SPY", "NVDA", "AAPL", "MSFT", "TSLA", "QQQ", "IWM"]
+        data_dict = download_data(tickers, start_date, end_date)
+        print("Running multi-asset portfolio simulation...")
+        nav_df, trades = run_multi_asset_simulation(data_dict, DEFAULT_PARAMS)
+        bench_df = data_dict["SPY"]
+        bench_label = "SPY Buy & Hold"
+    else:
+        data_dict = download_data([ticker], start_date, end_date)
+        if ticker not in data_dict:
+            print(f"Failed to fetch data for {ticker}. Aborting.")
+            return
+        df = data_dict[ticker]
+        print(f"Running simulation for {ticker}...")
+        nav_df, trades = run_single_asset_simulation(df, ticker, DEFAULT_PARAMS)
+        bench_df = df
+        bench_label = f"Buy & Hold {ticker}"
     
     # Benchmark equal-weight Buy & Hold
-    bench_shares = 10000.0 / df.loc[df.index >= nav_df.index[0], "close"].iloc[0]
-    bench_nav = df.loc[df.index >= nav_df.index[0], "close"] * bench_shares
+    bench_shares = 10000.0 / bench_df.loc[bench_df.index >= nav_df.index[0], "close"].iloc[0]
+    bench_nav = bench_df.loc[bench_df.index >= nav_df.index[0], "close"] * bench_shares
     bench_nav.index = [d.strftime("%Y-%m-%d") for d in bench_nav.index]
     
     # Sync Indices
@@ -261,7 +445,7 @@ def main():
     
     # Metrics
     strat_metrics = calculate_metrics(nav_df["NAV"], "MACD Trend Strategy")
-    bench_metrics = calculate_metrics(bench_nav, f"Buy & Hold {ticker}")
+    bench_metrics = calculate_metrics(bench_nav, bench_label)
     
     # Print results
     print("=" * 80)
@@ -325,18 +509,26 @@ def run_macd_simulation_for_api(ticker="SPY", start_date="2021-06-15", end_date=
             print(f"Error loading learned parameters: {e}")
             
     # Download data
-    data_dict = download_data([ticker], start_date, end_date)
-    if ticker not in data_dict:
-        raise ValueError(f"Failed to fetch data for {ticker}")
-        
-    df = data_dict[ticker]
-    
-    # Run simulation
-    nav_df, trades = run_single_asset_simulation(df, ticker, params)
+    if ticker == "ALL":
+        tickers = ["SPY", "NVDA", "AAPL", "MSFT", "TSLA", "QQQ", "IWM"]
+        data_dict = download_data(tickers, start_date, end_date)
+        # Run simulation
+        nav_df, trades = run_multi_asset_simulation(data_dict, params)
+        bench_df = data_dict["SPY"]
+        bench_label = "SPY Buy & Hold"
+    else:
+        data_dict = download_data([ticker], start_date, end_date)
+        if ticker not in data_dict:
+            raise ValueError(f"Failed to fetch data for {ticker}")
+        df = data_dict[ticker]
+        # Run simulation
+        nav_df, trades = run_single_asset_simulation(df, ticker, params)
+        bench_df = df
+        bench_label = f"Buy & Hold {ticker}"
     
     # Benchmark equal-weight Buy & Hold
-    bench_shares = 10000.0 / df.loc[df.index >= nav_df.index[0], "close"].iloc[0]
-    bench_nav = df.loc[df.index >= nav_df.index[0], "close"] * bench_shares
+    bench_shares = 10000.0 / bench_df.loc[bench_df.index >= nav_df.index[0], "close"].iloc[0]
+    bench_nav = bench_df.loc[bench_df.index >= nav_df.index[0], "close"] * bench_shares
     bench_nav.index = [d.strftime("%Y-%m-%d") for d in bench_nav.index]
     
     # Sync Indices
@@ -346,7 +538,7 @@ def run_macd_simulation_for_api(ticker="SPY", start_date="2021-06-15", end_date=
     
     # Metrics
     strat_metrics = calculate_metrics(nav_df["NAV"], "MACD Trend Strategy")
-    bench_metrics = calculate_metrics(bench_nav, f"Buy & Hold {ticker}")
+    bench_metrics = calculate_metrics(bench_nav, bench_label)
     
     # Prepare API response matching run_backtest_simulation format
     strategy_return = strat_metrics["total_return"] * 100.0

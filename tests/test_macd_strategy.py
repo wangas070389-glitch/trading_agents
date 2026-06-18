@@ -60,3 +60,49 @@ def test_calculate_atr():
     })
     atr = calculate_atr(df, length=3)
     assert len(atr) == 5
+
+def test_run_multi_asset_simulation():
+    from backtest_macd import run_multi_asset_simulation
+    
+    # Create mock dataframes for 2 assets
+    dates = pd.date_range(start="2023-01-01", periods=10)
+    df1 = pd.DataFrame({
+        "open": [10.0] * 10,
+        "high": [12.0] * 10,
+        "low": [9.0] * 10,
+        "close": [11.0] * 10,
+        "volume": [1000] * 10
+    }, index=dates)
+    
+    df2 = pd.DataFrame({
+        "open": [20.0] * 10,
+        "high": [22.0] * 10,
+        "low": [19.0] * 10,
+        "close": [21.0] * 10,
+        "volume": [2000] * 10
+    }, index=dates)
+    
+    data_dict = {
+        "ASSET1": df1,
+        "ASSET2": df2
+    }
+    
+    params = {
+        "longTermMALength": 3,
+        "maType": "SMA",
+        "fastLength": 2,
+        "slowLength": 4,
+        "signalLength": 2,
+        "profitTriggerPercent": 5.0,
+        "trailingStopPercent": 2.0,
+        "defaultQtyValue": 10.0,
+        "pyramiding": 1,
+        "commission": 0.0010,
+        "slippage_cents": 3,
+    }
+    
+    nav_df, trades = run_multi_asset_simulation(data_dict, params)
+    
+    assert not nav_df.empty
+    assert "NAV" in nav_df.columns
+    assert len(nav_df) == 8  # 10 periods minus 2 periods warmup (for SMA 3)
