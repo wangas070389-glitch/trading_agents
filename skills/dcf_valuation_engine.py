@@ -68,13 +68,14 @@ def calculate_dcf_intrinsic_value(
         fcff_projections.append((t, current_fcff, current_growth))
         
     # 2. Compute Terminal Value (at year 10)
-    # Ensure denominator is positive to prevent division by zero or negative terminal value
-    denominator = wacc - terminal_growth
-    if denominator <= 0.01:
-        denominator = 0.01  # Safe floor
-        
+    # Structurally bound terminal growth to not exceed WACC minus an economic buffer.
+    # Flooring the denominator post-hoc masks impossible inputs; constrain at the source.
+    max_sustainable_growth = min(wacc - 0.005, 0.03)
+    effective_terminal_growth = min(terminal_growth, max_sustainable_growth)
+    denominator = wacc - effective_terminal_growth
+
     last_year_fcff = fcff_projections[-1][1]
-    terminal_value = (last_year_fcff * (1 + terminal_growth)) / denominator
+    terminal_value = (last_year_fcff * (1 + effective_terminal_growth)) / denominator
     
     # 3. Discount cash flows to present value
     pv_cash_flows = 0.0
