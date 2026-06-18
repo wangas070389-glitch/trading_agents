@@ -119,6 +119,41 @@ class DashboardAPIHandler(SimpleHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(json.dumps(response).encode('utf-8'))
             return
+
+        # API: POST /api/backtest_macd
+        if self.path == '/api/backtest_macd':
+            try:
+                # Import backtest runner
+                from backtest_macd import run_macd_simulation_for_api
+                
+                # Read JSON body if present
+                content_length = int(self.headers.get('Content-Length', 0))
+                ticker = "SPY"
+                if content_length > 0:
+                    try:
+                        body = self.rfile.read(content_length)
+                        req_data = json.loads(body.decode('utf-8'))
+                        ticker = req_data.get("ticker", "SPY")
+                    except Exception:
+                        pass
+                
+                # Execute simulation
+                results = run_macd_simulation_for_api(ticker=ticker)
+                
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(results).encode('utf-8'))
+            except Exception as e:
+                response = {
+                    "status": "error",
+                    "message": str(e)
+                }
+                self.send_response(500)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(response).encode('utf-8'))
+            return
             
         self.send_error(404, "Endpoint not found")
 

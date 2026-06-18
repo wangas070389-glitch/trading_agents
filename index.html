@@ -106,11 +106,34 @@
 
         <!-- Backtest Section -->
         <div class="glass-card backtest-card" style="margin-top: 1.25rem;">
-            <div class="backtest-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
-                <h3 style="margin-bottom: 0;">60-Day Walk-Forward Strategy Backtest</h3>
-                <button id="backtest-btn" class="btn primary-btn" style="background: linear-gradient(135deg, #6366f1, #4f46e5); color: white;">
-                    <span class="btn-icon">📈</span> Run Backtest Simulation
-                </button>
+            <div class="backtest-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+                <h3 id="backtest-title" style="margin-bottom: 0;">Strategy Backtest Simulation</h3>
+                
+                <div class="backtest-controls" style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                    <!-- Strategy Selector Tabs -->
+                    <div class="strategy-selector" style="display: flex; gap: 0.25rem; background: rgba(255, 255, 255, 0.03); padding: 0.25rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                        <button id="strat-val-btn" class="strat-toggle active" style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: white; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Outfit'; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">Mexican Value Equity</button>
+                        <button id="strat-macd-btn" class="strat-toggle" style="background: transparent; border: 1px solid transparent; color: #8f9cae; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Outfit'; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">Systematic MACD Trend</button>
+                    </div>
+
+                    <!-- MACD Ticker Dropdown (Hidden by default) -->
+                    <div id="macd-ticker-container" style="display: none; align-items: center; gap: 0.5rem; background: rgba(255, 255, 255, 0.03); padding: 0.25rem 0.5rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                        <label for="macd-ticker" style="font-size: 0.85rem; color: #8f9cae; font-family: 'Outfit';">Ticker:</label>
+                        <select id="macd-ticker" style="background: transparent; border: none; color: white; font-family: 'Outfit'; font-size: 0.85rem; outline: none; cursor: pointer; font-weight: 500;">
+                            <option value="SPY" style="background: #111827; color: white;">SPY</option>
+                            <option value="NVDA" style="background: #111827; color: white;">NVDA</option>
+                            <option value="AAPL" style="background: #111827; color: white;">AAPL</option>
+                            <option value="MSFT" style="background: #111827; color: white;">MSFT</option>
+                            <option value="TSLA" style="background: #111827; color: white;">TSLA</option>
+                            <option value="QQQ" style="background: #111827; color: white;">QQQ</option>
+                            <option value="IWM" style="background: #111827; color: white;">IWM</option>
+                        </select>
+                    </div>
+
+                    <button id="backtest-btn" class="btn primary-btn" style="background: linear-gradient(135deg, #6366f1, #4f46e5); color: white;">
+                        <span class="btn-icon">📈</span> Run Backtest Simulation
+                    </button>
+                </div>
             </div>
             <div class="backtest-content-grid" style="display: grid; grid-template-columns: 1.8fr 1fr; gap: 1.5rem;">
                 <!-- Line Chart -->
@@ -121,15 +144,15 @@
                 <div class="backtest-metrics-panel" style="display: flex; flex-direction: column; justify-content: center; gap: 1rem; padding: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px;">
                     <h4 style="margin: 0; font-size: 0.95rem; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.5px;">Simulation Performance</h4>
                     <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span>V3 Strategy Return:</span>
+                        <span id="label-strat-ret">V3 Strategy Return:</span>
                         <strong id="bt-strat-ret" class="positive" style="color: #10b981;">--</strong>
                     </div>
                     <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span>Bondia Cash Yield (11%):</span>
+                        <span id="label-cash-ret">Bondia Cash Yield (11%):</span>
                         <strong id="bt-cash-ret" style="color: #0ea5e9;">--</strong>
                     </div>
                     <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span>SPY Index Return:</span>
+                        <span id="label-spy-ret">SPY Index Return:</span>
                         <strong id="bt-spy-ret" style="color: #a855f7;">--</strong>
                     </div>
                     <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
@@ -141,7 +164,7 @@
                         <strong id="bt-drawdown" class="negative" style="color: #ef4444;">--</strong>
                     </div>
                     <div class="metric-row" style="display: flex; justify-content: space-between; font-size: 0.9rem;">
-                        <span>Total Trading Fees Paid:</span>
+                        <span id="label-fees-paid">Total Trading Fees Paid:</span>
                         <strong id="bt-fees" style="color: #8f9cae;">--</strong>
                     </div>
                 </div>

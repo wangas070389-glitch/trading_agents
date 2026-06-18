@@ -1,12 +1,12 @@
 {
   "total_capital": 20000.0,
-  "cash_balance": 13650.51,
+  "cash_balance": 13662.91,
   "holdings": [
     {
       "ticker": "WALMEX.MX",
       "shares": 49,
       "buy_price": 52.64,
-      "last_price": 52.63999938964844,
+      "last_price": 50.29,
       "target_weight": 0.12726072122459797,
       "dcs": 0.5489296757321679,
       "garch_vol": 0.01592104163079478,
@@ -18,7 +18,7 @@
       "ticker": "ASURB.MX",
       "shares": 5,
       "buy_price": 516.37,
-      "last_price": 516.3699951171875,
+      "last_price": 533.83,
       "target_weight": 0.13315075594553702,
       "dcs": 0.7051387304631916,
       "garch_vol": 0.01954699857319485,
@@ -30,7 +30,7 @@
       "ticker": "GRUMAB.MX",
       "shares": 1,
       "buy_price": 291.46,
-      "last_price": 291.4599914550781,
+      "last_price": 288.69,
       "target_weight": 0.027853008203029602,
       "dcs": 0.10792792454714929,
       "garch_vol": 0.014302464118323956,
@@ -42,7 +42,7 @@
       "ticker": "AC.MX",
       "shares": 6,
       "buy_price": 212.42,
-      "last_price": 212.4199981689453,
+      "last_price": 210.45,
       "target_weight": 0.06292807009565798,
       "dcs": 0.19587522839954968,
       "garch_vol": 0.011489053488625106,
@@ -51,6 +51,6 @@
       "zg_t": -0.12592592592592594
     }
   ],
-  "last_updated": "2026-06-15 15:30:07",
+  "last_updated": "2026-06-18 14:50:49",
   "slippage_savings": 0.0
 }

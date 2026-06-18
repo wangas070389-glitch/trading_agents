@@ -274,6 +274,7 @@ document.getElementById('refresh-btn').addEventListener('click', async () => {
 });
 
 let backtestChartInstance = null;
+let currentStrategy = 'value_equity';
 
 function renderBacktestChart(dates, strategy, cash, benchmark) {
     const ctx = document.getElementById('backtestChart').getContext('2d');
@@ -281,16 +282,21 @@ function renderBacktestChart(dates, strategy, cash, benchmark) {
         backtestChartInstance.destroy();
     }
     
+    const stratLabel = currentStrategy === 'macd_trend' ? 'MACD Systematic Strategy' : 'V5 Active Strategy';
+    const benchLabel = currentStrategy === 'macd_trend' ? `${document.getElementById('macd-ticker').value} Buy & Hold` : 'SPY Buy & Hold';
+    const stratColor = currentStrategy === 'macd_trend' ? '#6366f1' : '#10b981';
+    const stratBg = currentStrategy === 'macd_trend' ? 'rgba(99, 102, 241, 0.05)' : 'rgba(16, 185, 129, 0.05)';
+    
     backtestChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
             labels: dates,
             datasets: [
                 {
-                    label: 'V4 Active Strategy',
+                    label: stratLabel,
                     data: strategy,
-                    borderColor: '#10b981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                    borderColor: stratColor,
+                    backgroundColor: stratBg,
                     borderWidth: 2,
                     pointRadius: 1,
                     tension: 0.1,
@@ -307,7 +313,7 @@ function renderBacktestChart(dates, strategy, cash, benchmark) {
                     tension: 0.1
                 },
                 {
-                    label: 'SPY Buy & Hold',
+                    label: benchLabel,
                     data: benchmark,
                     borderColor: '#a855f7',
                     backgroundColor: 'transparent',
@@ -351,14 +357,97 @@ function renderBacktestChart(dates, strategy, cash, benchmark) {
     });
 }
 
+// Setup Strategy Toggles
+document.getElementById('strat-val-btn').addEventListener('click', () => {
+    if (currentStrategy === 'value_equity') return;
+    currentStrategy = 'value_equity';
+    
+    // UI states
+    document.getElementById('strat-val-btn').style.background = 'rgba(16, 185, 129, 0.2)';
+    document.getElementById('strat-val-btn').style.borderColor = '#10b981';
+    document.getElementById('strat-val-btn').style.color = 'white';
+    
+    document.getElementById('strat-macd-btn').style.background = 'transparent';
+    document.getElementById('strat-macd-btn').style.borderColor = 'transparent';
+    document.getElementById('strat-macd-btn').style.color = '#8f9cae';
+    
+    document.getElementById('macd-ticker-container').style.display = 'none';
+    
+    // Update labels
+    document.getElementById('label-strat-ret').textContent = 'V5 Strategy Return:';
+    document.getElementById('label-cash-ret').textContent = 'Bondia Cash Yield (11%):';
+    document.getElementById('label-spy-ret').textContent = 'SPY Index Return:';
+    document.getElementById('label-fees-paid').textContent = 'Total Trading Fees Paid:';
+    
+    resetBacktestUI();
+});
+
+document.getElementById('strat-macd-btn').addEventListener('click', () => {
+    if (currentStrategy === 'macd_trend') return;
+    currentStrategy = 'macd_trend';
+    
+    // UI states
+    document.getElementById('strat-macd-btn').style.background = 'rgba(99, 102, 241, 0.2)';
+    document.getElementById('strat-macd-btn').style.borderColor = '#6366f1';
+    document.getElementById('strat-macd-btn').style.color = 'white';
+    
+    document.getElementById('strat-val-btn').style.background = 'transparent';
+    document.getElementById('strat-val-btn').style.borderColor = 'transparent';
+    document.getElementById('strat-val-btn').style.color = '#8f9cae';
+    
+    document.getElementById('macd-ticker-container').style.display = 'flex';
+    
+    // Update labels
+    document.getElementById('label-strat-ret').textContent = 'MACD Strategy Return:';
+    document.getElementById('label-cash-ret').textContent = 'Bondia Cash Yield (11%):';
+    const ticker = document.getElementById('macd-ticker').value;
+    document.getElementById('label-spy-ret').textContent = `${ticker} Index Return:`;
+    document.getElementById('label-fees-paid').textContent = 'Total Trans. Cost (Est):';
+    
+    resetBacktestUI();
+});
+
+// Update label-spy-ret when dropdown changes
+document.getElementById('macd-ticker').addEventListener('change', () => {
+    const ticker = document.getElementById('macd-ticker').value;
+    document.getElementById('label-spy-ret').textContent = `${ticker} Index Return:`;
+    resetBacktestUI();
+});
+
+function resetBacktestUI() {
+    document.getElementById('bt-strat-ret').textContent = '--';
+    document.getElementById('bt-cash-ret').textContent = '--';
+    document.getElementById('bt-spy-ret').textContent = '--';
+    document.getElementById('bt-sharpe').textContent = '--';
+    document.getElementById('bt-drawdown').textContent = '--';
+    document.getElementById('bt-fees').textContent = '--';
+    if (backtestChartInstance) {
+        backtestChartInstance.destroy();
+        backtestChartInstance = null;
+    }
+}
+
 // Bind backtest button action
 document.getElementById('backtest-btn').addEventListener('click', async () => {
     const btn = document.getElementById('backtest-btn');
     btn.disabled = true;
-    btn.innerHTML = `<span class="btn-icon">⏳</span> Running walk-forward...`;
+    btn.innerHTML = `<span class="btn-icon">⏳</span> Running simulation...`;
     
     try {
-        const response = await fetch('/api/backtest', { method: 'POST' });
+        let response;
+        if (currentStrategy === 'value_equity') {
+            response = await fetch('/api/backtest', { method: 'POST' });
+        } else {
+            const ticker = document.getElementById('macd-ticker').value;
+            response = await fetch('/api/backtest_macd', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ticker: ticker })
+            });
+        }
+        
         if (!response.ok) {
             throw new Error(`Simulation failed: ${response.statusText}`);
         }
@@ -372,7 +461,10 @@ document.getElementById('backtest-btn').addEventListener('click', async () => {
         document.getElementById('bt-spy-ret').textContent = `${metrics.benchmark_return >= 0 ? '+' : ''}${metrics.benchmark_return.toFixed(2)}%`;
         document.getElementById('bt-sharpe').textContent = metrics.sharpe.toFixed(2);
         document.getElementById('bt-drawdown').textContent = `${metrics.drawdown.toFixed(2)}%`;
-        document.getElementById('bt-fees').textContent = `$${formatCurrency(metrics.fees)} MXN`;
+        
+        const isMACD = currentStrategy === 'macd_trend';
+        const feeCurrency = isMACD ? 'USD' : 'MXN';
+        document.getElementById('bt-fees').textContent = `$${formatCurrency(metrics.fees)} ${feeCurrency}`;
         
         // Render Chart
         renderBacktestChart(data.dates, data.strategy, data.cash, data.benchmark);
