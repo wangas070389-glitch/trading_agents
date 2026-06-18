@@ -1,6 +1,149 @@
 {
   "total_capital": 20000.0,
-  "cash_balance": 20360.69,
-  "holdings": [],
-  "last_updated": "2026-06-13 00:01:07"
+  "cash_balance": 6955.31,
+  "settled_cash": 6955.31,
+  "unsettled_cash": 0.0,
+  "holdings": [
+    {
+      "ticker": "AMXB.MX",
+      "shares": 31,
+      "buy_price": 23.88,
+      "last_price": 22.92,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "FEMSAUBD.MX",
+      "shares": 3,
+      "buy_price": 222.64,
+      "last_price": 218.22,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "WALMEX.MX",
+      "shares": 14,
+      "buy_price": 52.08,
+      "last_price": 51.79,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "GFNORTEO.MX",
+      "shares": 3,
+      "buy_price": 188.65,
+      "last_price": 191.11,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "GMEXICOB.MX",
+      "shares": 3,
+      "buy_price": 209.69,
+      "last_price": 214.7,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "CEMEXCPO.MX",
+      "shares": 33,
+      "buy_price": 22.37,
+      "last_price": 21.84,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "BIMBOA.MX",
+      "shares": 12,
+      "buy_price": 58.15,
+      "last_price": 57.72,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "GAPB.MX",
+      "shares": 1,
+      "buy_price": 408.74,
+      "last_price": 431.59,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "ASURB.MX",
+      "shares": 1,
+      "buy_price": 493.42,
+      "last_price": 522.79,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "OMAB.MX",
+      "shares": 3,
+      "buy_price": 219.24,
+      "last_price": 242.32,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "GRUMAB.MX",
+      "shares": 2,
+      "buy_price": 296.06,
+      "last_price": 292.5,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "KIMBERA.MX",
+      "shares": 19,
+      "buy_price": 37.49,
+      "last_price": 37.93,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "AC.MX",
+      "shares": 3,
+      "buy_price": 209.61,
+      "last_price": 214.42,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "ORBIA.MX",
+      "shares": 33,
+      "buy_price": 21.98,
+      "last_price": 21.62,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "PINFRA.MX",
+      "shares": 2,
+      "buy_price": 280.05,
+      "last_price": 284.8,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "BBAJIOO.MX",
+      "shares": 13,
+      "buy_price": 55.31,
+      "last_price": 54.93,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "GENTERA.MX",
+      "shares": 20,
+      "buy_price": 36.86,
+      "last_price": 38.17,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "CUERVO.MX",
+      "shares": 51,
+      "buy_price": 14.27,
+      "last_price": 14.38,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "GCC.MX",
+      "shares": 3,
+      "buy_price": 202.04,
+      "last_price": 205.48,
+      "target_weight": 0.037
+    },
+    {
+      "ticker": "VESTA.MX",
+      "shares": 12,
+      "buy_price": 59.15,
+      "last_price": 59.42,
+      "target_weight": 0.037
+    }
+  ],
+  "last_updated": "2026-06-18 00:01:23"
 }

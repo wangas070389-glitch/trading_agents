@@ -119,11 +119,24 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
     spy_start_price = spy_mxn_series.iloc[0]
     spy_shares = (starting_capital * (1.0 - 0.0029)) / spy_start_price
     
-    # Track daily portfolio values
+    # Track daily portfolio values (actual NAV with deposits)
     history_dates = []
     history_strat = []
     history_cash_bench = []
     history_spy_bench = []
+    
+    # Time-Weighted Return (TWR) Tracking
+    strategy_last_nav = starting_capital
+    cash_last_nav = starting_capital
+    spy_last_nav = starting_capital
+    
+    history_strat_twr = []
+    history_cash_twr = []
+    history_spy_twr = []
+    
+    current_strat_twr = 1.0
+    current_cash_twr = 1.0
+    current_spy_twr = 1.0
     
     # Active screening agents
     screener = FundamentalScreener()
@@ -153,30 +166,45 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
         cash_interest = cash_value * daily_rate * calendar_days
         cash_value += cash_interest
         
-        # Get prices of holdings on day t
-        stock_value = 0.0
-        for ticker, shares in holdings.items():
-            if shares > 0:
-                price_t = universe_history[ticker]["Asset_Price"].loc[current_date]
-                stock_value += shares * price_t
+        # Get prices of holdings on day t before any contribution or rebalance
+        stock_value = sum(holdings.get(t, 0.0) * universe_history[t]["Asset_Price"].loc[current_date] for t in holdings if holdings.get(t, 0.0) > 0)
+        strat_nav_before = cash + stock_value
+        cash_nav_before = cash_value
+        spy_nav_before = spy_shares * spy_mxn_series.loc[current_date]
+        
+        # Update TWR series
+        if t_idx > 0:
+            r_strat = (strat_nav_before / strategy_last_nav) - 1.0 if strategy_last_nav > 0 else 0.0
+            r_cash = (cash_nav_before / cash_last_nav) - 1.0 if cash_last_nav > 0 else 0.0
+            r_spy = (spy_nav_before / spy_last_nav) - 1.0 if spy_last_nav > 0 else 0.0
+            current_strat_twr *= (1.0 + r_strat)
+            current_cash_twr *= (1.0 + r_cash)
+            current_spy_twr *= (1.0 + r_spy)
+            
+        # Apply monthly savings contribution of 2,000 MXN
+        is_contribution_day = False
+        if t_idx == 0:
+            is_contribution_day = True
+        else:
+            prev_date = backtest_dates[t_idx - 1]
+            if current_date.month != prev_date.month:
+                is_contribution_day = True
                 
-        strat_value = cash + stock_value
-        
-        # Record daily history
-        history_dates.append(current_date.strftime("%Y-%m-%d"))
-        history_strat.append(round(strat_value, 2))
-        history_cash_bench.append(round(cash_value, 2))
-        
-        # SPY benchmark value on day t (less transaction fee at final day to be realistic)
-        spy_price_t = spy_mxn_series.loc[current_date]
-        spy_bench_val = spy_shares * spy_price_t
-        if t_idx == len(backtest_dates) - 1:
-            spy_bench_val = spy_bench_val * (1.0 - 0.0029)
-        history_spy_bench.append(round(spy_bench_val, 2))
-        
+        if is_contribution_day:
+            cash += 2000.0
+            strat_nav_before += 2000.0
+            cash_value += 2000.0
+            cash_nav_before += 2000.0
+            spy_price_t = spy_mxn_series.loc[current_date]
+            spy_contribution_shares = (2000.0 * (1.0 - 0.0029)) / spy_price_t
+            spy_shares += spy_contribution_shares
+            spy_nav_before += 2000.0
+            
         # Rebalancing triggers: Day 0, and then every 15 business days
         if t_idx == 0 or t_idx % rebalance_freq == 0:
-            print(f"  |-- Walk-Forward Rebalancing on {current_date.strftime('%Y-%m-%d')}...")
+            # Recompute active portfolio value (including the new cash injection)
+            portfolio_value_mxn = cash + sum(holdings.get(t, 0.0) * universe_history[t]["Asset_Price"].loc[current_date] for t in holdings if holdings.get(t, 0.0) > 0)
+            print(f"  |-- Walk-Forward Rebalancing on {current_date.strftime('%Y-%m-%d')}... Portfolio Value: {portfolio_value_mxn:.2f}")
             
             # Separate BMV and US tickers
             bmv_tickers = [t for t in universe_history.keys() if t.endswith(".MX")]
@@ -200,9 +228,6 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             if us_close_dict and usdmxn_rate is not None:
                 batch_close = pd.DataFrame(us_close_dict)
                 batch_volume = pd.DataFrame(us_vol_dict)
-                
-                # Estimate current portfolio value for the pre-filter affordability check
-                portfolio_value_mxn = strat_value
                 
                 from skills.prefilter import prefilter_us_universe
                 selected_us = prefilter_us_universe(
@@ -249,23 +274,25 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
                 
             # Assemble current portfolio dict
             portfolio_sim = {
-                "total_capital": starting_capital,
+                "total_capital": portfolio_value_mxn,
                 "cash_balance": cash,
                 "holdings": [{"ticker": tick, "shares": sh, "buy_price": universe_history[tick]["Asset_Price"].loc[current_date], "last_price": universe_history[tick]["Asset_Price"].loc[current_date]} for tick, sh in holdings.items() if sh > 0]
             }
             
             # Run quantitative V3 screener + rebalancer
-            raw_metrics = screener.screen(lookback_universe)
+            raw_metrics = screener.screen(lookback_universe, execution_date=current_date)
             adjusted_metrics = analyst.stress_test(raw_metrics, {})
             
             # Load learned parameters (or defaults) and build context
             dir_path = os.path.dirname(os.path.abspath(__file__))
             learned = load_learned_params(dir_path)
             learning_context = {
-                "dcs_threshold": learned["dcs_threshold"],
+                "dcs_threshold": 0.15,  # Relaxed for aggressive capital growth
                 "vr_threshold": learned["vr_threshold"],
                 "confidence": {},
-                "exposure_scalar": 1.0
+                "exposure_scalar": 1.0,
+                "normalize_weights": True,
+                "min_fx_scalar": 0.7
             }
             
             # Optimize and calculate weights
@@ -297,32 +324,62 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             total_fees_paid += step_fees
             print(f"      Rebalanced: Holdings={holdings} | Cash={cash:.2f} MXN | Fees Paid={step_fees:.2f} MXN")
 
-    # 5. Compute backtest statistics
-    # V3 Strategy Stats
-    strat_vals = np.array(history_strat)
-    strat_returns = strat_vals[1:] / strat_vals[:-1] - 1.0
-    strat_cum_return = (strat_vals[-1] / starting_capital - 1.0) * 100.0
+        # Record today's final NAV (after cash injections/rebalance)
+        stock_value = sum(holdings.get(t, 0.0) * universe_history[t]["Asset_Price"].loc[current_date] for t in holdings if holdings.get(t, 0.0) > 0)
+        strat_value = cash + stock_value
+        
+        strategy_last_nav = strat_value
+        cash_last_nav = cash_value
+        spy_last_nav = spy_shares * spy_mxn_series.loc[current_date]
+        
+        # Record daily history
+        history_dates.append(current_date.strftime("%Y-%m-%d"))
+        history_strat.append(round(strat_value, 2))
+        history_cash_bench.append(round(cash_value, 2))
+        
+        # SPY benchmark value on day t (less transaction fee at final day to be realistic)
+        spy_bench_val = spy_last_nav
+        if t_idx == len(backtest_dates) - 1:
+            spy_bench_val = spy_bench_val * (1.0 - 0.0029)
+        history_spy_bench.append(round(spy_bench_val, 2))
+        
+        history_strat_twr.append(current_strat_twr)
+        history_cash_twr.append(current_cash_twr)
+        history_spy_twr.append(current_spy_twr)
+
+    # 5. Compute backtest statistics using Time-Weighted Return (TWR)
+    # Convert TWR series to pandas Series
+    strat_twr_pd = pd.Series(history_strat_twr, index=backtest_dates)
+    cash_twr_pd = pd.Series(history_cash_twr, index=backtest_dates)
+    spy_twr_pd = pd.Series(history_spy_twr, index=backtest_dates)
     
-    # Annualized Sharpe ratio (excess over Bondia cash rate)
-    excess_returns = strat_returns - (0.11 / 252.0)
+    # Compute daily pct changes of the TWR series
+    strat_twr_returns = strat_twr_pd.pct_change().dropna()
+    cash_twr_returns = cash_twr_pd.pct_change().dropna()
+    spy_twr_returns = spy_twr_pd.pct_change().dropna()
+    
+    # Cumulative TWR returns
+    strat_cum_return = (strat_twr_pd.iloc[-1] - 1.0) * 100.0
+    cash_cum_return = (cash_twr_pd.iloc[-1] - 1.0) * 100.0
+    spy_cum_return = (spy_twr_pd.iloc[-1] - 1.0) * 100.0
+    
+    # Sharpe ratio (annualized, excess over 11% Bondia rate / 252)
+    excess_returns = strat_twr_returns - (0.11 / 252.0)
     sharpe_strat = np.sqrt(252.0) * np.mean(excess_returns) / np.std(excess_returns) if np.std(excess_returns) > 0 else 0.0
     
-    # Max Drawdown
-    peaks_strat = np.maximum.accumulate(strat_vals)
-    dd_strat = (strat_vals - peaks_strat) / peaks_strat
+    # Max Drawdowns from TWR cumulative series
+    peaks_strat = np.maximum.accumulate(history_strat_twr)
+    dd_strat = (np.array(history_strat_twr) - peaks_strat) / peaks_strat
     max_dd_strat = dd_strat.min() * 100.0
     
-    # Cash Stats
-    cash_vals = np.array(history_cash_bench)
-    cash_cum_return = (cash_vals[-1] / starting_capital - 1.0) * 100.0
-    
-    # SPY Stats
-    spy_vals = np.array(history_spy_bench)
-    spy_returns = spy_vals[1:] / spy_vals[:-1] - 1.0
-    spy_cum_return = (spy_vals[-1] / starting_capital - 1.0) * 100.0
-    peaks_spy = np.maximum.accumulate(spy_vals)
-    dd_spy = (spy_vals - peaks_spy) / peaks_spy
+    # SPY Bench drawdowns
+    peaks_spy = np.maximum.accumulate(history_spy_twr)
+    dd_spy = (np.array(history_spy_twr) - peaks_spy) / peaks_spy
     max_dd_spy = dd_spy.min() * 100.0
+    
+    strat_vals = np.array(history_strat)
+    cash_vals = np.array(history_cash_bench)
+    spy_vals = np.array(history_spy_bench)
     
     # Save backtest report to markdown
     report = []

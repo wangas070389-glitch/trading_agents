@@ -77,7 +77,10 @@ function renderDashboard(portfolio, dcsThreshold) {
     document.getElementById('cash-pct').textContent = `${((cash / totalPortfolioValue) * 100).toFixed(1)}% cash reserve`;
 
     const slippageSavings = portfolio.slippage_savings !== undefined ? portfolio.slippage_savings : 0.0;
-    document.getElementById('dqn-savings').innerHTML = `$${formatCurrency(slippageSavings)} <span class="currency">MXN</span>`;
+    const dqnSavingsEl = document.getElementById('dqn-savings');
+    if (dqnSavingsEl) {
+        dqnSavingsEl.innerHTML = `$${formatCurrency(slippageSavings)} <span class="currency">MXN</span>`;
+    }
 
     // 3. Render Positions Table
     const tbody = document.getElementById('portfolio-body');

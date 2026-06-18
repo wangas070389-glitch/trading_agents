@@ -372,7 +372,7 @@ def main():
     # 3. Phase 2: Quantitative Screening (Agent 1)
     print("\n--- PHASE 2: AGENT QUANTITATIVE SCREENING ---")
     screener = FundamentalScreener()
-    raw_metrics = screener.screen(universe_data)
+    raw_metrics = screener.screen(universe_data, execution_date=execution_date)
 
     # 4. Phase 3: Qualitative Macro Adjustment (Agent 2)
     print("\n--- PHASE 3: AGENT MACRO RISK ANALYSIS ---")
@@ -391,6 +391,35 @@ def main():
             "last_updated": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
         print("  |-- portfolio.json missing. Initialized default empty portfolio with $20,000.00 MXN.")
+    else:
+        # Check if we transitioned to a new calendar month since last_updated to add monthly contribution
+        last_updated_str = portfolio.get("last_updated")
+        if last_updated_str:
+            try:
+                # Support formats: "%Y-%m-%d %H:%M:%S" or "%Y-%m-%d"
+                if " " in last_updated_str:
+                    last_dt = datetime.datetime.strptime(last_updated_str, "%Y-%m-%d %H:%M:%S")
+                else:
+                    last_dt = datetime.datetime.strptime(last_updated_str, "%Y-%m-%d")
+                
+                # Check year and month transition relative to today
+                today = datetime.date.today()
+                if today.year > last_dt.year or (today.year == last_dt.year and today.month > last_dt.month):
+                    contribution_amount = 2000.0
+                    portfolio["cash_balance"] += contribution_amount
+                    if "settled_cash" in portfolio:
+                        portfolio["settled_cash"] += contribution_amount
+                    portfolio["total_capital"] += contribution_amount
+                    print(f"\n[Savings Ingestion] New month detected ({last_dt.strftime('%Y-%m')} -> {today.strftime('%Y-%m')}). "
+                          f"Injected ${contribution_amount:,.2f} MXN monthly savings contribution.")
+                    
+                    # Log the contribution in transactions.md
+                    log_transaction(
+                        dir_path, execution_date, "CASH", "DEPOSIT", 1, contribution_amount,
+                        "Monthly savings contribution", fee=0.0
+                    )
+            except Exception as e:
+                print(f"[WARN] Failed to parse last_updated date or apply monthly contribution: {e}")
 
     # 5b. Adaptive learning context: resolve past signal outcomes, compute
     # confidence multipliers, load learned thresholds, apply drawdown brake.
@@ -419,10 +448,12 @@ def main():
     }
 
     learning_context = {
-        "dcs_threshold": learned["dcs_threshold"],
+        "dcs_threshold": 0.15,  # Relaxed for aggressive capital growth
         "vr_threshold": learned["vr_threshold"],
         "confidence": confidence,
         "exposure_scalar": exposure,
+        "normalize_weights": True,
+        "min_fx_scalar": 0.7
     }
 
     reconciler = PortfolioReconciler()
