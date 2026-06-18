@@ -1,16 +1,16 @@
-# BACKTEST ANALYSIS REPORT (Hedge Fund Method V4)
-**Analysis Period:** 2026-03-20 to 2026-06-15 (60 Business Days)
+# BACKTEST ANALYSIS REPORT (Hedge Fund Method V3)
+**Analysis Period:** 2026-03-24 to 2026-06-17 (60 Business Days)
 **Starting Capital:** $20,000.00 MXN | **Rebalancing Frequency:** every 15 Business Days
 
 ## 1. Performance Overview Comparison
 | Portfolio Strategy | Cumulative Return | Final Capital | Sharpe Ratio | Max Drawdown |
 | :--- | :---: | :---: | :---: | :---: |
-| **V4 Quantitative Strategy** | **+1.25%** | $20,250.51 MXN | -1.55 | -1.24% |
-| Bondia Cash Benchmark (11% APR) | +2.72% | $20,544.90 MXN | 0.00 | 0.00% |
-| SPY Buy & Hold Index | +12.25% | $22,450.61 MXN | -- | -3.94% |
+| **V3 Quantitative Strategy** | **+2.73%** | $20,545.73 MXN | 0.09 | -3.20% |
+| Bondia Cash Benchmark (11% APR) | +2.66% | $20,532.36 MXN | 0.00 | 0.00% |
+| SPY Buy & Hold Index | +9.12% | $21,824.35 MXN | -- | -3.94% |
 
 ## 2. Operational Metrics
-* **Total Transaction Fees Paid (0.29% rate)**: $52.26 MXN
-* **Total Passive Bondia Yield Earned**: $451.76 MXN
-* **Active vs. Cash Outperformance**: -1.47%
-* **Active vs. SPY Outperformance**: -11.00%
+* **Total Transaction Fees Paid (0.29% rate)**: $156.56 MXN
+* **Total Passive Bondia Yield Earned**: $248.01 MXN
+* **Active vs. Cash Outperformance**: +0.07%
+* **Active vs. SPY Outperformance**: -6.39%
