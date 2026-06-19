@@ -517,7 +517,7 @@ class PortfolioReconciler:
         
         # 2. Black-Litterman Sizing with SLSQP and Turnover Penalties
         pesos_asignados = {}
-        CONCENTRATION_CAP_HARD = 0.20
+        CONCENTRATION_CAP_HARD = ctx.get("concentration_cap", 0.20)
         
         # Pre-calculate portfolio value for optimization sizing
         cash = portfolio["cash_balance"]
@@ -592,8 +592,8 @@ class PortfolioReconciler:
             active_regimes = {t: met["hmm_state"] for t, met in adjusted_metrics.items()}
             pesos_asignados, arbitrage_reports = arb_engine.apply_regime_arbitrage(pesos_asignados, active_regimes)
 
-        # 3b. HARD POST-CONDITION: enforce 20% concentration cap after ALL adjustments
-        CONCENTRATION_CAP_HARD = 0.20
+        # 3b. HARD POST-CONDITION: enforce concentration cap after ALL adjustments
+        CONCENTRATION_CAP_HARD = ctx.get("concentration_cap", 0.20)
         for t in list(pesos_asignados.keys()):
             if pesos_asignados[t] > CONCENTRATION_CAP_HARD:
                 print(f"  |-- [CAP] {t} weight {pesos_asignados[t]:.1%} -> {CONCENTRATION_CAP_HARD:.0%} (hard cap enforced)")
@@ -619,7 +619,7 @@ class PortfolioReconciler:
         rl_traces = []
         
         # Dead-zone threshold to prevent excessive fee churn
-        DEAD_ZONE_THRESHOLD = 0.05
+        DEAD_ZONE_THRESHOLD = ctx.get("dead_zone_threshold", 0.05)
         
         # First Phase: Execute Sells (frees up cash)
         new_holdings_dict = {}

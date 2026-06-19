@@ -206,9 +206,30 @@ def compute_metrics(nav_series: pd.Series, label: str) -> dict:
 
 
 def main():
-    print("=" * 80)
-    print("WALK-FORWARD BACKTEST")
-    print("=" * 80)
+    import argparse
+    parser = argparse.ArgumentParser(description="Walk-forward backtest")
+    parser.add_argument("--strategy", choices=["standard", "aggressive"], default="standard",
+                        help="Active Value strategy type profile to run")
+    args = parser.parse_args()
+
+    global REBALANCE_FREQ_DAYS, CONCENTRATION_CAP
+    
+    # Default settings for standard
+    max_positions = 6
+    dead_zone_threshold = 0.05
+    
+    if args.strategy == "aggressive":
+        REBALANCE_FREQ_DAYS = 45
+        CONCENTRATION_CAP = 0.40
+        max_positions = 3
+        dead_zone_threshold = 0.10
+        print("=" * 80)
+        print("WALK-FORWARD BACKTEST - AGGRESSIVE PROFILE")
+        print("=" * 80)
+    else:
+        print("=" * 80)
+        print("WALK-FORWARD BACKTEST - STANDARD PROFILE")
+        print("=" * 80)
 
     asset_data, exog, _ = download_universe()
     if not asset_data:
@@ -272,7 +293,10 @@ def main():
                             "dcs_threshold": DCS_ENTRY_THRESHOLD,
                             "vr_threshold": RELVOL_ENTRY_THRESHOLD,
                             "confidence": {},
-                            "exposure_scalar": 1.0
+                            "exposure_scalar": 1.0,
+                            "concentration_cap": CONCENTRATION_CAP,
+                            "dead_zone_threshold": dead_zone_threshold,
+                            "max_positions": max_positions
                         }
                         
                         # Run the reconciler
@@ -335,11 +359,14 @@ def main():
         f.write("# Walk-Forward Backtest Report\n\n")
         f.write(f"**Generated:** {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
         f.write("## Setup\n\n")
+        f.write(f"- Strategy profile: **{args.strategy.upper()}**\n")
         f.write(f"- Universe: {len(asset_data)} tickers (BMV + US, US converted to MXN)\n")
         f.write(f"- Backtest period: {strategy_series.index[0].date()} to {strategy_series.index[-1].date()}\n")
         f.write(f"- Rebalance frequency: every {REBALANCE_FREQ_DAYS} trading days ({len(rebalance_dates)} rebalances)\n")
         f.write(f"- Transaction cost: {TRANSACTION_COST*100:.2f}% per trade\n")
         f.write(f"- Concentration cap: {CONCENTRATION_CAP*100:.0f}% per ticker\n")
+        f.write(f"- Max positions: {max_positions}\n")
+        f.write(f"- Dead-zone threshold: {dead_zone_threshold*100:.0f}%\n")
         f.write(f"- Initial capital: ${INITIAL_CAPITAL:,.2f} MXN\n")
         f.write(f"- NLP sentiment: **disabled** (live news in backtest = look-ahead bias)\n")
         f.write(f"- Statistical arbitrage: **disabled** (cointegration uses full-sample data)\n\n")

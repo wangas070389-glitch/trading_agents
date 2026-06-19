@@ -283,9 +283,10 @@ function renderBacktestChart(dates, strategy, cash, benchmark) {
     }
     
     const tickerVal = document.getElementById('macd-ticker').value;
+    const valVariant = document.getElementById('val-variant').value;
     const stratLabel = currentStrategy === 'macd_trend' 
         ? (tickerVal === 'ALL' ? 'MACD Multi-Asset Strategy' : 'MACD Systematic Strategy') 
-        : 'V5 Active Strategy';
+        : `V5 Active Strategy (${valVariant === 'aggressive' ? 'Aggressive' : 'Standard'})`;
     const benchLabel = currentStrategy === 'macd_trend' 
         ? (tickerVal === 'ALL' ? 'SPY Buy & Hold' : `${tickerVal} Buy & Hold`) 
         : 'SPY Buy & Hold';
@@ -377,6 +378,7 @@ document.getElementById('strat-val-btn').addEventListener('click', () => {
     document.getElementById('strat-macd-btn').style.color = '#8f9cae';
     
     document.getElementById('macd-ticker-container').style.display = 'none';
+    document.getElementById('val-variant-container').style.display = 'flex';
     
     // Update labels
     document.getElementById('label-strat-ret').textContent = 'V5 Strategy Return:';
@@ -401,6 +403,7 @@ document.getElementById('strat-macd-btn').addEventListener('click', () => {
     document.getElementById('strat-val-btn').style.color = '#8f9cae';
     
     document.getElementById('macd-ticker-container').style.display = 'flex';
+    document.getElementById('val-variant-container').style.display = 'none';
     
     // Update labels
     document.getElementById('label-strat-ret').textContent = 'MACD Strategy Return:';
@@ -418,6 +421,11 @@ document.getElementById('macd-ticker').addEventListener('change', () => {
     const ticker = document.getElementById('macd-ticker').value;
     const displayTicker = ticker === 'ALL' ? 'SPY' : ticker;
     document.getElementById('label-spy-ret').textContent = `${displayTicker} Index Return:`;
+    resetBacktestUI();
+});
+
+// Update backtest UI when Value Strategy profile changes
+document.getElementById('val-variant').addEventListener('change', () => {
     resetBacktestUI();
 });
 
@@ -443,7 +451,14 @@ document.getElementById('backtest-btn').addEventListener('click', async () => {
     try {
         let response;
         if (currentStrategy === 'value_equity') {
-            response = await fetch('/api/backtest', { method: 'POST' });
+            const variant = document.getElementById('val-variant').value;
+            response = await fetch('/api/backtest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ strategy_type: variant })
+            });
         } else {
             const ticker = document.getElementById('macd-ticker').value;
             response = await fetch('/api/backtest_macd', {

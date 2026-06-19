@@ -10,7 +10,8 @@ from skills.adaptive_learning import load_learned_params
 from agents.agents import FundamentalScreener, MacroRiskAnalyst, PortfolioReconciler
 from ingest_live_bmv import BMV_TICKERS, US_TICKERS, fetch_historical_exogenous, fetch_historical_asset
 
-def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalance_freq=15):
+def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalance_freq=15,
+                            concentration_cap=0.20, dead_zone_threshold=0.05, max_positions=6):
     print("=" * 80)
     print(f"STARTINGwalk-forward BACKTEST SIMULATION (LAST {backtest_days} BUSINESS DAYS)")
     print("=" * 80)
@@ -282,7 +283,10 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
                 "dcs_threshold": learned["dcs_threshold"],
                 "vr_threshold": learned["vr_threshold"],
                 "confidence": {},
-                "exposure_scalar": 1.0
+                "exposure_scalar": 1.0,
+                "concentration_cap": concentration_cap,
+                "dead_zone_threshold": dead_zone_threshold,
+                "max_positions": max_positions
             }
             
             # Optimize and calculate weights

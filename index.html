@@ -115,6 +115,15 @@
                         <button id="strat-val-btn" class="strat-toggle active" style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: white; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Outfit'; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">Mexican Value Equity</button>
                         <button id="strat-macd-btn" class="strat-toggle" style="background: transparent; border: 1px solid transparent; color: #8f9cae; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Outfit'; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">Systematic MACD Trend</button>
                     </div>
+                    
+                    <!-- Value Equity Strategy Variant Dropdown -->
+                    <div id="val-variant-container" style="display: flex; align-items: center; gap: 0.5rem; background: rgba(255, 255, 255, 0.03); padding: 0.25rem 0.5rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                        <label for="val-variant" style="font-size: 0.85rem; color: #8f9cae; font-family: 'Outfit';">Profile:</label>
+                        <select id="val-variant" style="background: transparent; border: none; color: white; font-family: 'Outfit'; font-size: 0.85rem; outline: none; cursor: pointer; font-weight: 500;">
+                            <option value="standard" style="background: #111827; color: #10b981; font-weight: bold;">Standard (20% Cap, Monthly)</option>
+                            <option value="aggressive" style="background: #111827; color: white;">Aggressive (40% Cap, Bi-Monthly)</option>
+                        </select>
+                    </div>
 
                     <!-- MACD Ticker Dropdown (Hidden by default) -->
                     <div id="macd-ticker-container" style="display: none; align-items: center; gap: 0.5rem; background: rgba(255, 255, 255, 0.03); padding: 0.25rem 0.5rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08);">

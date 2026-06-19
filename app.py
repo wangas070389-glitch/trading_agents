@@ -102,8 +102,28 @@ class DashboardAPIHandler(SimpleHTTPRequestHandler):
                 # Import backtest runner
                 from backtest import run_backtest_simulation
                 
-                # Execute simulation
-                results = run_backtest_simulation()
+                # Read JSON body if present
+                content_length = int(self.headers.get('Content-Length', 0))
+                strategy_type = "standard"
+                if content_length > 0:
+                    try:
+                        body = self.rfile.read(content_length)
+                        req_data = json.loads(body.decode('utf-8'))
+                        strategy_type = req_data.get("strategy_type", "standard")
+                    except Exception:
+                        pass
+                
+                # Run standard vs aggressive backtest simulation
+                if strategy_type == "aggressive":
+                    # Aggressive settings: 40% cap, holds longer (rebalance every 45 business days, 10% dead zone), max 3 positions
+                    results = run_backtest_simulation(
+                        rebalance_freq=45,
+                        concentration_cap=0.40,
+                        dead_zone_threshold=0.10,
+                        max_positions=3
+                    )
+                else:
+                    results = run_backtest_simulation()
                 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
