@@ -11,7 +11,8 @@ from agents.agents import FundamentalScreener, MacroRiskAnalyst, PortfolioReconc
 from ingest_live_bmv import BMV_TICKERS, US_TICKERS, fetch_historical_exogenous, fetch_historical_asset
 
 def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalance_freq=15,
-                            concentration_cap=0.20, dead_zone_threshold=0.05, max_positions=6):
+                            concentration_cap=0.20, dead_zone_threshold=0.05, max_positions=6,
+                            sizing_profile="equal", adaptive_rebalance=False):
     print("=" * 80)
     print(f"STARTINGwalk-forward BACKTEST SIMULATION (LAST {backtest_days} BUSINESS DAYS)")
     print("=" * 80)
@@ -135,6 +136,10 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
     total_fees_paid = 0.0
     total_interest_earned = 0.0
     
+    # Dynamic rebalancing tracking variables
+    days_since_last_rebalance = 0
+    current_rebalance_freq = rebalance_freq
+
     # Day-by-day Walk-forward simulation
     for t_idx, current_date in enumerate(backtest_dates):
         # Calculate calendar days since last step to accrue Bondia interest
@@ -176,9 +181,19 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             spy_bench_val = spy_bench_val * (1.0 - 0.0029)
         history_spy_bench.append(round(spy_bench_val, 2))
         
-        # Rebalancing triggers: Day 0, and then every 15 business days
-        if t_idx == 0 or t_idx % rebalance_freq == 0:
-            print(f"  |-- Walk-Forward Rebalancing on {current_date.strftime('%Y-%m-%d')}...")
+        # Rebalancing triggers: Day 0, or when the adaptive frequency has elapsed
+        should_rebalance = False
+        if t_idx == 0:
+            should_rebalance = True
+        elif adaptive_rebalance:
+            if days_since_last_rebalance >= current_rebalance_freq:
+                should_rebalance = True
+        elif t_idx % rebalance_freq == 0:
+            should_rebalance = True
+            
+        if should_rebalance:
+            days_since_last_rebalance = 0
+            print(f"  |-- Walk-Forward Rebalancing on {current_date.strftime('%Y-%m-%d')}... (Next freq: {current_rebalance_freq} days)")
             
             # Separate BMV and US tickers
             bmv_tickers = [t for t in universe_history.keys() if t.endswith(".MX")]
@@ -279,6 +294,7 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             else:
                 learned = {"dcs_threshold": 0.15, "vr_threshold": 1.2}
                 
+            # Optimize and calculate weights
             learning_context = {
                 "dcs_threshold": learned["dcs_threshold"],
                 "vr_threshold": learned["vr_threshold"],
@@ -286,7 +302,8 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
                 "exposure_scalar": 1.0,
                 "concentration_cap": concentration_cap,
                 "dead_zone_threshold": dead_zone_threshold,
-                "max_positions": max_positions
+                "max_positions": max_positions,
+                "sizing_profile": sizing_profile
             }
             
             # Optimize and calculate weights
@@ -296,6 +313,18 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
                 learning_context=learning_context,
                 universe_prices_dict=universe_prices_dict
             )
+            
+            # Dynamic rebalancing frequency update based on HMM state
+            if adjusted_metrics and adaptive_rebalance:
+                first_met = next(iter(adjusted_metrics.values()))
+                spy_state = first_met.get("spy_hmm_state", 0)
+                if spy_state == 1:
+                    current_rebalance_freq = 63  # Bull: quarterly
+                elif spy_state == -1:
+                    current_rebalance_freq = 21  # Bear: monthly
+                else:
+                    current_rebalance_freq = 42  # Sideways: bi-monthly
+                print(f"      [Regime-Switching] Detected SPY regime: {spy_state} -> Next rebalance in {current_rebalance_freq} business days.")
             
             # Apply rebalanced holdings to simulation
             new_holdings = {h["ticker"]: h["shares"] for h in updated_portfolio_sim["holdings"]}
@@ -319,6 +348,9 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             holdings = new_holdings
             total_fees_paid += step_fees
             print(f"      Rebalanced: Holdings={holdings} | Cash={cash:.2f} MXN | Fees Paid={step_fees:.2f} MXN")
+
+        # Increment days since last rebalance
+        days_since_last_rebalance += 1
 
     # 5. Compute backtest statistics
     # V3 Strategy Stats

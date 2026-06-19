@@ -113,8 +113,16 @@ class DashboardAPIHandler(SimpleHTTPRequestHandler):
                     except Exception:
                         pass
                 
-                # Run standard vs aggressive backtest simulation
-                if strategy_type == "aggressive":
+                # Run standard vs aggressive vs adaptive backtest simulation
+                if strategy_type == "adaptive":
+                    results = run_backtest_simulation(
+                        rebalance_freq=42,
+                        concentration_cap=0.50,
+                        max_positions=3,
+                        sizing_profile="asymmetric",
+                        adaptive_rebalance=True
+                    )
+                elif strategy_type == "aggressive":
                     # Aggressive settings: 40% cap, holds longer (rebalance every 45 business days, 10% dead zone), max 3 positions
                     results = run_backtest_simulation(
                         rebalance_freq=45,

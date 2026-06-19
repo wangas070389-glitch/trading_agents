@@ -208,7 +208,7 @@ def compute_metrics(nav_series: pd.Series, label: str) -> dict:
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="Walk-forward backtest")
-    parser.add_argument("--strategy", choices=["standard", "aggressive"], default="standard",
+    parser.add_argument("--strategy", choices=["standard", "aggressive", "adaptive"], default="standard",
                         help="Active Value strategy type profile to run")
     args = parser.parse_args()
 
@@ -217,6 +217,8 @@ def main():
     # Default settings for standard
     max_positions = 6
     dead_zone_threshold = 0.05
+    sizing_profile = "equal"
+    adaptive_rebalance = False
     
     if args.strategy == "aggressive":
         REBALANCE_FREQ_DAYS = 45
@@ -225,6 +227,16 @@ def main():
         dead_zone_threshold = 0.10
         print("=" * 80)
         print("WALK-FORWARD BACKTEST - AGGRESSIVE PROFILE")
+        print("=" * 80)
+    elif args.strategy == "adaptive":
+        REBALANCE_FREQ_DAYS = 42  # Starting freq
+        CONCENTRATION_CAP = 0.50
+        max_positions = 3
+        dead_zone_threshold = 0.05
+        sizing_profile = "asymmetric"
+        adaptive_rebalance = True
+        print("=" * 80)
+        print("WALK-FORWARD BACKTEST - ADAPTIVE PROFILE")
         print("=" * 80)
     else:
         print("=" * 80)
@@ -267,11 +279,31 @@ def main():
     analyst = MacroRiskAnalyst()
     reconciler = PortfolioReconciler()
 
+    # Dynamic rebalancing tracking variables
+    days_since_last_rebalance = 0
+    current_rebalance_freq = REBALANCE_FREQ_DAYS
+
     t_start = time.time()
     for i, current_date in enumerate(price_matrix.index):
-        # Rebalance if this is a rebalance date
-        if rebalance_idx < len(rebalance_dates) and current_date >= rebalance_dates[rebalance_idx]:
-            print(f"  [{current_date.date()}] Rebalancing... (step {rebalance_idx+1}/{len(rebalance_dates)})")
+        # Determine if we should rebalance today
+        should_rebalance = False
+        if i == 0:
+            should_rebalance = True
+        elif adaptive_rebalance:
+            if days_since_last_rebalance >= current_rebalance_freq:
+                should_rebalance = True
+        else:
+            if rebalance_idx < len(rebalance_dates) and current_date >= rebalance_dates[rebalance_idx]:
+                should_rebalance = True
+                
+        if should_rebalance:
+            if adaptive_rebalance:
+                print(f"  [{current_date.date()}] Rebalancing... (adaptive freq: {current_rebalance_freq} days)")
+            else:
+                print(f"  [{current_date.date()}] Rebalancing... (step {rebalance_idx+1}/{len(rebalance_dates)})")
+            
+            days_since_last_rebalance = 0
+            
             try:
                 universe = build_universe_data(asset_data, exog, current_date)
                 if universe:
@@ -296,7 +328,8 @@ def main():
                             "exposure_scalar": 1.0,
                             "concentration_cap": CONCENTRATION_CAP,
                             "dead_zone_threshold": dead_zone_threshold,
-                            "max_positions": max_positions
+                            "max_positions": max_positions,
+                            "sizing_profile": sizing_profile
                         }
                         
                         # Run the reconciler
@@ -305,6 +338,18 @@ def main():
                             learning_context=learning_context,
                             universe_prices_dict=universe_prices_dict
                         )
+                        
+                        # Update rebalance frequency dynamically based on HMM state
+                        if adjusted and adaptive_rebalance:
+                            first_met = next(iter(adjusted.values()))
+                            spy_state = first_met.get("spy_hmm_state", 0)
+                            if spy_state == 1:
+                                current_rebalance_freq = 63  # Bull: quarterly
+                            elif spy_state == -1:
+                                current_rebalance_freq = 21  # Bear: monthly
+                            else:
+                                current_rebalance_freq = 42  # Sideways: bi-monthly
+                            print(f"      [Regime-Switching] Detected SPY regime: {spy_state} -> Next rebalance in {current_rebalance_freq} business days.")
                         
                         cash = updated_portfolio_sim["cash_balance"]
                         new_shares_held = {t: 0.0 for t in asset_data}
@@ -331,12 +376,17 @@ def main():
                         shares_held = new_shares_held
             except Exception as exc:
                 print(f"    [WARN] rebalance failed: {exc}")
-            rebalance_idx += 1
+                
+            if not adaptive_rebalance:
+                rebalance_idx += 1
 
         # Track daily NAV
         equity_value = sum(shares_held[t] * price_matrix[t].iloc[i] for t in shares_held)
         strategy_nav[current_date] = cash + equity_value
         benchmark_nav[current_date] = sum(bench_shares[t] * price_matrix[t].iloc[i] for t in bench_shares)
+
+        # Increment days since last rebalance
+        days_since_last_rebalance += 1
 
     elapsed = time.time() - t_start
     print(f"\nBacktest completed in {elapsed:.1f}s")
@@ -362,9 +412,15 @@ def main():
         f.write(f"- Strategy profile: **{args.strategy.upper()}**\n")
         f.write(f"- Universe: {len(asset_data)} tickers (BMV + US, US converted to MXN)\n")
         f.write(f"- Backtest period: {strategy_series.index[0].date()} to {strategy_series.index[-1].date()}\n")
-        f.write(f"- Rebalance frequency: every {REBALANCE_FREQ_DAYS} trading days ({len(rebalance_dates)} rebalances)\n")
+        if args.strategy == "adaptive":
+            f.write("- Rebalance frequency: **Regime-Switching (Bull=63, Sideways=42, Bear=21)**\n")
+        else:
+            f.write(f"- Rebalance frequency: every {REBALANCE_FREQ_DAYS} trading days ({len(rebalance_dates)} rebalances)\n")
         f.write(f"- Transaction cost: {TRANSACTION_COST*100:.2f}% per trade\n")
-        f.write(f"- Concentration cap: {CONCENTRATION_CAP*100:.0f}% per ticker\n")
+        if args.strategy == "adaptive":
+            f.write("- Concentration cap: **Asymmetric (50% / 30% / 20%)**\n")
+        else:
+            f.write(f"- Concentration cap: {CONCENTRATION_CAP*100:.0f}% per ticker\n")
         f.write(f"- Max positions: {max_positions}\n")
         f.write(f"- Dead-zone threshold: {dead_zone_threshold*100:.0f}%\n")
         f.write(f"- Initial capital: ${INITIAL_CAPITAL:,.2f} MXN\n")

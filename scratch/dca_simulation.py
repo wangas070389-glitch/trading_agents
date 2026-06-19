@@ -9,8 +9,9 @@ def run_dca_simulation():
     cagrs = {
         "Mattress Cash (0% APR)": 0.00,
         "Bondia Cash (11% APR)": 0.11,
-        "Active Value Equity - Standard (5.14% CAGR)": 0.0514,
+        "Active Value Equity - Standard (5.12% CAGR)": 0.0512,
         "Active Value Equity - Aggressive (7.71% CAGR)": 0.0771,
+        "Active Value Equity - Adaptive (14.09% CAGR)": 0.1409,
         "MACD Single-Asset (2.17% CAGR)": 0.0217,
         "MACD Multi-Asset (14.54% CAGR)": 0.1454,
         "SPY Buy & Hold (14.38% CAGR)": 0.1438

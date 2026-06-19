@@ -176,3 +176,93 @@ def test_reconcile_dead_zone_threshold():
     # With a tight dead-zone, a trade should execute (buying to reach 20% target weight, which is 40 shares)
     assert len(trades_tight) > 0
     assert updated_port_tight["holdings"][0]["shares"] == 40
+
+def test_reconcile_with_asymmetric_sizing():
+    reconciler = PortfolioReconciler()
+    
+    # 4 strong tickers with different DCS signals
+    adjusted_metrics = {
+        "TICKER1": {
+            "dcs_adjusted": 0.95,
+            "garch_vol_adjusted": 0.05,
+            "relative_vol": 2.0,
+            "hmm_state": 1,
+            "current_price": 100.0,
+            "spy_hmm_state": 1,
+            "zg_t": 0.0,
+            "wacc_adjustment": 0.0,
+            "growth_adjustment": 0.0,
+            "macro_description": "T1"
+        },
+        "TICKER2": {
+            "dcs_adjusted": 0.85,
+            "garch_vol_adjusted": 0.05,
+            "relative_vol": 2.0,
+            "hmm_state": 1,
+            "current_price": 100.0,
+            "spy_hmm_state": 1,
+            "zg_t": 0.0,
+            "wacc_adjustment": 0.0,
+            "growth_adjustment": 0.0,
+            "macro_description": "T2"
+        },
+        "TICKER3": {
+            "dcs_adjusted": 0.75,
+            "garch_vol_adjusted": 0.05,
+            "relative_vol": 2.0,
+            "hmm_state": 1,
+            "current_price": 100.0,
+            "spy_hmm_state": 1,
+            "zg_t": 0.0,
+            "wacc_adjustment": 0.0,
+            "growth_adjustment": 0.0,
+            "macro_description": "T3"
+        },
+        "TICKER4": {
+            "dcs_adjusted": 0.65,
+            "garch_vol_adjusted": 0.05,
+            "relative_vol": 2.0,
+            "hmm_state": 1,
+            "current_price": 100.0,
+            "spy_hmm_state": 1,
+            "zg_t": 0.0,
+            "wacc_adjustment": 0.0,
+            "growth_adjustment": 0.0,
+            "macro_description": "T4"
+        }
+    }
+    
+    portfolio = {
+        "total_capital": 20000.0,
+        "cash_balance": 20000.0,
+        "holdings": []
+    }
+    
+    learning_context_adaptive = {
+        "dcs_threshold": 0.15,
+        "vr_threshold": 1.2,
+        "max_positions": 3,
+        "sizing_profile": "asymmetric",
+        "dead_zone_threshold": 0.01  # set low to ensure trades execute
+    }
+    
+    updated_port, _, trades = reconciler.reconcile(
+        adjusted_metrics, portfolio.copy(), "2026-06-19",
+        learning_context=learning_context_adaptive
+    )
+    
+    # Check that at most 3 tickers are held
+    assert len(updated_port["holdings"]) <= 3
+    
+    # Sort holdings by target weight descending
+    holdings_sorted = sorted(updated_port["holdings"], key=lambda h: h["target_weight"], reverse=True)
+    
+    # Verify the asymmetric caps are respected:
+    # Rank 0 weight <= 0.50
+    # Rank 1 weight <= 0.30
+    # Rank 2 weight <= 0.20
+    caps = [0.50, 0.30, 0.20]
+    for idx, h in enumerate(holdings_sorted):
+        expected_cap = caps[idx]
+        assert h["target_weight"] <= expected_cap + 1e-5
+

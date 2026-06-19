@@ -286,7 +286,7 @@ function renderBacktestChart(dates, strategy, cash, benchmark) {
     const valVariant = document.getElementById('val-variant').value;
     const stratLabel = currentStrategy === 'macd_trend' 
         ? (tickerVal === 'ALL' ? 'MACD Multi-Asset Strategy' : 'MACD Systematic Strategy') 
-        : `V5 Active Strategy (${valVariant === 'aggressive' ? 'Aggressive' : 'Standard'})`;
+        : `V5 Active Strategy (${valVariant === 'adaptive' ? 'Adaptive' : (valVariant === 'aggressive' ? 'Aggressive' : 'Standard')})`;
     const benchLabel = currentStrategy === 'macd_trend' 
         ? (tickerVal === 'ALL' ? 'SPY Buy & Hold' : `${tickerVal} Buy & Hold`) 
         : 'SPY Buy & Hold';

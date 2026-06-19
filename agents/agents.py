@@ -513,6 +513,8 @@ class PortfolioReconciler:
                   f"{min(slots_for_new, len(new_eligible))} new entries "
                   f"(cap {max_posiciones}).")
 
+        # Sort eligible assets by DCS descending
+        activos_elegibles = sorted(activos_elegibles, key=lambda t: adjusted_metrics[t]["dcs_adjusted"], reverse=True)
         print(f"  |-- Eligible assets for long positions: {activos_elegibles}")
         
         # 2. Black-Litterman Sizing with SLSQP and Turnover Penalties
@@ -538,7 +540,11 @@ class PortfolioReconciler:
             inv_vol = {t: 1.0 / max(adjusted_metrics[t]["garch_vol_adjusted"], 1e-4) for t in activos_elegibles}
             suma_inv_vol = sum(inv_vol.values())
             w0 = np.array([(inv_vol[t] / suma_inv_vol) * adjusted_metrics[t]["dcs_adjusted"] * exposure_scalar for t in activos_elegibles])
-            w0 = np.clip(w0, 0.0, CONCENTRATION_CAP_HARD)
+            if ctx.get("sizing_profile") == "asymmetric":
+                caps = [0.50, 0.30, 0.20]
+                w0 = np.array([min(w0[idx], caps[idx] if idx < len(caps) else 0.0) for idx in range(n)])
+            else:
+                w0 = np.clip(w0, 0.0, CONCENTRATION_CAP_HARD)
             sum_w0 = sum(w0)
             if sum_w0 > max_equity_exposure:
                 w0 = w0 * (max_equity_exposure / sum_w0)
@@ -564,8 +570,12 @@ class PortfolioReconciler:
             # Constraint: sum(w) <= max_equity_exposure
             cons = ({'type': 'ineq', 'fun': lambda w: max_equity_exposure - np.sum(w)})
             
-            # Bounds: 0 <= w_i <= CONCENTRATION_CAP_HARD
-            bounds = [(0.0, CONCENTRATION_CAP_HARD) for _ in range(n)]
+            # Bounds: 0 <= w_i <= CONCENTRATION_CAP_HARD (or asymmetric caps)
+            if ctx.get("sizing_profile") == "asymmetric":
+                caps = [0.50, 0.30, 0.20]
+                bounds = [(0.0, caps[i]) if i < len(caps) else (0.0, 0.0) for i in range(n)]
+            else:
+                bounds = [(0.0, CONCENTRATION_CAP_HARD) for _ in range(n)]
             
             # Optimize weights
             res = minimize(objective, w0, method='SLSQP', bounds=bounds, constraints=cons)
@@ -593,11 +603,21 @@ class PortfolioReconciler:
             pesos_asignados, arbitrage_reports = arb_engine.apply_regime_arbitrage(pesos_asignados, active_regimes)
 
         # 3b. HARD POST-CONDITION: enforce concentration cap after ALL adjustments
-        CONCENTRATION_CAP_HARD = ctx.get("concentration_cap", 0.20)
-        for t in list(pesos_asignados.keys()):
-            if pesos_asignados[t] > CONCENTRATION_CAP_HARD:
-                print(f"  |-- [CAP] {t} weight {pesos_asignados[t]:.1%} -> {CONCENTRATION_CAP_HARD:.0%} (hard cap enforced)")
-                pesos_asignados[t] = CONCENTRATION_CAP_HARD
+        if ctx.get("sizing_profile") == "asymmetric":
+            caps = {"TICKER_RANK_0": 0.50, "TICKER_RANK_1": 0.30, "TICKER_RANK_2": 0.20}
+            # Sort active tickers by assigned weights descending
+            sorted_assigned = sorted([t for t in pesos_asignados.keys() if pesos_asignados[t] > 0.0], key=lambda t: pesos_asignados[t], reverse=True)
+            for idx, t in enumerate(sorted_assigned):
+                cap_t = caps.get(f"TICKER_RANK_{idx}", 0.0)
+                if pesos_asignados[t] > cap_t:
+                    print(f"  |-- [CAP] {t} weight {pesos_asignados[t]:.1%} -> {cap_t:.0%} (asymmetric cap enforced)")
+                    pesos_asignados[t] = cap_t
+        else:
+            CONCENTRATION_CAP_HARD = ctx.get("concentration_cap", 0.20)
+            for t in list(pesos_asignados.keys()):
+                if pesos_asignados[t] > CONCENTRATION_CAP_HARD:
+                    print(f"  |-- [CAP] {t} weight {pesos_asignados[t]:.1%} -> {CONCENTRATION_CAP_HARD:.0%} (hard cap enforced)")
+                    pesos_asignados[t] = CONCENTRATION_CAP_HARD
 
         # 4. Calculate portfolio value and execute trades
         cash = portfolio["cash_balance"]
