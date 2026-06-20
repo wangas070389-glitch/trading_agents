@@ -1,169 +1,169 @@
 {
-  "dcs_threshold": 0.1,
+  "dcs_threshold": 0.05,
   "vr_threshold": 1.1,
-  "trained_on": "2026-06-13",
-  "train_sharpe": 0.597,
-  "validation_sharpe": 1.277,
+  "trained_on": "2026-06-20",
+  "train_sharpe": 0.784,
+  "validation_sharpe": 2.529,
   "grid_results": [
     {
-      "dcs_threshold": 0.1,
-      "vr_threshold": 1.1,
-      "train_sharpe": 0.597,
-      "val_sharpe": 1.277,
-      "score": 0.937,
-      "val_cum_return": 3.88
-    },
-    {
-      "dcs_threshold": 0.3,
-      "vr_threshold": 1.4,
-      "train_sharpe": 0.639,
-      "val_sharpe": 1.05,
-      "score": 0.844,
-      "val_cum_return": 3.8
-    },
-    {
-      "dcs_threshold": 0.15,
-      "vr_threshold": 1.1,
-      "train_sharpe": 0.767,
-      "val_sharpe": 0.877,
-      "score": 0.822,
-      "val_cum_return": 2.68
-    },
-    {
-      "dcs_threshold": 0.1,
-      "vr_threshold": 1.4,
-      "train_sharpe": 2.129,
-      "val_sharpe": 1.151,
-      "score": 0.662,
-      "val_cum_return": 3.33
-    },
-    {
-      "dcs_threshold": 0.3,
-      "vr_threshold": 1.1,
-      "train_sharpe": -0.515,
-      "val_sharpe": 1.698,
-      "score": 0.591,
-      "val_cum_return": 7.65
-    },
-    {
-      "dcs_threshold": 0.1,
-      "vr_threshold": 1.2,
-      "train_sharpe": 1.593,
-      "val_sharpe": 0.845,
-      "score": 0.472,
-      "val_cum_return": 2.05
-    },
-    {
       "dcs_threshold": 0.05,
-      "vr_threshold": 1.4,
-      "train_sharpe": 2.397,
-      "val_sharpe": 1.055,
-      "score": 0.385,
-      "val_cum_return": 2.65
+      "vr_threshold": 1.1,
+      "train_sharpe": 0.784,
+      "val_sharpe": 2.529,
+      "score": 0.784,
+      "val_cum_return": 16.41
     },
     {
       "dcs_threshold": 0.2,
       "vr_threshold": 1.4,
-      "train_sharpe": 0.993,
-      "val_sharpe": 0.58,
-      "score": 0.374,
-      "val_cum_return": 1.89
+      "train_sharpe": 0.737,
+      "val_sharpe": 1.703,
+      "score": 0.737,
+      "val_cum_return": 11.6
     },
     {
       "dcs_threshold": 0.1,
-      "vr_threshold": 1.0,
-      "train_sharpe": 0.111,
-      "val_sharpe": 0.483,
-      "score": 0.297,
-      "val_cum_return": 1.37
+      "vr_threshold": 1.4,
+      "train_sharpe": 0.684,
+      "val_sharpe": 1.676,
+      "score": 0.684,
+      "val_cum_return": 11.38
     },
     {
-      "dcs_threshold": 0.3,
-      "vr_threshold": 1.2,
-      "train_sharpe": -0.653,
-      "val_sharpe": 1.133,
-      "score": 0.24,
-      "val_cum_return": 4.53
-    },
-    {
-      "dcs_threshold": 0.2,
-      "vr_threshold": 1.2,
-      "train_sharpe": 0.464,
-      "val_sharpe": 0.278,
-      "score": 0.185,
-      "val_cum_return": 0.72
-    },
-    {
-      "dcs_threshold": 0.2,
-      "vr_threshold": 1.1,
-      "train_sharpe": -0.644,
-      "val_sharpe": 0.968,
-      "score": 0.162,
-      "val_cum_return": 3.36
-    },
-    {
-      "dcs_threshold": 0.3,
-      "vr_threshold": 1.0,
-      "train_sharpe": -0.052,
-      "val_sharpe": 0.349,
-      "score": 0.148,
-      "val_cum_return": 1.43
-    },
-    {
-      "dcs_threshold": 0.15,
-      "vr_threshold": 1.0,
-      "train_sharpe": 0.299,
-      "val_sharpe": 0.168,
-      "score": 0.102,
-      "val_cum_return": 0.43
+      "dcs_threshold": 0.05,
+      "vr_threshold": 1.4,
+      "train_sharpe": 0.683,
+      "val_sharpe": 2.17,
+      "score": 0.683,
+      "val_cum_return": 13.97
     },
     {
       "dcs_threshold": 0.15,
       "vr_threshold": 1.4,
-      "train_sharpe": 2.55,
-      "val_sharpe": 0.887,
-      "score": 0.055,
-      "val_cum_return": 2.86
+      "train_sharpe": 0.657,
+      "val_sharpe": 1.676,
+      "score": 0.657,
+      "val_cum_return": 11.38
     },
     {
-      "dcs_threshold": 0.05,
+      "dcs_threshold": 0.3,
+      "vr_threshold": 1.4,
+      "train_sharpe": 0.655,
+      "val_sharpe": 1.825,
+      "score": 0.655,
+      "val_cum_return": 12.52
+    },
+    {
+      "dcs_threshold": 0.2,
       "vr_threshold": 1.1,
-      "train_sharpe": 1.447,
-      "val_sharpe": 0.519,
-      "score": 0.055,
-      "val_cum_return": 0.78
+      "train_sharpe": 0.637,
+      "val_sharpe": 2.544,
+      "score": 0.637,
+      "val_cum_return": 17.73
+    },
+    {
+      "dcs_threshold": 0.3,
+      "vr_threshold": 1.1,
+      "train_sharpe": 0.594,
+      "val_sharpe": 2.459,
+      "score": 0.594,
+      "val_cum_return": 17.34
+    },
+    {
+      "dcs_threshold": 0.15,
+      "vr_threshold": 1.1,
+      "train_sharpe": 0.585,
+      "val_sharpe": 2.555,
+      "score": 0.585,
+      "val_cum_return": 17.77
     },
     {
       "dcs_threshold": 0.15,
       "vr_threshold": 1.2,
-      "train_sharpe": 1.653,
-      "val_sharpe": 0.465,
-      "score": -0.129,
-      "val_cum_return": 1.17
+      "train_sharpe": 0.582,
+      "val_sharpe": 2.398,
+      "score": 0.582,
+      "val_cum_return": 16.36
     },
     {
       "dcs_threshold": 0.05,
       "vr_threshold": 1.2,
-      "train_sharpe": 2.029,
-      "val_sharpe": 0.448,
-      "score": -0.342,
-      "val_cum_return": 0.78
+      "train_sharpe": 0.565,
+      "val_sharpe": 2.075,
+      "score": 0.565,
+      "val_cum_return": 13.95
+    },
+    {
+      "dcs_threshold": 0.1,
+      "vr_threshold": 1.1,
+      "train_sharpe": 0.551,
+      "val_sharpe": 2.409,
+      "score": 0.551,
+      "val_cum_return": 16.61
+    },
+    {
+      "dcs_threshold": 0.1,
+      "vr_threshold": 1.2,
+      "train_sharpe": 0.55,
+      "val_sharpe": 2.357,
+      "score": 0.55,
+      "val_cum_return": 16.09
+    },
+    {
+      "dcs_threshold": 0.2,
+      "vr_threshold": 1.2,
+      "train_sharpe": 0.539,
+      "val_sharpe": 2.388,
+      "score": 0.539,
+      "val_cum_return": 16.32
+    },
+    {
+      "dcs_threshold": 0.3,
+      "vr_threshold": 1.2,
+      "train_sharpe": 0.487,
+      "val_sharpe": 2.485,
+      "score": 0.487,
+      "val_cum_return": 17.14
     },
     {
       "dcs_threshold": 0.2,
       "vr_threshold": 1.0,
-      "train_sharpe": -0.922,
-      "val_sharpe": 0.208,
-      "score": -0.357,
-      "val_cum_return": 0.62
+      "train_sharpe": 0.465,
+      "val_sharpe": 3.241,
+      "score": 0.465,
+      "val_cum_return": 22.97
+    },
+    {
+      "dcs_threshold": 0.15,
+      "vr_threshold": 1.0,
+      "train_sharpe": 0.405,
+      "val_sharpe": 3.286,
+      "score": 0.405,
+      "val_cum_return": 23.18
     },
     {
       "dcs_threshold": 0.05,
       "vr_threshold": 1.0,
-      "train_sharpe": 0.739,
-      "val_sharpe": -0.595,
-      "score": -1.262,
-      "val_cum_return": -0.93
+      "train_sharpe": 0.369,
+      "val_sharpe": 2.774,
+      "score": 0.369,
+      "val_cum_return": 16.88
+    },
+    {
+      "dcs_threshold": 0.1,
+      "vr_threshold": 1.0,
+      "train_sharpe": 0.367,
+      "val_sharpe": 3.047,
+      "score": 0.367,
+      "val_cum_return": 20.0
+    },
+    {
+      "dcs_threshold": 0.3,
+      "vr_threshold": 1.0,
+      "train_sharpe": 0.342,
+      "val_sharpe": 2.801,
+      "score": 0.342,
+      "val_cum_return": 20.98
     }
   ]
 }
