@@ -143,6 +143,57 @@
             </div>
         </div>
 
+        <!-- MACD + Trailing Stop Backtest Section -->
+        <div class="glass-card backtest-card" style="margin-top: 1.25rem;">
+            <div class="backtest-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <div>
+                    <h3 style="margin-bottom: 0.25rem;">MACD + Trailing Stop Strategy Backtest</h3>
+                    <p class="subtitle" style="margin: 0; font-size: 0.8rem; color: var(--text-secondary);">5Y walk-forward · MACD(12,26,9) crossover · 200 SMA trend filter · Trailing stop exit</p>
+                </div>
+                <button id="macd-backtest-btn" class="btn primary-btn" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: white;">
+                    <span class="btn-icon">⚡</span> Run MACD Backtest
+                </button>
+            </div>
+            <div class="backtest-content-grid" style="display: grid; grid-template-columns: 1.8fr 1fr; gap: 1.5rem;">
+                <!-- Line Chart -->
+                <div class="backtest-chart-container" style="height: 300px; position: relative;">
+                    <canvas id="macdBacktestChart"></canvas>
+                </div>
+                <!-- Backtest Metrics -->
+                <div class="backtest-metrics-panel" style="display: flex; flex-direction: column; justify-content: center; gap: 0.75rem; padding: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px;">
+                    <h4 style="margin: 0; font-size: 0.95rem; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.5px;">MACD Strategy Performance</h4>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span>MACD Strategy CAGR:</span>
+                        <strong id="macd-bt-cagr" style="color: #f59e0b;">--</strong>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span>Benchmark CAGR:</span>
+                        <strong id="macd-bt-bench-cagr" style="color: #0ea5e9;">--</strong>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span>Ann. Sharpe Ratio:</span>
+                        <strong id="macd-bt-sharpe" style="color: #fbbf24;">--</strong>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span>Max Drawdown:</span>
+                        <strong id="macd-bt-drawdown" class="negative" style="color: #ef4444;">--</strong>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span>Win Rate:</span>
+                        <strong id="macd-bt-winrate" style="color: #10b981;">--</strong>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span>Closed Trades:</span>
+                        <strong id="macd-bt-trades" style="color: #8f9cae;">--</strong>
+                    </div>
+                    <div class="metric-row" style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                        <span>Total Fees Paid:</span>
+                        <strong id="macd-bt-fees" style="color: #8f9cae;">--</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Footer -->
         <footer class="footer-info">
             <p>Executed by Antigravity AI | Valuation Date: 2026-06-03 | Active Universe: S&P/BMV IPC Index</p>

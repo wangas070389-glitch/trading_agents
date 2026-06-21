@@ -1,56 +1,11 @@
-# Agentic DAG Paper Trading Transaction Ledger
 
-This file tracks all buy and sell transactions executed by the Mexican Value Stock Evaluation Agentic DAG.
+| 2026-06-21 | BONDIA | INTEREST | 1 | 0.0029 | +0.0029 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0055 days. |
 
-## Chronological Transaction Log
-
-| Trade Date | Ticker | Action | Shares | Execution Price (MXN) | Total Cash Flow (MXN) | Order Type | Status | Note |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| 2026-06-03 | KIMBERA.MX | BUY | 62 | 38.09 | -2,361.58 | Market | FILLED | Initial value portfolio allocation (30% target) |
-| 2026-06-03 | PINFRA.MX | BUY | 8 | 276.19 | -2,209.52 | Market | FILLED | Initial value portfolio allocation (30% target) |
-| 2026-06-03 | CUERVO.MX | BUY | 108 | 14.07 | -1,519.56 | Market | FILLED | Initial value portfolio allocation (30% target) |
-
-| 2026-06-06 | KIMBERA.MX | SELL | 62 | 36.92 | +2,289.04 | Market | FILLED | V3 Dynamic Rebalance |
-| 2026-06-06 | PINFRA.MX | SELL | 8 | 266.06 | +2,128.48 | Market | FILLED | V3 Dynamic Rebalance |
-| 2026-06-06 | CUERVO.MX | SELL | 108 | 14.00 | +1,512.00 | Market | FILLED | V3 Dynamic Rebalance |
-| 2026-06-06 | BONDIA | INTEREST | 1 | 0.0227 | +0.0227 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0037 days. |
-| 2026-06-06 | BONDIA | INTEREST | 1 | 0.0066 | +0.0066 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0011 days. |
-| 2026-06-06 | NVDA | BUY | 2 | 3543.66 | -7,087.31 | Market | FILLED | V3 Dynamic Rebalance (Target Weight: 40.0%, DCS: 0.96) |
-| 2026-06-06 | AAPL | BUY | 1 | 5310.13 | -5,310.13 | Market | FILLED | V3 Dynamic Rebalance (Target Weight: 40.0%, DCS: 0.95) |
-| 2026-06-08 | BONDIA | INTEREST | 1 | 6.1904 | +6.1904 | Market | FILLED | Bondia overnight yield on cash reserves for 2.7421 days. |
-| 2026-06-08 | NVDA | SELL | 2 | 3649.11 | +7,298.23 | Market | FILLED | V3 Dynamic Rebalance |
-| 2026-06-08 | AAPL | SELL | 1 | 5322.59 | +5,322.59 | Market | FILLED | V3 Dynamic Rebalance |
-| 2026-06-08 | BONDIA | INTEREST | 1 | 1.3735 | +1.3735 | Market | FILLED | Bondia overnight yield on cash reserves for 0.2250 days. |
-| 2026-06-09 | BONDIA | INTEREST | 1 | 5.5616 | +5.5616 | Market | FILLED | Bondia overnight yield on cash reserves for 0.9110 days. |
-| 2026-06-09 | AAPL | BUY | 1 | 5060.80 | -5,060.80 | Market | FILLED | V3 Dynamic Rebalance (Target Weight: 40.0%, DCS: 0.95) |
-| 2026-06-09 | BONDIA | INTEREST | 1 | 0.4203 | +0.4203 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0923 days. |
-| 2026-06-10 | BONDIA | INTEREST | 1 | 4.5705 | +4.5705 | Market | FILLED | Bondia overnight yield on cash reserves for 1.0032 days. |
-| 2026-06-10 | AAPL | SELL | 1 | 5089.24 | +5,089.24 | Market | FILLED | V3 Dynamic Rebalance |
-| 2026-06-12 | BONDIA | INTEREST | 1 | 6.1286 | +6.1286 | Market | FILLED | Bondia overnight yield on cash reserves for 1.0034 days. |
-| 2026-06-12 | GRUMAB.MX | BUY | 27 | 293.50 | -7,924.50 | Market | FILLED | V3 Dynamic Rebalance (Target Weight: 40.0%, DCS: 0.99) |
-| 2026-06-12 | BBAJIOO.MX | BUY | 151 | 52.74 | -7,963.74 | Market | FILLED | V3 Dynamic Rebalance (Target Weight: 40.0%, DCS: 1.00) |
-| 2026-06-12 | BONDIA | INTEREST | 1 | 0.5480 | +0.5480 | Market | FILLED | Bondia overnight yield on cash reserves for 0.4416 days. |
-| 2026-06-12 | BONDIA | INTEREST | 1 | 0.0015 | +0.0015 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0012 days. |
-| 2026-06-12 | BONDIA | INTEREST | 1 | 0.0195 | +0.0195 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0157 days. |
-| 2026-06-12 | BONDIA | INTEREST | 1 | 0.0025 | +0.0025 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0020 days. |
-| 2026-06-12 | BONDIA | INTEREST | 1 | 0.0111 | +0.0111 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0090 days. |
-| 2026-06-12 | BONDIA | INTEREST | 1 | 0.0546 | +0.0546 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0440 days. |
-| 2026-06-12 | BONDIA | INTEREST | 1 | 0.0131 | +0.0131 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0105 days. |
-| 2026-06-12 | BONDIA | INTEREST | 1 | 0.0526 | +0.0526 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0424 days. |
-| 2026-06-13 | BONDIA | INTEREST | 1 | 0.5344 | +0.5344 | Market | FILLED | Bondia overnight yield on cash reserves for 0.4305 days. |
-| 2026-06-13 | GRUMAB.MX | SELL | 27 | 296.06 | +7,970.44 | Market | FILLED | V3 Dynamic Rebalance (Target Weight: 0.0%, DCS: 0.14) |
-| 2026-06-13 | BBAJIOO.MX | SELL | 151 | 55.31 | +8,327.59 | Market | FILLED | V3 Dynamic Rebalance (Target Weight: 0.0%, DCS: -0.00) |
-| 2026-06-15 | BONDIA | INTEREST | 1 | 17.1643 | +17.1643 | Market | FILLED | Bondia overnight yield on cash reserves for 2.7589 days. |
-| 2026-06-15 | ASURB.MX | BUY | 5 | 516.37 | -2,581.86 | Market | FILLED | V4 DQN Execution (Target Weight: 13.3%, DCS: 0.71, Saved: $0.00 MXN) |
-| 2026-06-15 | WALMEX.MX | BUY | 49 | 52.64 | -2,579.50 | Market | FILLED | V4 DQN Execution (Target Weight: 12.7%, DCS: 0.55, Saved: $1.05 MXN) |
-| 2026-06-15 | AC.MX | BUY | 6 | 212.42 | -1,274.54 | Market | FILLED | V4 DQN Execution (Target Weight: 6.3%, DCS: 0.20, Saved: $0.13 MXN) |
-| 2026-06-15 | GRUMAB.MX | BUY | 1 | 291.46 | -291.46 | Market | FILLED | V4 DQN Execution (Target Weight: 2.8%, DCS: 0.11, Saved: $0.02 MXN) |
-| 2026-06-15 | BONDIA | INTEREST | 1 | 0.0170 | +0.0170 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0041 days. |
 ---
 
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
-* **Total Deployed Capital**: 6,727.19 MXN (33.0% invested)
-* **Unallocated Cash Reserves**: 13,650.51 MXN (67.0% cash)
-* **Current Portfolio Market Value**: 20,377.70 MXN (including cash)
+* **Total Deployed Capital**: 18,631.39 MXN (91.6% invested)
+* **Unallocated Cash Reserves**: 1,706.25 MXN (8.4% cash)
+* **Current Portfolio Market Value**: 20,333.25 MXN (including cash)
