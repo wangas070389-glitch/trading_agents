@@ -347,7 +347,7 @@ class PortfolioReconciler:
         )
 
     def reconcile(self, adjusted_metrics: dict, portfolio: dict, execution_date: str,
-                  learning_context: dict = None) -> tuple[dict, str, list]:
+                  learning_context: dict = None, universe_prices_dict: dict = None) -> tuple[dict, str, list]:
         print(f"\n[Agent 3: Portfolio Reconciler] Starting portfolio reconciliation and optimization...")
 
         # Adaptive learning context (all optional, safe defaults = old behavior)
@@ -592,7 +592,7 @@ class PortfolioReconciler:
         print(f"  |-- Portfolio Value: {total_value:,.2f} MXN (Cash: {cash:,.2f} MXN, Stocks: {holdings_value:,.2f} MXN)")
         
         # Define structural hysteresis deadband (rebalancing tolerance)
-        REBALANCE_TOLERANCE = 0.05  # 5% absolute drift required to trigger a trade
+        REBALANCE_TOLERANCE = ctx.get("dead_zone_threshold", 0.05)
         
         # Adjust target weights using hysteresis BEFORE executing trade calculations
         for ticker in list(pesos_asignados.keys()):
@@ -610,7 +610,7 @@ class PortfolioReconciler:
         costo_corretaje = 0.0029 # 0.29% fee
         
         # Dead-zone threshold to prevent excessive fee churn
-        DEAD_ZONE_THRESHOLD = ctx.get("dead_zone_threshold", 0.05)
+        DEAD_ZONE_THRESHOLD = REBALANCE_TOLERANCE
         
         # First Phase: Execute Sells (frees up cash, proceeds go to T+1 unsettled cash)
         new_holdings_dict = {}
