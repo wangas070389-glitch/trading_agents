@@ -55,6 +55,7 @@
 | 2026-06-22 | BONDIA | INTEREST | 1 | 1.0153 | +1.0153 | Market | FILLED | Bondia overnight yield on cash reserves for 1.9473 days. |
 | 2026-06-23 | BONDIA | INTEREST | 1 | 0.0652 | +0.0652 | Market | FILLED | Bondia overnight yield on cash reserves for 0.2106 days. |
 | 2026-06-23 | BONDIA | INTEREST | 1 | 0.0050 | +0.0050 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0163 days. |
+| 2026-06-23 | BONDIA | INTEREST | 1 | 0.0010 | +0.0010 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0031 days. |
 ---
 
 ## Portfolio Capital Reconciliation
