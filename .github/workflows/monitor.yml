@@ -48,7 +48,11 @@ jobs:
     - name: Run Live MACD Ingestion
       run: python ingest_live_macd.py
 
-    # 5c. Run Performance Comparison
+    # 5c. Execute Live US Stock Momentum Strategy Ingestion (Isolated)
+    - name: Run Live US Stock Momentum Strategy
+      run: python run_live_alpaca_us_stocks.py
+
+    # 5d. Run Performance Comparison
     - name: Compare Strategy Performances
       run: python compare_strategies.py
 
@@ -59,8 +63,8 @@ jobs:
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         
         # Add updated database, performance log, evaluation report, transaction ledger, and history
-        git add portfolio.json portfolio_status.md portfolio_macd.json transactions_macd.md comparison_report.md mexican_value_equity_report_live.md mexican_value_equity_report_live_alpha.md transactions.md evaluation_history.md signal_history.json equity_curve.json learned_params.json || true
+        git add portfolio.json portfolio_status.md portfolio_macd.json transactions_macd.md portfolio_us_stocks.json transactions_us_stocks.md comparison_report.md mexican_value_equity_report_live.md mexican_value_equity_report_live_alpha.md transactions.md evaluation_history.md signal_history.json equity_curve.json learned_params.json || true
         
         # Commit only if files have changed (to prevent error crashes on identical runs)
-        git diff-index --quiet HEAD || (git commit -m "Auto-update: DCF Alpha-Momentum concentrated paper trading [$(date -u +%Y-%m-%d)]" && git push)
+        git diff-index --quiet HEAD || (git commit -m "Auto-update: Multi-strategy concentrated paper trading [$(date -u +%Y-%m-%d)]" && git push)
 

@@ -13,13 +13,15 @@ def main():
     
     portfolio_val_path = os.path.join(dir_path, "portfolio.json")
     portfolio_macd_path = os.path.join(dir_path, "portfolio_macd.json")
+    portfolio_us_path = os.path.join(dir_path, "portfolio_us_stocks.json")
     comparison_report_path = os.path.join(dir_path, "comparison_report.md")
     
     port_val = load_json(portfolio_val_path)
     port_macd = load_json(portfolio_macd_path)
+    port_us = load_json(portfolio_us_path)
     
-    if not port_val and not port_macd:
-        print("Error: Neither portfolio.json nor portfolio_macd.json was found. Cannot generate comparison.")
+    if not port_val and not port_macd and not port_us:
+        print("Error: No portfolio files found. Cannot generate comparison.")
         return
         
     now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -30,8 +32,8 @@ def main():
     
     # 1. Summary Comparison Table
     report.append("## 1. Executive Performance Summary")
-    report.append("| Strategy | Total Portfolio Value (MXN) | Cash Balance (MXN) | Capital Invested (MXN) | Allocation % | Total Profit/Loss | ROI % | Inception Date |")
-    report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
+    report.append("| Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |")
+    report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
     
     # Parse Strategy 1 (Adaptive Value)
     if port_val:
@@ -43,9 +45,9 @@ def main():
         v_roi = (v_profit / v_total_cap) * 100.0
         v_alloc = (v_invested / v_market_val) * 100.0 if v_market_val > 0 else 0.0
         v_sign = "+" if v_profit >= 0 else ""
-        report.append(f"| **Adaptive Dynamic Value (V4)** | ${v_market_val:,.2f} | ${v_cash:,.2f} | ${v_invested:,.2f} | {v_alloc:.1f}% | {v_sign}${v_profit:,.2f} | {v_sign}{v_roi:.2f}% | 2026-06-03 |")
+        report.append(f"| **Adaptive Dynamic Value (V4)** | ${v_market_val:,.2f} | ${v_cash:,.2f} | ${v_invested:,.2f} | {v_alloc:.1f}% | {v_sign}${v_profit:,.2f} | {v_sign}{v_roi:.2f}% | 2026-06-03 | MXN |")
     else:
-        report.append("| **Adaptive Dynamic Value (V4)** | *Not Initialized* | - | - | - | - | - | - |")
+        report.append("| **Adaptive Dynamic Value (V4)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
         
     # Parse Strategy 2 (1d MACD)
     if port_macd:
@@ -57,9 +59,23 @@ def main():
         m_roi = (m_profit / m_total_cap) * 100.0
         m_alloc = (m_invested / m_market_val) * 100.0 if m_market_val > 0 else 0.0
         m_sign = "+" if m_profit >= 0 else ""
-        report.append(f"| **1d MACD + SMA + HMM** | ${m_market_val:,.2f} | ${m_cash:,.2f} | ${m_invested:,.2f} | {m_alloc:.1f}% | {m_sign}${m_profit:,.2f} | {m_sign}{m_roi:.2f}% | 2026-06-03 |")
+        report.append(f"| **1d MACD + SMA + HMM** | ${m_market_val:,.2f} | ${m_cash:,.2f} | ${m_invested:,.2f} | {m_alloc:.1f}% | {m_sign}${m_profit:,.2f} | {m_sign}{m_roi:.2f}% | 2026-06-03 | MXN |")
     else:
-        report.append("| **1d MACD + SMA + HMM** | *Not Initialized* | - | - | - | - | - | - |")
+        report.append("| **1d MACD + SMA + HMM** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+
+    # Parse Strategy 3 (US Stock Momentum - Isolated)
+    if port_us:
+        u_total_cap = port_us.get("total_capital", 100000.0)
+        u_cash = port_us.get("cash_balance", 100000.0)
+        u_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_us.get("holdings", []))
+        u_market_val = u_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_us.get("holdings", []))
+        u_profit = u_market_val - u_total_cap
+        u_roi = (u_profit / u_total_cap) * 100.0
+        u_alloc = (u_invested / u_market_val) * 100.0 if u_market_val > 0 else 0.0
+        u_sign = "+" if u_profit >= 0 else ""
+        report.append(f"| **US Stock Momentum (Isolated)** | ${u_market_val:,.2f} | ${u_cash:,.2f} | ${u_invested:,.2f} | {u_alloc:.1f}% | {u_sign}${u_profit:,.2f} | {u_sign}{u_roi:.2f}% | 2026-06-23 | USD |")
+    else:
+        report.append("| **US Stock Momentum (Isolated)** | *Not Initialized* | - | - | - | - | - | - | USD |")
         
     report.append("\n" + "-" * 80 + "\n")
     
@@ -67,7 +83,7 @@ def main():
     report.append("## 2. Strategy Holdings Details")
     
     # Strategy 1 Holdings
-    report.append("### A. Adaptive Dynamic Value (V4) Holdings")
+    report.append("### A. Adaptive Dynamic Value (V4) Holdings (MXN)")
     if port_val and port_val.get("holdings"):
         report.append("| Ticker | Shares Held | Average Cost (MXN) | Current Price (MXN) | Market Value (MXN) | Target Weight | Unrealized P/L | P/L % |")
         report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
@@ -88,7 +104,7 @@ def main():
     report.append("\n")
     
     # Strategy 2 Holdings
-    report.append("### B. 1d MACD + SMA + HMM Holdings")
+    report.append("### B. 1d MACD + SMA + HMM Holdings (MXN)")
     if port_macd and port_macd.get("holdings"):
         report.append("| Ticker | Shares Held | Average Cost (MXN) | Current Price (MXN) | Market Value (MXN) | Target Weight | Unrealized P/L | P/L % |")
         report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
@@ -106,15 +122,38 @@ def main():
     else:
         report.append("*No open stock positions currently held. Portfolio is 100% Cash / Bondia sweep.*")
         
+    report.append("\n")
+
+    # Strategy 3 Holdings
+    report.append("### C. US Stock Momentum (Isolated) Holdings (USD)")
+    if port_us and port_us.get("holdings"):
+        report.append("| Ticker | Shares Held | Average Cost (USD) | Current Price (USD) | Market Value (USD) | Target Weight | Unrealized P/L | P/L % |")
+        report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
+        for h in port_us["holdings"]:
+            ticker = h["ticker"]
+            shares = h["shares"]
+            buy_price = h["buy_price"]
+            last_price = h.get("last_price", buy_price)
+            target_w = h.get("target_weight", 0.0)
+            mval = shares * last_price
+            pl = mval - (shares * buy_price)
+            pl_pct = ((last_price / buy_price) - 1.0) * 100.0 if buy_price > 0 else 0.0
+            sign = "+" if pl >= 0 else ""
+            report.append(f"| {ticker} | {shares:,} | ${buy_price:,.2f} | ${last_price:,.2f} | ${mval:,.2f} | {target_w:.1%} | {sign}${pl:,.2f} | {sign}{pl_pct:.2f}% |")
+    else:
+        report.append("*No open stock positions currently held. Portfolio is 100% Cash.*")
+        
     report.append("\n" + "-" * 80 + "\n")
     
     # 3. Dynamic Yield & Reserves Details
     report.append("## 3. Cash Sweeps & Yield Settings")
-    report.append("* **Bondia Overnight Cash Sweep Yield:** **6.53% APR** (accrued on unallocated cash balance daily).")
+    report.append("* **Bondia Overnight Cash Sweep Yield:** **6.53% APR** (accrued on unallocated MXN cash balance daily).")
     if port_val:
         report.append(f"* **Adaptive Value Current Cash Reserves:** ${port_val.get('cash_balance', 0.0):,.2f} MXN")
     if port_macd:
         report.append(f"* **1D MACD Current Cash Reserves:** ${port_macd.get('cash_balance', 0.0):,.2f} MXN")
+    if port_us:
+        report.append(f"* **US Stock Momentum Current Cash Reserves:** ${port_us.get('cash_balance', 0.0):,.2f} USD")
         
     # Write to comparison_report.md
     with open(comparison_report_path, "w", encoding="utf-8") as f:
