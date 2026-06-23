@@ -1,0 +1,880 @@
+diff --git a/.github/workflows/monitor.yml b/.github/workflows/monitor.yml
+index f00e3b5..c885a0f 100644
+--- a/.github/workflows/monitor.yml
++++ b/.github/workflows/monitor.yml
+@@ -4,6 +4,8 @@ on:
+   schedule:
+     # Runs Monday to Friday at 22:30 UTC (4:30 PM Mexico City CST)
+     - cron: '30 22 * * 1-5'
++    # Saturday 14:00 UTC: weekly walk-forward threshold training
++    - cron: '0 14 * * 6'
+   workflow_dispatch:
+     # Allows you to manually trigger this run from the GitHub Actions tab
+ 
+@@ -13,6 +15,8 @@ permissions:
+ jobs:
+   update-portfolio:
+     runs-on: ubuntu-latest
++    # Skip the daily trading job on the Saturday training cron
++    if: github.event.schedule != '0 14 * * 6'
+ 
+     steps:
+     # 1. Checkout the repository code
+@@ -47,7 +51,29 @@ jobs:
+         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+         
+         # Add updated database, performance log, evaluation report, transaction ledger, and history
+-        git add portfolio.json portfolio_status.md mexican_value_equity_report_live.md transactions.md evaluation_history.md
++        git add portfolio.json portfolio_status.md mexican_value_equity_report_live.md transactions.md evaluation_history.md signal_history.json equity_curve.json learned_params.json || true
+         
+         # Commit only if files have changed (to prevent error crashes on identical runs)
+         git diff-index --quiet HEAD || (git commit -m "Auto-update: Portfolio trades, P/L monitoring & BMV evaluation [$(date -u +%Y-%m-%d)]" && git push)
++
++  weekly-threshold-learning:
++    runs-on: ubuntu-latest
++    # Only the Saturday cron (or a manual dispatch) trains; daily runs just consume learned_params.json
++    if: github.event.schedule == '0 14 * * 6' || github.event_name == 'workflow_dispatch'
++    steps:
++    - uses: actions/checkout@v3
++    - uses: actions/setup-python@v4
++      with:
++        python-version: '3.11'
++        cache: 'pip'
++    - run: |
++        python -m pip install --upgrade pip
++        pip install -r requirements.txt
++    - name: Walk-forward threshold training
++      run: python learn_parameters.py
++    - name: Commit learned parameters
++      run: |
++        git config --global user.name "github-actions[bot]"
++        git config --global user.email "github-actions[bot]@users.noreply.github.com"
++        git add learned_params.json || true
++        git diff-index --quiet HEAD || (git commit -m "Auto-update: weekly walk-forward threshold training [$(date -u +%Y-%m-%d)]" && git push)
+diff --git a/agents/agents.py b/agents/agents.py
+index 94b85e0..e71239a 100644
+--- a/agents/agents.py
++++ b/agents/agents.py
+@@ -174,10 +174,18 @@ class FundamentalScreener:
+         retornos[0] = 0.0
+         
+         # Fit GARCH(1,1) model
++        # NOTE: `show_warning` is NOT a valid kwarg of arch_model() (it belongs to .fit()).
++        # The previous code raised TypeError on every call, silently forcing the
++        # rolling-std fallback for ALL tickers — GARCH never actually ran.
+         try:
+-            am = arch_model(retornos * 100, vol='Garch', p=1, q=1, dist='Normal', show_warning=False)
+-            res = am.fit(update_freq=0, disp='off')
+-            vol_condicional = res.conditional_volatility / 100
++            am = arch_model(retornos * 100, vol='Garch', p=1, q=1, dist='Normal')
++            res = am.fit(update_freq=0, disp='off', show_warning=False)
++            vol_condicional = np.asarray(res.conditional_volatility) / 100
++            # Guard against zero/NaN conditional volatility
++            vol_condicional = np.where(
++                np.isfinite(vol_condicional) & (vol_condicional > 1e-8),
++                vol_condicional, 0.015
++            )
+             retornos_estandarizados = retornos / vol_condicional
+         except Exception as e:
+             # Fallback to rolling standard deviation if GARCH fitting fails
+@@ -358,15 +366,25 @@ class PortfolioReconciler:
+             "costs, and draft the final production report."
+         )
+ 
+-    def reconcile(self, adjusted_metrics: dict, portfolio: dict, execution_date: str) -> tuple[dict, str]:
++    def reconcile(self, adjusted_metrics: dict, portfolio: dict, execution_date: str,
++                  learning_context: dict = None) -> tuple[dict, str, list]:
+         print(f"\n[Agent 3: Portfolio Reconciler] Starting portfolio reconciliation and optimization...")
+-        
+-        # 1. Determine active eligible assets based on threshold rules
++
++        # Adaptive learning context (all optional, safe defaults = old behavior)
++        ctx = learning_context or {}
++        umbral_histeresis_entrada = ctx.get("dcs_threshold", 0.25)
++        umbral_vr = ctx.get("vr_threshold", 1.2)
++        confidence = ctx.get("confidence", {})          # ticker -> multiplier
++        exposure_scalar = ctx.get("exposure_scalar", 1.0)
++        if exposure_scalar < 1.0:
++            print(f"  |-- [Drawdown Governor] Gross exposure scaled to {exposure_scalar:.0%} "
++                  f"(strategy drawdown brake active).")
++
++        # 1. Determine active eligible assets based on (learned) threshold rules
+         activos_elegibles = []
+-        umbral_histeresis_entrada = 0.25
+-        
++
+         for t, met in adjusted_metrics.items():
+-            if met["dcs_adjusted"] >= umbral_histeresis_entrada and met["relative_vol"] >= 1.2:
++            if met["dcs_adjusted"] >= umbral_histeresis_entrada and met["relative_vol"] >= umbral_vr:
+                 activos_elegibles.append(t)
+                 
+         print(f"  |-- Eligible assets for long positions: {activos_elegibles}")
+@@ -382,10 +400,16 @@ class PortfolioReconciler:
+             inv_vol = {t: 1.0 / adjusted_metrics[t]["garch_vol_adjusted"] for t in activos_elegibles}
+             suma_inv_vol = sum(inv_vol.values())
+             
+-            # Raw weights scaled by DCS view strength
++            # Raw weights scaled by DCS view strength, then by the learned
++            # confidence multiplier for this signal bucket (1.0 = no evidence
++            # yet), then by the drawdown-governor exposure scalar.
+             raw_weights = {}
+             for t in activos_elegibles:
+-                raw_weights[t] = (inv_vol[t] / suma_inv_vol) * adjusted_metrics[t]["dcs_adjusted"]
++                mult = confidence.get(t, 1.0)
++                raw_weights[t] = (inv_vol[t] / suma_inv_vol) * adjusted_metrics[t]["dcs_adjusted"] * mult * exposure_scalar
++                if mult != 1.0:
++                    print(f"  |-- [Learned Confidence] {t}: weight x{mult:.2f} "
++                          f"(historical bucket expectancy)")
+                 
+             # Enforce 40% concentration limit (and redistribute excess)
+             final_weights = {}
+@@ -432,7 +456,19 @@ class PortfolioReconciler:
+         # First Phase: Execute Sells (frees up cash)
+         new_holdings_dict = {}
+         cash_after_sells = cash
+-        
++
++        # BUGFIX: previously, any held ticker missing from adjusted_metrics
++        # (yfinance failure, liquidity gate rejection, screening error) simply
++        # vanished from the new portfolio — no SELL was logged and no cash was
++        # credited. The position's value evaporated from portfolio.json.
++        # Data unavailability is NOT a sell signal: carry the position at its
++        # last known price and flag it for review.
++        for ticker, h in holdings.items():
++            if ticker not in adjusted_metrics:
++                print(f"  +-- [WARN] {ticker} held but absent from today's metrics. "
++                      f"Carrying position at last price {h['last_price']:.2f} (review manually).")
++                new_holdings_dict[ticker] = {**h, "target_weight": h.get("target_weight", 0.0)}
++
+         for ticker, peso in pesos_asignados.items():
+             current_price = adjusted_metrics[ticker]["current_price"]
+             monto_teorico = total_value * peso
+@@ -487,8 +523,17 @@ class PortfolioReconciler:
+                 }
+                 
+         # Second Phase: Execute Buys
++        # BUGFIX: dict order is insertion order (ingestion order), so when cash ran
++        # out, low-conviction names ingested earlier got filled while the strongest
++        # signals were scaled down. Fill highest adjusted DCS first.
+         cash_after_buys = cash_after_sells
+-        for ticker, peso in pesos_asignados.items():
++        buy_order = sorted(
++            pesos_asignados.keys(),
++            key=lambda t: adjusted_metrics[t]["dcs_adjusted"],
++            reverse=True
++        )
++        for ticker in buy_order:
++            peso = pesos_asignados[ticker]
+             current_price = adjusted_metrics[ticker]["current_price"]
+             monto_teorico = total_value * peso
+             target_shares = int(monto_teorico // current_price)
+@@ -592,10 +637,10 @@ class PortfolioReconciler:
+             for t in discarded_assets:
+                 met = adjusted_metrics[t]
+                 reasons = []
+-                if met["dcs_adjusted"] < 0.25:
+-                    reasons.append(f"DCS below entry threshold ({met['dcs_adjusted']:.2f} < 0.25)")
+-                if met["relative_vol"] < 1.2:
+-                    reasons.append(f"Relative volume below threshold ({met['relative_vol']:.2f} < 1.2)")
++                if met["dcs_adjusted"] < umbral_histeresis_entrada:
++                    reasons.append(f"DCS below entry threshold ({met['dcs_adjusted']:.2f} < {umbral_histeresis_entrada:.2f})")
++                if met["relative_vol"] < umbral_vr:
++                    reasons.append(f"Relative volume below threshold ({met['relative_vol']:.2f} < {umbral_vr:.2f})")
+                 report.append(f"| {t} | {met['dcs_adjusted']:.4f} | {met['relative_vol']:.2f} | {', '.join(reasons)} |")
+         else:
+             report.append("*No assets were discarded this run.*")
+@@ -624,4 +669,6 @@ class PortfolioReconciler:
+         
+         final_markdown = "\n".join(report)
+         
+-        return updated_portfolio, final_markdown
++        # Return the trade blotter so callers log EXACTLY the executed trades
++        # (with fees) instead of re-deriving them by diffing holdings.
++        return updated_portfolio, final_markdown, rebalancing_trades
+diff --git a/backtest.py b/backtest.py
+index 7699437..48b33cb 100644
+--- a/backtest.py
++++ b/backtest.py
+@@ -34,10 +34,12 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
+                 "Asset_Ret": asset_ret
+             })
+             df_aligned = df_asset.join(df_exog, how="right")
+-            df_aligned["Asset_Price"] = df_aligned["Asset_Price"].ffill().bfill()
++            # BUGFIX: .bfill() leaked FUTURE prices into the past (look-ahead bias).
++            # Forward-fill only; rows before the ticker's first real quote stay NaN
++            # and are excluded from each rebalance lookback below.
++            df_aligned["Asset_Price"] = df_aligned["Asset_Price"].ffill()
+             df_aligned["Asset_Vol"] = df_aligned["Asset_Vol"].fillna(0.0)
+             df_aligned["Asset_Ret"] = df_aligned["Asset_Ret"].fillna(0.0)
+-            df_aligned = df_aligned.fillna(0.0)
+             universe_history[ticker] = df_aligned
+         except Exception:
+             continue
+@@ -62,10 +64,12 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
+                 "Asset_Ret": asset_ret_mxn
+             })
+             df_aligned = df_asset.join(df_exog, how="right")
+-            df_aligned["Asset_Price"] = df_aligned["Asset_Price"].ffill().bfill()
++            # BUGFIX: .bfill() leaked FUTURE prices into the past (look-ahead bias).
++            # Forward-fill only; rows before the ticker's first real quote stay NaN
++            # and are excluded from each rebalance lookback below.
++            df_aligned["Asset_Price"] = df_aligned["Asset_Price"].ffill()
+             df_aligned["Asset_Vol"] = df_aligned["Asset_Vol"].fillna(0.0)
+             df_aligned["Asset_Ret"] = df_aligned["Asset_Ret"].fillna(0.0)
+-            df_aligned = df_aligned.fillna(0.0)
+             universe_history[ticker] = df_aligned
+         except Exception:
+             continue
+@@ -90,7 +94,9 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
+     spy_history = yf.Ticker("SPY").history(period="5y")
+     spy_history.index = spy_history.index.tz_localize(None)
+     spy_mxn_series = spy_history["Close"] * raw_rate
+-    spy_mxn_series = spy_mxn_series.reindex(backtest_dates).ffill().bfill()
++    spy_mxn_series = spy_mxn_series.reindex(backtest_dates).ffill()
++    if spy_mxn_series.isna().any():
++        raise ValueError("SPY benchmark series has gaps at the start of the backtest window.")
+     
+     # Buy SPY on day 0
+     spy_start_price = spy_mxn_series.iloc[0]
+@@ -161,6 +167,7 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
+             for ticker, df_ticker in universe_history.items():
+                 # Get df rows before/on current_date
+                 df_lookback = df_ticker.loc[df_ticker.index <= current_date]
++                df_lookback = df_lookback.dropna(subset=["Asset_Price"])
+                 if len(df_lookback) < 50: continue
+                 
+                 # Check liquidity gate on lookback data
+@@ -189,7 +196,7 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
+             adjusted_metrics = analyst.stress_test(raw_metrics, {})
+             
+             # Optimize and calculate weights
+-            updated_portfolio_sim, _ = reconciler.reconcile(adjusted_metrics, portfolio_sim, current_date.strftime("%Y-%m-%d"))
++            updated_portfolio_sim, _, _ = reconciler.reconcile(adjusted_metrics, portfolio_sim, current_date.strftime("%Y-%m-%d"))
+             
+             # Apply rebalanced holdings to simulation
+             new_holdings = {h["ticker"]: h["shares"] for h in updated_portfolio_sim["holdings"]}
+diff --git a/ingest_live_bmv.py b/ingest_live_bmv.py
+index 130e806..70a2ecd 100644
+--- a/ingest_live_bmv.py
++++ b/ingest_live_bmv.py
+@@ -10,6 +10,9 @@ import yfinance as yf
+ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+ 
+ from skills.liquidity_gatekeeper import calculate_adtv, passes_liquidity_gate
++from skills.adaptive_learning import (
++    SignalPerformanceTracker, DrawdownGovernor, load_learned_params,
++)
+ from agents.agents import FundamentalScreener, MacroRiskAnalyst, PortfolioReconciler
+ 
+ # Major S&P/BMV IPC components to query
+@@ -97,14 +100,14 @@ def save_portfolio(dir_path, portfolio):
+     with open(portfolio_path, "w", encoding="utf-8") as f:
+         json.dump(portfolio, f, indent=2)
+ 
+-def log_transaction(dir_path, date_str, ticker, action, shares, price, note):
+-    """Append a transaction row to transactions.md."""
++def log_transaction(dir_path, date_str, ticker, action, shares, price, note, fee=0.0):
++    """Append a transaction row to transactions.md. Net capital impact includes fees."""
+     transactions_path = os.path.join(dir_path, "transactions.md")
+-    cash_flow = shares * price
++    gross = shares * price
+     if action == "BUY":
+-        cash_flow_str = f"-{cash_flow:,.2f}"
++        cash_flow_str = f"-{gross + fee:,.2f}"
+     else:
+-        cash_flow_str = f"+{cash_flow:,.2f}"
++        cash_flow_str = f"+{gross - fee:,.2f}"
+ 
+     row = f"| {date_str} | {ticker} | {action} | {shares} | {price:.2f} | {cash_flow_str} | Market | FILLED | {note} |"
+ 
+@@ -353,45 +356,80 @@ def main():
+         }
+         print("  |-- portfolio.json missing. Initialized default empty portfolio with $20,000.00 MXN.")
+ 
++    # 5b. Adaptive learning context: resolve past signal outcomes, compute
++    # confidence multipliers, load learned thresholds, apply drawdown brake.
++    print("\n--- PHASE 4b: ADAPTIVE LEARNING CONTEXT ---")
++    tracker = SignalPerformanceTracker(dir_path)
++    price_lookup = {t: m["current_price"] for t, m in adjusted_metrics.items()}
++    resolved = tracker.update_outcomes(execution_date, price_lookup)
++    print(f"  |-- Resolved {resolved} pending signal outcome(s). "
++          f"Bucket stats: {tracker.bucket_stats() or 'no resolved samples yet'}")
++
++    learned = load_learned_params(dir_path)
++    if learned.get("trained_on"):
++        print(f"  |-- Learned thresholds in use (trained {learned['trained_on']}, "
++              f"val Sharpe {learned.get('validation_sharpe')}): "
++              f"DCS>={learned['dcs_threshold']}, VR>={learned['vr_threshold']}")
++    else:
++        print("  |-- No learned_params.json found. Using default thresholds "
++              "(run learn_parameters.py to train).")
++
++    governor = DrawdownGovernor(dir_path)
++    exposure = governor.exposure_scalar()
++
++    confidence = {
++        t: tracker.confidence_multiplier(m["hmm_state"], m["dcs_adjusted"])
++        for t, m in adjusted_metrics.items()
++    }
++
++    learning_context = {
++        "dcs_threshold": learned["dcs_threshold"],
++        "vr_threshold": learned["vr_threshold"],
++        "confidence": confidence,
++        "exposure_scalar": exposure,
++    }
++
+     reconciler = PortfolioReconciler()
+-    updated_portfolio, report_markdown = reconciler.reconcile(adjusted_metrics, portfolio, execution_date)
++    updated_portfolio, report_markdown, rebalancing_trades = reconciler.reconcile(
++        adjusted_metrics, portfolio, execution_date, learning_context
++    )
+ 
+     # 6. Execute paper trades & write logs
+     print("\n--- PHASE 5: EXECUTING REBALANCING LOGS ---")
+     
+     # Extract optimal weights dictionary
+-    pesos_asignados = {t: updated_portfolio["holdings"][i]["target_weight"] for i, h in enumerate(updated_portfolio["holdings"]) for t in [h["ticker"]]}
++    pesos_asignados = {h["ticker"]: h["target_weight"] for h in updated_portfolio["holdings"]}
+     for t in adjusted_metrics:
+         if t not in pesos_asignados:
+             pesos_asignados[t] = 0.0
+ 
+-    # Compare old and new holdings to log trades
+-    old_holdings_dict = {h["ticker"]: h for h in portfolio["holdings"]}
+-    new_holdings_dict = {h["ticker"]: h for h in updated_portfolio["holdings"]}
+-    all_tickers = set(old_holdings_dict.keys()).union(new_holdings_dict.keys())
+-    
+-    trades_executed = 0
+-    for t in all_tickers:
+-        old_shares = old_holdings_dict.get(t, {}).get("shares", 0)
+-        new_shares = new_holdings_dict.get(t, {}).get("shares", 0)
+-        
+-        if old_shares != new_shares:
+-            trades_executed += 1
+-            current_price = adjusted_metrics[t]["current_price"]
+-            
+-            if new_shares > old_shares:
+-                shares_traded = new_shares - old_shares
+-                note = f"V3 Dynamic Rebalance (Target Weight: {pesos_asignados[t]:.1%}, DCS: {adjusted_metrics[t]['dcs_adjusted']:.2f})"
+-                log_transaction(dir_path, execution_date, t, "BUY", shares_traded, current_price, note)
+-            else:
+-                shares_traded = old_shares - new_shares
+-                note = f"V3 Dynamic Rebalance"
+-                log_transaction(dir_path, execution_date, t, "SELL", shares_traded, current_price, note)
++    # BUGFIX: previously trades were re-derived here by diffing old vs new holdings,
++    # ignoring fees — so transactions.md never reconciled with portfolio.json cash.
++    # Now we log the exact blotter the reconciler executed, fees included.
++    trades_executed = len(rebalancing_trades)
++    for trade in rebalancing_trades:
++        log_transaction(
++            dir_path, execution_date,
++            trade["ticker"], trade["action"], trade["shares"],
++            trade["price"], trade["note"], fee=trade["fee"]
++        )
+ 
+     # Save new portfolio.json
+     save_portfolio(dir_path, updated_portfolio)
+     update_capital_reconciliation(dir_path, updated_portfolio)
+ 
++    # 6b. Feed the learning loop: log today's acted-on signals as pending
++    # outcomes, and append today's total value to the equity curve so the
++    # drawdown governor sees it on the next run.
++    logged = tracker.record_signals(execution_date, adjusted_metrics, pesos_asignados)
++    total_value_now = updated_portfolio["cash_balance"] + sum(
++        h["shares"] * h["last_price"] for h in updated_portfolio["holdings"]
++    )
++    governor.record_value(execution_date, total_value_now)
++    print(f"  |-- [Learning] Logged {logged} signal(s) for future scoring. "
++          f"Equity curve point: {total_value_now:,.2f} MXN "
++          f"(drawdown {governor.current_drawdown():+.2%}, next-run exposure {governor.exposure_scalar():.0%}).")
++
+     if trades_executed > 0:
+         print(f"  |-- Processed and logged {trades_executed} transaction(s) in transactions.md.")
+     else:
+diff --git a/learn_parameters.py b/learn_parameters.py
+new file mode 100644
+index 0000000..6ae1f0d
+--- /dev/null
++++ b/learn_parameters.py
+@@ -0,0 +1,229 @@
++"""
++Walk-forward learning of entry thresholds (DCS, relative volume).
++
++Why this design
++---------------
++The expensive part of the pipeline (GARCH + HMM + Markov matrix per ticker)
++does NOT depend on the thresholds — only eligibility and sizing do. So we:
++
++  1. Compute one metric snapshot per rebalance date (heavy, done once).
++  2. Grid-search threshold combos over the cached snapshots (cheap).
++  3. Split snapshot dates 60/40 into train/validation. Score each combo on
++     BOTH windows. Select by validation Sharpe MINUS an instability penalty
++     |train_sharpe - val_sharpe|, so we prefer parameters that behave the
++     same out-of-sample over parameters that merely got lucky in-sample.
++  4. Write the winner to learned_params.json, which ingest_live_bmv.py
++     loads on every run (with safe fallbacks).
++
++Run weekly (or via the GitHub Action) — NOT on every daily run; relearning
++thresholds daily on overlapping data is how you overfit.
++
++Usage:  python learn_parameters.py
++"""
++
++import os
++import json
++import datetime
++import numpy as np
++
++from skills.liquidity_gatekeeper import calculate_adtv, passes_liquidity_gate
++from skills.adaptive_learning import LEARNED_PARAMS_FILE
++from agents.agents import FundamentalScreener, MacroRiskAnalyst
++from ingest_live_bmv import (
++    BMV_TICKERS, US_TICKERS,
++    fetch_historical_exogenous, fetch_historical_asset,
++)
++
++import pandas as pd
++
++LOOKBACK_DAYS = 250          # how far back snapshots go (~1 trading year)
++SNAPSHOT_EVERY = 10          # business days between snapshots
++FORWARD_HORIZON = 15         # business days a decision is held / scored
++FEE = 0.0029
++TRAIN_FRACTION = 0.6
++
++DCS_GRID = [0.10, 0.15, 0.20, 0.25, 0.30, 0.40]
++VR_GRID = [1.0, 1.1, 1.2, 1.4]
++
++
++def build_universe_history():
++    df_exog, raw_rate = fetch_historical_exogenous()
++    universe = {}
++    for ticker in BMV_TICKERS:
++        try:
++            hist = fetch_historical_asset(ticker)
++            if len(hist) < 200:
++                continue
++            hist.index = hist.index.tz_localize(None)
++            df = pd.DataFrame({
++                "Asset_Price": hist["Close"],
++                "Asset_Vol": hist["Volume"],
++            }).join(df_exog, how="right")
++            df["Asset_Price"] = df["Asset_Price"].ffill()  # no bfill: no look-ahead
++            df["Asset_Vol"] = df["Asset_Vol"].fillna(0.0)
++            universe[ticker] = df
++        except Exception:
++            continue
++    for ticker in US_TICKERS:
++        try:
++            hist = fetch_historical_asset(ticker)
++            if len(hist) < 200:
++                continue
++            hist.index = hist.index.tz_localize(None)
++            df_usd = pd.DataFrame({
++                "Close_USD": hist["Close"],
++                "Volume": hist["Volume"],
++            }).join(raw_rate, how="inner")
++            df_usd["Close_MXN"] = df_usd["Close_USD"] * df_usd["USDMXN_Rate"]
++            df = pd.DataFrame({
++                "Asset_Price": df_usd["Close_MXN"],
++                "Asset_Vol": df_usd["Volume"],
++            }).join(df_exog, how="right")
++            df["Asset_Price"] = df["Asset_Price"].ffill()
++            df["Asset_Vol"] = df["Asset_Vol"].fillna(0.0)
++            universe[ticker] = df
++        except Exception:
++            continue
++    return universe, df_exog
++
++
++def compute_snapshots(universe, df_exog):
++    """One (metrics, forward_returns) pair per snapshot date. Heavy step."""
++    screener = FundamentalScreener()
++    analyst = MacroRiskAnalyst()
++
++    all_dates = df_exog.index
++    usable = all_dates[-(LOOKBACK_DAYS + FORWARD_HORIZON):]
++    snapshot_dates = usable[::SNAPSHOT_EVERY]
++    # Need FORWARD_HORIZON days after each snapshot to score it
++    snapshot_dates = [d for d in snapshot_dates
++                      if all_dates.get_loc(d) + FORWARD_HORIZON < len(all_dates)]
++
++    snapshots = []
++    for i, date in enumerate(snapshot_dates):
++        print(f"[{i+1}/{len(snapshot_dates)}] Snapshot {date.date()}")
++        lookback_universe = {}
++        fwd_returns = {}
++        for ticker, df in universe.items():
++            df_lb = df.loc[df.index <= date].dropna(subset=["Asset_Price"])
++            if len(df_lb) < 120:
++                continue
++            prices_30 = df_lb["Asset_Price"].iloc[-30:].tolist()
++            vols_30 = df_lb["Asset_Vol"].iloc[-30:].tolist()
++            if not passes_liquidity_gate(calculate_adtv(prices_30, vols_30)):
++                continue
++            lookback_universe[ticker] = {
++                "prices": df_lb["Asset_Price"].values,
++                "volumes": df_lb["Asset_Vol"].values,
++                "exogenous": df_lb[["SPY_Ret", "USDMXN_Ret"]].values,
++            }
++            # Forward return over the holding horizon (uses only future data
++            # for SCORING, never for signal computation)
++            loc = all_dates.get_loc(date)
++            future_date = all_dates[loc + FORWARD_HORIZON]
++            p_now = df["Asset_Price"].asof(date)
++            p_fut = df["Asset_Price"].asof(future_date)
++            if p_now and p_fut and p_now > 0:
++                fwd_returns[ticker] = p_fut / p_now - 1.0
++
++        if not lookback_universe:
++            continue
++        raw = screener.screen(lookback_universe)
++        adjusted = analyst.stress_test(raw, {})
++        snapshots.append({
++            "date": str(date.date()),
++            "metrics": adjusted,
++            "fwd_returns": fwd_returns,
++        })
++    return snapshots
++
++
++def simulate_combo(snapshots, dcs_thr, vr_thr):
++    """Per-period portfolio returns for one threshold combo. Cheap step."""
++    period_returns = []
++    for snap in snapshots:
++        met = snap["metrics"]
++        fwd = snap["fwd_returns"]
++        eligible = [t for t in met
++                    if met[t]["dcs_adjusted"] >= dcs_thr
++                    and met[t]["relative_vol"] >= vr_thr
++                    and t in fwd]
++        if not eligible:
++            period_returns.append(0.0)  # cash (ignore Bondia for comparison)
++            continue
++        inv_vol = {t: 1.0 / met[t]["garch_vol_adjusted"] for t in eligible}
++        s = sum(inv_vol.values())
++        weights = {t: (inv_vol[t] / s) * met[t]["dcs_adjusted"] for t in eligible}
++        weights = {t: min(w, 0.40) for t, w in weights.items()}
++        gross = sum(weights.values())
++        port_ret = sum(weights[t] * fwd[t] for t in eligible)
++        turnover_cost = 2 * FEE * gross  # round-trip approximation
++        period_returns.append(port_ret - turnover_cost)
++    return np.array(period_returns)
++
++
++def sharpe(returns, periods_per_year):
++    if len(returns) < 2 or np.std(returns) == 0:
++        return 0.0
++    return float(np.sqrt(periods_per_year) * np.mean(returns) / np.std(returns))
++
++
++def main():
++    dir_path = os.path.dirname(os.path.abspath(__file__))
++    print("Building universe history...")
++    universe, df_exog = build_universe_history()
++    print(f"Universe: {len(universe)} tickers. Computing snapshots...")
++    snapshots = compute_snapshots(universe, df_exog)
++    if len(snapshots) < 8:
++        print("Not enough snapshots to learn anything robust. Keeping current params.")
++        return
++
++    split = int(len(snapshots) * TRAIN_FRACTION)
++    train, val = snapshots[:split], snapshots[split:]
++    ppy = 252 / (SNAPSHOT_EVERY)
++
++    rows = []
++    for dcs_thr in DCS_GRID:
++        for vr_thr in VR_GRID:
++            tr = simulate_combo(train, dcs_thr, vr_thr)
++            va = simulate_combo(val, dcs_thr, vr_thr)
++            s_tr, s_va = sharpe(tr, ppy), sharpe(va, ppy)
++            score = s_va - 0.5 * abs(s_tr - s_va)  # instability penalty
++            rows.append({
++                "dcs_threshold": dcs_thr, "vr_threshold": vr_thr,
++                "train_sharpe": round(s_tr, 3), "val_sharpe": round(s_va, 3),
++                "score": round(score, 3),
++                "val_cum_return": round(float(np.prod(1 + va) - 1) * 100, 2),
++            })
++
++    rows.sort(key=lambda r: r["score"], reverse=True)
++    best = rows[0]
++
++    print("\nTop 5 combos (score = val_sharpe - 0.5*|train-val|):")
++    for r in rows[:5]:
++        print(f"  DCS>={r['dcs_threshold']:.2f} VR>={r['vr_threshold']:.1f} | "
++              f"train Sharpe {r['train_sharpe']:+.2f} | val Sharpe {r['val_sharpe']:+.2f} | "
++              f"val return {r['val_cum_return']:+.2f}%")
++
++    if best["val_sharpe"] <= 0:
++        print("\nNo combo is profitable out-of-sample. Refusing to write 'learned' "
++              "parameters — defaults stay in place. This is the system telling you "
++              "the signal has no edge in the current regime; do not force it.")
++        return
++
++    params = {
++        "dcs_threshold": best["dcs_threshold"],
++        "vr_threshold": best["vr_threshold"],
++        "trained_on": datetime.date.today().isoformat(),
++        "train_sharpe": best["train_sharpe"],
++        "validation_sharpe": best["val_sharpe"],
++        "grid_results": rows,
++    }
++    with open(os.path.join(dir_path, LEARNED_PARAMS_FILE), "w", encoding="utf-8") as f:
++        json.dump(params, f, indent=2)
++    print(f"\nWrote {LEARNED_PARAMS_FILE}: DCS>={best['dcs_threshold']}, "
++          f"VR>={best['vr_threshold']} (val Sharpe {best['val_sharpe']:+.2f})")
++
++
++if __name__ == "__main__":
++    main()
+diff --git a/requirements.txt b/requirements.txt
+index 5eadc86..7728b1b 100644
+--- a/requirements.txt
++++ b/requirements.txt
+@@ -4,3 +4,5 @@ arch>=6.0.0
+ hmmlearn>=0.3.0
+ scikit-learn
+ scipy
++numpy>=1.26
++pandas>=2.0
+diff --git a/skills/adaptive_learning.py b/skills/adaptive_learning.py
+new file mode 100644
+index 0000000..823c631
+--- /dev/null
++++ b/skills/adaptive_learning.py
+@@ -0,0 +1,235 @@
++"""
++Adaptive learning layer for the V3 pipeline.
++
++Three components, each with a deliberately limited job:
++
++1. SignalPerformanceTracker
++   Records every signal the system acts on (DCS, HMM state, vol, weight) and,
++   once enough time has passed, the realized forward return. From that history
++   it computes an empirical-Bayes confidence multiplier per signal bucket:
++   buckets that have historically delivered positive expectancy get sized up
++   (capped), buckets that lose money get sized down. With few observations the
++   multiplier shrinks to 1.0 (no opinion) — the system only "trusts" what it
++   has evidence for.
++
++2. DrawdownGovernor
++   Tracks the strategy's own equity curve and scales gross exposure down as
++   drawdown deepens. This is the single most reliable "profitability" lever:
++   it does not predict returns, it caps how much a bad model can lose while
++   the tracker accumulates evidence.
++
++3. Walk-forward threshold optimization (see learn_parameters.py)
++   The entry thresholds (DCS >= x, relative volume >= y) were hardcoded
++   guesses. They are now learned on a training window and validated on
++   held-out data, with a robustness penalty so we pick stable parameters,
++   not the luckiest backtest.
++
++Honesty note: none of this guarantees profit. It makes the system update on
++evidence and lose less when it is wrong, which is the only defensible meaning
++of "learning to be profitable" with this little capital and history.
++"""
++
++import os
++import json
++import math
++import datetime
++
++SIGNAL_HISTORY_FILE = "signal_history.json"
++EQUITY_CURVE_FILE = "equity_curve.json"
++LEARNED_PARAMS_FILE = "learned_params.json"
++
++# Forward horizon (business days) over which a signal is judged.
++# Matches the rebalance cadence so each decision is scored against
++# what happened until the next decision.
++OUTCOME_HORIZON_DAYS = 15
++
++
++def _load_json(path, default):
++    if os.path.exists(path):
++        try:
++            with open(path, "r", encoding="utf-8") as f:
++                return json.load(f)
++        except (json.JSONDecodeError, OSError):
++            return default
++    return default
++
++
++def _save_json(path, obj):
++    with open(path, "w", encoding="utf-8") as f:
++        json.dump(obj, f, indent=2)
++
++
++def load_learned_params(dir_path):
++    """
++    Returns learned thresholds, falling back to the original hardcoded
++    values when learn_parameters.py has not been run yet.
++    """
++    defaults = {
++        "dcs_threshold": 0.25,
++        "vr_threshold": 1.2,
++        "trained_on": None,
++        "validation_sharpe": None,
++    }
++    params = _load_json(os.path.join(dir_path, LEARNED_PARAMS_FILE), defaults)
++    # Never accept absurd values from a corrupted file
++    if not (0.0 <= params.get("dcs_threshold", 0.25) <= 0.9):
++        params["dcs_threshold"] = 0.25
++    if not (0.5 <= params.get("vr_threshold", 1.2) <= 3.0):
++        params["vr_threshold"] = 1.2
++    return params
++
++
++class SignalPerformanceTracker:
++    """
++    Persistent log of (signal -> realized forward return) pairs.
++
++    Buckets are pooled across tickers: (hmm_state, dcs_bin). With a 15-day
++    horizon a single ticker would need years to accumulate a usable sample;
++    pooling across the ~25-name universe gets there ~25x faster, at the cost
++    of assuming the signal means roughly the same thing for every name.
++    """
++
++    DCS_BIN_WIDTH = 0.25  # bins: [0,0.25), [0.25,0.5), [0.5,0.75), [0.75,1.0]
++    MIN_SAMPLES_FULL_TRUST = 30   # shrinkage prior weight
++    MULT_FLOOR = 0.4
++    MULT_CAP = 1.4
++
++    def __init__(self, dir_path):
++        self.path = os.path.join(dir_path, SIGNAL_HISTORY_FILE)
++        self.records = _load_json(self.path, [])
++
++    # ------------------------------------------------------------------ #
++    @staticmethod
++    def _bucket(hmm_state, dcs):
++        b = min(int(max(dcs, 0.0) / SignalPerformanceTracker.DCS_BIN_WIDTH), 3)
++        return f"state{hmm_state}_dcs{b}"
++
++    def record_signals(self, execution_date, adjusted_metrics, weights):
++        """Log today's acted-on signals (weight > 0) as pending outcomes."""
++        added = 0
++        for ticker, w in weights.items():
++            if w <= 0.0 or ticker not in adjusted_metrics:
++                continue
++            met = adjusted_metrics[ticker]
++            self.records.append({
++                "date": execution_date,
++                "ticker": ticker,
++                "dcs": round(met["dcs_adjusted"], 4),
++                "hmm_state": met["hmm_state"],
++                "weight": round(w, 4),
++                "entry_price": met["current_price"],
++                "exit_price": None,
++                "fwd_return": None,
++                "resolved": False,
++            })
++            added += 1
++        _save_json(self.path, self.records)
++        return added
++
++    def update_outcomes(self, execution_date, price_lookup):
++        """
++        Resolve pending signals older than OUTCOME_HORIZON_DAYS business days
++        (approximated as horizon * 7/5 calendar days) using today's prices.
++        """
++        today = datetime.date.fromisoformat(execution_date)
++        min_age = datetime.timedelta(days=int(OUTCOME_HORIZON_DAYS * 7 / 5))
++        resolved = 0
++        for rec in self.records:
++            if rec["resolved"]:
++                continue
++            rec_date = datetime.date.fromisoformat(rec["date"])
++            if today - rec_date < min_age:
++                continue
++            price_now = price_lookup.get(rec["ticker"])
++            if price_now is None or rec["entry_price"] <= 0:
++                continue  # stays pending until we see the ticker again
++            rec["exit_price"] = price_now
++            rec["fwd_return"] = price_now / rec["entry_price"] - 1.0
++            rec["resolved"] = True
++            resolved += 1
++        if resolved:
++            _save_json(self.path, self.records)
++        return resolved
++
++    def bucket_stats(self):
++        """Mean forward return and count per signal bucket (resolved only)."""
++        stats = {}
++        for rec in self.records:
++            if not rec["resolved"]:
++                continue
++            key = self._bucket(rec["hmm_state"], rec["dcs"])
++            stats.setdefault(key, []).append(rec["fwd_return"])
++        return {
++            k: {"n": len(v), "mean_fwd_return": sum(v) / len(v)}
++            for k, v in stats.items()
++        }
++
++    def confidence_multiplier(self, hmm_state, dcs):
++        """
++        Empirical-Bayes multiplier on position weight for this signal bucket.
++
++        shrunk_mean = (n * sample_mean + k * 0) / (n + k), prior mean 0
++        multiplier  = clip(1 + shrunk_mean / scale, FLOOR, CAP)
++
++        scale = 0.05 means a bucket with a proven +5% mean 15-day return
++        (after full sample) gets ~2x conviction before capping; in practice
++        the cap binds long before that. With n=0 the multiplier is exactly 1.
++        """
++        stats = self.bucket_stats().get(self._bucket(hmm_state, dcs))
++        if not stats:
++            return 1.0
++        n = stats["n"]
++        k = self.MIN_SAMPLES_FULL_TRUST
++        shrunk = (n * stats["mean_fwd_return"]) / (n + k)
++        mult = 1.0 + shrunk / 0.05
++        return max(self.MULT_FLOOR, min(self.MULT_CAP, mult))
++
++
++class DrawdownGovernor:
++    """
++    Scales gross exposure by the strategy's own drawdown.
++
++    exposure = 1.0                     while drawdown < soft_limit (5%)
++    linear interpolation to floor      between soft (5%) and hard (15%)
++    exposure = floor (0.30)            at/beyond hard limit
++
++    Recovery is symmetric: as the equity curve climbs back, exposure
++    re-expands automatically. State lives in equity_curve.json.
++    """
++
++    SOFT_DD = 0.05
++    HARD_DD = 0.15
++    FLOOR = 0.30
++
++    def __init__(self, dir_path):
++        self.path = os.path.join(dir_path, EQUITY_CURVE_FILE)
++        self.curve = _load_json(self.path, [])
++
++    def record_value(self, execution_date, total_value):
++        # One point per date (re-runs on the same day overwrite)
++        self.curve = [p for p in self.curve if p["date"] != execution_date]
++        self.curve.append({"date": execution_date, "value": round(total_value, 2)})
++        self.curve.sort(key=lambda p: p["date"])
++        _save_json(self.path, self.curve)
++
++    def current_drawdown(self):
++        if not self.curve:
++            return 0.0
++        peak = -math.inf
++        dd = 0.0
++        for p in self.curve:
++            peak = max(peak, p["value"])
++            dd = min(dd, p["value"] / peak - 1.0)
++        # drawdown *now* relative to all-time peak:
++        last = self.curve[-1]["value"]
++        peak = max(p["value"] for p in self.curve)
++        return last / peak - 1.0
++
++    def exposure_scalar(self):
++        dd = -self.current_drawdown()  # positive number
++        if dd <= self.SOFT_DD:
++            return 1.0
++        if dd >= self.HARD_DD:
++            return self.FLOOR
++        frac = (dd - self.SOFT_DD) / (self.HARD_DD - self.SOFT_DD)
++        return 1.0 - frac * (1.0 - self.FLOOR)

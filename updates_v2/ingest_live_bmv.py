@@ -2,59 +2,18 @@ import os
 import sys
 import json
 import datetime
-import time
 import numpy as np
 import pandas as pd
 import yfinance as yf
 
-
 # Add current directory to path to enable local imports
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-_RETRY_DELAYS = [5, 15, 30]  # seconds between attempts
-
-
-def _strip_tz(df: pd.DataFrame) -> pd.DataFrame:
-    """Remove timezone from a DataFrame's DatetimeIndex regardless of its current state and normalize to midnight."""
-    if df.index.tz is not None:
-        df.index = df.index.tz_convert("UTC").tz_localize(None)
-    df.index = df.index.normalize()
-    return df
-
-
-def _fetch_ticker_history(ticker_symbol: str, period: str = "5y", max_retries: int = 3) -> pd.DataFrame:
-    """
-    Download historical OHLCV data from yfinance with retry/backoff.
-    Returns an empty DataFrame on permanent failure instead of raising.
-    """
-    last_exc = None
-    for attempt, delay in enumerate((_RETRY_DELAYS + [None])[:max_retries], start=1):
-        try:
-            hist = yf.Ticker(ticker_symbol).history(period=period, timeout=30)
-            if not hist.empty:
-                return hist
-            # Empty result is not an exception but still a failure worth retrying
-            raise ValueError(f"yfinance returned empty history for {ticker_symbol}")
-        except Exception as exc:
-            last_exc = exc
-            if delay is not None:
-                print(f"  [WARN] Attempt {attempt}/{max_retries} failed for {ticker_symbol}: {exc}. Retrying in {delay}s...")
-                time.sleep(delay)
-    print(f"  [ERROR] All {max_retries} attempts failed for {ticker_symbol}: {last_exc}")
-    return pd.DataFrame()
 from skills.liquidity_gatekeeper import calculate_adtv, passes_liquidity_gate
 from skills.adaptive_learning import (
     SignalPerformanceTracker, DrawdownGovernor, load_learned_params,
 )
-from skills.index_constituents import get_spx_tickers
-from skills.prefilter import prefilter_us_universe
 from agents.agents import FundamentalScreener, MacroRiskAnalyst, PortfolioReconciler
-
-
-def estimate_portfolio_value(dir_path):
-    """Current total value (cash + marked holdings) for affordability cuts."""
-    p = load_portfolio(dir_path)
-    return p["cash_balance"] + sum(h["shares"] * h["last_price"] for h in p["holdings"])
 
 # Major S&P/BMV IPC components to query
 BMV_TICKERS = [
@@ -220,7 +179,7 @@ def append_evaluation_history(dir_path, execution_date, adjusted_metrics, pesos_
     entry_lines = []
     entry_lines.append(f"\n## Run: {execution_date} @ {datetime.datetime.now().strftime('%H:%M:%S')} (V3 Quantitative Model)")
     entry_lines.append("")
-    entry_lines.append("| Ticker | DCS v2 | GARCH Vol | Relative Vol | HMM State | Target Weight | Price |")
+    entry_lines.append("| Ticker | DCS | GARCH Vol | Relative Vol | HMM State | Target Weight | Price |")
     entry_lines.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: |")
     
     sorted_tickers = sorted(adjusted_metrics.keys(), key=lambda x: adjusted_metrics[x]["dcs_adjusted"], reverse=True)
@@ -311,35 +270,7 @@ def main():
             continue
 
     # Process US stocks (converting to MXN)
-    # SPX EXPANSION: the static 5-ticker US list is replaced by the full
-    # S&P 500 universe, funneled through a cheap pre-filter so the expensive
-    # GARCH/HMM stage only sees affordable, liquid, trending candidates.
-    us_candidates = list(US_TICKERS)  # static list = last-resort fallback
-    try:
-        spx_tickers = get_spx_tickers(dir_path)
-        portfolio_value_est = estimate_portfolio_value(dir_path)
-        current_fx = float(raw_rate.iloc[-1])
-        print(f"  |-- [Pre-filter] Batch-downloading 6mo history for "
-              f"{len(spx_tickers)} SPX tickers (single request)...")
-        batch = yf.download(spx_tickers, period="6mo", progress=False,
-                            auto_adjust=True, group_by="column", threads=True)
-        candidates = prefilter_us_universe(
-            batch["Close"], batch["Volume"],
-            usdmxn_rate=current_fx,
-            portfolio_value_mxn=portfolio_value_est,
-        )
-        if candidates:
-            # Held US positions must ALWAYS reach the deep stage, even if the
-            # momentum funnel would cut them — otherwise the reconciler loses
-            # signal coverage on open positions (carry-warning territory).
-            held_us = {h["ticker"] for h in load_portfolio(dir_path)["holdings"]
-                       if not h["ticker"].endswith(".MX")}
-            us_candidates = list(dict.fromkeys(list(candidates) + sorted(held_us)))
-    except Exception as e:
-        print(f"  |-- [Pre-filter] SPX funnel failed ({e}). "
-              f"Falling back to static US ticker list.")
-
-    for ticker in us_candidates:
+    for ticker in US_TICKERS:
         try:
             # Download asset data
             hist = fetch_historical_asset(ticker)
@@ -459,9 +390,8 @@ def main():
     }
 
     reconciler = PortfolioReconciler()
-    universe_prices_dict = {t: data["prices"] for t, data in universe_data.items()}
     updated_portfolio, report_markdown, rebalancing_trades = reconciler.reconcile(
-        adjusted_metrics, portfolio, execution_date, learning_context, universe_prices_dict
+        adjusted_metrics, portfolio, execution_date, learning_context
     )
 
     # 6. Execute paper trades & write logs
@@ -476,46 +406,12 @@ def main():
     # BUGFIX: previously trades were re-derived here by diffing old vs new holdings,
     # ignoring fees — so transactions.md never reconciled with portfolio.json cash.
     # Now we log the exact blotter the reconciler executed, fees included.
-    # Initialize Alpaca connector
-    from connectors.alpaca_connector import AlpacaConnector
-    alpaca_client = None
-    try:
-        alpaca_client = AlpacaConnector()
-        # Verify credentials by fetching account info
-        account_info = alpaca_client.get_account_info()
-        print(f"  |-- [Alpaca Connection] Connected to Alpaca Paper Account (ID: {account_info.get('id')})")
-    except Exception as e:
-        print(f"  |-- [Alpaca Connection] Alpaca API client not active or credentials missing: {e}. US trades will run in mock mode.")
-        alpaca_client = None
-
     trades_executed = len(rebalancing_trades)
     for trade in rebalancing_trades:
-        ticker = trade["ticker"]
-        action = trade["action"]
-        shares = trade["shares"]
-        price = trade["price"]
-        note = trade["note"]
-        fee = trade["fee"]
-
-        # Check if US ticker
-        if alpaca_client and not ticker.endswith(".MX"):
-            try:
-                print(f"  |-- [Alpaca Order] Submitting order to Alpaca: {action} {shares} shares of {ticker}...")
-                order = alpaca_client.submit_order(ticker=ticker, qty=shares, side=action)
-                order_id = order.get("id")
-                print(f"  +-- [Alpaca Order Created] Order ID: {order_id} | Status: {order.get('status')}")
-                note = f"Alpaca Order {order_id} | {note}"
-            except Exception as e:
-                print(f"  +-- [Alpaca Order FAILED] Error submitting order for {ticker} to Alpaca: {e}. Executed locally in mock mode.")
-                note = f"Alpaca Execution Failed ({e}) | {note}"
-        elif ticker.endswith(".MX"):
-            if alpaca_client:
-                print(f"  |-- [Mock Order] Ticker {ticker} is a local BMV asset. Alpaca does not support Mexican shares. Running in mock mode.")
-        
         log_transaction(
             dir_path, execution_date,
-            ticker, action, shares,
-            price, note, fee=fee
+            trade["ticker"], trade["action"], trade["shares"],
+            trade["price"], trade["note"], fee=trade["fee"]
         )
 
     # Save new portfolio.json

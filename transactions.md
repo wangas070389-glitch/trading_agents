@@ -49,11 +49,16 @@ This file tracks all buy and sell transactions executed by the Mexican Value Sto
 | 2026-06-16 | BONDIA | INTEREST | 1 | 4.3220 | +4.3220 | Market | FILLED | Bondia overnight yield on cash reserves for 1.0362 days. |
 | 2026-06-17 | BONDIA | INTEREST | 1 | 2.7576 | +2.7576 | Market | FILLED | Bondia overnight yield on cash reserves for 0.6609 days. |
 | 2026-06-18 | BONDIA | INTEREST | 1 | 5.3227 | +5.3227 | Market | FILLED | Bondia overnight yield on cash reserves for 1.2755 days. |
+| 2026-06-22 | BONDIA | INTEREST | 1 | 16.7358 | +16.7358 | Market | FILLED | Bondia overnight yield on cash reserves for 4.0088 days. |
+| 2026-06-22 | GRUMAB.MX | SELL | 1 | 283.80 | +283.80 | Market | FILLED | V4 DQN Execution (Target Weight: 0.0%, DCS: 0.09, Saved: $0.02 MXN) |
+| 2026-06-22 | WALMEX.MX | SELL | 49 | 50.57 | +2,477.79 | Market | FILLED | V4 DQN Execution (Target Weight: 0.0%, DCS: -0.18, Saved: $1.04 MXN) |
+| 2026-06-22 | AC.MX | BUY | 13 | 206.73 | -2,687.53 | Market | FILLED | V4 DQN Execution (Target Weight: 20.0%, DCS: 0.80, Saved: $0.18 MXN) |
+| 2026-06-22 | ASURB.MX | BUY | 2 | 521.82 | -1,043.65 | Market | FILLED | V4 DQN Execution (Target Weight: 20.0%, DCS: 0.76, Saved: $0.04 MXN) |
 ---
 
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
-* **Total Deployed Capital**: 6,727.19 MXN (33.1% invested)
-* **Unallocated Cash Reserves**: 13,662.91 MXN (67.1% cash)
-* **Current Portfolio Market Value**: 20,347.66 MXN (including cash)
+* **Total Deployed Capital**: 7,587.58 MXN (37.4% invested)
+* **Unallocated Cash Reserves**: 12,710.07 MXN (62.6% cash)
+* **Current Portfolio Market Value**: 20,290.68 MXN (including cash)

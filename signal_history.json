@@ -86,5 +86,27 @@
     "exit_price": null,
     "fwd_return": null,
     "resolved": false
+  },
+  {
+    "date": "2026-06-22",
+    "ticker": "AC.MX",
+    "dcs": 0.7974,
+    "hmm_state": -1,
+    "weight": 0.2,
+    "entry_price": 206.72999572753906,
+    "exit_price": null,
+    "fwd_return": null,
+    "resolved": false
+  },
+  {
+    "date": "2026-06-22",
+    "ticker": "ASURB.MX",
+    "dcs": 0.7584,
+    "hmm_state": 0,
+    "weight": 0.2,
+    "entry_price": 521.8200073242188,
+    "exit_price": null,
+    "fwd_return": null,
+    "resolved": false
   }
 ]

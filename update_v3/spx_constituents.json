@@ -1,5 +1,5 @@
 {
- "fetched_on": "2026-06-22",
+ "fetched_on": "2026-06-12",
  "source": "github_dataset",
  "count": 503,
  "tickers": [
@@ -115,6 +115,7 @@
   "COR",
   "COST",
   "CPAY",
+  "CPB",
   "CPRT",
   "CPT",
   "CRH",
@@ -196,7 +197,6 @@
   "FISV",
   "FITB",
   "FIX",
-  "FLEX",
   "FOX",
   "FOXA",
   "FRT",
@@ -320,7 +320,6 @@
   "MRK",
   "MRNA",
   "MRSH",
-  "MRVL",
   "MS",
   "MSCI",
   "MSFT",
@@ -377,6 +376,7 @@
   "PNR",
   "PNW",
   "PODD",
+  "POOL",
   "PPG",
   "PPL",
   "PRU",

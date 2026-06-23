@@ -119,7 +119,7 @@ def monitor_portfolio():
             days_elapsed = time_diff.total_seconds() / 86400.0
             
             if days_elapsed > 0.001 and cash > 0:
-                daily_rate = 0.11 / 360.0
+                daily_rate = 0.0653 / 360.0
                 accrued_interest = cash * daily_rate * days_elapsed
                 cash = round(cash + accrued_interest, 2)
                 portfolio["cash_balance"] = cash
@@ -206,7 +206,7 @@ def monitor_portfolio():
     pl_sign = "+" if total_pl_mxn >= 0 else ""
 
     report_lines.append(f"\n* **Current Market Value of Shares**: {total_market_value:,.2f} MXN ({total_market_value/total_value*100:.1f}% allocation)")
-    report_lines.append(f"* **Bondia Cash Routing Reserves (11% APR)**: {cash:,.2f} MXN ({cash/total_value*100:.1f}% cash reserve)")
+    report_lines.append(f"* **Bondia Cash Routing Reserves (6.53% APR)**: {cash:,.2f} MXN ({cash/total_value*100:.1f}% cash reserve)")
     report_lines.append(f"* **Total Portfolio Value**: **{total_value:,.2f} MXN**")
     report_lines.append(f"* **Total Unrealized Profit/Loss**: **{pl_sign}{total_pl_mxn:,.2f} MXN ({pl_sign}{total_pl_pct:.2f}%)**")
 
@@ -216,7 +216,7 @@ def monitor_portfolio():
         report_lines.append(f"* Overnight interest accrued in this step: **+{accrued_interest:,.4f} MXN** (for {days_elapsed:.4f} days elapsed)")
     else:
         report_lines.append(f"* No overnight interest accrued in this check (last checked {days_elapsed*24.0*60.0:.1f} minutes ago)")
-    report_lines.append(f"* Expected daily interest accrual at 11% APR: **+{cash * (0.11 / 360):,.4f} MXN**")
+    report_lines.append(f"* Expected daily interest accrual at 6.53% APR: **+{cash * (0.0653 / 360):,.4f} MXN**")
 
     # Save back to portfolio.json
     portfolio["holdings"] = updated_holdings

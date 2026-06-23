@@ -547,7 +547,7 @@ def run_macd_simulation_for_api(ticker="SPY", start_date="2021-06-15", end_date=
     drawdown = strat_metrics["max_drawdown"] * 100.0
     
     # Simulate Bondia cash benchmark over the same period for comparison
-    daily_rate = 0.11 / 360.0
+    daily_rate = 0.0653 / 360.0
     cash_history = []
     cash_val = 10000.0
     dates_list = list(nav_df.index)

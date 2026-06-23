@@ -8,13 +8,15 @@ def run_dca_simulation():
     # CAGR assumptions based on backtest data
     cagrs = {
         "Mattress Cash (0% APR)": 0.00,
-        "Bondia Cash (11% APR)": 0.11,
+        "Bondia Cash (6.53% APR)": 0.0653,
         "Active Value Equity - Standard (5.12% CAGR)": 0.0512,
         "Active Value Equity - Aggressive (7.71% CAGR)": 0.0771,
         "Active Value Equity - Adaptive (14.09% CAGR)": 0.1409,
         "MACD Single-Asset (2.17% CAGR)": 0.0217,
         "MACD Multi-Asset (14.54% CAGR)": 0.1454,
-        "SPY Buy & Hold (14.38% CAGR)": 0.1438
+        "SPY Buy & Hold (14.38% CAGR)": 0.1438,
+        "Expanded 20-Asset - 4h MACD + SMA (3.86% CAGR)": 0.0386,
+        "Expanded 20-Asset - 1d MACD + SMA (9.16% CAGR)": 0.0916
     }
     
     results = []

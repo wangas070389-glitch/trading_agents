@@ -172,7 +172,7 @@ function renderDashboard(portfolio, dcsThreshold) {
     bondiaDiv.innerHTML = `
         <span class="alert-icon">💸</span>
         <div class="alert-text">
-            <strong>[BONDIA CASH ROUTING]</strong> Cash reserves are parked at 11% APR. Nightly interest accrues automatically.
+            <strong>[BONDIA CASH ROUTING]</strong> Cash reserves are parked at 6.53% APR. Nightly interest accrues automatically.
         </div>
     `;
     alertsContainer.appendChild(bondiaDiv);

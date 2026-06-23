@@ -10,9 +10,7 @@ from skills.adaptive_learning import load_learned_params
 from agents.agents import FundamentalScreener, MacroRiskAnalyst, PortfolioReconciler
 from ingest_live_bmv import BMV_TICKERS, US_TICKERS, fetch_historical_exogenous, fetch_historical_asset
 
-def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalance_freq=15,
-                            concentration_cap=0.20, dead_zone_threshold=0.05, max_positions=6,
-                            sizing_profile="equal", adaptive_rebalance=False):
+def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalance_freq=15):
     print("=" * 80)
     print(f"STARTINGwalk-forward BACKTEST SIMULATION (LAST {backtest_days} BUSINESS DAYS)")
     print("=" * 80)
@@ -47,30 +45,15 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
         except Exception:
             continue
             
-    print("Fetching S&P 500 tickers...")
-    from skills.index_constituents import get_spx_tickers
-    dir_path = os.path.dirname(os.path.abspath(__file__))
-    sp500_all = get_spx_tickers(dir_path)
-    
-    print(f"Downloading historical data for {len(sp500_all)} S&P 500 components...")
-    sp500_data = yf.download(sp500_all, period="5y", progress=False)
-    sp500_close = sp500_data["Close"]
-    sp500_vol = sp500_data["Volume"]
-    
-    for ticker in sp500_all:
+    for ticker in US_TICKERS:
         try:
-            if ticker not in sp500_close.columns or ticker not in sp500_vol.columns:
-                continue
-            close_col = sp500_close[ticker].dropna()
-            vol_col = sp500_vol[ticker].reindex(close_col.index).fillna(0.0)
-            if len(close_col) < 200: continue
-            
-            close_col.index = close_col.index.tz_localize(None)
-            vol_col.index = vol_col.index.tz_localize(None)
+            hist = fetch_historical_asset(ticker)
+            if len(hist) < 200: continue
+            hist.index = hist.index.tz_localize(None)
             
             df_usd = pd.DataFrame({
-                "Close_USD": close_col,
-                "Volume": vol_col
+                "Close_USD": hist["Close"],
+                "Volume": hist["Volume"]
             }).join(raw_rate, how="inner")
             
             df_usd["Close_MXN"] = df_usd["Close_USD"] * df_usd["USDMXN_Rate"]
@@ -79,17 +62,15 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             df_asset = pd.DataFrame({
                 "Asset_Price": df_usd["Close_MXN"],
                 "Asset_Vol": df_usd["Volume"],
-                "Asset_Ret": asset_ret_mxn,
-                "Close_USD": df_usd["Close_USD"],
-                "USDMXN_Rate": df_usd["USDMXN_Rate"]
+                "Asset_Ret": asset_ret_mxn
             })
             df_aligned = df_asset.join(df_exog, how="right")
+            # BUGFIX: .bfill() leaked FUTURE prices into the past (look-ahead bias).
+            # Forward-fill only; rows before the ticker's first real quote stay NaN
+            # and are excluded from each rebalance lookback below.
             df_aligned["Asset_Price"] = df_aligned["Asset_Price"].ffill()
             df_aligned["Asset_Vol"] = df_aligned["Asset_Vol"].fillna(0.0)
             df_aligned["Asset_Ret"] = df_aligned["Asset_Ret"].fillna(0.0)
-            df_aligned["Close_USD"] = df_aligned["Close_USD"].ffill()
-            df_aligned["USDMXN_Rate"] = df_aligned["USDMXN_Rate"].ffill()
-            
             universe_history[ticker] = df_aligned
         except Exception:
             continue
@@ -136,10 +117,6 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
     total_fees_paid = 0.0
     total_interest_earned = 0.0
     
-    # Dynamic rebalancing tracking variables
-    days_since_last_rebalance = 0
-    current_rebalance_freq = rebalance_freq
-
     # Day-by-day Walk-forward simulation
     for t_idx, current_date in enumerate(backtest_dates):
         # Calculate calendar days since last step to accrue Bondia interest
@@ -149,7 +126,7 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
         else:
             calendar_days = 1
             
-        daily_rate = 0.0653 / 360.0
+        daily_rate = 0.11 / 360.0
         
         # Accrue interest on cash for active strategy
         interest = cash * daily_rate * calendar_days
@@ -181,71 +158,15 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             spy_bench_val = spy_bench_val * (1.0 - 0.0029)
         history_spy_bench.append(round(spy_bench_val, 2))
         
-        # Rebalancing triggers: Day 0, or when the adaptive frequency has elapsed
-        should_rebalance = False
-        if t_idx == 0:
-            should_rebalance = True
-        elif adaptive_rebalance:
-            if days_since_last_rebalance >= current_rebalance_freq:
-                should_rebalance = True
-        elif t_idx % rebalance_freq == 0:
-            should_rebalance = True
-            
-        if should_rebalance:
-            days_since_last_rebalance = 0
-            print(f"  |-- Walk-Forward Rebalancing on {current_date.strftime('%Y-%m-%d')}... (Next freq: {current_rebalance_freq} days)")
-            
-            # Separate BMV and US tickers
-            bmv_tickers = [t for t in universe_history.keys() if t.endswith(".MX")]
-            us_tickers = [t for t in universe_history.keys() if not t.endswith(".MX")]
-            
-            # S&P 500 Pre-filtering for current_date
-            us_close_dict = {}
-            us_vol_dict = {}
-            usdmxn_rate = None
-            
-            for ticker in us_tickers:
-                df = universe_history[ticker]
-                df_lb = df.loc[df.index <= current_date]
-                if len(df_lb) >= 100:
-                    slice_lb = df_lb.iloc[-130:]
-                    us_close_dict[ticker] = slice_lb["Close_USD"]
-                    us_vol_dict[ticker] = slice_lb["Asset_Vol"]
-                    if usdmxn_rate is None and not slice_lb["USDMXN_Rate"].isna().all():
-                        usdmxn_rate = float(slice_lb["USDMXN_Rate"].iloc[-1])
-            
-            if us_close_dict and usdmxn_rate is not None:
-                batch_close = pd.DataFrame(us_close_dict)
-                batch_volume = pd.DataFrame(us_vol_dict)
-                
-                # Estimate current portfolio value for the pre-filter affordability check
-                portfolio_value_mxn = strat_value
-                
-                from skills.prefilter import prefilter_us_universe
-                selected_us = prefilter_us_universe(
-                    batch_close=batch_close,
-                    batch_volume=batch_volume,
-                    usdmxn_rate=usdmxn_rate,
-                    portfolio_value_mxn=portfolio_value_mxn
-                )
-                selected_us_tickers = list(selected_us.keys())
-            else:
-                selected_us_tickers = []
-                
-            # Held US positions must ALWAYS reach the deep stage, even if the
-            # momentum funnel would cut them — otherwise the reconciler loses
-            # signal coverage on open positions (carry-warning territory).
-            held_us = {tick for tick in holdings.keys() if not tick.endswith(".MX") and holdings[tick] > 0}
-            selected_us_tickers = list(dict.fromkeys(selected_us_tickers + sorted(held_us)))
-            candidates = bmv_tickers + selected_us_tickers
+        # Rebalancing triggers: Day 0, and then every 15 business days
+        if t_idx == 0 or t_idx % rebalance_freq == 0:
+            print(f"  |-- Walk-Forward Rebalancing on {current_date.strftime('%Y-%m-%d')}...")
             
             # Slice historical lookback data (only up to current_date)
             # This avoids lookahead bias in model training!
             lookback_universe = {}
-            for ticker in candidates:
-                if ticker not in universe_history:
-                    continue
-                df_ticker = universe_history[ticker]
+            for ticker, df_ticker in universe_history.items():
+                # Get df rows before/on current_date
                 df_lookback = df_ticker.loc[df_ticker.index <= current_date]
                 df_lookback = df_lookback.dropna(subset=["Asset_Price"])
                 if len(df_lookback) < 50: continue
@@ -293,38 +214,18 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
                     print("!" * 70)
             else:
                 learned = {"dcs_threshold": 0.15, "vr_threshold": 1.2}
-                
-            # Optimize and calculate weights
             learning_context = {
                 "dcs_threshold": learned["dcs_threshold"],
                 "vr_threshold": learned["vr_threshold"],
                 "confidence": {},
-                "exposure_scalar": 1.0,
-                "concentration_cap": concentration_cap,
-                "dead_zone_threshold": dead_zone_threshold,
-                "max_positions": max_positions,
-                "sizing_profile": sizing_profile
+                "exposure_scalar": 1.0
             }
             
             # Optimize and calculate weights
-            universe_prices_dict = {t: data["prices"] for t, data in lookback_universe.items()}
             updated_portfolio_sim, _, _ = reconciler.reconcile(
                 adjusted_metrics, portfolio_sim, current_date.strftime("%Y-%m-%d"),
-                learning_context=learning_context,
-                universe_prices_dict=universe_prices_dict
+                learning_context=learning_context
             )
-            
-            # Dynamic rebalancing frequency update based on HMM state
-            if adjusted_metrics and adaptive_rebalance:
-                first_met = next(iter(adjusted_metrics.values()))
-                spy_state = first_met.get("spy_hmm_state", 0)
-                if spy_state == 1:
-                    current_rebalance_freq = 63  # Bull: quarterly
-                elif spy_state == -1:
-                    current_rebalance_freq = 21  # Bear: monthly
-                else:
-                    current_rebalance_freq = 42  # Sideways: bi-monthly
-                print(f"      [Regime-Switching] Detected SPY regime: {spy_state} -> Next rebalance in {current_rebalance_freq} business days.")
             
             # Apply rebalanced holdings to simulation
             new_holdings = {h["ticker"]: h["shares"] for h in updated_portfolio_sim["holdings"]}
@@ -349,9 +250,6 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
             total_fees_paid += step_fees
             print(f"      Rebalanced: Holdings={holdings} | Cash={cash:.2f} MXN | Fees Paid={step_fees:.2f} MXN")
 
-        # Increment days since last rebalance
-        days_since_last_rebalance += 1
-
     # 5. Compute backtest statistics
     # V3 Strategy Stats
     strat_vals = np.array(history_strat)
@@ -359,7 +257,7 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
     strat_cum_return = (strat_vals[-1] / starting_capital - 1.0) * 100.0
     
     # Annualized Sharpe ratio (excess over Bondia cash rate)
-    excess_returns = strat_returns - (0.0653 / 252.0)
+    excess_returns = strat_returns - (0.11 / 252.0)
     sharpe_strat = np.sqrt(252.0) * np.mean(excess_returns) / np.std(excess_returns) if np.std(excess_returns) > 0 else 0.0
     
     # Max Drawdown
@@ -381,15 +279,15 @@ def run_backtest_simulation(starting_capital=20000.0, backtest_days=60, rebalanc
     
     # Save backtest report to markdown
     report = []
-    report.append("# BACKTEST ANALYSIS REPORT (Hedge Fund Method V5)")
+    report.append("# BACKTEST ANALYSIS REPORT (Hedge Fund Method V3)")
     report.append(f"**Analysis Period:** {backtest_dates[0].strftime('%Y-%m-%d')} to {backtest_dates[-1].strftime('%Y-%m-%d')} ({backtest_days} Business Days)")
     report.append(f"**Starting Capital:** ${starting_capital:,.2f} MXN | **Rebalancing Frequency:** every {rebalance_freq} Business Days\n")
     
     report.append("## 1. Performance Overview Comparison")
     report.append("| Portfolio Strategy | Cumulative Return | Final Capital | Sharpe Ratio | Max Drawdown |")
     report.append("| :--- | :---: | :---: | :---: | :---: |")
-    report.append(f"| **V5 Quantitative Strategy** | **{strat_cum_return:+.2f}%** | ${strat_vals[-1]:,.2f} MXN | {sharpe_strat:.2f} | {max_dd_strat:.2f}% |")
-    report.append(f"| Bondia Cash Benchmark (6.53% APR) | {cash_cum_return:+.2f}% | ${cash_vals[-1]:,.2f} MXN | 0.00 | 0.00% |")
+    report.append(f"| **V3 Quantitative Strategy** | **{strat_cum_return:+.2f}%** | ${strat_vals[-1]:,.2f} MXN | {sharpe_strat:.2f} | {max_dd_strat:.2f}% |")
+    report.append(f"| Bondia Cash Benchmark (11% APR) | {cash_cum_return:+.2f}% | ${cash_vals[-1]:,.2f} MXN | 0.00 | 0.00% |")
     report.append(f"| SPY Buy & Hold Index | {spy_cum_return:+.2f}% | ${spy_vals[-1]:,.2f} MXN | -- | {max_dd_spy:.2f}% |")
     
     report.append("\n## 2. Operational Metrics")
