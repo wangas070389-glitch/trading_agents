@@ -274,7 +274,11 @@ def main():
             tr = simulate_combo(train, dcs_thr, vr_thr)
             va = simulate_combo(val, dcs_thr, vr_thr)
             s_tr, s_va = sharpe(tr, ppy), sharpe(va, ppy)
-            score = s_va - 0.5 * abs(s_tr - s_va)  # instability penalty
+            # Selection MUST be blind to validation data. Using val_sharpe in the
+            # score collapses the validation set into the training set and destroys
+            # out-of-sample integrity. Score is strictly in-sample; validation is a
+            # blind readout only.
+            score = s_tr
             rows.append({
                 "dcs_threshold": dcs_thr, "vr_threshold": vr_thr,
                 "train_sharpe": round(s_tr, 3), "val_sharpe": round(s_va, 3),
@@ -301,7 +305,7 @@ def main():
               "binary flag, not a graded score. Recalibrate the signal before "
               "trusting threshold learning on it.")
 
-    print("\nTop 5 combos (score = val_sharpe - 0.5*|train-val|):")
+    print("\nTop 5 combos (score = train_sharpe; val_sharpe shown as blind readout):")
     for r in rows[:5]:
         print(f"  DCS>={r['dcs_threshold']:.2f} VR>={r['vr_threshold']:.1f} | "
               f"train Sharpe {r['train_sharpe']:+.2f} | val Sharpe {r['val_sharpe']:+.2f} | "

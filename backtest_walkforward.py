@@ -57,9 +57,9 @@ LOOKBACK_PERIOD = "5y"
 REBALANCE_FREQ_DAYS = 21         # monthly
 MIN_HISTORY_DAYS = 252           # 1y warmup before backtest begins
 TRANSACTION_COST = 0.0029        # 0.29% per side (matches live code)
-CONCENTRATION_CAP = 0.20
+CONCENTRATION_CAP = 0.40
 INITIAL_CAPITAL = 20_000.0       # MXN
-DCS_ENTRY_THRESHOLD = 0.25
+DCS_ENTRY_THRESHOLD = 0.15
 RELVOL_ENTRY_THRESHOLD = 1.2
 # ----------------------------
 
@@ -135,7 +135,7 @@ def build_universe_data(asset_data: dict, exog: pd.DataFrame, as_of: pd.Timestam
     return universe
 
 
-def compute_target_weights(adjusted_metrics: dict) -> dict:
+def compute_target_weights(adjusted_metrics: dict, normalize_weights: bool = True) -> dict:
     """Replicates PortfolioReconciler weighting logic without the trade simulation."""
     eligible = [
         t for t, m in adjusted_metrics.items()
@@ -145,10 +145,13 @@ def compute_target_weights(adjusted_metrics: dict) -> dict:
     if not eligible:
         return weights
 
-    # Inverse-volatility weighting scaled by DCS
+    # Inverse-volatility weighting
     inv_vol = {t: 1.0 / max(adjusted_metrics[t]["garch_vol_adjusted"], 1e-4) for t in eligible}
     inv_vol_sum = sum(inv_vol.values())
-    raw = {t: (inv_vol[t] / inv_vol_sum) * adjusted_metrics[t]["dcs_adjusted"] for t in eligible}
+    if normalize_weights:
+        raw = {t: (inv_vol[t] / inv_vol_sum) for t in eligible}
+    else:
+        raw = {t: (inv_vol[t] / inv_vol_sum) * adjusted_metrics[t]["dcs_adjusted"] for t in eligible}
 
     # Apply concentration cap with excess redistribution
     capped = {}
@@ -167,10 +170,14 @@ def compute_target_weights(adjusted_metrics: dict) -> dict:
                 share = raw[t] / under_cap_sum
                 capped[t] = min(CONCENTRATION_CAP, capped[t] + excess * share)
 
-    # Normalize so total ≤ 1 (raw weights can be < 1 if DCS values are < 1)
+    # Normalize weights to total (if normalize_weights is active, sum will equal 1.0; else total <= 1.0)
     total = sum(capped.values())
-    if total > 1.0:
-        capped = {t: w / total for t, w in capped.items()}
+    if normalize_weights:
+        if total > 0.0:
+            capped = {t: w / total for t, w in capped.items()}
+    else:
+        if total > 1.0:
+            capped = {t: w / total for t, w in capped.items()}
 
     for t, w in capped.items():
         weights[t] = w
@@ -275,6 +282,14 @@ def main():
     bench_per_ticker = INITIAL_CAPITAL / len(asset_data)
     bench_shares = {t: bench_per_ticker / price_matrix[t].iloc[0] for t in asset_data}
 
+    # Tracking metrics for Time-Weighted Return (TWR)
+    strategy_last_nav = INITIAL_CAPITAL
+    benchmark_last_nav = INITIAL_CAPITAL
+    strategy_twr_series = []
+    benchmark_twr_series = []
+    current_strat_twr = 1.0
+    current_bench_twr = 1.0
+
     screener = FundamentalScreener()
     analyst = MacroRiskAnalyst()
     reconciler = PortfolioReconciler()
@@ -285,6 +300,37 @@ def main():
 
     t_start = time.time()
     for i, current_date in enumerate(price_matrix.index):
+        # 1. Calculate today's NAV before any rebalance or cash additions
+        equity_value_before = sum(shares_held[t] * price_matrix[t].iloc[i] for t in shares_held)
+        strat_nav_before = cash + equity_value_before
+        bench_nav_before = sum(bench_shares[t] * price_matrix[t].iloc[i] for t in bench_shares)
+        
+        # 2. Update TWR series
+        if i > 0:
+            r_strat = (strat_nav_before / strategy_last_nav) - 1.0 if strategy_last_nav > 0 else 0.0
+            r_bench = (bench_nav_before / benchmark_last_nav) - 1.0 if benchmark_last_nav > 0 else 0.0
+            current_strat_twr *= (1.0 + r_strat)
+            current_bench_twr *= (1.0 + r_bench)
+
+        # Apply monthly savings contribution of 2,000 MXN
+        is_contribution_day = False
+        if i == 0:
+            is_contribution_day = True
+        else:
+            prev_date = price_matrix.index[i - 1]
+            if current_date.month != prev_date.month:
+                is_contribution_day = True
+
+        if is_contribution_day:
+            cash += 2000.0
+            strat_nav_before += 2000.0
+            
+            # Benchmark cash injection of 2,000 MXN, allocated equally
+            bench_contribution_per_ticker = 2000.0 / len(asset_data)
+            for t in bench_shares:
+                bench_shares[t] += bench_contribution_per_ticker / price_matrix[t].iloc[i]
+            bench_nav_before = sum(bench_shares[t] * price_matrix[t].iloc[i] for t in bench_shares)
+
         # Determine if we should rebalance today
         should_rebalance = False
         if i == 0:
@@ -307,10 +353,9 @@ def main():
             try:
                 universe = build_universe_data(asset_data, exog, current_date)
                 if universe:
-                    raw_metrics = screener.screen(universe)
+                    raw_metrics = screener.screen(universe, execution_date=current_date)
                     if raw_metrics:
                         adjusted = analyst.stress_test(raw_metrics, {})
-                        
                         # Build current portfolio state for reconciler
                         portfolio_sim = {
                             "total_capital": INITIAL_CAPITAL,
@@ -380,10 +425,15 @@ def main():
             if not adaptive_rebalance:
                 rebalance_idx += 1
 
-        # Track daily NAV
-        equity_value = sum(shares_held[t] * price_matrix[t].iloc[i] for t in shares_held)
-        strategy_nav[current_date] = cash + equity_value
-        benchmark_nav[current_date] = sum(bench_shares[t] * price_matrix[t].iloc[i] for t in bench_shares)
+        # 4. Record today's final NAV (after cash injections/rebalance)
+        strategy_last_nav = cash + sum(shares_held[t] * price_matrix[t].iloc[i] for t in shares_held)
+        benchmark_last_nav = sum(bench_shares[t] * price_matrix[t].iloc[i] for t in bench_shares)
+        
+        strategy_nav[current_date] = strategy_last_nav
+        benchmark_nav[current_date] = benchmark_last_nav
+        
+        strategy_twr_series.append(current_strat_twr)
+        benchmark_twr_series.append(current_bench_twr)
 
         # Increment days since last rebalance
         days_since_last_rebalance += 1
@@ -395,8 +445,12 @@ def main():
     benchmark_series = pd.Series(benchmark_nav, name="benchmark")
     nav_df = pd.DataFrame({"strategy": strategy_series, "benchmark": benchmark_series})
 
-    strategy_metrics = compute_metrics(strategy_series, "Strategy")
-    benchmark_metrics = compute_metrics(benchmark_series, "Equal-weight buy-and-hold")
+    # Calculate metrics based on Time-Weighted Return (TWR) factors
+    strategy_twr_pd = pd.Series(strategy_twr_series, index=price_matrix.index, name="strategy_twr")
+    benchmark_twr_pd = pd.Series(benchmark_twr_series, index=price_matrix.index, name="benchmark_twr")
+    
+    strategy_metrics = compute_metrics(strategy_twr_pd, "Strategy")
+    benchmark_metrics = compute_metrics(benchmark_twr_pd, "Equal-weight buy-and-hold")
 
     # Save outputs
     base_dir = os.path.dirname(os.path.abspath(__file__))

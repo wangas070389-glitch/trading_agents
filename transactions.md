@@ -1,6 +1,5 @@
-# Agentic DAG Paper Trading Transaction Ledger
 
-This file tracks all buy and sell transactions executed by the Mexican Value Stock Evaluation Agentic DAG.
+| 2026-06-21 | BONDIA | INTEREST | 1 | 0.0029 | +0.0029 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0055 days. |
 
 ## Chronological Transaction Log
 
@@ -9,7 +8,6 @@ This file tracks all buy and sell transactions executed by the Mexican Value Sto
 | 2026-06-03 | KIMBERA.MX | BUY | 62 | 38.09 | -2,361.58 | Market | FILLED | Initial value portfolio allocation (30% target) |
 | 2026-06-03 | PINFRA.MX | BUY | 8 | 276.19 | -2,209.52 | Market | FILLED | Initial value portfolio allocation (30% target) |
 | 2026-06-03 | CUERVO.MX | BUY | 108 | 14.07 | -1,519.56 | Market | FILLED | Initial value portfolio allocation (30% target) |
-
 | 2026-06-06 | KIMBERA.MX | SELL | 62 | 36.92 | +2,289.04 | Market | FILLED | V3 Dynamic Rebalance |
 | 2026-06-06 | PINFRA.MX | SELL | 8 | 266.06 | +2,128.48 | Market | FILLED | V3 Dynamic Rebalance |
 | 2026-06-06 | CUERVO.MX | SELL | 108 | 14.00 | +1,512.00 | Market | FILLED | V3 Dynamic Rebalance |
@@ -54,11 +52,12 @@ This file tracks all buy and sell transactions executed by the Mexican Value Sto
 | 2026-06-22 | WALMEX.MX | SELL | 49 | 50.57 | +2,477.79 | Market | FILLED | V4 DQN Execution (Target Weight: 0.0%, DCS: -0.18, Saved: $1.04 MXN) |
 | 2026-06-22 | AC.MX | BUY | 13 | 206.73 | -2,687.53 | Market | FILLED | V4 DQN Execution (Target Weight: 20.0%, DCS: 0.80, Saved: $0.18 MXN) |
 | 2026-06-22 | ASURB.MX | BUY | 2 | 521.82 | -1,043.65 | Market | FILLED | V4 DQN Execution (Target Weight: 20.0%, DCS: 0.76, Saved: $0.04 MXN) |
+| 2026-06-22 | BONDIA | INTEREST | 1 | 1.0153 | +1.0153 | Market | FILLED | Bondia overnight yield on cash reserves for 1.9473 days. |
 ---
 
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
-* **Total Deployed Capital**: 7,587.58 MXN (37.4% invested)
-* **Unallocated Cash Reserves**: 12,710.07 MXN (62.6% cash)
-* **Current Portfolio Market Value**: 20,290.68 MXN (including cash)
+* **Total Deployed Capital**: 18,631.39 MXN (91.4% invested)
+* **Unallocated Cash Reserves**: 1,707.27 MXN (8.4% cash)
+* **Current Portfolio Market Value**: 20,374.93 MXN (including cash)

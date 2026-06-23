@@ -3,175 +3,82 @@ import json
 import datetime
 import numpy as np
 import pandas as pd
-from hmmlearn import hmm
+import yfinance as yf
 from arch import arch_model
+from skills.dcf_valuation_engine import calculate_cost_of_equity, calculate_wacc, calculate_dcf_intrinsic_value
+from connectors.mock_data_connector import get_filing_data
 
-# Import V4 Quantitative Modules
-from skills.nlp_sentiment import NLPSentimentEngine
-from skills.statistical_arbitrage import StatisticalArbitrageEngine
-from skills.rl_execution_agent import optimize_order_execution
+_mbono_cache = None
+_us_yield_cache = None
 
+def get_mbono_yield_series():
+    global _mbono_cache
+    if _mbono_cache is not None:
+        return _mbono_cache
+    try:
+        url = "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01MXM156N"
+        df = pd.read_csv(url, parse_dates=['DATE'], index_col='DATE')
+        # Clean any missing indicators
+        df = df[df['IRLTLT01MXM156N'] != '.']
+        _mbono_cache = pd.to_numeric(df['IRLTLT01MXM156N']) / 100.0
+    except Exception as e:
+        print(f"Error downloading Mbono yield from FRED: {e}. Falling back to default 0.095.")
+        dates = pd.date_range("2020-01-01", "2027-01-01", freq="ME")
+        _mbono_cache = pd.Series(0.095, index=dates)
+    return _mbono_cache
 
-# Qualitative macro news feeds representing forward-looking risks
-MACRO_RISK_REGISTRY = {
-    "FEMSAUBD": {
-        "description": "Insulated domestic demand. Dominant retail footprint in nearshoring hubs. Banxico interest rate cuts will lower financing costs for Oxxo expansions.",
-        "wacc_adjustment": -0.005,  # -50 bps (positive factor)
-        "growth_adjustment": 0.00   # Unchanged
-    },
-    "CEMEXCPO": {
-        "description": "Strong nearshoring catalyst. Direct concrete supply contracts for Northern Mexico industrial parks. USD-denominated contracts mitigate MXN volatility.",
-        "wacc_adjustment": 0.00,    # Baseline
-        "growth_adjustment": 0.015  # +150 bps growth bump due to nearshoring infrastructure demand
-    },
-    "ALFAA": {
-        "description": "High leverage risk. High Banxico interest rates increase financing costs. However, Sigma Alimentos (food) provides a stable cash flow buffer.",
-        "wacc_adjustment": 0.01,    # +100 bps risk premium due to debt load
-        "growth_adjustment": -0.005 # -50 bps growth adjustment
-    },
-    "PE&OLES": {
-        "description": "Exposed to global metal price volatility and high energy tariffs. Sovereign interest rates remain high, impacting long-term mining capex projects.",
-        "wacc_adjustment": 0.015,   # +150 bps sovereign rate premium
-        "growth_adjustment": -0.01  # -100 bps growth reduction
-    },
-    "MTRAP": {
-        "description": "Micro-cap with extreme local governance risk and zero hedging against currency volatility.",
-        "wacc_adjustment": 0.04,    # +400 bps risk premium
-        "growth_adjustment": -0.02  # -200 bps growth reduction
-    },
-    "VTRAP": {
-        "description": "CRITICAL RISK: Facing imminent supply chain tariffs on imports (+20%) and a major regulatory reform targeting consumer credit interest rates, destroying future margins.",
-        "wacc_adjustment": 0.035,   # +350 bps risk premium (massive penalty)
-        "growth_adjustment": -0.05  # -500 bps growth reduction (flips growth negative)
-    },
-    "AMXB": {
-        "description": "Telecom giant. Stable consumer demand and cash flows, but faces regulatory antitrust pressures and high capital intensity. USD earnings hedge currency risks.",
-        "wacc_adjustment": 0.005,   # +50 bps regulatory premium
-        "growth_adjustment": 0.00
-    },
-    "WALMEX": {
-        "description": "Dominant retail giant. Strong supply chain scale and highly insulated from currency swings, but faces labor cost hikes and antitrust complaints.",
-        "wacc_adjustment": 0.00,
-        "growth_adjustment": 0.00
-    },
-    "GFNORTEO": {
-        "description": "Major bank. Exposed to net interest margin compression as Banxico trims policy rates, but benefits from strong mortgage and industrial loan demand.",
-        "wacc_adjustment": 0.005,   # +50 bps margin compression premium
-        "growth_adjustment": 0.005  # +50 bps nearshoring loan growth
-    },
-    "GMEXICOB": {
-        "description": "Mining and rail conglomerate. Exposed to global copper cycles and local political concession risk on rail lines. Environmental regulations increase capex.",
-        "wacc_adjustment": 0.015,   # +150 bps concession premium
-        "growth_adjustment": -0.01
-    },
-    "BIMBOA": {
-        "description": "Global baking leader. Highly defensive consumer staple, but exposed to wheat/packaging commodity cycles. Large USD earnings hedge.",
-        "wacc_adjustment": -0.002,  # -20 bps (defensive play)
-        "growth_adjustment": 0.00
-    },
-    "GAPB": {
-        "description": "CRITICAL RISK: Federal concession tariff hikes and regulatory changes targeting airport base fees compress EBITDA margins and cash flows.",
-        "wacc_adjustment": 0.025,   # +250 bps regulatory risk premium
-        "growth_adjustment": -0.015 # -150 bps growth rate trim
-    },
-    "ASURB": {
-        "description": "CRITICAL RISK: Facing federal concession fee hikes. High exposure to leisure travel in Cancun helps, but regulatory pricing headwinds remain high.",
-        "wacc_adjustment": 0.025,   # +250 bps regulatory risk premium
-        "growth_adjustment": -0.015
-    },
-    "OMAB": {
-        "description": "CRITICAL RISK: Facing federal airport concession pricing cuts. High exposure to nearshoring industrial hubs (Monterrey) mitigates growth impact but margins are compressed.",
-        "wacc_adjustment": 0.025,   # +250 bps regulatory risk premium
-        "growth_adjustment": -0.010 # Strong industrial demand buffers growth drop
-    },
-    "GRUMAB": {
-        "description": "Defensive leader. Global corn flour demand is highly inelastic. Low leverage and strong operating margins. WACC benefit from low volatility.",
-        "wacc_adjustment": -0.005,  # -50 bps defensive premium
-        "growth_adjustment": 0.00
-    },
-    "KIMBERA": {
-        "description": "Consumer paper products. Stable domestic demand, but raw pulp price cycles create margin volatility.",
-        "wacc_adjustment": 0.00,
-        "growth_adjustment": 0.00
-    },
-    "AC": {
-        "description": "Coke bottler. High cash generator, strong defensive consumer play in Mexico and US. Insulated from currency swings by cash flows.",
-        "wacc_adjustment": -0.005,  # -50 bps defensive premium
-        "growth_adjustment": 0.00
-    },
-    "ORBIA": {
-        "description": "Chemicals and irrigation. High leverage under high sovereign rates, exposed to PVC price drop and European recession headwinds.",
-        "wacc_adjustment": 0.015,   # +150 bps leverage and commodity premium
-        "growth_adjustment": -0.010
-    },
-    "PINFRA": {
-        "description": "Toll roads infrastructure. Defensive cash streams, concessions linked directly to domestic inflation, but faces government toll review threats.",
-        "wacc_adjustment": 0.00,
-        "growth_adjustment": 0.00
-    },
-    "BBAJIOO": {
-        "description": "Regional commercial bank. Insulated nearshoring play. Direct beneficiary of industrial park expansion and corporate lending in El Bajio corridor.",
-        "wacc_adjustment": 0.00,
-        "growth_adjustment": 0.010  # +100 bps nearshoring loan growth
-    },
-    "GENTERA": {
-        "description": "Microfinance lender. High credit margins, but highly exposed to lower-income consumer default cycles under recession or persistent inflation.",
-        "wacc_adjustment": 0.020,   # +200 bps microfinance default premium
-        "growth_adjustment": 0.00
-    },
-    "CUERVO": {
-        "description": "Jose Cuervo tequila. High brand power, but export margins hurt by strong Peso swings and agave crop pricing cycles.",
-        "wacc_adjustment": 0.005,   # +50 bps FX risk premium
-        "growth_adjustment": 0.00
-    },
-    "GCC": {
-        "description": "Cement producer. Deeply integrated in US border regions and Northern Mexico, benefiting directly from nearshoring and infrastructure capex.",
-        "wacc_adjustment": 0.00,
-        "growth_adjustment": 0.010  # +100 bps concrete growth
-    },
-    "VESTA": {
-        "description": "Industrial real estate (warehouses). Prime beneficiary of nearshoring warehouses demand, near zero vacancy rates in Northern Mexico. High pricing power.",
-        "wacc_adjustment": -0.005,  # -50 bps nearshoring tailwind
-        "growth_adjustment": 0.020  # +200 bps growth bump
-    },
-    "NVDA": {
-        "description": "Global AI chip leader. Strong growth catalyst from hyperscaler capex, but high volatility and exposure to international export restrictions.",
-        "wacc_adjustment": 0.005,  # +50 bps regulatory/valuation risk premium
-        "growth_adjustment": 0.015 # +150 bps growth rate bump due to AI demand
-    },
-    "AAPL": {
-        "description": "Consumer hardware giant. Highly stable premium pricing cash flows, but faces antitrust lawsuits and longer smartphone replacement cycles.",
-        "wacc_adjustment": 0.00,   # Baseline risk
-        "growth_adjustment": 0.00  # Baseline growth
-    },
-    "MSFT": {
-        "description": "Enterprise software and cloud infrastructure leader. Solid recurring SaaS revenues, defensive positioning with low leverage.",
-        "wacc_adjustment": -0.002, # -20 bps (defensive play)
-        "growth_adjustment": 0.005  # +50 bps growth adjustment from AI integration
-    },
-    "AMZN": {
-        "description": "E-commerce and cloud (AWS) giant. Exposed to consumer spending cycles, but AWS margins provide substantial cash flow buffer.",
-        "wacc_adjustment": 0.002,  # +20 bps
-        "growth_adjustment": 0.00
-    },
-    "GOOGL": {
-        "description": "Search and digital ads leader. Highly cash-generative search monopoly, but faces regulatory antitrust breaking-up risks.",
-        "wacc_adjustment": 0.005,  # +50 bps antitrust premium
-        "growth_adjustment": -0.005 # -50 bps growth drag from antitrust pressure
-    }
-}
+def get_mbono_yield_at(date_val) -> float:
+    series = get_mbono_yield_series()
+    try:
+        dt = pd.to_datetime(date_val)
+        past_dates = series.index[series.index <= dt]
+        if len(past_dates) > 0:
+            val = series.loc[past_dates[-1]]
+            if not np.isnan(val):
+                return float(val)
+        return float(series.iloc[-1])
+    except Exception:
+        return 0.095
+
+def get_us_yield_series():
+    global _us_yield_cache
+    if _us_yield_cache is not None:
+        return _us_yield_cache
+    try:
+        tnx = yf.Ticker("^TNX").history(period="5y")
+        tnx.index = tnx.index.tz_localize(None)
+        _us_yield_cache = tnx["Close"] / 100.0
+    except Exception as e:
+        print(f"Error downloading US yield from yfinance: {e}. Falling back to default 0.04.")
+        dates = pd.date_range("2020-01-01", "2027-01-01", freq="D")
+        _us_yield_cache = pd.Series(0.04, index=dates)
+    return _us_yield_cache
+
+def get_us_yield_at(date_val) -> float:
+    series = get_us_yield_series()
+    try:
+        dt = pd.to_datetime(date_val)
+        past_dates = series.index[series.index <= dt]
+        if len(past_dates) > 0:
+            val = series.loc[past_dates[-1]]
+            if not np.isnan(val):
+                return float(val)
+        return float(series.iloc[-1])
+    except Exception:
+        return 0.04
+
 
 class FundamentalScreener:
     """
     Agent 1: Runs the quantitative V3 model on historical prices and volumes.
-    Computes daily returns, standardizes returns via GARCH(1,1), fits a Multivariate HMM 
-    with SPY and USD/MXN returns, and calculates second-order Markov transition probabilities (DCS).
+    Computes daily returns, standardizes returns via GARCH(1,1), fits a dynamic multi-stage DCF Model
+    using sovereign risk yields (Mbonos) and exchange rate sensitivities.
     """
     def __init__(self):
         self.system_prompt = (
             "SYSTEM PROMPT: You are the Quantitative Screener Agent (V3). Your objective is to run "
-            "advanced mathematical models (GARCH(1,1), Multivariate HMM, 2nd-Order Markov transitions) "
-            "to extract volatility and trend signals (DCS) for each BMV stock relative to global macro drivers."
+            "advanced mathematical models (GARCH(1,1) and multi-stage DCF Intrinsic Value) "
+            "to extract volatility and valuation signals (DCS) for each BMV stock relative to global macro drivers."
         )
 
     def calcular_retornos_estandarizados_garch(self, precios):
@@ -180,9 +87,6 @@ class FundamentalScreener:
         retornos[0] = 0.0
         
         # Fit GARCH(1,1) model
-        # NOTE: `show_warning` is NOT a valid kwarg of arch_model() (it belongs to .fit()).
-        # The previous code raised TypeError on every call, silently forcing the
-        # rolling-std fallback for ALL tickers — GARCH never actually ran.
         try:
             am = arch_model(retornos * 100, vol='Garch', p=1, q=1, dist='Normal')
             res = am.fit(update_freq=0, disp='off', show_warning=False)
@@ -204,62 +108,12 @@ class FundamentalScreener:
             
         return retornos, retornos_estandarizados, vol_condicional
 
-    def entrenar_hmm_multivariado(self, retornos_asset, exogenos):
-        obs = np.column_stack([retornos_asset, exogenos])
-        model_hmm = None
-        try:
-            model_hmm = hmm.GaussianHMM(n_components=3, covariance_type="full", n_iter=100, random_state=42)
-            model_hmm.fit(obs)
-            estados_inferidos = model_hmm.predict(obs)
-            
-            # Map states: argmin of means (Bear), argmax (Bull), others (Sideways)
-            means = model_hmm.means_[:, 0]
-            mapa_estados = {np.argmin(means): -1, np.argmax(means): 1}
-            for idx in range(3):
-                if idx not in mapa_estados:
-                    mapa_estados[idx] = 0
-            
-            estados_mapeados = np.array([mapa_estados[e] for e in estados_inferidos])
-        except Exception as e:
-            # Fallback: simple sign classification of asset returns
-            print(f"  [HMM Fallback] Classifying states based on returns: {e}")
-            estados_mapeados = np.zeros(len(retornos_asset), dtype=int)
-            for i in range(len(retornos_asset)):
-                val = retornos_asset[i]
-                if val > 0.004:
-                    estados_mapeados[i] = 1
-                elif val < -0.004:
-                    estados_mapeados[i] = -1
-            
-        return estados_mapeados, model_hmm
-
-    def calcular_matriz_markov_segundo_orden(self, estados):
-        mapa_llaves = {
-            (1,1):0, (1,0):1, (1,-1):2, 
-            (0,1):3, (0,0):4, (0,-1):5, 
-            (-1,1):6, (-1,0):7, (-1,-1):8
-        }
-        matriz_conteo = np.zeros((9, 3)) # 9 combinations of origin, 3 of destination [1, 0, -1]
-        
-        for t in range(len(estados) - 2):
-            estado_ant = estados[t]
-            estado_act = estados[t+1]
-            estado_sig = estados[t+2]
-            
-            key = (estado_ant, estado_act)
-            if key in mapa_llaves:
-                fila_idx = mapa_llaves[key]
-                col_idx = 1 if estado_sig == 0 else (0 if estado_sig == 1 else 2)
-                matriz_conteo[fila_idx, col_idx] += 1
-                
-        # Laplace smoothing (+1) and normalization
-        matriz_suavizada = matriz_conteo + 1
-        matriz_transicion_2da = matriz_suavizada / matriz_suavizada.sum(axis=1, keepdims=True)
-        return matriz_transicion_2da, mapa_llaves
-
-    def screen(self, universe_data: dict) -> dict:
+    def screen(self, universe_data: dict, execution_date: str = None) -> dict:
         print(f"\n[Agent 1: Quantitative Screener] Screening {len(universe_data)} assets in the universe...")
         
+        if execution_date is None:
+            execution_date = datetime.date.today().strftime("%Y-%m-%d")
+            
         # Train HMM on SPY returns once to determine global market regime
         spy_hmm_state = 0 # Default to Sideways
         try:
@@ -291,63 +145,129 @@ class FundamentalScreener:
             try:
                 precios = np.array(data["prices"])
                 volumenes = np.array(data["volumes"])
-                exogenos = np.array(data["exogenous"])
+                exogenous = np.array(data["exogenous"])
                 
-                # Check data length
-                if len(precios) < 20:
-                    print(f"  |-- {ticker}: Skipping (insufficient price history: {len(precios)} days)")
+                # Clean non-positive or non-finite prices to avoid log return NaN/inf
+                valid_mask = (precios > 0) & np.isfinite(precios)
+                if np.sum(valid_mask) < 20:
+                    print(f"  |-- {ticker}: Skipping (insufficient positive price history: {np.sum(valid_mask)} days)")
                     continue
+                precios = precios[valid_mask]
+                volumenes = volumenes[valid_mask]
+                exogenous = exogenous[valid_mask]
                 
                 # 1. GARCH Modeling
                 ret, ret_est, vol_cond = self.calcular_retornos_estandarizados_garch(precios)
                 garch_vol_final = vol_cond[-1]
                 
-                # 2. HMM State Inference and DCS v2 calculation
-                estados_hist, model_hmm = self.entrenar_hmm_multivariado(ret_est, exogenos)
+                # 2. Estimate SPY and USD/MXN beta over a 252-day trailing window
+                ret_len = len(ret)
+                lb = min(ret_len, 252)
+                ret_slice = ret[-lb:]
+                spy_ret = exogenous[-lb:, 0]
+                usdmxn_ret = exogenous[-lb:, 1]
                 
-                dcs = None
-                current_state = None
+                cov_spy = np.cov(ret_slice[1:], spy_ret[1:])
+                beta_spy = cov_spy[0, 1] / cov_spy[1, 1] if cov_spy[1, 1] > 1e-8 else 1.0
                 
-                if model_hmm is not None:
-                    try:
-                        obs = np.column_stack([ret_est, exogenos])
-                        gamma_T = model_hmm.predict_proba(obs)[-1]
-                        pi_next = gamma_T @ model_hmm.transmat_
-                        mu = model_hmm.means_[:, 0]
-                        e_ret = pi_next @ mu
-                        
-                        # Normalize expected return to [-1, 1]
-                        max_mu = max(abs(mu.min()), abs(mu.max()))
-                        dcs = e_ret / max_mu if max_mu > 0 else 0.0
-                        
-                        # Map argmax of gamma_T to regime label mapped through means
-                        bear_idx = np.argmin(mu)
-                        bull_idx = np.argmax(mu)
-                        sideways_idx = [idx for idx in range(3) if idx not in (bear_idx, bull_idx)][0]
-                        mapa_estados = {bear_idx: -1, bull_idx: 1, sideways_idx: 0}
-                        current_state = int(mapa_estados[np.argmax(gamma_T)])
-                    except Exception as inference_error:
-                        print(f"  [HMM Inference Fallback] Inference failed for {ticker}: {inference_error}")
-                        model_hmm = None
-                        
-                if model_hmm is None:
-                    # Fallback path (mean of last 10 standardized returns)
-                    dcs = float(np.clip(np.mean(ret_est[-10:]), -1.0, 1.0))
-                    current_state = int(estados_hist[-1])
+                cov_fx = np.cov(ret_slice[1:], usdmxn_ret[1:])
+                beta_fx = cov_fx[0, 1] / cov_fx[1, 1] if cov_fx[1, 1] > 1e-8 else 0.0
+                
+                usd_mxn_vol = np.std(usdmxn_ret[-20:])
+                usd_mxn_ret_recent = np.sum(usdmxn_ret[-20:])
+                
+                # 3. Dynamic DCF Valuation
+                current_price = precios[-1]
+                
+                if "raw_dcf_inputs" in data:
+                    # Blind pipeline support
+                    raw_dcf = data["raw_dcf_inputs"]
+                    tax_rate = raw_dcf.get("tax_rate", 0.30)
+                    cost_of_debt = raw_dcf.get("cost_of_debt", 0.08)
+                    total_debt = raw_dcf["total_debt"]
+                    shares_outstanding = raw_dcf["shares_outstanding"]
+                    base_fcff = raw_dcf["base_fcff"]
+                    cash_and_equivalents = raw_dcf["cash_and_equivalents"]
+                    growth_rate_stage1 = raw_dcf["growth_rate_stage1"]
+                    total_assets = raw_dcf.get("total_assets", 1.0)
+                    total_liabilities = raw_dcf.get("total_liabilities", 0.0)
+                else:
+                    # Normal pipeline support
+                    lookup_ticker = ticker.split(".")[0]
+                    filing = get_filing_data(lookup_ticker)
+                    tax_rate = filing["tax_rate"]
+                    cost_of_debt = filing["cost_of_debt"]
+                    total_debt = filing["total_debt"]
+                    shares_outstanding = filing["shares_outstanding"]
+                    base_fcff = filing["base_fcff"]
+                    cash_and_equivalents = filing["cash_and_equivalents"]
+                    growth_rate_stage1 = filing["growth_rate_stage1"]
+                    total_assets = filing["total_assets"]
+                    total_liabilities = filing["total_liabilities"]
+                    
+                # Dynamic interest rates and sovereign spread
+                us_yield = get_us_yield_at(execution_date)
+                mbono_yield = get_mbono_yield_at(execution_date)
+                sovereign_risk_premium = max(0.0, mbono_yield - us_yield)
+                
+                # Leverage risk adjustment
+                equity_val = total_assets - total_liabilities
+                if equity_val > 1e-4:
+                    debt_to_equity = total_debt / equity_val
+                    leverage_premium = max(0.0, (debt_to_equity - 1.0) * 0.015)
+                else:
+                    leverage_premium = 0.05  # high penalty for insolvent/negative equity
+                
+                cost_of_equity = calculate_cost_of_equity(
+                    risk_free_rate=us_yield,
+                    beta=beta_spy,
+                    equity_risk_premium=0.055,
+                    sovereign_risk_premium=sovereign_risk_premium + leverage_premium
+                )
+                
+                wacc = calculate_wacc(
+                    cost_of_equity=cost_of_equity,
+                    cost_of_debt=cost_of_debt,
+                    total_debt=total_debt,
+                    market_cap=current_price * shares_outstanding,
+                    tax_rate=tax_rate
+                )
+                
+                dcf_results = calculate_dcf_intrinsic_value(
+                    current_price=current_price,
+                    shares_outstanding=shares_outstanding,
+                    base_fcff=base_fcff,
+                    wacc=wacc,
+                    total_debt=total_debt,
+                    cash_and_equivalents=cash_and_equivalents,
+                    growth_rate_stage1=growth_rate_stage1,
+                    terminal_growth=min(0.03, growth_rate_stage1 * 0.6)
+                )
+                
+                margin_of_safety = dcf_results["margin_of_safety"]
+                # Clip to [-1.0, 1.0] for DCS compatibility
+                dcs = float(np.clip(margin_of_safety, -1.0, 1.0))
+                
+                # Map conviction to state: 1 (Bull/Buy), -1 (Bear/Sell), 0 (Sideways/Neutral)
+                current_state = 1 if dcs >= 0.25 else (-1 if dcs <= -0.10 else 0)
                 
                 # 4. Volume Confirmation (Relative Volume)
                 vr = volumenes[-1] / np.mean(volumenes[-20:])
                 
                 quantitative_results[ticker] = {
-                    "dcs": float(dcs),
+                    "dcs": dcs,
                     "garch_vol": float(garch_vol_final),
                     "relative_vol": float(vr),
                     "hmm_state": int(current_state),
-                    "current_price": float(precios[-1]),
-                    "spy_hmm_state": spy_hmm_state
+                    "current_price": float(current_price),
+                    "spy_hmm_state": spy_hmm_state,
+                    "beta_fx": float(beta_fx),
+                    "beta_spy": float(beta_spy),
+                    "usd_mxn_vol": float(usd_mxn_vol),
+                    "usd_mxn_ret_recent": float(usd_mxn_ret_recent)
                 }
                 
-                print(f"  +-- {ticker}: DCS={dcs:.4f} | VR={vr:.2f} | Vol={garch_vol_final:.4f} | HMM State={current_state}")
+                print(f"  +-- {ticker}: DCS={dcs:.4f} | VR={vr:.2f} | Vol={garch_vol_final:.4f} | Conviction State={current_state}")
                 
             except Exception as e:
                 print(f"  |-- [ERROR] Failed to run quantitative screening for {ticker}: {e}")
@@ -365,85 +285,79 @@ class MacroRiskAnalyst:
     def __init__(self):
         self.system_prompt = (
             "SYSTEM PROMPT: You are the Macro Risk Analyst Agent (V3). Your objective is to adjust "
-            "quantitative screener outputs (DCS and GARCH Volatility) based on macro-specific tailwinds or regulatory headwinds."
+            "quantitative screener outputs (DCS and GARCH Volatility) based on dynamic currency and sovereign rate sensitivities."
         )
 
     def stress_test(self, quantitative_metrics: dict, ticker_map: dict) -> dict:
-        print(f"\n[Agent 2: Macro/Sovereign Risk Analyst] Refining signals with qualitative risk factors and NLP Sentiment...")
-        
-        # Instantiate NLP Sentiment Engine and fetch adjustments
-        nlp_engine = NLPSentimentEngine()
-        tickers = list(quantitative_metrics.keys())
-        nlp_adjustments = nlp_engine.get_black_litterman_adjustments(tickers)
+        print(f"\n[Agent 2: Macro/Sovereign Risk Analyst] Refining signals with dynamic currency and rate sensitivities...")
         
         adjusted_metrics = {}
         for ticker, metrics in quantitative_metrics.items():
-            lookup_ticker = ticker.split(".")[0]
-            
-            risk_data = MACRO_RISK_REGISTRY.get(
-                lookup_ticker, 
-                {"description": "No macro adjustments.", "wacc_adjustment": 0.0, "growth_adjustment": 0.0}
-            )
-            
-            zg_t = nlp_adjustments.get(ticker, 0.0)
-            
             garch_vol = metrics["garch_vol"]
             dcs = metrics["dcs"]
+            beta_fx = metrics.get("beta_fx", 0.0)
+            usd_mxn_vol = metrics.get("usd_mxn_vol", 0.01)
+            usd_mxn_ret_recent = metrics.get("usd_mxn_ret_recent", 0.0)
             
-            # NLP Sentiment modifies the WACC (risk) and Growth multipliers
-            # Positive ZG_t sentiment reduces risk and increases growth signal
-            nlp_wacc_mod = -0.005 * zg_t
-            nlp_growth_mod = 0.05 * zg_t
+            # Dynamic adjustments based on USD/MXN beta and volatility
+            vol_penalty = abs(beta_fx) * usd_mxn_vol * 2.0
+            adjusted_vol = garch_vol * (1.0 + vol_penalty)
             
-            adjusted_vol = garch_vol * (1.0 + (risk_data["wacc_adjustment"] + nlp_wacc_mod) * 5.0)
-            adjusted_dcs = np.clip(dcs + risk_data["growth_adjustment"] + nlp_growth_mod, -1.0, 1.0)
+            dcs_adjustment = beta_fx * usd_mxn_ret_recent * 5.0
+            adjusted_dcs = np.clip(dcs + dcs_adjustment, -1.0, 1.0)
+            
+            description = (
+                f"Dynamic FX Sensitivity: beta_fx={beta_fx:.2f}. "
+                f"Recent USD/MXN ret={usd_mxn_ret_recent*100:+.2f}%, "
+                f"vol={usd_mxn_vol*100:.2f}%. "
+                f"Vol penalization: {vol_penalty*100:+.1f}%. "
+                f"DCS adjustment: {dcs_adjustment*100:+.1f}%."
+            )
             
             adjusted_metrics[ticker] = {
                 **metrics,
                 "garch_vol_adjusted": float(adjusted_vol),
                 "dcs_adjusted": float(adjusted_dcs),
-                "macro_description": risk_data["description"],
-                "wacc_adjustment": risk_data["wacc_adjustment"],
-                "growth_adjustment": risk_data["growth_adjustment"],
-                "zg_t": float(zg_t)
+                "macro_description": description,
+                "wacc_adjustment": float(vol_penalty / 5.0),  # Backwards compatibility translation
+                "growth_adjustment": float(dcs_adjustment)
             }
             
-            if risk_data["wacc_adjustment"] != 0.0 or risk_data["growth_adjustment"] != 0.0 or zg_t != 0.0:
-                print(f"  |-- {ticker}: Adjusted DCS {dcs:.4f} -> {adjusted_dcs:.4f} | Vol {garch_vol:.4f} -> {adjusted_vol:.4f} (zg_t={zg_t:+.2f})")
+            if vol_penalty != 0.0 or dcs_adjustment != 0.0:
+                print(f"  |-- {ticker}: Adjusted DCS {dcs:.4f} -> {adjusted_dcs:.4f} | Vol {garch_vol:.4f} -> {adjusted_vol:.4f} ({description})")
                 
         return adjusted_metrics
 
 
 class PortfolioReconciler:
     """
-    Agent 3: Rebalances the portfolio based on Black-Litterman weights and V4 optimizations.
-    - Filters by DCS >= 0.25 and VR >= 1.2, dynamically adjusted by learning context with exit hysteresis.
-    - Performs inverse-volatility weighting scaled by the DCS strength and learned confidence levels.
-    - Integrates Engle-Granger Cointegration & Regime Arbitrage on historical price graphs.
-    - Enforces a hard 20% concentration limit (reduced from 40% to improve diversification).
-    - Applies a 5% Dead-Zone threshold to avoid fee churn on marginal target weight deviations.
-    - Invokes DQN Reinforcement Learning agent to route order books and minimize trade slippage.
-    - Deducts execution friction fees and interest earned on deferred cash.
-    - Automatically routes cash to Bondia overnight sweeps.
+    Agent 3: Rebalances the portfolio based on Black-Litterman weights and generates the execution report.
+    - Filters by DCS >= 0.25 and VR >= 1.2
+    - Performs inverse-volatility weighting scaled by the DCS strength
+    - Enforces 40% concentration limit
+    - Computes buying/selling transactions to adjust to target holdings
+    - Deducts 0.29% transaction fees on all operations
+    - Automatically routes cash to Bondia
     """
     def __init__(self):
         self.system_prompt = (
-            "SYSTEM PROMPT: You are the Portfolio Reconciler Agent (V4). Your objective is to run "
-            "Black-Litterman optimization, apply dynamic Cointegration Regime Arbitrage offsets, "
-            "optimize execution routing via DQN RL agent, and draft the production execution report."
+            "SYSTEM PROMPT: You are the Portfolio Reconciler Agent (V3). Your objective is to run "
+            "Black-Litterman optimization, compute trade rebalancing vectors, apply execution friction "
+            "costs, and draft the final production report."
         )
 
     def reconcile(self, adjusted_metrics: dict, portfolio: dict, execution_date: str,
-                  learning_context: dict = None, universe_prices_dict: dict = None) -> tuple[dict, str, list]:
-        print(f"\n[Agent 3: Portfolio Reconciler] Starting unified portfolio reconciliation and optimization...")
+                  learning_context: dict = None) -> tuple[dict, str, list]:
+        print(f"\n[Agent 3: Portfolio Reconciler] Starting portfolio reconciliation and optimization...")
 
-        # V3 Adaptive learning context (all optional, safe defaults)
+        # Adaptive learning context (all optional, safe defaults = old behavior)
         ctx = learning_context or {}
         umbral_histeresis_entrada = ctx.get("dcs_threshold", 0.25)
         umbral_vr = ctx.get("vr_threshold", 1.2)
         confidence = ctx.get("confidence", {})          # ticker -> multiplier
         exposure_scalar = ctx.get("exposure_scalar", 1.0)
-        
+        normalize_weights = ctx.get("normalize_weights", False)
+        min_fx_scalar = ctx.get("min_fx_scalar", 0.4)
         if exposure_scalar < 1.0:
             print(f"  |-- [Drawdown Governor] Gross exposure scaled to {exposure_scalar:.0%} "
                   f"(strategy drawdown brake active).")
@@ -539,57 +453,101 @@ class PortfolioReconciler:
             # Initial guess: inverse-volatility weights
             inv_vol = {t: 1.0 / max(adjusted_metrics[t]["garch_vol_adjusted"], 1e-4) for t in activos_elegibles}
             suma_inv_vol = sum(inv_vol.values())
-            w0 = np.array([(inv_vol[t] / suma_inv_vol) * adjusted_metrics[t]["dcs_adjusted"] * exposure_scalar for t in activos_elegibles])
-            if ctx.get("sizing_profile") == "asymmetric":
-                caps = [0.50, 0.30, 0.20]
-                w0 = np.array([min(w0[idx], caps[idx] if idx < len(caps) else 0.0) for idx in range(n)])
+            # Dynamic exposure scaling based on USD/MXN volatility
+            first_ticker = activos_elegibles[0]
+            usd_mxn_vol = adjusted_metrics[first_ticker].get("usd_mxn_vol", 0.005)
+            fx_vol_scalar = max(min_fx_scalar, 1.0 - max(0.0, (usd_mxn_vol - 0.005) / 0.005))
+            if fx_vol_scalar < 1.0:
+                print(f"  |-- [Volatility Governor] USD/MXN volatility is elevated ({usd_mxn_vol*100:.2f}%). Scaling gross exposure by {fx_vol_scalar:.1%}")
+
+            if normalize_weights:
+                # Raw weights: inverse-volatility, optionally normalized to sum to 1.0 (fully invested)
+                raw_weights = {}
+                for t in activos_elegibles:
+                    raw_weights[t] = (inv_vol[t] / suma_inv_vol) * exposure_scalar * fx_vol_scalar
+                
+                # Enforce 40% concentration limit (and redistribute excess)
+                final_weights = {}
+                excess = 0.0
+                under_cap_sum = 0.0
+                
+                for t, w in raw_weights.items():
+                    if w > 0.40:
+                        final_weights[t] = 0.40
+                        excess += (w - 0.40)
+                    else:
+                        final_weights[t] = w
+                        under_cap_sum += w
+                        
+                if excess > 0 and under_cap_sum > 0:
+                    for t in list(final_weights.keys()):
+                        if final_weights[t] < 0.40:
+                            share = raw_weights[t] / under_cap_sum
+                            extra = excess * share
+                            final_weights[t] = min(0.40, final_weights[t] + extra)
+                            
+                for t in activos_elegibles:
+                    pesos_asignados[t] = final_weights[t]
             else:
-                w0 = np.clip(w0, 0.0, CONCENTRATION_CAP_HARD)
-            sum_w0 = sum(w0)
-            if sum_w0 > max_equity_exposure:
-                w0 = w0 * (max_equity_exposure / sum_w0)
+                # SLSQP Weight Optimization
+                w0_list = []
+                for t in activos_elegibles:
+                    mult = confidence.get(t, 1.0)
+                    if mult != 1.0:
+                        print(f"  |-- [Learned Confidence] {t}: weight factor x{mult:.2f} (historical bucket expectancy)")
+                    w0_val = (inv_vol[t] / suma_inv_vol) * adjusted_metrics[t]["dcs_adjusted"] * mult * exposure_scalar * fx_vol_scalar
+                    w0_list.append(w0_val)
+                w0 = np.array(w0_list)
                 
-            # Current weights for eligible assets
-            w_curr = np.zeros(n)
-            for i, t in enumerate(activos_elegibles):
-                current_shares = holdings_dict.get(t, {}).get("shares", 0)
-                current_price = adjusted_metrics[t]["current_price"]
-                w_curr[i] = (current_shares * current_price) / total_value if total_value > 0 else 0.0
+                if ctx.get("sizing_profile") == "asymmetric":
+                    caps = [0.50, 0.30, 0.20]
+                    w0 = np.array([min(w0[idx], caps[idx] if idx < len(caps) else 0.0) for idx in range(n)])
+                else:
+                    w0 = np.clip(w0, 0.0, CONCENTRATION_CAP_HARD)
+                sum_w0 = sum(w0)
+                if sum_w0 > max_equity_exposure:
+                    w0 = w0 * (max_equity_exposure / sum_w0)
+                    
+                # Current weights for eligible assets
+                w_curr = np.zeros(n)
+                for i, t in enumerate(activos_elegibles):
+                    current_shares = holdings_dict.get(t, {}).get("shares", 0)
+                    current_price = adjusted_metrics[t]["current_price"]
+                    w_curr[i] = (current_shares * current_price) / total_value if total_value > 0 else 0.0
+                    
+                # Objective: Maximize expected return minus turnover penalty
+                dcs_arr = np.array([adjusted_metrics[t]["dcs_adjusted"] * confidence.get(t, 1.0) for t in activos_elegibles])
+                lambda_penalty = 3.0  # Turnover penalty scaling factor
+                fee_rate = 0.0029
                 
-            # Objective: Maximize expected return minus turnover penalty
-            dcs_arr = np.array([adjusted_metrics[t]["dcs_adjusted"] for t in activos_elegibles])
-            lambda_penalty = 3.0  # Turnover penalty scaling factor
-            fee_rate = 0.0029
-            
-            def objective(w):
-                expected_return = np.sum(w * dcs_arr)
-                turnover_cost = np.sum(np.abs(w - w_curr)) * fee_rate
-                utility = expected_return - lambda_penalty * turnover_cost
-                return -utility  # Minimize negative utility
+                def objective(w):
+                    expected_return = np.sum(w * dcs_arr)
+                    turnover_cost = np.sum(np.abs(w - w_curr)) * fee_rate
+                    utility = expected_return - lambda_penalty * turnover_cost
+                    return -utility  # Minimize negative utility
+                    
+                # Constraint: sum(w) <= max_equity_exposure
+                cons = ({'type': 'ineq', 'fun': lambda w: max_equity_exposure - np.sum(w)})
                 
-            # Constraint: sum(w) <= max_equity_exposure
-            cons = ({'type': 'ineq', 'fun': lambda w: max_equity_exposure - np.sum(w)})
-            
-            # Bounds: 0 <= w_i <= CONCENTRATION_CAP_HARD (or asymmetric caps)
-            if ctx.get("sizing_profile") == "asymmetric":
-                caps = [0.50, 0.30, 0.20]
-                bounds = [(0.0, caps[i]) if i < len(caps) else (0.0, 0.0) for i in range(n)]
-            else:
-                bounds = [(0.0, CONCENTRATION_CAP_HARD) for _ in range(n)]
-            
-            # Optimize weights
-            res = minimize(objective, w0, method='SLSQP', bounds=bounds, constraints=cons)
-            
-            if res.success:
-                opt_weights = res.x
-                print("  |-- SLSQP Weight Optimization converged successfully.")
-            else:
-                opt_weights = w0
-                print("  |-- [WARN] SLSQP optimization failed to converge. Falling back to initial inv-vol weights.")
+                # Bounds: 0 <= w_i <= CONCENTRATION_CAP_HARD (or asymmetric caps)
+                if ctx.get("sizing_profile") == "asymmetric":
+                    caps = [0.50, 0.30, 0.20]
+                    bounds = [(0.0, caps[i]) if i < len(caps) else (0.0, 0.0) for i in range(n)]
+                else:
+                    bounds = [(0.0, CONCENTRATION_CAP_HARD) for _ in range(n)]
                 
-            for i, t in enumerate(activos_elegibles):
-                pesos_asignados[t] = float(opt_weights[i])
+                # Optimize weights
+                res = minimize(objective, w0, method='SLSQP', bounds=bounds, constraints=cons)
                 
+                if res.success:
+                    opt_weights = res.x
+                    print("  |-- SLSQP Weight Optimization converged successfully.")
+                else:
+                    opt_weights = w0
+                    print("  |-- [WARN] SLSQP optimization failed to converge. Falling back to initial inv-vol weights.")
+                    
+                for i, t in enumerate(activos_elegibles):
+                    pesos_asignados[t] = float(opt_weights[i])
             for t in adjusted_metrics:
                 if t not in pesos_asignados:
                     pesos_asignados[t] = 0.0
@@ -633,69 +591,52 @@ class PortfolioReconciler:
         total_value = cash + holdings_value
         print(f"  |-- Portfolio Value: {total_value:,.2f} MXN (Cash: {cash:,.2f} MXN, Stocks: {holdings_value:,.2f} MXN)")
         
+        # Define structural hysteresis deadband (rebalancing tolerance)
+        REBALANCE_TOLERANCE = 0.05  # 5% absolute drift required to trigger a trade
+        
+        # Adjust target weights using hysteresis BEFORE executing trade calculations
+        for ticker in list(pesos_asignados.keys()):
+            current_price = adjusted_metrics[ticker]["current_price"]
+            current_shares = holdings.get(ticker, {}).get("shares", 0)
+            current_weight = (current_shares * current_price) / total_value if total_value > 0 else 0.0
+            target_weight = pesos_asignados[ticker]
+            
+            # If the stock is already held, target weight is positive, and the change in weight is within tolerance, suppress rebalancing
+            if current_shares > 0 and target_weight > 0.0 and abs(target_weight - current_weight) < REBALANCE_TOLERANCE:
+                pesos_asignados[ticker] = current_weight
+        
         # Target shares and rebalancing trade vector
         rebalancing_trades = []
-        total_slippage_savings = 0.0
-        rl_traces = []
+        costo_corretaje = 0.0029 # 0.29% fee
         
         # Dead-zone threshold to prevent excessive fee churn
         DEAD_ZONE_THRESHOLD = ctx.get("dead_zone_threshold", 0.05)
         
-        # First Phase: Execute Sells (frees up cash)
+        # First Phase: Execute Sells (frees up cash, proceeds go to T+1 unsettled cash)
         new_holdings_dict = {}
-        cash_after_sells = cash
-
+        cash_available_for_buys = cash
+        unsettled_cash_from_sells = 0.0
+        
+        # Handle tickers held but missing from current adjusted metrics
         for ticker, h in holdings.items():
             if ticker not in adjusted_metrics:
-                print(f"  +-- [WARN] {ticker} held but absent from today's metrics. "
-                      f"Carrying position at last price {h['last_price']:.2f} (review manually).")
+                print(f"  +-- [WARN] {ticker} held but absent from today's metrics. Carrying position at last price {h['last_price']:.2f}")
                 new_holdings_dict[ticker] = {**h, "target_weight": h.get("target_weight", 0.0)}
 
         for ticker, peso in pesos_asignados.items():
             current_price = adjusted_metrics[ticker]["current_price"]
             monto_teorico = total_value * peso
             target_shares = int(monto_teorico // current_price)
-            
             current_shares = holdings.get(ticker, {}).get("shares", 0)
             
-            # Rebalance dead-zone: skip if weight delta < 5% (except when liquidating)
-            current_weight = (current_shares * current_price) / total_value if total_value > 0 else 0.0
-            weight_delta = abs(peso - current_weight)
-            if weight_delta < DEAD_ZONE_THRESHOLD and current_shares > 0 and peso > 0.0:
-                new_holdings_dict[ticker] = {
-                    "ticker": ticker,
-                    "shares": current_shares,
-                    "buy_price": holdings[ticker]["buy_price"],
-                    "last_price": current_price,
-                    "target_weight": peso,
-                    "dcs": adjusted_metrics[ticker]["dcs_adjusted"],
-                    "garch_vol": adjusted_metrics[ticker]["garch_vol_adjusted"],
-                    "hmm_state": adjusted_metrics[ticker]["hmm_state"],
-                    "vol_relative": adjusted_metrics[ticker]["relative_vol"],
-                    "zg_t": adjusted_metrics[ticker].get("zg_t", 0.0)
-                }
-                print(f"  |-- [HOLD] {ticker}: weight delta {weight_delta:.1%} < {DEAD_ZONE_THRESHOLD:.0%} dead-zone. No trade.")
-                continue
-            
             if current_shares > target_shares:
-                # Execute Sell
                 shares_to_sell = current_shares - target_shares
                 revenue = shares_to_sell * current_price
+                fee = revenue * costo_corretaje
+                net_revenue = revenue - fee
+                unsettled_cash_from_sells += net_revenue
                 
-                # DQN Order Execution Routing Optimization
-                est_spread = max(0.002, min(0.015, adjusted_metrics[ticker]["garch_vol_adjusted"] * 0.5))
-                rl_results = optimize_order_execution(shares_to_sell, est_spread, market_volume_15m=shares_to_sell * 2.0)
-                
-                fee = rl_results["fees"]
-                net_revenue = revenue - fee + rl_results["interest_earned"]
-                cash_after_sells += net_revenue
-                total_slippage_savings += rl_results["slippage_savings"]
-                
-                rl_traces.append(f"**{ticker} SELL (DQN Optimization)**:")
-                for step_line in rl_results["trace"]:
-                    rl_traces.append(f"  * {step_line}")
-                
-                note = f"V4 DQN Execution (Target Weight: {peso:.1%}, DCS: {adjusted_metrics[ticker]['dcs_adjusted']:.2f}, Saved: ${rl_results['slippage_savings']:.2f} MXN)"
+                note = f"V3 Dynamic Rebalance (Target Weight: {peso:.1%}, DCS: {adjusted_metrics[ticker]['dcs_adjusted']:.2f})"
                 rebalancing_trades.append({
                     "ticker": ticker,
                     "action": "SELL",
@@ -705,7 +646,7 @@ class PortfolioReconciler:
                     "net_cash": net_revenue,
                     "note": note
                 })
-                print(f"  +-- [SELL] {ticker}: {shares_to_sell} shares @ {current_price:.2f} (Net: +{net_revenue:,.2f} MXN, Saved: +{rl_results['slippage_savings']:.2f} MXN)")
+                print(f"  +-- [SELL] {ticker}: {shares_to_sell} shares @ {current_price:.2f} (Net: +{net_revenue:,.2f} MXN)")
                 
                 if target_shares > 0:
                     new_holdings_dict[ticker] = {
@@ -717,11 +658,9 @@ class PortfolioReconciler:
                         "dcs": adjusted_metrics[ticker]["dcs_adjusted"],
                         "garch_vol": adjusted_metrics[ticker]["garch_vol_adjusted"],
                         "hmm_state": adjusted_metrics[ticker]["hmm_state"],
-                        "vol_relative": adjusted_metrics[ticker]["relative_vol"],
-                        "zg_t": adjusted_metrics[ticker].get("zg_t", 0.0)
+                        "vol_relative": adjusted_metrics[ticker]["relative_vol"]
                     }
             elif current_shares > 0 and current_shares == target_shares:
-                # Keep holding
                 new_holdings_dict[ticker] = {
                     "ticker": ticker,
                     "shares": current_shares,
@@ -731,71 +670,51 @@ class PortfolioReconciler:
                     "dcs": adjusted_metrics[ticker]["dcs_adjusted"],
                     "garch_vol": adjusted_metrics[ticker]["garch_vol_adjusted"],
                     "hmm_state": adjusted_metrics[ticker]["hmm_state"],
-                    "vol_relative": adjusted_metrics[ticker]["relative_vol"],
-                    "zg_t": adjusted_metrics[ticker].get("zg_t", 0.0)
+                    "vol_relative": adjusted_metrics[ticker]["relative_vol"]
                 }
                 
-        # Second Phase: Execute Buys
-        cash_after_buys = cash_after_sells
+        # Second Phase: Execute Buys (restrict to settled cash balance)
+        cash_after_buys = cash_available_for_buys
         buy_order = sorted(
             pesos_asignados.keys(),
             key=lambda t: adjusted_metrics[t]["dcs_adjusted"],
             reverse=True
         )
-        
         for ticker in buy_order:
             peso = pesos_asignados[ticker]
             current_price = adjusted_metrics[ticker]["current_price"]
             monto_teorico = total_value * peso
             target_shares = int(monto_teorico // current_price)
-            
             current_shares = holdings.get(ticker, {}).get("shares", 0)
             
-            # Dead-zone check for buys
-            current_weight = (current_shares * current_price) / total_value if total_value > 0 else 0.0
-            weight_delta = abs(peso - current_weight)
-            if weight_delta < DEAD_ZONE_THRESHOLD and current_shares > 0 and peso > 0.0:
-                continue  # Already handled in first loop
-            
             if target_shares > current_shares:
-                # Calculate maximum buyable shares within cash constraints
                 shares_to_buy = target_shares - current_shares
                 cost = shares_to_buy * current_price
-                fee = cost * 0.0029
+                fee = cost * costo_corretaje
                 total_cost = cost + fee
                 
                 if total_cost > cash_after_buys:
-                    shares_to_buy = int(cash_after_buys // (current_price * 1.0029))
+                    shares_to_buy = int(cash_after_buys // (current_price * (1.0 + costo_corretaje)))
+                    cost = shares_to_buy * current_price
+                    fee = cost * costo_corretaje
+                    total_cost = cost + fee
                     
                 if shares_to_buy > 0:
-                    # DQN execution optimization
-                    est_spread = max(0.002, min(0.015, adjusted_metrics[ticker]["garch_vol_adjusted"] * 0.5))
-                    rl_results = optimize_order_execution(shares_to_buy, est_spread, market_volume_15m=shares_to_buy * 2.0)
-                    
-                    fee = rl_results["fees"]
-                    dqn_cost = shares_to_buy * current_price + fee - rl_results["interest_earned"]
-                    cash_after_buys -= dqn_cost
-                    total_slippage_savings += rl_results["slippage_savings"]
-                    
-                    rl_traces.append(f"**{ticker} BUY (DQN Optimization)**:")
-                    for step_line in rl_results["trace"]:
-                        rl_traces.append(f"  * {step_line}")
-                    
-                    # Update cost basis
+                    cash_after_buys -= total_cost
                     old_buy_price = holdings.get(ticker, {}).get("buy_price", 0.0)
                     new_buy_price = ((current_shares * old_buy_price) + (shares_to_buy * current_price)) / (current_shares + shares_to_buy)
                     
-                    note = f"V4 DQN Execution (Target Weight: {peso:.1%}, DCS: {adjusted_metrics[ticker]['dcs_adjusted']:.2f}, Saved: ${rl_results['slippage_savings']:.2f} MXN)"
+                    note = f"V3 Dynamic Rebalance (Target Weight: {peso:.1%}, DCS: {adjusted_metrics[ticker]['dcs_adjusted']:.2f})"
                     rebalancing_trades.append({
                         "ticker": ticker,
                         "action": "BUY",
                         "shares": shares_to_buy,
                         "price": current_price,
                         "fee": fee,
-                        "net_cash": -dqn_cost,
+                        "net_cash": -total_cost,
                         "note": note
                     })
-                    print(f"  +-- [BUY] {ticker}: {shares_to_buy} shares @ {current_price:.2f} (Total Cost: {dqn_cost:,.2f} MXN, Saved: +{rl_results['slippage_savings']:.2f} MXN)")
+                    print(f"  +-- [BUY] {ticker}: {shares_to_buy} shares @ {current_price:.2f} (Total Cost: {total_cost:,.2f} MXN)")
                     
                     new_holdings_dict[ticker] = {
                         "ticker": ticker,
@@ -806,8 +725,7 @@ class PortfolioReconciler:
                         "dcs": adjusted_metrics[ticker]["dcs_adjusted"],
                         "garch_vol": adjusted_metrics[ticker]["garch_vol_adjusted"],
                         "hmm_state": adjusted_metrics[ticker]["hmm_state"],
-                        "vol_relative": adjusted_metrics[ticker]["relative_vol"],
-                        "zg_t": adjusted_metrics[ticker].get("zg_t", 0.0)
+                        "vol_relative": adjusted_metrics[ticker]["relative_vol"]
                     }
                 elif current_shares > 0:
                     new_holdings_dict[ticker] = {
@@ -819,48 +737,43 @@ class PortfolioReconciler:
                         "dcs": adjusted_metrics[ticker]["dcs_adjusted"],
                         "garch_vol": adjusted_metrics[ticker]["garch_vol_adjusted"],
                         "hmm_state": adjusted_metrics[ticker]["hmm_state"],
-                        "vol_relative": adjusted_metrics[ticker]["relative_vol"],
-                        "zg_t": adjusted_metrics[ticker].get("zg_t", 0.0)
+                        "vol_relative": adjusted_metrics[ticker]["relative_vol"]
                     }
                     
-        # Update portfolio object
+        total_cash_balance = cash_after_buys + unsettled_cash_from_sells
         updated_portfolio = {
             "total_capital": total_capital,
-            "cash_balance": round(cash_after_buys, 2),
+            "cash_balance": round(total_cash_balance, 2),
+            "settled_cash": round(cash_after_buys, 2),
+            "unsettled_cash": round(unsettled_cash_from_sells, 2),
             "holdings": list(new_holdings_dict.values()),
-            "last_updated": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "slippage_savings": round(total_slippage_savings, 2)
+            "last_updated": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
         
-        # 5. Generate Markdown V4 Execution Report
+        # 4. Generate Markdown Execution Report
         report = []
-        report.append("# QUANTITATIVE PLATFORM REPORT (V4)")
-        report.append(f"**Execution Date:** {execution_date} | **System Version:** Alpha Generation V4\n")
+        report.append("# MEXICAN QUANTITATIVE REPORT (V3)")
+        report.append(f"**Execution Date:** {execution_date} | **System Version:** Hedge Fund Method V3\n")
         
-        report.append("## 1. Top Quantitative Signals (HMM Regime + 2nd-Order Markov + GARCH)")
-        report.append("| Ticker | DCS | ZG_t Sentiment | GARCH Vol | Relative Vol | HMM State | Target Weight | Price |")
-        report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
+        report.append("## 1. Top Quantitative Signals (DCF + GARCH)")
+        report.append("| Ticker | DCS Adjusted | GARCH Vol | Relative Vol | Conviction State | Target Weight | Price |")
+        report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: |")
         
         sorted_tickers = sorted(adjusted_metrics.keys(), key=lambda x: adjusted_metrics[x]["dcs_adjusted"], reverse=True)
         for t in sorted_tickers:
             met = adjusted_metrics[t]
             state_str = "Bull (1)" if met["hmm_state"] == 1 else ("Bear (-1)" if met["hmm_state"] == -1 else "Sideways (0)")
-            weight_str = f"{pesos_asignados[t]:.1%}"
-            report.append(f"| {t} | {met['dcs_adjusted']:.4f} | {met['zg_t']:+.2f} | {met['garch_vol_adjusted']:.4f} | {met['relative_vol']:.2f} | {state_str} | {weight_str} | {met['current_price']:.2f} |")
+            weight_str = f"{pesos_asignados.get(t, 0.0):.1%}"
+            report.append(f"| {t} | {met['dcs_adjusted']:.4f} | {met['garch_vol_adjusted']:.4f} | {met['relative_vol']:.2f} | {state_str} | {weight_str} | {met['current_price']:.2f} |")
             
-        if arbitrage_reports:
-            report.append("\n## 2. Statistical Cointegration Regime Arbitrage")
-            for r_line in arbitrage_reports:
-                report.append(f"* {r_line}")
-                
-        report.append("\n## 3. Macro Sentiment & Catalyst Overrides")
+        report.append("\n## 2. Macro Catalyst Adjustments")
         for t in sorted_tickers:
             met = adjusted_metrics[t]
-            if met["wacc_adjustment"] != 0.0 or met["growth_adjustment"] != 0.0 or met["zg_t"] != 0.0:
-                report.append(f"* **{t}**: {met['macro_description']} Adjusted signal strength by {met['growth_adjustment']*100:+.1f}%. Adjusted volatility by {met['wacc_adjustment']*500:+.1f}%.")
+            if met["wacc_adjustment"] != 0.0 or met["growth_adjustment"] != 0.0:
+                report.append(f"* **{t}**: {met['macro_description']}")
                 
-        report.append("\n## 4. Discarded Assets (Signal or Volume Suppressed)")
-        discarded_assets = [t for t in sorted_tickers if pesos_asignados[t] == 0.0]
+        report.append("\n## 3. Discarded Assets (Signal or Volume Suppressed)")
+        discarded_assets = [t for t in sorted_tickers if pesos_asignados.get(t, 0.0) == 0.0]
         if discarded_assets:
             report.append("| Ticker | DCS Adjusted | Relative Vol | Reason |")
             report.append("| :--- | :---: | :---: | :--- |")
@@ -875,7 +788,7 @@ class PortfolioReconciler:
         else:
             report.append("*No assets were discarded this run.*")
             
-        report.append("\n## 5. Rebalancing Trade Blotter (DQN Optimized)")
+        report.append("\n## 4. Rebalancing Trade Blotter")
         if rebalancing_trades:
             report.append("| Ticker | Action | Shares | Execution Price | Fee Paid | Net Capital Impact | Note |")
             report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :--- |")
@@ -884,24 +797,19 @@ class PortfolioReconciler:
                 total_fees += r["fee"]
                 cap_impact = f"{r['net_cash']:+,.2f} MXN"
                 report.append(f"| {r['ticker']} | {r['action']} | {r['shares']:,} | ${r['price']:.2f} | ${r['fee']:.2f} | {cap_impact} | {r['note']} |")
-            report.append(f"\n* **Total Transaction Fees Paid**: ${total_fees:,.2f} MXN")
-            report.append(f"* **DQN Slippage Reduction Savings**: ${total_slippage_savings:,.2f} MXN")
+            report.append(f"\n* **Total Transaction Fees Paid**: ${total_fees:,.2f} MXN (0.29% flat rate)")
         else:
             report.append("*No trades required. Portfolio holdings match optimal target allocations.*")
             
-        if rl_traces:
-            report.append("\n## 6. DQN Reinforcement Order Routing Traces")
-            for trace_line in rl_traces:
-                report.append(trace_line)
-            
-        # Capital Reconciliation
         invested_capital = sum(h["shares"] * h["last_price"] for h in updated_portfolio["holdings"])
         eff_ratio = invested_capital / total_value
-        report.append(f"\n## 7. Active Cash Routing & Capital Allocation")
+        report.append(f"\n## 5. Active Cash Routing & Capital Allocation")
         report.append(f"* **Total Capital Value**: ${total_value:,.2f} MXN")
         report.append(f"* **Total Invested in Equities**: ${invested_capital:,.2f} MXN ({eff_ratio:.2%})")
-        report.append(f"* **Bondia Cash Routing Reserves (11% APR)**: ${cash_after_buys:,.2f} MXN ({1.0 - eff_ratio:.2%})")
-        report.append(f"* **Expected Nightly Yield on Cash**: ${cash_after_buys * (0.11 / 252):,.4f} MXN")
+        report.append(f"* **Settled Cash (Available Now)**: ${cash_after_buys:,.2f} MXN")
+        report.append(f"* **Unsettled Cash (T+1 from today's sells)**: ${unsettled_cash_from_sells:,.2f} MXN")
+        report.append(f"* **Total Cash Reserves (Bondia, 11% APR)**: ${total_cash_balance:,.2f} MXN ({1.0 - eff_ratio:.2%})")
+        report.append(f"* **Expected Nightly Yield on Cash**: ${total_cash_balance * (0.11 / 252):,.4f} MXN")
         
         final_markdown = "\n".join(report)
         return updated_portfolio, final_markdown, rebalancing_trades

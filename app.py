@@ -182,6 +182,27 @@ class DashboardAPIHandler(SimpleHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(json.dumps(response).encode('utf-8'))
             return
+
+        # API: POST /api/backtest-macd
+        if self.path == '/api/backtest-macd':
+            try:
+                from backtest_macd import run_macd_backtest_for_api
+                results = run_macd_backtest_for_api()
+                
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(results).encode('utf-8'))
+            except Exception as e:
+                response = {
+                    "status": "error",
+                    "message": str(e)
+                }
+                self.send_response(500)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(response).encode('utf-8'))
+            return
             
         self.send_error(404, "Endpoint not found")
 

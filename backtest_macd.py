@@ -591,5 +591,91 @@ def run_macd_simulation_for_api(ticker="SPY", start_date="2021-06-15", end_date=
     }
     return backtest_data
 
+def run_macd_backtest_for_api():
+    """Entry point for the dashboard API. Returns JSON-serializable results."""
+    from ingest_live_bmv import BMV_TICKERS, US_TICKERS
+    from skills.macd_trailing_strategy import MACDTrailingStopStrategy
+    
+    LOOKBACK_PERIOD = "5y"
+    MIN_HISTORY_DAYS = 252
+    INITIAL_CAPITAL = 20000.0
+    MONTHLY_CONTRIBUTION = 2000.0
+    TRANSACTION_COST = 0.0029
+    
+    STRATEGY_PARAMS = {
+        "long_term_ma_length": 200,
+        "ma_type": "SMA",
+        "macd_fast": 12,
+        "macd_slow": 26,
+        "macd_signal": 9,
+        "profit_trigger_pct": 15.0,
+        "trailing_stop_pct": 5.0,
+        "position_pct": 0.10,
+        "commission_pct": TRANSACTION_COST,
+        "max_positions": 10,
+    }
+    
+    print("Downloading USD/MXN exchange rate...")
+    usdmxn = yf.Ticker("MXN=X").history(period=LOOKBACK_PERIOD)
+    if usdmxn.index.tz is not None:
+        usdmxn.index = pd.to_datetime(usdmxn.index.date)
+    fx_rate = usdmxn["Close"].rename("USDMXN_Rate")
+
+    all_tickers = BMV_TICKERS + US_TICKERS
+    price_data = {}
+
+    for ticker in all_tickers:
+        try:
+            hist = yf.Ticker(ticker).history(period=LOOKBACK_PERIOD)
+            if hist.empty or len(hist) < MIN_HISTORY_DAYS:
+                continue
+            if hist.index.tz is not None:
+                hist.index = pd.to_datetime(hist.index.date)
+
+            if ticker in US_TICKERS:
+                df = pd.DataFrame({"Close": hist["Close"]}).join(fx_rate, how="inner")
+                if df.empty:
+                    continue
+                price_data[ticker] = df["Close"] * df["USDMXN_Rate"]
+            else:
+                price_data[ticker] = hist["Close"]
+        except Exception:
+            continue
+
+    price_matrix = pd.DataFrame(price_data).ffill().bfill()
+    valid_cols = [c for c in price_matrix.columns if price_matrix[c].notna().sum() >= MIN_HISTORY_DAYS]
+    price_matrix = price_matrix[valid_cols]
+
+    strategy = MACDTrailingStopStrategy(**STRATEGY_PARAMS)
+    results = strategy.run_portfolio_backtest(
+        price_matrix=price_matrix,
+        initial_capital=INITIAL_CAPITAL,
+        monthly_contribution=MONTHLY_CONTRIBUTION,
+    )
+
+    nav_series = results["nav_series"]
+    bench_series = results["benchmark_nav"]
+    metrics = results["metrics"]
+    trade_log = results["trade_log"]
+
+    return {
+        "dates": [str(d.date()) for d in nav_series.index],
+        "strategy": [float(x) for x in nav_series.values],
+        "benchmark": [float(x) for x in bench_series.values],
+        "trade_log": trade_log[-30:],
+        "metrics": {
+            "strategy_return": float(metrics["strategy_total_return"] * 100),
+            "strategy_cagr": float(metrics["strategy_cagr"] * 100),
+            "benchmark_return": float(metrics["benchmark_total_return"] * 100),
+            "benchmark_cagr": float(metrics["benchmark_cagr"] * 100),
+            "sharpe": float(metrics["strategy_sharpe"]),
+            "drawdown": float(metrics["strategy_max_dd"] * 100),
+            "n_trades": int(metrics["n_trades"]),
+            "win_rate": float(metrics["win_rate"] * 100),
+            "total_fees": float(metrics["total_fees"]),
+            "total_pnl": float(metrics["total_pnl"]),
+        },
+    }
+
 if __name__ == "__main__":
     main()

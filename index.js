@@ -77,7 +77,10 @@ function renderDashboard(portfolio, dcsThreshold) {
     document.getElementById('cash-pct').textContent = `${((cash / totalPortfolioValue) * 100).toFixed(1)}% cash reserve`;
 
     const slippageSavings = portfolio.slippage_savings !== undefined ? portfolio.slippage_savings : 0.0;
-    document.getElementById('dqn-savings').innerHTML = `$${formatCurrency(slippageSavings)} <span class="currency">MXN</span>`;
+    const dqnSavingsEl = document.getElementById('dqn-savings');
+    if (dqnSavingsEl) {
+        dqnSavingsEl.innerHTML = `$${formatCurrency(slippageSavings)} <span class="currency">MXN</span>`;
+    }
 
     // 3. Render Positions Table
     const tbody = document.getElementById('portfolio-body');
@@ -497,6 +500,110 @@ document.getElementById('backtest-btn').addEventListener('click', async () => {
     } finally {
         btn.disabled = false;
         btn.innerHTML = `<span class="btn-icon">📈</span> Run Backtest Simulation`;
+    }
+});
+
+let macdBacktestChartInstance = null;
+
+function renderMACDBacktestChart(dates, strategy, benchmark) {
+    const ctx = document.getElementById('macdBacktestChart').getContext('2d');
+    if (macdBacktestChartInstance) {
+        macdBacktestChartInstance.destroy();
+    }
+    
+    macdBacktestChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [
+                {
+                    label: 'MACD Strategy',
+                    data: strategy,
+                    borderColor: '#f59e0b',
+                    backgroundColor: 'rgba(245, 158, 11, 0.05)',
+                    borderWidth: 2,
+                    pointRadius: 1,
+                    tension: 0.1,
+                    fill: true
+                },
+                {
+                    label: 'Equal-weight Benchmark',
+                    data: benchmark,
+                    borderColor: '#0ea5e9',
+                    backgroundColor: 'transparent',
+                    borderWidth: 1.5,
+                    pointRadius: 0,
+                    tension: 0.1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: '#8f9cae',
+                        font: { family: 'Outfit', size: 10 }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { color: 'rgba(255, 255, 255, 0.03)' },
+                    ticks: {
+                        color: '#8f9cae',
+                        font: { family: 'Outfit', size: 9 },
+                        maxTicksLimit: 8
+                    }
+                },
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.03)' },
+                    ticks: {
+                        color: '#8f9cae',
+                        font: { family: 'Outfit', size: 9 },
+                        callback: function(value) { return '$' + value.toLocaleString(); }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Bind MACD backtest button action
+document.getElementById('macd-backtest-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('macd-backtest-btn');
+    btn.disabled = true;
+    btn.innerHTML = `<span class="btn-icon">⏳</span> Running MACD backtest...`;
+    
+    try {
+        const response = await fetch('/api/backtest-macd', { method: 'POST' });
+        if (!response.ok) {
+            throw new Error(`Simulation failed: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        // Update Metrics Panel
+        const metrics = data.metrics;
+        document.getElementById('macd-bt-cagr').textContent = `${metrics.strategy_cagr >= 0 ? '+' : ''}${metrics.strategy_cagr.toFixed(2)}%`;
+        document.getElementById('macd-bt-bench-cagr').textContent = `${metrics.benchmark_cagr >= 0 ? '+' : ''}${metrics.benchmark_cagr.toFixed(2)}%`;
+        document.getElementById('macd-bt-sharpe').textContent = metrics.sharpe.toFixed(2);
+        document.getElementById('macd-bt-drawdown').textContent = `${metrics.drawdown.toFixed(2)}%`;
+        document.getElementById('macd-bt-winrate').textContent = `${metrics.win_rate.toFixed(1)}%`;
+        document.getElementById('macd-bt-trades').textContent = metrics.n_trades;
+        document.getElementById('macd-bt-fees').textContent = `$${formatCurrency(metrics.total_fees)} MXN`;
+        
+        // Render Chart
+        renderMACDBacktestChart(data.dates, data.strategy, data.benchmark);
+        
+    } catch (err) {
+        console.error("MACD Backtest Error:", err);
+        alert(`MACD Backtest execution error: ${err.message}`);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span class="btn-icon">⚡</span> Run MACD Backtest`;
     }
 });
 
