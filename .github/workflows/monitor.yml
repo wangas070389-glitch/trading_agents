@@ -36,10 +36,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # 3b. Run connectivity test (sends 1 AAPL buy order)
-    - name: Run Connectivity Test
-      run: python scratch/shoot_order_test.py
-
     # 4. Execute Portfolio Performance Scraper (accrues interest, updates prices)
     - name: Run Portfolio Monitor
       run: python monitor_portfolio.py
