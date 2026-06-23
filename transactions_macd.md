@@ -9,6 +9,7 @@
 | 2026-06-23 | BONDIA | INTEREST | 1 | 0.01 | +0.0070 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0032 days. |
 | 2026-06-23 | BONDIA | INTEREST | 1 | 1.47 | +1.4728 | Market | FILLED | Bondia overnight yield on cash reserves for 0.6677 days. |
 | 2026-06-23 | FEMSAUBD.MX | BUY | 14 | 222.97 | -3,124.90 | Market | FILLED | 1D MACD systematic signal |
+| 2026-06-23 | BONDIA | INTEREST | 1 | 0.15 | +0.1500 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0915 days. |
 ---
 
 
@@ -18,5 +19,5 @@
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
 * **Total Deployed Capital**: 10,953.44 MXN (55.0% invested)
-* **Unallocated Cash Reserves**: 9,037.35 MXN (45.4% cash)
-* **Current Portfolio Market Value**: 19,897.94 MXN (including cash)
+* **Unallocated Cash Reserves**: 9,037.50 MXN (45.4% cash)
+* **Current Portfolio Market Value**: 19,898.09 MXN (including cash)

@@ -1,12 +1,12 @@
 # Daily Strategy Performance Comparison Report
-**Report Generated At:** 2026-06-23 16:43:21
+**Report Generated At:** 2026-06-23 23:35:33
 
 ## 1. Executive Performance Summary
 | Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Adaptive Dynamic Value (V4)** | $20,260.61 | $1,707.56 | $18,631.39 | 92.0% | +$260.61 | +1.30% | 2026-06-03 | MXN |
-| **1d MACD + SMA + HMM** | $19,897.94 | $9,037.35 | $10,953.44 | 55.0% | $-102.06 | -0.51% | 2026-06-03 | MXN |
-| **US Stock Momentum (Isolated)** | $100,000.00 | $92.14 | $99,907.86 | 99.9% | +$0.00 | +0.00% | 2026-06-23 | USD |
+| **Adaptive Dynamic Value (V4)** | $20,260.64 | $1,707.59 | $18,631.39 | 92.0% | +$260.64 | +1.30% | 2026-06-03 | MXN |
+| **1d MACD + SMA + HMM** | $19,898.09 | $9,037.50 | $10,953.44 | 55.0% | $-101.91 | -0.51% | 2026-06-03 | MXN |
+| **US Stock Momentum (Isolated)** | $199,907.86 | $100,000.00 | $99,907.86 | 50.0% | +$99,907.86 | +99.91% | 2026-06-23 | USD |
 
 --------------------------------------------------------------------------------
 
@@ -37,6 +37,6 @@
 
 ## 3. Cash Sweeps & Yield Settings
 * **Bondia Overnight Cash Sweep Yield:** **6.53% APR** (accrued on unallocated MXN cash balance daily).
-* **Adaptive Value Current Cash Reserves:** $1,707.56 MXN
-* **1D MACD Current Cash Reserves:** $9,037.35 MXN
-* **US Stock Momentum Current Cash Reserves:** $92.14 USD
+* **Adaptive Value Current Cash Reserves:** $1,707.59 MXN
+* **1D MACD Current Cash Reserves:** $9,037.50 MXN
+* **US Stock Momentum Current Cash Reserves:** $100,000.00 USD
