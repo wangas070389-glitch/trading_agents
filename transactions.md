@@ -54,11 +54,12 @@
 | 2026-06-22 | ASURB.MX | BUY | 2 | 521.82 | -1,043.65 | Market | FILLED | V4 DQN Execution (Target Weight: 20.0%, DCS: 0.76, Saved: $0.04 MXN) |
 | 2026-06-22 | BONDIA | INTEREST | 1 | 1.0153 | +1.0153 | Market | FILLED | Bondia overnight yield on cash reserves for 1.9473 days. |
 | 2026-06-23 | BONDIA | INTEREST | 1 | 0.0652 | +0.0652 | Market | FILLED | Bondia overnight yield on cash reserves for 0.2106 days. |
+| 2026-06-23 | BONDIA | INTEREST | 1 | 0.0050 | +0.0050 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0163 days. |
 ---
 
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
 * **Total Deployed Capital**: 18,631.39 MXN (91.4% invested)
-* **Unallocated Cash Reserves**: 1,707.34 MXN (8.4% cash)
-* **Current Portfolio Market Value**: 20,375.00 MXN (including cash)
+* **Unallocated Cash Reserves**: 1,707.35 MXN (8.4% cash)
+* **Current Portfolio Market Value**: 20,375.01 MXN (including cash)
