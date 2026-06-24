@@ -3,6 +3,7 @@
 | Date | Ticker | Action | Shares | Price | Fee | Net Amount | Note |
 | :--- | :--- | :--- | ---: | ---: | ---: | ---: | :--- |
 | 2026-06-23 | AVGO | BUY | 65.00 | $380.15 | $71.66 | $-24,781.41 | Quarterly Rebalance (Target weight 25.0%) |
+| 2026-06-23 | AVGO | BUY | 65.00 | $380.15 | $71.66 | $-24,781.41 | Quarterly Rebalance (Target weight 25.0%) |
 ---
 
 

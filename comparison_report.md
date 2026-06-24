@@ -1,12 +1,12 @@
 # Daily Strategy Performance Comparison Report
-**Report Generated At:** 2026-06-24 05:13:25
+**Report Generated At:** 2026-06-23 23:19:37
 
 ## 1. Executive Performance Summary
 | Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **Adaptive Dynamic Value (V4)** | $20,260.71 | $1,707.66 | $18,631.39 | 92.0% | +$260.71 | +1.30% | 2026-06-03 | MXN |
 | **1d MACD + SMA + HMM** | $19,898.47 | $9,037.88 | $10,953.44 | 55.0% | $-101.53 | -0.51% | 2026-06-03 | MXN |
-| **US Stock Momentum (Isolated)** | $199,907.86 | $174,847.36 | $25,060.50 | 12.5% | +$99,907.86 | +99.91% | 2026-06-23 | USD |
+| **US Stock Momentum (Isolated)** | $100,000.00 | $75,273.64 | $24,726.36 | 24.7% | +$0.00 | +0.00% | 2026-06-23 | USD |
 | **US Stock DCS Value-Growth (Isolated)** | $99,928.34 | $75,218.59 | $24,709.75 | 24.7% | $-71.66 | -0.07% | 2026-06-23 | USD |
 
 --------------------------------------------------------------------------------
@@ -32,13 +32,13 @@
 ### C. US Stock Momentum (Isolated) Holdings (USD)
 | Ticker | Shares Held | Average Cost (USD) | Current Price (USD) | Market Value (USD) | Target Weight | Unrealized P/L | P/L % |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| JPM | 75 | $334.14 | $334.14 | $25,060.50 | 25.0% | +$0.00 | +0.00% |
+| JPM | 74 | $334.14 | $334.14 | $24,726.36 | 25.0% | +$0.00 | +0.00% |
 
 
 ### D. US Stock DCS Value-Growth (Isolated) Holdings (USD)
 | Ticker | Shares Held | Average Cost (USD) | Current Price (USD) | Market Value (USD) | Target Weight | DCS Conviction | Unrealized P/L | P/L % |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| AVGO | 65 | $380.15 | $380.15 | $24,709.75 | 25.0% | 1.686 | +$0.00 | +0.00% |
+| AVGO | 65 | $380.15 | $380.15 | $24,709.75 | 25.0% | 1.701 | +$0.00 | +0.00% |
 
 --------------------------------------------------------------------------------
 
@@ -46,5 +46,5 @@
 * **Bondia Overnight Cash Sweep Yield:** **6.53% APR** (accrued on unallocated MXN cash balance daily).
 * **Adaptive Value Current Cash Reserves:** $1,707.66 MXN
 * **1D MACD Current Cash Reserves:** $9,037.88 MXN
-* **US Stock Momentum Current Cash Reserves:** $174,847.36 USD
+* **US Stock Momentum Current Cash Reserves:** $75,273.64 USD
 * **US Stock DCS Value-Growth Current Cash Reserves:** $75,218.59 USD
