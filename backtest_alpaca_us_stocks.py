@@ -16,6 +16,7 @@ INITIAL_CAPITAL = 100000.0  # USD
 SLIPPAGE_PCT = 0.0002       # 0.02% slippage to account for bid-ask spread
 TRAILING_ARM_PCT = 0.10     # Arm trailing stop at +10%
 TRAILING_STOP_PCT = 0.05    # Trail 5% below peak
+CONCENTRATION_CAP = 0.25    # Max 25% allocation per stock
 
 def download_us_data(tickers, start_date, end_date):
     print(f"Downloading daily data for {len(tickers)} US tickers from {start_date} to {end_date}...")
@@ -141,7 +142,7 @@ def run_simulation(data_dict, tickers):
         # Determine Target Weights
         target_weights = {t: 0.0 for t in processed_data}
         if bullish_tickers:
-            weight_per_stock = 1.0 / len(bullish_tickers)
+            weight_per_stock = min(CONCENTRATION_CAP, 1.0 / len(bullish_tickers))
             for t in bullish_tickers:
                 target_weights[t] = weight_per_stock
                 

@@ -102,6 +102,35 @@ Running the walkthrough simulation over the 4-year period (2022-06-09 to 2026-06
 * **Alpha Sizing vs. Volatility Normalization**: Proportional conviction sizing (weighting by DCS score rather than inverse-volatility) concentrated capital into the absolute highest-conviction undervalued stock assets, capturing maximum revaluation returns.
 * **Low Fee Leakage**: Extending the rebalancing frequency to quarterly (63 business days) saved **$12,538.31 MXN** in commissions compared to the monthly rebalanced core active strategy.
 
-### E. Live Pipeline Integration
-* Restated the API server (`python app.py`) on port `8000` to register the new endpoint.
-* Open `http://localhost:8000` to trigger both backtests and view performance in real-time.
+### C. Strategy 4: Isolated US Stock DCS Value-Growth Strategy
+* **Fundamentals & Valuation Engine** (`skills/us_dcf_valuation.py`): Re-engineered Mexican Value valuation techniques for US Mega-Cap equities, implementing a dynamic DCF/DCS calculation based on trailing 12-month metrics and dynamic Treasury yields.
+* **Active DCA & Rebalance Simulation** (`backtest_us_stocks_dcf.py`): Implemented a 5-year backtest incorporating monthly savings inflows ($1,000 USD/month) and quarterly rebalancing with a 25% concentration cap constraint (maximum of 5 concurrent holdings).
+* **Isolated Live Execution Runner** (`run_live_alpaca_us_stocks_dcf.py`): Connected directly to Alpaca paper trading accounts to submit real-time orders, manage separate ledger logs (`transactions_us_dcs.md` / `portfolio_us_dcs.json`), and generate execution reports (`us_stocks_dcf_report_live.md`).
+* **Multi-Strategy Consolidation**: Integrated Strategy 4 into `compare_strategies.py` and the GitHub actions `monitor.yml` workflow, and added a GET API endpoint `/api/portfolio_us_dcs` in `app.py`.
+
+---
+
+### E. US Stock DCS Value-Growth Backtest Verification
+Running the standalone 5-year US DCS backtest (`python backtest_us_stocks_dcf.py`) over the period from 2021-06-20 to 2026-06-20 with $1,000 USD monthly inflows yielded:
+
+| Metric | Strategy (DCS Value-Growth) | SPY Benchmark (DCA) |
+| :--- | :---: | :---: |
+| **TWR CAGR** | **+31.32%** | **+15.66%** |
+| **Sharpe Ratio** | **1.19** | **0.69** |
+| **Max Drawdown** | **-32.04%** | **-24.50%** |
+| **Completed Trades** | **20** | -- |
+| **Win Rate** | **75.0%** | -- |
+| **Total Invested (DCA)** | **$167,000.00 USD** | **$167,000.00 USD** |
+| **Final Portfolio NAV** | **$619,047.43 USD** | **$263,012.33 USD** |
+
+#### Strategy Diagnostics:
+* **Massive Index Outperformance**: Outperformed the SPY benchmark by **+15.66% CAGR** per year, leading to a terminal portfolio value of **$619,047.43 USD** compared to the benchmark's **$263,012.33 USD**.
+* **High Efficiency (Sharpe 1.19)**: Demonstrated a superior risk-adjusted profile relative to SPY (Sharpe **1.19** vs **0.69**).
+* **Controlled Turnover**: Low frequency rebalancing and strict trend filtering resulted in only 20 transactions over 5 years, reducing friction.
+
+### F. Live Pipeline Integration
+* Restated the API server (`python app.py`) on port `8000` to register the new GET `/api/portfolio_us_dcs` endpoint.
+* Integrated execution step into GitHub Actions workflow (`.github/workflows/monitor.yml`) to run Strategy 4 and auto-commit its reports.
+* Updated `compare_strategies.py` to compile daily multi-strategy performance comparisons into `comparison_report.md`.
+
+

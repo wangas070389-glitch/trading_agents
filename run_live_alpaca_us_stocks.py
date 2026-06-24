@@ -221,7 +221,7 @@ def main():
     # 5. Calculate target weights
     target_weights = {t: 0.0 for t in US_UNIVERSE}
     if active_bullish_assets:
-        weight_per_asset = 1.0 / len(active_bullish_assets)
+        weight_per_asset = min(0.25, 1.0 / len(active_bullish_assets))
         for ticker in active_bullish_assets:
             target_weights[ticker] = weight_per_asset
 

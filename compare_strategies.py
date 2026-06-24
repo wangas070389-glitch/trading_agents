@@ -14,13 +14,15 @@ def main():
     portfolio_val_path = os.path.join(dir_path, "portfolio.json")
     portfolio_macd_path = os.path.join(dir_path, "portfolio_macd.json")
     portfolio_us_path = os.path.join(dir_path, "portfolio_us_stocks.json")
+    portfolio_us_dcs_path = os.path.join(dir_path, "portfolio_us_dcs.json")
     comparison_report_path = os.path.join(dir_path, "comparison_report.md")
     
     port_val = load_json(portfolio_val_path)
     port_macd = load_json(portfolio_macd_path)
     port_us = load_json(portfolio_us_path)
+    port_us_dcs = load_json(portfolio_us_dcs_path)
     
-    if not port_val and not port_macd and not port_us:
+    if not port_val and not port_macd and not port_us and not port_us_dcs:
         print("Error: No portfolio files found. Cannot generate comparison.")
         return
         
@@ -76,6 +78,20 @@ def main():
         report.append(f"| **US Stock Momentum (Isolated)** | ${u_market_val:,.2f} | ${u_cash:,.2f} | ${u_invested:,.2f} | {u_alloc:.1f}% | {u_sign}${u_profit:,.2f} | {u_sign}{u_roi:.2f}% | 2026-06-23 | USD |")
     else:
         report.append("| **US Stock Momentum (Isolated)** | *Not Initialized* | - | - | - | - | - | - | USD |")
+        
+    # Parse Strategy 4 (US Stock DCS Value-Growth - Isolated)
+    if port_us_dcs:
+        ud_total_cap = port_us_dcs.get("total_capital", 100000.0)
+        ud_cash = port_us_dcs.get("cash_balance", 100000.0)
+        ud_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_us_dcs.get("holdings", []))
+        ud_market_val = ud_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_us_dcs.get("holdings", []))
+        ud_profit = ud_market_val - ud_total_cap
+        ud_roi = (ud_profit / ud_total_cap) * 100.0
+        ud_alloc = (ud_invested / ud_market_val) * 100.0 if ud_market_val > 0 else 0.0
+        ud_sign = "+" if ud_profit >= 0 else ""
+        report.append(f"| **US Stock DCS Value-Growth (Isolated)** | ${ud_market_val:,.2f} | ${ud_cash:,.2f} | ${ud_invested:,.2f} | {ud_alloc:.1f}% | {ud_sign}${ud_profit:,.2f} | {ud_sign}{ud_roi:.2f}% | 2026-06-23 | USD |")
+    else:
+        report.append("| **US Stock DCS Value-Growth (Isolated)** | *Not Initialized* | - | - | - | - | - | - | USD |")
         
     report.append("\n" + "-" * 80 + "\n")
     
@@ -143,6 +159,28 @@ def main():
     else:
         report.append("*No open stock positions currently held. Portfolio is 100% Cash.*")
         
+    report.append("\n")
+
+    # Strategy 4 Holdings
+    report.append("### D. US Stock DCS Value-Growth (Isolated) Holdings (USD)")
+    if port_us_dcs and port_us_dcs.get("holdings"):
+        report.append("| Ticker | Shares Held | Average Cost (USD) | Current Price (USD) | Market Value (USD) | Target Weight | DCS Conviction | Unrealized P/L | P/L % |")
+        report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
+        for h in port_us_dcs["holdings"]:
+            ticker = h["ticker"]
+            shares = h["shares"]
+            buy_price = h["buy_price"]
+            last_price = h.get("last_price", buy_price)
+            target_w = h.get("target_weight", 0.0)
+            dcs = h.get("dcs", 0.0)
+            mval = shares * last_price
+            pl = mval - (shares * buy_price)
+            pl_pct = ((last_price / buy_price) - 1.0) * 100.0 if buy_price > 0 else 0.0
+            sign = "+" if pl >= 0 else ""
+            report.append(f"| {ticker} | {shares:,} | ${buy_price:,.2f} | ${last_price:,.2f} | ${mval:,.2f} | {target_w:.1%} | {dcs:.3f} | {sign}${pl:,.2f} | {sign}{pl_pct:.2f}% |")
+    else:
+        report.append("*No open stock positions currently held. Portfolio is 100% Cash.*")
+        
     report.append("\n" + "-" * 80 + "\n")
     
     # 3. Dynamic Yield & Reserves Details
@@ -154,6 +192,8 @@ def main():
         report.append(f"* **1D MACD Current Cash Reserves:** ${port_macd.get('cash_balance', 0.0):,.2f} MXN")
     if port_us:
         report.append(f"* **US Stock Momentum Current Cash Reserves:** ${port_us.get('cash_balance', 0.0):,.2f} USD")
+    if port_us_dcs:
+        report.append(f"* **US Stock DCS Value-Growth Current Cash Reserves:** ${port_us_dcs.get('cash_balance', 0.0):,.2f} USD")
         
     # Write to comparison_report.md
     with open(comparison_report_path, "w", encoding="utf-8") as f:

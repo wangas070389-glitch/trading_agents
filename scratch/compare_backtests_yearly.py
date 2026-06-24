@@ -47,42 +47,55 @@ def reconstruct_twr_returns(csv_path, contribution=2000.0):
     df['bench_ret'] = bench_returns
     return df
 
-def compute_metrics_for_subset(df_subset, rf_annual=0.11):
-    if len(df_subset) == 0:
-        return {"return": 0.0, "max_dd": 0.0, "sharpe_rf": 0.0, "sharpe_raw": 0.0}
+def get_contribution_for_month_index(m_idx):
+    """
+    m_idx is 1-based index of months elapsed since start of simulation.
+    Month 1: M=1 -> +3K base + 60K annual.
+    Month 3: M=3 -> +3K base + 6K quarterly.
+    Month 6: M=6 -> +3K base + 6K quarterly + 20K semi-annual.
+    Month 13: M=13 -> +3K base + 60K annual.
+    """
+    contrib = 3000.0 # base monthly
+    if m_idx % 3 == 0:
+        contrib += 6000.0
+    if m_idx % 6 == 0:
+        contrib += 20000.0
+    if (m_idx - 1) % 12 == 0:
+        contrib += 60000.0
+    return contrib
+
+def simulate_custom_cash_flows(df_reconstructed, initial_capital=20000.0):
+    dates = df_reconstructed['date'].reset_index(drop=True)
+    returns = df_reconstructed['strat_ret'].reset_index(drop=True).values
+    bench_returns = df_reconstructed['bench_ret'].reset_index(drop=True).values
+    
+    portfolio_value = initial_capital
+    bench_value = initial_capital
+    
+    prev_month = dates.iloc[0].month
+    months_elapsed = 0
+    total_deposited = initial_capital
+    
+    for i in range(len(dates)):
+        current_date = dates.iloc[i]
+        current_month = current_date.month
         
-    rf_daily = rf_annual / 252.0
-    s_ret = df_subset['strat_ret'].values
-    
-    # Yearly return (compounded)
-    strat_ret = np.prod(1.0 + s_ret) - 1.0
-    
-    # Sharpe (raw)
-    std_s = s_ret.std()
-    sharpe_raw = (s_ret.mean() / std_s * np.sqrt(252.0)) if std_s > 1e-6 else 0.0
-    
-    # Sharpe (excess over Rf)
-    excess = s_ret - rf_daily
-    sharpe_rf = (excess.mean() / std_s * np.sqrt(252.0)) if std_s > 1e-6 else 0.0
-    
-    # Max DD (properly anchored to 1.0 at start of subset)
-    cum = np.cumprod(1.0 + s_ret)
-    cum = np.insert(cum, 0, 1.0)
-    peaks = np.maximum.accumulate(cum)
-    dd = (cum - peaks) / peaks
-    max_dd = dd.min()
-    
-    # If strategy has no positions (std is near 0), Sharpe is N/A or 0
-    if std_s < 1e-5:
-        sharpe_raw = 0.0
-        sharpe_rf = 0.0
+        is_contrib = (i == 0 or current_month != prev_month)
         
-    return {
-        "return": strat_ret,
-        "max_dd": max_dd,
-        "sharpe_rf": sharpe_rf,
-        "sharpe_raw": sharpe_raw,
-    }
+        if i > 0:
+            portfolio_value *= (1.0 + returns[i])
+            bench_value *= (1.0 + bench_returns[i])
+            
+        if is_contrib:
+            months_elapsed += 1
+            contrib = get_contribution_for_month_index(months_elapsed)
+            portfolio_value += contrib
+            bench_value += contrib
+            if i > 0:
+                total_deposited += contrib
+            prev_month = current_month
+            
+    return portfolio_value, bench_value, total_deposited, months_elapsed
 
 def main():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -92,66 +105,75 @@ def main():
     df_alpha = reconstruct_twr_returns(alpha_path)
     df_macd = reconstruct_twr_returns(macd_path)
     
-    # Aligned datasets
-    start_date_alpha = df_alpha['date'].min()
-    end_date_alpha = df_alpha['date'].max()
+    # 1. Aligned Period starting 2022-06-09
+    start_date = df_alpha['date'].min()
+    df_macd_aligned = df_macd[df_macd['date'] >= start_date].copy()
     
-    df_macd_aligned = df_macd[(df_macd['date'] >= start_date_alpha) & (df_macd['date'] <= end_date_alpha)].copy()
+    # Simulate custom cash flows for Aligned Period
+    final_alpha, final_alpha_bench, deposits_aligned, months_a = simulate_custom_cash_flows(df_alpha)
+    final_macd_aligned, final_macd_bench_aligned, _, _ = simulate_custom_cash_flows(df_macd_aligned)
     
-    # Print overall stats
-    metrics_alpha_all = compute_metrics_for_subset(df_alpha)
-    metrics_macd_all = compute_metrics_for_subset(df_macd)
-    metrics_macd_aligned_all = compute_metrics_for_subset(df_macd_aligned)
+    # Simulate risk-free Bondia for the aligned period
+    rf_daily = 0.11 / 360.0
+    bondia_val = 20000.0
+    prev_month_b = df_alpha['date'].iloc[0].month
+    months_elapsed_b = 0
     
-    print("=== OVERALL ALIGNED PERIOD (2022-06-09 to 2026-06-19) ===")
-    print(f"DCF Alpha-Momentum: Return={metrics_alpha_all['return']:.2%}, CAGR={metrics_alpha_all['sharpe_rf']:.2f} (Sharpe Raw), MaxDD={metrics_alpha_all['strat_max_dd'] if 'strat_max_dd' in metrics_alpha_all else metrics_alpha_all['max_dd']:.2%}")
-    # Wait, let's output a structured Markdown table to copy directly
-    
-    years = [2022, 2023, 2024, 2025, 2026]
-    
-    print("\n| Year | Strategy | Active Period | Return (%) | Max Drawdown (%) | Sharpe Ratio (Raw) | Sharpe Ratio (Rf=11%) |")
-    print("| :--- | :--- | :---: | :---: | :---: | :---: | :---: |")
-    
-    for y in years:
-        # DCF
-        sub_alpha = df_alpha[df_alpha['date'].dt.year == y]
-        m_a = compute_metrics_for_subset(sub_alpha)
-        period_a = f"{sub_alpha['date'].min().strftime('%m-%d')} to {sub_alpha['date'].max().strftime('%m-%d')}"
-        print(f"| {y} | **DCF Alpha-Momentum** | {period_a} | {m_a['return']*100:+.2f}% | {m_a['max_dd']*100:.2f}% | {m_a['sharpe_raw']:.2f} | {m_a['sharpe_rf']:.2f} |")
+    for i in range(len(df_alpha)):
+        curr_date = df_alpha['date'].iloc[i]
+        curr_month = curr_date.month
         
-        # MACD (Aligned to DCF for 2022)
-        sub_macd = df_macd_aligned[df_macd_aligned['date'].dt.year == y]
-        m_m = compute_metrics_for_subset(sub_macd)
-        period_m = f"{sub_macd['date'].min().strftime('%m-%d')} to {sub_macd['date'].max().strftime('%m-%d')}"
-        print(f"| | **MACD Trend (Aligned)** | {period_m} | {m_m['return']*100:+.2f}% | {m_m['max_dd']*100:.2f}% | {m_m['sharpe_raw']:.2f} | {m_m['sharpe_rf']:.2f} |")
-        print("| --- | --- | :---: | :---: | :---: | :---: | :---: |")
+        if i > 0:
+            calendar_days = (curr_date - df_alpha['date'].iloc[i-1]).days
+            bondia_val += bondia_val * rf_daily * calendar_days
+            
+        if i == 0 or curr_month != prev_month_b:
+            months_elapsed_b += 1
+            contrib = get_contribution_for_month_index(months_elapsed_b)
+            bondia_val += contrib
+            prev_month_b = curr_month
+            
+    print(f"--- Aligned Period Custom Scenario (2022-06-09 to 2026-06-19 — {months_a} months) ---")
+    print(f"Total Deposited:                      ${deposits_aligned:,.2f} MXN")
+    print(f"DCF Alpha-Momentum Final Value:       ${final_alpha:,.2f} MXN")
+    print(f"DCF Benchmark Final Value:            ${final_alpha_bench:,.2f} MXN")
+    print(f"MACD Trend (Aligned) Final Value:     ${final_macd_aligned:,.2f} MXN")
+    print(f"MACD Benchmark (Aligned) Final Value:  ${final_macd_bench_aligned:,.2f} MXN")
+    print(f"Bondia Cash Sweep (11% APR) Value:    ${bondia_val:,.2f} MXN")
+    
+    # 2. Full Period (unaligned)
+    final_macd_full, final_macd_bench_full, deposits_full, months_f = simulate_custom_cash_flows(df_macd)
+    
+    # Simulate risk-free Bondia for the full period
+    bondia_val_full = 20000.0
+    prev_month_bf = df_macd['date'].iloc[0].month
+    months_elapsed_bf = 0
+    
+    for i in range(len(df_macd)):
+        curr_date = df_macd['date'].iloc[i]
+        curr_month = curr_date.month
+        
+        if i > 0:
+            calendar_days = (curr_date - df_macd['date'].iloc[i-1]).days
+            bondia_val_full += bondia_val_full * rf_daily * calendar_days
+            
+        if i == 0 or curr_month != prev_month_bf:
+            months_elapsed_bf += 1
+            contrib = get_contribution_for_month_index(months_elapsed_bf)
+            bondia_val_full += contrib
+            prev_month_bf = curr_month
 
-    # Unconstrained full history comparison (including 2021)
-    print("\n\n=== UNCONSTRAINED FULL HISTORIES (Each starting at inception) ===")
-    print("| Year | Strategy | Active Period | Return (%) | Max Drawdown (%) | Sharpe Ratio (Raw) | Sharpe (Rf=11%) |")
-    print("| :--- | :--- | :---: | :---: | :---: | :---: | :---: |")
-    
-    # 2021
-    sub_macd_2021 = df_macd[df_macd['date'].dt.year == 2021]
-    m_m_2021 = compute_metrics_for_subset(sub_macd_2021)
-    period_m_2021 = f"{sub_macd_2021['date'].min().strftime('%m-%d')} to {sub_macd_2021['date'].max().strftime('%m-%d')}"
-    print(f"| 2021 | **DCF Alpha-Momentum** | N/A (Warmup) | - | - | - | - |")
-    print(f"| | **MACD Trend (Unconstrained)** | {period_m_2021} | {m_m_2021['return']*100:+.2f}% | {m_m_2021['max_dd']*100:.2f}% | {m_m_2021['sharpe_raw']:.2f} | {m_m_2021['sharpe_rf']:.2f} |")
-    print("| --- | --- | :---: | :---: | :---: | :---: | :---: |")
-    
-    for y in years:
-        # DCF
-        sub_alpha = df_alpha[df_alpha['date'].dt.year == y]
-        m_a = compute_metrics_for_subset(sub_alpha)
-        period_a = f"{sub_alpha['date'].min().strftime('%m-%d')} to {sub_alpha['date'].max().strftime('%m-%d')}"
-        print(f"| {y} | **DCF Alpha-Momentum** | {period_a} | {m_a['return']*100:+.2f}% | {m_a['max_dd']*100:.2f}% | {m_a['sharpe_raw']:.2f} | {m_a['sharpe_rf']:.2f} |")
-        
-        # MACD (Full year for 2022)
-        sub_macd = df_macd[df_macd['date'].dt.year == y]
-        m_m = compute_metrics_for_subset(sub_macd)
-        period_m = f"{sub_macd['date'].min().strftime('%m-%d')} to {sub_macd['date'].max().strftime('%m-%d')}"
-        print(f"| | **MACD Trend (Unconstrained)** | {period_m} | {m_m['return']*100:+.2f}% | {m_m['max_dd']*100:.2f}% | {m_m['sharpe_raw']:.2f} | {m_m['sharpe_rf']:.2f} |")
-        print("| --- | --- | :---: | :---: | :---: | :---: | :---: |")
+    print(f"\n--- Full Unconstrained Custom Scenario ---")
+    print(f"DCF Alpha-Momentum (2022-06-09 to 2026-06-19 — {months_a} months):")
+    print(f"  Total Deposited:                    ${deposits_aligned:,.2f} MXN")
+    print(f"  Final Strategy Value:               ${final_alpha:,.2f} MXN")
+    print(f"  Final Benchmark Value:              ${final_alpha_bench:,.2f} MXN")
+    print(f"  Bondia Cash Sweep (11% APR) Value:  ${bondia_val:,.2f} MXN")
+    print(f"MACD Trend Strategy (2021-06-21 to 2026-06-19 — {months_f} months):")
+    print(f"  Total Deposited:                    ${deposits_full:,.2f} MXN")
+    print(f"  Final Strategy Value:               ${final_macd_full:,.2f} MXN")
+    print(f"  Final Benchmark Value:              ${final_macd_bench_full:,.2f} MXN")
+    print(f"  Bondia Cash Sweep (11% APR) Value:  ${bondia_val_full:,.2f} MXN")
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,5 @@
 # Daily Strategy Performance Comparison Report
-**Report Generated At:** 2026-06-23 23:35:33
+**Report Generated At:** 2026-06-23 22:52:03
 
 ## 1. Executive Performance Summary
 | Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |
@@ -7,6 +7,7 @@
 | **Adaptive Dynamic Value (V4)** | $20,260.64 | $1,707.59 | $18,631.39 | 92.0% | +$260.64 | +1.30% | 2026-06-03 | MXN |
 | **1d MACD + SMA + HMM** | $19,898.09 | $9,037.50 | $10,953.44 | 55.0% | $-101.91 | -0.51% | 2026-06-03 | MXN |
 | **US Stock Momentum (Isolated)** | $199,907.86 | $100,000.00 | $99,907.86 | 50.0% | +$99,907.86 | +99.91% | 2026-06-23 | USD |
+| **US Stock DCS Value-Growth (Isolated)** | $99,928.34 | $75,218.59 | $24,709.75 | 24.7% | $-71.66 | -0.07% | 2026-06-23 | USD |
 
 --------------------------------------------------------------------------------
 
@@ -33,6 +34,12 @@
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | JPM | 299 | $334.14 | $334.14 | $99,907.86 | 100.0% | +$0.00 | +0.00% |
 
+
+### D. US Stock DCS Value-Growth (Isolated) Holdings (USD)
+| Ticker | Shares Held | Average Cost (USD) | Current Price (USD) | Market Value (USD) | Target Weight | DCS Conviction | Unrealized P/L | P/L % |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| AVGO | 65 | $380.15 | $380.15 | $24,709.75 | 25.0% | 1.686 | +$0.00 | +0.00% |
+
 --------------------------------------------------------------------------------
 
 ## 3. Cash Sweeps & Yield Settings
@@ -40,3 +47,4 @@
 * **Adaptive Value Current Cash Reserves:** $1,707.59 MXN
 * **1D MACD Current Cash Reserves:** $9,037.50 MXN
 * **US Stock Momentum Current Cash Reserves:** $100,000.00 USD
+* **US Stock DCS Value-Growth Current Cash Reserves:** $75,218.59 USD
