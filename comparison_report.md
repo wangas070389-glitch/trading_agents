@@ -1,14 +1,14 @@
 # Daily Strategy Performance Comparison Report
-**Report Generated At:** 2026-06-24 20:34:16
+**Report Generated At:** 2026-06-24 23:42:49
 
 ## 1. Executive Performance Summary
 | Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Adaptive Dynamic Value (V4)** | $20,192.93 | $1,707.86 | $18,631.39 | 92.3% | +$192.93 | +0.96% | 2026-06-03 | MXN |
-| **1d MACD + SMA + HMM** | $19,765.13 | $8,194.32 | $11,584.87 | 58.6% | $-234.87 | -1.17% | 2026-06-03 | MXN |
-| **US Stock Momentum (Isolated)** | $74,905.44 | $50,179.08 | $24,726.36 | 33.0% | $-25,214.84 | -25.18% | 2026-06-23 | USD |
-| **US Stock DCS Value-Growth (Isolated)** | $100,053.14 | $75,218.59 | $24,709.75 | 24.7% | $-52.19 | -0.05% | 2026-06-23 | USD |
-| **Alternative Assets (Isolated)** | $99,907.02 | $70,009.91 | $29,903.37 | 29.9% | $-217.81 | -0.22% | 2026-06-24 | USD |
+| **Adaptive Dynamic Value (V4)** | $20,213.90 | $1,707.90 | $18,631.39 | 92.2% | +$213.90 | +1.07% | 2026-06-03 | MXN |
+| **1d MACD + SMA + HMM** | $19,765.37 | $8,194.51 | $11,584.87 | 58.6% | $-234.63 | -1.17% | 2026-06-03 | MXN |
+| **US Stock Momentum (Isolated)** | $74,905.44 | $50,179.08 | $24,726.36 | 33.0% | $-25,408.70 | -25.33% | 2026-06-23 | USD |
+| **US Stock DCS Value-Growth (Isolated)** | $100,053.14 | $75,218.59 | $24,709.75 | 24.7% | $-261.00 | -0.26% | 2026-06-23 | USD |
+| **Alternative Assets (Isolated)** | $99,899.56 | $70,009.91 | $29,903.37 | 29.9% | $-414.58 | -0.41% | 2026-06-24 | USD |
 
 --------------------------------------------------------------------------------
 
@@ -16,18 +16,18 @@
 ### A. Adaptive Dynamic Value (V4) Holdings (MXN)
 | Ticker | Shares Held | Average Cost (MXN) | Current Price (MXN) | Market Value (MXN) | Target Weight | Unrealized P/L | P/L % |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| GRUMAB.MX | 1 | $291.46 | $280.84 | $280.84 | 2.8% | $-10.62 | -3.64% |
-| ORBIA.MX | 288.36366782265185 | $21.20 | $21.56 | $6,217.12 | 30.0% | +$103.81 | +1.70% |
-| BBAJIOO.MX | 111.39413008131325 | $54.88 | $54.85 | $6,109.97 | 30.0% | $-3.34 | -0.05% |
-| GFNORTEO.MX | 32.26361682335487 | $189.48 | $182.16 | $5,877.14 | 30.0% | $-236.17 | -3.86% |
+| GRUMAB.MX | 1 | $291.46 | $281.59 | $281.59 | 2.8% | $-9.87 | -3.39% |
+| ORBIA.MX | 288.36366782265185 | $21.20 | $21.60 | $6,228.66 | 30.0% | +$115.35 | +1.89% |
+| BBAJIOO.MX | 111.39413008131325 | $54.88 | $54.89 | $6,114.42 | 30.0% | +$1.11 | +0.02% |
+| GFNORTEO.MX | 32.26361682335487 | $189.48 | $182.29 | $5,881.33 | 30.0% | $-231.98 | -3.79% |
 
 
 ### B. 1d MACD + SMA + HMM Holdings (MXN)
 | Ticker | Shares Held | Average Cost (MXN) | Current Price (MXN) | Market Value (MXN) | Target Weight | Unrealized P/L | P/L % |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| GAPB.MX | 9 | $431.82 | $432.95 | $3,896.55 | 20.0% | +$10.17 | +0.26% |
-| AMXB.MX | 172 | $23.02 | $23.00 | $3,956.00 | 20.0% | $-3.44 | -0.09% |
-| ASURB.MX | 7 | $534.15 | $531.18 | $3,718.26 | 20.0% | $-20.79 | -0.56% |
+| GAPB.MX | 9 | $431.82 | $434.05 | $3,906.45 | 20.0% | +$20.07 | +0.52% |
+| AMXB.MX | 172 | $23.02 | $22.90 | $3,938.80 | 20.0% | $-20.64 | -0.52% |
+| ASURB.MX | 7 | $534.15 | $532.23 | $3,725.61 | 20.0% | $-13.44 | -0.36% |
 
 
 ### C. US Stock Momentum (Isolated) Holdings (USD)
@@ -45,15 +45,15 @@
 ### E. Alternative Assets (Isolated) Holdings (USD)
 | Ticker | Asset Type | Shares Held | Average Cost (USD) | Current Price (USD) | Market Value (USD) | Target Weight | Unrealized P/L | P/L % |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| EURUSD=X | FOREX | 13154.0000 | $1.14 | $1.14 | $14,946.03 | 15.0% | $-10.20 | -0.07% |
-| GBPUSD=X | FOREX | 11354.0000 | $1.32 | $1.32 | $14,951.08 | 15.0% | +$3.94 | +0.03% |
+| EURUSD=X | FOREX | 13154.0000 | $1.14 | $1.14 | $14,940.94 | 15.0% | $-15.29 | -0.10% |
+| GBPUSD=X | FOREX | 11354.0000 | $1.32 | $1.32 | $14,948.72 | 15.0% | +$1.57 | +0.01% |
 
 --------------------------------------------------------------------------------
 
 ## 3. Cash Sweeps & Yield Settings
 * **Bondia Overnight Cash Sweep Yield:** **6.53% APR** (accrued on unallocated MXN cash balance daily).
-* **Adaptive Value Current Cash Reserves:** $1,707.86 MXN
-* **1D MACD Current Cash Reserves:** $8,194.32 MXN
+* **Adaptive Value Current Cash Reserves:** $1,707.90 MXN
+* **1D MACD Current Cash Reserves:** $8,194.51 MXN
 * **US Stock Momentum Current Cash Reserves:** $50,179.08 USD
 * **US Stock DCS Value-Growth Current Cash Reserves:** $75,218.59 USD
 * **Alternative Assets Current Cash Reserves:** $70,009.91 USD
