@@ -15,14 +15,16 @@ def main():
     portfolio_macd_path = os.path.join(dir_path, "portfolio_macd.json")
     portfolio_us_path = os.path.join(dir_path, "portfolio_us_stocks.json")
     portfolio_us_dcs_path = os.path.join(dir_path, "portfolio_us_dcs.json")
+    portfolio_alternatives_path = os.path.join(dir_path, "portfolio_alternatives.json")
     comparison_report_path = os.path.join(dir_path, "comparison_report.md")
     
     port_val = load_json(portfolio_val_path)
     port_macd = load_json(portfolio_macd_path)
     port_us = load_json(portfolio_us_path)
     port_us_dcs = load_json(portfolio_us_dcs_path)
+    port_alternatives = load_json(portfolio_alternatives_path)
     
-    if not port_val and not port_macd and not port_us and not port_us_dcs:
+    if not port_val and not port_macd and not port_us and not port_us_dcs and not port_alternatives:
         print("Error: No portfolio files found. Cannot generate comparison.")
         return
         
@@ -92,6 +94,20 @@ def main():
         report.append(f"| **US Stock DCS Value-Growth (Isolated)** | ${ud_market_val:,.2f} | ${ud_cash:,.2f} | ${ud_invested:,.2f} | {ud_alloc:.1f}% | {ud_sign}${ud_profit:,.2f} | {ud_sign}{ud_roi:.2f}% | 2026-06-23 | USD |")
     else:
         report.append("| **US Stock DCS Value-Growth (Isolated)** | *Not Initialized* | - | - | - | - | - | - | USD |")
+        
+    # Parse Strategy 5 (Alternative Assets - Isolated)
+    if port_alternatives:
+        a_total_cap = port_alternatives.get("total_capital", 100000.0)
+        a_cash = port_alternatives.get("cash_balance", 100000.0)
+        a_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_alternatives.get("holdings", []))
+        a_market_val = a_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_alternatives.get("holdings", []))
+        a_profit = a_market_val - a_total_cap
+        a_roi = (a_profit / a_total_cap) * 100.0
+        a_alloc = (a_invested / a_market_val) * 100.0 if a_market_val > 0 else 0.0
+        a_sign = "+" if a_profit >= 0 else ""
+        report.append(f"| **Alternative Assets (Isolated)** | ${a_market_val:,.2f} | ${a_cash:,.2f} | ${a_invested:,.2f} | {a_alloc:.1f}% | {a_sign}${a_profit:,.2f} | {a_sign}{a_roi:.2f}% | 2026-06-24 | USD |")
+    else:
+        report.append("| **Alternative Assets (Isolated)** | *Not Initialized* | - | - | - | - | - | - | USD |")
         
     report.append("\n" + "-" * 80 + "\n")
     
@@ -181,6 +197,28 @@ def main():
     else:
         report.append("*No open stock positions currently held. Portfolio is 100% Cash.*")
         
+    report.append("\n")
+
+    # Strategy 5 Holdings
+    report.append("### E. Alternative Assets (Isolated) Holdings (USD)")
+    if port_alternatives and port_alternatives.get("holdings"):
+        report.append("| Ticker | Asset Type | Shares Held | Average Cost (USD) | Current Price (USD) | Market Value (USD) | Target Weight | Unrealized P/L | P/L % |")
+        report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
+        for h in port_alternatives["holdings"]:
+            ticker = h["ticker"]
+            asset_type = h.get("asset_type", "N/A").upper()
+            shares = h["shares"]
+            buy_price = h["buy_price"]
+            last_price = h.get("last_price", buy_price)
+            target_w = h.get("target_weight", 0.0)
+            mval = shares * last_price
+            pl = mval - (shares * buy_price)
+            pl_pct = ((last_price / buy_price) - 1.0) * 100.0 if buy_price > 0 else 0.0
+            sign = "+" if pl >= 0 else ""
+            report.append(f"| {ticker} | {asset_type} | {shares:.4f} | ${buy_price:,.2f} | ${last_price:,.2f} | ${mval:,.2f} | {target_w:.1%} | {sign}${pl:,.2f} | {sign}{pl_pct:.2f}% |")
+    else:
+        report.append("*No alternative asset positions currently held. Portfolio is 100% Cash.*")
+        
     report.append("\n" + "-" * 80 + "\n")
     
     # 3. Dynamic Yield & Reserves Details
@@ -194,6 +232,8 @@ def main():
         report.append(f"* **US Stock Momentum Current Cash Reserves:** ${port_us.get('cash_balance', 0.0):,.2f} USD")
     if port_us_dcs:
         report.append(f"* **US Stock DCS Value-Growth Current Cash Reserves:** ${port_us_dcs.get('cash_balance', 0.0):,.2f} USD")
+    if port_alternatives:
+        report.append(f"* **Alternative Assets Current Cash Reserves:** ${port_alternatives.get('cash_balance', 0.0):,.2f} USD")
         
     # Write to comparison_report.md
     with open(comparison_report_path, "w", encoding="utf-8") as f:

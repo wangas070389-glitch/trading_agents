@@ -1,5 +1,5 @@
 # Daily Strategy Performance Comparison Report
-**Report Generated At:** 2026-06-23 23:19:37
+**Report Generated At:** 2026-06-24 00:00:10
 
 ## 1. Executive Performance Summary
 | Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |
@@ -8,6 +8,7 @@
 | **1d MACD + SMA + HMM** | $19,898.47 | $9,037.88 | $10,953.44 | 55.0% | $-101.53 | -0.51% | 2026-06-03 | MXN |
 | **US Stock Momentum (Isolated)** | $100,000.00 | $75,273.64 | $24,726.36 | 24.7% | +$0.00 | +0.00% | 2026-06-23 | USD |
 | **US Stock DCS Value-Growth (Isolated)** | $99,928.34 | $75,218.59 | $24,709.75 | 24.7% | $-71.66 | -0.07% | 2026-06-23 | USD |
+| **Alternative Assets (Isolated)** | $99,956.63 | $85,000.40 | $14,956.23 | 15.0% | $-43.37 | -0.04% | 2026-06-24 | USD |
 
 --------------------------------------------------------------------------------
 
@@ -40,6 +41,12 @@
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | AVGO | 65 | $380.15 | $380.15 | $24,709.75 | 25.0% | 1.701 | +$0.00 | +0.00% |
 
+
+### E. Alternative Assets (Isolated) Holdings (USD)
+| Ticker | Asset Type | Shares Held | Average Cost (USD) | Current Price (USD) | Market Value (USD) | Target Weight | Unrealized P/L | P/L % |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| EURUSD=X | FOREX | 13154.0000 | $1.14 | $1.14 | $14,956.23 | 15.0% | +$0.00 | +0.00% |
+
 --------------------------------------------------------------------------------
 
 ## 3. Cash Sweeps & Yield Settings
@@ -48,3 +55,4 @@
 * **1D MACD Current Cash Reserves:** $9,037.88 MXN
 * **US Stock Momentum Current Cash Reserves:** $75,273.64 USD
 * **US Stock DCS Value-Growth Current Cash Reserves:** $75,218.59 USD
+* **Alternative Assets Current Cash Reserves:** $85,000.40 USD

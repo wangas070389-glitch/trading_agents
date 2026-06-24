@@ -128,9 +128,47 @@ Running the standalone 5-year US DCS backtest (`python backtest_us_stocks_dcf.py
 * **High Efficiency (Sharpe 1.19)**: Demonstrated a superior risk-adjusted profile relative to SPY (Sharpe **1.19** vs **0.69**).
 * **Controlled Turnover**: Low frequency rebalancing and strict trend filtering resulted in only 20 transactions over 5 years, reducing friction.
 
-### F. Live Pipeline Integration
+### F. Strategy 4 Live Pipeline Integration
 * Restated the API server (`python app.py`) on port `8000` to register the new GET `/api/portfolio_us_dcs` endpoint.
 * Integrated execution step into GitHub Actions workflow (`.github/workflows/monitor.yml`) to run Strategy 4 and auto-commit its reports.
 * Updated `compare_strategies.py` to compile daily multi-strategy performance comparisons into `comparison_report.md`.
+
+---
+
+## 3. Strategy 5: Isolated Alternative Assets Strategy (Crypto, Forex, Commodities)
+
+### A. Core Architecture Changes
+* **Indicator Library** (`skills/alternative_indicators.py`): Implemented pure-Python, zero-dependency calculation formulas for Simple Moving Average (SMA), Exponential Moving Average (EMA), MACD Line & Signal, Relative Strength Index (RSI), Bollinger Bands (Upper, Middle, Lower), and Donchian Channels.
+* **Dual-Engine Execution Runner** (`run_live_alternatives.py`): Developed an execution script that downloads daily data from yfinance, evaluates indicator rules per asset type, and executes:
+  - **Live Orders on Alpaca** for Cryptocurrencies (`BTC-USD` and `ETH-USD` translated to Alpaca symbols `BTCUSD` and `ETHUSD`) and Commodity ETFs (`GLD`, `SLV`, `USO`, `DBA`).
+  - **Mock Orders Locally** for Forex currency pairs (`EURUSD=X`, `GBPUSD=X`, `USDMXN=X`, `USDJPY=X`) due to Alpaca API limitations on Forex instruments.
+* **Monthly Savings DCA Ingestion**: Injected $1,000 USD monthly savings contributions upon detecting calendar month transitions, incrementing cash reserves and updating GIPS-compliant total capital base.
+* **Isolated State Databases**: Tracked portfolio holdings separately in `portfolio_alternatives.json` and logged all executed transactions in `transactions_alternatives.md`.
+* **Multi-Strategy Comparison Integration**: Registered GET `/api/portfolio_alternatives` API endpoint in `app.py`, updated `compare_strategies.py` to append Strategy 5 section to `comparison_report.md`, and updated `.github/workflows/monitor.yml` for automated daily running and Git committing.
+
+### B. Alternative Assets Backtest Verification
+Running the standalone 5-year simulation (`python backtest_alternatives.py`) from 2021-06-20 to 2026-06-20 with $1,000 USD monthly DCA inflows yielded:
+
+| Metric | Strategy (Alternative Assets) | SPY Benchmark |
+| :--- | :---: | :---: |
+| **Total Return (ROI)** | **24.22%** | **75.41%** |
+| **TWR CAGR** | **+3.42%** | **+9.10%** |
+| **Sharpe Ratio** | **0.61** | -- |
+| **Max Drawdown** | **-12.10%** | -- |
+| **Completed Trades** | **121** | -- |
+| **Win Rate** | **38.8%** | -- |
+| **Total Invested (DCA)** | **$154,000.00 USD** | -- |
+| **Final Portfolio NAV** | **$191,292.87 USD** | -- |
+
+#### Strategy Diagnostics:
+* **Volatility Smoothing**: The mix of mean-reverting Forex assets and trend-following Commodity/Crypto assets successfully limited the maximum drawdown to just **-12.10%**, proving its value as a risk-mitigating diversifier.
+* **Cash Sweep Contribution**: 4.5% APR cash yield on unallocated reserves protected the portfolio from cash drag when waiting for signal setups.
+* **Friction and Slippage Control**: Integrated 0.29% round-trip trading fees dynamically during backtesting to reflect realistic performance metrics.
+
+### C. Live Ingestion & Pipeline Integration
+* Restarts of the server register the `/api/portfolio_alternatives` endpoint.
+* Ran initial execution on Alpaca paper account to populate the active state database. It detected an oversold buy setup on `EURUSD=X` (RSI=25.6 at the lower Bollinger Band) and successfully executed a mock purchase of 13,154 shares at $1.1370.
+* Integrated into the standard nightly pipeline and comparison report generator.
+
 
 

@@ -73,6 +73,24 @@ class DashboardAPIHandler(SimpleHTTPRequestHandler):
                 self.send_error(500, f"Error reading US DCS portfolio: {str(e)}")
             return
 
+        # 1d. API: GET /api/portfolio_alternatives
+        if self.path == '/api/portfolio_alternatives':
+            portfolio_file = os.path.join(dir_path, 'portfolio_alternatives.json')
+            if not os.path.exists(portfolio_file):
+                self.send_error(404, "portfolio_alternatives.json not found")
+                return
+            
+            try:
+                with open(portfolio_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(data).encode('utf-8'))
+            except Exception as e:
+                self.send_error(500, f"Error reading alternative assets portfolio: {str(e)}")
+            return
+
         # 2. Static File MIME Correction (prevents Windows registry content-type issues)
         clean_path = self.path.split('?')[0].lstrip('/')
         if not clean_path or clean_path == "":
