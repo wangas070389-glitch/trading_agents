@@ -16,6 +16,8 @@
 | 2026-06-24 | FEMSAUBD.MX | SELL | 14 | 217.39 | +3,040.42 | Market | FILLED | 1D MACD systematic signal |
 | 2026-06-24 | ASURB.MX | BUY | 7 | 534.15 | -3,743.02 | Market | FILLED | 1D MACD systematic signal |
 | 2026-06-24 | BONDIA | INTEREST | 1 | 0.08 | +0.0784 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0988 days. |
+| 2026-06-24 | BONDIA | INTEREST | 1 | 0.03 | +0.0311 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0392 days. |
+| 2026-06-24 | GFNORTEO.MX | SELL | 21 | 182.16 | +3,821.53 | Market | FILLED | 1D MACD systematic signal |
 ---
 
 
@@ -24,6 +26,6 @@
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
-* **Total Deployed Capital**: 15,530.35 MXN (78.2% invested)
-* **Unallocated Cash Reserves**: 4,372.76 MXN (22.0% cash)
-* **Current Portfolio Market Value**: 19,854.53 MXN (including cash)
+* **Total Deployed Capital**: 11,584.87 MXN (58.6% invested)
+* **Unallocated Cash Reserves**: 8,194.32 MXN (41.5% cash)
+* **Current Portfolio Market Value**: 19,765.13 MXN (including cash)
