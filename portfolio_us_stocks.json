@@ -1,15 +1,15 @@
 {
   "total_capital": 100000.0,
-  "cash_balance": 100000.0,
+  "cash_balance": 174847.36,
   "holdings": [
     {
       "ticker": "JPM",
-      "shares": 299,
+      "shares": 75,
       "buy_price": 334.1400146484375,
       "last_price": 334.1400146484375,
       "peak_price": 335.3699951171875,
-      "target_weight": 1.0
+      "target_weight": 0.25
     }
   ],
-  "last_updated": "2026-06-23 23:35:33"
+  "last_updated": "2026-06-24 05:13:23"
 }
