@@ -1,16 +1,16 @@
 # Daily Strategy Performance Comparison Report
-**Report Generated At:** 2026-06-25 22:19:04
+**Report Generated At:** 2026-06-25 22:31:30
 
 ## 1. Executive Performance Summary
 | Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **Adaptive Dynamic Value (V4)** | $20,549.42 | $1,708.19 | $18,631.39 | 90.7% | +$549.42 | +2.75% | 2026-06-03 | MXN |
-| **1d MACD + SMA + HMM** | $19,929.21 | $5,773.48 | $14,004.69 | 70.3% | $-70.79 | -0.35% | 2026-06-03 | MXN |
-| **US Stock Momentum (Isolated)** | $74,905.43 | $50,179.07 | $24,726.36 | 33.0% | $-24,750.56 | -24.84% | 2026-06-23 | USD |
-| **US Stock DCS Value-Growth (Isolated)** | $99,847.74 | $75,218.59 | $24,709.75 | 24.7% | +$191.75 | +0.19% | 2026-06-23 | USD |
-| **Alternative Assets (Isolated)** | $99,951.51 | $70,009.91 | $29,903.37 | 29.9% | +$295.52 | +0.30% | 2026-06-24 | USD |
+| **1d MACD + SMA + HMM** | $19,929.22 | $5,773.49 | $14,004.69 | 70.3% | $-70.78 | -0.35% | 2026-06-03 | MXN |
+| **US Stock Momentum (Isolated)** | $74,905.43 | $50,179.07 | $24,726.36 | 33.0% | $-24,642.52 | -24.75% | 2026-06-23 | USD |
+| **US Stock DCS Value-Growth (Isolated)** | $99,847.74 | $75,218.59 | $24,709.75 | 24.7% | +$299.79 | +0.30% | 2026-06-23 | USD |
+| **Alternative Assets (Isolated)** | $99,947.72 | $70,009.91 | $29,903.37 | 29.9% | +$419.07 | +0.42% | 2026-06-24 | USD |
 | **High-Beta Value-Momentum (Isolated)** | $100,012.32 | $100,012.32 | $0.00 | 0.0% | +$0.00 | +0.00% | 2026-06-24 | USD |
-| **Consolidated Multi-Strategy (S7)** | $300,986.23 | $245,338.46 | $55,647.77 | 18.5% | +$518.68 | +0.17% | 2026-06-24 | USD |
+| **Consolidated Multi-Strategy (S7)** | $300,981.94 | $245,338.42 | $55,643.51 | 18.5% | +$750.25 | +0.25% | 2026-06-24 | USD |
 
 --------------------------------------------------------------------------------
 
@@ -48,8 +48,8 @@
 ### E. Alternative Assets (Isolated) Holdings (USD)
 | Ticker | Asset Type | Shares Held | Average Cost (USD) | Current Price (USD) | Market Value (USD) | Target Weight | Unrealized P/L | P/L % |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| EURUSD=X | FOREX | 13154.0000 | $1.14 | $1.14 | $14,961.33 | 15.0% | +$5.10 | +0.03% |
-| GBPUSD=X | FOREX | 11354.0000 | $1.32 | $1.32 | $14,980.28 | 15.0% | +$33.13 | +0.22% |
+| EURUSD=X | FOREX | 13154.0000 | $1.14 | $1.14 | $14,957.93 | 15.0% | +$1.70 | +0.01% |
+| GBPUSD=X | FOREX | 11354.0000 | $1.32 | $1.32 | $14,979.88 | 15.0% | +$32.74 | +0.22% |
 
 
 ### F. High-Beta Value-Momentum (Isolated) Holdings (USD)
@@ -59,9 +59,9 @@
 ### G. Consolidated Multi-Strategy Portfolio (Strategy 7) Allocations (USD)
 | Strategy Component | Target Allocation % | Current Weight % | Deviation % | Current Value (USD) |
 | :--- | :---: | :---: | :---: | :---: |
-| Strategy 1 Mxn Value | 30.0% | 0.4% | -29.6% | $1,174.66 |
+| Strategy 1 Mxn Value | 30.0% | 0.4% | -29.6% | $1,174.16 |
 | Strategy 4 Us Dcs | 40.0% | 33.2% | -6.8% | $99,847.74 |
-| Strategy 5 Alternatives | 10.0% | 33.2% | +23.2% | $99,951.51 |
+| Strategy 5 Alternatives | 10.0% | 33.2% | +23.2% | $99,947.72 |
 | Strategy 6 High Beta | 20.0% | 33.2% | +13.2% | $100,012.32 |
 
 --------------------------------------------------------------------------------
@@ -70,9 +70,9 @@
 * **Bondia Overnight Cash Sweep Yield:** **6.53% APR** (accrued on unallocated MXN cash balance daily).
 * **USD Sweep Cash Yield:** **4.50% APR** (accrued on unallocated USD cash reserves daily).
 * **Adaptive Value Current Cash Reserves:** $1,708.19 MXN
-* **1D MACD Current Cash Reserves:** $5,773.48 MXN
+* **1D MACD Current Cash Reserves:** $5,773.49 MXN
 * **US Stock Momentum Current Cash Reserves:** $50,179.07 USD
 * **US Stock DCS Value-Growth Current Cash Reserves:** $75,218.59 USD
 * **Alternative Assets Current Cash Reserves:** $70,009.91 USD
 * **High-Beta Momentum Current Cash Reserves:** $100,012.32 USD
-* **Consolidated Portfolio Current Cash Reserves:** $245,338.46 USD
+* **Consolidated Portfolio Current Cash Reserves:** $245,338.42 USD
