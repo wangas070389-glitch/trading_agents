@@ -16,6 +16,8 @@ def main():
     portfolio_us_path = os.path.join(dir_path, "portfolio_us_stocks.json")
     portfolio_us_dcs_path = os.path.join(dir_path, "portfolio_us_dcs.json")
     portfolio_alternatives_path = os.path.join(dir_path, "portfolio_alternatives.json")
+    portfolio_high_beta_path = os.path.join(dir_path, "portfolio_high_beta.json")
+    portfolio_multi_strategy_path = os.path.join(dir_path, "portfolio_multi_strategy.json")
     comparison_report_path = os.path.join(dir_path, "comparison_report.md")
     
     port_val = load_json(portfolio_val_path)
@@ -23,8 +25,10 @@ def main():
     port_us = load_json(portfolio_us_path)
     port_us_dcs = load_json(portfolio_us_dcs_path)
     port_alternatives = load_json(portfolio_alternatives_path)
+    port_high_beta = load_json(portfolio_high_beta_path)
+    port_multi_strategy = load_json(portfolio_multi_strategy_path)
     
-    if not port_val and not port_macd and not port_us and not port_us_dcs and not port_alternatives:
+    if not port_val and not port_macd and not port_us and not port_us_dcs and not port_alternatives and not port_high_beta and not port_multi_strategy:
         print("Error: No portfolio files found. Cannot generate comparison.")
         return
         
@@ -108,6 +112,40 @@ def main():
         report.append(f"| **Alternative Assets (Isolated)** | ${a_market_val:,.2f} | ${a_cash:,.2f} | ${a_invested:,.2f} | {a_alloc:.1f}% | {a_sign}${a_profit:,.2f} | {a_sign}{a_roi:.2f}% | 2026-06-24 | USD |")
     else:
         report.append("| **Alternative Assets (Isolated)** | *Not Initialized* | - | - | - | - | - | - | USD |")
+        
+    # Parse Strategy 6 (High-Beta Value-Momentum - Isolated)
+    if port_high_beta:
+        hb_total_cap = port_high_beta.get("total_capital", 100000.0)
+        hb_cash = port_high_beta.get("cash_balance", 100000.0)
+        hb_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_high_beta.get("holdings", []))
+        hb_market_val = hb_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_high_beta.get("holdings", []))
+        hb_profit = hb_market_val - hb_total_cap
+        hb_roi = (hb_profit / hb_total_cap) * 100.0
+        hb_alloc = (hb_invested / hb_market_val) * 100.0 if hb_market_val > 0 else 0.0
+        hb_sign = "+" if hb_profit >= 0 else ""
+        report.append(f"| **High-Beta Value-Momentum (Isolated)** | ${hb_market_val:,.2f} | ${hb_cash:,.2f} | ${hb_invested:,.2f} | {hb_alloc:.1f}% | {hb_sign}${hb_profit:,.2f} | {hb_sign}{hb_roi:.2f}% | 2026-06-24 | USD |")
+    else:
+        report.append("| **High-Beta Value-Momentum (Isolated)** | *Not Initialized* | - | - | - | - | - | - | USD |")
+        
+    # Parse Strategy 7 (Consolidated Multi-Strategy)
+    if port_multi_strategy:
+        usd_mxn_rate = port_multi_strategy.get("usd_mxn_rate", 18.0)
+        s1_cap_usd = port_val.get("total_capital", 20000.0) / usd_mxn_rate if port_val else 1139.0
+        s4_cap = port_us_dcs.get("total_capital", 100000.0) if port_us_dcs else 100000.0
+        s5_cap = port_alternatives.get("total_capital", 100000.0) if port_alternatives else 100000.0
+        s6_cap = port_high_beta.get("total_capital", 100000.0) if port_high_beta else 100000.0
+        ms_total_cap = s1_cap_usd + s4_cap + s5_cap + s6_cap
+        
+        ms_market_val = port_multi_strategy.get("total_portfolio_value_usd", 0.0)
+        ms_cash = port_multi_strategy.get("total_cash_balance_usd", 0.0)
+        ms_invested = ms_market_val - ms_cash
+        ms_profit = ms_market_val - ms_total_cap
+        ms_roi = (ms_profit / ms_total_cap) * 100.0 if ms_total_cap > 0 else 0.0
+        ms_alloc = (ms_invested / ms_market_val) * 100.0 if ms_market_val > 0 else 0.0
+        ms_sign = "+" if ms_profit >= 0 else ""
+        report.append(f"| **Consolidated Multi-Strategy (S7)** | ${ms_market_val:,.2f} | ${ms_cash:,.2f} | ${ms_invested:,.2f} | {ms_alloc:.1f}% | {ms_sign}${ms_profit:,.2f} | {ms_sign}{ms_roi:.2f}% | 2026-06-24 | USD |")
+    else:
+        report.append("| **Consolidated Multi-Strategy (S7)** | *Not Initialized* | - | - | - | - | - | - | USD |")
         
     report.append("\n" + "-" * 80 + "\n")
     
@@ -219,11 +257,54 @@ def main():
     else:
         report.append("*No alternative asset positions currently held. Portfolio is 100% Cash.*")
         
+    report.append("\n")
+
+    # Strategy 6 Holdings
+    report.append("### F. High-Beta Value-Momentum (Isolated) Holdings (USD)")
+    if port_high_beta and port_high_beta.get("holdings"):
+        report.append("| Ticker | Shares Held | Average Cost (USD) | Current Price (USD) | Market Value (USD) | Target Weight | DCS Conviction | Beta | Unrealized P/L | P/L % |")
+        report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
+        for h in port_high_beta["holdings"]:
+            ticker = h["ticker"]
+            shares = h["shares"]
+            buy_price = h["buy_price"]
+            last_price = h.get("last_price", buy_price)
+            target_w = h.get("target_weight", 0.33)
+            dcs = h.get("dcs", 0.0)
+            beta = h.get("beta", 0.0)
+            mval = shares * last_price
+            pl = mval - (shares * buy_price)
+            pl_pct = ((last_price / buy_price) - 1.0) * 100.0 if buy_price > 0 else 0.0
+            sign = "+" if pl >= 0 else ""
+            report.append(f"| {ticker} | {shares:.4f} | ${buy_price:,.2f} | ${last_price:,.2f} | ${mval:,.2f} | {target_w:.1%} | {dcs:.3f} | {beta:.2f} | {sign}${pl:,.2f} | {sign}{pl_pct:.2f}% |")
+    else:
+        report.append("*No open stock positions currently held. Portfolio is 100% Cash.*")
+        
+    report.append("\n")
+
+    # Strategy 7 Holdings (Allocations)
+    report.append("### G. Consolidated Multi-Strategy Portfolio (Strategy 7) Allocations (USD)")
+    if port_multi_strategy and port_multi_strategy.get("allocations"):
+        report.append("| Strategy Component | Target Allocation % | Current Weight % | Deviation % | Current Value (USD) |")
+        report.append("| :--- | :---: | :---: | :---: | :---: |")
+        allocs = port_multi_strategy["allocations"]
+        for key, val in allocs.items():
+            name = key.replace("_", " ").title()
+            target_w = val.get("target_weight", 0.0)
+            curr_w = val.get("current_weight", 0.0)
+            dev = val.get("deviation", 0.0)
+            nav = val.get("nav_usd", 0.0)
+            sign = "+" if dev >= 0 else ""
+            report.append(f"| {name} | {target_w:.1%} | {curr_w:.1%} | {sign}{dev:.1%} | ${nav:,.2f} |")
+    else:
+        report.append("*Multi-strategy allocation tracking is not active.*")
+
     report.append("\n" + "-" * 80 + "\n")
     
     # 3. Dynamic Yield & Reserves Details
     report.append("## 3. Cash Sweeps & Yield Settings")
     report.append("* **Bondia Overnight Cash Sweep Yield:** **6.53% APR** (accrued on unallocated MXN cash balance daily).")
+    report.append("* **USD Sweep Cash Yield:** **4.50% APR** (accrued on unallocated USD cash reserves daily).")
     if port_val:
         report.append(f"* **Adaptive Value Current Cash Reserves:** ${port_val.get('cash_balance', 0.0):,.2f} MXN")
     if port_macd:
@@ -234,6 +315,10 @@ def main():
         report.append(f"* **US Stock DCS Value-Growth Current Cash Reserves:** ${port_us_dcs.get('cash_balance', 0.0):,.2f} USD")
     if port_alternatives:
         report.append(f"* **Alternative Assets Current Cash Reserves:** ${port_alternatives.get('cash_balance', 0.0):,.2f} USD")
+    if port_high_beta:
+        report.append(f"* **High-Beta Momentum Current Cash Reserves:** ${port_high_beta.get('cash_balance', 0.0):,.2f} USD")
+    if port_multi_strategy:
+        report.append(f"* **Consolidated Portfolio Current Cash Reserves:** ${port_multi_strategy.get('total_cash_balance_usd', 0.0):,.2f} USD")
         
     # Write to comparison_report.md
     with open(comparison_report_path, "w", encoding="utf-8") as f:
