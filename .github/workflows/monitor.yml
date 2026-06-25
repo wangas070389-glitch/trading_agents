@@ -78,8 +78,7 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         
-        # Add updated database, performance log, evaluation report, transaction ledger, and history
-        git add portfolio.json portfolio_status.md portfolio_macd.json transactions_macd.md portfolio_us_stocks.json transactions_us_stocks.md portfolio_us_dcs.json transactions_us_dcs.md us_stocks_dcf_report_live.md portfolio_alternatives.json transactions_alternatives.md alternatives_report_live.md portfolio_high_beta.json transactions_high_beta.md high_beta_report_live.md portfolio_multi_strategy.json multi_strategy_report_live.md consolidated_portfolio_nav.csv comparison_report.md mexican_value_equity_report_live.md mexican_value_equity_report_live_alpha.md transactions.md evaluation_history.md signal_history.json equity_curve.json learned_params.json || true
+        git add portfolio.json portfolio_status.md portfolio_macd.json transactions_macd.md portfolio_us_stocks.json transactions_us_stocks.md portfolio_us_dcs.json transactions_us_dcs.md us_stocks_dcf_report_live.md portfolio_alternatives.json transactions_alternatives.md alternatives_report_live.md portfolio_high_beta.json transactions_high_beta.md high_beta_report_live.md portfolio_multi_strategy.json multi_strategy_report_live.md multi_strategy_allocation_history.md consolidated_portfolio_nav.csv comparison_report.md mexican_value_equity_report_live.md mexican_value_equity_report_live_alpha.md transactions.md evaluation_history.md signal_history.json equity_curve.json learned_params.json || true
         
         # Commit only if files have changed (to prevent error crashes on identical runs)
         git diff-index --quiet HEAD || (git commit -m "Auto-update: Multi-strategy concentrated paper trading [$(date -u +%Y-%m-%d)]" && git push)

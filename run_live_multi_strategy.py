@@ -280,6 +280,33 @@ def main():
     with open(os.path.join(dir_path, REPORT_FILE), 'w', encoding='utf-8') as f:
         f.write(report_md)
 
+    # 7. Generate allocation history report
+    history_md_path = os.path.join(dir_path, "multi_strategy_allocation_history.md")
+    history_lines = [
+        "# Consolidated Multi-Strategy Allocation History\n",
+        "| Date | Strategy 1 (MXN Value) | Strategy 4 (US DCS) | Strategy 5 (Alternatives) | Strategy 6 (High-Beta) | Total NAV (USD) |",
+        "| :--- | :---: | :---: | :---: | :---: | :---: |"
+    ]
+    
+    # Sort history entries descending (newest first)
+    sorted_history = sorted(state.get("history", []), key=lambda x: x["date"], reverse=True)
+    for entry in sorted_history:
+        date = entry["date"]
+        nav = entry["nav_usd"]
+        if nav > 0:
+            pct1 = (entry["s1_nav_usd"] / nav) * 100.0
+            pct4 = (entry["s4_nav_usd"] / nav) * 100.0
+            pct5 = (entry["s5_nav_usd"] / nav) * 100.0
+            pct6 = (entry["s6_nav_usd"] / nav) * 100.0
+        else:
+            pct1 = pct4 = pct5 = pct6 = 0.0
+            
+        history_lines.append(f"| {date} | {pct1:.1f}% | {pct4:.1f}% | {pct5:.1f}% | {pct6:.1f}% | ${nav:,.2f} |")
+        
+    with open(history_md_path, 'w', encoding='utf-8') as f:
+        f.write("\n".join(history_lines) + "\n")
+    print(f"Saved allocation history to {history_md_path}")
+
     print(f"\nConsolidated execution complete! Saved report to {REPORT_FILE}")
     print("=" * 80)
 

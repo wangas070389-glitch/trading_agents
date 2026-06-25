@@ -1,0 +1,6 @@
+# Consolidated Multi-Strategy Allocation History
+
+| Date | Strategy 1 (MXN Value) | Strategy 4 (US DCS) | Strategy 5 (Alternatives) | Strategy 6 (High-Beta) | Total NAV (USD) |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| 2026-06-25 | 0.4% | 33.2% | 33.2% | 33.2% | $300,964.35 |
+| 2026-06-24 | 0.4% | 33.2% | 33.2% | 33.2% | $301,039.32 |
