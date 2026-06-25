@@ -326,5 +326,97 @@ def main():
         
     print(f"Comparison report generated successfully: {comparison_report_path}")
 
+    # 4. Generate all strategies allocation history
+    usd_mxn = port_multi_strategy.get("usd_mxn_rate", 17.5) if port_multi_strategy else 17.5
+    
+    # Helper to compute local NAV
+    def get_portfolio_nav(port):
+        if not port:
+            return 0.0
+        cash = float(port.get("cash_balance", 0.0))
+        holdings_val = sum(float(h.get("shares", 0.0)) * float(h.get("last_price", h.get("buy_price", 0.0))) for h in port.get("holdings", []))
+        return cash + holdings_val
+
+    s1_nav_mxn = get_portfolio_nav(port_val)
+    s2_nav_mxn = get_portfolio_nav(port_macd)
+    s3_nav_usd = get_portfolio_nav(port_us)
+    s4_nav_usd = get_portfolio_nav(port_us_dcs)
+    s5_nav_usd = get_portfolio_nav(port_alternatives)
+    s6_nav_usd = get_portfolio_nav(port_high_beta)
+
+    s1_nav_usd = s1_nav_mxn / usd_mxn
+    s2_nav_usd = s2_nav_mxn / usd_mxn
+    
+    total_nav_usd = s1_nav_usd + s2_nav_usd + s3_nav_usd + s4_nav_usd + s5_nav_usd + s6_nav_usd
+
+    history_json_path = os.path.join(dir_path, "all_strategies_history.json")
+    all_history = []
+    if os.path.exists(history_json_path):
+        try:
+            with open(history_json_path, 'r', encoding='utf-8') as f:
+                all_history = json.load(f)
+        except Exception:
+            all_history = []
+
+    today_str = datetime.date.today().strftime("%Y-%m-%d")
+    
+    exists_idx = -1
+    for idx, entry in enumerate(all_history):
+        if entry["date"] == today_str:
+            exists_idx = idx
+            break
+            
+    new_entry = {
+        "date": today_str,
+        "s1_nav_usd": s1_nav_usd,
+        "s2_nav_usd": s2_nav_usd,
+        "s3_nav_usd": s3_nav_usd,
+        "s4_nav_usd": s4_nav_usd,
+        "s5_nav_usd": s5_nav_usd,
+        "s6_nav_usd": s6_nav_usd,
+        "total_nav_usd": total_nav_usd
+    }
+    
+    if exists_idx != -1:
+        all_history[exists_idx] = new_entry
+    else:
+        all_history.append(new_entry)
+        
+    try:
+        with open(history_json_path, 'w', encoding='utf-8') as f:
+            json.dump(all_history, f, indent=2)
+    except Exception as e:
+        print(f"Error saving all strategies history: {e}")
+
+    history_md_path = os.path.join(dir_path, "all_strategies_allocation_history.md")
+    md_lines = [
+        "# All Strategies Allocation History\n",
+        "| Date | Strategy 1 (MXN Value) | Strategy 2 (1d MACD) | Strategy 3 (US Momentum) | Strategy 4 (US DCS) | Strategy 5 (Alternatives) | Strategy 6 (High-Beta) | Total Combined NAV (USD) |",
+        "| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |"
+    ]
+    
+    sorted_all_history = sorted(all_history, key=lambda x: x["date"], reverse=True)
+    for entry in sorted_all_history:
+        date = entry["date"]
+        nav = entry["total_nav_usd"]
+        if nav > 0:
+            pct1 = (entry["s1_nav_usd"] / nav) * 100.0
+            pct2 = (entry["s2_nav_usd"] / nav) * 100.0
+            pct3 = (entry["s3_nav_usd"] / nav) * 100.0
+            pct4 = (entry["s4_nav_usd"] / nav) * 100.0
+            pct5 = (entry["s5_nav_usd"] / nav) * 100.0
+            pct6 = (entry["s6_nav_usd"] / nav) * 100.0
+        else:
+            pct1 = pct2 = pct3 = pct4 = pct5 = pct6 = 0.0
+            
+        md_lines.append(f"| {date} | {pct1:.1f}% | {pct2:.1f}% | {pct3:.1f}% | {pct4:.1f}% | {pct5:.1f}% | {pct6:.1f}% | ${nav:,.2f} |")
+        
+    try:
+        with open(history_md_path, 'w', encoding='utf-8') as f:
+            f.write("\n".join(md_lines) + "\n")
+        print(f"All strategies allocation history saved to {history_md_path}")
+    except Exception as e:
+        print(f"Error saving all strategies allocation history: {e}")
+
 if __name__ == "__main__":
     main()

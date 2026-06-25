@@ -1,5 +1,5 @@
 # Daily Strategy Performance Comparison Report
-**Report Generated At:** 2026-06-25 19:58:09
+**Report Generated At:** 2026-06-25 15:39:59
 
 ## 1. Executive Performance Summary
 | Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |
@@ -10,7 +10,7 @@
 | **US Stock DCS Value-Growth (Isolated)** | $99,815.89 | $75,218.59 | $24,709.75 | 24.8% | +$235.83 | +0.24% | 2026-06-23 | USD |
 | **Alternative Assets (Isolated)** | $99,957.96 | $70,009.91 | $29,903.37 | 29.9% | +$379.99 | +0.38% | 2026-06-24 | USD |
 | **High-Beta Value-Momentum (Isolated)** | $100,012.32 | $100,012.32 | $0.00 | 0.0% | +$0.00 | +0.00% | 2026-06-24 | USD |
-| **Consolidated Multi-Strategy (S7)** | $300,964.35 | $245,338.54 | $55,625.81 | 18.5% | +$649.84 | +0.22% | 2026-06-24 | USD |
+| **Consolidated Multi-Strategy (S7)** | $300,963.99 | $245,338.51 | $55,625.48 | 18.5% | +$649.83 | +0.22% | 2026-06-24 | USD |
 
 --------------------------------------------------------------------------------
 
@@ -59,7 +59,7 @@
 ### G. Consolidated Multi-Strategy Portfolio (Strategy 7) Allocations (USD)
 | Strategy Component | Target Allocation % | Current Weight % | Deviation % | Current Value (USD) |
 | :--- | :---: | :---: | :---: | :---: |
-| Strategy 1 Mxn Value | 30.0% | 0.4% | -29.6% | $1,178.18 |
+| Strategy 1 Mxn Value | 30.0% | 0.4% | -29.6% | $1,177.82 |
 | Strategy 4 Us Dcs | 40.0% | 33.2% | -6.8% | $99,815.89 |
 | Strategy 5 Alternatives | 10.0% | 33.2% | +23.2% | $99,957.96 |
 | Strategy 6 High Beta | 20.0% | 33.2% | +13.2% | $100,012.32 |
@@ -75,4 +75,4 @@
 * **US Stock DCS Value-Growth Current Cash Reserves:** $75,218.59 USD
 * **Alternative Assets Current Cash Reserves:** $70,009.91 USD
 * **High-Beta Momentum Current Cash Reserves:** $100,012.32 USD
-* **Consolidated Portfolio Current Cash Reserves:** $245,338.54 USD
+* **Consolidated Portfolio Current Cash Reserves:** $245,338.51 USD
