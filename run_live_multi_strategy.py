@@ -251,6 +251,78 @@ def main():
     with open(state_path, 'w', encoding='utf-8') as f:
         json.dump(state, f, indent=2)
 
+    # 5.5. Construct Underlying Holdings detail tables
+    holdings_md = "\n## 4. Underlying Strategy Holdings Detail\n"
+    
+    # Strategy 1 (MXN Value)
+    holdings_md += "\n### A. Strategy 1: MXN Dynamic Value Holdings (MXN / USD)\n"
+    if s1_data and s1_data.get("holdings"):
+        holdings_md += "| Ticker | Shares Held | Buy Price (MXN) | Current Price (MXN) | Market Value (MXN) | Market Value (USD) | Strategy Weight |\n"
+        holdings_md += "| :--- | :---: | :---: | :---: | :---: | :---: | :---: |\n"
+        for h in s1_data["holdings"]:
+            ticker = h["ticker"]
+            shares = float(h["shares"])
+            buy_p = float(h["buy_price"])
+            last_p = float(h.get("last_price", buy_p))
+            mval_mxn = shares * last_p
+            mval_usd = mval_mxn / usd_mxn_rate
+            weight = mval_usd / s1_nav_usd if s1_nav_usd > 0 else 0.0
+            holdings_md += f"| **{ticker}** | {shares:,.4f} | ${buy_p:,.2f} | ${last_p:,.2f} | ${mval_mxn:,.2f} | ${mval_usd:,.2f} | {weight:.1%} |\n"
+    else:
+        holdings_md += "*No open stock positions currently held. Strategy is 100% Cash / Bondia sweep.*\n"
+
+    # Strategy 4 (US DCS)
+    holdings_md += "\n### B. Strategy 4: US DCS Value-Growth Holdings (USD)\n"
+    if s4_data and s4_data.get("holdings"):
+        holdings_md += "| Ticker | Shares Held | Buy Price (USD) | Current Price (USD) | Market Value (USD) | Strategy Weight | DCS MOS |\n"
+        holdings_md += "| :--- | :---: | :---: | :---: | :---: | :---: | :---: |\n"
+        for h in s4_data["holdings"]:
+            ticker = h["ticker"]
+            shares = float(h["shares"])
+            buy_p = float(h["buy_price"])
+            last_p = float(h.get("last_price", buy_p))
+            mval_usd = shares * last_p
+            weight = mval_usd / s4_nav_usd if s4_nav_usd > 0 else 0.0
+            dcs = h.get("dcs", 0.0)
+            holdings_md += f"| **{ticker}** | {shares:,.2f} | ${buy_p:,.2f} | ${last_p:,.2f} | ${mval_usd:,.2f} | {weight:.1%} | {dcs:.3f} |\n"
+    else:
+        holdings_md += "*No open stock positions currently held. Strategy is 100% Cash.*\n"
+
+    # Strategy 6 (High-Beta)
+    holdings_md += "\n### C. Strategy 6: US High-Beta Momentum Holdings (USD)\n"
+    if s6_data and s6_data.get("holdings"):
+        holdings_md += "| Ticker | Shares Held | Buy Price (USD) | Current Price (USD) | Market Value (USD) | Strategy Weight | DCS MOS | Beta |\n"
+        holdings_md += "| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |\n"
+        for h in s6_data["holdings"]:
+            ticker = h["ticker"]
+            shares = float(h["shares"])
+            buy_p = float(h["buy_price"])
+            last_p = float(h.get("last_price", buy_p))
+            mval_usd = shares * last_p
+            weight = mval_usd / s6_nav_usd if s6_nav_usd > 0 else 0.0
+            dcs = h.get("dcs", 0.0)
+            beta = h.get("beta", 0.0)
+            holdings_md += f"| **{ticker}** | {shares:,.4f} | ${buy_p:,.2f} | ${last_p:,.2f} | ${mval_usd:,.2f} | {weight:.1%} | {dcs:.3f} | {beta:.2f} |\n"
+    else:
+        holdings_md += "*No open stock positions currently held. Strategy is 100% Cash.*\n"
+
+    # Strategy 5 (Alternatives)
+    holdings_md += "\n### D. Strategy 5: Alternatives Holdings (USD)\n"
+    if s5_data and s5_data.get("holdings"):
+        holdings_md += "| Ticker | Asset Type | Shares Held | Buy Price (USD) | Current Price (USD) | Market Value (USD) | Strategy Weight |\n"
+        holdings_md += "| :--- | :--- | :---: | :---: | :---: | :---: | :---: |\n"
+        for h in s5_data["holdings"]:
+            ticker = h["ticker"]
+            asset_type = h.get("asset_type", "N/A").upper()
+            shares = float(h["shares"])
+            buy_p = float(h["buy_price"])
+            last_p = float(h.get("last_price", buy_p))
+            mval_usd = shares * last_p
+            weight = mval_usd / s5_nav_usd if s5_nav_usd > 0 else 0.0
+            holdings_md += f"| **{ticker}** | {asset_type} | {shares:,.4f} | ${buy_p:,.2f} | ${last_p:,.2f} | ${mval_usd:,.2f} | {weight:.1%} |\n"
+    else:
+        holdings_md += "*No open positions currently held. Strategy is 100% Cash.*\n"
+
     # 6. Generate report
     report_md = f"""# Strategy 7 (Consolidated Multi-Strategy) Daily Execution Report
 **Execution Date:** {today_str} | **Orchestrator Version:** Live V1
@@ -273,7 +345,7 @@ def main():
 | **Strategy 1: MXN Dynamic Value** | {W_S1*100:.1f}% | {w1_curr*100:.1f}% | {(w1_curr - W_S1)*100:+.1f}% | ${s1_nav_usd:,.2f} |
 | **Strategy 6: US High-Beta Momentum** | {W_S6*100:.1f}% | {w6_curr*100:.1f}% | {(w6_curr - W_S6)*100:+.1f}% | ${s6_nav_usd:,.2f} |
 | **Strategy 5: Alternatives (Crypto/Forex/ETFs)** | {W_S5*100:.1f}% | {w5_curr*100:.1f}% | {(w5_curr - W_S5)*100:+.1f}% | ${s5_nav_usd:,.2f} |
-
+{holdings_md}
 ---
 *Generated by daily orchestrator at {state["last_updated"]}*
 """
