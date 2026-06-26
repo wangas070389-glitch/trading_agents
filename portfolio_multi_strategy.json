@@ -1,8 +1,8 @@
 {
-  "total_portfolio_value_usd": 300967.980200615,
-  "total_cash_balance_usd": 245338.39172770677,
-  "last_updated": "2026-06-25 23:52:58",
-  "usd_mxn_rate": 17.507999420166016,
+  "total_portfolio_value_usd": 301007.76112947345,
+  "total_cash_balance_usd": 245338.34104032742,
+  "last_updated": "2026-06-25 23:32:06",
+  "usd_mxn_rate": 17.517099380493164,
   "history": [
     {
       "date": "2026-06-24",
@@ -25,29 +25,29 @@
   ],
   "allocations": {
     "strategy_1_mxn_value": {
-      "nav_usd": 1173.7209098517633,
+      "nav_usd": 1173.1111734175058,
       "nav_mxn": 20549.5050091214,
-      "current_weight": 0.0038998198714341667,
+      "current_weight": 0.0038972788243586574,
       "target_weight": 0.3,
-      "deviation": -0.2961001801285658
+      "deviation": -0.29610272117564135
     },
     "strategy_4_us_dcs": {
       "nav_usd": 99847.7402380371,
-      "current_weight": 0.3317553587311248,
+      "current_weight": 0.33171151422600453,
       "target_weight": 0.4,
-      "deviation": -0.0682446412688752
+      "deviation": -0.06828848577399549
     },
     "strategy_5_alternatives": {
-      "nav_usd": 99934.19872418404,
-      "current_weight": 0.3320426267856511,
+      "nav_usd": 99974.58938947678,
+      "current_weight": 0.3321329291123307,
       "target_weight": 0.1,
-      "deviation": 0.2320426267856511
+      "deviation": 0.23213292911233072
     },
     "strategy_6_high_beta": {
       "nav_usd": 100012.32032854209,
-      "current_weight": 0.3323021946117899,
+      "current_weight": 0.3322582778373062,
       "target_weight": 0.2,
-      "deviation": 0.13230219461178988
+      "deviation": 0.1322582778373062
     }
   },
   "performance": {
