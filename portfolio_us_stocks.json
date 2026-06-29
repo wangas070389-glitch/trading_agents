@@ -1,5 +1,5 @@
 {
-  "total_capital": 98376.38,
+  "total_capital": 98323.1,
   "cash_balance": 50179.07,
   "holdings": [
     {
@@ -11,5 +11,5 @@
       "target_weight": 0.25
     }
   ],
-  "last_updated": "2026-06-26 23:43:23"
+  "last_updated": "2026-06-29 01:29:42"
 }
