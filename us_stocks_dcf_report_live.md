@@ -2,7 +2,7 @@
 **Execution Date:** 2026-06-29 | **Strategy Version:** DCS Value-Growth Isolated V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $99,537.69 USD
+* **Total Portfolio NAV:** $99,478.86 USD
 * **Total Cash Balance:** $75,218.59 USD
 * **Equity Exposure:** 24.4%
 * **Days Since Last Rebalance:** 6 days
@@ -10,7 +10,7 @@
 ## 2. Current Holdings
 | Ticker | Shares Held | Last Price | Market Value | Target Weight | DCS Conviction |
 | :--- | :---: | :---: | ---: | :---: | :---: |
-| **AVGO** | 65.00 | $374.14 | $24,319.10 | 25.0% | 1.701 |
+| **AVGO** | 65.00 | $373.23 | $24,260.27 | 25.0% | 1.701 |
 
 ## 3. Today's Execution Logs
 * No actions required today. Portfolio matches target weights.
