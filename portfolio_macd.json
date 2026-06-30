@@ -1,12 +1,12 @@
 {
   "total_capital": 20000.0,
-  "cash_balance": 8274.75,
+  "cash_balance": 8274.97,
   "holdings": [
     {
       "ticker": "GAPB.MX",
       "shares": 9,
       "buy_price": 431.82000732421875,
-      "last_price": 440.45001220703125,
+      "last_price": 442.260009765625,
       "target_weight": 0.2,
       "hmm_state": 1
     },
@@ -14,7 +14,7 @@
       "ticker": "ASURB.MX",
       "shares": 7,
       "buy_price": 534.1500244140625,
-      "last_price": 531.1300048828125,
+      "last_price": 534.3099975585938,
       "target_weight": 0.2,
       "hmm_state": 1
     },
@@ -22,10 +22,10 @@
       "ticker": "FEMSAUBD.MX",
       "shares": 17,
       "buy_price": 223.5,
-      "last_price": 223.3300018310547,
+      "last_price": 222.9499969482422,
       "target_weight": 0.2,
       "hmm_state": 1
     }
   ],
-  "last_updated": "2026-06-30 18:52:05"
+  "last_updated": "2026-06-30 22:23:02"
 }
