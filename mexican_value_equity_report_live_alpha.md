@@ -1,19 +1,19 @@
 # Alpha-Momentum Concentrated Execution Report (Paper Trading)
-**Execution Date:** 2026-06-29 | **Strategy Version:** DCF Alpha-Momentum Concentrated V1
+**Execution Date:** 2026-06-30 | **Strategy Version:** DCF Alpha-Momentum Concentrated V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $20,920.22 MXN
-* **Total Cash Balance:** $1,709.51 MXN (Compounding in Bondia Cash at 11% APR)
+* **Total Portfolio NAV:** $20,871.15 MXN
+* **Total Cash Balance:** $1,709.76 MXN (Compounding in Bondia Cash at 11% APR)
 * **Equity Exposure:** 91.8%
-* **Days Since Last Rebalance:** 8 days
+* **Days Since Last Rebalance:** 9 days
 
 ## 2. Current Holdings
 | Ticker | Shares Held | Last Price | Market Value | Target Weight | DCS Conviction |
 | :--- | :---: | :---: | ---: | :---: | :---: |
-| **GRUMAB.MX** | 1.00 | $282.73 | $282.73 | 2.8% | 0.715 |
-| **ORBIA.MX** | 288.36 | $22.90 | $6,603.53 | 30.0% | 1.000 |
-| **BBAJIOO.MX** | 111.39 | $57.05 | $6,355.04 | 30.0% | 0.826 |
-| **GFNORTEO.MX** | 32.26 | $185.02 | $5,969.41 | 30.0% | 0.169 |
+| **GRUMAB.MX** | 1.00 | $282.23 | $282.23 | 2.8% | 0.715 |
+| **ORBIA.MX** | 288.36 | $22.60 | $6,517.02 | 30.0% | 1.000 |
+| **BBAJIOO.MX** | 111.39 | $57.18 | $6,369.52 | 30.0% | 0.826 |
+| **GFNORTEO.MX** | 32.26 | $185.74 | $5,992.64 | 30.0% | 0.169 |
 
 ## 3. Today's Execution Logs
 * No actions required today. Portfolio matches target weights and cash remains parked in Bondia Cash.

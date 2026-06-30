@@ -35,6 +35,8 @@
 | 2026-06-29 | BONDIA | INTEREST | 1 | 0.03 | +0.0346 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0436 days. |
 | 2026-06-29 | BONDIA | INTEREST | 1 | 0.05 | +0.0468 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0591 days. |
 | 2026-06-29 | BONDIA | INTEREST | 1 | 0.09 | +0.0850 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1073 days. |
+| 2026-06-30 | BONDIA | INTEREST | 1 | 0.64 | +0.6370 | Market | FILLED | Bondia overnight yield on cash reserves for 0.8039 days. |
+| 2026-06-30 | AMXB.MX | SELL | 172 | 22.73 | +3,905.65 | Market | FILLED | 1D MACD systematic signal |
 ---
 
 
@@ -43,6 +45,6 @@
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
-* **Total Deployed Capital**: 15,384.37 MXN (76.8% invested)
-* **Unallocated Cash Reserves**: 4,368.46 MXN (21.8% cash)
-* **Current Portfolio Market Value**: 20,037.08 MXN (including cash)
+* **Total Deployed Capital**: 11,424.93 MXN (57.8% invested)
+* **Unallocated Cash Reserves**: 8,274.75 MXN (41.9% cash)
+* **Current Portfolio Market Value**: 19,753.32 MXN (including cash)
