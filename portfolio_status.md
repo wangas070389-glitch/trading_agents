@@ -1,5 +1,5 @@
 # PORTFOLIO PERFORMANCE MONITOR
-**Status Check Time:** 2026-07-01 22:04:10
+**Status Check Time:** 2026-07-01 23:51:28
 
 ## 1. Current Holdings Value
 | Ticker | Shares Held | Buy Price (MXN) | Current Price (MXN) | Market Value (MXN) | Unrealized P/L | P/L % | DCS | HMM State | Target Weight |
@@ -10,10 +10,10 @@
 | GFNORTEO.MX | 32.26361682335487 | 189.48 | 189.77 | 6,122.67 | **+9.36** | **+0.15%** | 0.1687 | Sideways | 30.0% |
 
 * **Current Market Value of Shares**: 19,204.46 MXN (91.8% allocation)
-* **Bondia Cash Routing Reserves (6.53% APR)**: 1,710.12 MXN (8.2% cash reserve)
-* **Total Portfolio Value**: **20,914.58 MXN**
-* **Total Unrealized Profit/Loss**: **+914.58 MXN (+4.57%)**
+* **Bondia Cash Routing Reserves (6.53% APR)**: 1,710.14 MXN (8.2% cash reserve)
+* **Total Portfolio Value**: **20,914.60 MXN**
+* **Total Unrealized Profit/Loss**: **+914.60 MXN (+4.57%)**
 
 ## 2. Active Cash Routing & Yield Generation
-* Overnight interest accrued in this step: **+0.0254 MXN** (for 0.0819 days elapsed)
+* Overnight interest accrued in this step: **+0.0231 MXN** (for 0.0744 days elapsed)
 * Expected daily interest accrual at 6.53% APR: **+0.3102 MXN**

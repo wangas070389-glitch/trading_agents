@@ -1,16 +1,16 @@
 # Daily Strategy Performance Comparison Report
-**Report Generated At:** 2026-07-01 22:04:32
+**Report Generated At:** 2026-07-01 23:51:51
 
 ## 1. Executive Performance Summary
 | Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Adaptive Dynamic Value (V4)** | $20,914.58 | $1,710.12 | $18,631.39 | 89.1% | +$914.58 | +4.57% | 2026-06-03 | MXN |
-| **1d MACD + SMA + HMM** | $19,871.83 | $14,136.23 | $5,651.88 | 28.4% | $-128.17 | -0.64% | 2026-06-03 | MXN |
-| **US Stock Momentum (Isolated)** | $99,554.18 | $25,812.68 | $73,741.50 | 74.1% | +$447.55 | +0.45% | 2026-06-23 | USD |
-| **US Stock DCS Value-Growth (Isolated)** | $100,225.69 | $76,218.59 | $24,709.75 | 24.7% | +$1,119.06 | +1.13% | 2026-06-23 | USD |
-| **Alternative Assets (Isolated)** | $101,054.60 | $71,009.91 | $29,903.37 | 29.6% | +$1,947.97 | +1.97% | 2026-06-24 | USD |
+| **Adaptive Dynamic Value (V4)** | $20,914.60 | $1,710.14 | $18,631.39 | 89.1% | +$914.60 | +4.57% | 2026-06-03 | MXN |
+| **1d MACD + SMA + HMM** | $19,872.02 | $14,136.42 | $5,651.88 | 28.4% | $-127.98 | -0.64% | 2026-06-03 | MXN |
+| **US Stock Momentum (Isolated)** | $99,554.18 | $25,812.68 | $73,741.50 | 74.1% | +$548.05 | +0.55% | 2026-06-23 | USD |
+| **US Stock DCS Value-Growth (Isolated)** | $100,225.69 | $76,218.59 | $24,709.75 | 24.7% | +$1,219.56 | +1.23% | 2026-06-23 | USD |
+| **Alternative Assets (Isolated)** | $101,059.21 | $71,009.91 | $29,903.37 | 29.6% | +$2,055.66 | +2.08% | 2026-06-24 | USD |
 | **High-Beta Value-Momentum (Isolated)** | $101,036.96 | $101,036.96 | $0.00 | 0.0% | +$0.00 | +0.00% | 2026-06-24 | USD |
-| **Consolidated Multi-Strategy (S7)** | $303,509.04 | $248,362.91 | $55,146.13 | 18.2% | +$3,119.15 | +1.04% | 2026-06-24 | USD |
+| **Consolidated Multi-Strategy (S7)** | $303,513.65 | $248,362.91 | $55,150.73 | 18.2% | +$3,327.34 | +1.11% | 2026-06-24 | USD |
 
 --------------------------------------------------------------------------------
 
@@ -50,7 +50,7 @@
 | Ticker | Asset Type | Shares Held | Average Cost (USD) | Current Price (USD) | Market Value (USD) | Target Weight | Unrealized P/L | P/L % |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | EURUSD=X | FOREX | 13154.0000 | $1.14 | $1.14 | $14,971.55 | 15.0% | +$15.32 | +0.10% |
-| GBPUSD=X | FOREX | 11354.0000 | $1.32 | $1.33 | $15,073.15 | 15.0% | +$126.00 | +0.84% |
+| GBPUSD=X | FOREX | 11354.0000 | $1.32 | $1.33 | $15,077.75 | 15.0% | +$130.61 | +0.87% |
 
 
 ### F. High-Beta Value-Momentum (Isolated) Holdings (USD)
@@ -62,7 +62,7 @@
 | :--- | :---: | :---: | :---: | :---: |
 | Strategy 1 Mxn Value | 30.0% | 0.4% | -29.6% | $1,191.78 |
 | Strategy 4 Us Dcs | 40.0% | 33.0% | -7.0% | $100,225.69 |
-| Strategy 5 Alternatives | 10.0% | 33.3% | +23.3% | $101,054.60 |
+| Strategy 5 Alternatives | 10.0% | 33.3% | +23.3% | $101,059.21 |
 | Strategy 6 High Beta | 20.0% | 33.3% | +13.3% | $101,036.96 |
 
 --------------------------------------------------------------------------------
@@ -70,8 +70,8 @@
 ## 3. Cash Sweeps & Yield Settings
 * **Bondia Overnight Cash Sweep Yield:** **6.53% APR** (accrued on unallocated MXN cash balance daily).
 * **USD Sweep Cash Yield:** **4.50% APR** (accrued on unallocated USD cash reserves daily).
-* **Adaptive Value Current Cash Reserves:** $1,710.12 MXN
-* **1D MACD Current Cash Reserves:** $14,136.23 MXN
+* **Adaptive Value Current Cash Reserves:** $1,710.14 MXN
+* **1D MACD Current Cash Reserves:** $14,136.42 MXN
 * **US Stock Momentum Current Cash Reserves:** $25,812.68 USD
 * **US Stock DCS Value-Growth Current Cash Reserves:** $76,218.59 USD
 * **Alternative Assets Current Cash Reserves:** $71,009.91 USD
