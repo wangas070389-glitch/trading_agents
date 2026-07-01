@@ -43,6 +43,7 @@
 | 2026-07-01 | FEMSAUBD.MX | SELL | 9 | 223.98 | +2,013.67 | Market | FILLED | 1D MACD systematic signal |
 | 2026-07-01 | GAPB.MX | SELL | 5 | 445.20 | +2,223.65 | Market | FILLED | 1D MACD systematic signal |
 | 2026-07-01 | ASURB.MX | SELL | 3 | 541.50 | +1,622.37 | Market | FILLED | 1D MACD systematic signal |
+| 2026-07-01 | BONDIA | INTEREST | 1 | 0.21 | +0.2100 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0819 days. |
 ---
 
 
@@ -52,5 +53,5 @@
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
 * **Total Deployed Capital**: 5,651.88 MXN (28.4% invested)
-* **Unallocated Cash Reserves**: 14,136.02 MXN (71.1% cash)
-* **Current Portfolio Market Value**: 19,874.66 MXN (including cash)
+* **Unallocated Cash Reserves**: 14,136.23 MXN (71.1% cash)
+* **Current Portfolio Market Value**: 19,871.83 MXN (including cash)
