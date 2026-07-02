@@ -170,5 +170,38 @@ Running the standalone 5-year simulation (`python backtest_alternatives.py`) fro
 * Ran initial execution on Alpaca paper account to populate the active state database. It detected an oversold buy setup on `EURUSD=X` (RSI=25.6 at the lower Bollinger Band) and successfully executed a mock purchase of 13,154 shares at $1.1370.
 * Integrated into the standard nightly pipeline and comparison report generator.
 
+---
 
+---
 
+## 4. Scheduling Automated 30-Minute Live Execution
+
+We have implemented two options for automated scheduling: a **GitHub Actions Workflow** (running on GitHub) and a **Local Background Scheduler** (running locally on your machine).
+
+### A. Scheduling Rules & Timing
+* **Interval**: Runs every 30 minutes.
+* **Time Frame**: Monday through Friday, from 8:30 AM to 3:00 PM CST (Central/Mexico City Standard Time).
+* **GitHub Actions Schedule** ([monitor.yml](file:///c:/Users/wanga/OneDrive/Escritorio/Antigravity-projects/trading_agents/.github/workflows/monitor.yml)):
+  Configured via three separate cron schedules to cover standard Mexican BMV market hours (CST offset is UTC-6 all year round):
+  - `30 14 * * 1-5` => Runs at 8:30 AM CST (14:30 UTC)
+  - `0,30 15-20 * * 1-5` => Runs every 30 minutes from 9:00 AM CST to 2:30 PM CST (15:00 to 20:30 UTC)
+  - `0 21 * * 1-5` => Runs at 3:00 PM CST (21:00 UTC)
+* **Local Background Scheduler** ([scheduler.py](file:///c:/Users/wanga/OneDrive/Escritorio/Antigravity-projects/trading_agents/scheduler.py)):
+  Uses a robust 10-second sleep loop that evaluates the local system clock, ensuring immunity to system sleep, hibernation, or clock drift.
+
+### B. Execution Sequence
+Both schedulers execute the entire strategy pipeline sequentially in the following order:
+1. `monitor_portfolio.py`: Accrues overnight cash yield (Bondia interest) and pulls live prices for Strategy 1.
+2. `run_live_alpha_growth.py`: Runs Strategy 1 (MXN Dynamic Value / DCF Alpha-Momentum).
+3. `ingest_live_macd.py`: Runs the Live MACD Strategy Ingestion.
+4. `run_live_alpaca_us_stocks.py`: Runs Strategy 6 (US Stock Momentum Reference).
+5. `run_live_alpaca_us_stocks_dcf.py`: Runs Strategy 4 (US DCS Value-Growth).
+6. `run_live_alternatives.py`: Runs Strategy 5 (Alternative Assets).
+7. `run_live_high_beta.py`: Runs Strategy 6 (US High-Beta Momentum).
+8. `run_live_multi_strategy.py`: Consolidates all strategy reports/states into a multi-strategy JSON and updates the live report.
+9. `compare_strategies.py`: Compiles performance comparison logs.
+
+### C. Logging & Verification
+* **GitHub Actions**: Runs automatically on GitHub, commits files back to the repository on change with the run time (e.g. `Auto-update: Multi-strategy concentrated paper trading [2026-07-02 04:41:15 UTC]`), and displays logs in the Actions tab.
+* **Local Logging**: Logs core scheduler state to `scheduler.log` and individual script stdout/stderr to timestamped files under `scheduler_logs/`.
+* **Local Dry Run**: Run `python scheduler.py --test` to verify all scripts execute successfully on your local machine.

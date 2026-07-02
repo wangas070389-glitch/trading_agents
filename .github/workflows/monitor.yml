@@ -2,8 +2,13 @@ name: Daily DCF Alpha-Momentum Paper Trading
 
 on:
   schedule:
-    # Runs Monday to Friday at 22:30 UTC (4:30 PM Mexico City CST)
-    - cron: '30 22 * * 1-5'
+    # Runs Monday to Friday, every 30 minutes from 8:30 AM to 3:00 PM CST (Central/Mexico City Standard Time)
+    # 8:30 AM CST = 14:30 UTC
+    - cron: '30 14 * * 1-5'
+    # 9:00 AM CST to 2:30 PM CST = 15:00 UTC to 20:30 UTC
+    - cron: '0,30 15-20 * * 1-5'
+    # 3:00 PM CST = 21:00 UTC
+    - cron: '0 21 * * 1-5'
   workflow_dispatch:
     # Allows you to manually trigger this run from the GitHub Actions tab
 
@@ -81,5 +86,5 @@ jobs:
         git add portfolio.json portfolio_status.md portfolio_macd.json transactions_macd.md portfolio_us_stocks.json transactions_us_stocks.md portfolio_us_dcs.json transactions_us_dcs.md us_stocks_dcf_report_live.md portfolio_alternatives.json transactions_alternatives.md alternatives_report_live.md portfolio_high_beta.json transactions_high_beta.md high_beta_report_live.md portfolio_multi_strategy.json multi_strategy_report_live.md multi_strategy_allocation_history.md all_strategies_allocation_history.md all_strategies_history.json consolidated_portfolio_nav.csv comparison_report.md mexican_value_equity_report_live.md mexican_value_equity_report_live_alpha.md transactions.md evaluation_history.md signal_history.json equity_curve.json learned_params.json || true
         
         # Commit only if files have changed (to prevent error crashes on identical runs)
-        git diff-index --quiet HEAD || (git commit -m "Auto-update: Multi-strategy concentrated paper trading [$(date -u +%Y-%m-%d)]" && git push)
+        git diff-index --quiet HEAD || (git commit -m "Auto-update: Multi-strategy concentrated paper trading [$(date -u +'%Y-%m-%d %H:%M:%S UTC')]" && git push)
 
