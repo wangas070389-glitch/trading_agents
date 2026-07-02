@@ -50,6 +50,7 @@
 | 2026-07-02 | GAPB.MX | BUY | 4 | 439.53 | -1,760.13 | Market | FILLED | 1D MACD systematic signal |
 | 2026-07-02 | BONDIA | INTEREST | 1 | 0.04 | +0.0394 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0252 days. |
 | 2026-07-02 | BONDIA | INTEREST | 1 | 0.07 | +0.0679 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0434 days. |
+| 2026-07-02 | BONDIA | INTEREST | 1 | 0.05 | +0.0453 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0290 days. |
 ---
 
 
@@ -59,5 +60,5 @@
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
 * **Total Deployed Capital**: 11,175.04 MXN (56.4% invested)
-* **Unallocated Cash Reserves**: 8,609.38 MXN (43.5% cash)
-* **Current Portfolio Market Value**: 19,796.98 MXN (including cash)
+* **Unallocated Cash Reserves**: 8,609.43 MXN (43.4% cash)
+* **Current Portfolio Market Value**: 19,818.71 MXN (including cash)
