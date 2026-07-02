@@ -7,6 +7,9 @@
 | 2026-06-23 | JPM | BUY | 74 | 334.14 | -24,726.36 | Market | FILLED | Alpaca Order 34c26674-cde0-4b81-8eb1-1f5497d39ea0 | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 | 2026-06-30 | TSLA | BUY | 58 | 420.03 | -24,361.74 | Market | FILLED | Alpaca Order 16bba08c-dfa5-4aaf-9e96-8e8b416e1655 | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 | 2026-07-01 | AMZN | BUY | 102 | 241.70 | -24,653.40 | Market | FILLED | Alpaca Order e05f5ad0-db0a-43a0-8b46-e883d9b28e4c | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
+| 2026-07-02 | TSLA | SELL | 58 | 394.39 | +22,874.62 | Market | FILLED | Alpaca Order de6cce6d-c789-40f8-bc77-c3800507befb | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-02 | AAPL | BUY | 79 | 307.81 | -24,316.64 | Market | FILLED | Alpaca Order 256e97be-80a5-49c6-9a64-f1764217f2c2 | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
+| 2026-07-02 | GOOGL | BUY | 68 | 355.76 | -24,191.68 | Market | FILLED | Alpaca Order f7debfb4-62c5-43dd-8bc7-1d5b1800e20e | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 ---
 
 
@@ -14,7 +17,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $99,006.13 USD
-* **Total Deployed Capital**: $73,741.50 USD (74.1% invested)
-* **Unallocated Cash Reserves**: $25,812.68 USD (25.9% cash)
-* **Current Portfolio Market Value**: $99,554.18 USD (including cash)
+* **Initial Starting Capital**: $97,286.66 USD
+* **Total Deployed Capital**: $97,888.08 USD (133.6% invested)
+* **Unallocated Cash Reserves**: $-24,632.76 USD (-33.6% cash)
+* **Current Portfolio Market Value**: $73,255.32 USD (including cash)

@@ -1,6 +1,6 @@
 {
-  "total_capital": 99006.13,
-  "cash_balance": 25812.68,
+  "total_capital": 97286.66,
+  "cash_balance": -24632.76,
   "holdings": [
     {
       "ticker": "JPM",
@@ -11,21 +11,29 @@
       "target_weight": 0.25
     },
     {
-      "ticker": "TSLA",
-      "shares": 58,
-      "buy_price": 420.0299987792969,
-      "last_price": 420.0299987792969,
-      "peak_price": 432.8598937988281,
-      "target_weight": 0.25
-    },
-    {
       "ticker": "AMZN",
       "shares": 102,
       "buy_price": 241.6999969482422,
       "last_price": 241.6999969482422,
-      "peak_price": 244.89999389648438,
+      "peak_price": 246.72000122070312,
+      "target_weight": 0.25
+    },
+    {
+      "ticker": "AAPL",
+      "shares": 79,
+      "buy_price": 307.8055114746094,
+      "last_price": 307.8055114746094,
+      "peak_price": 307.8900146484375,
+      "target_weight": 0.25
+    },
+    {
+      "ticker": "GOOGL",
+      "shares": 68,
+      "buy_price": 355.760009765625,
+      "last_price": 355.760009765625,
+      "peak_price": 364.2049865722656,
       "target_weight": 0.25
     }
   ],
-  "last_updated": "2026-07-01 23:51:42"
+  "last_updated": "2026-07-02 16:19:02"
 }
