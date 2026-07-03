@@ -1,6 +1,6 @@
 # Strategy 11: Intraday CCI-ADX Leveraged Breakout & Reversion Report
 **Simulation Period:** 2026-04-08 to 2026-07-02 (85.0 Days)
-**Assets Traded:** TQQQ & SQQQ based on QQQ index indicators (CCI & ADX).
+**Assets Traded:** TQQQ (3x Long QQQ) & SQQQ (3x Short QQQ) based on QQQ index indicators (CCI & ADX).
 
 ## 1. Performance Summary
 * **Final Portfolio NAV**: $203,552.39 MXN

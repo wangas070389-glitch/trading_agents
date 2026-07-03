@@ -21,33 +21,29 @@ def calculate_atr(df, period=14):
     atr = tr.rolling(window=period).mean()
     return atr.fillna(tr.expanding().mean())
 
-def calculate_cci(df, period=20):
+def calculate_cci(df, period=10):
     tp = (df['High'] + df['Low'] + df['Close']) / 3.0
     sma = tp.rolling(window=period).mean()
-    # rolling mean absolute deviation
     mad = tp.rolling(window=period).apply(lambda x: np.abs(x - x.mean()).mean(), raw=True)
     cci = (tp - sma) / (0.015 * mad)
     return cci.fillna(0.0)
 
-def calculate_adx(df, period=14):
+def calculate_adx(df, period=7):
     high = df['High']
     low = df['Low']
     close = df['Close']
     
-    # TR
     tr1 = high - low
     tr2 = (high - close.shift(1)).abs()
     tr3 = (low - close.shift(1)).abs()
     tr = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
     
-    # DM+ / DM-
     up_move = high - high.shift(1)
     down_move = low.shift(1) - low
     
     plus_dm = np.where((up_move > down_move) & (up_move > 0), up_move, 0.0)
     minus_dm = np.where((down_move > up_move) & (down_move > 0), down_move, 0.0)
     
-    # Wilder's Smoothing
     tr_smooth = tr.rolling(window=period).mean()
     plus_dm_smooth = pd.Series(plus_dm, index=df.index).rolling(window=period).mean()
     minus_dm_smooth = pd.Series(minus_dm, index=df.index).rolling(window=period).mean()
@@ -66,7 +62,7 @@ def main():
     print("STRATEGY 11: INTRADAY CCI-ADX TWIN BACKTEST")
     print("=" * 80)
     
-    # 1. Download SPY returns for daily HMM regime checks
+    # 1. Download SPY returns for HMM regime checks
     print("Downloading historical daily SPY returns for HMM training (2 years)...")
     spy_daily = yf.download("SPY", start="2024-05-01", end="2026-07-01", interval="1d", progress=False)
     spy_daily.columns = [c[0] if isinstance(c, tuple) else c for c in spy_daily.columns]
@@ -140,9 +136,8 @@ def main():
     cash = INITIAL_NAV
     portfolio_value = INITIAL_NAV
     
-    active_position = None  # None or {"side": "long"/"short", "shares": float, "entry_price": float, "peak_price": float, "allocated": float}
+    active_position = None  
     
-    # Record tracking lists
     nav_history = []
     dates_list = []
     regimes_list = []
@@ -194,7 +189,6 @@ def main():
                     should_hold_overnight = False
                     if is_eod and not is_stop_out:
                         trade_profit = (current_price > active_position["entry_price"])
-                        # Hold overnight if trend is very strong (ADX > 25)
                         if trade_profit and adx_qqq > 25.0:
                             if active_position["side"] == "long" and close_qqq >= (daily_high_qqq - 0.005 * daily_high_qqq) and regime == 0:
                                 should_hold_overnight = True
@@ -219,13 +213,11 @@ def main():
                         
             # Trigger entries
             if not active_position and not is_eod:
-                # ADX filter to separate Trend vs. Chop
                 is_trending = adx_qqq >= 22.0
                 
                 if is_trending:
                     # Breakout Trend Following Mode
                     if regime == 0 and cci_qqq > 100.0 and di_plus > di_minus:
-                        # Enter Long TQQQ
                         alloc = current_portfolio_value * 0.90
                         shares = alloc / (close_tqqq * (1.0 + commission_rate))
                         cash -= alloc
@@ -244,7 +236,6 @@ def main():
                             "pnl": 0.0
                         })
                     elif (regime == 1 or regime == 2) and cci_qqq < -100.0 and di_minus > di_plus:
-                        # Enter Short SQQQ
                         alloc = current_portfolio_value * 0.90
                         shares = alloc / (close_sqqq * (1.0 + commission_rate))
                         cash -= alloc
@@ -265,7 +256,6 @@ def main():
                 else:
                     # Mean Reversion Mode (CCI extreme reversal)
                     if cci_qqq < -150.0:
-                        # Buy TQQQ reversion
                         alloc = current_portfolio_value * 0.90
                         shares = alloc / (close_tqqq * (1.0 + commission_rate))
                         cash -= alloc
@@ -284,7 +274,6 @@ def main():
                             "pnl": 0.0
                         })
                     elif cci_qqq > 150.0:
-                        # Buy SQQQ reversion
                         alloc = current_portfolio_value * 0.90
                         shares = alloc / (close_sqqq * (1.0 + commission_rate))
                         cash -= alloc
@@ -303,9 +292,7 @@ def main():
                             "pnl": 0.0
                         })
             elif active_position and not is_eod:
-                # Settle mean reversion early if CCI returns to center line (0.0)
                 side = active_position["side"]
-                # If we entered reversion and CCI crosses zero, exit early
                 if (side == "long" and cci_qqq >= 0.0) or (side == "short" and cci_qqq <= 0.0):
                     current_price = close_tqqq if side == "long" else close_sqqq
                     val_credited = active_position["shares"] * current_price * (1.0 - commission_rate)
@@ -368,7 +355,7 @@ def main():
     report_path = os.path.join(dir_path, "strategy11_backtest_report.md")
     report = f"""# Strategy 11: Intraday CCI-ADX Leveraged Breakout & Reversion Report
 **Simulation Period:** {df_nav.index[0].date()} to {df_nav.index[-1].date()} ({years*365.25:.1f} Days)
-**Assets Traded:** TQQQ & SQQQ based on QQQ index indicators (CCI & ADX).
+**Assets Traded:** TQQQ (3x Long QQQ) & SQQQ (3x Short QQQ) based on QQQ index indicators (CCI & ADX).
 
 ## 1. Performance Summary
 * **Final Portfolio NAV**: ${final_nav:,.2f} MXN
