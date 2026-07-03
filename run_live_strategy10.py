@@ -8,7 +8,6 @@ import numpy as np
 import pandas as pd
 from hmmlearn.hmm import GaussianHMM
 
-# local import
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 PORTFOLIO_FILE = "portfolio_strategy10.json"
@@ -41,10 +40,10 @@ def log_transaction(dir_path, date_str, ticker, action, shares, price, note, fee
     t_path = os.path.join(dir_path, TRANSACTIONS_FILE)
     if not os.path.exists(t_path):
         with open(t_path, "w", encoding="utf-8") as f:
-            f.write("# Transaction Ledger (Strategy 10: Intraday VWAP Alpha)\n\n| Date | Ticker | Action | Shares | Price | Fee | Net Impact | Note |\n| :--- | :--- | :--- | ---: | ---: | ---: | ---: | :--- |\n---\n")
+            f.write("# Transaction Ledger (Strategy 10: Upgraded Intraday Alpha)\n\n| Date | Ticker | Action | Shares | Price | Fee | Net Impact | Note |\n| :--- | :--- | :--- | ---: | ---: | ---: | ---: | :--- |\n---\n")
             
     net_amount = shares * price
-    if action in ["BUY", "DEPOSIT"]:
+    if action in ["BUY_TQQQ", "BUY_SQQQ", "DEPOSIT"]:
         net_amount = -(net_amount + fee)
     else:
         net_amount = net_amount - fee
@@ -91,7 +90,7 @@ def main():
     now = datetime.datetime.now()
 
     print("=" * 80)
-    print(f"LIVE EXECUTION: STRATEGY 10: INTRADAY VWAP ALPHA ({today_str})")
+    print(f"LIVE UPGRADED EXECUTION: STRATEGY 10: INTRADAY VWAP ALPHA ({today_str})")
     print("=" * 80)
 
     # 1. Load portfolio and accrue sweep interest
@@ -123,7 +122,7 @@ def main():
         print(f"[DCA Deposit] Month transition detected. Ingested ${MONTHLY_CONTRIBUTION:,.2f} MXN.")
         log_transaction(dir_path, today_str, "CASH", "DEPOSIT", 1, MONTHLY_CONTRIBUTION, "Monthly DCA savings contribution", fee=0.0)
 
-    # 3. Check currency rate and fetch SPY daily + QQQ 30-min data
+    # 3. Fetch data for QQQ, TQQQ, SQQQ and FX rates
     print("\nFetching pricing histories and FX rates...")
     try:
         usdmxn_ticker = yf.Ticker("MXN=X")
@@ -134,13 +133,22 @@ def main():
         spy_daily.columns = [c[0] if isinstance(c, tuple) else c for c in spy_daily.columns]
         
         qqq_30m = yf.download("QQQ", period="5d", interval="30m", progress=False)
-        if isinstance(qqq_30m.columns, pd.MultiIndex):
-            qqq_30m.columns = [c[0] for c in qqq_30m.columns]
+        tqqq_30m = yf.download("TQQQ", period="5d", interval="30m", progress=False)
+        sqqq_30m = yf.download("SQQQ", period="5d", interval="30m", progress=False)
+        
+        if isinstance(qqq_30m.columns, pd.MultiIndex): qqq_30m.columns = [c[0] for c in qqq_30m.columns]
+        if isinstance(tqqq_30m.columns, pd.MultiIndex): tqqq_30m.columns = [c[0] for c in tqqq_30m.columns]
+        if isinstance(sqqq_30m.columns, pd.MultiIndex): sqqq_30m.columns = [c[0] for c in sqqq_30m.columns]
+        
+        # Calculate ATRs
+        qqq_30m["ATR"] = calculate_atr(qqq_30m, period=14)
+        tqqq_30m["ATR"] = calculate_atr(tqqq_30m, period=14)
+        sqqq_30m["ATR"] = calculate_atr(sqqq_30m, period=14)
     except Exception as e:
         print(f"Failed to fetch market data: {e}")
         return
 
-    # 4. HMM Regime Prediction (Daily check)
+    # 4. HMM Regime Prediction
     spy_returns = spy_daily["Close"].ffill().pct_change().dropna().values.reshape(-1, 1)
     hmm = GaussianHMM(n_components=3, covariance_type="full", n_iter=100, random_state=42)
     hmm.fit(spy_returns)
@@ -152,7 +160,6 @@ def main():
     bear_state = np.argmax(state_vols)
     rem = [i for i in range(3) if i != bear_state]
     bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
-    chop_state = [i for i in range(3) if i != bear_state and i != bull_state][0]
     
     current_state_raw = regimes[-1]
     if args.force_regime is not None:
@@ -171,175 +178,186 @@ def main():
             
     print(f"Regime Decoded: State {regime} ({regime_reason})")
 
-    # 5. Calculate intraday VWAP and ATR Bands
-    # Standardize time to local market hours
-    # We group bars belonging to today to compute rolling VWAP
+    # 5. Establish current bar metrics
+    close_qqq = float(qqq_30m["Close"].iloc[-1])
+    atr_qqq = float(qqq_30m["ATR"].iloc[-1])
+    
+    close_tqqq = float(tqqq_30m["Close"].iloc[-1])
+    atr_tqqq = float(tqqq_30m["ATR"].iloc[-1])
+    
+    close_sqqq = float(sqqq_30m["Close"].iloc[-1])
+    atr_sqqq = float(sqqq_30m["ATR"].iloc[-1])
+
     today_date_str = now.strftime("%Y-%m-%d")
-    qqq_30m.index = pd.to_datetime(qqq_30m.index)
+    today_bars_qqq = qqq_30m[qqq_30m.index.strftime("%Y-%m-%d") == today_date_str]
     
-    # Calculate ATR
-    qqq_30m["ATR"] = calculate_atr(qqq_30m, period=14)
-    
-    # Filter bars belonging to the current trading day
-    today_bars = qqq_30m[qqq_30m.index.strftime("%Y-%m-%d") == today_date_str]
-    
-    action_logs = []
-    close_price = float(qqq_30m["Close"].iloc[-1])
-    atr_val = float(qqq_30m["ATR"].iloc[-1])
-    
-    if not today_bars.empty:
-        cum_pv = ((today_bars["High"] + today_bars["Low"] + today_bars["Close"]) / 3.0 * today_bars["Volume"]).sum()
-        cum_vol = today_bars["Volume"].sum()
-        vwap_val = cum_pv / cum_vol if cum_vol > 0 else close_price
+    if not today_bars_qqq.empty:
+        cum_pv = ((today_bars_qqq["High"] + today_bars_qqq["Low"] + today_bars_qqq["Close"]) / 3.0 * today_bars_qqq["Volume"]).sum()
+        cum_vol = today_bars_qqq["Volume"].sum()
+        vwap_qqq = cum_pv / cum_vol if cum_vol > 0 else close_qqq
+        daily_high_qqq = float(today_bars_qqq["High"].max())
+        daily_low_qqq = float(today_bars_qqq["Low"].min())
     else:
-        vwap_val = close_price
+        vwap_qqq = close_qqq
+        daily_high_qqq = close_qqq
+        daily_low_qqq = close_qqq
 
-    upper_band = vwap_val + 2.0 * atr_val
-    lower_band = vwap_val - 2.0 * atr_val
+    # Tightened entry bands (1.5 * ATR)
+    upper_band = vwap_qqq + 1.5 * atr_qqq
+    lower_band = vwap_qqq - 1.5 * atr_qqq
 
-    # Check for EOD Square-off (Alpaca market close closeout at 2:30 PM CST / 15:30 EST)
-    # Market close is at 15:00 CST / 16:00 EST. We check if time is past 2:30 PM CST (14:30 CST)
-    is_eod = now.time() >= datetime.time(14, 30) or now.time() >= datetime.time(15, 30) # handle EST/CST overlap
+    is_eod = now.time() >= datetime.time(14, 30) or now.time() >= datetime.time(15, 30)
     
-    # Load open position if any
     holdings = portfolio["holdings"]
     active_pos = holdings[0] if holdings else None
+    action_logs = []
     
-    if is_eod:
-        # Liquidate all holdings immediately
-        if active_pos:
-            ticker = active_pos["ticker"]
-            shares = active_pos["shares"]
-            side = active_pos.get("side", "long")
+    # 6. Evaluation Logic
+    if active_pos:
+        side = active_pos.get("side", "long")
+        ticker = active_pos["ticker"]
+        shares = active_pos["shares"]
+        
+        current_price = close_tqqq if side == "long" else close_sqqq
+        atr_exec = atr_tqqq if side == "long" else atr_sqqq
+        
+        # Update peak price for trailing stop
+        active_pos["peak_price"] = max(active_pos.get("peak_price", current_price), current_price)
+        stop_threshold = active_pos["peak_price"] - 1.5 * atr_exec
+        
+        is_stop_out = current_price < stop_threshold
+        
+        if is_stop_out or is_eod:
+            should_hold_overnight = False
+            if is_eod and not is_stop_out:
+                # Conditional Hold Evaluation
+                price_mxn = current_price * fx_rate
+                trade_in_profit = (price_mxn > active_pos["buy_price"])
+                if trade_in_profit:
+                    if side == "long" and close_qqq >= (daily_high_qqq - 0.005 * daily_high_qqq) and regime == 0:
+                        should_hold_overnight = True
+                    elif side == "short" and close_qqq <= (daily_low_qqq + 0.005 * daily_low_qqq) and (regime == 1 or regime == 2):
+                        should_hold_overnight = True
             
-            price_mxn = close_price * fx_rate
+            if not should_hold_overnight:
+                price_mxn = current_price * fx_rate
+                if side == "long":
+                    val = shares * price_mxn
+                else:
+                    val = active_pos["allocated"] + (active_pos["allocated"] - shares * price_mxn)
+                    
+                current_cash += val * (1.0 - TRANSACTION_FEE_RATE)
+                exit_reason = "TRAILING_STOP" if is_stop_out else "EOD_LIQUIDATION"
+                log_transaction(dir_path, today_str, ticker, f"EXIT_{side.upper()}", shares, price_mxn, f"Exit: {exit_reason}", fee=0.0)
+                action_logs.append(f"LIQUIDATED {side.upper()} position on {ticker} via {exit_reason}. Balance credited: ${val:,.2f} MXN.")
+                portfolio["holdings"] = []
+                active_pos = None
+            else:
+                action_logs.append(f"HOLDING {side.upper()} position on {ticker} overnight. (Reason: Strong trend close, trade in profit).")
+                active_pos["last_price"] = current_price * fx_rate
+                
+    # 7. Entry Triggers (only if flat)
+    if not active_pos and not is_eod:
+        if regime == 1:
+            # Bear State: Short Breakout (SQQQ)
+            if close_qqq < lower_band:
+                price_mxn = close_sqqq * fx_rate
+                alloc = current_cash * 0.90
+                shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
+                if shares > 0.01:
+                    current_cash -= alloc
+                    portfolio["holdings"].append({
+                        "ticker": "SQQQ",
+                        "side": "short",
+                        "shares": shares,
+                        "buy_price": price_mxn,
+                        "last_price": price_mxn,
+                        "peak_price": close_sqqq,
+                        "allocated": alloc
+                    })
+                    log_transaction(dir_path, today_str, "SQQQ", "BUY_SQQQ", shares, price_mxn, "Bear breakdown entry", fee=0.0)
+                    action_logs.append(f"ENTERED SHORT breakout on SQQQ at ${price_mxn:,.2f} MXN.")
+        elif regime == 0:
+            # Bull State: Long Breakout (TQQQ)
+            if close_qqq > upper_band:
+                price_mxn = close_tqqq * fx_rate
+                alloc = current_cash * 0.90
+                shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
+                if shares > 0.01:
+                    current_cash -= alloc
+                    portfolio["holdings"].append({
+                        "ticker": "TQQQ",
+                        "side": "long",
+                        "shares": shares,
+                        "buy_price": price_mxn,
+                        "last_price": price_mxn,
+                        "peak_price": close_tqqq,
+                        "allocated": alloc
+                    })
+                    log_transaction(dir_path, today_str, "TQQQ", "BUY_TQQQ", shares, price_mxn, "Bull breakout entry", fee=0.0)
+                    action_logs.append(f"ENTERED LONG breakout on TQQQ at ${price_mxn:,.2f} MXN.")
+        else:
+            # Chop State: Mean Reversion to VWAP
+            if close_qqq < lower_band:
+                price_mxn = close_tqqq * fx_rate
+                alloc = current_cash * 0.90
+                shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
+                if shares > 0.01:
+                    current_cash -= alloc
+                    portfolio["holdings"].append({
+                        "ticker": "TQQQ",
+                        "side": "long",
+                        "shares": shares,
+                        "buy_price": price_mxn,
+                        "last_price": price_mxn,
+                        "peak_price": close_tqqq,
+                        "allocated": alloc
+                    })
+                    log_transaction(dir_path, today_str, "TQQQ", "BUY_TQQQ", shares, price_mxn, "Lower band mean-reversion buy", fee=0.0)
+                    action_logs.append(f"ENTERED LONG reversion on TQQQ at ${price_mxn:,.2f} MXN.")
+            elif close_qqq > upper_band:
+                price_mxn = close_sqqq * fx_rate
+                alloc = current_cash * 0.90
+                shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
+                if shares > 0.01:
+                    current_cash -= alloc
+                    portfolio["holdings"].append({
+                        "ticker": "SQQQ",
+                        "side": "short",
+                        "shares": shares,
+                        "buy_price": price_mxn,
+                        "last_price": price_mxn,
+                        "peak_price": close_sqqq,
+                        "allocated": alloc
+                    })
+                    log_transaction(dir_path, today_str, "SQQQ", "BUY_SQQQ", shares, price_mxn, "Upper band mean-reversion short", fee=0.0)
+                    action_logs.append(f"ENTERED SHORT reversion on SQQQ at ${price_mxn:,.2f} MXN.")
+    elif active_pos and regime == 2 and not is_eod:
+        # Settle reversion early at VWAP during Chop
+        side = active_pos["side"]
+        if (side == "long" and close_qqq >= vwap_qqq) or \
+           (side == "short" and close_qqq <= vwap_qqq):
+            current_price = close_tqqq if side == "long" else close_sqqq
+            price_mxn = current_price * fx_rate
+            shares = active_pos["shares"]
+            
             if side == "long":
                 val = shares * price_mxn
             else:
                 val = active_pos["allocated"] + (active_pos["allocated"] - shares * price_mxn)
                 
             current_cash += val * (1.0 - TRANSACTION_FEE_RATE)
-            log_transaction(dir_path, today_str, ticker, f"CLOSE_{side.upper()}", shares, close_price * fx_rate, "EOD square-off forced liquidation", fee=0.0)
-            action_logs.append(f"FORCE CLOSED intraday {side.upper()} position on {ticker} for end-of-day square-off. Cash credited: ${val:,.2f} MXN.")
+            log_transaction(dir_path, today_str, active_pos["ticker"], f"SETTLE_{side.upper()}_VWAP", shares, price_mxn, "Reversion target met at VWAP line", fee=0.0)
+            action_logs.append(f"SETTLED {side.upper()} reversion on QQQ at VWAP line (${vwap_qqq:.2f}). Cash credited: ${val:,.2f} MXN.")
             portfolio["holdings"] = []
             active_pos = None
-    else:
-        # Run active trading triggers based on regime
-        if regime == 1:
-            # Bear state: Stays in cash sweeps, close positions if any
-            if active_pos:
-                ticker = active_pos["ticker"]
-                shares = active_pos["shares"]
-                side = active_pos.get("side", "long")
-                price_mxn = close_price * fx_rate
-                if side == "long":
-                    val = shares * price_mxn
-                else:
-                    val = active_pos["allocated"] + (active_pos["allocated"] - shares * price_mxn)
-                current_cash += val * (1.0 - TRANSACTION_FEE_RATE)
-                log_transaction(dir_path, today_str, ticker, f"CLOSE_{side.upper()}", shares, price_mxn, "Bear regime shift liquidation", fee=0.0)
-                action_logs.append(f"CLOSED position on {ticker} due to Bear state classification.")
-                portfolio["holdings"] = []
-                active_pos = None
-                
-        elif regime == 0:
-            # Bull state: Momentum Breakouts
-            if not active_pos:
-                if close_price > upper_band:
-                    # Enter Long QQQ
-                    price_mxn = close_price * fx_rate
-                    alloc = current_cash * 0.90
-                    shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
-                    if shares > 0.01:
-                        current_cash -= alloc
-                        portfolio["holdings"].append({
-                            "ticker": "QQQ",
-                            "side": "long",
-                            "shares": shares,
-                            "buy_price": price_mxn,
-                            "last_price": price_mxn,
-                            "allocated": alloc
-                        })
-                        log_transaction(dir_path, today_str, "QQQ", "BUY_LONG", shares, price_mxn, "Bull breakout entry", fee=0.0)
-                        action_logs.append(f"ENTERED LONG breakout on QQQ at ${price_mxn:,.2f} MXN.")
-                elif close_price < lower_band:
-                    # Enter Short QQQ
-                    price_mxn = close_price * fx_rate
-                    alloc = current_cash * 0.90
-                    shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
-                    if shares > 0.01:
-                        current_cash -= alloc
-                        portfolio["holdings"].append({
-                            "ticker": "QQQ",
-                            "side": "short",
-                            "shares": shares,
-                            "buy_price": price_mxn,
-                            "last_price": price_mxn,
-                            "allocated": alloc
-                        })
-                        log_transaction(dir_path, today_str, "QQQ", "SELL_SHORT", shares, price_mxn, "Bear breakdown entry", fee=0.0)
-                        action_logs.append(f"ENTERED SHORT breakdown on QQQ at ${price_mxn:,.2f} MXN.")
-                        
-        else:
-            # Chop state: Mean Reversion to VWAP
-            if not active_pos:
-                if close_price < lower_band:
-                    # Buy reversion (Long)
-                    price_mxn = close_price * fx_rate
-                    alloc = current_cash * 0.90
-                    shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
-                    if shares > 0.01:
-                        current_cash -= alloc
-                        portfolio["holdings"].append({
-                            "ticker": "QQQ",
-                            "side": "long",
-                            "shares": shares,
-                            "buy_price": price_mxn,
-                            "last_price": price_mxn,
-                            "allocated": alloc
-                        })
-                        log_transaction(dir_path, today_str, "QQQ", "BUY_REVERSION", shares, price_mxn, "Lower band mean-reversion buy", fee=0.0)
-                        action_logs.append(f"ENTERED LONG reversion on QQQ at ${price_mxn:,.2f} MXN (Price < Lower Band).")
-                elif close_price > upper_band:
-                    # Sell reversion (Short)
-                    price_mxn = close_price * fx_rate
-                    alloc = current_cash * 0.90
-                    shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
-                    if shares > 0.01:
-                        current_cash -= alloc
-                        portfolio["holdings"].append({
-                            "ticker": "QQQ",
-                            "side": "short",
-                            "shares": shares,
-                            "buy_price": price_mxn,
-                            "last_price": price_mxn,
-                            "allocated": alloc
-                        })
-                        log_transaction(dir_path, today_str, "QQQ", "SHORT_REVERSION", shares, price_mxn, "Upper band mean-reversion short", fee=0.0)
-                        action_logs.append(f"ENTERED SHORT reversion on QQQ at ${price_mxn:,.2f} MXN (Price > Upper Band).")
-            else:
-                # Target reversion to VWAP line to settle early
-                side = active_pos["side"]
-                if (side == "long" and close_price >= vwap_val) or \
-                   (side == "short" and close_price <= vwap_val):
-                    price_mxn = close_price * fx_rate
-                    shares = active_pos["shares"]
-                    if side == "long":
-                        val = shares * price_mxn
-                    else:
-                        val = active_pos["allocated"] + (active_pos["allocated"] - shares * price_mxn)
-                    current_cash += val * (1.0 - TRANSACTION_FEE_RATE)
-                    log_transaction(dir_path, today_str, "QQQ", f"SETTLE_{side.upper()}_VWAP", shares, price_mxn, "Reversion target met at VWAP line", fee=0.0)
-                    action_logs.append(f"SETTLED {side.upper()} reversion on QQQ at VWAP line (${vwap_val:.2f}). Cash credited: ${val:,.2f} MXN.")
-                    portfolio["holdings"] = []
-                    active_pos = None
 
-    # Calculate portfolio values
+    # Recalculate valuations
     assets_equity = 0.0
     for h in portfolio["holdings"]:
-        h["last_price"] = close_price * fx_rate
-        side = h.get("side", "long")
-        if side == "long":
+        curr_p = close_tqqq if h["side"] == "long" else close_sqqq
+        h["last_price"] = curr_p * fx_rate
+        if h["side"] == "long":
             assets_equity += h["shares"] * h["last_price"]
         else:
             assets_equity += h["allocated"] + (h["allocated"] - h["shares"] * h["last_price"])
@@ -351,9 +369,9 @@ def main():
     portfolio["total_capital"] = round(portfolio_value, 2)
     save_portfolio(dir_path, portfolio)
 
-    # 7. Generate markdown report
-    report_md = f"""# Strategy 10: Intraday VWAP Alpha Execution Report
-**Execution Date:** {now.strftime('%Y-%m-%d %H:%M:%S')} | **Strategy Version:** Upgraded Live V1
+    # Generate live report
+    report_md = f"""# Strategy 10: Upgraded Intraday VWAP Execution Report
+**Execution Date:** {now.strftime('%Y-%m-%d %H:%M:%S')} | **Strategy Version:** Upgraded Live V2 (Leveraged)
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** ${portfolio_value:,.2f} MXN
@@ -362,7 +380,7 @@ def main():
 * **Active Regime:** State {regime} ({regime_reason})
 
 ## 2. Current Holdings
-| Ticker | Type | Side | Shares | Buy Price | Last Price | Market Value (MXN) |
+| Ticker | Type | Side | Shares | Buy Price (MXN) | Last Price (MXN) | Market Value (MXN) |
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
 """
     for h in portfolio["holdings"]:
@@ -372,7 +390,7 @@ def main():
             mkt_val = h["shares"] * h["last_price"]
         else:
             mkt_val = h["allocated"] + (h["allocated"] - h["shares"] * h["last_price"])
-        report_md += f"| **{t}** | INTRADAY POSITION | {side} | {h['shares']:.4f} | ${h['buy_price']:,.2f} | ${h['last_price']:,.2f} | ${mkt_val:,.2f} |\n"
+        report_md += f"| **{t}** | LEVERAGED INTRADAY | {side} | {h['shares']:.4f} | ${h['buy_price']:,.2f} | ${h['last_price']:,.2f} | ${mkt_val:,.2f} |\n"
 
     report_md += "\n## 3. Today's Execution Logs\n"
     if is_new_month:
@@ -385,20 +403,17 @@ def main():
     else:
         report_md += "* No trades or rebalancing actions triggered in this 30-minute interval.\n"
 
-    # Add Diagnostics
-    report_md += "\n## 4. Asset Evaluation Diagnostics (VWAP & ATR telemetry)\n"
+    report_md += "\n## 4. Upgraded Asset Telemetry\n"
     report_md += f"  * Decoded Regime: HMM State {current_state_raw} -> **Regime {regime} ({regime_reason})**\n"
-    report_md += f"  * QQQ Last Price: ${close_price:.2f} USD\n"
-    report_md += f"  * QQQ Intraday VWAP: ${vwap_val:.2f} USD\n"
-    report_md += f"  * QQQ Intraday ATR (14): ${atr_val:.2f} USD\n"
-    report_md += f"  * VWAP Volatility bands:\n"
-    report_md += f"    * Upper Band (+2.0 ATR): ${upper_band:.2f} USD\n"
-    report_md += f"    * Lower Band (-2.0 ATR): ${lower_band:.2f} USD\n"
+    report_md += f"  * QQQ Close: ${close_qqq:.2f} USD (High: ${daily_high_qqq:.2f}, Low: ${daily_low_qqq:.2f})\n"
+    report_md += f"  * QQQ Intraday VWAP: ${vwap_qqq:.2f} USD\n"
+    report_md += f"  * QQQ Intraday ATR (14): ${atr_qqq:.2f} USD\n"
+    report_md += f"  * VWAP bands (1.5 * ATR): ${lower_band:.2f} to ${upper_band:.2f} USD\n"
 
     with open(os.path.join(dir_path, REPORT_FILE), "w", encoding="utf-8") as f:
         f.write(report_md)
 
-    print(f"\nExecution complete. Live report written to {REPORT_FILE}")
+    print(f"\nExecution complete. Upgraded live report written to {REPORT_FILE}")
     print("=" * 80)
 
 if __name__ == "__main__":

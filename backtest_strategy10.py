@@ -4,7 +4,6 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 from hmmlearn.hmm import GaussianHMM
-import statsmodels.api as sm
 
 def _strip_tz(df: pd.DataFrame) -> pd.DataFrame:
     if df.index.tz is not None:
@@ -15,11 +14,9 @@ def calculate_atr(df, period=14):
     high = df['High']
     low = df['Low']
     close = df['Close']
-    
     tr1 = high - low
     tr2 = (high - close.shift(1)).abs()
     tr3 = (low - close.shift(1)).abs()
-    
     tr = pd.concat([tr1, tr2, tr3], axis=1).max(axis=1)
     atr = tr.rolling(window=period).mean()
     return atr.fillna(tr.expanding().mean())
@@ -27,7 +24,7 @@ def calculate_atr(df, period=14):
 def main():
     dir_path = os.path.dirname(os.path.abspath(__file__))
     print("=" * 80)
-    print("STARTING STRATEGY 10: INTRADAY VWAP BREAKOUT & REVERSION BACKTEST")
+    print("UPGRADED STRATEGY 10: INTRADAY VWAP LEVERAGED BACKTEST")
     print("=" * 80)
     
     # 1. Download daily SPY data for HMM training
@@ -37,7 +34,6 @@ def main():
     spy_daily_returns = spy_daily["Close"].ffill().pct_change().dropna()
     spy_rets_vals = spy_daily_returns.values.reshape(-1, 1)
     
-    # Train 3-State Gaussian HMM
     hmm = GaussianHMM(n_components=3, covariance_type="full", n_iter=100, random_state=42)
     hmm.fit(spy_rets_vals)
     regimes = hmm.predict(spy_rets_vals)
@@ -48,9 +44,7 @@ def main():
     bear_state = np.argmax(state_vols)
     rem = [i for i in range(3) if i != bear_state]
     bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
-    chop_state = [i for i in range(3) if i != bear_state and i != bull_state][0]
     
-    # Map daily dates to decoded regimes
     daily_regimes = {}
     for date, state in zip(spy_daily_returns.index, regimes):
         date_str = date.strftime("%Y-%m-%d")
@@ -61,218 +55,244 @@ def main():
         else:
             daily_regimes[date_str] = 2  # Chop
             
-    # 2. Download QQQ 30-minute intraday bars
-    print("\nDownloading QQQ 30-minute intraday bars (60 days)...")
+    # 2. Download Intraday QQQ, TQQQ, SQQQ 30-minute bars
+    print("\nDownloading QQQ, TQQQ, SQQQ 30m intraday bars (60 days)...")
     qqq = yf.download("QQQ", period="60d", interval="30m", progress=False)
-    # Handle multi-index column headers if present
-    if isinstance(qqq.columns, pd.MultiIndex):
-        qqq.columns = [c[0] for c in qqq.columns]
-        
+    tqqq = yf.download("TQQQ", period="60d", interval="30m", progress=False)
+    sqqq = yf.download("SQQQ", period="60d", interval="30m", progress=False)
+    
+    if isinstance(qqq.columns, pd.MultiIndex): qqq.columns = [c[0] for c in qqq.columns]
+    if isinstance(tqqq.columns, pd.MultiIndex): tqqq.columns = [c[0] for c in tqqq.columns]
+    if isinstance(sqqq.columns, pd.MultiIndex): sqqq.columns = [c[0] for c in sqqq.columns]
+    
     qqq = _strip_tz(qqq)
+    tqqq = _strip_tz(tqqq)
+    sqqq = _strip_tz(sqqq)
+    
+    # Calculate indicators
     qqq["ATR"] = calculate_atr(qqq, period=14)
+    tqqq["ATR"] = calculate_atr(tqqq, period=14)
+    sqqq["ATR"] = calculate_atr(sqqq, period=14)
+    
+    # Merge datasets to align timestamps
+    merged = qqq[["Close", "High", "Low", "Volume", "ATR"]].join(
+        tqqq[["Close", "ATR"]], lsuffix="_QQQ", rsuffix="_TQQQ"
+    ).join(
+        sqqq[["Close", "ATR"]], rsuffix="_SQQQ"
+    )
+    merged.columns = ["Close_QQQ", "High_QQQ", "Low_QQQ", "Volume_QQQ", "ATR_QQQ", "Close_TQQQ", "ATR_TQQQ", "Close_SQQQ", "ATR_SQQQ"]
+    merged = merged.dropna()
     
     # Backtest parameters
     INITIAL_NAV = 200000.0  # MXN
-    commission_rate = 0.0000
+    commission_rate = 0.0000  # Alpaca commission-free
     rf_annual = 0.095
     rf_daily = rf_annual / 252.0
     
     cash = INITIAL_NAV
     portfolio_value = INITIAL_NAV
     
-    active_position = None  # None or {"side": "long"/"short", "shares": float, "entry_price": float, "allocated": float}
+    # Position state
+    active_position = None  
     
     # Record tracking lists
     nav_history = []
     dates_list = []
     regimes_list = []
     
-    # Group intraday bars by date
-    qqq["DateOnly"] = qqq.index.strftime("%Y-%m-%d")
-    grouped = qqq.groupby("DateOnly")
+    merged["DateOnly"] = merged.index.strftime("%Y-%m-%d")
+    grouped = merged.groupby("DateOnly")
     
     trade_logs = []
-    day_count = 0
     
     for date_str, group in grouped:
-        regime = daily_regimes.get(date_str, 2)  # default to Chop if unknown
-        day_count += 1
+        regime = daily_regimes.get(date_str, 2)
         
         # Calculate daily variables
         cum_pv = 0.0
         cum_vol = 0.0
         
-        # S10 earns risk-free interest daily
-        cash = cash * (1.0 + rf_daily / 13.0)  # compound fractionally over the day's 13 bars
+        # Compounding overnight sweep interest
+        cash = cash * (1.0 + rf_daily / 13.0)
         
-        # Settle any active overnight positions (should be none, but force safety)
-        if active_position:
-            p_close = float(group["Close"].iloc[0])
-            if active_position["side"] == "long":
-                val = active_position["shares"] * p_close
-            else:
-                val = active_position["allocated"] + (active_position["allocated"] - active_position["shares"] * p_close)
-            cash += val * (1.0 - commission_rate)
-            active_position = None
-            
+        # Keep track of daily highs/lows for holding check
+        daily_high_qqq = float(group["High_QQQ"].max())
+        daily_low_qqq = group["Low_QQQ"].min()
+        
         for i in range(len(group)):
             bar_time = group.index[i]
-            close = float(group["Close"].iloc[i])
-            high = float(group["High"].iloc[i])
-            low = float(group["Low"].iloc[i])
-            volume = float(group["Volume"].iloc[i])
-            atr = float(group["ATR"].iloc[i])
             
-            # Update cumulative sums for intraday VWAP
-            cum_pv += ((high + low + close) / 3.0) * volume
-            cum_vol += volume
-            vwap = cum_pv / cum_vol if cum_vol > 0 else close
+            close_qqq = float(group["Close_QQQ"].iloc[i])
+            high_qqq = float(group["High_QQQ"].iloc[i])
+            low_qqq = float(group["Low_QQQ"].iloc[i])
+            vol_qqq = float(group["Volume_QQQ"].iloc[i])
+            atr_qqq = float(group["ATR_QQQ"].iloc[i])
             
-            upper_band = vwap + 2.0 * atr
-            lower_band = vwap - 2.0 * atr
+            close_tqqq = float(group["Close_TQQQ"].iloc[i])
+            atr_tqqq = float(group["ATR_TQQQ"].iloc[i])
             
-            # Check for intraday square-off (liquidate at 2:30 PM CST / 15:30 EST bar close)
-            # The last bar close is at 15:30 EST (which spans 15:30 to 16:00)
+            close_sqqq = float(group["Close_SQQQ"].iloc[i])
+            atr_sqqq = float(group["ATR_SQQQ"].iloc[i])
+            
+            # Intraday VWAP calculations on QQQ index
+            cum_pv += ((high_qqq + low_qqq + close_qqq) / 3.0) * vol_qqq
+            cum_vol += vol_qqq
+            vwap_qqq = cum_pv / cum_vol if cum_vol > 0 else close_qqq
+            
+            # Tightened bands (1.5 * ATR)
+            upper_band = vwap_qqq + 1.5 * atr_qqq
+            lower_band = vwap_qqq - 1.5 * atr_qqq
+            
             is_eod = (bar_time.hour == 15 and bar_time.minute == 30) or i == (len(group) - 1)
             
-            if is_eod:
-                # Force close position
-                if active_position:
-                    if active_position["side"] == "long":
-                        val = active_position["shares"] * close
-                    else:
-                        val = active_position["allocated"] + (active_position["allocated"] - active_position["shares"] * close)
-                    
-                    cash_gain = val * (1.0 - commission_rate)
-                    cash += cash_gain
-                    pnl = cash_gain - active_position["allocated"]
-                    trade_logs.append({
-                        "date": date_str,
-                        "time": bar_time.strftime("%H:%M"),
-                        "action": f"CLOSE_{active_position['side'].upper()}",
-                        "price": close,
-                        "pnl": pnl
-                    })
-                    active_position = None
-                
-                portfolio_value = cash
-                dates_list.append(bar_time)
-                nav_history.append(portfolio_value)
-                regimes_list.append(regime)
-                continue
-                
-            # Process Active Position valuation
+            # Valuate active positions
             current_portfolio_value = cash
             if active_position:
-                if active_position["side"] == "long":
-                    current_portfolio_value += active_position["shares"] * close
-                else:
-                    current_portfolio_value += active_position["allocated"] + (active_position["allocated"] - active_position["shares"] * close)
-            
-            # Trading Signal Checks
-            if regime == 1:
-                # Bear state: Stays in Cash sweeps, do nothing
-                pass
-            elif regime == 0:
-                # Bull state: Momentum Breakouts
-                if not active_position:
-                    if close > upper_band:
-                        # Enter Long
-                        alloc = current_portfolio_value * 0.90
-                        shares = (alloc / (close * (1.0 + commission_rate)))
-                        cash -= alloc
-                        active_position = {
-                            "side": "long",
-                            "shares": shares,
-                            "entry_price": close,
-                            "allocated": alloc
-                        }
+                current_price = close_tqqq if active_position["side"] == "long" else close_sqqq
+                active_position["peak_price"] = max(active_position["peak_price"], current_price)
+                
+                # Check Trailing Stop exit
+                atr_exec = atr_tqqq if active_position["side"] == "long" else atr_sqqq
+                stop_threshold = active_position["peak_price"] - 1.5 * atr_exec
+                
+                is_stop_out = current_price < stop_threshold
+                
+                # Valuation
+                current_portfolio_value += active_position["shares"] * current_price
+                
+                # Trigger exits
+                if is_stop_out or is_eod:
+                    # Overnight Hold Evaluation
+                    should_hold_overnight = False
+                    if is_eod and not is_stop_out:
+                        # Trade must be in profit
+                        trade_profit = (current_price > active_position["entry_price"])
+                        if trade_profit:
+                            if active_position["side"] == "long" and close_qqq >= (daily_high_qqq - 0.005 * daily_high_qqq) and regime == 0:
+                                should_hold_overnight = True
+                            elif active_position["side"] == "short" and close_qqq <= (daily_low_qqq + 0.005 * daily_low_qqq) and (regime == 1 or regime == 2):
+                                should_hold_overnight = True
+                                
+                    if not should_hold_overnight:
+                        # Liquidate
+                        val_credited = active_position["shares"] * current_price * (1.0 - commission_rate)
+                        cash += val_credited
+                        pnl = val_credited - active_position["allocated"]
+                        exit_type = "TRAILING_STOP" if is_stop_out else "EOD_CLOSE"
+                        
                         trade_logs.append({
                             "date": date_str,
                             "time": bar_time.strftime("%H:%M"),
-                            "action": "BUY_LONG",
-                            "price": close,
-                            "pnl": 0.0
-                        })
-                    elif close < lower_band:
-                        # Enter Short
-                        alloc = current_portfolio_value * 0.90
-                        shares = (alloc / (close * (1.0 + commission_rate)))
-                        cash -= alloc
-                        active_position = {
-                            "side": "short",
-                            "shares": shares,
-                            "entry_price": close,
-                            "allocated": alloc
-                        }
-                        trade_logs.append({
-                            "date": date_str,
-                            "time": bar_time.strftime("%H:%M"),
-                            "action": "SELL_SHORT",
-                            "price": close,
-                            "pnl": 0.0
-                        })
-            else:
-                # Chop state: Mean Reversion
-                if not active_position:
-                    if close < lower_band:
-                        # Buy reversion (Long)
-                        alloc = current_portfolio_value * 0.90
-                        shares = (alloc / (close * (1.0 + commission_rate)))
-                        cash -= alloc
-                        active_position = {
-                            "side": "long",
-                            "shares": shares,
-                            "entry_price": close,
-                            "allocated": alloc
-                        }
-                        trade_logs.append({
-                            "date": date_str,
-                            "time": bar_time.strftime("%H:%M"),
-                            "action": "BUY_REVERSION",
-                            "price": close,
-                            "pnl": 0.0
-                        })
-                    elif close > upper_band:
-                        # Sell reversion (Short)
-                        alloc = current_portfolio_value * 0.90
-                        shares = (alloc / (close * (1.0 + commission_rate)))
-                        cash -= alloc
-                        active_position = {
-                            "side": "short",
-                            "shares": shares,
-                            "entry_price": close,
-                            "allocated": alloc
-                        }
-                        trade_logs.append({
-                            "date": date_str,
-                            "time": bar_time.strftime("%H:%M"),
-                            "action": "SHORT_REVERSION",
-                            "price": close,
-                            "pnl": 0.0
-                        })
-                else:
-                    # Target reversion to VWAP line to settle early
-                    if (active_position["side"] == "long" and close >= vwap) or \
-                       (active_position["side"] == "short" and close <= vwap):
-                        if active_position["side"] == "long":
-                            val = active_position["shares"] * close
-                        else:
-                            val = active_position["allocated"] + (active_position["allocated"] - active_position["shares"] * close)
-                            
-                        cash_gain = val * (1.0 - commission_rate)
-                        cash += cash_gain
-                        pnl = cash_gain - active_position["allocated"]
-                        trade_logs.append({
-                            "date": date_str,
-                            "time": bar_time.strftime("%H:%M"),
-                            "action": f"SETTLE_{active_position['side'].upper()}_VWAP",
-                            "price": close,
+                            "action": f"EXIT_{active_position['side'].upper()}_{exit_type}",
+                            "price": current_price,
                             "pnl": pnl
                         })
                         active_position = None
                         current_portfolio_value = cash
                         
+            # Trigger entries (only if no active position)
+            if not active_position and not is_eod:
+                if regime == 1:
+                    # Bear State: Only trade short breaks (SQQQ)
+                    if close_qqq < lower_band:
+                        alloc = current_portfolio_value * 0.90
+                        shares = alloc / (close_sqqq * (1.0 + commission_rate))
+                        cash -= alloc
+                        active_position = {
+                            "side": "short",
+                            "shares": shares,
+                            "entry_price": close_sqqq,
+                            "peak_price": close_sqqq,
+                            "allocated": alloc
+                        }
+                        trade_logs.append({
+                            "date": date_str,
+                            "time": bar_time.strftime("%H:%M"),
+                            "action": "BUY_SQQQ_BEAR_BREAK",
+                            "price": close_sqqq,
+                            "pnl": 0.0
+                        })
+                elif regime == 0:
+                    # Bull State: Momentum Breakouts
+                    if close_qqq > upper_band:
+                        # Enter Long TQQQ
+                        alloc = current_portfolio_value * 0.90
+                        shares = alloc / (close_tqqq * (1.0 + commission_rate))
+                        cash -= alloc
+                        active_position = {
+                            "side": "long",
+                            "shares": shares,
+                            "entry_price": close_tqqq,
+                            "peak_price": close_tqqq,
+                            "allocated": alloc
+                        }
+                        trade_logs.append({
+                            "date": date_str,
+                            "time": bar_time.strftime("%H:%M"),
+                            "action": "BUY_TQQQ_BULL_BREAK",
+                            "price": close_tqqq,
+                            "pnl": 0.0
+                        })
+                else:
+                    # Chop State: Mean Reversion to VWAP
+                    if close_qqq < lower_band:
+                        # Buy reversion (Long TQQQ)
+                        alloc = current_portfolio_value * 0.90
+                        shares = alloc / (close_tqqq * (1.0 + commission_rate))
+                        cash -= alloc
+                        active_position = {
+                            "side": "long",
+                            "shares": shares,
+                            "entry_price": close_tqqq,
+                            "peak_price": close_tqqq,
+                            "allocated": alloc
+                        }
+                        trade_logs.append({
+                            "date": date_str,
+                            "time": bar_time.strftime("%H:%M"),
+                            "action": "BUY_TQQQ_REVERSION",
+                            "price": close_tqqq,
+                            "pnl": 0.0
+                        })
+                    elif close_qqq > upper_band:
+                        # Short reversion (Buy SQQQ)
+                        alloc = current_portfolio_value * 0.90
+                        shares = alloc / (close_sqqq * (1.0 + commission_rate))
+                        cash -= alloc
+                        active_position = {
+                            "side": "short",
+                            "shares": shares,
+                            "entry_price": close_sqqq,
+                            "peak_price": close_sqqq,
+                            "allocated": alloc
+                        }
+                        trade_logs.append({
+                            "date": date_str,
+                            "time": bar_time.strftime("%H:%M"),
+                            "action": "BUY_SQQQ_REVERSION",
+                            "price": close_sqqq,
+                            "pnl": 0.0
+                        })
+            elif active_position and regime == 2 and not is_eod:
+                # Settle at VWAP center line early during chop regime
+                side = active_position["side"]
+                if (side == "long" and close_qqq >= vwap_qqq) or \
+                   (side == "short" and close_qqq <= vwap_qqq):
+                    current_price = close_tqqq if side == "long" else close_sqqq
+                    val_credited = active_position["shares"] * current_price * (1.0 - commission_rate)
+                    cash += val_credited
+                    pnl = val_credited - active_position["allocated"]
+                    
+                    trade_logs.append({
+                        "date": date_str,
+                        "time": bar_time.strftime("%H:%M"),
+                        "action": f"SETTLE_{side.upper()}_VWAP",
+                        "price": current_price,
+                        "pnl": pnl
+                    })
+                    active_position = None
+                    current_portfolio_value = cash
+            
             portfolio_value = current_portfolio_value
             dates_list.append(bar_time)
             nav_history.append(portfolio_value)
@@ -288,7 +308,6 @@ def main():
     final_nav = float(df_nav["NAV"].iloc[-1])
     total_ret = (final_nav / INITIAL_NAV) - 1.0
     
-    # Annualized CAGR over 60 days
     days = (df_nav.index[-1] - df_nav.index[0]).days
     years = max(days / 365.25, 0.01)
     cagr = (final_nav / INITIAL_NAV) ** (1.0 / years) - 1.0
@@ -297,13 +316,12 @@ def main():
     ann_vol = daily_pct.std() * np.sqrt(252)
     sharpe = (cagr - rf_annual) / ann_vol if ann_vol > 0 else 0.0
     
-    # Drawdown
     roll_max = df_nav["NAV"].cummax()
     drawdowns = (df_nav["NAV"] - roll_max) / roll_max
     max_dd = float(drawdowns.min())
     
     print("\n" + "=" * 60)
-    print("BACKTEST SIMULATION RESULT SUMMARY (STRATEGY 10)")
+    print("UPGRADED LEVERAGED SIMULATION SUMMARY (TQQQ/SQQQ)")
     print("=" * 60)
     print(f"  Final Portfolio NAV:  ${final_nav:,.2f} MXN")
     print(f"  Total Return:         {total_ret*100:.2f}%")
@@ -316,15 +334,14 @@ def main():
     # Save CSV
     csv_path = os.path.join(dir_path, "strategy10_backtest_nav.csv")
     df_nav.to_csv(csv_path)
-    print(f"Saved NAV curve to {csv_path}")
     
     # Generate report
     report_path = os.path.join(dir_path, "strategy10_backtest_report.md")
-    report = f"""# Strategy 10: Intraday VWAP Breakout & Reversion Backtest Report
+    report = f"""# Strategy 10: Intraday VWAP Leveraged Breakout & Reversion Report
 **Simulation Period:** {df_nav.index[0].date()} to {df_nav.index[-1].date()} ({years*365.25:.1f} Days)
-**Core Asset traded:** QQQ 30-Minute Bars
+**Assets Traded:** TQQQ (3x Long QQQ) & SQQQ (3x Short QQQ) based on QQQ indicators.
 
-## 1. Performance Summary
+## 1. Upgraded Performance Summary
 * **Final Portfolio NAV**: ${final_nav:,.2f} MXN
 * **Total Return**: {total_ret*100:.2f}%
 * **Time-Weighted CAGR**: **{cagr*100:.2f}%**
@@ -332,24 +349,24 @@ def main():
 * **Sharpe Ratio**: **{sharpe:.2f}**
 * **Maximum Drawdown**: **{max_dd*100:.2f}%**
 
-## 2. Dynamic Settings
-* **Intraday Square-off Time:** 15:30 EST (Force close to sweeps)
-* **Regime Switching Active:** YES (HMM on SPY returns)
-* **Broker Commission Rate:** 0.29%
+## 2. Updated Settings
+* **Conditional Overnight Holds:** ACTIVE (Evaluates day-end trend strength)
+* **Entry Band Threshold:** 1.5 * ATR (Tightened)
+* **Trailing Stop-Loss:** 1.5 * ATR (Active)
+* **Broker Commission Rate:** 0.00% (Alpaca zero-commission)
 
 ## 3. Transaction Summary (Last 20 Closed Trades)
 | Date | Time | Action | Settle Price | Trade P/L (MXN) |
 | :--- | :---: | :---: | ---: | ---: |
 """
-    closed_trades = [t for t in trade_logs if t["action"].startswith("CLOSE") or t["action"].startswith("SETTLE")]
+    closed_trades = [t for t in trade_logs if t["action"].startswith("EXIT") or t["action"].startswith("SETTLE")]
     for t in closed_trades[-20:]:
         sign = "+" if t["pnl"] >= 0 else ""
         report += f"| {t['date']} | {t['time']} | {t['action']} | ${t['price']:.2f} | {sign}${t['pnl']:,.2f} |\n"
         
     with open(report_path, "w", encoding="utf-8") as f:
         f.write(report)
-    print(f"Saved report to {report_path}")
-
+        
     return {
         "df_nav": df_nav,
         "cagr": cagr,
@@ -363,15 +380,14 @@ def run_strategy10_backtest_for_api():
     df_nav = res["df_nav"]
     initial_nav = float(df_nav["NAV"].iloc[0])
     
-    # Generate cash compounding (9.5% APR)
+    # Compounding cash values (9.5% APR)
     cash_values = []
     curr_c = initial_nav
     for val in df_nav["NAV"]:
-        # simple visual match
         cash_values.append(curr_c)
         curr_c *= (1.0 + 0.095 / (252.0 * 13.0))
         
-    # Generate benchmark (11% APR)
+    # Benchmark (11% APR)
     bench_values = []
     curr_b = initial_nav
     for val in df_nav["NAV"]:
@@ -379,16 +395,16 @@ def run_strategy10_backtest_for_api():
         curr_b *= (1.0 + 0.11 / (252.0 * 13.0))
         
     ui_trade_log = []
-    closed_trades = [t for t in res["trade_logs"] if t["action"].startswith("CLOSE") or t["action"].startswith("SETTLE")]
+    closed_trades = [t for t in res["trade_logs"] if t["action"].startswith("EXIT") or t["action"].startswith("SETTLE")]
     for t in closed_trades[-30:]:
         ui_trade_log.append({
             "date": t["date"] + " " + t["time"],
-            "ticker": "QQQ",
+            "ticker": "TQQQ/SQQQ",
             "action": t["action"],
             "shares": 0.0,
             "price": float(t["price"]),
             "pnl": float(t["pnl"]),
-            "note": "Intraday Trade"
+            "note": "Upgraded Intraday Alpha"
         })
         
     return {
