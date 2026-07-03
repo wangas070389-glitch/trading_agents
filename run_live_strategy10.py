@@ -3,6 +3,7 @@ import sys
 import json
 import datetime
 import argparse
+import requests
 import yfinance as yf
 import numpy as np
 import pandas as pd
@@ -93,6 +94,24 @@ def main():
     print(f"LIVE UPGRADED EXECUTION: STRATEGY 10: INTRADAY VWAP ALPHA ({today_str})")
     print("=" * 80)
 
+    # === CIRCUIT BREAKER 1: MARKET CLOCK AWARENESS ===
+    print("[Telemetry] Verifying live market state via Alpaca Clock API...")
+    try:
+        from connectors.alpaca_connector import AlpacaConnector
+        alpaca = AlpacaConnector()
+        clock_url = f"{alpaca.base_url}/v2/clock"
+        headers = {"APCA-API-KEY-ID": alpaca.api_key, "APCA-API-SECRET-KEY": alpaca.secret_key}
+        clock_resp = requests.get(clock_url, headers=headers, timeout=10)
+        if clock_resp.status_code == 200:
+            is_open = clock_resp.json().get("is_open", False)
+            if not is_open:
+                print("ABORT: Market is currently CLOSED. Halting execution to prevent stale data triggers.")
+                return
+        else:
+            print(f"[Warning] Alpaca clock returned {clock_resp.status_code}. Proceeding to secondary data checks.")
+    except Exception as e:
+        print(f"[Warning] Market clock validation bypassed ({e}). Relying on timestamp integrity.")
+
     # 1. Load portfolio and accrue sweep interest
     portfolio = load_portfolio(dir_path)
     current_cash = portfolio["cash_balance"]
@@ -136,6 +155,10 @@ def main():
         tqqq_30m = yf.download("TQQQ", period="5d", interval="30m", progress=False)
         sqqq_30m = yf.download("SQQQ", period="5d", interval="30m", progress=False)
         
+        if qqq_30m.empty or tqqq_30m.empty or sqqq_30m.empty:
+            print("CRITICAL: yfinance returned empty DataFrames (Silent API failure). Halting.")
+            return
+
         if isinstance(qqq_30m.columns, pd.MultiIndex): qqq_30m.columns = [c[0] for c in qqq_30m.columns]
         if isinstance(tqqq_30m.columns, pd.MultiIndex): tqqq_30m.columns = [c[0] for c in tqqq_30m.columns]
         if isinstance(sqqq_30m.columns, pd.MultiIndex): sqqq_30m.columns = [c[0] for c in sqqq_30m.columns]
@@ -147,6 +170,20 @@ def main():
     except Exception as e:
         print(f"Failed to fetch market data: {e}")
         return
+
+    # === CIRCUIT BREAKER 2: TIMESTAMP VALIDATION (HEARTBEAT) ===
+    last_bar_time = qqq_30m.index[-1]
+    now_utc = datetime.datetime.now(datetime.timezone.utc)
+    
+    # Standardize tzinfo to UTC for comparative math if yfinance passes naive/local tz
+    if last_bar_time.tzinfo is None:
+        pass # If naive, we can't easily cross-reference without knowing local server time safely.
+    else:
+        minutes_stale = (now_utc - last_bar_time).total_seconds() / 60.0
+        # 30-minute interval + 15 minute grace period for standard API latency/batching delays
+        if minutes_stale > 45.0:
+            print(f"FATAL: Data feed stall detected. Last QQQ bar is {minutes_stale:.1f} minutes old. Engine halted.")
+            return
 
     # 4. HMM Regime Prediction
     spy_returns = spy_daily["Close"].ffill().pct_change().dropna().values.reshape(-1, 1)
@@ -191,16 +228,16 @@ def main():
     today_date_str = now.strftime("%Y-%m-%d")
     today_bars_qqq = qqq_30m[qqq_30m.index.strftime("%Y-%m-%d") == today_date_str]
     
-    if not today_bars_qqq.empty:
-        cum_pv = ((today_bars_qqq["High"] + today_bars_qqq["Low"] + today_bars_qqq["Close"]) / 3.0 * today_bars_qqq["Volume"]).sum()
-        cum_vol = today_bars_qqq["Volume"].sum()
-        vwap_qqq = cum_pv / cum_vol if cum_vol > 0 else close_qqq
-        daily_high_qqq = float(today_bars_qqq["High"].max())
-        daily_low_qqq = float(today_bars_qqq["Low"].min())
-    else:
-        vwap_qqq = close_qqq
-        daily_high_qqq = close_qqq
-        daily_low_qqq = close_qqq
+    # === CIRCUIT BREAKER 3: ERADICATE LOBOTOMY FALLBACK ===
+    if today_bars_qqq.empty:
+        print(f"FATAL ERROR: No intraday rows mapped to {today_date_str}. The market is either closed or the API dropped the current session. Execution halted.")
+        return 
+        
+    cum_pv = ((today_bars_qqq["High"] + today_bars_qqq["Low"] + today_bars_qqq["Close"]) / 3.0 * today_bars_qqq["Volume"]).sum()
+    cum_vol = today_bars_qqq["Volume"].sum()
+    vwap_qqq = cum_pv / cum_vol if cum_vol > 0 else close_qqq
+    daily_high_qqq = float(today_bars_qqq["High"].max())
+    daily_low_qqq = float(today_bars_qqq["Low"].min())
 
     # Tightened entry bands (1.5 * ATR)
     upper_band = vwap_qqq + 1.5 * atr_qqq
@@ -371,7 +408,7 @@ def main():
 
     # Generate live report
     report_md = f"""# Strategy 10: Upgraded Intraday VWAP Execution Report
-**Execution Date:** {now.strftime('%Y-%m-%d %H:%M:%S')} | **Strategy Version:** Upgraded Live V2 (Leveraged)
+**Execution Date:** {now.strftime('%Y-%m-%d %H:%M:%S')} | **Strategy Version:** Upgraded Live V3 (Defensive Circuit Breakers Active)
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** ${portfolio_value:,.2f} MXN
