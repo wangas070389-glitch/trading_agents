@@ -7,7 +7,7 @@ from hmmlearn.hmm import GaussianHMM
 
 def _strip_tz(df: pd.DataFrame) -> pd.DataFrame:
     if df.index.tz is not None:
-        df.index = df.index.tz_convert("UTC").tz_localize(None)
+        df.index = df.index.tz_convert("America/New_York").tz_localize(None)
     return df
 
 def calculate_atr(df, period=14):
