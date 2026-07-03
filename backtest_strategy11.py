@@ -59,10 +59,10 @@ def calculate_adx(df, period=7):
 def main():
     dir_path = os.path.dirname(os.path.abspath(__file__))
     print("=" * 80)
-    print("STRATEGY 11: INTRADAY CCI-ADX TWIN BACKTEST")
+    print("DIRECT ASSET STRATEGY 11: CCI-ADX LEVERAGED BACKTEST")
     print("=" * 80)
     
-    # 1. Download SPY returns for HMM regime checks
+    # 1. Download daily SPY returns for HMM regime checks
     print("Downloading historical daily SPY returns for HMM training (2 years)...")
     spy_daily = yf.download("SPY", start="2024-05-01", end="2026-07-01", interval="1d", progress=False)
     spy_daily.columns = [c[0] if isinstance(c, tuple) else c for c in spy_daily.columns]
@@ -104,26 +104,31 @@ def main():
     tqqq = _strip_tz(tqqq)
     sqqq = _strip_tz(sqqq)
     
-    # Calculate indicators
-    qqq["ATR"] = calculate_atr(qqq, period=14)
-    qqq["CCI"] = calculate_cci(qqq, period=10)
-    adx_series, plus_di_series, minus_di_series = calculate_adx(qqq, period=7)
-    qqq["ADX"] = adx_series
-    qqq["DI+"] = plus_di_series
-    qqq["DI-"] = minus_di_series
-    
+    # Calculate indicators directly on TQQQ and SQQQ
     tqqq["ATR"] = calculate_atr(tqqq, period=14)
+    tqqq["CCI"] = calculate_cci(tqqq, period=10)
+    adx_t, plus_di_t, minus_di_t = calculate_adx(tqqq, period=7)
+    tqqq["ADX"] = adx_t
+    tqqq["DI+"] = plus_di_t
+    tqqq["DI-"] = minus_di_t
+    
     sqqq["ATR"] = calculate_atr(sqqq, period=14)
+    sqqq["CCI"] = calculate_cci(sqqq, period=10)
+    adx_s, plus_di_s, minus_di_s = calculate_adx(sqqq, period=7)
+    sqqq["ADX"] = adx_s
+    sqqq["DI+"] = plus_di_s
+    sqqq["DI-"] = minus_di_s
     
     # Merge datasets
-    merged = qqq[["Close", "High", "Low", "Volume", "ATR", "CCI", "ADX", "DI+", "DI-"]].join(
-        tqqq[["Close", "ATR"]], lsuffix="_QQQ", rsuffix="_TQQQ"
+    merged = qqq[["Close", "High", "Low", "Volume"]].join(
+        tqqq[["Close", "ATR", "CCI", "ADX", "DI+", "DI-"]], lsuffix="_QQQ", rsuffix="_TQQQ"
     ).join(
-        sqqq[["Close", "ATR"]], rsuffix="_SQQQ"
+        sqqq[["Close", "ATR", "CCI", "ADX", "DI+", "DI-"]], rsuffix="_SQQQ"
     )
     merged.columns = [
-        "Close_QQQ", "High_QQQ", "Low_QQQ", "Volume_QQQ", "ATR_QQQ", "CCI_QQQ", "ADX_QQQ", "DI+_QQQ", "DI-_QQQ",
-        "Close_TQQQ", "ATR_TQQQ", "Close_SQQQ", "ATR_SQQQ"
+        "Close_QQQ", "High_QQQ", "Low_QQQ", "Volume_QQQ",
+        "Close_TQQQ", "ATR_TQQQ", "CCI_TQQQ", "ADX_TQQQ", "DI+_TQQQ", "DI-_TQQQ",
+        "Close_SQQQ", "ATR_SQQQ", "CCI_SQQQ", "ADX_SQQQ", "DI+_SQQQ", "DI-_SQQQ"
     ]
     merged = merged.dropna()
     
@@ -159,15 +164,19 @@ def main():
             bar_time = group.index[i]
             
             close_qqq = float(group["Close_QQQ"].iloc[i])
-            cci_qqq = float(group["CCI_QQQ"].iloc[i])
-            adx_qqq = float(group["ADX_QQQ"].iloc[i])
-            di_plus = float(group["DI+_QQQ"].iloc[i])
-            di_minus = float(group["DI-_QQQ"].iloc[i])
             
             close_tqqq = float(group["Close_TQQQ"].iloc[i])
+            cci_tqqq = float(group["CCI_TQQQ"].iloc[i])
+            adx_tqqq = float(group["ADX_TQQQ"].iloc[i])
+            di_plus_t = float(group["DI+_TQQQ"].iloc[i])
+            di_minus_t = float(group["DI-_TQQQ"].iloc[i])
             atr_tqqq = float(group["ATR_TQQQ"].iloc[i])
             
             close_sqqq = float(group["Close_SQQQ"].iloc[i])
+            cci_sqqq = float(group["CCI_SQQQ"].iloc[i])
+            adx_sqqq = float(group["ADX_SQQQ"].iloc[i])
+            di_plus_s = float(group["DI+_SQQQ"].iloc[i])
+            di_minus_s = float(group["DI-_SQQQ"].iloc[i])
             atr_sqqq = float(group["ATR_SQQQ"].iloc[i])
             
             is_eod = (bar_time.hour == 15 and bar_time.minute == 30) or i == (len(group) - 1)
@@ -189,8 +198,9 @@ def main():
                     should_hold_overnight = False
                     if is_eod and not is_stop_out:
                         trade_profit = (current_price > active_position["entry_price"])
-                        if trade_profit and adx_qqq > 25.0:
-                            if active_position["side"] == "long" and close_qqq >= (daily_high_qqq - 0.005 * daily_high_qqq) and regime == 0:
+                        # Determine overnight hold based on index closing state
+                        if trade_profit:
+                            if active_position["side"] == "long" and close_qqq >= (daily_high_qqq - 0.005 * daily_high_qqq) and (regime == 0 or regime == 2):
                                 should_hold_overnight = True
                             elif active_position["side"] == "short" and close_qqq <= (daily_low_qqq + 0.005 * daily_low_qqq) and (regime == 1 or regime == 2):
                                 should_hold_overnight = True
@@ -213,102 +223,116 @@ def main():
                         
             # Trigger entries
             if not active_position and not is_eod:
-                is_trending = adx_qqq >= 22.0
-                
-                if is_trending:
-                    # Breakout Trend Following Mode
-                    if regime == 0 and cci_qqq > 100.0 and di_plus > di_minus:
-                        alloc = current_portfolio_value * 0.90
-                        shares = alloc / (close_tqqq * (1.0 + commission_rate))
-                        cash -= alloc
-                        active_position = {
-                            "side": "long",
-                            "shares": shares,
-                            "entry_price": close_tqqq,
-                            "peak_price": close_tqqq,
-                            "allocated": alloc
-                        }
-                        trade_logs.append({
-                            "date": date_str,
-                            "time": bar_time.strftime("%H:%M"),
-                            "action": "BUY_TQQQ_TREND_BREAKOUT",
-                            "price": close_tqqq,
-                            "pnl": 0.0
-                        })
-                    elif (regime == 1 or regime == 2) and cci_qqq < -100.0 and di_minus > di_plus:
-                        alloc = current_portfolio_value * 0.90
-                        shares = alloc / (close_sqqq * (1.0 + commission_rate))
-                        cash -= alloc
-                        active_position = {
-                            "side": "short",
-                            "shares": shares,
-                            "entry_price": close_sqqq,
-                            "peak_price": close_sqqq,
-                            "allocated": alloc
-                        }
-                        trade_logs.append({
-                            "date": date_str,
-                            "time": bar_time.strftime("%H:%M"),
-                            "action": "BUY_SQQQ_TREND_BREAKDOWN",
-                            "price": close_sqqq,
-                            "pnl": 0.0
-                        })
-                else:
-                    # Mean Reversion Mode (CCI extreme reversal)
-                    if cci_qqq < -150.0:
-                        alloc = current_portfolio_value * 0.90
-                        shares = alloc / (close_tqqq * (1.0 + commission_rate))
-                        cash -= alloc
-                        active_position = {
-                            "side": "long",
-                            "shares": shares,
-                            "entry_price": close_tqqq,
-                            "peak_price": close_tqqq,
-                            "allocated": alloc
-                        }
-                        trade_logs.append({
-                            "date": date_str,
-                            "time": bar_time.strftime("%H:%M"),
-                            "action": "BUY_TQQQ_CCI_REVERSION",
-                            "price": close_tqqq,
-                            "pnl": 0.0
-                        })
-                    elif cci_qqq > 150.0:
-                        alloc = current_portfolio_value * 0.90
-                        shares = alloc / (close_sqqq * (1.0 + commission_rate))
-                        cash -= alloc
-                        active_position = {
-                            "side": "short",
-                            "shares": shares,
-                            "entry_price": close_sqqq,
-                            "peak_price": close_sqqq,
-                            "allocated": alloc
-                        }
-                        trade_logs.append({
-                            "date": date_str,
-                            "time": bar_time.strftime("%H:%M"),
-                            "action": "BUY_SQQQ_CCI_REVERSION",
-                            "price": close_sqqq,
-                            "pnl": 0.0
-                        })
-            elif active_position and not is_eod:
-                side = active_position["side"]
-                if (side == "long" and cci_qqq >= 0.0) or (side == "short" and cci_qqq <= 0.0):
-                    current_price = close_tqqq if side == "long" else close_sqqq
-                    val_credited = active_position["shares"] * current_price * (1.0 - commission_rate)
-                    cash += val_credited
-                    pnl = val_credited - active_position["allocated"]
-                    
+                # 1. Breakout long TQQQ (Bull state, TQQQ breakout)
+                if (regime == 0 or regime == 2) and adx_tqqq >= 22.0 and cci_tqqq > 100.0 and di_plus_t > di_minus_t:
+                    alloc = current_portfolio_value * 0.90
+                    shares = alloc / (close_tqqq * (1.0 + commission_rate))
+                    cash -= alloc
+                    active_position = {
+                        "side": "long",
+                        "shares": shares,
+                        "entry_price": close_tqqq,
+                        "peak_price": close_tqqq,
+                        "allocated": alloc
+                    }
                     trade_logs.append({
                         "date": date_str,
                         "time": bar_time.strftime("%H:%M"),
-                        "action": f"SETTLE_{side.upper()}_CCI_ZERO",
-                        "price": current_price,
-                        "pnl": pnl
+                        "action": "BUY_TQQQ_TREND_BREAKOUT",
+                        "price": close_tqqq,
+                        "pnl": 0.0
                     })
-                    active_position = None
-                    current_portfolio_value = cash
-                    
+                # 2. Breakout SQQQ (Bear state, SQQQ breakout)
+                elif (regime == 1 or regime == 2) and adx_sqqq >= 22.0 and cci_sqqq > 100.0 and di_plus_s > di_minus_s:
+                    alloc = current_portfolio_value * 0.90
+                    shares = alloc / (close_sqqq * (1.0 + commission_rate))
+                    cash -= alloc
+                    active_position = {
+                        "side": "short",
+                        "shares": shares,
+                        "entry_price": close_sqqq,
+                        "peak_price": close_sqqq,
+                        "allocated": alloc
+                    }
+                    trade_logs.append({
+                        "date": date_str,
+                        "time": bar_time.strftime("%H:%M"),
+                        "action": "BUY_SQQQ_TREND_BREAKDOWN",
+                        "price": close_sqqq,
+                        "pnl": 0.0
+                    })
+                # 3. Mean Reversion Long Pullback (CCI < -150 on TQQQ)
+                elif adx_tqqq < 22.0 and cci_tqqq < -150.0:
+                    alloc = current_portfolio_value * 0.90
+                    shares = alloc / (close_tqqq * (1.0 + commission_rate))
+                    cash -= alloc
+                    active_position = {
+                        "side": "long",
+                        "shares": shares,
+                        "entry_price": close_tqqq,
+                        "peak_price": close_tqqq,
+                        "allocated": alloc
+                    }
+                    trade_logs.append({
+                        "date": date_str,
+                        "time": bar_time.strftime("%H:%M"),
+                        "action": "BUY_TQQQ_CCI_REVERSION",
+                        "price": close_tqqq,
+                        "pnl": 0.0
+                    })
+                # 4. Mean Reversion Short Pullback (CCI < -150 on SQQQ)
+                # When SQQQ is oversold (CCI < -150), it means market spiked up, we buy SQQQ as it reverts down?
+                # No, if SQQQ's CCI < -150, SQQQ is extremely oversold, so we buy SQQQ expecting QQQ to revert down!
+                elif adx_sqqq < 22.0 and cci_sqqq < -150.0:
+                    alloc = current_portfolio_value * 0.90
+                    shares = alloc / (close_sqqq * (1.0 + commission_rate))
+                    cash -= alloc
+                    active_position = {
+                        "side": "short",
+                        "shares": shares,
+                        "entry_price": close_sqqq,
+                        "peak_price": close_sqqq,
+                        "allocated": alloc
+                    }
+                    trade_logs.append({
+                        "date": date_str,
+                        "time": bar_time.strftime("%H:%M"),
+                        "action": "BUY_SQQQ_CCI_REVERSION",
+                        "price": close_sqqq,
+                        "pnl": 0.0
+                    })
+            elif active_position and not is_eod:
+                side = active_position["side"]
+                # Settle at CCI zero
+                if side == "long":
+                    if cci_tqqq >= 0.0:
+                        val_credited = active_position["shares"] * close_tqqq * (1.0 - commission_rate)
+                        cash += val_credited
+                        pnl = val_credited - active_position["allocated"]
+                        trade_logs.append({
+                            "date": date_str,
+                            "time": bar_time.strftime("%H:%M"),
+                            "action": "SETTLE_LONG_CCI_ZERO",
+                            "price": close_tqqq,
+                            "pnl": pnl
+                        })
+                        active_position = None
+                        current_portfolio_value = cash
+                else:
+                    if cci_sqqq >= 0.0:
+                        val_credited = active_position["shares"] * close_sqqq * (1.0 - commission_rate)
+                        cash += val_credited
+                        pnl = val_credited - active_position["allocated"]
+                        trade_logs.append({
+                            "date": date_str,
+                            "time": bar_time.strftime("%H:%M"),
+                            "action": "SETTLE_SHORT_CCI_ZERO",
+                            "price": close_sqqq,
+                            "pnl": pnl
+                        })
+                        active_position = None
+                        current_portfolio_value = cash
+                        
             portfolio_value = current_portfolio_value
             dates_list.append(bar_time)
             nav_history.append(portfolio_value)
@@ -337,7 +361,7 @@ def main():
     max_dd = float(drawdowns.min())
     
     print("\n" + "=" * 60)
-    print("STRATEGY 11: CCI-ADX SIMULATION SUMMARY (TQQQ/SQQQ)")
+    print("STRATEGY 11: DIRECT ASSET CCI SIMULATION SUMMARY")
     print("=" * 60)
     print(f"  Final Portfolio NAV:  ${final_nav:,.2f} MXN")
     print(f"  Total Return:         {total_ret*100:.2f}%")
@@ -353,9 +377,9 @@ def main():
     
     # Generate report
     report_path = os.path.join(dir_path, "strategy11_backtest_report.md")
-    report = f"""# Strategy 11: Intraday CCI-ADX Leveraged Breakout & Reversion Report
+    report = f"""# Strategy 11: Intraday Direct Asset CCI-ADX Leveraged Report
 **Simulation Period:** {df_nav.index[0].date()} to {df_nav.index[-1].date()} ({years*365.25:.1f} Days)
-**Assets Traded:** TQQQ (3x Long QQQ) & SQQQ (3x Short QQQ) based on QQQ index indicators (CCI & ADX).
+**Assets Traded:** TQQQ & SQQQ based on direct asset indicators.
 
 ## 1. Performance Summary
 * **Final Portfolio NAV**: ${final_nav:,.2f} MXN
@@ -366,8 +390,8 @@ def main():
 * **Maximum Drawdown**: **{max_dd*100:.2f}%**
 
 ## 2. Dynamic Settings
-* **CCI Channels (20-period):** Breakout $\pm 100$, Reversion $\pm 150$
-* **ADX Trend strength (14-period):** Threshold 22.0 (Active Trend / Range switch)
+* **CCI Channels (10-period):** Breakout $\pm 100$, Reversion $\pm 150$ (Direct traded assets)
+* **ADX Trend strength (7-period):** Threshold 22.0
 * **Trailing Stop-Loss:** 1.5 * ATR (Active)
 * **Broker Commission Rate:** 0.00% (Alpaca zero-commission)
 
@@ -420,7 +444,7 @@ def run_strategy11_backtest_for_api():
             "shares": 0.0,
             "price": float(t["price"]),
             "pnl": float(t["pnl"]),
-            "note": "CCI-ADX Momentum"
+            "note": "Direct CCI-ADX"
         })
         
     return {

@@ -15,4 +15,4 @@
 * **Initial + Inflow Capital**: $100,000.00 USD
 * **Total Deployed Capital**: $29,903.37 USD (29.5% invested)
 * **Unallocated Cash Reserves**: $71,009.91 USD (70.1% cash)
-* **Current Portfolio Market Value**: $101,255.83 USD (including cash)
+* **Current Portfolio Market Value**: $101,252.07 USD (including cash)

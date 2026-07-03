@@ -125,7 +125,7 @@ def main():
     now = datetime.datetime.now()
 
     print("=" * 80)
-    print(f"LIVE EXECUTION: STRATEGY 11: CCI-ADX TWIN STRATEGY ({today_str})")
+    print(f"LIVE EXECUTION: STRATEGY 11: DIRECT ASSET CCI-ADX ({today_str})")
     print("=" * 80)
 
     # 1. Load portfolio and accrue sweep interest
@@ -175,16 +175,21 @@ def main():
         if isinstance(tqqq_30m.columns, pd.MultiIndex): tqqq_30m.columns = [c[0] for c in tqqq_30m.columns]
         if isinstance(sqqq_30m.columns, pd.MultiIndex): sqqq_30m.columns = [c[0] for c in sqqq_30m.columns]
         
-        # Calculate indicators
-        qqq_30m["ATR"] = calculate_atr(qqq_30m, period=14)
-        qqq_30m["CCI"] = calculate_cci(qqq_30m, period=10)
-        adx_s, p_di, m_di = calculate_adx(qqq_30m, period=7)
-        qqq_30m["ADX"] = adx_s
-        qqq_30m["DI+"] = p_di
-        qqq_30m["DI-"] = m_di
-        
+        # Calculate indicators directly on TQQQ and SQQQ
         tqqq_30m["ATR"] = calculate_atr(tqqq_30m, period=14)
+        tqqq_30m["CCI"] = calculate_cci(tqqq_30m, period=10)
+        adx_t, plus_di_t, minus_di_t = calculate_adx(tqqq_30m, period=7)
+        tqqq_30m["ADX"] = adx_t
+        tqqq_30m["DI+"] = plus_di_t
+        tqqq_30m["DI-"] = minus_di_t
+        
         sqqq_30m["ATR"] = calculate_atr(sqqq_30m, period=14)
+        sqqq_30m["CCI"] = calculate_cci(sqqq_30m, period=10)
+        adx_s, plus_di_s, minus_di_s = calculate_adx(sqqq_30m, period=7)
+        sqqq_30m["ADX"] = adx_s
+        sqqq_30m["DI+"] = plus_di_s
+        sqqq_30m["DI-"] = minus_di_s
+        
     except Exception as e:
         print(f"Failed to fetch market data: {e}")
         return
@@ -221,15 +226,19 @@ def main():
 
     # 5. Extract current metrics
     close_qqq = float(qqq_30m["Close"].iloc[-1])
-    cci_qqq = float(qqq_30m["CCI"].iloc[-1])
-    adx_qqq = float(qqq_30m["ADX"].iloc[-1])
-    di_plus = float(qqq_30m["DI+"].iloc[-1])
-    di_minus = float(qqq_30m["DI-"].iloc[-1])
     
     close_tqqq = float(tqqq_30m["Close"].iloc[-1])
+    cci_tqqq = float(tqqq_30m["CCI"].iloc[-1])
+    adx_tqqq = float(tqqq_30m["ADX"].iloc[-1])
+    di_plus_t = float(tqqq_30m["DI+"].iloc[-1])
+    di_minus_t = float(tqqq_30m["DI-"].iloc[-1])
     atr_tqqq = float(tqqq_30m["ATR"].iloc[-1])
     
     close_sqqq = float(sqqq_30m["Close"].iloc[-1])
+    cci_sqqq = float(sqqq_30m["CCI"].iloc[-1])
+    adx_sqqq = float(sqqq_30m["ADX"].iloc[-1])
+    di_plus_s = float(sqqq_30m["DI+"].iloc[-1])
+    di_minus_s = float(sqqq_30m["DI-"].iloc[-1])
     atr_sqqq = float(sqqq_30m["ATR"].iloc[-1])
 
     today_date_str = now.strftime("%Y-%m-%d")
@@ -266,8 +275,8 @@ def main():
             if is_eod and not is_stop_out:
                 price_mxn = current_price * fx_rate
                 trade_in_profit = (price_mxn > active_pos["buy_price"])
-                if trade_in_profit and adx_qqq > 25.0:
-                    if side == "long" and close_qqq >= (daily_high_qqq - 0.005 * daily_high_qqq) and regime == 0:
+                if trade_in_profit:
+                    if side == "long" and close_qqq >= (daily_high_qqq - 0.005 * daily_high_qqq) and (regime == 0 or regime == 2):
                         should_hold_overnight = True
                     elif side == "short" and close_qqq <= (daily_low_qqq + 0.005 * daily_low_qqq) and (regime == 1 or regime == 2):
                         should_hold_overnight = True
@@ -291,46 +300,45 @@ def main():
                 
     # 7. Entry triggers
     if not active_pos and not is_eod:
-        is_trending = adx_qqq >= 22.0
-        
-        if is_trending:
-            if regime == 0 and cci_qqq > 100.0 and di_plus > di_minus:
-                price_mxn = close_tqqq * fx_rate
-                alloc = current_cash * 0.90
-                shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
-                if shares > 0.01:
-                    current_cash -= alloc
-                    portfolio["holdings"].append({
-                        "ticker": "TQQQ",
-                        "side": "long",
-                        "shares": shares,
-                        "buy_price": price_mxn,
-                        "last_price": price_mxn,
-                        "peak_price": close_tqqq,
-                        "allocated": alloc
-                    })
-                    log_transaction(dir_path, today_str, "TQQQ", "BUY_TQQQ", shares, price_mxn, "ADX-CCI trend breakout entry", fee=0.0)
-                    action_logs.append(f"ENTERED LONG trend breakout on TQQQ at ${price_mxn:,.2f} MXN (ADX={adx_qqq:.1f}, CCI={cci_qqq:.1f}).")
-            elif (regime == 1 or regime == 2) and cci_qqq < -100.0 and di_minus > di_plus:
-                price_mxn = close_sqqq * fx_rate
-                alloc = current_cash * 0.90
-                shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
-                if shares > 0.01:
-                    current_cash -= alloc
-                    portfolio["holdings"].append({
-                        "ticker": "SQQQ",
-                        "side": "short",
-                        "shares": shares,
-                        "buy_price": price_mxn,
-                        "last_price": price_mxn,
-                        "peak_price": close_sqqq,
-                        "allocated": alloc
-                    })
-                    log_transaction(dir_path, today_str, "SQQQ", "BUY_SQQQ", shares, price_mxn, "ADX-CCI trend breakdown entry", fee=0.0)
-                    action_logs.append(f"ENTERED SHORT trend breakdown on SQQQ at ${price_mxn:,.2f} MXN (ADX={adx_qqq:.1f}, CCI={cci_qqq:.1f}).")
+        # 1. Breakout long TQQQ (Bull state, TQQQ breakout)
+        if (regime == 0 or regime == 2) and adx_tqqq >= 22.0 and cci_tqqq > 100.0 and di_plus_t > di_minus_t:
+            price_mxn = close_tqqq * fx_rate
+            alloc = current_cash * 0.90
+            shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
+            if shares > 0.01:
+                current_cash -= alloc
+                portfolio["holdings"].append({
+                    "ticker": "TQQQ",
+                    "side": "long",
+                    "shares": shares,
+                    "buy_price": price_mxn,
+                    "last_price": price_mxn,
+                    "peak_price": close_tqqq,
+                    "allocated": alloc
+                })
+                log_transaction(dir_path, today_str, "TQQQ", "BUY_TQQQ", shares, price_mxn, "Direct asset trend breakout entry", fee=0.0)
+                action_logs.append(f"ENTERED LONG trend breakout on TQQQ at ${price_mxn:,.2f} MXN (ADX={adx_tqqq:.1f}, CCI={cci_tqqq:.1f}).")
+        # 2. Breakout SQQQ (Bear state, SQQQ breakout)
+        elif (regime == 1 or regime == 2) and adx_sqqq >= 22.0 and cci_sqqq > 100.0 and di_plus_s > di_minus_s:
+            price_mxn = close_sqqq * fx_rate
+            alloc = current_cash * 0.90
+            shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
+            if shares > 0.01:
+                current_cash -= alloc
+                portfolio["holdings"].append({
+                    "ticker": "SQQQ",
+                    "side": "short",
+                    "shares": shares,
+                    "buy_price": price_mxn,
+                    "last_price": price_mxn,
+                    "peak_price": close_sqqq,
+                    "allocated": alloc
+                })
+                log_transaction(dir_path, today_str, "SQQQ", "BUY_SQQQ", shares, price_mxn, "Direct asset trend breakdown entry", fee=0.0)
+                action_logs.append(f"ENTERED SHORT trend breakdown on SQQQ at ${price_mxn:,.2f} MXN (ADX={adx_sqqq:.1f}, CCI={cci_sqqq:.1f}).")
         else:
             # Mean Reversion
-            if cci_qqq < -150.0:
+            if adx_tqqq < 22.0 and cci_tqqq < -150.0:
                 price_mxn = close_tqqq * fx_rate
                 alloc = current_cash * 0.90
                 shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
@@ -345,9 +353,9 @@ def main():
                         "peak_price": close_tqqq,
                         "allocated": alloc
                     })
-                    log_transaction(dir_path, today_str, "TQQQ", "BUY_TQQQ", shares, price_mxn, "CCI extreme reversion entry", fee=0.0)
-                    action_logs.append(f"ENTERED LONG reversion on TQQQ at ${price_mxn:,.2f} MXN (CCI={cci_qqq:.1f} oversold).")
-            elif cci_qqq > 150.0:
+                    log_transaction(dir_path, today_str, "TQQQ", "BUY_TQQQ", shares, price_mxn, "Direct asset CCI reversion entry", fee=0.0)
+                    action_logs.append(f"ENTERED LONG reversion on TQQQ at ${price_mxn:,.2f} MXN (CCI={cci_tqqq:.1f} oversold).")
+            elif adx_sqqq < 22.0 and cci_sqqq < -150.0:
                 price_mxn = close_sqqq * fx_rate
                 alloc = current_cash * 0.90
                 shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
@@ -362,12 +370,12 @@ def main():
                         "peak_price": close_sqqq,
                         "allocated": alloc
                     })
-                    log_transaction(dir_path, today_str, "SQQQ", "BUY_SQQQ", shares, price_mxn, "CCI extreme reversion entry", fee=0.0)
-                    action_logs.append(f"ENTERED SHORT reversion on SQQQ at ${price_mxn:,.2f} MXN (CCI={cci_qqq:.1f} overbought).")
+                    log_transaction(dir_path, today_str, "SQQQ", "BUY_SQQQ", shares, price_mxn, "Direct asset CCI reversion entry", fee=0.0)
+                    action_logs.append(f"ENTERED SHORT reversion on SQQQ at ${price_mxn:,.2f} MXN (CCI={cci_sqqq:.1f} oversold).")
     elif active_pos and not is_eod:
-        # early zero settle
         side = active_pos["side"]
-        if (side == "long" and cci_qqq >= 0.0) or (side == "short" and cci_qqq <= 0.0):
+        cci_val = cci_tqqq if side == "long" else cci_sqqq
+        if cci_val >= 0.0:
             current_price = close_tqqq if side == "long" else close_sqqq
             price_mxn = current_price * fx_rate
             shares = active_pos["shares"]
@@ -378,8 +386,8 @@ def main():
                 val = active_pos["allocated"] + (active_pos["allocated"] - shares * price_mxn)
                 
             current_cash += val * (1.0 - TRANSACTION_FEE_RATE)
-            log_transaction(dir_path, today_str, active_pos["ticker"], f"SETTLE_{side.upper()}_CCI_ZERO", shares, price_mxn, "CCI returned to zero line", fee=0.0)
-            action_logs.append(f"SETTLED {side.upper()} reversion on QQQ at CCI zero mark. Cash credited: ${val:,.2f} MXN.")
+            log_transaction(dir_path, today_str, active_pos["ticker"], f"SETTLE_{side.upper()}_CCI_ZERO", shares, price_mxn, "Direct CCI returned to zero line", fee=0.0)
+            action_logs.append(f"SETTLED {side.upper()} reversion at direct CCI zero mark. Cash credited: ${val:,.2f} MXN.")
             portfolio["holdings"] = []
             active_pos = None
 
@@ -436,8 +444,8 @@ def main():
     report_md += "\n## 4. CCI-ADX Telemetry\n"
     report_md += f"  * Decoded Regime: HMM State {current_state_raw} -> **Regime {regime} ({regime_reason})**\n"
     report_md += f"  * QQQ Close: ${close_qqq:.2f} USD\n"
-    report_md += f"  * QQQ Intraday CCI (10): {cci_qqq:.1f} (Thresholds: Breakout $\pm 100$, Reversion $\pm 150$)\n"
-    report_md += f"  * QQQ Intraday ADX (7): {adx_qqq:.1f} (DI+: {di_plus:.1f}, DI-: {di_minus:.1f})\n"
+    report_md += f"  * TQQQ CCI (10): {cci_tqqq:.1f} | ADX (7): {adx_tqqq:.1f}\n"
+    report_md += f"  * SQQQ CCI (10): {cci_sqqq:.1f} | ADX (7): {adx_sqqq:.1f}\n"
 
     with open(os.path.join(dir_path, REPORT_FILE), "w", encoding="utf-8") as f:
         f.write(report_md)
