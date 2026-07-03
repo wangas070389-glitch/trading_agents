@@ -3,6 +3,7 @@ import sys
 import json
 import datetime
 import argparse
+from zoneinfo import ZoneInfo
 import yfinance as yf
 import numpy as np
 import pandas as pd
@@ -241,7 +242,7 @@ def main():
     di_minus_s = float(sqqq_30m["DI-"].iloc[-1])
     atr_sqqq = float(sqqq_30m["ATR"].iloc[-1])
 
-    today_date_str = now.strftime("%Y-%m-%d")
+    today_date_str = datetime.datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
     today_bars_qqq = qqq_30m[qqq_30m.index.strftime("%Y-%m-%d") == today_date_str]
     
     if not today_bars_qqq.empty:
@@ -251,7 +252,8 @@ def main():
         daily_high_qqq = close_qqq
         daily_low_qqq = close_qqq
 
-    is_eod = now.time() >= datetime.time(14, 30) or now.time() >= datetime.time(15, 30)
+    now_et = datetime.datetime.now(ZoneInfo("America/New_York"))
+    is_eod = now_et.time() >= datetime.time(15, 30)
     
     holdings = portfolio["holdings"]
     active_pos = holdings[0] if holdings else None
@@ -286,7 +288,7 @@ def main():
                 if side == "long":
                     val = shares * price_mxn
                 else:
-                    val = active_pos["allocated"] + (active_pos["allocated"] - shares * price_mxn)
+                    val = shares * price_mxn  # SQQQ es instrumento inverso: se compra long, valor = shares * precio
                     
                 current_cash += val * (1.0 - TRANSACTION_FEE_RATE)
                 exit_reason = "TRAILING_STOP" if is_stop_out else "EOD_CLOSE"
@@ -383,7 +385,7 @@ def main():
             if side == "long":
                 val = shares * price_mxn
             else:
-                val = active_pos["allocated"] + (active_pos["allocated"] - shares * price_mxn)
+                val = shares * price_mxn  # SQQQ es instrumento inverso: se compra long, valor = shares * precio
                 
             current_cash += val * (1.0 - TRANSACTION_FEE_RATE)
             log_transaction(dir_path, today_str, active_pos["ticker"], f"SETTLE_{side.upper()}_CCI_ZERO", shares, price_mxn, "Direct CCI returned to zero line", fee=0.0)
@@ -399,7 +401,7 @@ def main():
         if h["side"] == "long":
             assets_equity += h["shares"] * h["last_price"]
         else:
-            assets_equity += h["allocated"] + (h["allocated"] - h["shares"] * h["last_price"])
+            assets_equity += h["shares"] * h["last_price"]  # SQQQ long: sin short sintetico
             
     portfolio_value = current_cash + assets_equity
 
@@ -427,7 +429,7 @@ def main():
         if side == "LONG":
             mkt_val = h["shares"] * h["last_price"]
         else:
-            mkt_val = h["allocated"] + (h["allocated"] - h["shares"] * h["last_price"])
+            mkt_val = h["shares"] * h["last_price"]
         report_md += f"| **{t}** | LEVERAGED INTRADAY | {side} | {h['shares']:.4f} | ${h['buy_price']:,.2f} | ${h['last_price']:,.2f} | ${mkt_val:,.2f} |\n"
 
     report_md += "\n## 3. Today's Execution Logs\n"
