@@ -82,18 +82,13 @@
 | 2026-07-01 | BONDIA | INTEREST | 1 | 0.2631 | +0.2631 | Market | FILLED | Bondia overnight yield on cash reserves for 0.8482 days. |
 | 2026-07-01 | BONDIA | INTEREST | 1 | 0.0254 | +0.0254 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0819 days. |
 | 2026-07-01 | BONDIA | INTEREST | 1 | 0.0231 | +0.0231 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0744 days. |
-| 2026-07-02 | BONDIA | INTEREST | 1 | 0.2126 | +0.2126 | Market | FILLED | Bondia overnight yield on cash reserves for 0.6855 days. |
-| 2026-07-02 | BONDIA | INTEREST | 1 | 0.0078 | +0.0078 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0251 days. |
-| 2026-07-02 | BONDIA | INTEREST | 1 | 0.0135 | +0.0135 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0434 days. |
-| 2026-07-02 | BONDIA | INTEREST | 1 | 0.0090 | +0.0090 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0289 days. |
-| 2026-07-02 | BONDIA | INTEREST | 1 | 0.0222 | +0.0222 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0717 days. |
-| 2026-07-02 | BONDIA | INTEREST | 1 | 0.0179 | +0.0179 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0577 days. |
-| 2026-07-02 | BONDIA | INTEREST | 1 | 0.0056 | +0.0056 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0181 days. |
+| 2026-07-01 | BONDIA | INTEREST | 1 | 0.0008 | +0.0008 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0025 days. |
+| 2026-07-02 | BONDIA | INTEREST | 1 | 0.3067 | +0.3067 | Market | FILLED | Bondia overnight yield on cash reserves for 0.9888 days. |
 ---
 
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
 * **Total Deployed Capital**: 18,631.39 MXN (88.9% invested)
-* **Unallocated Cash Reserves**: 1,710.43 MXN (8.2% cash)
-* **Current Portfolio Market Value**: 20,961.32 MXN (including cash)
+* **Unallocated Cash Reserves**: 1,710.45 MXN (8.2% cash)
+* **Current Portfolio Market Value**: 20,961.34 MXN (including cash)

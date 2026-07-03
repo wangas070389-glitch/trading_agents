@@ -45,15 +45,9 @@
 | 2026-07-01 | ASURB.MX | SELL | 3 | 541.50 | +1,622.37 | Market | FILLED | 1D MACD systematic signal |
 | 2026-07-01 | BONDIA | INTEREST | 1 | 0.21 | +0.2100 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0819 days. |
 | 2026-07-01 | BONDIA | INTEREST | 1 | 0.19 | +0.1909 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0744 days. |
-| 2026-07-02 | BONDIA | INTEREST | 1 | 1.76 | +1.7580 | Market | FILLED | Bondia overnight yield on cash reserves for 0.6856 days. |
-| 2026-07-02 | GFNORTEO.MX | BUY | 20 | 188.25 | -3,768.77 | Market | FILLED | 1D MACD systematic signal |
-| 2026-07-02 | GAPB.MX | BUY | 4 | 439.53 | -1,760.13 | Market | FILLED | 1D MACD systematic signal |
-| 2026-07-02 | BONDIA | INTEREST | 1 | 0.04 | +0.0394 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0252 days. |
-| 2026-07-02 | BONDIA | INTEREST | 1 | 0.07 | +0.0679 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0434 days. |
-| 2026-07-02 | BONDIA | INTEREST | 1 | 0.05 | +0.0453 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0290 days. |
-| 2026-07-02 | BONDIA | INTEREST | 1 | 0.11 | +0.1123 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0719 days. |
-| 2026-07-02 | BONDIA | INTEREST | 1 | 0.09 | +0.0902 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0578 days. |
-| 2026-07-02 | BONDIA | INTEREST | 1 | 0.03 | +0.0282 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0181 days. |
+| 2026-07-02 | BONDIA | INTEREST | 1 | 2.63 | +2.6324 | Market | FILLED | Bondia overnight yield on cash reserves for 1.0266 days. |
+| 2026-07-02 | GFNORTEO.MX | BUY | 20 | 187.70 | -3,757.78 | Market | FILLED | 1D MACD systematic signal |
+| 2026-07-02 | GAPB.MX | BUY | 4 | 441.55 | -1,768.21 | Market | FILLED | 1D MACD systematic signal |
 ---
 
 
@@ -62,6 +56,6 @@
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
-* **Total Deployed Capital**: 11,175.04 MXN (56.2% invested)
-* **Unallocated Cash Reserves**: 8,609.66 MXN (43.3% cash)
-* **Current Portfolio Market Value**: 19,873.34 MXN (including cash)
+* **Total Deployed Capital**: 11,172.04 MXN (56.2% invested)
+* **Unallocated Cash Reserves**: 8,613.06 MXN (43.3% cash)
+* **Current Portfolio Market Value**: 19,876.74 MXN (including cash)

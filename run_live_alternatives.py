@@ -202,6 +202,22 @@ def main():
     current_equity = sum(h["shares"] * current_prices.get(h["ticker"], h["last_price"]) for h in portfolio["holdings"])
     portfolio_value = current_cash + current_equity
 
+    # 4.5 Evaluate signals for all tickers in the universe for report logs
+    all_evaluations = {}
+    for ticker in ALL_TICKERS:
+        if ticker not in current_prices:
+            continue
+        if ticker in CRYPTO:
+            asset_type = "crypto"
+        elif ticker in COMMODITIES:
+            asset_type = "commodity"
+        else:
+            asset_type = "forex"
+            
+        hist = ticker_history[ticker]
+        sig_res = evaluate_signals(ticker, asset_type, hist)
+        all_evaluations[ticker] = (asset_type, sig_res)
+
     # 5. Process Exits
     exit_trades = []
     for ticker, h in list(holdings_dict.items()):
@@ -228,11 +244,11 @@ def main():
 
         # Check standard sell signals
         if not exit_triggered:
-            hist = ticker_history[ticker]
-            signal_res = evaluate_signals(ticker, asset_type, hist)
-            if signal_res["signal"] == "sell":
-                exit_triggered = True
-                exit_reason = signal_res["reason"]
+            if ticker in all_evaluations:
+                _, signal_res = all_evaluations[ticker]
+                if signal_res["signal"] == "sell":
+                    exit_triggered = True
+                    exit_reason = signal_res["reason"]
 
         if exit_triggered:
             # Execute Exit
@@ -268,20 +284,12 @@ def main():
     if num_positions < MAX_CONCURRENT_POSITIONS:
         candidates = []
         for ticker in ALL_TICKERS:
-            if ticker in holdings_dict or ticker not in current_prices:
+            if ticker in holdings_dict or ticker not in all_evaluations:
                 continue
                 
-            if ticker in CRYPTO:
-                asset_type = "crypto"
-            elif ticker in COMMODITIES:
-                asset_type = "commodity"
-            else:
-                asset_type = "forex"
-                
-            hist = ticker_history[ticker]
-            signal_res = evaluate_signals(ticker, asset_type, hist)
-            if signal_res["signal"] == "buy":
-                candidates.append((ticker, asset_type, signal_res))
+            asset_type, sig_res = all_evaluations[ticker]
+            if sig_res["signal"] == "buy":
+                candidates.append((ticker, asset_type, sig_res))
                 
         # Sort candidates
         candidates.sort(key=lambda x: 0 if x[1] == "crypto" else (1 if x[1] == "commodity" else 2))
@@ -392,6 +400,31 @@ def main():
             report_markdown += f"* {trade}\n"
     if not exit_trades and not entry_trades and not is_new_month:
         report_markdown += "* No actions required today. Positions match target indicator profiles.\n"
+
+    # 4. Evaluation Diagnostics Section
+    report_markdown += "\n## 4. Asset Evaluation Diagnostics (Signals Checked)\n"
+    report_markdown += "| Ticker | Asset Type | Signal | Price | Indicator Diagnostics | Evaluation Reason |\n"
+    report_markdown += "| :--- | :---: | :---: | :---: | :--- | :--- |\n"
+    
+    for ticker in ALL_TICKERS:
+        if ticker not in all_evaluations:
+            report_markdown += f"| **{ticker}** | - | N/A | - | Data download failed | - |\n"
+            continue
+            
+        asset_type, sig_res = all_evaluations[ticker]
+        price = sig_res.get("price", current_prices.get(ticker, 0.0))
+        sig_str = sig_res.get("signal", "hold").upper()
+        reason_str = sig_res.get("reason", "No signals")
+        
+        ind = sig_res.get("indicators", {})
+        if asset_type == "crypto":
+            diag_str = f"SMA 200: ${ind.get('sma_200', 0.0):,.2f}, MACD: {ind.get('macd', 0.0):.4f}, Signal: {ind.get('signal', 0.0):.4f}"
+        elif asset_type == "commodity":
+            diag_str = f"SMA 100: ${ind.get('sma_100', 0.0):,.2f}, Donchian High: ${ind.get('donchian_high', 0.0):,.2f}, Donchian Low: ${ind.get('donchian_low', 0.0):,.2f}"
+        else:
+            diag_str = f"RSI: {ind.get('rsi', 0.0):.1f}, Lower BB: ${ind.get('lower_bb', 0.0):,.4f}, Upper BB: ${ind.get('upper_bb', 0.0):,.4f}"
+            
+        report_markdown += f"| **{ticker}** | {asset_type.upper()} | {sig_str} | ${price:,.4f} | {diag_str} | {reason_str} |\n"
 
     with open(os.path.join(dir_path, REPORT_FILE), "w", encoding="utf-8") as f:
         f.write(report_markdown)

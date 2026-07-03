@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 # Target allocations
-W_S4, W_S1, W_S6, W_S5 = 0.40, 0.30, 0.20, 0.10
+W_S9, W_S4, W_S1, W_S8, W_S6, W_S5 = 0.25, 0.25, 0.20, 0.15, 0.10, 0.05
 
 PORTFOLIO_FILE = "portfolio_multi_strategy.json"
 REPORT_FILE = "multi_strategy_report_live.md"
@@ -17,7 +17,12 @@ def get_nav(portfolio_data):
     if not portfolio_data:
         return 0.0, 0.0
     cash = float(portfolio_data.get("cash_balance", 0.0))
-    holdings_val = sum(float(h.get("shares", 0.0)) * float(h.get("last_price", h.get("buy_price", 0.0))) for h in portfolio_data.get("holdings", []))
+    holdings_val = 0.0
+    for h in portfolio_data.get("holdings", []):
+        if "shares" in h:
+            holdings_val += float(h["shares"]) * float(h.get("last_price", h.get("buy_price", 0.0)))
+        elif "last_price" in h:
+            holdings_val += float(h.get("last_price", h.get("buy_price", 0.0)))
     return cash + holdings_val, cash
 
 def main():
@@ -44,11 +49,15 @@ def main():
     s4_path = os.path.join(dir_path, "portfolio_us_dcs.json")
     s5_path = os.path.join(dir_path, "portfolio_alternatives.json")
     s6_path = os.path.join(dir_path, "portfolio_high_beta.json")
+    s8_path = os.path.join(dir_path, "portfolio_dividends.json")
+    s9_path = os.path.join(dir_path, "portfolio_strategy9.json")
 
     s1_data = None
     s4_data = None
     s5_data = None
     s6_data = None
+    s8_data = None
+    s9_data = None
 
     if os.path.exists(s1_path):
         with open(s1_path, 'r', encoding='utf-8') as f:
@@ -62,32 +71,48 @@ def main():
     if os.path.exists(s6_path):
         with open(s6_path, 'r', encoding='utf-8') as f:
             s6_data = json.load(f)
+    if os.path.exists(s8_path):
+        with open(s8_path, 'r', encoding='utf-8') as f:
+            s8_data = json.load(f)
+    if os.path.exists(s9_path):
+        with open(s9_path, 'r', encoding='utf-8') as f:
+            s9_data = json.load(f)
 
     # Calculate individual NAVs in local currencies
     s1_nav_mxn, s1_cash_mxn = get_nav(s1_data)
     s4_nav_usd, s4_cash_usd = get_nav(s4_data)
     s5_nav_usd, s5_cash_usd = get_nav(s5_data)
     s6_nav_usd, s6_cash_usd = get_nav(s6_data)
+    s8_nav_mxn, s8_cash_mxn = get_nav(s8_data)
+    s9_nav_mxn, s9_cash_mxn = get_nav(s9_data)
 
-    # Convert S1 (MXN) to USD
+    # Convert S1, S8, S9 (MXN) to USD
     s1_nav_usd = s1_nav_mxn / usd_mxn_rate
     s1_cash_usd = s1_cash_mxn / usd_mxn_rate
+    s8_nav_usd = s8_nav_mxn / usd_mxn_rate
+    s8_cash_usd = s8_cash_mxn / usd_mxn_rate
+    s9_nav_usd = s9_nav_mxn / usd_mxn_rate
+    s9_cash_usd = s9_cash_mxn / usd_mxn_rate
 
     # Consolidated totals (USD)
-    total_nav_usd = s1_nav_usd + s4_nav_usd + s5_nav_usd + s6_nav_usd
-    total_cash_usd = s1_cash_usd + s4_cash_usd + s5_cash_usd + s6_cash_usd
+    total_nav_usd = s1_nav_usd + s4_nav_usd + s5_nav_usd + s6_nav_usd + s8_nav_usd + s9_nav_usd
+    total_cash_usd = s1_cash_usd + s4_cash_usd + s5_cash_usd + s6_cash_usd + s8_cash_usd + s9_cash_usd
 
     # Compute weights
     w1_curr = s1_nav_usd / total_nav_usd if total_nav_usd > 0 else 0.0
     w4_curr = s4_nav_usd / total_nav_usd if total_nav_usd > 0 else 0.0
     w5_curr = s5_nav_usd / total_nav_usd if total_nav_usd > 0 else 0.0
     w6_curr = s6_nav_usd / total_nav_usd if total_nav_usd > 0 else 0.0
+    w8_curr = s8_nav_usd / total_nav_usd if total_nav_usd > 0 else 0.0
+    w9_curr = s9_nav_usd / total_nav_usd if total_nav_usd > 0 else 0.0
 
     print("\nCurrent NAV Breakdown:")
-    print(f"  S1 (MXN Value):     ${s1_nav_usd:,.2f} USD ({w1_curr*100:.1f}% vs Target 30.0%)")
-    print(f"  S4 (US DCS):        ${s4_nav_usd:,.2f} USD ({w4_curr*100:.1f}% vs Target 40.0%)")
-    print(f"  S5 (Alternatives):  ${s5_nav_usd:,.2f} USD ({w5_curr*100:.1f}% vs Target 10.0%)")
-    print(f"  S6 (High-Beta):     ${s6_nav_usd:,.2f} USD ({w6_curr*100:.1f}% vs Target 20.0%)")
+    print(f"  S9 (AI Stat Arb):   ${s9_nav_usd:,.2f} USD ({w9_curr*100:.1f}% vs Target 25.0%)")
+    print(f"  S4 (US DCS):        ${s4_nav_usd:,.2f} USD ({w4_curr*100:.1f}% vs Target 25.0%)")
+    print(f"  S1 (MXN Value):     ${s1_nav_usd:,.2f} USD ({w1_curr*100:.1f}% vs Target 20.0%)")
+    print(f"  S8 (Div Quality):   ${s8_nav_usd:,.2f} USD ({w8_curr*100:.1f}% vs Target 15.0%)")
+    print(f"  S6 (High-Beta):     ${s6_nav_usd:,.2f} USD ({w6_curr*100:.1f}% vs Target 10.0%)")
+    print(f"  S5 (Alternatives):  ${s5_nav_usd:,.2f} USD ({w5_curr*100:.1f}% vs Target 5.0%)")
     print(f"  Total Portfolio:    ${total_nav_usd:,.2f} USD")
 
     # 3. Load Multi-Strategy portfolio state
@@ -120,8 +145,10 @@ def main():
             # Detect monthly savings inflows on month transition
             is_new_month = today_date.year > last_date.year or (today_date.year == last_date.year and today_date.month > last_date.month)
             
-            # S1 (MXN Value Inflow 2000 MXN)
+            # S1, S8, S9 (MXN Value Inflows 2000 MXN each)
             inflow_1_usd = (2000.0 / usd_mxn_rate) if is_new_month else 0.0
+            inflow_8_usd = (2000.0 / usd_mxn_rate) if is_new_month else 0.0
+            inflow_9_usd = (2000.0 / usd_mxn_rate) if is_new_month else 0.0
             # S4, S5, S6 (USD Inflows 1000 USD each)
             inflow_4_usd = 1000.0 if is_new_month else 0.0
             inflow_5_usd = 1000.0 if is_new_month else 0.0
@@ -132,10 +159,12 @@ def main():
             r4 = (s4_nav_usd - inflow_4_usd) / last_entry["s4_nav_usd"] - 1.0 if last_entry.get("s4_nav_usd", 0) > 0 else 0.0
             r5 = (s5_nav_usd - inflow_5_usd) / last_entry["s5_nav_usd"] - 1.0 if last_entry.get("s5_nav_usd", 0) > 0 else 0.0
             r6 = (s6_nav_usd - inflow_6_usd) / last_entry["s6_nav_usd"] - 1.0 if last_entry.get("s6_nav_usd", 0) > 0 else 0.0
+            r8 = (s8_nav_usd - inflow_8_usd) / last_entry.get("s8_nav_usd", s8_nav_usd) - 1.0 if last_entry.get("s8_nav_usd", 0) > 0 else 0.0
+            r9 = (s9_nav_usd - inflow_9_usd) / last_entry.get("s9_nav_usd", s9_nav_usd) - 1.0 if last_entry.get("s9_nav_usd", 0) > 0 else 0.0
             
             # Combined R7
-            r7_today = (W_S4 * r4) + (W_S1 * r1) + (W_S6 * r6) + (W_S5 * r5)
-            print(f"Calculated Today's Returns: R1={r1*100:.2f}%, R4={r4*100:.2f}%, R5={r5*100:.2f}%, R6={r6*100:.2f}% | Blended R7={r7_today*100:.2f}%")
+            r7_today = (W_S4 * r4) + (W_S1 * r1) + (W_S6 * r6) + (W_S5 * r5) + (W_S8 * r8) + (W_S9 * r9)
+            print(f"Calculated Returns: R9={r9*100:.2f}%, R4={r4*100:.2f}%, R1={r1*100:.2f}%, R8={r8*100:.2f}%, R6={r6*100:.2f}%, R5={r5*100:.2f}% | R7={r7_today*100:.2f}%")
     else:
         # First entry initialization
         is_new_day = True
@@ -204,7 +233,9 @@ def main():
                 "s1_nav_usd": s1_nav_usd,
                 "s4_nav_usd": s4_nav_usd,
                 "s5_nav_usd": s5_nav_usd,
-                "s6_nav_usd": s6_nav_usd
+                "s6_nav_usd": s6_nav_usd,
+                "s8_nav_usd": s8_nav_usd,
+                "s9_nav_usd": s9_nav_usd
             })
 
     # Update meta values
@@ -214,6 +245,13 @@ def main():
     state["last_updated"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
     state["allocations"] = {
+        "strategy_9_ai_arb": {
+            "nav_usd": s9_nav_usd,
+            "nav_mxn": s9_nav_mxn,
+            "current_weight": w9_curr,
+            "target_weight": W_S9,
+            "deviation": w9_curr - W_S9
+        },
         "strategy_1_mxn_value": {
             "nav_usd": s1_nav_usd,
             "nav_mxn": s1_nav_mxn,
@@ -226,6 +264,13 @@ def main():
             "current_weight": w4_curr,
             "target_weight": W_S4,
             "deviation": w4_curr - W_S4
+        },
+        "strategy_8_dividend_quality": {
+            "nav_usd": s8_nav_usd,
+            "nav_mxn": s8_nav_mxn,
+            "current_weight": w8_curr,
+            "target_weight": W_S8,
+            "deviation": w8_curr - W_S8
         },
         "strategy_5_alternatives": {
             "nav_usd": s5_nav_usd,
@@ -323,9 +368,51 @@ def main():
     else:
         holdings_md += "*No open positions currently held. Strategy is 100% Cash.*\n"
 
+    # Strategy 8 (Dividends)
+    holdings_md += "\n### E. Strategy 8: Dividend Quality & Yield Holdings (MXN / USD)\n"
+    if s8_data and s8_data.get("holdings"):
+        holdings_md += "| Ticker | Shares Held | Buy Price (Local) | Current Price (Local) | Market Value (MXN) | Market Value (USD) | Strategy Weight |\n"
+        holdings_md += "| :--- | :---: | :---: | :---: | :---: | :---: | :---: |\n"
+        for h in s8_data["holdings"]:
+            ticker = h["ticker"]
+            shares = float(h["shares"])
+            buy_p = float(h["buy_price"])
+            last_p = float(h.get("last_price", buy_p))
+            mval_mxn = shares * last_p
+            mval_usd = mval_mxn / usd_mxn_rate
+            weight = mval_usd / s8_nav_usd if s8_nav_usd > 0 else 0.0
+            holdings_md += f"| **{ticker}** | {shares:,.4f} | ${buy_p:,.2f} | ${last_p:,.2f} | ${mval_mxn:,.2f} | ${mval_usd:,.2f} | {weight:.1%} |\n"
+    else:
+        holdings_md += "*No open stock positions currently held. Strategy is 100% Cash / Bondia sweep.*\n"
+
+    # Strategy 9 (AI Arb)
+    holdings_md += "\n### F. Strategy 9: AI-Regime Adaptive Stat-Arb Holdings (MXN / USD)\n"
+    if s9_data and s9_data.get("holdings"):
+        holdings_md += "| Ticker | Type | Qty Y | Qty X | Buy/Alloc | Last Value | Value (MXN) | Value (USD) |\n"
+        holdings_md += "| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |\n"
+        for h in s9_data["holdings"]:
+            ticker = h["ticker"]
+            is_pair = ticker.startswith("PAIR:")
+            buy_p = float(h["buy_price"])
+            last_p = float(h.get("last_price", buy_p))
+            
+            qty_y = h.get("qty_y", 0.0) if is_pair else h.get("shares", 0.0)
+            qty_x = h.get("qty_x", 0.0)
+            
+            mval_mxn = last_p
+            if not is_pair:
+                mval_mxn = qty_y * last_p
+                
+            mval_usd = mval_mxn / usd_mxn_rate
+            
+            type_str = "Pairs Spread" if is_pair else "Regime Asset"
+            holdings_md += f"| **{ticker}** | {type_str} | {qty_y:.4f} | {qty_x:.4f} | ${buy_p:,.2f} | ${last_p:,.2f} | ${mval_mxn:,.2f} | ${mval_usd:,.2f} |\n"
+    else:
+        holdings_md += "*No open arbitrage positions or regime assets held. Strategy is 100% Cash / Bondia sweep.*\n"
+
     # 6. Generate report
     report_md = f"""# Strategy 7 (Consolidated Multi-Strategy) Daily Execution Report
-**Execution Date:** {today_str} | **Orchestrator Version:** Live V1
+**Execution Date:** {today_str} | **Orchestrator Version:** Live V2
 
 ## 1. Consolidated Portfolio Summary
 * **Total Portfolio Value (USD):** ${total_nav_usd:,.2f} USD
@@ -341,10 +428,13 @@ def main():
 ## 3. Allocation Target Deviation
 | Strategy Component | Target Allocation % | Current Allocation % | Deviation % | Current Value (USD) |
 | :--- | :---: | :---: | :---: | :---: |
+| **Strategy 9: AI Stat-Arb & Regime** | {W_S9*100:.1f}% | {w9_curr*100:.1f}% | {(w9_curr - W_S9)*100:+.1f}% | ${s9_nav_usd:,.2f} |
 | **Strategy 4: US DCS Value-Growth** | {W_S4*100:.1f}% | {w4_curr*100:.1f}% | {(w4_curr - W_S4)*100:+.1f}% | ${s4_nav_usd:,.2f} |
 | **Strategy 1: MXN Dynamic Value** | {W_S1*100:.1f}% | {w1_curr*100:.1f}% | {(w1_curr - W_S1)*100:+.1f}% | ${s1_nav_usd:,.2f} |
+| **Strategy 8: Dividend Quality & Yield** | {W_S8*100:.1f}% | {w8_curr*100:.1f}% | {(w8_curr - W_S8)*100:+.1f}% | ${s8_nav_usd:,.2f} |
 | **Strategy 6: US High-Beta Momentum** | {W_S6*100:.1f}% | {w6_curr*100:.1f}% | {(w6_curr - W_S6)*100:+.1f}% | ${s6_nav_usd:,.2f} |
 | **Strategy 5: Alternatives (Crypto/Forex/ETFs)** | {W_S5*100:.1f}% | {w5_curr*100:.1f}% | {(w5_curr - W_S5)*100:+.1f}% | ${s5_nav_usd:,.2f} |
+
 {holdings_md}
 ---
 *Generated by daily orchestrator at {state["last_updated"]}*
@@ -356,27 +446,29 @@ def main():
     history_md_path = os.path.join(dir_path, "multi_strategy_allocation_history.md")
     history_lines = [
         "# Consolidated Multi-Strategy Allocation History\n",
-        "| Date | Strategy 1 (MXN Value) | Strategy 4 (US DCS) | Strategy 5 (Alternatives) | Strategy 6 (High-Beta) | Total NAV (USD) |",
-        "| :--- | :---: | :---: | :---: | :---: | :---: |"
+        "| Date | Strategy 9 (AI Arb) | Strategy 1 (MXN Value) | Strategy 4 (US DCS) | Strategy 8 (Dividends) | Strategy 5 (Alternatives) | Strategy 6 (High-Beta) | Total NAV (USD) |",
+        "| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |"
     ]
     
-    # Sort history entries descending (newest first)
     sorted_history = sorted(state.get("history", []), key=lambda x: x["date"], reverse=True)
     for entry in sorted_history:
         date = entry["date"]
         nav = entry["nav_usd"]
         if nav > 0:
+            pct9 = (entry.get("s9_nav_usd", 0.0) / nav) * 100.0
             pct1 = (entry["s1_nav_usd"] / nav) * 100.0
             pct4 = (entry["s4_nav_usd"] / nav) * 100.0
+            pct8 = (entry.get("s8_nav_usd", 0.0) / nav) * 100.0
             pct5 = (entry["s5_nav_usd"] / nav) * 100.0
             pct6 = (entry["s6_nav_usd"] / nav) * 100.0
         else:
-            pct1 = pct4 = pct5 = pct6 = 0.0
+            pct9 = pct1 = pct4 = pct8 = pct5 = pct6 = 0.0
             
-        history_lines.append(f"| {date} | {pct1:.1f}% | {pct4:.1f}% | {pct5:.1f}% | {pct6:.1f}% | ${nav:,.2f} |")
+        history_lines.append(f"| {date} | {pct9:.1f}% | {pct1:.1f}% | {pct4:.1f}% | {pct8:.1f}% | {pct5:.1f}% | {pct6:.1f}% | ${nav:,.2f} |")
         
     with open(history_md_path, 'w', encoding='utf-8') as f:
         f.write("\n".join(history_lines) + "\n")
+    print(f"Saved allocation history to {history_md_path}")
     print(f"Saved allocation history to {history_md_path}")
 
     print(f"\nConsolidated execution complete! Saved report to {REPORT_FILE}")

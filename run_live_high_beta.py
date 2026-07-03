@@ -243,6 +243,17 @@ def main():
         if ticker in price_data:
             indicators_dict[ticker] = calculate_indicators(price_data[ticker])
 
+    # Calculate DCS scores for all tickers for diagnostics
+    print("\nCalculating DCS conviction scores for all universe tickers...")
+    dcs_scores = {}
+    for ticker in US_TICKERS:
+        if ticker in current_prices:
+            try:
+                dcf_res = calculate_us_dcs(ticker, current_prices[ticker], rf_rate)
+                dcs_scores[ticker] = float(dcf_res["margin_of_safety"])
+            except Exception as e:
+                dcs_scores[ticker] = 0.0
+
     # 5. Evaluate exits
     print("\nEvaluating exits for current holdings...")
     action_logs = []
@@ -356,14 +367,7 @@ def main():
             trend_bull = curr_close > curr_sma
             
             if trend_bull and macd_cross_up:
-                # Calculate DCS margin of safety
-                try:
-                    dcf_res = calculate_us_dcs(ticker, curr_close, rf_rate)
-                    dcs = float(dcf_res["margin_of_safety"])
-                except Exception as e:
-                    print(f"  DCS valuation failed for {ticker}: {e}")
-                    dcs = 0.0
-                    
+                dcs = dcs_scores.get(ticker, 0.0)
                 if dcs >= 0.15:
                     candidates.append((ticker, active_betas[ticker], curr_close, dcs, float(ind_df["atr"].iloc[-1])))
                     print(f"  Candidate: {ticker} (Beta: {active_betas[ticker]:.2f}, DCS MOS: {dcs:.2%}) - VALID")
@@ -458,6 +462,59 @@ def main():
             report_md += f"* {log}\n"
     else:
         report_md += "* No rebalancing or trades required today.\n"
+
+    # 4. Diagnostics Table
+    report_md += "\n## 4. Asset Evaluation Diagnostics (Signals Checked)\n"
+    report_md += "| Ticker | Signal | Price | Beta | DCS MOS | MACD Status | SMA 100 Status | Evaluation Reason |\n"
+    report_md += "| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |\n"
+    
+    for t in sorted(US_TICKERS):
+        price = current_prices.get(t, 0.0)
+        beta_val = active_betas.get(t, 0.0)
+        dcs_val = dcs_scores.get(t, 0.0)
+        
+        ind_df = indicators_dict.get(t)
+        if ind_df is None or ind_df.empty:
+            report_md += f"| **{t}** | - | N/A | {beta_val:.2f} | {dcs_val:.1%} | - | - | Data failed | \n"
+            continue
+            
+        curr_macd = float(ind_df["macd"].iloc[-1])
+        curr_signal = float(ind_df["signal"].iloc[-1])
+        curr_sma = float(ind_df["sma100"].iloc[-1])
+        
+        prev_macd = float(ind_df["macd"].iloc[-2])
+        prev_signal = float(ind_df["signal"].iloc[-2])
+        
+        macd_cross_up = (prev_macd <= prev_signal) and (curr_macd > curr_signal)
+        trend_bull = price > curr_sma
+        
+        # Diagnostics
+        macd_str = f"MACD: {curr_macd:.4f} (Sig: {curr_signal:.4f})"
+        sma_str = "BULL" if trend_bull else "BEAR"
+        
+        # Check standard conditions
+        is_held = any(h["ticker"] == t for h in portfolio["holdings"])
+        
+        if trend_bull and dcs_val >= 0.15:
+            if is_held:
+                sig = "HOLD"
+                reason = f"Held position. Bull trend (Close > SMA 100) and healthy DCS ({dcs_val:.1%})"
+            elif macd_cross_up:
+                sig = "BUY"
+                reason = f"Bull trend and MACD Golden Cross. High Beta: {beta_val:.2f}"
+            else:
+                sig = "WATCH"
+                reason = f"Bull trend and healthy DCS ({dcs_val:.1%}), but waiting for MACD Cross"
+        else:
+            sig = "AVOID / SELL"
+            reasons = []
+            if dcs_val < 0.15:
+                reasons.append(f"Low DCS margin of safety ({dcs_val:.1%} < 15%)")
+            if not trend_bull:
+                reasons.append("Bear trend (Close <= SMA 100)")
+            reason = " and ".join(reasons)
+            
+        report_md += f"| **{t}** | {sig} | ${price:,.2f} | {beta_val:.2f} | {dcs_val:.1%} | {macd_str} | {sma_str} | {reason} |\n"
 
     report_path = os.path.join(dir_path, REPORT_FILE)
     with open(report_path, "w", encoding="utf-8") as f:

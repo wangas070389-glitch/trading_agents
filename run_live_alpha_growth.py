@@ -232,16 +232,21 @@ def main():
 
     screener = FundamentalScreener()
     analyst = MacroRiskAnalyst()
-    adjusted_metrics = {}
-
-    # Run Screener if rebalancing
-    if should_rebalance:
-        print("\n[Quarterly Rebalance] Running Agent Quantitative Valuation Pipeline...")
+    
+    # Run Screener every run for diagnostics report
+    print("\nRunning Agent Quantitative Valuation Pipeline for diagnostics...")
+    try:
         raw_metrics = screener.screen(universe_data, execution_date=today_str)
-        adjusted_metrics = analyst.stress_test(raw_metrics, {})
+        all_adjusted_metrics = analyst.stress_test(raw_metrics, {})
+    except Exception as e:
+        print(f"  [WARN] Failed to run valuation pipeline: {e}")
+        all_adjusted_metrics = {}
+
+    adjusted_metrics = {}
+    if should_rebalance:
+        adjusted_metrics = all_adjusted_metrics
     else:
         # Load previous DCS from existing holdings as stub for report
-        adjusted_metrics = {}
         for h in portfolio["holdings"]:
             adjusted_metrics[h["ticker"]] = {
                 "current_price": current_prices[h["ticker"]],
@@ -430,6 +435,49 @@ def main():
             report_markdown += f"* {trade.strip()}\n"
     if not dca_trades and not rebalance_trades and not is_new_month:
         report_markdown += "* No actions required today. Portfolio matches target weights and cash remains parked in Bondia Cash.\n"
+
+    # 4. Diagnostics Table
+    report_markdown += "\n## 4. Asset Evaluation Diagnostics (Signals Checked)\n"
+    report_markdown += "| Ticker | Signal | Price | DCS Conviction | SMA 100 Trend | SMA 20 Trend (DCA) | Evaluation Reason |\n"
+    report_markdown += "| :--- | :---: | :---: | :---: | :---: | :---: | :--- |\n"
+    
+    for t in sorted(universe_data.keys()):
+        price = current_prices.get(t, 0.0)
+        sma20 = sma_20_values.get(t, 0.0)
+        sma100 = sma_100_values.get(t, 0.0)
+        
+        dcs = 0.0
+        if t in all_adjusted_metrics:
+            dcs = all_adjusted_metrics[t].get("dcs_adjusted", 0.0)
+        else:
+            for h in portfolio["holdings"]:
+                if h["ticker"] == t:
+                    dcs = h["dcs"]
+                    
+        sma100_status = "BULL" if price > sma100 else "BEAR"
+        sma20_status = "BULL" if price > sma20 else "BEAR"
+        
+        is_held = any(h["ticker"] == t for h in portfolio["holdings"])
+        
+        if dcs >= DCS_ENTRY_THRESHOLD and price > sma100:
+            sig = "BUY / HOLD"
+            reason = f"Strong conviction (DCS={dcs:.3f}) and bull trend (Close > SMA 100)"
+        else:
+            sig = "SELL / AVOID"
+            reasons = []
+            if dcs < DCS_ENTRY_THRESHOLD:
+                reasons.append(f"Low conviction (DCS={dcs:.3f} < {DCS_ENTRY_THRESHOLD})")
+            if price <= sma100:
+                reasons.append(f"Bear trend (Close <= SMA 100)")
+            reason = " and ".join(reasons)
+            
+        if is_held and sig == "BUY / HOLD":
+            if price > sma20:
+                reason += " | Eligible for active DCA"
+            else:
+                reason += f" | DCA restricted (Close <= SMA 20)"
+                
+        report_markdown += f"| **{t}** | {sig} | ${price:,.2f} | {dcs:.3f} | {sma100_status} | {sma20_status} | {reason} |\n"
 
     with open(os.path.join(dir_path, REPORT_FILE), "w", encoding="utf-8") as f:
         f.write(report_markdown)

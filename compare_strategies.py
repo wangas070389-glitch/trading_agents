@@ -18,6 +18,8 @@ def main():
     portfolio_alternatives_path = os.path.join(dir_path, "portfolio_alternatives.json")
     portfolio_high_beta_path = os.path.join(dir_path, "portfolio_high_beta.json")
     portfolio_multi_strategy_path = os.path.join(dir_path, "portfolio_multi_strategy.json")
+    portfolio_dividends_path = os.path.join(dir_path, "portfolio_dividends.json")
+    portfolio_strategy9_path = os.path.join(dir_path, "portfolio_strategy9.json")
     comparison_report_path = os.path.join(dir_path, "comparison_report.md")
     
     port_val = load_json(portfolio_val_path)
@@ -26,9 +28,11 @@ def main():
     port_us_dcs = load_json(portfolio_us_dcs_path)
     port_alternatives = load_json(portfolio_alternatives_path)
     port_high_beta = load_json(portfolio_high_beta_path)
+    port_dividends = load_json(portfolio_dividends_path)
+    port_strategy9 = load_json(portfolio_strategy9_path)
     port_multi_strategy = load_json(portfolio_multi_strategy_path)
     
-    if not port_val and not port_macd and not port_us and not port_us_dcs and not port_alternatives and not port_high_beta and not port_multi_strategy:
+    if not port_val and not port_macd and not port_us and not port_us_dcs and not port_alternatives and not port_high_beta and not port_dividends and not port_strategy9 and not port_multi_strategy:
         print("Error: No portfolio files found. Cannot generate comparison.")
         return
         
@@ -127,6 +131,34 @@ def main():
     else:
         report.append("| **High-Beta Value-Momentum (Isolated)** | *Not Initialized* | - | - | - | - | - | - | USD |")
         
+    # Parse Strategy 8 (Dividend Quality & Yield - Isolated)
+    if port_dividends:
+        d_total_cap = port_dividends.get("total_capital", 200000.0)
+        d_cash = port_dividends.get("cash_balance", 200000.0)
+        d_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_dividends.get("holdings", []))
+        d_market_val = d_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_dividends.get("holdings", []))
+        d_profit = d_market_val - d_total_cap
+        d_roi = (d_profit / d_total_cap) * 100.0
+        d_alloc = (d_invested / d_market_val) * 100.0 if d_market_val > 0 else 0.0
+        d_sign = "+" if d_profit >= 0 else ""
+        report.append(f"| **Dividend Quality & Yield (Isolated)** | ${d_market_val:,.2f} | ${d_cash:,.2f} | ${d_invested:,.2f} | {d_alloc:.1f}% | {d_sign}${d_profit:,.2f} | {d_sign}{d_roi:.2f}% | 2026-07-01 | MXN |")
+    else:
+        report.append("| **Dividend Quality & Yield (Isolated)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        
+    # Parse Strategy 9 (AI Regime Stat-Arb - Isolated)
+    if port_strategy9:
+        s9_total_cap = port_strategy9.get("total_capital", 200000.0)
+        s9_cash = port_strategy9.get("cash_balance", 200000.0)
+        s9_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy9.get("holdings", []) if "shares" in h) + sum(h.get("buy_price", 0.0) for h in port_strategy9.get("holdings", []) if "shares" not in h and "last_price" in h)
+        s9_market_val = s9_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_strategy9.get("holdings", []) if "shares" in h) + sum(h.get("last_price", 0.0) for h in port_strategy9.get("holdings", []) if "shares" not in h and "last_price" in h)
+        s9_profit = s9_market_val - s9_total_cap
+        s9_roi = (s9_profit / s9_total_cap) * 100.0 if s9_total_cap > 0 else 0.0
+        s9_alloc = (s9_invested / s9_market_val) * 100.0 if s9_market_val > 0 else 0.0
+        s9_sign = "+" if s9_profit >= 0 else ""
+        report.append(f"| **AI Regime Stat-Arb (Isolated)** | ${s9_market_val:,.2f} | ${s9_cash:,.2f} | ${s9_invested:,.2f} | {s9_alloc:.1f}% | {s9_sign}${s9_profit:,.2f} | {s9_sign}{s9_roi:.2f}% | 2026-07-02 | MXN |")
+    else:
+        report.append("| **AI Regime Stat-Arb (Isolated)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        
     # Parse Strategy 7 (Consolidated Multi-Strategy)
     if port_multi_strategy:
         usd_mxn_rate = port_multi_strategy.get("usd_mxn_rate", 18.0)
@@ -134,7 +166,9 @@ def main():
         s4_cap = port_us_dcs.get("total_capital", 100000.0) if port_us_dcs else 100000.0
         s5_cap = port_alternatives.get("total_capital", 100000.0) if port_alternatives else 100000.0
         s6_cap = port_high_beta.get("total_capital", 100000.0) if port_high_beta else 100000.0
-        ms_total_cap = s1_cap_usd + s4_cap + s5_cap + s6_cap
+        s8_cap_usd = port_dividends.get("total_capital", 200000.0) / usd_mxn_rate if port_dividends else 11390.0
+        s9_cap_usd = port_strategy9.get("total_capital", 200000.0) / usd_mxn_rate if port_strategy9 else 11111.0
+        ms_total_cap = s1_cap_usd + s4_cap + s5_cap + s6_cap + s8_cap_usd + s9_cap_usd
         
         ms_market_val = port_multi_strategy.get("total_portfolio_value_usd", 0.0)
         ms_cash = port_multi_strategy.get("total_cash_balance_usd", 0.0)
@@ -282,6 +316,52 @@ def main():
         
     report.append("\n")
 
+    # Strategy 8 Holdings
+    report.append("### G. Dividend Quality & Yield (Isolated) Holdings (MXN)")
+    if port_dividends and port_dividends.get("holdings"):
+        report.append("| Ticker | Shares Held | Average Cost (Local) | Current Price (Local) | Market Value (MXN) | Target Weight | Unrealized P/L | P/L % |")
+        report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
+        for h in port_dividends["holdings"]:
+            ticker = h["ticker"]
+            shares = h["shares"]
+            buy_price = h["buy_price"]
+            last_price = h.get("last_price", buy_price)
+            target_w = h.get("target_weight", 0.20)
+            mval = shares * last_price
+            pl = mval - (shares * buy_price)
+            pl_pct = ((last_price / buy_price) - 1.0) * 100.0 if buy_price > 0 else 0.0
+            sign = "+" if pl >= 0 else ""
+            report.append(f"| {ticker} | {shares:,.4f} | ${buy_price:,.2f} | ${last_price:,.2f} | ${mval:,.2f} | {target_w:.1%} | {sign}${pl:,.2f} | {sign}{pl_pct:.2f}% |")
+    else:
+        report.append("*No open stock positions currently held. Portfolio is 100% Cash / Bondia sweep.*")
+
+    report.append("\n")
+
+    # Strategy 9 Holdings
+    report.append("### H. AI Regime Stat-Arb (Isolated) Holdings (MXN)")
+    if port_strategy9 and port_strategy9.get("holdings"):
+        report.append("| Ticker | Type | Qty Y | Qty X | Buy/Alloc | Last Price | Market Value (MXN) | Side |")
+        report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |")
+        for h in port_strategy9["holdings"]:
+            ticker = h["ticker"]
+            is_pair = ticker.startswith("PAIR:")
+            buy_price = h["buy_price"]
+            last_price = h.get("last_price", buy_price)
+            qty_y = h.get("qty_y", 0.0) if is_pair else h.get("shares", 0.0)
+            qty_x = h.get("qty_x", 0.0)
+            
+            mval_mxn = last_price
+            if not is_pair:
+                mval_mxn = qty_y * last_price
+                
+            type_str = "Pairs Spread" if is_pair else "Regime Asset"
+            side_str = h.get("side", "--").upper()
+            report.append(f"| {ticker} | {type_str} | {qty_y:.4f} | {qty_x:.4f} | ${buy_price:,.2f} | ${last_price:,.2f} | ${mval_mxn:,.2f} | {side_str} |")
+    else:
+        report.append("*No open arbitrage spreads or regime positions held. Portfolio is 100% Cash / Bondia sweep.*")
+
+    report.append("\n")
+
     # Strategy 7 Holdings (Allocations)
     report.append("### G. Consolidated Multi-Strategy Portfolio (Strategy 7) Allocations (USD)")
     if port_multi_strategy and port_multi_strategy.get("allocations"):
@@ -317,6 +397,10 @@ def main():
         report.append(f"* **Alternative Assets Current Cash Reserves:** ${port_alternatives.get('cash_balance', 0.0):,.2f} USD")
     if port_high_beta:
         report.append(f"* **High-Beta Momentum Current Cash Reserves:** ${port_high_beta.get('cash_balance', 0.0):,.2f} USD")
+    if port_dividends:
+        report.append(f"* **Dividend Quality Current Cash Reserves:** ${port_dividends.get('cash_balance', 0.0):,.2f} MXN")
+    if port_strategy9:
+        report.append(f"* **AI Regime Stat-Arb Current Cash Reserves:** ${port_strategy9.get('cash_balance', 0.0):,.2f} MXN")
     if port_multi_strategy:
         report.append(f"* **Consolidated Portfolio Current Cash Reserves:** ${port_multi_strategy.get('total_cash_balance_usd', 0.0):,.2f} USD")
         
@@ -343,11 +427,15 @@ def main():
     s4_nav_usd = get_portfolio_nav(port_us_dcs)
     s5_nav_usd = get_portfolio_nav(port_alternatives)
     s6_nav_usd = get_portfolio_nav(port_high_beta)
+    s8_nav_mxn = get_portfolio_nav(port_dividends)
+    s9_nav_mxn = get_portfolio_nav(port_strategy9)
 
     s1_nav_usd = s1_nav_mxn / usd_mxn
     s2_nav_usd = s2_nav_mxn / usd_mxn
+    s8_nav_usd = s8_nav_mxn / usd_mxn
+    s9_nav_usd = s9_nav_mxn / usd_mxn
     
-    total_nav_usd = s1_nav_usd + s2_nav_usd + s3_nav_usd + s4_nav_usd + s5_nav_usd + s6_nav_usd
+    total_nav_usd = s1_nav_usd + s2_nav_usd + s3_nav_usd + s4_nav_usd + s5_nav_usd + s6_nav_usd + s8_nav_usd + s9_nav_usd
 
     history_json_path = os.path.join(dir_path, "all_strategies_history.json")
     all_history = []
@@ -374,6 +462,8 @@ def main():
         "s4_nav_usd": s4_nav_usd,
         "s5_nav_usd": s5_nav_usd,
         "s6_nav_usd": s6_nav_usd,
+        "s8_nav_usd": s8_nav_usd,
+        "s9_nav_usd": s9_nav_usd,
         "total_nav_usd": total_nav_usd
     }
     
@@ -391,8 +481,8 @@ def main():
     history_md_path = os.path.join(dir_path, "all_strategies_allocation_history.md")
     md_lines = [
         "# All Strategies Allocation History\n",
-        "| Date | Strategy 1 (MXN Value) | Strategy 2 (1d MACD) | Strategy 3 (US Momentum) | Strategy 4 (US DCS) | Strategy 5 (Alternatives) | Strategy 6 (High-Beta) | Total Combined NAV (USD) |",
-        "| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |"
+        "| Date | Strategy 1 (MXN Value) | Strategy 2 (1d MACD) | Strategy 3 (US Momentum) | Strategy 4 (US DCS) | Strategy 5 (Alternatives) | Strategy 6 (High-Beta) | Strategy 8 (Dividends) | Strategy 9 (AI Arb) | Total Combined NAV (USD) |",
+        "| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |"
     ]
     
     sorted_all_history = sorted(all_history, key=lambda x: x["date"], reverse=True)
@@ -406,10 +496,12 @@ def main():
             pct4 = (entry["s4_nav_usd"] / nav) * 100.0
             pct5 = (entry["s5_nav_usd"] / nav) * 100.0
             pct6 = (entry["s6_nav_usd"] / nav) * 100.0
+            pct8 = (entry.get("s8_nav_usd", 0.0) / nav) * 100.0
+            pct9 = (entry.get("s9_nav_usd", 0.0) / nav) * 100.0
         else:
-            pct1 = pct2 = pct3 = pct4 = pct5 = pct6 = 0.0
+            pct1 = pct2 = pct3 = pct4 = pct5 = pct6 = pct8 = pct9 = 0.0
             
-        md_lines.append(f"| {date} | {pct1:.1f}% | {pct2:.1f}% | {pct3:.1f}% | {pct4:.1f}% | {pct5:.1f}% | {pct6:.1f}% | ${nav:,.2f} |")
+        md_lines.append(f"| {date} | {pct1:.1f}% | {pct2:.1f}% | {pct3:.1f}% | {pct4:.1f}% | {pct5:.1f}% | {pct6:.1f}% | {pct8:.1f}% | {pct9:.1f}% | ${nav:,.2f} |")
         
     try:
         with open(history_md_path, 'w', encoding='utf-8') as f:

@@ -31,6 +31,8 @@ STRATEGY_SCRIPTS = [
     "run_live_alpaca_us_stocks_dcf.py",
     "run_live_alternatives.py",
     "run_live_high_beta.py",
+    "run_live_dividends.py",
+    "run_live_strategy9.py",
     "run_live_multi_strategy.py",
     "compare_strategies.py"
 ]

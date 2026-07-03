@@ -457,6 +457,51 @@ def main():
     if not dca_trades and not rebalance_trades and not is_new_month:
         report_markdown += "* No actions required today. Portfolio matches target weights.\n"
 
+    # 4. Diagnostics Table
+    report_markdown += "\n## 4. Asset Evaluation Diagnostics (Signals Checked)\n"
+    report_markdown += "| Ticker | Signal | Price | DCS Conviction | Intrinsic Value | SMA 100 Trend | SMA 20 Trend (DCA) | Evaluation Reason |\n"
+    report_markdown += "| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |\n"
+    
+    for t in sorted(US_UNIVERSE):
+        price = current_prices.get(t, 0.0)
+        sma20 = sma_20_values.get(t, 0.0)
+        sma100 = sma_100_values.get(t, 0.0)
+        
+        dcs = 0.0
+        intrinsic = 0.0
+        if t in adjusted_metrics:
+            dcs = adjusted_metrics[t]["dcs_adjusted"]
+            intrinsic = adjusted_metrics[t]["intrinsic_value"]
+        else:
+            for h in portfolio["holdings"]:
+                if h["ticker"] == t:
+                    dcs = h["dcs"]
+                    
+        sma100_status = "BULL" if price > sma100 else "BEAR"
+        sma20_status = "BULL" if price > sma20 else "BEAR"
+        
+        is_held = any(h["ticker"] == t for h in portfolio["holdings"])
+        
+        if dcs >= DCS_ENTRY_THRESHOLD and price > sma100:
+            sig = "BUY / HOLD"
+            reason = f"Strong conviction (DCS={dcs:.3f}) and bull trend (Close > SMA 100)"
+        else:
+            sig = "SELL / AVOID"
+            reasons = []
+            if dcs < DCS_ENTRY_THRESHOLD:
+                reasons.append(f"Low conviction (DCS={dcs:.3f} < {DCS_ENTRY_THRESHOLD})")
+            if price <= sma100:
+                reasons.append(f"Bear trend (Close <= SMA 100)")
+            reason = " and ".join(reasons)
+            
+        if is_held and sig == "BUY / HOLD":
+            if price > sma20:
+                reason += " | Eligible for active DCA"
+            else:
+                reason += f" | DCA restricted (Close <= SMA 20)"
+                
+        report_markdown += f"| **{t}** | {sig} | ${price:,.2f} | {dcs:.3f} | ${intrinsic:,.2f} | {sma100_status} | {sma20_status} | {reason} |\n"
+
     with open(os.path.join(dir_path, REPORT_FILE), "w", encoding="utf-8") as f:
         f.write(report_markdown)
 

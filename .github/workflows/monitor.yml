@@ -2,13 +2,13 @@ name: Daily DCF Alpha-Momentum Paper Trading
 
 on:
   schedule:
-    # Runs Monday to Friday, every 30 minutes from 8:30 AM to 3:00 PM CST (Central/Mexico City Standard Time)
+    # Runs every day (Monday to Sunday) at 3:00 PM CST (21:00 UTC) to finalize the daily paper trading cycle and accrue sweeps
+    - cron: '0 21 * * *'
+    # Runs Monday to Friday, every 30 minutes during CST market hours (8:30 AM to 2:30 PM CST)
     # 8:30 AM CST = 14:30 UTC
     - cron: '30 14 * * 1-5'
     # 9:00 AM CST to 2:30 PM CST = 15:00 UTC to 20:30 UTC
     - cron: '0,30 15-20 * * 1-5'
-    # 3:00 PM CST = 21:00 UTC
-    - cron: '0 21 * * 1-5'
   workflow_dispatch:
     # Allows you to manually trigger this run from the GitHub Actions tab
 
@@ -69,6 +69,14 @@ jobs:
     - name: Run Live High-Beta Momentum Strategy
       run: python run_live_high_beta.py
 
+    # 5ff. Execute Live Dividend Quality & Yield Strategy (Isolated)
+    - name: Run Live Dividend Quality & Yield Strategy
+      run: python run_live_dividends.py
+
+    # 5fff. Execute Live AI-Regime Adaptive Stat-Arb Strategy (Isolated)
+    - name: Run Live AI Regime Stat-Arb Strategy
+      run: python run_live_strategy9.py
+
     # 5g. Execute Live Multi-Strategy Orchestration
     - name: Run Live Multi-Strategy Orchestrator
       run: python run_live_multi_strategy.py
@@ -83,7 +91,7 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         
-        git add portfolio.json portfolio_status.md portfolio_macd.json transactions_macd.md portfolio_us_stocks.json transactions_us_stocks.md portfolio_us_dcs.json transactions_us_dcs.md us_stocks_dcf_report_live.md portfolio_alternatives.json transactions_alternatives.md alternatives_report_live.md portfolio_high_beta.json transactions_high_beta.md high_beta_report_live.md portfolio_multi_strategy.json multi_strategy_report_live.md multi_strategy_allocation_history.md all_strategies_allocation_history.md all_strategies_history.json consolidated_portfolio_nav.csv comparison_report.md mexican_value_equity_report_live.md mexican_value_equity_report_live_alpha.md transactions.md evaluation_history.md signal_history.json equity_curve.json learned_params.json || true
+        git add portfolio.json portfolio_status.md portfolio_macd.json transactions_macd.md portfolio_us_stocks.json transactions_us_stocks.md portfolio_us_dcs.json transactions_us_dcs.md us_stocks_dcf_report_live.md portfolio_alternatives.json transactions_alternatives.md alternatives_report_live.md portfolio_high_beta.json transactions_high_beta.md high_beta_report_live.md portfolio_multi_strategy.json multi_strategy_report_live.md multi_strategy_allocation_history.md all_strategies_allocation_history.md all_strategies_history.json consolidated_portfolio_nav.csv comparison_report.md mexican_value_equity_report_live.md mexican_value_equity_report_live_alpha.md transactions.md evaluation_history.md signal_history.json equity_curve.json learned_params.json portfolio_dividends.json transactions_dividends.md dividends_report_live.md dividends_backtest_nav.csv dividends_backtest_report.md portfolio_strategy9.json transactions_strategy9.md strategy9_report_live.md strategy9_backtest_nav.csv strategy9_backtest_report.md || true
         
         # Commit only if files have changed (to prevent error crashes on identical runs)
         git diff-index --quiet HEAD || (git commit -m "Auto-update: Multi-strategy concentrated paper trading [$(date -u +'%Y-%m-%d %H:%M:%S UTC')]" && git push)
