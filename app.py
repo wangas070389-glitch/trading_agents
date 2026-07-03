@@ -163,6 +163,24 @@ class DashboardAPIHandler(SimpleHTTPRequestHandler):
                 self.send_error(500, f"Error reading Strategy 9 portfolio: {str(e)}")
             return
 
+        # 1i. API: GET /api/portfolio_strategy10
+        if self.path == '/api/portfolio_strategy10':
+            portfolio_file = os.path.join(dir_path, 'portfolio_strategy10.json')
+            if not os.path.exists(portfolio_file):
+                self.send_error(404, "portfolio_strategy10.json not found")
+                return
+            
+            try:
+                with open(portfolio_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(data).encode('utf-8'))
+            except Exception as e:
+                self.send_error(500, f"Error reading Strategy 10 portfolio: {str(e)}")
+            return
+
         # 2. Static File MIME Correction (prevents Windows registry content-type issues)
         clean_path = self.path.split('?')[0].lstrip('/')
         if not clean_path or clean_path == "":
@@ -356,6 +374,27 @@ class DashboardAPIHandler(SimpleHTTPRequestHandler):
             try:
                 from backtest_strategy9 import run_strategy9_backtest_for_api
                 results = run_strategy9_backtest_for_api()
+                
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(results).encode('utf-8'))
+            except Exception as e:
+                response = {
+                    "status": "error",
+                    "message": str(e)
+                }
+                self.send_response(500)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(response).encode('utf-8'))
+            return
+
+        # API: POST /api/backtest-strategy10
+        if self.path == '/api/backtest-strategy10':
+            try:
+                from backtest_strategy10 import run_strategy10_backtest_for_api
+                results = run_strategy10_backtest_for_api()
                 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
