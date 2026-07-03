@@ -2,16 +2,15 @@ import os
 import sys
 import json
 import datetime
-from zoneinfo import ZoneInfo
 import argparse
 import requests
+from zoneinfo import ZoneInfo
 import yfinance as yf
 import numpy as np
 import pandas as pd
 from hmmlearn.hmm import GaussianHMM
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from connectors.alpaca_connector import AlpacaConnector
 
 PORTFOLIO_FILE = "portfolio_strategy10.json"
 TRANSACTIONS_FILE = "transactions_strategy10.md"
@@ -28,14 +27,14 @@ def load_portfolio(dir_path):
             "total_capital": 200000.0,
             "cash_balance": 200000.0,
             "holdings": [],
-            "last_updated": datetime.datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d %H:%M:%S")
+            "last_updated": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
     with open(p_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
-def save_portfolio(dir_path, portfolio, now):
+def save_portfolio(dir_path, portfolio):
     p_path = os.path.join(dir_path, PORTFOLIO_FILE)
-    portfolio["last_updated"] = now.strftime("%Y-%m-%d %H:%M:%S")
+    portfolio["last_updated"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(p_path, 'w', encoding='utf-8') as f:
         json.dump(portfolio, f, indent=2)
 
@@ -89,26 +88,18 @@ def main():
     args = parser.parse_args()
 
     dir_path = os.path.dirname(os.path.abspath(__file__))
-    
-    # === NYSE TIMEZONE ENFORCEMENT ===
-    ny_tz = ZoneInfo("America/New_York")
-    now = datetime.datetime.now(ny_tz)
-    today_str = now.strftime("%Y-%m-%d")
+    today_str = datetime.date.today().strftime("%Y-%m-%d")
+    now = datetime.datetime.now()
 
     print("=" * 80)
-    print(f"LIVE UPGRADED EXECUTION: STRATEGY 10: INTRADAY VWAP ALPHA ({today_str} EST)")
+    print(f"LIVE UPGRADED EXECUTION: STRATEGY 10: INTRADAY VWAP ALPHA ({today_str})")
     print("=" * 80)
-
-    # === API INSTANTIATION ===
-    try:
-        alpaca = AlpacaConnector()
-    except Exception as e:
-        print(f"FATAL: Alpaca API keys missing or invalid. Engine halted. {e}")
-        return
 
     # === CIRCUIT BREAKER 1: MARKET CLOCK AWARENESS ===
     print("[Telemetry] Verifying live market state via Alpaca Clock API...")
     try:
+        from connectors.alpaca_connector import AlpacaConnector
+        alpaca = AlpacaConnector()
         clock_url = f"{alpaca.base_url}/v2/clock"
         headers = {"APCA-API-KEY-ID": alpaca.api_key, "APCA-API-SECRET-KEY": alpaca.secret_key}
         clock_resp = requests.get(clock_url, headers=headers, timeout=10)
@@ -117,6 +108,8 @@ def main():
             if not is_open:
                 print("ABORT: Market is currently CLOSED. Halting execution to prevent stale data triggers.")
                 return
+        else:
+            print(f"[Warning] Alpaca clock returned {clock_resp.status_code}. Proceeding to secondary data checks.")
     except Exception as e:
         print(f"[Warning] Market clock validation bypassed ({e}). Relying on timestamp integrity.")
 
@@ -126,9 +119,9 @@ def main():
 
     last_updated_str = portfolio.get("last_updated", today_str + " 00:00:00")
     if " " in last_updated_str:
-        last_dt = datetime.datetime.strptime(last_updated_str, "%Y-%m-%d %H:%M:%S").replace(tzinfo=ny_tz)
+        last_dt = datetime.datetime.strptime(last_updated_str, "%Y-%m-%d %H:%M:%S")
     else:
-        last_dt = datetime.datetime.strptime(last_updated_str, "%Y-%m-%d").replace(tzinfo=ny_tz)
+        last_dt = datetime.datetime.strptime(last_updated_str, "%Y-%m-%d")
 
     days_elapsed = max((now - last_dt).total_seconds() / (24.0 * 3600.0), 0.0)
     accrued_interest = 0.0
@@ -137,6 +130,7 @@ def main():
         current_cash = round(current_cash + accrued_interest, 2)
         portfolio["cash_balance"] = current_cash
         portfolio["total_capital"] += accrued_interest
+        print(f"[Sweep Yield] Accrued ${accrued_interest:,.4f} MXN interest on sweeps.")
         log_transaction(dir_path, today_str, "BONDIA", "INTEREST", 1, accrued_interest, "Accrued interest on sweep balance", fee=0.0)
 
     # 2. Check for month change DCA
@@ -145,6 +139,7 @@ def main():
         current_cash += MONTHLY_CONTRIBUTION
         portfolio["cash_balance"] = current_cash
         portfolio["total_capital"] += MONTHLY_CONTRIBUTION
+        print(f"[DCA Deposit] Month transition detected. Ingested ${MONTHLY_CONTRIBUTION:,.2f} MXN.")
         log_transaction(dir_path, today_str, "CASH", "DEPOSIT", 1, MONTHLY_CONTRIBUTION, "Monthly DCA savings contribution", fee=0.0)
 
     # 3. Fetch data for QQQ, TQQQ, SQQQ and FX rates
@@ -169,6 +164,7 @@ def main():
         if isinstance(tqqq_30m.columns, pd.MultiIndex): tqqq_30m.columns = [c[0] for c in tqqq_30m.columns]
         if isinstance(sqqq_30m.columns, pd.MultiIndex): sqqq_30m.columns = [c[0] for c in sqqq_30m.columns]
         
+        # Calculate ATRs
         qqq_30m["ATR"] = calculate_atr(qqq_30m, period=14)
         tqqq_30m["ATR"] = calculate_atr(tqqq_30m, period=14)
         sqqq_30m["ATR"] = calculate_atr(sqqq_30m, period=14)
@@ -176,11 +172,16 @@ def main():
         print(f"Failed to fetch market data: {e}")
         return
 
-    # === CIRCUIT BREAKER 2: TIMESTAMP VALIDATION ===
+    # === CIRCUIT BREAKER 2: TIMESTAMP VALIDATION (HEARTBEAT) ===
     last_bar_time = qqq_30m.index[-1]
     now_utc = datetime.datetime.now(datetime.timezone.utc)
-    if last_bar_time.tzinfo is not None:
+    
+    # Standardize tzinfo to UTC for comparative math if yfinance passes naive/local tz
+    if last_bar_time.tzinfo is None:
+        pass # If naive, we can't easily cross-reference without knowing local server time safely.
+    else:
         minutes_stale = (now_utc - last_bar_time).total_seconds() / 60.0
+        # 30-minute interval + 15 minute grace period for standard API latency/batching delays
         if minutes_stale > 45.0:
             print(f"FATAL: Data feed stall detected. Last QQQ bar is {minutes_stale:.1f} minutes old. Engine halted.")
             return
@@ -218,15 +219,19 @@ def main():
     # 5. Establish current bar metrics
     close_qqq = float(qqq_30m["Close"].iloc[-1])
     atr_qqq = float(qqq_30m["ATR"].iloc[-1])
+    
     close_tqqq = float(tqqq_30m["Close"].iloc[-1])
     atr_tqqq = float(tqqq_30m["ATR"].iloc[-1])
+    
     close_sqqq = float(sqqq_30m["Close"].iloc[-1])
     atr_sqqq = float(sqqq_30m["ATR"].iloc[-1])
 
-    today_bars_qqq = qqq_30m[qqq_30m.index.strftime("%Y-%m-%d") == today_str]
+    today_date_str = datetime.datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
+    today_bars_qqq = qqq_30m[qqq_30m.index.strftime("%Y-%m-%d") == today_date_str]
     
+    # === CIRCUIT BREAKER 3: ERADICATE LOBOTOMY FALLBACK ===
     if today_bars_qqq.empty:
-        print(f"FATAL ERROR: No intraday rows mapped to {today_str}. Engine halted.")
+        print(f"FATAL ERROR: No intraday rows mapped to {today_date_str}. The market is either closed or the API dropped the current session. Execution halted.")
         return 
         
     cum_pv = ((today_bars_qqq["High"] + today_bars_qqq["Low"] + today_bars_qqq["Close"]) / 3.0 * today_bars_qqq["Volume"]).sum()
@@ -235,17 +240,18 @@ def main():
     daily_high_qqq = float(today_bars_qqq["High"].max())
     daily_low_qqq = float(today_bars_qqq["Low"].min())
 
+    # Tightened entry bands (1.5 * ATR)
     upper_band = vwap_qqq + 1.5 * atr_qqq
     lower_band = vwap_qqq - 1.5 * atr_qqq
 
-    # strictly 15:30 EST (3:30 PM New York)
-    is_eod = now.time() >= datetime.time(15, 30)
+    now_et = datetime.datetime.now(ZoneInfo("America/New_York"))
+    is_eod = now_et.time() >= datetime.time(15, 30)
     
     holdings = portfolio["holdings"]
     active_pos = holdings[0] if holdings else None
     action_logs = []
     
-    # 6. Evaluation Logic (Exits)
+    # 6. Evaluation Logic
     if active_pos:
         side = active_pos.get("side", "long")
         ticker = active_pos["ticker"]
@@ -254,13 +260,16 @@ def main():
         current_price = close_tqqq if side == "long" else close_sqqq
         atr_exec = atr_tqqq if side == "long" else atr_sqqq
         
+        # Update peak price for trailing stop
         active_pos["peak_price"] = max(active_pos.get("peak_price", current_price), current_price)
         stop_threshold = active_pos["peak_price"] - 1.5 * atr_exec
+        
         is_stop_out = current_price < stop_threshold
         
         if is_stop_out or is_eod:
             should_hold_overnight = False
             if is_eod and not is_stop_out:
+                # Conditional Hold Evaluation
                 price_mxn = current_price * fx_rate
                 trade_in_profit = (price_mxn > active_pos["buy_price"])
                 if trade_in_profit:
@@ -274,99 +283,113 @@ def main():
                 if side == "long":
                     val = shares * price_mxn
                 else:
-                    val = active_pos["allocated"] + (active_pos["allocated"] - shares * price_mxn)
-                
-                # LIVE API EXECUTION (Selling the ETF to close the position)
-                try:
-                    alpaca.submit_order(ticker=ticker, qty=int(shares), side="sell", order_type="market", time_in_force="day")
-                    current_cash += val * (1.0 - TRANSACTION_FEE_RATE)
-                    exit_reason = "TRAILING_STOP" if is_stop_out else "EOD_LIQUIDATION"
-                    log_transaction(dir_path, today_str, ticker, f"EXIT_{side.upper()}", shares, price_mxn, f"Exit: {exit_reason}", fee=0.0)
-                    action_logs.append(f"LIQUIDATED {side.upper()} position on {ticker} via {exit_reason}. Balance credited: ${val:,.2f} MXN.")
-                    portfolio["holdings"] = []
-                    active_pos = None
-                except Exception as e:
-                    action_logs.append(f"CRITICAL EXECUTION FAILURE: Alpaca API rejected SELL order for {ticker}. State preserved. Error: {e}")
+                    val = shares * price_mxn  # SQQQ es instrumento inverso: se compra long, valor = shares * precio
+                    
+                current_cash += val * (1.0 - TRANSACTION_FEE_RATE)
+                exit_reason = "TRAILING_STOP" if is_stop_out else "EOD_LIQUIDATION"
+                log_transaction(dir_path, today_str, ticker, f"EXIT_{side.upper()}", shares, price_mxn, f"Exit: {exit_reason}", fee=0.0)
+                action_logs.append(f"LIQUIDATED {side.upper()} position on {ticker} via {exit_reason}. Balance credited: ${val:,.2f} MXN.")
+                portfolio["holdings"] = []
+                active_pos = None
             else:
                 action_logs.append(f"HOLDING {side.upper()} position on {ticker} overnight. (Reason: Strong trend close, trade in profit).")
                 active_pos["last_price"] = current_price * fx_rate
                 
-    # 7. Entry Triggers (Entries)
+    # 7. Entry Triggers (only if flat)
     if not active_pos and not is_eod:
-        target_ticker = None
-        target_side = None
-        target_price_mxn = None
-        target_price_usd = None
-        reason = ""
-
-        if regime == 1 and close_qqq < lower_band: # Bear Breakout
-            target_ticker, target_side = "SQQQ", "short"
-            target_price_usd = close_sqqq
-            target_price_mxn = close_sqqq * fx_rate
-            reason = "Bear breakdown entry"
-        elif regime == 0 and close_qqq > upper_band: # Bull Breakout
-            target_ticker, target_side = "TQQQ", "long"
-            target_price_usd = close_tqqq
-            target_price_mxn = close_tqqq * fx_rate
-            reason = "Bull breakout entry"
-        elif regime == 2:
-            if close_qqq < lower_band: # Chop Lower Reversion
-                target_ticker, target_side = "TQQQ", "long"
-                target_price_usd = close_tqqq
-                target_price_mxn = close_tqqq * fx_rate
-                reason = "Lower band mean-reversion buy"
-            elif close_qqq > upper_band: # Chop Upper Reversion
-                target_ticker, target_side = "SQQQ", "short"
-                target_price_usd = close_sqqq
-                target_price_mxn = close_sqqq * fx_rate
-                reason = "Upper band mean-reversion short"
-
-        if target_ticker:
-            alloc = current_cash * 0.90
-            shares = alloc / (target_price_mxn * (1.0 + TRANSACTION_FEE_RATE))
-            exec_shares = int(shares) # Force integer shares to prevent Alpaca fractional errors on leveraged ETFs
-
-            if exec_shares > 0:
-                # LIVE API EXECUTION (Buying the target ETF to open the position)
-                try:
-                    alpaca.submit_order(ticker=target_ticker, qty=exec_shares, side="buy", order_type="market", time_in_force="day")
-                    
-                    # Update Ledger only upon success
-                    current_cash -= (exec_shares * target_price_mxn)
+        if regime == 1:
+            # Bear State: Short Breakout (SQQQ)
+            if close_qqq < lower_band:
+                price_mxn = close_sqqq * fx_rate
+                alloc = current_cash * 0.90
+                shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
+                if shares > 0.01:
+                    current_cash -= alloc
                     portfolio["holdings"].append({
-                        "ticker": target_ticker,
-                        "side": target_side,
-                        "shares": exec_shares,
-                        "buy_price": target_price_mxn,
-                        "last_price": target_price_mxn,
-                        "peak_price": target_price_usd,
-                        "allocated": (exec_shares * target_price_mxn)
+                        "ticker": "SQQQ",
+                        "side": "short",
+                        "shares": shares,
+                        "buy_price": price_mxn,
+                        "last_price": price_mxn,
+                        "peak_price": close_sqqq,
+                        "allocated": alloc
                     })
-                    log_transaction(dir_path, today_str, target_ticker, f"BUY_{target_ticker}", exec_shares, target_price_mxn, reason, fee=0.0)
-                    action_logs.append(f"ENTERED {target_side.upper()} via {target_ticker} at ${target_price_mxn:,.2f} MXN ({exec_shares} shares).")
-                except Exception as e:
-                    action_logs.append(f"CRITICAL EXECUTION FAILURE: Alpaca API rejected BUY order for {target_ticker}. Capital preserved. Error: {e}")
-
-    # Mid-day Reversion Exit logic during Chop
+                    log_transaction(dir_path, today_str, "SQQQ", "BUY_SQQQ", shares, price_mxn, "Bear breakdown entry", fee=0.0)
+                    action_logs.append(f"ENTERED SHORT breakout on SQQQ at ${price_mxn:,.2f} MXN.")
+        elif regime == 0:
+            # Bull State: Long Breakout (TQQQ)
+            if close_qqq > upper_band:
+                price_mxn = close_tqqq * fx_rate
+                alloc = current_cash * 0.90
+                shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
+                if shares > 0.01:
+                    current_cash -= alloc
+                    portfolio["holdings"].append({
+                        "ticker": "TQQQ",
+                        "side": "long",
+                        "shares": shares,
+                        "buy_price": price_mxn,
+                        "last_price": price_mxn,
+                        "peak_price": close_tqqq,
+                        "allocated": alloc
+                    })
+                    log_transaction(dir_path, today_str, "TQQQ", "BUY_TQQQ", shares, price_mxn, "Bull breakout entry", fee=0.0)
+                    action_logs.append(f"ENTERED LONG breakout on TQQQ at ${price_mxn:,.2f} MXN.")
+        else:
+            # Chop State: Mean Reversion to VWAP
+            if close_qqq < lower_band:
+                price_mxn = close_tqqq * fx_rate
+                alloc = current_cash * 0.90
+                shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
+                if shares > 0.01:
+                    current_cash -= alloc
+                    portfolio["holdings"].append({
+                        "ticker": "TQQQ",
+                        "side": "long",
+                        "shares": shares,
+                        "buy_price": price_mxn,
+                        "last_price": price_mxn,
+                        "peak_price": close_tqqq,
+                        "allocated": alloc
+                    })
+                    log_transaction(dir_path, today_str, "TQQQ", "BUY_TQQQ", shares, price_mxn, "Lower band mean-reversion buy", fee=0.0)
+                    action_logs.append(f"ENTERED LONG reversion on TQQQ at ${price_mxn:,.2f} MXN.")
+            elif close_qqq > upper_band:
+                price_mxn = close_sqqq * fx_rate
+                alloc = current_cash * 0.90
+                shares = alloc / (price_mxn * (1.0 + TRANSACTION_FEE_RATE))
+                if shares > 0.01:
+                    current_cash -= alloc
+                    portfolio["holdings"].append({
+                        "ticker": "SQQQ",
+                        "side": "short",
+                        "shares": shares,
+                        "buy_price": price_mxn,
+                        "last_price": price_mxn,
+                        "peak_price": close_sqqq,
+                        "allocated": alloc
+                    })
+                    log_transaction(dir_path, today_str, "SQQQ", "BUY_SQQQ", shares, price_mxn, "Upper band mean-reversion short", fee=0.0)
+                    action_logs.append(f"ENTERED SHORT reversion on SQQQ at ${price_mxn:,.2f} MXN.")
     elif active_pos and regime == 2 and not is_eod:
+        # Settle reversion early at VWAP during Chop
         side = active_pos["side"]
-        if (side == "long" and close_qqq >= vwap_qqq) or (side == "short" and close_qqq <= vwap_qqq):
+        if (side == "long" and close_qqq >= vwap_qqq) or \
+           (side == "short" and close_qqq <= vwap_qqq):
             current_price = close_tqqq if side == "long" else close_sqqq
             price_mxn = current_price * fx_rate
             shares = active_pos["shares"]
             
-            if side == "long": val = shares * price_mxn
-            else: val = active_pos["allocated"] + (active_pos["allocated"] - shares * price_mxn)
+            if side == "long":
+                val = shares * price_mxn
+            else:
+                val = shares * price_mxn  # SQQQ es instrumento inverso: se compra long, valor = shares * precio
                 
-            try:
-                alpaca.submit_order(ticker=active_pos["ticker"], qty=int(shares), side="sell", order_type="market", time_in_force="day")
-                current_cash += val * (1.0 - TRANSACTION_FEE_RATE)
-                log_transaction(dir_path, today_str, active_pos["ticker"], f"SETTLE_{side.upper()}_VWAP", shares, price_mxn, "Reversion target met at VWAP line", fee=0.0)
-                action_logs.append(f"SETTLED {side.upper()} reversion on QQQ at VWAP line (${vwap_qqq:.2f}). Cash credited: ${val:,.2f} MXN.")
-                portfolio["holdings"] = []
-                active_pos = None
-            except Exception as e:
-                action_logs.append(f"CRITICAL EXECUTION FAILURE: Alpaca API rejected reversion SELL order. State preserved. Error: {e}")
+            current_cash += val * (1.0 - TRANSACTION_FEE_RATE)
+            log_transaction(dir_path, today_str, active_pos["ticker"], f"SETTLE_{side.upper()}_VWAP", shares, price_mxn, "Reversion target met at VWAP line", fee=0.0)
+            action_logs.append(f"SETTLED {side.upper()} reversion on QQQ at VWAP line (${vwap_qqq:.2f}). Cash credited: ${val:,.2f} MXN.")
+            portfolio["holdings"] = []
+            active_pos = None
 
     # Recalculate valuations
     assets_equity = 0.0
@@ -376,22 +399,22 @@ def main():
         if h["side"] == "long":
             assets_equity += h["shares"] * h["last_price"]
         else:
-            assets_equity += h["allocated"] + (h["allocated"] - h["shares"] * h["last_price"])
+            assets_equity += h["shares"] * h["last_price"]  # SQQQ long: sin short sintetico
             
     portfolio_value = current_cash + assets_equity
 
     # Save state
     portfolio["cash_balance"] = round(current_cash, 2)
     portfolio["total_capital"] = round(portfolio_value, 2)
-    save_portfolio(dir_path, portfolio, now)
+    save_portfolio(dir_path, portfolio)
 
     # Generate live report
     report_md = f"""# Strategy 10: Upgraded Intraday VWAP Execution Report
-**Execution Date:** {now.strftime('%Y-%m-%d %H:%M:%S EST')} | **Strategy Version:** LIVE EXECUTOR V4 (API Linked)
+**Execution Date:** {now.strftime('%Y-%m-%d %H:%M:%S')} | **Strategy Version:** Upgraded Live V3 (Defensive Circuit Breakers Active)
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** ${portfolio_value:,.2f} MXN
-* **Total Cash Balance:** ${current_cash:,.2f} MXN
+* **Total Cash Balance:** ${current_cash:,.2f} MXN (Parked compounding in Bondia sweep at 6.53% APR)
 * **Equity Exposure:** {((portfolio_value - current_cash)/portfolio_value * 100):.1f}%
 * **Active Regime:** State {regime} ({regime_reason})
 
@@ -402,23 +425,35 @@ def main():
     for h in portfolio["holdings"]:
         t = h["ticker"]
         side = h.get("side", "long").upper()
-        mkt_val = h["shares"] * h["last_price"] if side == "LONG" else h["allocated"] + (h["allocated"] - h["shares"] * h["last_price"])
-        report_md += f"| **{t}** | LEVERAGED INTRADAY | {side} | {h['shares']} | ${h['buy_price']:,.2f} | ${h['last_price']:,.2f} | ${mkt_val:,.2f} |\n"
+        if side == "LONG":
+            mkt_val = h["shares"] * h["last_price"]
+        else:
+            mkt_val = h["shares"] * h["last_price"]
+        report_md += f"| **{t}** | LEVERAGED INTRADAY | {side} | {h['shares']:.4f} | ${h['buy_price']:,.2f} | ${h['last_price']:,.2f} | ${mkt_val:,.2f} |\n"
 
     report_md += "\n## 3. Today's Execution Logs\n"
+    if is_new_month:
+        report_md += f"* **[SAVINGS DEPOSIT]** Month transition detected. Credited $2,000.00 MXN savings contribution.\n"
+    if accrued_interest > 0:
+        report_md += f"* **[INTEREST ACCRUED]** Cash reserves earned $${accrued_interest:,.4f} MXN sweep interest.\n"
     if action_logs:
-        for log in action_logs: report_md += f"* {log}\n"
+        for log in action_logs:
+            report_md += f"* {log}\n"
     else:
-        report_md += "* No trades executed. API standby.\n"
+        report_md += "* No trades or rebalancing actions triggered in this 30-minute interval.\n"
 
     report_md += "\n## 4. Upgraded Asset Telemetry\n"
-    report_md += f"  * Decoded Regime: HMM State {current_state_raw} -> **Regime {regime}**\n"
+    report_md += f"  * Decoded Regime: HMM State {current_state_raw} -> **Regime {regime} ({regime_reason})**\n"
+    report_md += f"  * QQQ Close: ${close_qqq:.2f} USD (High: ${daily_high_qqq:.2f}, Low: ${daily_low_qqq:.2f})\n"
     report_md += f"  * QQQ Intraday VWAP: ${vwap_qqq:.2f} USD\n"
+    report_md += f"  * QQQ Intraday ATR (14): ${atr_qqq:.2f} USD\n"
+    report_md += f"  * VWAP bands (1.5 * ATR): ${lower_band:.2f} to ${upper_band:.2f} USD\n"
 
     with open(os.path.join(dir_path, REPORT_FILE), "w", encoding="utf-8") as f:
         f.write(report_md)
 
-    print(f"\nExecution complete. Live API report written to {REPORT_FILE}")
+    print(f"\nExecution complete. Upgraded live report written to {REPORT_FILE}")
+    print("=" * 80)
 
 if __name__ == "__main__":
     main()
