@@ -1,9 +1,9 @@
 # Strategy 10: Upgraded Intraday VWAP Execution Report
-**Execution Date:** 2026-07-03 16:40:13 | **Strategy Version:** Upgraded Live V2 (Leveraged)
+**Execution Date:** 2026-07-03 18:17:24 | **Strategy Version:** Upgraded Live V2 (Leveraged)
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $200,025.56 MXN
-* **Total Cash Balance:** $200,025.56 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Total Portfolio NAV:** $200,027.97 MXN
+* **Total Cash Balance:** $200,027.97 MXN (Parked compounding in Bondia sweep at 6.53% APR)
 * **Equity Exposure:** 0.0%
 * **Active Regime:** State 0 (Bull trend, low volatility detected on SPY)
 
@@ -12,7 +12,7 @@
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $$0.8907 MXN sweep interest.
+* **[INTEREST ACCRUED]** Cash reserves earned $$2.4135 MXN sweep interest.
 * No trades or rebalancing actions triggered in this 30-minute interval.
 
 ## 4. Upgraded Asset Telemetry
