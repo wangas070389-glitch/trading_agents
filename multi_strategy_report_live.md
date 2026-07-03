@@ -1,10 +1,10 @@
 # Strategy 7 (Consolidated Multi-Strategy) Daily Execution Report
-**Execution Date:** 2026-07-02 | **Orchestrator Version:** Live V2
+**Execution Date:** 2026-07-02 | **Orchestrator Version:** Live V2.1
 
 ## 1. Consolidated Portfolio Summary
-* **Total Portfolio Value (USD):** $337,502.00 USD
-* **Total Unallocated Cash (USD):** $273,475.16 USD
-* **Currency Rate (USD/MXN):** 17.4165
+* **Total Portfolio Value (USD):** $348,956.07 USD
+* **Total Unallocated Cash (USD):** $284,938.55 USD
+* **Currency Rate (USD/MXN):** 17.4260
 * **Combined Cumulative Return (TWR Multiplier):** 2.4495 (+144.95%)
 
 ## 2. Multi-Strategy Performance Statistics (Historical + Live)
@@ -15,52 +15,56 @@
 ## 3. Allocation Target Deviation
 | Strategy Component | Target Allocation % | Current Allocation % | Deviation % | Current Value (USD) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Strategy 10: AI Intraday VWAP** | 15.0% | 3.4% | -11.6% | $11,483.38 |
-| **Strategy 9: AI Stat-Arb & Regime** | 20.0% | 3.4% | -16.6% | $11,357.65 |
-| **Strategy 4: US DCS Value-Growth** | 20.0% | 29.5% | +9.5% | $99,647.84 |
-| **Strategy 1: MXN Dynamic Value** | 15.0% | 0.4% | -14.6% | $1,203.53 |
-| **Strategy 8: Dividend Quality & Yield** | 15.0% | 3.4% | -11.6% | $11,512.55 |
-| **Strategy 6: US High-Beta Momentum** | 10.0% | 29.9% | +19.9% | $101,036.96 |
-| **Strategy 5: Alternatives (Crypto/Forex/ETFs)** | 5.0% | 30.0% | +25.0% | $101,260.09 |
+| **Strategy 11: AI Intraday CCI-ADX** | 10.0% | 3.3% | -6.7% | $11,477.11 |
+| **Strategy 10: AI Intraday VWAP** | 10.0% | 3.3% | -6.7% | $11,477.13 |
+| **Strategy 9: AI Stat-Arb & Regime** | 20.0% | 3.3% | -16.7% | $11,351.47 |
+| **Strategy 4: US DCS Value-Growth** | 20.0% | 28.6% | +8.6% | $99,647.84 |
+| **Strategy 1: MXN Dynamic Value** | 15.0% | 0.3% | -14.7% | $1,202.88 |
+| **Strategy 8: Dividend Quality & Yield** | 15.0% | 3.3% | -11.7% | $11,506.85 |
+| **Strategy 6: US High-Beta Momentum** | 5.0% | 29.0% | +24.0% | $101,036.96 |
+| **Strategy 5: Alternatives (Crypto/Forex/ETFs)** | 5.0% | 29.0% | +24.0% | $101,255.83 |
 
 
 ## 4. Underlying Strategy Holdings Detail
 
-### A. Strategy 1: MXN Dynamic Value Holdings (MXN / USD)
+### A. Strategy 11: AI Intraday CCI-ADX Holdings (MXN / USD)
+*No open positions currently held. Strategy is 100% Cash / Bondia sweep (squared off daily at 2:30 PM CST).*
+
+### B. Strategy 10: AI Intraday VWAP Alpha Holdings (MXN / USD)
+*No active intraday positions currently held. Strategy is 100% Cash / Bondia sweep (squared off daily at 2:30 PM CST).*
+
+### C. Strategy 1: MXN Dynamic Value Holdings (MXN / USD)
 | Ticker | Shares Held | Buy Price (MXN) | Current Price (MXN) | Market Value (MXN) | Market Value (USD) | Strategy Weight |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **GRUMAB.MX** | 1.0000 | $291.46 | $282.05 | $282.05 | $16.19 | 1.3% |
-| **ORBIA.MX** | 288.3637 | $21.20 | $22.85 | $6,589.11 | $378.33 | 31.4% |
-| **BBAJIOO.MX** | 111.3941 | $54.88 | $56.77 | $6,323.84 | $363.10 | 30.2% |
-| **GFNORTEO.MX** | 32.2636 | $189.48 | $187.70 | $6,055.88 | $347.71 | 28.9% |
+| **ORBIA.MX** | 288.3637 | $21.20 | $22.85 | $6,589.11 | $378.12 | 31.4% |
+| **BBAJIOO.MX** | 111.3941 | $54.88 | $56.77 | $6,323.84 | $362.90 | 30.2% |
+| **GFNORTEO.MX** | 32.2636 | $189.48 | $187.70 | $6,055.88 | $347.52 | 28.9% |
 
-### B. Strategy 4: US DCS Value-Growth Holdings (USD)
+### D. Strategy 4: US DCS Value-Growth Holdings (USD)
 | Ticker | Shares Held | Buy Price (USD) | Current Price (USD) | Market Value (USD) | Strategy Weight | DCS MOS |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **AVGO** | 65.00 | $380.15 | $360.45 | $23,429.25 | 23.5% | 1.701 |
 
-### C. Strategy 6: US High-Beta Momentum Holdings (USD)
-*No open stock positions currently held. Strategy is 100% Cash.*
-
-### D. Strategy 5: Alternatives Holdings (USD)
-| Ticker | Asset Type | Shares Held | Buy Price (USD) | Current Price (USD) | Market Value (USD) | Strategy Weight |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **EURUSD=X** | FOREX | 13,154.0000 | $1.14 | $1.15 | $15,067.58 | 14.9% |
-| **GBPUSD=X** | FOREX | 11,354.0000 | $1.32 | $1.34 | $15,182.60 | 15.0% |
-
 ### E. Strategy 8: Dividend Quality & Yield Holdings (MXN / USD)
 | Ticker | Shares Held | Buy Price (Local) | Current Price (Local) | Market Value (MXN) | Market Value (USD) | Strategy Weight |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **GFNORTEO.MX** | 210.7815 | $189.77 | $187.70 | $39,563.68 | $2,271.62 | 19.7% |
-| **BBAJIOO.MX** | 707.5889 | $56.53 | $56.77 | $40,169.82 | $2,306.42 | 20.0% |
-| **KOFUBL.MX** | 215.4592 | $185.65 | $187.51 | $40,400.75 | $2,319.68 | 20.1% |
-| **PG** | 15.4803 | $2,583.93 | $2,637.59 | $40,830.68 | $2,344.37 | 20.4% |
+| **GFNORTEO.MX** | 210.7815 | $189.77 | $187.70 | $39,563.68 | $2,270.38 | 19.7% |
+| **BBAJIOO.MX** | 707.5889 | $56.53 | $56.77 | $40,169.82 | $2,305.17 | 20.0% |
+| **KOFUBL.MX** | 215.4592 | $185.65 | $187.51 | $40,400.75 | $2,318.42 | 20.1% |
+| **PG** | 15.4803 | $2,583.93 | $2,638.24 | $40,840.76 | $2,343.67 | 20.4% |
 
 ### F. Strategy 9: AI-Regime Adaptive Stat-Arb Holdings (MXN / USD)
-*No open arbitrage positions or regime assets held. Strategy is 100% Cash / Bondia sweep.*
+*No open arbitrage positions. Strategy is 100% Cash / Bondia sweep.*
 
-### G. Strategy 10: AI Intraday VWAP Alpha Holdings (MXN / USD)
-*No active intraday positions currently held. Strategy is 100% Cash / Bondia sweep (Positions squared off daily at 2:30 PM CST).*
+### G. Strategy 6: US High-Beta Momentum Holdings (USD)
+*No open stock positions currently held. Strategy is 100% Cash.*
+
+### H. Strategy 5: Alternatives Holdings (USD)
+| Ticker | Asset Type | Shares Held | Buy Price (USD) | Current Price (USD) | Market Value (USD) | Strategy Weight |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **EURUSD=X** | FOREX | 13,154.0000 | $1.14 | $1.15 | $15,067.58 | 14.9% |
+| **GBPUSD=X** | FOREX | 11,354.0000 | $1.32 | $1.34 | $15,178.33 | 15.0% |
 
 ---
-*Generated by daily orchestrator at 2026-07-02 23:40:26*
+*Generated by daily orchestrator at 2026-07-02 23:49:49*

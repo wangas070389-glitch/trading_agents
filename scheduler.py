@@ -34,6 +34,7 @@ STRATEGY_SCRIPTS = [
     "run_live_dividends.py",
     "run_live_strategy9.py",
     "run_live_strategy10.py",
+    "run_live_strategy11.py",
     "run_live_multi_strategy.py",
     "compare_strategies.py"
 ]

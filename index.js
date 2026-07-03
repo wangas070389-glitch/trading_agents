@@ -292,14 +292,16 @@ function renderBacktestChart(dates, strategy, cash, benchmark) {
                 ? 'AI Regime Adaptive Stat-Arb' 
                 : (currentStrategy === 'strategy10' 
                     ? 'AI Intraday VWAP Alpha' 
-                    : `V5 Active Strategy (${valVariant === 'adaptive' ? 'Adaptive' : (valVariant === 'aggressive' ? 'Aggressive' : 'Standard')})`)));
+                    : (currentStrategy === 'strategy11' 
+                        ? 'AI Intraday CCI-ADX Twin' 
+                        : `V5 Active Strategy (${valVariant === 'adaptive' ? 'Adaptive' : (valVariant === 'aggressive' ? 'Aggressive' : 'Standard')})`))));
     const benchLabel = currentStrategy === 'macd_trend' 
         ? (tickerVal === 'ALL' ? 'SPY Buy & Hold' : `${tickerVal} Buy & Hold`) 
         : (currentStrategy === 'dividend_quality' 
             ? 'Cash Benchmark (11% APR)' 
-            : (currentStrategy === 'strategy9' ? 'Cash Benchmark (11% APR)' : (currentStrategy === 'strategy10' ? 'Cash Benchmark (9.5% APR)' : 'SPY Buy & Hold')));
-    const stratColor = currentStrategy === 'macd_trend' ? '#6366f1' : (currentStrategy === 'dividend_quality' ? '#fbbf24' : (currentStrategy === 'strategy9' ? '#a855f7' : (currentStrategy === 'strategy10' ? '#3b82f6' : '#10b981')));
-    const stratBg = currentStrategy === 'macd_trend' ? 'rgba(99, 102, 241, 0.05)' : (currentStrategy === 'dividend_quality' ? 'rgba(251, 191, 36, 0.05)' : (currentStrategy === 'strategy9' ? 'rgba(168, 85, 247, 0.05)' : (currentStrategy === 'strategy10' ? 'rgba(59, 130, 246, 0.05)' : 'rgba(16, 185, 129, 0.05)')));
+            : (currentStrategy === 'strategy9' ? 'Cash Benchmark (11% APR)' : (currentStrategy === 'strategy10' ? 'Cash Benchmark (9.5% APR)' : (currentStrategy === 'strategy11' ? 'Cash Benchmark (9.5% APR)' : 'SPY Buy & Hold'))));
+    const stratColor = currentStrategy === 'macd_trend' ? '#6366f1' : (currentStrategy === 'dividend_quality' ? '#fbbf24' : (currentStrategy === 'strategy9' ? '#a855f7' : (currentStrategy === 'strategy10' ? '#3b82f6' : (currentStrategy === 'strategy11' ? '#ec4899' : '#10b981'))));
+    const stratBg = currentStrategy === 'macd_trend' ? 'rgba(99, 102, 241, 0.05)' : (currentStrategy === 'dividend_quality' ? 'rgba(251, 191, 36, 0.05)' : (currentStrategy === 'strategy9' ? 'rgba(168, 85, 247, 0.05)' : (currentStrategy === 'strategy10' ? 'rgba(59, 130, 246, 0.05)' : (currentStrategy === 'strategy11' ? 'rgba(236, 72, 153, 0.05)' : 'rgba(16, 185, 129, 0.05)'))));
     
     backtestChartInstance = new Chart(ctx, {
         type: 'line',
@@ -397,6 +399,10 @@ document.getElementById('strat-val-btn').addEventListener('click', () => {
     document.getElementById('strat-s10-btn').style.borderColor = 'transparent';
     document.getElementById('strat-s10-btn').style.color = '#8f9cae';
     
+    document.getElementById('strat-s11-btn').style.background = 'transparent';
+    document.getElementById('strat-s11-btn').style.borderColor = 'transparent';
+    document.getElementById('strat-s11-btn').style.color = '#8f9cae';
+    
     document.getElementById('macd-ticker-container').style.display = 'none';
     document.getElementById('val-variant-container').style.display = 'flex';
     
@@ -433,6 +439,10 @@ document.getElementById('strat-macd-btn').addEventListener('click', () => {
     document.getElementById('strat-s10-btn').style.background = 'transparent';
     document.getElementById('strat-s10-btn').style.borderColor = 'transparent';
     document.getElementById('strat-s10-btn').style.color = '#8f9cae';
+    
+    document.getElementById('strat-s11-btn').style.background = 'transparent';
+    document.getElementById('strat-s11-btn').style.borderColor = 'transparent';
+    document.getElementById('strat-s11-btn').style.color = '#8f9cae';
     
     document.getElementById('macd-ticker-container').style.display = 'flex';
     document.getElementById('val-variant-container').style.display = 'none';
@@ -473,6 +483,10 @@ document.getElementById('strat-div-btn').addEventListener('click', () => {
     document.getElementById('strat-s10-btn').style.borderColor = 'transparent';
     document.getElementById('strat-s10-btn').style.color = '#8f9cae';
     
+    document.getElementById('strat-s11-btn').style.background = 'transparent';
+    document.getElementById('strat-s11-btn').style.borderColor = 'transparent';
+    document.getElementById('strat-s11-btn').style.color = '#8f9cae';
+    
     document.getElementById('macd-ticker-container').style.display = 'none';
     document.getElementById('val-variant-container').style.display = 'none';
     
@@ -509,6 +523,10 @@ document.getElementById('strat-s9-btn').addEventListener('click', () => {
     document.getElementById('strat-s10-btn').style.background = 'transparent';
     document.getElementById('strat-s10-btn').style.borderColor = 'transparent';
     document.getElementById('strat-s10-btn').style.color = '#8f9cae';
+    
+    document.getElementById('strat-s11-btn').style.background = 'transparent';
+    document.getElementById('strat-s11-btn').style.borderColor = 'transparent';
+    document.getElementById('strat-s11-btn').style.color = '#8f9cae';
     
     document.getElementById('macd-ticker-container').style.display = 'none';
     document.getElementById('val-variant-container').style.display = 'none';
@@ -547,11 +565,56 @@ document.getElementById('strat-s10-btn').addEventListener('click', () => {
     document.getElementById('strat-s9-btn').style.borderColor = 'transparent';
     document.getElementById('strat-s9-btn').style.color = '#8f9cae';
     
+    document.getElementById('strat-s11-btn').style.background = 'transparent';
+    document.getElementById('strat-s11-btn').style.borderColor = 'transparent';
+    document.getElementById('strat-s11-btn').style.color = '#8f9cae';
+    
     document.getElementById('macd-ticker-container').style.display = 'none';
     document.getElementById('val-variant-container').style.display = 'none';
     
     // Update labels
     document.getElementById('label-strat-ret').textContent = 'Intraday VWAP Return:';
+    document.getElementById('label-cash-ret').textContent = 'Bondia Cash Yield (9.5%):';
+    document.getElementById('label-spy-ret').textContent = 'Cash Benchmark Return:';
+    document.getElementById('label-fees-paid').textContent = 'Total Trading Fees Paid:';
+    
+    resetBacktestUI();
+});
+
+document.getElementById('strat-s11-btn').addEventListener('click', () => {
+    if (currentStrategy === 'strategy11') return;
+    currentStrategy = 'strategy11';
+    
+    // UI states
+    document.getElementById('strat-s11-btn').style.background = 'rgba(236, 72, 153, 0.2)';
+    document.getElementById('strat-s11-btn').style.borderColor = '#ec4899';
+    document.getElementById('strat-s11-btn').style.color = 'white';
+    
+    document.getElementById('strat-val-btn').style.background = 'transparent';
+    document.getElementById('strat-val-btn').style.borderColor = 'transparent';
+    document.getElementById('strat-val-btn').style.color = '#8f9cae';
+    
+    document.getElementById('strat-macd-btn').style.background = 'transparent';
+    document.getElementById('strat-macd-btn').style.borderColor = 'transparent';
+    document.getElementById('strat-macd-btn').style.color = '#8f9cae';
+
+    document.getElementById('strat-div-btn').style.background = 'transparent';
+    document.getElementById('strat-div-btn').style.borderColor = 'transparent';
+    document.getElementById('strat-div-btn').style.color = '#8f9cae';
+
+    document.getElementById('strat-s9-btn').style.background = 'transparent';
+    document.getElementById('strat-s9-btn').style.borderColor = 'transparent';
+    document.getElementById('strat-s9-btn').style.color = '#8f9cae';
+
+    document.getElementById('strat-s10-btn').style.background = 'transparent';
+    document.getElementById('strat-s10-btn').style.borderColor = 'transparent';
+    document.getElementById('strat-s10-btn').style.color = '#8f9cae';
+    
+    document.getElementById('macd-ticker-container').style.display = 'none';
+    document.getElementById('val-variant-container').style.display = 'none';
+    
+    // Update labels
+    document.getElementById('label-strat-ret').textContent = 'Intraday CCI-ADX Return:';
     document.getElementById('label-cash-ret').textContent = 'Bondia Cash Yield (9.5%):';
     document.getElementById('label-spy-ret').textContent = 'Cash Benchmark Return:';
     document.getElementById('label-fees-paid').textContent = 'Total Trading Fees Paid:';
@@ -612,6 +675,10 @@ document.getElementById('backtest-btn').addEventListener('click', async () => {
             });
         } else if (currentStrategy === 'strategy10') {
             response = await fetch('/api/backtest-strategy10', {
+                method: 'POST'
+            });
+        } else if (currentStrategy === 'strategy11') {
+            response = await fetch('/api/backtest-strategy11', {
                 method: 'POST'
             });
         } else {

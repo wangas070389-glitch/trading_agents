@@ -1,0 +1,7 @@
+# Transaction Ledger (Strategy 11: CCI-ADX Twin Strategy)
+
+| Date | Ticker | Action | Shares | Price | Fee | Net Impact | Note |
+| :--- | :--- | :--- | ---: | ---: | ---: | ---: | :--- |
+| 2026-07-02 | BONDIA | INTEREST | 1.0000 | $0.0000 | $0.00 | $0.00 | Accrued interest on sweep balance |
+| 2026-07-02 | BONDIA | INTEREST | 1.0000 | $0.0745 | $0.00 | $0.07 | Accrued interest on sweep balance |
+---
