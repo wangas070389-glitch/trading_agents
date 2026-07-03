@@ -1,26 +1,26 @@
 {
   "total_capital": 200000.0,
-  "cash_balance": 39548.95,
+  "cash_balance": 39549.35,
   "holdings": [
     {
       "ticker": "GFNORTEO.MX",
       "shares": 210.78146756307328,
       "buy_price": 189.77000427246094,
-      "last_price": 186.13999938964844,
+      "last_price": 186.97999572753906,
       "target_weight": 0.2
     },
     {
       "ticker": "BBAJIOO.MX",
       "shares": 707.5889061340172,
       "buy_price": 56.529998779296875,
-      "last_price": 56.779998779296875,
+      "last_price": 56.790000915527344,
       "target_weight": 0.2
     },
     {
       "ticker": "KOFUBL.MX",
       "shares": 215.4592044980265,
       "buy_price": 185.64999389648438,
-      "last_price": 186.11000061035156,
+      "last_price": 186.47000122070312,
       "target_weight": 0.2
     },
     {
@@ -31,6 +31,6 @@
       "target_weight": 0.2
     }
   ],
-  "last_updated": "2026-07-03 18:17:01",
+  "last_updated": "2026-07-03 19:37:52",
   "last_rebalance_date": "2026-07-01"
 }
