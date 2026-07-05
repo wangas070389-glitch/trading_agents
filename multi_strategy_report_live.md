@@ -1,28 +1,28 @@
 # Strategy 7 (Consolidated Multi-Strategy) Daily Execution Report
-**Execution Date:** 2026-07-04 | **Orchestrator Version:** Live V2.1
+**Execution Date:** 2026-07-05 | **Orchestrator Version:** Live V2.1
 
 ## 1. Consolidated Portfolio Summary
-* **Total Portfolio Value (USD):** $348,779.79 USD
-* **Total Unallocated Cash (USD):** $275,162.97 USD
-* **Currency Rate (USD/MXN):** 17.4620
-* **Combined Cumulative Return (TWR Multiplier):** 2.4444 (+144.44%)
+* **Total Portfolio Value (USD):** $348,808.20 USD
+* **Total Unallocated Cash (USD):** $275,181.93 USD
+* **Currency Rate (USD/MXN):** 17.4596
+* **Combined Cumulative Return (TWR Multiplier):** 2.4448 (+144.48%)
 
 ## 2. Multi-Strategy Performance Statistics (Historical + Live)
-* **Strategy 7 CAGR:** 24.57%
+* **Strategy 7 CAGR:** 24.56%
 * **Strategy 7 Sharpe Ratio:** 1.43
 * **Strategy 7 Maximum Drawdown:** -8.82%
 
 ## 3. Allocation Target Deviation
 | Strategy Component | Target Allocation % | Current Allocation % | Deviation % | Current Value (USD) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Strategy 11: AI Intraday CCI-ADX** | 10.0% | 3.3% | -6.7% | $11,457.39 |
-| **Strategy 10: AI Intraday VWAP** | 10.0% | 3.3% | -6.7% | $11,455.04 |
-| **Strategy 9: AI Stat-Arb & Regime** | 20.0% | 3.2% | -16.8% | $11,303.89 |
+| **Strategy 11: AI Intraday CCI-ADX** | 10.0% | 3.3% | -6.7% | $11,461.04 |
+| **Strategy 10: AI Intraday VWAP** | 10.0% | 3.3% | -6.7% | $11,456.64 |
+| **Strategy 9: AI Stat-Arb & Regime** | 20.0% | 3.2% | -16.8% | $11,307.97 |
 | **Strategy 4: US DCS Value-Growth** | 20.0% | 28.6% | +8.6% | $99,647.84 |
-| **Strategy 1: MXN Dynamic Value** | 15.0% | 0.3% | -14.7% | $1,200.01 |
-| **Strategy 8: Dividend Quality & Yield** | 15.0% | 3.3% | -11.7% | $11,462.67 |
-| **Strategy 6: US High-Beta Momentum** | 5.0% | 29.0% | +24.0% | $101,036.96 |
-| **Strategy 5: Alternatives (Crypto/Forex/ETFs)** | 5.0% | 29.0% | +24.0% | $101,215.99 |
+| **Strategy 1: MXN Dynamic Value** | 15.0% | 0.3% | -14.7% | $1,200.19 |
+| **Strategy 8: Dividend Quality & Yield** | 15.0% | 3.3% | -11.7% | $11,463.86 |
+| **Strategy 6: US High-Beta Momentum** | 5.0% | 29.0% | +24.0% | $101,049.41 |
+| **Strategy 5: Alternatives (Crypto/Forex/ETFs)** | 5.0% | 29.0% | +24.0% | $101,221.26 |
 
 
 ## 4. Underlying Strategy Holdings Detail
@@ -36,10 +36,10 @@
 ### C. Strategy 1: MXN Dynamic Value Holdings (MXN / USD)
 | Ticker | Shares Held | Buy Price (MXN) | Current Price (MXN) | Market Value (MXN) | Market Value (USD) | Strategy Weight |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **GRUMAB.MX** | 1.0000 | $291.46 | $281.56 | $281.56 | $16.12 | 1.3% |
-| **ORBIA.MX** | 288.3637 | $21.20 | $23.00 | $6,632.36 | $379.82 | 31.7% |
-| **BBAJIOO.MX** | 111.3941 | $54.88 | $56.34 | $6,275.95 | $359.41 | 30.0% |
-| **GFNORTEO.MX** | 32.2636 | $189.48 | $187.63 | $6,053.62 | $346.67 | 28.9% |
+| **GRUMAB.MX** | 1.0000 | $291.46 | $281.56 | $281.56 | $16.13 | 1.3% |
+| **ORBIA.MX** | 288.3637 | $21.20 | $23.00 | $6,632.36 | $379.87 | 31.7% |
+| **BBAJIOO.MX** | 111.3941 | $54.88 | $56.34 | $6,275.95 | $359.46 | 29.9% |
+| **GFNORTEO.MX** | 32.2636 | $189.48 | $187.63 | $6,053.62 | $346.72 | 28.9% |
 
 ### D. Strategy 4: US DCS Value-Growth Holdings (USD)
 | Ticker | Shares Held | Buy Price (USD) | Current Price (USD) | Market Value (USD) | Strategy Weight | DCS MOS |
@@ -49,15 +49,15 @@
 ### E. Strategy 8: Dividend Quality & Yield Holdings (MXN / USD)
 | Ticker | Shares Held | Buy Price (Local) | Current Price (Local) | Market Value (MXN) | Market Value (USD) | Strategy Weight |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **GFNORTEO.MX** | 210.7815 | $189.77 | $187.63 | $39,548.93 | $2,264.86 | 19.8% |
-| **BBAJIOO.MX** | 707.5889 | $56.53 | $56.34 | $39,865.56 | $2,282.99 | 19.9% |
-| **KOFUBL.MX** | 215.4592 | $185.65 | $186.86 | $40,260.71 | $2,305.62 | 20.1% |
-| **PG** | 15.4803 | $2,583.93 | $2,643.92 | $40,928.66 | $2,343.87 | 20.4% |
+| **GFNORTEO.MX** | 210.7815 | $189.77 | $187.63 | $39,548.93 | $2,265.17 | 19.8% |
+| **BBAJIOO.MX** | 707.5889 | $56.53 | $56.34 | $39,865.56 | $2,283.31 | 19.9% |
+| **KOFUBL.MX** | 215.4592 | $185.65 | $186.86 | $40,260.71 | $2,305.94 | 20.1% |
+| **PG** | 15.4803 | $2,583.93 | $2,643.00 | $40,914.38 | $2,343.38 | 20.4% |
 
 ### F. Strategy 9: AI-Regime Adaptive Stat-Arb Holdings (MXN / USD)
 | Ticker | Type | Qty Y | Qty X | Buy/Alloc | Last Value | Value (MXN) | Value (USD) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **SPY** | Regime Asset | 13.0000 | 0.0000 | $13,005.35 | $13,005.35 | $169,069.53 | $9,682.14 |
+| **SPY** | Regime Asset | 13.0000 | 0.0000 | $13,005.35 | $13,008.33 | $169,108.26 | $9,685.71 |
 
 ### G. Strategy 6: US High-Beta Momentum Holdings (USD)
 *No open stock positions currently held. Strategy is 100% Cash.*
@@ -66,7 +66,7 @@
 | Ticker | Asset Type | Shares Held | Buy Price (USD) | Current Price (USD) | Market Value (USD) | Strategy Weight |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
 | **EURUSD=X** | FOREX | 13,154.0000 | $1.14 | $1.14 | $15,048.62 | 14.9% |
-| **GBPUSD=X** | FOREX | 11,354.0000 | $1.32 | $1.33 | $15,157.46 | 15.0% |
+| **GBPUSD=X** | FOREX | 11,354.0000 | $1.32 | $1.34 | $15,162.73 | 15.0% |
 
 ---
-*Generated by daily orchestrator at 2026-07-04 22:01:22*
+*Generated by daily orchestrator at 2026-07-05 22:04:33*

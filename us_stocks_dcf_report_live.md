@@ -1,11 +1,11 @@
 # Isolated US Stock DCS Value-Growth Execution Report
-**Execution Date:** 2026-07-04 | **Strategy Version:** DCS Value-Growth Isolated V1
+**Execution Date:** 2026-07-05 | **Strategy Version:** DCS Value-Growth Isolated V1
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** $99,647.84 USD
 * **Total Cash Balance:** $76,218.59 USD
 * **Equity Exposure:** 23.5%
-* **Days Since Last Rebalance:** 11 days
+* **Days Since Last Rebalance:** 12 days
 
 ## 2. Current Holdings
 | Ticker | Shares Held | Last Price | Market Value | Target Weight | DCS Conviction |
@@ -23,7 +23,7 @@
 | **AMZN** | SELL / AVOID | $242.67 | -0.712 | $69.82 | BULL | BULL | Low conviction (DCS=-0.712 < 0.15) |
 | **AVGO** | SELL / AVOID | $360.45 | 1.882 | $1,038.81 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
 | **COST** | SELL / AVOID | $951.67 | -0.595 | $385.25 | BEAR | BEAR | Low conviction (DCS=-0.595 < 0.15) and Bear trend (Close <= SMA 100) |
-| **GOOGL** | SELL / AVOID | $359.91 | -0.698 | $108.67 | BULL | BULL | Low conviction (DCS=-0.698 < 0.15) |
+| **GOOGL** | SELL / AVOID | $359.91 | -0.698 | $108.66 | BULL | BULL | Low conviction (DCS=-0.698 < 0.15) |
 | **JPM** | SELL / AVOID | $334.47 | -0.308 | $231.33 | BULL | BULL | Low conviction (DCS=-0.308 < 0.15) |
 | **META** | SELL / AVOID | $582.90 | -0.354 | $376.63 | BEAR | BULL | Low conviction (DCS=-0.354 < 0.15) and Bear trend (Close <= SMA 100) |
 | **MSFT** | SELL / AVOID | $390.49 | -0.529 | $183.93 | BEAR | BULL | Low conviction (DCS=-0.529 < 0.15) and Bear trend (Close <= SMA 100) |

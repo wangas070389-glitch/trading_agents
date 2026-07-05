@@ -1,11 +1,11 @@
 # Strategy 8: Dividend Quality & Yield Execution Report
-**Execution Date:** 2026-07-04 22:00:56 | **Strategy Version:** Live V1
+**Execution Date:** 2026-07-05 22:04:07 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $200,161.09 MXN
-* **Total Cash Balance:** $39,557.24 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $200,154.01 MXN
+* **Total Cash Balance:** $39,564.43 MXN (Parked in Bondia Compound at 6.53% APR)
 * **Equity Exposure:** 80.2%
-* **Days Since Last Rebalance:** 3 days
+* **Days Since Last Rebalance:** 4 days
 
 ## 2. Current Holdings
 | Ticker | Shares Held | Buy Price | Last Price | Market Value | Target Weight |
@@ -13,10 +13,10 @@
 | **GFNORTEO.MX** | 210.78 | $189.77 | $187.63 | $39,548.93 | 20.0% |
 | **BBAJIOO.MX** | 707.59 | $56.53 | $56.34 | $39,865.56 | 20.0% |
 | **KOFUBL.MX** | 215.46 | $185.65 | $186.86 | $40,260.71 | 20.0% |
-| **PG** | 15.48 | $2583.93 | $2643.92 | $40,928.66 | 20.0% |
+| **PG** | 15.48 | $2583.93 | $2643.00 | $40,914.38 | 20.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $7.1430 MXN over 0.9957 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $7.1912 MXN over 1.0022 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
@@ -30,7 +30,7 @@
 | **JNJ** | SELL / AVOID | 2.04% | 60.2% | 60.2% | $263.04 > SMA $216.98 | Yield below 2.5% |
 | **KO** | BUY / HOLD | 2.52% | 64.8% | 64.8% | $84.14 > SMA $73.46 | Passed all quality checks. Score: 0.0000 |
 | **KOFUBL.MX** | BUY / HOLD | 4.14% | 59.9% | 59.9% | $186.86 > SMA $172.02 | Passed all quality checks. Score: 0.0000 |
-| **MCD** | SELL / AVOID | 2.65% | 59.9% | 59.9% | $280.63 <= SMA $300.21 | Bear trend (Close <= SMA 200) |
+| **MCD** | SELL / AVOID | 2.65% | 59.9% | 59.9% | $280.63 <= SMA $302.04 | Bear trend (Close <= SMA 200) |
 | **ORBIA.MX** | SELL / AVOID | 0.00% | 0.0% | 0.0% | $23.00 > SMA $19.25 | Yield below 2.5% and Payout Ratio (0.0%) out of bounds and Non-positive EPS (-4.03) and Debt/Equity (2.13) exceeds 1.5 |
 | **PEP** | SELL / AVOID | 4.10% | 89.3% | 89.3% | $144.22 <= SMA $147.48 | Payout Ratio (89.3%) out of bounds and FCF Payout (89.3%) exceeds limit and Debt/Equity (2.45) exceeds 1.5 and Bear trend (Close <= SMA 200) |
 | **PG** | BUY / HOLD | 2.81% | 61.8% | 61.8% | $151.41 > SMA $147.09 | Passed all quality checks. Score: 0.0000 |
