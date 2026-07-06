@@ -1,4 +1,4 @@
-# Watchdog Report - 2026-07-06 16:50:01
+# Watchdog Report - 2026-07-06 17:19:55
 
 **CRITICAL: 0 | WARNING: 2**
 
@@ -6,8 +6,8 @@
 | :--- | :--- | :--- | :--- |
 | [WARN] | strategy10 | W2 | Sin trades aun (2/10 dias de gracia) |
 | [WARN] | strategy11 | W2 | Sin trades aun (2/10 dias de gracia) |
-| [ OK ] | strategy12 | - | NAV $201,833.32 | sin anomalias |
-| [ OK ] | strategy13 | - | NAV $201,836.22 | sin anomalias |
-| [ OK ] | strategy14 | - | NAV $201,376.91 | sin anomalias |
-| [ OK ] | strategy15 | - | NAV $201,381.59 | sin anomalias |
-| [ OK ] | strategy9 | - | NAV $196,977.04 | sin anomalias |
+| [ OK ] | strategy12 | - | NAV $201,682.68 | sin anomalias |
+| [ OK ] | strategy13 | - | NAV $201,686.20 | sin anomalias |
+| [ OK ] | strategy14 | - | NAV $201,237.38 | sin anomalias |
+| [ OK ] | strategy15 | - | NAV $201,238.45 | sin anomalias |
+| [ OK ] | strategy9 | - | NAV $196,363.83 | sin anomalias |
