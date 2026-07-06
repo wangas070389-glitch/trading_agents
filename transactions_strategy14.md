@@ -9,4 +9,6 @@
 | 2026-07-06 | USD-MMF | INTEREST | 1.0000 | $0.0003 | USD sweep |
 | 2026-07-06 | BONDIA | INTEREST | 1.0000 | $0.4214 | MXN sweep |
 | 2026-07-06 | USD-MMF | INTEREST | 1.0000 | $0.0033 | USD sweep |
+| 2026-07-06 | BONDIA | INTEREST | 1.0000 | $18.0320 | MXN sweep |
+| 2026-07-06 | USD-MMF | INTEREST | 1.0000 | $0.1423 | USD sweep |
 ---

@@ -1,12 +1,12 @@
 {
   "total_capital": 20000.0,
-  "cash_balance": 1711.37,
+  "cash_balance": 1711.59,
   "holdings": [
     {
       "ticker": "GRUMAB.MX",
       "shares": 1,
       "buy_price": 291.46,
-      "last_price": 281.55999755859375,
+      "last_price": 282.5,
       "target_weight": 0.027853008203029602,
       "dcs": 0.7146482020540937,
       "garch_vol": 0.0140117435282772,
@@ -18,7 +18,7 @@
       "ticker": "ORBIA.MX",
       "shares": 288.36366782265185,
       "buy_price": 21.200000762939453,
-      "last_price": 23.0,
+      "last_price": 22.81999969482422,
       "target_weight": 0.3,
       "dcs": 1.0,
       "garch_vol": 0.02162142890424951,
@@ -30,7 +30,7 @@
       "ticker": "BBAJIOO.MX",
       "shares": 111.39413008131325,
       "buy_price": 54.880001068115234,
-      "last_price": 56.34000015258789,
+      "last_price": 56.7599983215332,
       "target_weight": 0.3,
       "dcs": 0.825598943947785,
       "garch_vol": 0.020536932359282355,
@@ -42,7 +42,7 @@
       "ticker": "GFNORTEO.MX",
       "shares": 32.26361682335487,
       "buy_price": 189.47999572753906,
-      "last_price": 187.6300048828125,
+      "last_price": 189.1300048828125,
       "target_weight": 0.3,
       "dcs": 0.1687403499821262,
       "garch_vol": 0.01983195010230015,
@@ -51,7 +51,7 @@
       "zg_t": 0.0
     }
   ],
-  "last_updated": "2026-07-05 23:40:23",
+  "last_updated": "2026-07-06 16:49:14",
   "slippage_savings": 0.0,
   "last_rebalance_date": "2026-06-21"
 }
