@@ -7,4 +7,6 @@
 | 2026-07-06 | USDMXN | BUY_USD | 1619.7274 | $17.4660 | mix f=0.17 |
 | 2026-07-06 | BONDIA | INTEREST | 1.0000 | $0.0432 | MXN sweep |
 | 2026-07-06 | USD-MMF | INTEREST | 1.0000 | $0.0003 | USD sweep |
+| 2026-07-06 | BONDIA | INTEREST | 1.0000 | $0.4214 | MXN sweep |
+| 2026-07-06 | USD-MMF | INTEREST | 1.0000 | $0.0033 | USD sweep |
 ---
