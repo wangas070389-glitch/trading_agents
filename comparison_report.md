@@ -1,5 +1,5 @@
 # Daily Strategy Performance Comparison Report
-**Report Generated At:** 2026-07-05 22:04:33
+**Report Generated At:** 2026-07-05 23:21:39
 
 ## 1. Executive Performance Summary
 | Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |
@@ -14,18 +14,26 @@
 | **AI Regime Stat-Arb (S9)** | $197,432.34 | $28,324.08 | $169,069.53 | 85.6% | +$0.00 | +0.00% | 2026-06-30 | MXN |
 | **AI Intraday VWAP (S10)** | $200,027.97 | $200,027.97 | $0.00 | 0.0% | +$0.00 | +0.00% | 2026-07-02 | MXN |
 | **AI Intraday CCI-ADX (S11)** | $200,104.75 | $200,104.75 | $0.00 | 0.0% | +$0.00 | +0.00% | 2026-07-02 | MXN |
-| **Strategy 7 (Consolidated Core)** | $348,808.20 | $275,181.93 | $73,626.27 | 21.1% | +$11,312.69 | +3.35% | 2026-07-02 | USD |
+| **VTTL Trend-Carry (S12)** | $200,002.25 | $161,597.66 | $38,402.39 | 19.2% | +$0.00 | +0.00% | 2026-07-06 | MXN |
+| **CARA Cross-Asset (S13)** | $200,001.37 | $161,597.66 | $38,402.39 | 19.2% | +$0.00 | +0.00% | 2026-07-06 | MXN |
+| **HEDGE Aggregator (S14)** | $230,315.33 | $200,000.00 | $30,304.75 | 13.2% | +$30,294.82 | +15.15% | 2026-07-06 | MXN |
+| **TRACK Tracker (S15)** | $230,311.72 | $200,000.00 | $30,304.78 | 13.2% | +$30,298.26 | +15.15% | 2026-07-06 | MXN |
+| **Strategy 7 (Consolidated Core)** | $391,338.57 | $309,856.34 | $81,482.23 | 20.8% | +$8,048.70 | +2.10% | 2026-07-02 | USD |
 
 *Note: Strategy 7 consolidated values represent all strategies rebalanced dynamically under risk parity.*
 
 ## 2. Dynamic Weight Deviations (Strategy 7 Core Components)
 | Component Strategy | Current Value (USD) | Target Weight % | Current Weight % | Deviation % |
 | :--- | :---: | :---: | :---: | :---: |
-| 11 Intraday Cci Adx | $11,461.04 | 10.0% | 3.3% | -6.7% |
-| 10 Intraday Vwap | $11,456.64 | 10.0% | 3.3% | -6.7% |
-| 9 Ai Arb | $11,307.97 | 20.0% | 3.2% | -16.8% |
-| 4 Us Dcs | $99,647.84 | 20.0% | 28.6% | +8.6% |
-| 1 Mxn Value | $1,200.19 | 15.0% | 0.3% | -14.7% |
-| 8 Dividend Quality | $11,463.86 | 15.0% | 3.3% | -11.7% |
-| 6 High Beta | $101,049.41 | 5.0% | 29.0% | +24.0% |
-| 5 Alternatives | $101,221.26 | 5.0% | 29.0% | +24.0% |
+| 11 Intraday Cci Adx | $11,454.59 | 10.0% | 2.9% | -7.1% |
+| 10 Intraday Vwap | $11,450.19 | 10.0% | 2.9% | -7.1% |
+| 9 Ai Arb | $11,301.61 | 15.0% | 2.9% | -12.1% |
+| 4 Us Dcs | $99,647.84 | 15.0% | 25.5% | +10.5% |
+| 1 Mxn Value | $1,199.52 | 10.0% | 0.3% | -9.7% |
+| 8 Dividend Quality | $11,457.41 | 10.0% | 2.9% | -7.1% |
+| 12 Vttl | $11,448.72 | 5.0% | 2.9% | -2.1% |
+| 13 Cara | $11,448.67 | 5.0% | 2.9% | -2.1% |
+| 14 Hedge | $9,829.79 | 5.0% | 2.5% | -2.5% |
+| 15 Track | $9,829.58 | 5.0% | 2.5% | -2.5% |
+| 6 High Beta | $101,049.41 | 5.0% | 25.8% | +20.8% |
+| 5 Alternatives | $101,221.26 | 5.0% | 25.9% | +20.9% |
