@@ -294,14 +294,47 @@ function renderBacktestChart(dates, strategy, cash, benchmark) {
                     ? 'AI Intraday VWAP Alpha' 
                     : (currentStrategy === 'strategy11' 
                         ? 'AI Intraday CCI-ADX Twin' 
-                        : `V5 Active Strategy (${valVariant === 'adaptive' ? 'Adaptive' : (valVariant === 'aggressive' ? 'Aggressive' : 'Standard')})`))));
+                        : (currentStrategy === 'strategy12'
+                            ? 'S12 VTTL Trend-Carry'
+                            : (currentStrategy === 'strategy13'
+                                ? 'S13 CARA Cross-Asset'
+                                : (currentStrategy === 'strategy14'
+                                    ? 'S14 HEDGE Aggregator'
+                                    : (currentStrategy === 'strategy15'
+                                        ? 'S15 TRACK Tracker'
+                                        : `V5 Active Strategy (${valVariant === 'adaptive' ? 'Adaptive' : (valVariant === 'aggressive' ? 'Aggressive' : 'Standard')})`))))))));
     const benchLabel = currentStrategy === 'macd_trend' 
         ? (tickerVal === 'ALL' ? 'SPY Buy & Hold' : `${tickerVal} Buy & Hold`) 
         : (currentStrategy === 'dividend_quality' 
             ? 'Cash Benchmark (11% APR)' 
-            : (currentStrategy === 'strategy9' ? 'Cash Benchmark (11% APR)' : (currentStrategy === 'strategy10' ? 'Cash Benchmark (9.5% APR)' : (currentStrategy === 'strategy11' ? 'Cash Benchmark (9.5% APR)' : 'SPY Buy & Hold'))));
-    const stratColor = currentStrategy === 'macd_trend' ? '#6366f1' : (currentStrategy === 'dividend_quality' ? '#fbbf24' : (currentStrategy === 'strategy9' ? '#a855f7' : (currentStrategy === 'strategy10' ? '#3b82f6' : (currentStrategy === 'strategy11' ? '#ec4899' : '#10b981'))));
-    const stratBg = currentStrategy === 'macd_trend' ? 'rgba(99, 102, 241, 0.05)' : (currentStrategy === 'dividend_quality' ? 'rgba(251, 191, 36, 0.05)' : (currentStrategy === 'strategy9' ? 'rgba(168, 85, 247, 0.05)' : (currentStrategy === 'strategy10' ? 'rgba(59, 130, 246, 0.05)' : (currentStrategy === 'strategy11' ? 'rgba(236, 72, 153, 0.05)' : 'rgba(16, 185, 129, 0.05)'))));
+            : (currentStrategy === 'strategy9' ? 'Cash Benchmark (11% APR)' 
+            : (currentStrategy === 'strategy10' ? 'Cash Benchmark (9.5% APR)' 
+            : (currentStrategy === 'strategy11' ? 'Cash Benchmark (9.5% APR)' 
+            : (currentStrategy === 'strategy12' ? 'QQQ B&H MXN'
+            : (currentStrategy === 'strategy13' ? 'QQQ B&H MXN'
+            : (currentStrategy === 'strategy14' ? 'QQQ B&H MXN'
+            : (currentStrategy === 'strategy15' ? 'QQQ B&H MXN'
+            : 'SPY Buy & Hold'))))))));
+    const stratColor = currentStrategy === 'macd_trend' ? '#6366f1' 
+        : (currentStrategy === 'dividend_quality' ? '#fbbf24' 
+        : (currentStrategy === 'strategy9' ? '#a855f7' 
+        : (currentStrategy === 'strategy10' ? '#3b82f6' 
+        : (currentStrategy === 'strategy11' ? '#ec4899' 
+        : (currentStrategy === 'strategy12' ? '#0ea5e9'
+        : (currentStrategy === 'strategy13' ? '#10b981'
+        : (currentStrategy === 'strategy14' ? '#f59e0b'
+        : (currentStrategy === 'strategy15' ? '#ef4444'
+        : '#10b981'))))))));
+    const stratBg = currentStrategy === 'macd_trend' ? 'rgba(99, 102, 241, 0.05)' 
+        : (currentStrategy === 'dividend_quality' ? 'rgba(251, 191, 36, 0.05)' 
+        : (currentStrategy === 'strategy9' ? 'rgba(168, 85, 247, 0.05)' 
+        : (currentStrategy === 'strategy10' ? 'rgba(59, 130, 246, 0.05)' 
+        : (currentStrategy === 'strategy11' ? 'rgba(236, 72, 153, 0.05)' 
+        : (currentStrategy === 'strategy12' ? 'rgba(14, 165, 233, 0.05)'
+        : (currentStrategy === 'strategy13' ? 'rgba(16, 185, 129, 0.05)'
+        : (currentStrategy === 'strategy14' ? 'rgba(245, 158, 11, 0.05)'
+        : (currentStrategy === 'strategy15' ? 'rgba(239, 68, 68, 0.05)'
+        : 'rgba(16, 185, 129, 0.05)'))))))));
     
     backtestChartInstance = new Chart(ctx, {
         type: 'line',
@@ -373,36 +406,25 @@ function renderBacktestChart(dates, strategy, cash, benchmark) {
     });
 }
 
-// Setup Strategy Toggles
+// Setup Strfunction clearAllStratButtons() {
+    const ids = ['strat-val-btn', 'strat-macd-btn', 'strat-div-btn', 'strat-s9-btn', 'strat-s10-btn', 'strat-s11-btn', 'strat-s12-btn', 'strat-s13-btn', 'strat-s14-btn', 'strat-s15-btn'];
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.style.background = 'transparent';
+            el.style.borderColor = 'transparent';
+            el.style.color = '#8f9cae';
+        }
+    });
+}
+
 document.getElementById('strat-val-btn').addEventListener('click', () => {
     if (currentStrategy === 'value_equity') return;
     currentStrategy = 'value_equity';
-    
-    // UI states
+    clearAllStratButtons();
     document.getElementById('strat-val-btn').style.background = 'rgba(16, 185, 129, 0.2)';
     document.getElementById('strat-val-btn').style.borderColor = '#10b981';
     document.getElementById('strat-val-btn').style.color = 'white';
-    
-    document.getElementById('strat-macd-btn').style.background = 'transparent';
-    document.getElementById('strat-macd-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-macd-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-div-btn').style.background = 'transparent';
-    document.getElementById('strat-div-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-div-btn').style.color = '#8f9cae';
-
-    document.getElementById('strat-s9-btn').style.background = 'transparent';
-    document.getElementById('strat-s9-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s9-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-s10-btn').style.background = 'transparent';
-    document.getElementById('strat-s10-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s10-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-s11-btn').style.background = 'transparent';
-    document.getElementById('strat-s11-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s11-btn').style.color = '#8f9cae';
-    
     document.getElementById('macd-ticker-container').style.display = 'none';
     document.getElementById('val-variant-container').style.display = 'flex';
     
@@ -418,32 +440,10 @@ document.getElementById('strat-val-btn').addEventListener('click', () => {
 document.getElementById('strat-macd-btn').addEventListener('click', () => {
     if (currentStrategy === 'macd_trend') return;
     currentStrategy = 'macd_trend';
-    
-    // UI states
+    clearAllStratButtons();
     document.getElementById('strat-macd-btn').style.background = 'rgba(99, 102, 241, 0.2)';
     document.getElementById('strat-macd-btn').style.borderColor = '#6366f1';
     document.getElementById('strat-macd-btn').style.color = 'white';
-    
-    document.getElementById('strat-val-btn').style.background = 'transparent';
-    document.getElementById('strat-val-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-val-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-div-btn').style.background = 'transparent';
-    document.getElementById('strat-div-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-div-btn').style.color = '#8f9cae';
-
-    document.getElementById('strat-s9-btn').style.background = 'transparent';
-    document.getElementById('strat-s9-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s9-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-s10-btn').style.background = 'transparent';
-    document.getElementById('strat-s10-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s10-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-s11-btn').style.background = 'transparent';
-    document.getElementById('strat-s11-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s11-btn').style.color = '#8f9cae';
-    
     document.getElementById('macd-ticker-container').style.display = 'flex';
     document.getElementById('val-variant-container').style.display = 'none';
     
@@ -461,32 +461,10 @@ document.getElementById('strat-macd-btn').addEventListener('click', () => {
 document.getElementById('strat-div-btn').addEventListener('click', () => {
     if (currentStrategy === 'dividend_quality') return;
     currentStrategy = 'dividend_quality';
-    
-    // UI states
+    clearAllStratButtons();
     document.getElementById('strat-div-btn').style.background = 'rgba(251, 191, 36, 0.2)';
     document.getElementById('strat-div-btn').style.borderColor = '#fbbf24';
     document.getElementById('strat-div-btn').style.color = 'white';
-    
-    document.getElementById('strat-val-btn').style.background = 'transparent';
-    document.getElementById('strat-val-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-val-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-macd-btn').style.background = 'transparent';
-    document.getElementById('strat-macd-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-macd-btn').style.color = '#8f9cae';
-
-    document.getElementById('strat-s9-btn').style.background = 'transparent';
-    document.getElementById('strat-s9-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s9-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-s10-btn').style.background = 'transparent';
-    document.getElementById('strat-s10-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s10-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-s11-btn').style.background = 'transparent';
-    document.getElementById('strat-s11-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s11-btn').style.color = '#8f9cae';
-    
     document.getElementById('macd-ticker-container').style.display = 'none';
     document.getElementById('val-variant-container').style.display = 'none';
     
@@ -502,32 +480,10 @@ document.getElementById('strat-div-btn').addEventListener('click', () => {
 document.getElementById('strat-s9-btn').addEventListener('click', () => {
     if (currentStrategy === 'strategy9') return;
     currentStrategy = 'strategy9';
-    
-    // UI states
+    clearAllStratButtons();
     document.getElementById('strat-s9-btn').style.background = 'rgba(168, 85, 247, 0.2)';
     document.getElementById('strat-s9-btn').style.borderColor = '#a855f7';
     document.getElementById('strat-s9-btn').style.color = 'white';
-    
-    document.getElementById('strat-val-btn').style.background = 'transparent';
-    document.getElementById('strat-val-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-val-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-macd-btn').style.background = 'transparent';
-    document.getElementById('strat-macd-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-macd-btn').style.color = '#8f9cae';
-
-    document.getElementById('strat-div-btn').style.background = 'transparent';
-    document.getElementById('strat-div-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-div-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-s10-btn').style.background = 'transparent';
-    document.getElementById('strat-s10-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s10-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-s11-btn').style.background = 'transparent';
-    document.getElementById('strat-s11-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s11-btn').style.color = '#8f9cae';
-    
     document.getElementById('macd-ticker-container').style.display = 'none';
     document.getElementById('val-variant-container').style.display = 'none';
     
@@ -543,32 +499,10 @@ document.getElementById('strat-s9-btn').addEventListener('click', () => {
 document.getElementById('strat-s10-btn').addEventListener('click', () => {
     if (currentStrategy === 'strategy10') return;
     currentStrategy = 'strategy10';
-    
-    // UI states
+    clearAllStratButtons();
     document.getElementById('strat-s10-btn').style.background = 'rgba(59, 130, 246, 0.2)';
     document.getElementById('strat-s10-btn').style.borderColor = '#3b82f6';
     document.getElementById('strat-s10-btn').style.color = 'white';
-    
-    document.getElementById('strat-val-btn').style.background = 'transparent';
-    document.getElementById('strat-val-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-val-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-macd-btn').style.background = 'transparent';
-    document.getElementById('strat-macd-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-macd-btn').style.color = '#8f9cae';
-
-    document.getElementById('strat-div-btn').style.background = 'transparent';
-    document.getElementById('strat-div-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-div-btn').style.color = '#8f9cae';
-
-    document.getElementById('strat-s9-btn').style.background = 'transparent';
-    document.getElementById('strat-s9-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s9-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-s11-btn').style.background = 'transparent';
-    document.getElementById('strat-s11-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s11-btn').style.color = '#8f9cae';
-    
     document.getElementById('macd-ticker-container').style.display = 'none';
     document.getElementById('val-variant-container').style.display = 'none';
     
@@ -584,32 +518,10 @@ document.getElementById('strat-s10-btn').addEventListener('click', () => {
 document.getElementById('strat-s11-btn').addEventListener('click', () => {
     if (currentStrategy === 'strategy11') return;
     currentStrategy = 'strategy11';
-    
-    // UI states
+    clearAllStratButtons();
     document.getElementById('strat-s11-btn').style.background = 'rgba(236, 72, 153, 0.2)';
     document.getElementById('strat-s11-btn').style.borderColor = '#ec4899';
     document.getElementById('strat-s11-btn').style.color = 'white';
-    
-    document.getElementById('strat-val-btn').style.background = 'transparent';
-    document.getElementById('strat-val-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-val-btn').style.color = '#8f9cae';
-    
-    document.getElementById('strat-macd-btn').style.background = 'transparent';
-    document.getElementById('strat-macd-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-macd-btn').style.color = '#8f9cae';
-
-    document.getElementById('strat-div-btn').style.background = 'transparent';
-    document.getElementById('strat-div-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-div-btn').style.color = '#8f9cae';
-
-    document.getElementById('strat-s9-btn').style.background = 'transparent';
-    document.getElementById('strat-s9-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s9-btn').style.color = '#8f9cae';
-
-    document.getElementById('strat-s10-btn').style.background = 'transparent';
-    document.getElementById('strat-s10-btn').style.borderColor = 'transparent';
-    document.getElementById('strat-s10-btn').style.color = '#8f9cae';
-    
     document.getElementById('macd-ticker-container').style.display = 'none';
     document.getElementById('val-variant-container').style.display = 'none';
     
@@ -618,6 +530,82 @@ document.getElementById('strat-s11-btn').addEventListener('click', () => {
     document.getElementById('label-cash-ret').textContent = 'Bondia Cash Yield (9.5%):';
     document.getElementById('label-spy-ret').textContent = 'Cash Benchmark Return:';
     document.getElementById('label-fees-paid').textContent = 'Total Trading Fees Paid:';
+    
+    resetBacktestUI();
+});
+
+document.getElementById('strat-s12-btn').addEventListener('click', () => {
+    if (currentStrategy === 'strategy12') return;
+    currentStrategy = 'strategy12';
+    clearAllStratButtons();
+    document.getElementById('strat-s12-btn').style.background = 'rgba(14, 165, 233, 0.2)';
+    document.getElementById('strat-s12-btn').style.borderColor = '#0ea5e9';
+    document.getElementById('strat-s12-btn').style.color = 'white';
+    document.getElementById('macd-ticker-container').style.display = 'none';
+    document.getElementById('val-variant-container').style.display = 'none';
+    
+    // Update labels
+    document.getElementById('label-strat-ret').textContent = 'VTTL Trend Return:';
+    document.getElementById('label-cash-ret').textContent = 'Bondia Cash Yield (6.53%):';
+    document.getElementById('label-spy-ret').textContent = 'QQQ B&H MXN Return:';
+    document.getElementById('label-fees-paid').textContent = 'Est. Annual Turnover:';
+    
+    resetBacktestUI();
+});
+
+document.getElementById('strat-s13-btn').addEventListener('click', () => {
+    if (currentStrategy === 'strategy13') return;
+    currentStrategy = 'strategy13';
+    clearAllStratButtons();
+    document.getElementById('strat-s13-btn').style.background = 'rgba(16, 185, 129, 0.2)';
+    document.getElementById('strat-s13-btn').style.borderColor = '#10b981';
+    document.getElementById('strat-s13-btn').style.color = 'white';
+    document.getElementById('macd-ticker-container').style.display = 'none';
+    document.getElementById('val-variant-container').style.display = 'none';
+    
+    // Update labels
+    document.getElementById('label-strat-ret').textContent = 'CARA Score Return:';
+    document.getElementById('label-cash-ret').textContent = 'Bondia Cash Yield (6.53%):';
+    document.getElementById('label-spy-ret').textContent = 'QQQ B&H MXN Return:';
+    document.getElementById('label-fees-paid').textContent = 'Est. Annual Turnover:';
+    
+    resetBacktestUI();
+});
+
+document.getElementById('strat-s14-btn').addEventListener('click', () => {
+    if (currentStrategy === 'strategy14') return;
+    currentStrategy = 'strategy14';
+    clearAllStratButtons();
+    document.getElementById('strat-s14-btn').style.background = 'rgba(245, 158, 11, 0.2)';
+    document.getElementById('strat-s14-btn').style.borderColor = '#f59e0b';
+    document.getElementById('strat-s14-btn').style.color = 'white';
+    document.getElementById('macd-ticker-container').style.display = 'none';
+    document.getElementById('val-variant-container').style.display = 'none';
+    
+    // Update labels
+    document.getElementById('label-strat-ret').textContent = 'HEDGE Agg. Return:';
+    document.getElementById('label-cash-ret').textContent = 'Bondia Cash Yield (6.53%):';
+    document.getElementById('label-spy-ret').textContent = 'QQQ B&H MXN Return:';
+    document.getElementById('label-fees-paid').textContent = 'Est. Annual Turnover:';
+    
+    resetBacktestUI();
+});
+
+document.getElementById('strat-s15-btn').addEventListener('click', () => {
+    if (currentStrategy === 'strategy15') return;
+    currentStrategy = 'strategy15';
+    clearAllStratButtons();
+    document.getElementById('strat-s15-btn').style.background = 'rgba(239, 68, 68, 0.2)';
+    document.getElementById('strat-s15-btn').style.borderColor = '#ef4444';
+    document.getElementById('strat-s15-btn').style.color = 'white';
+    document.getElementById('macd-ticker-container').style.display = 'none';
+    document.getElementById('val-variant-container').style.display = 'none';
+    
+    // Update labels
+    document.getElementById('label-strat-ret').textContent = 'TRACK Tracker Return:';
+    document.getElementById('label-cash-ret').textContent = 'Bondia Cash Yield (6.53%):';
+    document.getElementById('label-spy-ret').textContent = 'QQQ B&H MXN Return:';
+    document.getElementById('label-fees-paid').textContent = 'Est. Annual Turnover:';
     
     resetBacktestUI();
 });
@@ -681,6 +669,22 @@ document.getElementById('backtest-btn').addEventListener('click', async () => {
             response = await fetch('/api/backtest-strategy11', {
                 method: 'POST'
             });
+        } else if (currentStrategy === 'strategy12') {
+            response = await fetch('/api/backtest-strategy12', {
+                method: 'POST'
+            });
+        } else if (currentStrategy === 'strategy13') {
+            response = await fetch('/api/backtest-strategy13', {
+                method: 'POST'
+            });
+        } else if (currentStrategy === 'strategy14') {
+            response = await fetch('/api/backtest-strategy14', {
+                method: 'POST'
+            });
+        } else if (currentStrategy === 'strategy15') {
+            response = await fetch('/api/backtest-strategy15', {
+                method: 'POST'
+            });
         } else {
             const ticker = document.getElementById('macd-ticker').value;
             response = await fetch('/api/backtest_macd', {
@@ -708,8 +712,17 @@ document.getElementById('backtest-btn').addEventListener('click', async () => {
         
         const isMACD = currentStrategy === 'macd_trend';
         const isDividend = currentStrategy === 'dividend_quality';
+        const isS12 = currentStrategy === 'strategy12';
+        const isS13 = currentStrategy === 'strategy13';
+        const isS14 = currentStrategy === 'strategy14';
+        const isS15 = currentStrategy === 'strategy15';
         const feeCurrency = isMACD ? 'USD' : 'MXN';
-        document.getElementById('bt-fees').textContent = `$${formatCurrency(metrics.total_fees || metrics.fees)} ${feeCurrency}`;
+        
+        if (isS12 || isS13 || isS14 || isS15) {
+            document.getElementById('bt-fees').textContent = `${(metrics.n_trades || 0)} trades`;
+        } else {
+            document.getElementById('bt-fees').textContent = `$${formatCurrency(metrics.total_fees || metrics.fees || 0.0)} ${feeCurrency}`;
+        }
         
         // Render Chart
         renderBacktestChart(data.dates, data.strategy, data.cash, data.benchmark);

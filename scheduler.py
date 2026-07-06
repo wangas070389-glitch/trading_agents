@@ -35,8 +35,13 @@ STRATEGY_SCRIPTS = [
     "run_live_strategy9.py",
     "run_live_strategy10.py",
     "run_live_strategy11.py",
+    "run_live_strategy12.py",
+    "run_live_strategy13.py",
+    "run_live_strategy14.py",
+    "run_live_strategy15.py",
     "run_live_multi_strategy.py",
-    "compare_strategies.py"
+    "compare_strategies.py",
+    "watchdog.py"
 ]
 
 def run_script(script_name):

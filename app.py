@@ -199,6 +199,78 @@ class DashboardAPIHandler(SimpleHTTPRequestHandler):
                 self.send_error(500, f"Error reading Strategy 11 portfolio: {str(e)}")
             return
 
+        # 1k. API: GET /api/portfolio_strategy12
+        if self.path == '/api/portfolio_strategy12':
+            portfolio_file = os.path.join(dir_path, 'portfolio_strategy12.json')
+            if not os.path.exists(portfolio_file):
+                self.send_error(404, "portfolio_strategy12.json not found")
+                return
+            
+            try:
+                with open(portfolio_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(data).encode('utf-8'))
+            except Exception as e:
+                self.send_error(500, f"Error reading Strategy 12 portfolio: {str(e)}")
+            return
+
+        # 1l. API: GET /api/portfolio_strategy13
+        if self.path == '/api/portfolio_strategy13':
+            portfolio_file = os.path.join(dir_path, 'portfolio_strategy13.json')
+            if not os.path.exists(portfolio_file):
+                self.send_error(404, "portfolio_strategy13.json not found")
+                return
+            
+            try:
+                with open(portfolio_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(data).encode('utf-8'))
+            except Exception as e:
+                self.send_error(500, f"Error reading Strategy 13 portfolio: {str(e)}")
+            return
+
+        # 1m. API: GET /api/portfolio_strategy14
+        if self.path == '/api/portfolio_strategy14':
+            portfolio_file = os.path.join(dir_path, 'portfolio_strategy14.json')
+            if not os.path.exists(portfolio_file):
+                self.send_error(404, "portfolio_strategy14.json not found")
+                return
+            
+            try:
+                with open(portfolio_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(data).encode('utf-8'))
+            except Exception as e:
+                self.send_error(500, f"Error reading Strategy 14 portfolio: {str(e)}")
+            return
+
+        # 1n. API: GET /api/portfolio_strategy15
+        if self.path == '/api/portfolio_strategy15':
+            portfolio_file = os.path.join(dir_path, 'portfolio_strategy15.json')
+            if not os.path.exists(portfolio_file):
+                self.send_error(404, "portfolio_strategy15.json not found")
+                return
+            
+            try:
+                with open(portfolio_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(data).encode('utf-8'))
+            except Exception as e:
+                self.send_error(500, f"Error reading Strategy 15 portfolio: {str(e)}")
+            return
+
         # 2. Static File MIME Correction (prevents Windows registry content-type issues)
         clean_path = self.path.split('?')[0].lstrip('/')
         if not clean_path or clean_path == "":
@@ -434,6 +506,90 @@ class DashboardAPIHandler(SimpleHTTPRequestHandler):
             try:
                 from backtest_strategy11 import run_strategy11_backtest_for_api
                 results = run_strategy11_backtest_for_api()
+                
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(results).encode('utf-8'))
+            except Exception as e:
+                response = {
+                    "status": "error",
+                    "message": str(e)
+                }
+                self.send_response(500)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(response).encode('utf-8'))
+            return
+
+        # API: POST /api/backtest-strategy12
+        if self.path == '/api/backtest-strategy12':
+            try:
+                from backtest_strategy12 import run_strategy12_backtest_for_api
+                results = run_strategy12_backtest_for_api()
+                
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(results).encode('utf-8'))
+            except Exception as e:
+                response = {
+                    "status": "error",
+                    "message": str(e)
+                }
+                self.send_response(500)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(response).encode('utf-8'))
+            return
+
+        # API: POST /api/backtest-strategy13
+        if self.path == '/api/backtest-strategy13':
+            try:
+                from backtest_strategy13 import run_strategy13_backtest_for_api
+                results = run_strategy13_backtest_for_api()
+                
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(results).encode('utf-8'))
+            except Exception as e:
+                response = {
+                    "status": "error",
+                    "message": str(e)
+                }
+                self.send_response(500)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(response).encode('utf-8'))
+            return
+
+        # API: POST /api/backtest-strategy14
+        if self.path == '/api/backtest-strategy14':
+            try:
+                from backtest_strategy14 import run_strategy14_backtest_for_api
+                results = run_strategy14_backtest_for_api()
+                
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(results).encode('utf-8'))
+            except Exception as e:
+                response = {
+                    "status": "error",
+                    "message": str(e)
+                }
+                self.send_response(500)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                self.wfile.write(json.dumps(response).encode('utf-8'))
+            return
+
+        # API: POST /api/backtest-strategy15
+        if self.path == '/api/backtest-strategy15':
+            try:
+                from backtest_strategy15 import run_strategy15_backtest_for_api
+                results = run_strategy15_backtest_for_api()
                 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
