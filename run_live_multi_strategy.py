@@ -114,8 +114,8 @@ def main():
     s11_nav_mxn, s11_cash_mxn, _ = get_nav(s11_data)
     s12_nav_mxn, s12_cash_mxn, _ = get_nav(s12_data)
     s13_nav_mxn, s13_cash_mxn, s13_cash_usd = get_nav(s13_data)
-    s14_nav_mxn, s14_cash_mxn, _ = get_nav(s14_data)
-    s15_nav_mxn, s15_cash_mxn, _ = get_nav(s15_data)
+    s14_nav_mxn, s14_cash_mxn, s14_cash_usd = get_nav(s14_data)
+    s15_nav_mxn, s15_cash_mxn, s15_cash_usd = get_nav(s15_data)
 
     # Convert MXN assets to USD
     s1_nav_usd, s1_cash_usd = s1_nav_mxn / usd_mxn_rate, s1_cash_mxn / usd_mxn_rate
@@ -125,8 +125,8 @@ def main():
     s11_nav_usd, s11_cash_usd = s11_nav_mxn / usd_mxn_rate, s11_cash_mxn / usd_mxn_rate
     s12_nav_usd, s12_cash_usd = s12_nav_mxn / usd_mxn_rate, s12_cash_mxn / usd_mxn_rate
     s13_nav_usd, s13_cash_usd = s13_nav_mxn / usd_mxn_rate, (s13_cash_mxn / usd_mxn_rate + s13_cash_usd)
-    s14_nav_usd, s14_cash_usd = s14_nav_mxn / usd_mxn_rate, s14_cash_mxn / usd_mxn_rate
-    s15_nav_usd, s15_cash_usd = s15_nav_mxn / usd_mxn_rate, s15_cash_mxn / usd_mxn_rate
+    s14_nav_usd, s14_cash_usd = s14_nav_mxn / usd_mxn_rate + s14_cash_usd, (s14_cash_mxn / usd_mxn_rate + s14_cash_usd)
+    s15_nav_usd, s15_cash_usd = s15_nav_mxn / usd_mxn_rate + s15_cash_usd, (s15_cash_mxn / usd_mxn_rate + s15_cash_usd)
 
     # Consolidated NAV
     total_nav_usd = (s1_nav_usd + s4_nav_usd + s5_nav_usd + s6_nav_usd + s8_nav_usd + s9_nav_usd + 

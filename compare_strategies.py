@@ -260,7 +260,9 @@ def main():
     s14_market_val = s14_cash = s14_invested = 0.0
     if port_strategy14:
         s14_total_cap = port_strategy14.get("total_capital", 200000.0)
-        s14_cash = port_strategy14.get("cash_balance", 200000.0)
+        s14_cash_mxn = port_strategy14.get("cash_balance_mxn", 200000.0)
+        s14_cash_usd = port_strategy14.get("cash_balance_usd", 0.0)
+        s14_cash = s14_cash_mxn + s14_cash_usd * usd_mxn_rate
         s14_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy14.get("holdings", []))
         s14_market_val = s14_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_strategy14.get("holdings", []))
         s14_profit = s14_market_val - s14_total_cap
@@ -275,7 +277,9 @@ def main():
     s15_market_val = s15_cash = s15_invested = 0.0
     if port_strategy15:
         s15_total_cap = port_strategy15.get("total_capital", 200000.0)
-        s15_cash = port_strategy15.get("cash_balance", 200000.0)
+        s15_cash_mxn = port_strategy15.get("cash_balance_mxn", 200000.0)
+        s15_cash_usd = port_strategy15.get("cash_balance_usd", 0.0)
+        s15_cash = s15_cash_mxn + s15_cash_usd * usd_mxn_rate
         s15_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy15.get("holdings", []))
         s15_market_val = s15_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_strategy15.get("holdings", []))
         s15_profit = s15_market_val - s15_total_cap

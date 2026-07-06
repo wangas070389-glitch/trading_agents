@@ -3,12 +3,12 @@
 **Assets Traded:** TQQQ (3x Long QQQ) & SQQQ (3x Short QQQ) based on QQQ indicators.
 
 ## 1. Upgraded Performance Summary
-* **Final Portfolio NAV**: $212,933.11 MXN
-* **Total Return**: 6.47%
-* **Time-Weighted CAGR**: **30.90%**
-* **Annualized Volatility**: 10.66%
-* **Sharpe Ratio**: **2.01**
-* **Maximum Drawdown**: **-4.95%**
+* **Final Portfolio NAV**: $211,948.91 MXN
+* **Total Return**: 5.97%
+* **Time-Weighted CAGR**: **28.32%**
+* **Annualized Volatility**: 11.90%
+* **Sharpe Ratio**: **1.58**
+* **Maximum Drawdown**: **-6.08%**
 
 ## 2. Updated Settings
 * **Conditional Overnight Holds:** ACTIVE (Evaluates day-end trend strength)
@@ -19,23 +19,23 @@
 ## 3. Transaction Summary (Last 20 Closed Trades)
 | Date | Time | Action | Settle Price | Trade P/L (MXN) |
 | :--- | :---: | :---: | ---: | ---: |
-| 2026-04-16 | 14:00 | SETTLE_LONG_VWAP | $55.59 | +$2,842.36 |
-| 2026-04-30 | 19:30 | EXIT_SHORT_EOD_CLOSE | $51.67 | $-791.91 |
-| 2026-05-06 | 19:30 | EXIT_SHORT_EOD_CLOSE | $45.60 | $-1,678.32 |
-| 2026-05-07 | 15:30 | EXIT_LONG_TRAILING_STOP | $72.11 | $-2,686.66 |
-| 2026-05-12 | 15:30 | EXIT_LONG_EOD_CLOSE | $72.33 | $-677.51 |
-| 2026-05-12 | 18:00 | SETTLE_LONG_VWAP | $73.52 | +$2,990.89 |
-| 2026-05-14 | 14:00 | SETTLE_LONG_VWAP | $78.44 | +$3,494.88 |
-| 2026-05-18 | 15:30 | EXIT_LONG_EOD_CLOSE | $73.50 | +$717.78 |
-| 2026-05-18 | 19:30 | EXIT_LONG_EOD_CLOSE | $74.28 | +$4,403.32 |
-| 2026-05-21 | 19:30 | EXIT_LONG_EOD_CLOSE | $76.93 | $-981.26 |
-| 2026-05-29 | 13:30 | SETTLE_LONG_VWAP | $85.57 | +$4,939.69 |
-| 2026-06-01 | 19:30 | EXIT_LONG_EOD_CLOSE | $86.05 | $-249.78 |
-| 2026-06-04 | 19:30 | EXIT_SHORT_EOD_CLOSE | $37.78 | +$674.80 |
-| 2026-06-12 | 14:00 | SETTLE_LONG_VWAP | $76.46 | +$1,863.91 |
-| 2026-06-16 | 15:30 | EXIT_LONG_EOD_CLOSE | $81.33 | $-2,603.55 |
-| 2026-06-16 | 19:30 | EXIT_LONG_EOD_CLOSE | $79.92 | $-3,128.10 |
-| 2026-06-29 | 19:30 | EXIT_SHORT_EOD_CLOSE | $38.18 | $-852.98 |
-| 2026-06-30 | 19:30 | EXIT_LONG_EOD_CLOSE | $80.96 | $-11.84 |
-| 2026-07-02 | 15:30 | EXIT_LONG_EOD_CLOSE | $74.32 | $-12.92 |
-| 2026-07-02 | 19:30 | EXIT_LONG_EOD_CLOSE | $73.34 | $-261.28 |
+| 2026-04-14 | 15:30 | EXIT_SHORT_EOD_CLOSE | $62.03 | $-1,719.57 |
+| 2026-04-16 | 10:00 | SETTLE_LONG_VWAP | $55.59 | +$3,337.77 |
+| 2026-04-16 | 14:00 | SETTLE_SHORT_VWAP | $59.40 | +$3,522.74 |
+| 2026-04-30 | 15:30 | EXIT_SHORT_EOD_CLOSE | $51.67 | $-806.88 |
+| 2026-05-06 | 15:30 | EXIT_SHORT_EOD_CLOSE | $45.60 | $-1,710.04 |
+| 2026-05-07 | 11:30 | EXIT_LONG_TRAILING_STOP | $72.11 | $-2,737.44 |
+| 2026-05-12 | 14:00 | SETTLE_LONG_VWAP | $73.52 | +$2,339.34 |
+| 2026-05-14 | 10:00 | SETTLE_LONG_VWAP | $78.44 | +$3,560.63 |
+| 2026-05-18 | 15:30 | EXIT_LONG_EOD_CLOSE | $74.28 | +$2,763.66 |
+| 2026-05-21 | 15:30 | EXIT_LONG_EOD_CLOSE | $76.93 | $-988.44 |
+| 2026-05-29 | 09:30 | SETTLE_LONG_VWAP | $85.57 | +$4,975.82 |
+| 2026-06-01 | 15:30 | EXIT_LONG_EOD_CLOSE | $86.05 | $-251.61 |
+| 2026-06-04 | 15:30 | EXIT_SHORT_EOD_CLOSE | $37.78 | +$679.74 |
+| 2026-06-12 | 10:00 | SETTLE_LONG_VWAP | $76.46 | +$1,877.54 |
+| 2026-06-16 | 14:30 | EXIT_LONG_TRAILING_STOP | $81.06 | $-3,287.31 |
+| 2026-06-16 | 15:30 | EXIT_LONG_EOD_CLOSE | $79.92 | $-2,748.06 |
+| 2026-06-29 | 15:30 | EXIT_SHORT_EOD_CLOSE | $38.18 | $-858.18 |
+| 2026-06-30 | 15:30 | EXIT_LONG_EOD_CLOSE | $80.96 | $-11.92 |
+| 2026-07-02 | 13:30 | EXIT_LONG_TRAILING_STOP | $71.78 | $-6,623.05 |
+| 2026-07-02 | 15:30 | EXIT_LONG_EOD_CLOSE | $73.34 | +$4,066.13 |
