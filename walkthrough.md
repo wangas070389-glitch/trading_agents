@@ -356,18 +356,55 @@ We have implemented two options for automated scheduling: a **GitHub Actions Wor
 
 ### B. Execution Sequence
 Both schedulers execute the entire strategy pipeline sequentially in the following order:
-1. `monitor_portfolio.py`: Accrues overnight cash yield (Bondia interest) and pulls live prices for Strategy 1.
+1. `monitor_portfolio.py`: Accrues overnight cash yield (Bondia interest) and pulls live BMV prices.
 2. `run_live_alpha_growth.py`: Runs Strategy 1 (MXN Dynamic Value / DCF Alpha-Momentum).
-3. `ingest_live_macd.py`: Runs the Live MACD Strategy Ingestion.
-4. `run_live_alpaca_us_stocks.py`: Runs Strategy 6 (US Stock Momentum Reference).
+3. `ingest_live_macd.py`: Runs the Live MACD Strategy Ingestion (Strategy 2).
+4. `run_live_alpaca_us_stocks.py`: Runs Strategy 3 (US Stock Momentum Reference).
 5. `run_live_alpaca_us_stocks_dcf.py`: Runs Strategy 4 (US DCS Value-Growth).
 6. `run_live_alternatives.py`: Runs Strategy 5 (Alternative Assets).
 7. `run_live_high_beta.py`: Runs Strategy 6 (US High-Beta Momentum).
 8. `run_live_dividends.py`: Runs Strategy 8 (Dividend Quality & Yield).
-9. `run_live_multi_strategy.py`: Consolidates all strategy reports/states into a multi-strategy JSON and updates the live report.
-10. `compare_strategies.py`: Compiles performance comparison logs.
+9. `run_live_strategy9.py`: Runs Strategy 9 (AI-Regime Adaptive Stat-Arb).
+10. `run_live_strategy10.py`: Runs Strategy 10 (AI Intraday VWAP).
+11. `run_live_strategy11.py`: Runs Strategy 11 (AI Intraday CCI-ADX Twin).
+12. `run_live_strategy12.py`: Runs Strategy 12 (VTTL Vol-Targeted Trend Carry).
+13. `run_live_strategy13.py`: Runs Strategy 13 (CARA Cross-Asset Risk Appetite).
+14. `run_live_strategy14.py`: Runs Strategy 14 (HEDGE Multiplicative Weights Expert Aggregator).
+15. `run_live_strategy15.py`: Runs Strategy 15 (TRACK Fixed-Share Expert Tracker).
+16. `run_live_multi_strategy.py`: Consolidates all strategy NAVs, allocations, and targets under Strategy 7 (Risk Parity Core).
+17. `compare_strategies.py`: Compiles performance comparison logs, charts, and table summaries.
+18. `watchdog.py`: Audits post-run outputs (fails build with Exit Code 1 on NAV jumps, negative values, zero-trades, or staleness >30h).
 
 ### C. Logging & Verification
-* **GitHub Actions**: Runs automatically on GitHub, commits files back to the repository on change with the run time (e.g. `Auto-update: Multi-strategy concentrated paper trading [2026-07-02 04:41:15 UTC]`), and displays logs in the Actions tab.
+* **GitHub Actions**: Runs automatically on GitHub via [.github/workflows/monitor.yml](file:///.github/workflows/monitor.yml), commits files back to the repository on change with the run time, and displays logs in the Actions tab.
 * **Local Logging**: Logs core scheduler state to `scheduler.log` and individual script stdout/stderr to timestamped files under `scheduler_logs/`.
-* **Local Dry Run**: Run `python scheduler.py --test` to verify all scripts execute successfully on your local machine.
+* **Local Verification**: Verified by running `python scheduler.py --test` locally, completing all 18 sequential scripts successfully with 0 failures and exit code 0.
+
+---
+
+## 5. Integration of Advanced Strategies 12, 13, 14, and 15
+
+We migrated 13 new strategy files from `updates_in_trading_system` into the parent workspace and integrated them into the system:
+
+### A. Core Strategy Logic
+* **Strategy 12 (VTTL)**: Volatility-targeted trend-following using `TQQQ` leverage and daily yield tracking.
+* **Strategy 13 (CARA)**: Cross-asset risk appetite metric allocating between `TQQQ` (risk-on) and treasury bonds (risk-off) depending on credit spreads and stock indicators.
+* **Strategy 14 (HEDGE)**: Online expert mixture aggregator using a Multiplicative Weights Update (MWU) method. Weights five underlying strategy experts (TSMOM, QQQ B&H, VTTL, CARA, Cash) dynamically based on performance to minimize regret.
+* **Strategy 15 (TRACK)**: Fixed-share expert tracking adding a dynamic shift factor to the MWU weight updates, optimizing for time-varying benchmark sequences.
+
+### B. API and Dashboard UI Integration
+* **Server Routes** (`app.py`):
+  - Registered GET portfolio telemetry routes for each new strategy.
+  - Registered POST endpoints to trigger simulations dynamically.
+* **Dashboard Front-end** (`index.html`, `index.js`):
+  - Added new navigation tabs for Strategies 12-15.
+  - Refactored toggle styling to use a clean centralized `clearAllStratButtons()` helper.
+  - Wired backtest triggers to plot historical equity curves and print simulation metrics.
+
+### C. Watchdog Auditor (`watchdog.py`)
+Runs at the end of the sequence to verify data integrity:
+- Checks if file updates are stale (>30 hours).
+- Checks if any strategy has zero active trades after its grace period.
+- Detects NAV anomalies (sudden jumps or drops) and negative balances.
+- Exits with **Exit Code 1** on CRITICAL errors to abort/fail CI workflows.
+Our verification run yielded **0 Critical Errors** (watchdog passed cleanly).
