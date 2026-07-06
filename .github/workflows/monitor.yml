@@ -109,7 +109,11 @@ jobs:
     - name: Compare Strategy Performances
       run: python compare_strategies.py
 
-    # 5i. Run Watchdog Auditor
+    # 5i. Run Evidence-Quality Report Generator
+    - name: Generate Clean Performance Report
+      run: python generate_clean_report.py
+
+    # 5j. Run Watchdog Auditor
     - name: Run Watchdog Audit
       run: python watchdog.py
 
