@@ -1,12 +1,12 @@
 {
   "total_capital": 20000.0,
-  "cash_balance": 12468.98,
+  "cash_balance": 12469.04,
   "holdings": [
     {
       "ticker": "GAPB.MX",
       "shares": 4,
       "buy_price": 436.68,
-      "last_price": 421.5,
+      "last_price": 421.8500061035156,
       "target_weight": 0.07142857142857142,
       "hmm_state": 0
     },
@@ -14,7 +14,7 @@
       "ticker": "FEMSAUBD.MX",
       "shares": 8,
       "buy_price": 223.5,
-      "last_price": 226.30999755859375,
+      "last_price": 225.8300018310547,
       "target_weight": 0.08333333333333333,
       "hmm_state": 0
     },
@@ -22,10 +22,10 @@
       "ticker": "GFNORTEO.MX",
       "shares": 20,
       "buy_price": 187.13,
-      "last_price": 186.75,
+      "last_price": 187.47000122070312,
       "target_weight": 0.19,
       "hmm_state": 1
     }
   ],
-  "last_updated": "2026-07-07 16:16:24"
+  "last_updated": "2026-07-07 16:57:25"
 }
