@@ -22,6 +22,7 @@ let parsedTransactions = [];
 
 let navChartInstance = null;
 let allocChartInstance = null;
+let txNavChartInstance = null;
 
 document.addEventListener("DOMContentLoaded", () => {
     initializeNavigation();
@@ -87,7 +88,7 @@ function checkHaltStatus() {
         });
 }
 
-// Fetch all files on startup
+// Load and aggregate data
 async function loadDashboardData() {
     const promises = Object.keys(STRATEGY_METADATA).map(async (key) => {
         const metadata = STRATEGY_METADATA[key];
@@ -126,7 +127,6 @@ function updateUIForSelectedStrategy(selected) {
     let navMxn = 0;
     let cashMxn = 0;
     let investedMxn = 0;
-    let twr = "15.63%"; // Combined Core target
     
     const combinedPositions = [];
     const allocationClasses = {
@@ -151,7 +151,7 @@ function updateUIForSelectedStrategy(selected) {
         kpiInvestedLabel.textContent = "Capital Invertido";
         kpiTwrLabel.textContent = "Retorno Compuesto (TWR)";
         document.getElementById("metric-twr").textContent = "+15.63%";
-        document.getElementById("metric-twr-sub").textContent = "Ponderación balanceada S7";
+        document.getElementById("metric-twr-sub").textContent = "Ponderación S7";
         strategiesGrid.parentNode.style.display = "block"; // Show detail grid
     } else {
         const meta = STRATEGY_METADATA[selected];
@@ -244,12 +244,10 @@ function updateUIForSelectedStrategy(selected) {
         });
     }
 
-    // Refresh general cards grid (only if ALL is active)
     if (selected === "ALL") {
         renderStrategiesGrid();
     }
 
-    // Update charts
     renderAllocationChart(allocationClasses);
     renderNAVChart(selected);
 }
@@ -371,7 +369,6 @@ function renderNAVChart(selected) {
 
     const chartTitle = document.getElementById("chart-nav-title");
     
-    // We calculate dates and datasets
     if (selected === "ALL") {
         chartTitle.textContent = "Evolución del NAV Consolidado General (MXN)";
         const dateNavs = {};
@@ -404,10 +401,9 @@ function renderNAVChart(selected) {
                     pointRadius: 2
                 }]
             },
-            options: getChartOptions()
+            options: getChartOptions(selected)
         });
     } else {
-        // Individual Strategy 1:1 view compared to S14 (HEDGE)
         chartTitle.textContent = `Evolución del NAV de ${selected} vs. S14 (HEDGE)`;
         const mapKeyMap = {
             "S1": "portfolio",
@@ -429,7 +425,6 @@ function renderNAVChart(selected) {
         const selectedPoints = cachedHistory[mappedKey] || [];
         const hedgePoints = cachedHistory["strategy14"] || [];
 
-        // Build mapping
         const dateNavSelected = {};
         selectedPoints.forEach(pt => {
             const date = pt.ts.split(" ")[0];
@@ -458,7 +453,7 @@ function renderNAVChart(selected) {
                     {
                         label: `${selected} NAV (${currency})`,
                         data: selectedValues,
-                        borderColor: '#0ea5e9', // Blue
+                        borderColor: '#0ea5e9',
                         borderWidth: 2,
                         fill: false,
                         tension: 0.35,
@@ -467,7 +462,7 @@ function renderNAVChart(selected) {
                     {
                         label: `S14: HEDGE (MXN)`,
                         data: hedgeValues,
-                        borderColor: '#64748b', // Slate
+                        borderColor: '#64748b',
                         borderWidth: 1.5,
                         borderDash: [5, 5],
                         fill: false,
@@ -476,12 +471,13 @@ function renderNAVChart(selected) {
                     }
                 ]
             },
-            options: getChartOptions()
+            options: getChartOptions(selected)
         });
     }
 }
 
-function getChartOptions() {
+function getChartOptions(selected) {
+    const currency = selected === "ALL" ? "MXN" : STRATEGY_METADATA[selected].currency;
     return {
         responsive: true,
         maintainAspectRatio: false,
@@ -503,7 +499,7 @@ function getChartOptions() {
                     color: '#64748b', 
                     font: { family: 'Outfit', size: 10 },
                     callback: function(value) {
-                        return value >= 1000 ? '$' + (value/1000).toFixed(0) + 'k' : '$' + value;
+                        return value >= 1000 ? '$' + (value/1000).toFixed(0) + 'k ' + currency : '$' + value + ' ' + currency;
                     }
                 }
             }
@@ -527,12 +523,10 @@ async function loadTransactionsData() {
             if (!res.ok) return;
             const text = await res.text();
             
-            // Parse Markdown Table
             const lines = text.split("\n");
             lines.forEach(line => {
                 if (line.trim().startsWith("|") && !line.includes("Action") && !line.includes("---")) {
                     const cols = line.split("|").map(col => col.trim());
-                    // Cols indices: 0 = empty, 1 = Date, 2 = Ticker, 3 = Action, 4 = Shares, 5 = Price, 6 = Net Impact, 7 = Order Type, 8 = Status, 9 = Note, 10 = empty
                     if (cols.length >= 10 && cols[1] && cols[1] !== "") {
                         parsedTransactions.push({
                             date: cols[1],
@@ -556,11 +550,11 @@ async function loadTransactionsData() {
 
     await Promise.all(promises);
 
-    // Sort transactions by date descending
     parsedTransactions.sort((a, b) => b.date.localeCompare(a.date));
 
-    // Render Table
+    // Render Table and Interactive Execution Point Chart
     renderTransactionsTable(parsedTransactions);
+    renderTxNavChart(selected);
 }
 
 function renderTransactionsTable(txs) {
@@ -609,4 +603,156 @@ function filterTransactionsTable(query) {
     });
 
     renderTransactionsTable(filtered);
+}
+
+// Render the new trades execution-point NAV chart in the transactions view
+function renderTxNavChart(selected) {
+    if (!cachedHistory) return;
+    const ctx = document.getElementById("txNavChart").getContext("2d");
+    if (txNavChartInstance) txNavChartInstance.destroy();
+
+    const txChartTitle = document.getElementById("tx-chart-title");
+    
+    // Group transactions by date for point annotations
+    const dateTxs = {};
+    parsedTransactions.forEach(tx => {
+        const date = tx.date;
+        if (!dateTxs[date]) dateTxs[date] = [];
+        dateTxs[date].push(tx);
+    });
+
+    let labels = [];
+    let navValues = [];
+    const currency = selected === "ALL" ? "MXN" : STRATEGY_METADATA[selected].currency;
+
+    if (selected === "ALL") {
+        txChartTitle.textContent = "Historial Consolidado: NAV General y Puntos de Ejecución (Trades)";
+        const dateNavs = {};
+        Object.keys(cachedHistory).forEach(stratKey => {
+            const points = cachedHistory[stratKey];
+            const isUsd = ["strategy4", "alternatives", "high_beta", "portfolio_us_dcs", "portfolio_alternatives", "portfolio_high_beta"].includes(stratKey);
+            const rate = isUsd ? FX_RATE : 1.0;
+            points.forEach(pt => {
+                const date = pt.ts.split(" ")[0];
+                if (!dateNavs[date]) dateNavs[date] = 0;
+                dateNavs[date] += pt.nav * rate;
+            });
+        });
+        labels = Object.keys(dateNavs).sort();
+        navValues = labels.map(d => dateNavs[d]);
+    } else {
+        txChartTitle.textContent = `Evolución de ${selected} y Puntos de Ejecución (Trades)`;
+        const mapKeyMap = {
+            "S1": "portfolio",
+            "S2": "macd",
+            "S3": "strategy3",
+            "S4": "portfolio_us_dcs",
+            "S5": "portfolio_alternatives",
+            "S6": "portfolio_high_beta",
+            "S8": "dividends",
+            "S9": "strategy9",
+            "S10": "strategy10",
+            "S11": "strategy11",
+            "S12": "strategy12",
+            "S13": "strategy13",
+            "S14": "strategy14",
+            "S15": "strategy15"
+        };
+        const mappedKey = mapKeyMap[selected] || selected.toLowerCase();
+        const selectedPoints = cachedHistory[mappedKey] || [];
+        labels = selectedPoints.map(pt => pt.ts.split(" ")[0]);
+        navValues = selectedPoints.map(pt => pt.nav);
+    }
+
+    // Map point radius, colors, and styles according to transaction events on that date
+    const pointRadii = [];
+    const pointColors = [];
+    const pointStyles = [];
+
+    labels.forEach((date, idx) => {
+        const dayTxs = dateTxs[date];
+        if (dayTxs && dayTxs.length > 0) {
+            pointRadii.push(7);
+            
+            const hasBuy = dayTxs.some(t => t.action === "BUY");
+            const hasSell = dayTxs.some(t => t.action === "SELL");
+
+            if (hasBuy && hasSell) {
+                pointColors.push('#f59e0b'); // Yellow/Orange mix
+                pointStyles.push('rectRot');
+            } else if (hasBuy) {
+                pointColors.push('#10b981'); // Emerald Green
+                pointStyles.push('triangle');
+            } else if (hasSell) {
+                pointColors.push('#ef4444'); // Rose Red
+                pointStyles.push('rectRot'); // Diamond style
+            } else {
+                pointColors.push('#0ea5e9'); // Sweep yield/dividends (Blue)
+                pointStyles.push('circle');
+            }
+        } else {
+            pointRadii.push(1.5);
+            pointColors.push('rgba(255, 255, 255, 0.2)');
+            pointStyles.push('circle');
+        }
+    });
+
+    txNavChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: `NAV de Cartera (${currency})`,
+                data: navValues,
+                borderColor: '#64748b',
+                borderWidth: 1.5,
+                fill: false,
+                tension: 0.25,
+                pointRadius: pointRadii,
+                pointBackgroundColor: pointColors,
+                pointBorderColor: pointColors,
+                pointStyle: pointStyles,
+                pointHoverRadius: 9
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const index = context.dataIndex;
+                            const date = context.chart.data.labels[index];
+                            const nav = context.raw;
+                            let label = `NAV: $${nav.toLocaleString("es-MX", {minimumFractionDigits: 2})} ${currency}`;
+
+                            if (dateTxs[date]) {
+                                const list = dateTxs[date].map(t => `${t.action} ${t.ticker} (${t.shares} shrs)`).join(' | ');
+                                label += ` [Trades: ${list}]`;
+                            }
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#64748b', font: { family: 'Outfit', size: 10 } }
+                },
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.03)' },
+                    ticks: { 
+                        color: '#64748b', 
+                        font: { family: 'Outfit', size: 10 },
+                        callback: function(value) {
+                            return value >= 1000 ? '$' + (value/1000).toFixed(0) + 'k' : '$' + value;
+                        }
+                    }
+                }
+            }
+        }
+    });
 }

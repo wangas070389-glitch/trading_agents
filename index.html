@@ -148,6 +148,16 @@
 
             <!-- Transactions View -->
             <div id="transactions-view" class="view-panel hidden">
+                <!-- Visual Trades Timeline Chart -->
+                <div class="glass-card" style="margin-bottom: 2rem;">
+                    <div class="section-header">
+                        <h2 id="tx-chart-title">Evolución de NAV y Puntos de Ejecución (Trades)</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="txNavChart"></canvas>
+                    </div>
+                </div>
+
                 <div class="glass-card table-card">
                     <div class="section-header">
                         <h2>Historial de Transacciones (Ledger)</h2>
