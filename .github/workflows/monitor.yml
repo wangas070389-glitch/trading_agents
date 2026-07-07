@@ -56,8 +56,8 @@ jobs:
       run: python ingest_live_macd.py
 
     # 5c. Execute Live US Stock Momentum Strategy Ingestion (Isolated)
-    - name: Run Live US Stock Momentum Strategy
-      run: python run_live_alpaca_us_stocks.py
+    # - name: Run Live US Stock Momentum Strategy
+    #   run: python run_live_alpaca_us_stocks.py
 
     # 5d. Execute Live US Stock DCS Value-Growth Strategy (Isolated)
     - name: Run Live US Stock DCS Value-Growth Strategy
