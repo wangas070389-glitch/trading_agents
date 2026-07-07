@@ -132,25 +132,28 @@ def main():
     trade_logs = []
     
     for date_str, group in grouped:
-        # Fit HMM dynamically on historical daily returns up to yesterday
-        cutoff_date = pd.to_datetime(date_str)
-        train_rets = spy_daily_returns[spy_daily_returns.index < cutoff_date]
-        if len(train_rets) < 100:
+        # Get historical intraday QQQ data prior to the start of today
+        first_bar_time = group.index[0]
+        train_data = merged[merged.index < first_bar_time]
+        if len(train_data) < 130:
             regime = 2
         else:
-            train_vals = train_rets.values.reshape(-1, 1)
-            hmm = GaussianHMM(n_components=3, covariance_type="full", n_iter=100, random_state=42)
-            hmm.fit(train_vals)
-            regimes = hmm.predict(train_vals)
+            log_returns = np.log(train_data["Close_QQQ"] / train_data["Close_QQQ"].shift(1)).fillna(0.0)
+            rolling_vol = log_returns.rolling(window=10).std().fillna(0.0)
+            features = np.column_stack([log_returns.values, rolling_vol.values])
             
-            state_means = [np.mean(train_vals[regimes == i]) for i in range(3)]
-            state_vols = [np.std(train_vals[regimes == i]) for i in range(3)]
+            hmm = GaussianHMM(n_components=3, covariance_type="diag", n_iter=100, random_state=42)
+            hmm.fit(features)
+            regimes = hmm.predict(features)
             
+            state_vols = [np.mean(rolling_vol.values[regimes == i]) for i in range(3)]
             bear_state = np.argmax(state_vols)
+            
             rem = [i for i in range(3) if i != bear_state]
+            state_means = [np.mean(log_returns.values[regimes == i]) for i in range(3)]
             bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
             
-            last_state = regimes[-1] # state at yesterday's close
+            last_state = regimes[-1]
             if last_state == bull_state:
                 regime = 0
             elif last_state == bear_state:

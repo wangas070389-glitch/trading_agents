@@ -149,10 +149,7 @@ def main():
         fx_hist = usdmxn_ticker.history(period="1d")
         fx_rate = float(fx_hist["Close"].iloc[-1]) if not fx_hist.empty else 18.0
         
-        spy_daily = yf.download("SPY", period="2y", interval="1d", progress=False)
-        spy_daily.columns = [c[0] if isinstance(c, tuple) else c for c in spy_daily.columns]
-        
-        qqq_30m = yf.download("QQQ", period="5d", interval="30m", progress=False)
+        qqq_30m = yf.download("QQQ", period="30d", interval="30m", progress=False)
         tqqq_30m = yf.download("TQQQ", period="5d", interval="30m", progress=False)
         sqqq_30m = yf.download("SQQQ", period="5d", interval="30m", progress=False)
         
@@ -188,33 +185,40 @@ def main():
 
     # 4. HMM Regime Prediction
     cutoff_date = datetime.date.today()
-    spy_daily_past = spy_daily[spy_daily.index.date < cutoff_date]
-    spy_returns = spy_daily_past["Close"].ffill().pct_change().dropna().values.reshape(-1, 1)
-    hmm = GaussianHMM(n_components=3, covariance_type="full", n_iter=100, random_state=42)
-    hmm.fit(spy_returns)
-    regimes = hmm.predict(spy_returns)
-    
-    state_means = [np.mean(spy_returns[regimes == i]) for i in range(3)]
-    state_vols = [np.std(spy_returns[regimes == i]) for i in range(3)]
-    
-    bear_state = np.argmax(state_vols)
-    rem = [i for i in range(3) if i != bear_state]
-    bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
-    
-    current_state_raw = regimes[-1]
-    if args.force_regime is not None:
-        regime = args.force_regime
-        regime_reason = "FORCED via execution flag"
+    train_data = qqq_30m[qqq_30m.index.date < cutoff_date]
+    if len(train_data) < 130:
+        regime = 2
+        regime_reason = "Insuficiente data historica; default a Chop"
     else:
-        if current_state_raw == bull_state:
-            regime = 0
-            regime_reason = "Bull trend, low volatility detected on SPY"
-        elif current_state_raw == bear_state:
-            regime = 1
-            regime_reason = "High volatility, downward pressure detected on SPY"
+        log_returns = np.log(train_data["Close"] / train_data["Close"].shift(1)).fillna(0.0)
+        rolling_vol = log_returns.rolling(window=10).std().fillna(0.0)
+        features = np.column_stack([log_returns.values, rolling_vol.values])
+        
+        hmm = GaussianHMM(n_components=3, covariance_type="diag", n_iter=100, random_state=42)
+        hmm.fit(features)
+        regimes = hmm.predict(features)
+        
+        state_vols = [np.mean(rolling_vol.values[regimes == i]) for i in range(3)]
+        bear_state = np.argmax(state_vols)
+        
+        rem = [i for i in range(3) if i != bear_state]
+        state_means = [np.mean(log_returns.values[regimes == i]) for i in range(3)]
+        bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
+        
+        current_state_raw = regimes[-1]
+        if args.force_regime is not None:
+            regime = args.force_regime
+            regime_reason = "FORCED via execution flag"
         else:
-            regime = 2
-            regime_reason = "Range-bound chop, mean-reversion detected on SPY"
+            if current_state_raw == bull_state:
+                regime = 0
+                regime_reason = "Bull trend, low volatility detected on QQQ"
+            elif current_state_raw == bear_state:
+                regime = 1
+                regime_reason = "High volatility, downward pressure detected on QQQ"
+            else:
+                regime = 2
+                regime_reason = "Range-bound chop, mean-reversion detected on QQQ"
             
     print(f"Regime Decoded: State {regime} ({regime_reason})")
 
