@@ -132,6 +132,9 @@ def expert_targets_and_returns(qqq, vix, vix3m, hyg, ief, fx, p):
 
 def main():
     dir_path = os.path.dirname(os.path.abspath(__file__))
+    from halt_gate import halted
+    if halted(dir_path, "strategy14"):
+        return
     now_et = datetime.datetime.now(ZoneInfo("America/New_York"))
     today_str = now_et.strftime("%Y-%m-%d")
     now_local = datetime.datetime.now()

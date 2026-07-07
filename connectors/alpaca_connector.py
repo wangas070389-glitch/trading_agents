@@ -1,4 +1,5 @@
 import os
+import time
 import requests
 
 class AlpacaConnector:
@@ -65,6 +66,35 @@ class AlpacaConnector:
         response = requests.post(url, json=payload, headers=self._get_headers())
         response.raise_for_status()
         return response.json()
+
+
+    def submit_and_confirm(self, ticker: str, qty: float, side: str,
+                           order_type: str = "market", time_in_force: str = "day",
+                           timeout_s: int = 30) -> dict:
+        """Envia una orden y CONFIRMA el fill real via polling. NUNCA lanza:
+        devuelve {"filled": bool, "status", "filled_qty", "filled_avg_price", "id"}.
+        El ledger local SOLO debe mutarse si filled es True."""
+        try:
+            order = self.submit_order(ticker, qty, side, order_type, time_in_force)
+        except Exception as e:
+            return {"filled": False, "status": f"submit_error: {e}",
+                    "filled_qty": 0.0, "filled_avg_price": None, "id": None}
+        order_id = order.get("id")
+        status = order.get("status", "")
+        deadline = time.time() + timeout_s
+        while status not in ("filled", "canceled", "rejected", "expired") and time.time() < deadline:
+            time.sleep(2)
+            try:
+                order = self.get_order(order_id)
+                status = order.get("status", "")
+            except Exception as e:
+                status = f"poll_error: {e}"
+                break
+        filled = status == "filled"
+        return {"filled": filled, "status": status,
+                "filled_qty": float(order.get("filled_qty") or 0.0) if filled else 0.0,
+                "filled_avg_price": float(order.get("filled_avg_price") or 0.0) if filled else None,
+                "id": order_id}
 
     def get_order(self, order_id: str) -> dict:
         """Fetch details of a specific order."""

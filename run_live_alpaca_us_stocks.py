@@ -112,6 +112,9 @@ def update_capital_reconciliation(dir_path, portfolio):
 
 def main():
     dir_path = os.path.dirname(os.path.abspath(__file__))
+    from halt_gate import halted
+    if halted(dir_path, "us_stocks"):
+        return
     today_str = datetime.date.today().strftime("%Y-%m-%d")
     
     print("=" * 80)
@@ -294,18 +297,23 @@ def main():
         
         note = f"Isolated US Stock Momentum strategy: {reason}"
         
+        executed = True
         if alpaca_client:
-            try:
-                print(f"  |-- [Alpaca Order] Submitting {action} order for {shares} shares of {ticker}...")
-                order = alpaca_client.submit_order(ticker=ticker, qty=shares, side=action)
-                order_id = order.get("id")
-                print(f"  +-- [Alpaca Order Created] Order ID: {order_id} | Status: {order.get('status')}")
-                note = f"Alpaca Order {order_id} | {note}"
-            except Exception as e:
-                print(f"  +-- [Alpaca Order FAILED] Error submitting order for {ticker}: {e}. Mock executing.")
-                note = f"Alpaca Failed ({e}) | {note}"
+            print(f"  |-- [Alpaca Order] Submitting {action} order for {shares} shares of {ticker}...")
+            res = alpaca_client.submit_and_confirm(ticker=ticker, qty=shares, side=action)
+            executed = res["filled"]
+            if executed:
+                shares = res["filled_qty"] or shares
+                price = res["filled_avg_price"] or price
+                note = f"Alpaca Order {res['id']} FILLED | {note}"
+                print(f"  +-- [Alpaca FILLED] {shares} @ ${price:.2f}")
+            else:
+                print(f"  +-- [Alpaca NOT FILLED] status={res['status']}. Ledger NO modificado.")
+                log_transaction(dir_path, today_str, ticker, f"{action}-REJECTED", shares, price, f"Alpaca {res['status']} | {note}")
         else:
             print(f"  |-- [Mock Order] {action} {shares} shares of {ticker} @ ${price:.2f} ({reason})")
+        if not executed:
+            continue
             
         # Update capital ledger
         net_impact = shares * price

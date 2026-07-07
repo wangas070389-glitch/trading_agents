@@ -93,6 +93,9 @@ def main():
     args = parser.parse_args()
 
     dir_path = os.path.dirname(os.path.abspath(__file__))
+    from halt_gate import halted
+    if halted(dir_path, "strategy9"):
+        return
     today_str = datetime.date.today().strftime("%Y-%m-%d")
     now = datetime.datetime.now()
 

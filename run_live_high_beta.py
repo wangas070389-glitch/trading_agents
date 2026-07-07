@@ -139,6 +139,9 @@ def calculate_indicators(df: pd.DataFrame) -> pd.DataFrame:
 
 def main():
     dir_path = os.path.dirname(os.path.abspath(__file__))
+    from halt_gate import halted
+    if halted(dir_path, "high_beta"):
+        return
     today_str = datetime.date.today().strftime("%Y-%m-%d")
 
     print("=" * 80)
@@ -320,10 +323,13 @@ def main():
             portfolio["cash_balance"] += net_proceeds
             
             if alpaca_client:
-                try:
-                    alpaca_client.submit_order(ticker=ticker, qty=int(shares_to_sell), side="sell")
-                except Exception as e:
-                    print(f"  [Alpaca SELL FAILED] Exit {ticker}: {e}")
+                res = alpaca_client.submit_and_confirm(ticker=ticker, qty=int(shares_to_sell), side="sell")
+                if not res["filled"]:
+                    print(f"  [Alpaca SELL NOT FILLED] Exit {ticker}: {res['status']}. Ledger NO modificado.")
+                    portfolio["cash_balance"] -= net_proceeds
+                    log_transaction(dir_path, today_str, ticker, "SELL-REJECTED", shares_to_sell, close_price, f"Alpaca {res['status']}", fee=0.0)
+                    updated_holdings.append(h)
+                    continue
                     
             realized_pnl = net_proceeds - (shares_to_sell * h["buy_price"])
             pnl_pct = (close_price / h["buy_price"] - 1.0) * 100.0
@@ -416,10 +422,13 @@ def main():
                 })
                 
                 if alpaca_client:
-                    try:
-                        alpaca_client.submit_order(ticker=ticker, qty=int(shares), side="buy")
-                    except Exception as e:
-                        print(f"  [Alpaca BUY FAILED] Entry {ticker}: {e}")
+                    res = alpaca_client.submit_and_confirm(ticker=ticker, qty=int(shares), side="buy")
+                    if not res["filled"]:
+                        print(f"  [Alpaca BUY NOT FILLED] Entry {ticker}: {res['status']}. Ledger NO modificado.")
+                        portfolio["cash_balance"] += total_cost
+                        portfolio["holdings"].pop()
+                        log_transaction(dir_path, today_str, ticker, "BUY-REJECTED", shares, close_price, f"Alpaca {res['status']}", fee=0.0)
+                        continue
                         
                 log_transaction(dir_path, today_str, ticker, "BUY", shares, close_price, f"Entry (Beta: {beta_val:.2f}, DCS MOS: {dcs_val:.2%})", fee=fee)
                 action_logs.append(f"BOUGHT {shares:.4f} shares of {ticker} at ${close_price:.2f} (Beta: {beta_val:.2f}, DCS MOS: {dcs_val:.2%})")

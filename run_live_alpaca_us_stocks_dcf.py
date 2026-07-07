@@ -122,6 +122,9 @@ def main():
     args = parser.parse_args()
 
     dir_path = os.path.dirname(os.path.abspath(__file__))
+    from halt_gate import halted
+    if halted(dir_path, "us_dcs"):
+        return
     today_str = datetime.date.today().strftime("%Y-%m-%d")
 
     print("=" * 80)
@@ -266,10 +269,12 @@ def main():
                         
                         # Submit trade
                         if alpaca_client:
-                            try:
-                                alpaca_client.submit_order(ticker=ticker, qty=shares, side="buy")
-                            except Exception as e:
-                                print(f"  [Alpaca Order FAILED] DCA BUY {ticker}: {e}")
+                            res = alpaca_client.submit_and_confirm(ticker=ticker, qty=shares, side="buy")
+                            if not res["filled"]:
+                                print(f"  [Alpaca BUY NOT FILLED] {ticker}: {res['status']}. Ledger NO modificado.")
+                                current_cash += total_cost
+                                log_transaction(dir_path, today_str, ticker, "BUY-REJECTED", shares, price, f"Alpaca {res['status']}", fee=0.0)
+                                continue
                                 
                         # Update local state
                         for h in portfolio["holdings"]:
@@ -327,10 +332,12 @@ def main():
                 current_cash += (sell_val - fee)
                 
                 if alpaca_client:
-                    try:
-                        alpaca_client.submit_order(ticker=ticker, qty=int(shares_to_sell), side="sell")
-                    except Exception as e:
-                        print(f"  [Alpaca SELL FAILED] Exit {ticker}: {e}")
+                    res = alpaca_client.submit_and_confirm(ticker=ticker, qty=int(shares_to_sell), side="sell")
+                    if not res["filled"]:
+                        print(f"  [Alpaca SELL NOT FILLED] {ticker}: {res['status']}. Ledger NO modificado.")
+                        current_cash -= (sell_val - fee)
+                        log_transaction(dir_path, today_str, ticker, "SELL-REJECTED", shares_to_sell, close_price, f"Alpaca {res['status']}", fee=0.0)
+                        continue
                         
                 log_transaction(dir_path, today_str, ticker, "SELL", shares_to_sell, close_price, "Quarterly exit (DCS suppressed)", fee=fee)
                 rebalance_trades.append(f"SOLD {shares_to_sell:.2f} shares of {ticker} (Exit)")

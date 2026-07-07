@@ -27,14 +27,14 @@ STRATEGY_SCRIPTS = [
     "monitor_portfolio.py",
     "run_live_alpha_growth.py",
     "ingest_live_macd.py",
-    "run_live_alpaca_us_stocks.py",
+    # "run_live_alpaca_us_stocks.py",   # S3 SUSPENDIDA: reconciliar margen -44k vs Alpaca antes de reactivar
     "run_live_alpaca_us_stocks_dcf.py",
     "run_live_alternatives.py",
     "run_live_high_beta.py",
     "run_live_dividends.py",
     "run_live_strategy9.py",
-    "run_live_strategy10.py",
-    "run_live_strategy11.py",
+    # "run_live_strategy10.py",   # S10 SUSPENDIDA: pendiente rediseno walk-forward del HMM
+    # "run_live_strategy11.py",   # S11 SUSPENDIDA: pendiente rediseno walk-forward del HMM
     "run_live_strategy12.py",
     "run_live_strategy13.py",
     "run_live_strategy14.py",

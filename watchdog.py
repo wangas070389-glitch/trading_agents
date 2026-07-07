@@ -128,8 +128,7 @@ def check_strategy(name, p_path, dir_path, nav_hist, now):
                             f"Sin actualizar desde {lu} ({stale_busdays} dias habiles): cron muerto o script crasheando"))
 
     # W2: zero-trade
-    num = name.replace("strategy", "")
-    tx_path = os.path.join(dir_path, f"transactions_strategy{num}.md")
+    tx_path = os.path.join(dir_path, "transactions.md" if name == "core" else f"transactions_{name}.md")
     trades, first_date = count_real_trades(tx_path)
     if trades is not None and first_date is not None:
         age = business_days_between(first_date, now)
@@ -161,7 +160,7 @@ def check_strategy(name, p_path, dir_path, nav_hist, now):
         nav_hist[name] = hist[-500:]
 
     # W5: drawdown breaker vs backtest
-    bt_csv = os.path.join(dir_path, f"strategy{num}_backtest_nav.csv")
+    bt_csv = os.path.join(dir_path, f"{name}_backtest_nav.csv")
     if os.path.exists(bt_csv) and len(hist) > 5:
         try:
             bt_nav = pd.read_csv(bt_csv, index_col=0)["NAV"]
@@ -176,9 +175,60 @@ def check_strategy(name, p_path, dir_path, nav_hist, now):
             pass
 
     if not findings:
-        findings.append(Finding("OK", name, "-", f"NAV ${nav:,.2f} | sin anomalias"))
+        nav_txt = f"NAV ${nav:,.2f}" if isinstance(nav, (int, float)) else "NAV n/d"
+        findings.append(Finding("OK", name, "-", f"{nav_txt} | sin anomalias"))
     return findings, nav_hist
 
+
+
+def check_broker_reconciliation(dir_path, now):
+    """W6: reconciliacion contra Alpaca. Los libros locales pueden mentir
+    (fills fantasma); el broker es la verdad. Requiere APCA_API_KEY_ID y
+    APCA_API_SECRET_KEY en el entorno; si faltan, se omite con WARNING."""
+    import glob as _glob
+    key = os.environ.get("APCA_API_KEY_ID")
+    sec = os.environ.get("APCA_API_SECRET_KEY")
+    base = os.environ.get("APCA_API_BASE_URL", "https://paper-api.alpaca.markets")
+    if not key or not sec:
+        return [Finding("WARNING", "broker", "W6", "Sin credenciales Alpaca en env; reconciliacion omitida")]
+    try:
+        import requests
+        hdr = {"APCA-API-KEY-ID": key, "APCA-API-SECRET-KEY": sec}
+        acct = requests.get(f"{base}/v2/account", headers=hdr, timeout=15).json()
+        positions = requests.get(f"{base}/v2/positions", headers=hdr, timeout=15).json()
+    except Exception as e:
+        return [Finding("WARNING", "broker", "W6", f"Alpaca inaccesible: {e}")]
+
+    findings = []
+    cash = float(acct.get("cash", 0.0))
+    if cash < -0.01:
+        findings.append(Finding("CRITICAL", "broker", "W6",
+                        f"Cash de Alpaca NEGATIVO: ${cash:,.2f} (margen no intencional; probable fill fantasma previo)"))
+
+    # holdings locales agregados de todos los portafolios (tickers US)
+    local = {}
+    for p_path in _glob.glob(os.path.join(dir_path, "portfolio_*.json")):
+        try:
+            with open(p_path, "r", encoding="utf-8") as f:
+                pj = json.load(f)
+            for h in pj.get("holdings", []):
+                t = str(h.get("ticker", "")).upper()
+                if t and ".MX" not in t:
+                    local[t] = local.get(t, 0.0) + float(h.get("shares", 0.0))
+        except Exception:
+            continue
+
+    for pos in positions if isinstance(positions, list) else []:
+        sym = str(pos.get("symbol", "")).upper()
+        qty_b = float(pos.get("qty", 0.0))
+        qty_l = local.get(sym, 0.0)
+        if qty_b - qty_l > max(0.02 * max(qty_b, 1.0), 0.5):
+            findings.append(Finding("CRITICAL", "broker", "W6",
+                            f"HUERFANO en Alpaca: {sym} broker={qty_b:g} vs ledgers={qty_l:g} "
+                            f"(firma de SELL fantasma: el broker aun lo tiene)"))
+    if not findings:
+        findings.append(Finding("OK", "broker", "W6", f"Reconciliado: cash ${cash:,.2f}, {len(positions) if isinstance(positions, list) else 0} posiciones"))
+    return findings
 
 def main():
     ap = argparse.ArgumentParser()
@@ -197,13 +247,31 @@ def main():
             nav_hist = {}
 
     all_findings = []
-    for p_path in sorted(glob.glob(os.path.join(dir_path, "portfolio_strategy*.json"))):
-        name = os.path.basename(p_path).replace("portfolio_", "").replace(".json", "")
+    paths = sorted(glob.glob(os.path.join(dir_path, "portfolio_*.json")))
+    core = os.path.join(dir_path, "portfolio.json")
+    if os.path.exists(core):
+        paths.insert(0, core)
+    for p_path in paths:
+        if os.path.basename(p_path) == "watchdog_nav_history.json":
+            continue
+        name = os.path.basename(p_path).replace("portfolio_", "").replace("portfolio", "core").replace(".json", "") or "core"
         f, nav_hist = check_strategy(name, p_path, dir_path, nav_hist, now)
         all_findings.extend(f)
 
     with open(hist_path, "w", encoding="utf-8") as f:
         json.dump(nav_hist, f, indent=1)
+
+    all_findings.extend(check_broker_reconciliation(dir_path, now))
+
+    # HALT GATE: cada CRITICAL de estrategia escribe su flag -> los runners se detienen
+    try:
+        from halt_gate import raise_halt
+        for f in all_findings:
+            if f.level == "CRITICAL" and f.strategy not in ("broker",):
+                flag = raise_halt(dir_path, f.strategy, f"[{now}] {f.code}: {f.msg}")
+                print(f"HALT flag escrito: {flag}")
+    except Exception as e:
+        print(f"(halt_gate no disponible: {e})")
 
     n_crit = sum(1 for f in all_findings if f.level == "CRITICAL")
     n_warn = sum(1 for f in all_findings if f.level == "WARNING")

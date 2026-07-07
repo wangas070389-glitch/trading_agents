@@ -127,6 +127,9 @@ def translate_ticker_to_alpaca(ticker: str) -> str:
 
 def main():
     dir_path = os.path.dirname(os.path.abspath(__file__))
+    from halt_gate import halted
+    if halted(dir_path, "alternatives"):
+        return
     today_str = datetime.date.today().strftime("%Y-%m-%d")
 
     print("=" * 80)
@@ -262,12 +265,12 @@ def main():
             # Submit to Alpaca if not mock Forex
             if asset_type != "forex" and alpaca_client:
                 alpaca_sym = translate_ticker_to_alpaca(ticker)
-                try:
-                    alpaca_client.submit_order(ticker=alpaca_sym, qty=int(shares_to_sell) if asset_type == "commodity" else float(shares_to_sell), side="sell")
-                    note = f"Alpaca Order filled | {note}"
-                except Exception as e:
-                    print(f"  [Alpaca Exit FAILED] {ticker}: {e}")
-                    note = f"Alpaca Failed ({e}) | {note}"
+                res = alpaca_client.submit_and_confirm(ticker=alpaca_sym, qty=int(shares_to_sell) if asset_type == "commodity" else float(shares_to_sell), side="sell")
+                if not res["filled"]:
+                    print(f"  [Alpaca Exit NOT FILLED] {ticker}: {res['status']}. Ledger NO modificado.")
+                    log_transaction(dir_path, today_str, ticker, "SELL-REJECTED", shares_to_sell, price, f"Alpaca {res['status']}", fee=0.0)
+                    continue
+                note = f"Alpaca Order FILLED ({res['id']}) | {note}"
                     
             log_transaction(dir_path, today_str, ticker, "SELL", shares_to_sell, price, note, fee=fee)
             exit_trades.append(f"SOLD {shares_to_sell:.4f} shares of {ticker} | {exit_reason}")
@@ -331,13 +334,13 @@ def main():
                     
                     if asset_type != "forex" and alpaca_client:
                         alpaca_sym = translate_ticker_to_alpaca(ticker)
-                        try:
-                            # Submit order
-                            alpaca_client.submit_order(ticker=alpaca_sym, qty=shares, side="buy")
-                            note = f"Alpaca Order filled | {note}"
-                        except Exception as e:
-                            print(f"  [Alpaca Entry FAILED] {ticker}: {e}")
-                            note = f"Alpaca Failed ({e}) | {note}"
+                        res = alpaca_client.submit_and_confirm(ticker=alpaca_sym, qty=shares, side="buy")
+                        if not res["filled"]:
+                            print(f"  [Alpaca Entry NOT FILLED] {ticker}: {res['status']}. Ledger NO modificado.")
+                            current_cash += total_cost
+                            log_transaction(dir_path, today_str, ticker, "BUY-REJECTED", shares, close_price, f"Alpaca {res['status']}", fee=0.0)
+                            continue
+                        note = f"Alpaca Order FILLED ({res['id']}) | {note}"
                             
                     portfolio["holdings"].append({
                         "ticker": ticker,
