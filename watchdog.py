@@ -181,10 +181,12 @@ def check_strategy(name, p_path, dir_path, nav_hist, now):
 
 
 
-def check_broker_reconciliation(dir_path, now):
+def check_broker_reconciliation(dir_path, now, active_strats=None):
     """W6: reconciliacion contra Alpaca. Los libros locales pueden mentir
     (fills fantasma); el broker es la verdad. Requiere APCA_API_KEY_ID y
     APCA_API_SECRET_KEY en el entorno; si faltan, se omite con WARNING."""
+    if active_strats is None:
+        active_strats = set()
     import glob as _glob
     key = os.environ.get("APCA_API_KEY_ID")
     sec = os.environ.get("APCA_API_SECRET_KEY")
@@ -202,19 +204,26 @@ def check_broker_reconciliation(dir_path, now):
     findings = []
     cash = float(acct.get("cash", 0.0))
     if cash < -0.01:
-        findings.append(Finding("CRITICAL", "broker", "W6",
-                        f"Cash de Alpaca NEGATIVO: ${cash:,.2f} (margen no intencional; probable fill fantasma previo)"))
+        level = "CRITICAL" if "us_stocks" in active_strats else "WARNING"
+        prefix = "" if level == "CRITICAL" else "[INACTIVE STRATEGY] "
+        findings.append(Finding(level, "broker", "W6",
+                        f"{prefix}Cash de Alpaca NEGATIVO: ${cash:,.2f} (margen no intencional; probable fill fantasma previo)"))
 
-    # holdings locales agregados de todos los portafolios (tickers US)
+    # holdings locales agregados de todos los portafolios (tickers US) y mapeo de ticker -> lista de estrategias
     local = {}
+    ticker_to_strats = {}
     for p_path in _glob.glob(os.path.join(dir_path, "portfolio_*.json")):
         try:
+            name = os.path.basename(p_path).replace("portfolio_", "").replace("portfolio", "core").replace(".json", "") or "core"
             with open(p_path, "r", encoding="utf-8") as f:
                 pj = json.load(f)
             for h in pj.get("holdings", []):
                 t = str(h.get("ticker", "")).upper()
                 if t and ".MX" not in t:
                     local[t] = local.get(t, 0.0) + float(h.get("shares", 0.0))
+                    if t not in ticker_to_strats:
+                        ticker_to_strats[t] = set()
+                    ticker_to_strats[t].add(name)
         except Exception:
             continue
 
@@ -223,8 +232,14 @@ def check_broker_reconciliation(dir_path, now):
         qty_b = float(pos.get("qty", 0.0))
         qty_l = local.get(sym, 0.0)
         if qty_b - qty_l > max(0.02 * max(qty_b, 1.0), 0.5):
-            findings.append(Finding("CRITICAL", "broker", "W6",
-                            f"HUERFANO en Alpaca: {sym} broker={qty_b:g} vs ledgers={qty_l:g} "
+            strats_for_ticker = ticker_to_strats.get(sym, set())
+            is_active_mismatch = any(s in active_strats for s in strats_for_ticker) or ("us_stocks" in active_strats)
+            
+            level = "CRITICAL" if is_active_mismatch else "WARNING"
+            prefix = "" if level == "CRITICAL" else "[INACTIVE STRATEGY] "
+            
+            findings.append(Finding(level, "broker", "W6",
+                            f"{prefix}HUERFANO en Alpaca: {sym} broker={qty_b:g} vs ledgers={qty_l:g} "
                             f"(firma de SELL fantasma: el broker aun lo tiene)"))
     if not findings:
         findings.append(Finding("OK", "broker", "W6", f"Reconciliado: cash ${cash:,.2f}, {len(positions) if isinstance(positions, list) else 0} posiciones"))
@@ -314,7 +329,7 @@ def main():
     with open(hist_path, "w", encoding="utf-8") as f:
         json.dump(nav_hist, f, indent=1)
 
-    all_findings.extend(check_broker_reconciliation(dir_path, now))
+    all_findings.extend(check_broker_reconciliation(dir_path, now, active_strats))
 
     # HALT GATE: cada CRITICAL de estrategia escribe su flag -> los runners se detienen
     try:
