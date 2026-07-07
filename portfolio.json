@@ -1,12 +1,12 @@
 {
   "total_capital": 20000.0,
-  "cash_balance": 1711.94,
+  "cash_balance": 1711.95,
   "holdings": [
     {
       "ticker": "GRUMAB.MX",
       "shares": 1,
       "buy_price": 291.46,
-      "last_price": 286.6099853515625,
+      "last_price": 286.44000244140625,
       "target_weight": 0.027853008203029602,
       "dcs": 0.7146482020540937,
       "garch_vol": 0.0140117435282772,
@@ -30,7 +30,7 @@
       "ticker": "BBAJIOO.MX",
       "shares": 111.39413008131325,
       "buy_price": 54.880001068115234,
-      "last_price": 56.349998474121094,
+      "last_price": 56.47999954223633,
       "target_weight": 0.3,
       "dcs": 0.825598943947785,
       "garch_vol": 0.020536932359282355,
@@ -42,7 +42,7 @@
       "ticker": "GFNORTEO.MX",
       "shares": 32.26361682335487,
       "buy_price": 189.47999572753906,
-      "last_price": 187.82000732421875,
+      "last_price": 188.17999267578125,
       "target_weight": 0.3,
       "dcs": 0.1687403499821262,
       "garch_vol": 0.01983195010230015,
@@ -51,7 +51,7 @@
       "zg_t": 0.0
     }
   ],
-  "last_updated": "2026-07-07 19:58:04",
+  "last_updated": "2026-07-07 21:06:19",
   "slippage_savings": 0.0,
   "last_rebalance_date": "2026-06-21"
 }
