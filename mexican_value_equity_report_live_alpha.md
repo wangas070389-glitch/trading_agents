@@ -21,10 +21,10 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Signal | Price | DCS Conviction | SMA 100 Trend | SMA 20 Trend (DCA) | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **AAPL** | SELL / AVOID | $5,433.41 | -0.761 | BULL | BULL | Low conviction (DCS=-0.761 < 0.15) |
+| **AAPL** | SELL / AVOID | $5,433.72 | -0.760 | BULL | BULL | Low conviction (DCS=-0.760 < 0.15) |
 | **AC.MX** | SELL / AVOID | $205.57 | -0.189 | BEAR | BEAR | Low conviction (DCS=-0.189 < 0.15) and Bear trend (Close <= SMA 100) |
 | **AMXB.MX** | SELL / AVOID | $22.77 | -0.334 | BULL | BEAR | Low conviction (DCS=-0.334 < 0.15) |
-| **AMZN** | SELL / AVOID | $4,243.01 | -0.839 | BULL | BULL | Low conviction (DCS=-0.839 < 0.15) |
+| **AMZN** | SELL / AVOID | $4,243.26 | -0.839 | BULL | BULL | Low conviction (DCS=-0.839 < 0.15) |
 | **ASURB.MX** | SELL / AVOID | $538.08 | -0.191 | BEAR | BULL | Low conviction (DCS=-0.191 < 0.15) and Bear trend (Close <= SMA 100) |
 | **BBAJIOO.MX** | BUY / HOLD | $56.81 | 0.779 | BULL | BULL | Strong conviction (DCS=0.779) and bull trend (Close > SMA 100) | Eligible for active DCA |
 | **BIMBOA.MX** | SELL / AVOID | $57.04 | 0.449 | BEAR | BULL | Bear trend (Close <= SMA 100) |
@@ -36,11 +36,11 @@
 | **GENTERA.MX** | SELL / AVOID | $38.95 | -0.203 | BEAR | BEAR | Low conviction (DCS=-0.203 < 0.15) |
 | **GFNORTEO.MX** | BUY / HOLD | $188.41 | 0.186 | BULL | BULL | Strong conviction (DCS=0.186) and bull trend (Close > SMA 100) | Eligible for active DCA |
 | **GMEXICOB.MX** | SELL / AVOID | $202.78 | -0.667 | BULL | BEAR | Low conviction (DCS=-0.667 < 0.15) |
-| **GOOGL** | SELL / AVOID | $6,368.34 | -0.828 | BULL | BULL | Low conviction (DCS=-0.828 < 0.15) |
+| **GOOGL** | SELL / AVOID | $6,368.71 | -0.828 | BULL | BULL | Low conviction (DCS=-0.828 < 0.15) |
 | **GRUMAB.MX** | SELL / AVOID | $283.23 | 0.757 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
 | **KIMBERA.MX** | SELL / AVOID | $39.21 | -0.267 | BEAR | BULL | Low conviction (DCS=-0.267 < 0.15) and Bear trend (Close <= SMA 100) |
-| **MSFT** | SELL / AVOID | $6,720.77 | -0.672 | BEAR | BEAR | Low conviction (DCS=-0.672 < 0.15) and Bear trend (Close <= SMA 100) |
-| **NVDA** | SELL / AVOID | $3,398.27 | -0.881 | BULL | BEAR | Low conviction (DCS=-0.881 < 0.15) |
+| **MSFT** | SELL / AVOID | $6,721.15 | -0.671 | BEAR | BEAR | Low conviction (DCS=-0.671 < 0.15) and Bear trend (Close <= SMA 100) |
+| **NVDA** | SELL / AVOID | $3,398.46 | -0.881 | BULL | BEAR | Low conviction (DCS=-0.881 < 0.15) |
 | **OMAB.MX** | SELL / AVOID | $245.86 | -0.099 | BULL | BULL | Low conviction (DCS=-0.099 < 0.15) |
 | **ORBIA.MX** | BUY / HOLD | $22.80 | 1.000 | BULL | BULL | Strong conviction (DCS=1.000) and bull trend (Close > SMA 100) | Eligible for active DCA |
 | **PE&OLES.MX** | SELL / AVOID | $781.55 | -0.923 | BEAR | BEAR | Low conviction (DCS=-0.923 < 0.15) and Bear trend (Close <= SMA 100) |

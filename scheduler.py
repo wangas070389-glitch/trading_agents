@@ -33,8 +33,8 @@ STRATEGY_SCRIPTS = [
     "run_live_high_beta.py",
     "run_live_dividends.py",
     "run_live_strategy9.py",
-    # "run_live_strategy10.py",   # S10 SUSPENDIDA: pendiente rediseno walk-forward del HMM
-    # "run_live_strategy11.py",   # S11 SUSPENDIDA: pendiente rediseno walk-forward del HMM
+    "run_live_strategy10.py",
+    "run_live_strategy11.py",
     "run_live_strategy12.py",
     "run_live_strategy13.py",
     "run_live_strategy14.py",
