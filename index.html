@@ -34,84 +34,148 @@
 
         <!-- Main Dashboard content -->
         <main>
-            <!-- Core KPI Row -->
-            <div class="metrics-row">
-                <div class="glass-card">
-                    <div class="card-title">Valor Neto Total Portafolio</div>
-                    <div id="metric-net-val" class="card-value">$0.00 MXN</div>
-                    <div id="metric-net-val-usd" class="card-subtitle">$0.00 USD</div>
+            <!-- Interactive Filters & Tabs Bar -->
+            <div class="filter-section glass-card">
+                <div class="filter-group">
+                    <label for="strategy-select">Estrategia Activa:</label>
+                    <select id="strategy-select" class="custom-select">
+                        <option value="ALL">Consolidado (Todas las Estrategias)</option>
+                        <option value="S1">S1: Adaptive Value</option>
+                        <option value="S2">S2: 1d MACD Systematic</option>
+                        <option value="S3">S3: US Stock Momentum</option>
+                        <option value="S4">S4: US DCS Value-Growth</option>
+                        <option value="S5">S5: Alternative Assets</option>
+                        <option value="S6">S6: High-Beta Momentum</option>
+                        <option value="S8">S8: Dividend Quality & Yield</option>
+                        <option value="S9">S9: AI Regime Stat-Arb</option>
+                        <option value="S10">S10: AI Intraday VWAP</option>
+                        <option value="S11">S11: AI Intraday CCI-ADX</option>
+                        <option value="S12">S12: Vol-Targeted Trend (VTTL)</option>
+                        <option value="S13">S13: Risk Appetite (CARA)</option>
+                        <option value="S14">S14: Aggregator (HEDGE)</option>
+                        <option value="S15">S15: Tracker (TRACK)</option>
+                    </select>
                 </div>
-                <div class="glass-card">
-                    <div class="card-title">Efectivo en Remuneración (Sweep)</div>
-                    <div id="metric-cash" class="card-value">$0.00 MXN</div>
-                    <div id="metric-cash-pct" class="card-subtitle">Cargando...</div>
-                </div>
-                <div class="glass-card">
-                    <div class="card-title">Capital Total Invertido</div>
-                    <div id="metric-invested" class="card-value">$0.00 MXN</div>
-                    <div id="metric-invested-pct" class="card-subtitle">Cargando...</div>
-                </div>
-                <div class="glass-card">
-                    <div class="card-title">Retorno Compuesto (TWR)</div>
-                    <div id="metric-twr" class="card-value">+0.00%</div>
-                    <div id="metric-twr-sub" class="card-subtitle">Promedio ponderado en vivo</div>
+                <div class="tab-group">
+                    <button id="tab-dashboard" class="tab-btn active">Resumen y Portafolio</button>
+                    <button id="tab-transactions" class="tab-btn">Historial de Transacciones</button>
                 </div>
             </div>
 
-            <!-- Charts Section -->
-            <div class="charts-row">
-                <div class="glass-card">
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="view-panel">
+                <!-- Core KPI Row -->
+                <div class="metrics-row" style="margin-bottom: 2rem;">
+                    <div class="glass-card">
+                        <div class="card-title" id="kpi-nav-label">Valor Neto Consolidado</div>
+                        <div id="metric-net-val" class="card-value">$0.00 MXN</div>
+                        <div id="metric-net-val-usd" class="card-subtitle">$0.00 USD</div>
+                    </div>
+                    <div class="glass-card">
+                        <div class="card-title" id="kpi-cash-label">Efectivo Sweep</div>
+                        <div id="metric-cash" class="card-value">$0.00 MXN</div>
+                        <div id="metric-cash-pct" class="card-subtitle">Cargando...</div>
+                    </div>
+                    <div class="glass-card">
+                        <div class="card-title" id="kpi-invested-label">Capital Invertido</div>
+                        <div id="metric-invested" class="card-value">$0.00 MXN</div>
+                        <div id="metric-invested-pct" class="card-subtitle">Cargando...</div>
+                    </div>
+                    <div class="glass-card">
+                        <div class="card-title" id="kpi-twr-label">Retorno Compuesto (TWR)</div>
+                        <div id="metric-twr" class="card-value">+15.63%</div>
+                        <div id="metric-twr-sub" class="card-subtitle">Promedio ponderado en vivo</div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-row" style="margin-bottom: 2rem;">
+                    <div class="glass-card">
+                        <div class="section-header">
+                            <h2 id="chart-nav-title">Evolución de NAV Histórica</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="navChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <div class="section-header">
+                            <h2>Distribución de Activos</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="allocationChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Positions Section -->
+                <div class="glass-card table-card" style="margin-bottom: 2rem;">
                     <div class="section-header">
-                        <h2>Evolución de NAV Histórica (Watchdog)</h2>
+                        <h2>Posiciones Activas Combinadas</h2>
                     </div>
-                    <div class="chart-container">
-                        <canvas id="navChart"></canvas>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Activo</th>
+                                    <th>Estrategia</th>
+                                    <th>Acciones/Contratos</th>
+                                    <th>Precio Entrada</th>
+                                    <th>Precio Último</th>
+                                    <th>Valor Mercado</th>
+                                    <th>Retorno %</th>
+                                </tr>
+                            </thead>
+                            <tbody id="positions-table-body">
+                                <tr>
+                                    <td colspan="7" style="text-align: center; color: var(--text-secondary);">Cargando posiciones del portafolio consolidado...</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="glass-card">
+
+                <!-- Strategies Detail Grid Section -->
+                <div>
+                    <div class="section-header" style="margin-bottom: 1rem;">
+                        <h2>Estrategias y Sleeves de Inversión</h2>
+                    </div>
+                    <div class="strategies-grid" id="strategies-card-grid">
+                        <!-- Cards dynamic generation -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transactions View -->
+            <div id="transactions-view" class="view-panel hidden">
+                <div class="glass-card table-card">
                     <div class="section-header">
-                        <h2>Distribución de Activos</h2>
+                        <h2>Historial de Transacciones (Ledger)</h2>
+                        <input type="text" id="tx-search" placeholder="Buscar por activo, operación, nota..." class="search-input">
                     </div>
-                    <div class="chart-container">
-                        <canvas id="allocationChart"></canvas>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Activo</th>
+                                    <th>Estrategia</th>
+                                    <th>Operación</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Monto Neto</th>
+                                    <th>Tipo Orden</th>
+                                    <th>Estado</th>
+                                    <th>Nota</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactions-table-body">
+                                <tr>
+                                    <td colspan="10" style="text-align: center; color: var(--text-secondary);">Cargando historial de operaciones de los agentes...</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-            </div>
-
-            <!-- Active Positions Section -->
-            <div class="glass-card table-card">
-                <div class="section-header">
-                    <h2>Posiciones Activas Combinadas (Broker & Ledger)</h2>
-                </div>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Activo</th>
-                                <th>Estrategia</th>
-                                <th>Acciones/Contratos</th>
-                                <th>Precio Entrada</th>
-                                <th>Precio Último</th>
-                                <th>Valor Mercado</th>
-                                <th>Retorno %</th>
-                            </tr>
-                        </thead>
-                        <tbody id="positions-table-body">
-                            <tr>
-                                <td colspan="7" style="text-align: center; color: var(--text-secondary);">Cargando posiciones del portafolio consolidado...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Strategies Detail Grid Section -->
-            <div>
-                <div class="section-header" style="margin-bottom: 1rem;">
-                    <h2>Estrategias y Sleeves de Inversión</h2>
-                </div>
-                <div class="strategies-grid" id="strategies-card-grid">
-                    <!-- Cards dynamic generation -->
                 </div>
             </div>
         </main>
