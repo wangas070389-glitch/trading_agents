@@ -1,247 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mexican Value Equity Dashboard</title>
-    <!-- Google Fonts: Outfit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Chart.js via CDN -->
+    <title>Trading Agents Suite - Cuadro de Mando</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Chart.js for premium vector graphics -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div class="background-glow bg-glow-1"></div>
-    <div class="background-glow bg-glow-2"></div>
-
-    <div class="dashboard-container">
-        <!-- Header -->
-        <header class="glass-card main-header">
-            <div class="header-left">
-                <span class="badge">Agentic DAG Pipeline</span>
-                <h1>Mexican Value Stock Dashboard</h1>
-                <p class="subtitle">Real-time S&P/BMV IPC valuation, sizing, and exit target triggers.</p>
+    <div class="app-container">
+        <!-- Header Section -->
+        <header>
+            <div class="brand-section">
+                <div class="brand-logo">Ω</div>
+                <div class="brand-title">
+                    <h1>Trading Agents Suite</h1>
+                    <p>Orquestación de Agentes Cuantitativos Multi-Activo</p>
+                </div>
             </div>
-            <div class="header-right">
-                <button id="refresh-btn" class="btn primary-btn">
-                    <span class="btn-icon">🔄</span> Refresh Live Prices
-                </button>
+            
+            <div class="header-status">
+                <div id="connection-status" class="status-badge secure">
+                    <span class="pulse-dot"></span>
+                    <span id="connection-text">GitHub Runner: Activo</span>
+                </div>
+                <div id="halt-status" class="status-badge secure">
+                    <span class="pulse-dot"></span>
+                    <span id="halt-text">Sistema Seguro (Normal)</span>
+                </div>
             </div>
         </header>
 
-        <!-- KPI Metrics Grid -->
-        <div class="kpi-grid">
-            <div class="glass-card kpi-card">
-                <div class="kpi-label">Total Portfolio Value</div>
-                <div id="total-val" class="kpi-value">20,000.00 <span class="currency">MXN</span></div>
-                <div id="total-pl" class="kpi-change positive">+0.00 MXN (+0.00%)</div>
-            </div>
-            <div class="glass-card kpi-card">
-                <div class="kpi-label">Deployed Capital</div>
-                <div id="deployed-val" class="kpi-value">6,090.66 <span class="currency">MXN</span></div>
-                <div id="deployed-pct" class="kpi-sub">30.5% allocation</div>
-            </div>
-            <div class="glass-card kpi-card">
-                <div class="kpi-label">Cash Reserve</div>
-                <div id="cash-val" class="kpi-value">13,909.34 <span class="currency">MXN</span></div>
-                <div id="cash-pct" class="kpi-sub">69.5% unallocated</div>
-            </div>
-        </div>
-
-        <!-- Charts and Alerts Row -->
-        <div class="charts-alerts-grid">
-            <!-- Asset Allocation Chart -->
-            <div class="glass-card chart-card">
-                <h3>Asset Allocation</h3>
-                <div class="chart-container">
-                    <canvas id="allocationChart"></canvas>
+        <!-- Main Dashboard content -->
+        <main>
+            <!-- Core KPI Row -->
+            <div class="metrics-row">
+                <div class="glass-card">
+                    <div class="card-title">Valor Neto Total Portafolio</div>
+                    <div id="metric-net-val" class="card-value">$0.00 MXN</div>
+                    <div id="metric-net-val-usd" class="card-subtitle">$0.00 USD</div>
+                </div>
+                <div class="glass-card">
+                    <div class="card-title">Efectivo en Remuneración (Sweep)</div>
+                    <div id="metric-cash" class="card-value">$0.00 MXN</div>
+                    <div id="metric-cash-pct" class="card-subtitle">Cargando...</div>
+                </div>
+                <div class="glass-card">
+                    <div class="card-title">Capital Total Invertido</div>
+                    <div id="metric-invested" class="card-value">$0.00 MXN</div>
+                    <div id="metric-invested-pct" class="card-subtitle">Cargando...</div>
+                </div>
+                <div class="glass-card">
+                    <div class="card-title">Retorno Compuesto (TWR)</div>
+                    <div id="metric-twr" class="card-value">+0.00%</div>
+                    <div id="metric-twr-sub" class="card-subtitle">Promedio ponderado en vivo</div>
                 </div>
             </div>
 
-            <!-- Trading Triggers / Alerts -->
-            <div class="glass-card alerts-card">
-                <h3>Active Rebalancing Alerts</h3>
-                <div id="alerts-list" class="alerts-list">
-                    <div class="alert-item empty-state">
-                        <span class="alert-icon">✨</span>
-                        <p>No active sell triggers hit. Open positions are moving as intended.</p>
+            <!-- Charts Section -->
+            <div class="charts-row">
+                <div class="glass-card">
+                    <div class="section-header">
+                        <h2>Evolución de NAV Histórica (Watchdog)</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="navChart"></canvas>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <div class="section-header">
+                        <h2>Distribución de Activos</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="allocationChart"></canvas>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Open Positions Table Card -->
-        <div class="glass-card table-card">
-            <h3>Open Positions & V3 Quantitative Signals</h3>
-            <div class="table-responsive">
-                <table class="portfolio-table">
-                    <thead>
-                        <tr>
-                            <th>Ticker</th>
-                            <th>Shares</th>
-                            <th>Buy Price</th>
-                            <th>Current Price</th>
-                            <th>Market Value</th>
-                            <th>Total P/L</th>
-                            <th>P/L %</th>
-                            <th>Target Weight</th>
-                            <th>DCS v2 Signal</th>
-                            <th>Vol Adjust</th>
-                            <th>HMM State</th>
-                        </tr>
-                    </thead>
-                    <tbody id="portfolio-body">
-                        <!-- Filled dynamically -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Backtest Section -->
-        <div class="glass-card backtest-card" style="margin-top: 1.25rem;">
-            <div class="backtest-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
-                <h3 id="backtest-title" style="margin-bottom: 0;">Strategy Backtest Simulation</h3>
-                
-                <div class="backtest-controls" style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-                    <!-- Strategy Selector Tabs -->
-                    <div class="strategy-selector" style="display: flex; gap: 0.25rem; background: rgba(255, 255, 255, 0.03); padding: 0.25rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08);">
-                        <button id="strat-val-btn" class="strat-toggle active" style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: white; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Outfit'; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">Mexican Value Equity</button>
-                        <button id="strat-macd-btn" class="strat-toggle" style="background: transparent; border: 1px solid transparent; color: #8f9cae; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Outfit'; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">Systematic MACD Trend</button>
-                        <button id="strat-div-btn" class="strat-toggle" style="background: transparent; border: 1px solid transparent; color: #8f9cae; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Outfit'; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">Dividend Quality</button>
-                        <button id="strat-s9-btn" class="strat-toggle" style="background: transparent; border: 1px solid transparent; color: #8f9cae; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Outfit'; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">AI Regime Stat-Arb</button>
-                        <button id="strat-s10-btn" class="strat-toggle" style="background: transparent; border: 1px solid transparent; color: #8f9cae; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Outfit'; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">AI Intraday VWAP</button>
-                        <button id="strat-s11-btn" class="strat-toggle" style="background: transparent; border: 1px solid transparent; color: #8f9cae; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Outfit'; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">AI Intraday CCI-ADX</button>
-                        <button id="strat-s12-btn" class="strat-toggle" style="background: transparent; border: 1px solid transparent; color: #8f9cae; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Outfit'; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">S12 VTTL</button>
-                        <button id="strat-s13-btn" class="strat-toggle" style="background: transparent; border: 1px solid transparent; color: #8f9cae; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Outfit'; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">S13 CARA</button>
-                        <button id="strat-s14-btn" class="strat-toggle" style="background: transparent; border: 1px solid transparent; color: #8f9cae; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Outfit'; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">S14 HEDGE</button>
-                        <button id="strat-s15-btn" class="strat-toggle" style="background: transparent; border: 1px solid transparent; color: #8f9cae; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Outfit'; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">S15 TRACK</button>
-                    </div>
-                    
-                    <!-- Value Equity Strategy Variant Dropdown -->
-                    <div id="val-variant-container" style="display: flex; align-items: center; gap: 0.5rem; background: rgba(255, 255, 255, 0.03); padding: 0.25rem 0.5rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08);">
-                        <label for="val-variant" style="font-size: 0.85rem; color: #8f9cae; font-family: 'Outfit';">Profile:</label>
-                        <select id="val-variant" style="background: transparent; border: none; color: white; font-family: 'Outfit'; font-size: 0.85rem; outline: none; cursor: pointer; font-weight: 500;">
-                            <option value="standard" style="background: #111827; color: #10b981; font-weight: bold;">Standard (20% Cap, Monthly)</option>
-                            <option value="aggressive" style="background: #111827; color: white;">Aggressive (40% Cap, Bi-Monthly)</option>
-                            <option value="adaptive" style="background: #111827; color: #a855f7;">Adaptive (Dynamic Frequency, Asymmetric Cap)</option>
-                        </select>
-                    </div>
-
-                    <!-- MACD Ticker Dropdown (Hidden by default) -->
-                    <div id="macd-ticker-container" style="display: none; align-items: center; gap: 0.5rem; background: rgba(255, 255, 255, 0.03); padding: 0.25rem 0.5rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.08);">
-                        <label for="macd-ticker" style="font-size: 0.85rem; color: #8f9cae; font-family: 'Outfit';">Ticker:</label>
-                        <select id="macd-ticker" style="background: transparent; border: none; color: white; font-family: 'Outfit'; font-size: 0.85rem; outline: none; cursor: pointer; font-weight: 500;">
-                            <option value="ALL" style="background: #111827; color: #10b981; font-weight: bold;">Multi-Asset Portfolio</option>
-                            <option value="SPY" style="background: #111827; color: white;">SPY</option>
-                            <option value="NVDA" style="background: #111827; color: white;">NVDA</option>
-                            <option value="AAPL" style="background: #111827; color: white;">AAPL</option>
-                            <option value="MSFT" style="background: #111827; color: white;">MSFT</option>
-                            <option value="TSLA" style="background: #111827; color: white;">TSLA</option>
-                            <option value="QQQ" style="background: #111827; color: white;">QQQ</option>
-                            <option value="IWM" style="background: #111827; color: white;">IWM</option>
-                        </select>
-                    </div>
-
-                    <button id="backtest-btn" class="btn primary-btn" style="background: linear-gradient(135deg, #6366f1, #4f46e5); color: white;">
-                        <span class="btn-icon">📈</span> Run Backtest Simulation
-                    </button>
+            <!-- Active Positions Section -->
+            <div class="glass-card table-card">
+                <div class="section-header">
+                    <h2>Posiciones Activas Combinadas (Broker & Ledger)</h2>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Activo</th>
+                                <th>Estrategia</th>
+                                <th>Acciones/Contratos</th>
+                                <th>Precio Entrada</th>
+                                <th>Precio Último</th>
+                                <th>Valor Mercado</th>
+                                <th>Retorno %</th>
+                            </tr>
+                        </thead>
+                        <tbody id="positions-table-body">
+                            <tr>
+                                <td colspan="7" style="text-align: center; color: var(--text-secondary);">Cargando posiciones del portafolio consolidado...</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="backtest-content-grid" style="display: grid; grid-template-columns: 1.8fr 1fr; gap: 1.5rem;">
-                <!-- Line Chart -->
-                <div class="backtest-chart-container" style="height: 300px; position: relative;">
-                    <canvas id="backtestChart"></canvas>
-                </div>
-                <!-- Backtest Metrics -->
-                <div class="backtest-metrics-panel" style="display: flex; flex-direction: column; justify-content: center; gap: 1rem; padding: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px;">
-                    <h4 style="margin: 0; font-size: 0.95rem; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.5px;">Simulation Performance</h4>
-                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span id="label-strat-ret">V3 Strategy Return:</span>
-                        <strong id="bt-strat-ret" class="positive" style="color: #10b981;">--</strong>
-                    </div>
-                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span id="label-cash-ret">Bondia Cash Yield (6.53%):</span>
-                        <strong id="bt-cash-ret" style="color: #0ea5e9;">--</strong>
-                    </div>
-                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span id="label-spy-ret">SPY Index Return:</span>
-                        <strong id="bt-spy-ret" style="color: #a855f7;">--</strong>
-                    </div>
-                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span>Ann. Sharpe Ratio (vs Cash):</span>
-                        <strong id="bt-sharpe" style="color: #fbbf24;">--</strong>
-                    </div>
-                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span>Max Drawdown:</span>
-                        <strong id="bt-drawdown" class="negative" style="color: #ef4444;">--</strong>
-                    </div>
-                    <div class="metric-row" style="display: flex; justify-content: space-between; font-size: 0.9rem;">
-                        <span id="label-fees-paid">Total Trading Fees Paid:</span>
-                        <strong id="bt-fees" style="color: #8f9cae;">--</strong>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- MACD + Trailing Stop Backtest Section -->
-        <div class="glass-card backtest-card" style="margin-top: 1.25rem;">
-            <div class="backtest-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
-                <div>
-                    <h3 style="margin-bottom: 0.25rem;">MACD + Trailing Stop Strategy Backtest</h3>
-                    <p class="subtitle" style="margin: 0; font-size: 0.8rem; color: var(--text-secondary);">5Y walk-forward · MACD(12,26,9) crossover · 200 SMA trend filter · Trailing stop exit</p>
+            <!-- Strategies Detail Grid Section -->
+            <div>
+                <div class="section-header" style="margin-bottom: 1rem;">
+                    <h2>Estrategias y Sleeves de Inversión</h2>
                 </div>
-                <button id="macd-backtest-btn" class="btn primary-btn" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: white;">
-                    <span class="btn-icon">⚡</span> Run MACD Backtest
-                </button>
-            </div>
-            <div class="backtest-content-grid" style="display: grid; grid-template-columns: 1.8fr 1fr; gap: 1.5rem;">
-                <!-- Line Chart -->
-                <div class="backtest-chart-container" style="height: 300px; position: relative;">
-                    <canvas id="macdBacktestChart"></canvas>
-                </div>
-                <!-- Backtest Metrics -->
-                <div class="backtest-metrics-panel" style="display: flex; flex-direction: column; justify-content: center; gap: 0.75rem; padding: 1.25rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: 12px;">
-                    <h4 style="margin: 0; font-size: 0.95rem; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.5px;">MACD Strategy Performance</h4>
-                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span>MACD Strategy CAGR:</span>
-                        <strong id="macd-bt-cagr" style="color: #f59e0b;">--</strong>
-                    </div>
-                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span>Benchmark CAGR:</span>
-                        <strong id="macd-bt-bench-cagr" style="color: #0ea5e9;">--</strong>
-                    </div>
-                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span>Ann. Sharpe Ratio:</span>
-                        <strong id="macd-bt-sharpe" style="color: #fbbf24;">--</strong>
-                    </div>
-                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span>Max Drawdown:</span>
-                        <strong id="macd-bt-drawdown" class="negative" style="color: #ef4444;">--</strong>
-                    </div>
-                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span>Win Rate:</span>
-                        <strong id="macd-bt-winrate" style="color: #10b981;">--</strong>
-                    </div>
-                    <div class="metric-row" style="display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.08); padding-bottom: 0.5rem; font-size: 0.9rem;">
-                        <span>Closed Trades:</span>
-                        <strong id="macd-bt-trades" style="color: #8f9cae;">--</strong>
-                    </div>
-                    <div class="metric-row" style="display: flex; justify-content: space-between; font-size: 0.9rem;">
-                        <span>Total Fees Paid:</span>
-                        <strong id="macd-bt-fees" style="color: #8f9cae;">--</strong>
-                    </div>
+                <div class="strategies-grid" id="strategies-card-grid">
+                    <!-- Cards dynamic generation -->
                 </div>
             </div>
-        </div>
-
-        <!-- Footer -->
-        <footer class="footer-info">
-            <p>Executed by Antigravity AI | Valuation Date: 2026-06-03 | Active Universe: S&P/BMV IPC Index</p>
-        </footer>
+        </main>
     </div>
 
-    <script src="index.js"></script>
+    <!-- Application Logic Javascript -->
+    <script src="app.js"></script>
 </body>
 </html>
