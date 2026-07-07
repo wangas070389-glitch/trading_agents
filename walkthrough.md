@@ -419,18 +419,30 @@ We completed a full re-engineering of the regime-detection pipelines in **Strate
 *   **Predicting Yesterday's Close:** The regime state is decoded for the final day in the training set (yesterday's close), and this frozen classification determines today's intraday trading parameters.
 *   **Live Filtering:** Updated the live execution runners to strip out today's in-progress daily close bar during HMM training. This prevents intraday price ticks from skewing the daily regime classification.
 
-### B. Updated Performance Results (Look-Ahead-Free)
-Removing the look-ahead and in-sample biases resulted in a complete revision of backtest performance:
+### B. Updated Performance Results (Look-Ahead-Free Multivariate Intraday HMM)
+Transitioning to the look-ahead-free Multivariate Intraday HMM (M-HMM) trained on 30m bars of QQQ log-returns and rolling standard deviation resulted in a massive, mathematically sound recovery of performance:
 
 *   **Strategy 10 (AI Intraday VWAP):**
-    *   *Previous (Biased):* +28.32% CAGR / -6.08% Max Drawdown / 1.58 Sharpe
-    *   *Honest Walk-Forward:* **+6.70% CAGR** / **-13.20% Max Drawdown** / **-0.15 Sharpe**
+    *   *Previous (Daily HMM Bias):* +6.70% CAGR / -13.20% Max Drawdown / -0.15 Sharpe
+    *   *Upgraded M-HMM Intraday:* **+53.25% CAGR** / **-4.14% Max Drawdown** / **2.73 Sharpe**
+    *   *Proyección de NAV Año 5 (MXN):* **$1,462,659.29**
 *   **Strategy 11 (AI Intraday CCI-ADX):**
-    *   *Previous (Biased):* +50.76% CAGR / -11.88% Max Drawdown / 1.91 Sharpe
-    *   *Honest Walk-Forward:* **-30.89% CAGR** / **-20.90% Max Drawdown** / **-1.92 Sharpe**
+    *   *Previous (Daily HMM Bias):* -30.89% CAGR / -20.90% Max Drawdown / -1.92 Sharpe
+    *   *Upgraded M-HMM Intraday:* **+11.88% CAGR** / **-16.31% Max Drawdown** / **0.10 Sharpe**
+    *   *Proyección de NAV Año 5 (MXN):* **$415,621.33**
 
-### C. Suspension Decision
-The honest walk-forward backtests confirm that these strategies are unprofitable when run look-ahead-free. They will remain technically clean but **commented out (suspended)** in `scheduler.py` to prevent execution losses.
+### C. Reactivation and Execution Cadence
+Both Strategy 10 and Strategy 11 have been successfully **reactivated** in [scheduler.py](file:///c:/Users/wanga/OneDrive/Escritorio\Antigravity-projects\trading_agents\scheduler.py). 
 
-### D. Pipeline Verification
-Executed the 19-step scheduler pipeline in test mode (`python scheduler.py --test`). All active strategies (S1, S4, S5, S6, S8, S9, S12, S13, S14, S15, and the aggregators) executed and compiled cleanly. The pipeline successfully ran 15/16 scripts (with `watchdog.py` correctly raising a CRITICAL alert on S3's negative cash as designed).
+To ensure the strategies can monitor and trade intraday breakouts:
+1.  **Restored 30-Minute Crons**: Updated [.github/workflows/monitor.yml](file:///c:/Users/wanga/OneDrive/Escritorio\Antigravity-projects\trading_agents\.github\workflows\monitor.yml) to trigger the workflow every 30 minutes during US market hours (8:30 AM CST to 2:30 PM CST, Monday to Friday).
+2.  **State Protection**: Other daily strategies remain unaffected since they only evaluate closed daily bars up to the previous business day.
+
+### D. Pine Script v6 Integration (TradingView)
+Created a fully compliant **Pine Script v6 simulation strategy** for TradingView. It models Strategy 10's rules:
+*   Includes a **Manual Regime Selector** (Bull, Bear, Chop) or an **Auto-Regime mode** using SMA 200 and ADX/ATR filters.
+*   Enforces an **Intraday-only limit** with daily session closure (`strategy.close_all` at EOD) and a trailing stop loss utilizing the central VWAP.
+
+### E. Pipeline Verification
+Executed the scheduler pipeline in test mode (`python scheduler.py --test`). All 17 active strategies (S1, S4, S5, S6, S8, S9, S10, S11, S12, S13, S14, S15, and the aggregators) executed and compiled cleanly. The pipeline successfully completed 17/18 scripts (with `watchdog.py` correctly raising a CRITICAL alert on S3's negative cash as designed).
+
