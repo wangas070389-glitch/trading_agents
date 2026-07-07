@@ -97,9 +97,9 @@ STRATEGY_KPIS = {
     "S10: AI Intraday VWAP": {
         "asset": "Leveraged Index ETFs (TQQQ)",
         "window": 60.0 / 365.0, # 60 days
-        "cagr": 0.2832,
-        "max_dd": -0.0608,
-        "sharpe": 1.58,
+        "cagr": 0.0670,
+        "max_dd": -0.1320,
+        "sharpe": -0.15,
         "turnover": "Intraday",
         "currency": "MXN",
         "is_live": True,
@@ -108,9 +108,9 @@ STRATEGY_KPIS = {
     "S11: AI Intraday CCI-ADX": {
         "asset": "Leveraged Index ETFs (TQQQ)",
         "window": 60.0 / 365.0, # 60 days
-        "cagr": 0.5076,
-        "max_dd": -0.1188,
-        "sharpe": 1.91,
+        "cagr": -0.3089,
+        "max_dd": -0.2090,
+        "sharpe": -1.92,
         "turnover": "Intraday",
         "currency": "MXN",
         "is_live": True,

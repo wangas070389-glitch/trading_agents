@@ -67,28 +67,7 @@ def main():
     spy_daily = yf.download("SPY", start="2024-05-01", end="2026-07-01", interval="1d", progress=False)
     spy_daily.columns = [c[0] if isinstance(c, tuple) else c for c in spy_daily.columns]
     spy_daily_returns = spy_daily["Close"].ffill().pct_change().dropna()
-    spy_rets_vals = spy_daily_returns.values.reshape(-1, 1)
-    
-    hmm = GaussianHMM(n_components=3, covariance_type="full", n_iter=100, random_state=42)
-    hmm.fit(spy_rets_vals)
-    regimes = hmm.predict(spy_rets_vals)
-    
-    state_means = [np.mean(spy_rets_vals[regimes == i]) for i in range(3)]
-    state_vols = [np.std(spy_rets_vals[regimes == i]) for i in range(3)]
-    
-    bear_state = np.argmax(state_vols)
-    rem = [i for i in range(3) if i != bear_state]
-    bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
-    
-    daily_regimes = {}
-    for date, state in zip(spy_daily_returns.index, regimes):
-        date_str = date.strftime("%Y-%m-%d")
-        if state == bull_state:
-            daily_regimes[date_str] = 0  # Bull
-        elif state == bear_state:
-            daily_regimes[date_str] = 1  # Bear
-        else:
-            daily_regimes[date_str] = 2  # Chop
+    pass
             
     # 2. Download Intraday QQQ, TQQQ, SQQQ 30-minute bars
     print("\nDownloading QQQ, TQQQ, SQQQ 30m intraday bars (60 days)...")
@@ -153,7 +132,31 @@ def main():
     trade_logs = []
     
     for date_str, group in grouped:
-        regime = daily_regimes.get(date_str, 2)
+        # Fit HMM dynamically on historical daily returns up to yesterday
+        cutoff_date = pd.to_datetime(date_str)
+        train_rets = spy_daily_returns[spy_daily_returns.index < cutoff_date]
+        if len(train_rets) < 100:
+            regime = 2
+        else:
+            train_vals = train_rets.values.reshape(-1, 1)
+            hmm = GaussianHMM(n_components=3, covariance_type="full", n_iter=100, random_state=42)
+            hmm.fit(train_vals)
+            regimes = hmm.predict(train_vals)
+            
+            state_means = [np.mean(train_vals[regimes == i]) for i in range(3)]
+            state_vols = [np.std(train_vals[regimes == i]) for i in range(3)]
+            
+            bear_state = np.argmax(state_vols)
+            rem = [i for i in range(3) if i != bear_state]
+            bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
+            
+            last_state = regimes[-1] # state at yesterday's close
+            if last_state == bull_state:
+                regime = 0
+            elif last_state == bear_state:
+                regime = 1
+            else:
+                regime = 2
         
         # Calculate daily variables
         cash = cash * (1.0 + rf_daily / 13.0)

@@ -196,7 +196,9 @@ def main():
         return
 
     # 4. HMM Regime Prediction
-    spy_returns = spy_daily["Close"].ffill().pct_change().dropna().values.reshape(-1, 1)
+    cutoff_date = datetime.date.today()
+    spy_daily_past = spy_daily[spy_daily.index.date < cutoff_date]
+    spy_returns = spy_daily_past["Close"].ffill().pct_change().dropna().values.reshape(-1, 1)
     hmm = GaussianHMM(n_components=3, covariance_type="full", n_iter=100, random_state=42)
     hmm.fit(spy_returns)
     regimes = hmm.predict(spy_returns)

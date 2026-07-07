@@ -1,5 +1,5 @@
 # Comprehensive Strategy KPI & Compounding Report
-**Report Compiled on:** 2026-07-05 | **Evidence-Quality Ranked**
+**Report Compiled on:** 2026-07-06 | **Evidence-Quality Ranked**
 
 ## 1. Evidence Quality Rank & 5-Year Projection Grid
 This table ranks strategies by **Evidence Quality Score** (`Sharpe * Backtest Window (Years)`), ensuring that 60-day in-sample strategies are properly contextualized behind long-window, walk-forward verified strategies.
@@ -19,8 +19,8 @@ This table ranks strategies by **Evidence Quality Score** (`Sharpe * Backtest Wi
 | **11. S5: Alternative Assets** | **3.80** | 4.00 | 0.95 | 18.40% | -15.20% | **$513,495.30** | $233,495.30 | +83.4% |
 | **12. S1: Adaptive Value** | **3.28** | 4.00 | 0.82 | 20.07% | -28.18% | **$541,687.84** | $261,687.84 | +93.5% |
 | **13. S9: AI Regime Stat-Arb** | **2.90** | 2.00 | 1.45 | 26.80% | -7.50% | **$669,753.18** | $389,753.18 | +139.2% |
-| **14. S11: AI Intraday CCI-ADX** | **0.31** | 0.16 | 1.91 | 50.76% | -11.88% | **$1,363,957.77** | $1,083,957.77 | +387.1% |
-| **15. S10: AI Intraday VWAP** | **0.26** | 0.16 | 1.58 | 28.32% | -6.08% | **$702,124.66** | $422,124.66 | +150.8% |
+| **14. S10: AI Intraday VWAP** | **-0.02** | 0.16 | -0.15 | 6.70% | -13.20% | **$350,336.38** | $70,336.38 | +25.1% |
+| **15. S11: AI Intraday CCI-ADX** | **-0.32** | 0.16 | -1.92 | -30.89% | -20.90% | **$99,110.79** | $-180,889.21 | -64.6% |
 
 ---
 
