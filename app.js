@@ -374,7 +374,7 @@ function renderNAVChart(selected) {
         const dateNavs = {};
         Object.keys(cachedHistory).forEach(stratKey => {
             const points = cachedHistory[stratKey];
-            const isUsd = ["strategy4", "alternatives", "high_beta", "portfolio_us_dcs", "portfolio_alternatives", "portfolio_high_beta"].includes(stratKey);
+            const isUsd = ["us_dcs", "us_stocks", "alternatives", "high_beta"].includes(stratKey);
             const rate = isUsd ? FX_RATE : 1.0;
             points.forEach(pt => {
                 const date = pt.ts.split(" ")[0];
@@ -406,12 +406,12 @@ function renderNAVChart(selected) {
     } else {
         chartTitle.textContent = `Evolución del NAV de ${selected} vs. S14 (HEDGE)`;
         const mapKeyMap = {
-            "S1": "portfolio",
+            "S1": "core",
             "S2": "macd",
-            "S3": "strategy3",
-            "S4": "portfolio_us_dcs",
-            "S5": "portfolio_alternatives",
-            "S6": "portfolio_high_beta",
+            "S3": "us_stocks",
+            "S4": "us_dcs",
+            "S5": "alternatives",
+            "S6": "high_beta",
             "S8": "dividends",
             "S9": "strategy9",
             "S10": "strategy10",
@@ -628,7 +628,7 @@ function renderTxNavChart(selected) {
         const dateNavs = {};
         Object.keys(cachedHistory).forEach(stratKey => {
             const points = cachedHistory[stratKey];
-            const isUsd = ["strategy4", "alternatives", "high_beta", "portfolio_us_dcs", "portfolio_alternatives", "portfolio_high_beta"].includes(stratKey);
+            const isUsd = ["us_dcs", "us_stocks", "alternatives", "high_beta"].includes(stratKey);
             const rate = isUsd ? FX_RATE : 1.0;
             points.forEach(pt => {
                 const date = pt.ts.split(" ")[0];
@@ -639,8 +639,8 @@ function renderTxNavChart(selected) {
         Object.assign(dateNavsMap, dateNavs);
     } else {
         const mapKeyMap = {
-            "S1": "portfolio", "S2": "macd", "S3": "strategy3", "S4": "portfolio_us_dcs",
-            "S5": "portfolio_alternatives", "S6": "portfolio_high_beta", "S8": "dividends",
+            "S1": "core", "S2": "macd", "S3": "us_stocks", "S4": "us_dcs",
+            "S5": "alternatives", "S6": "high_beta", "S8": "dividends",
             "S9": "strategy9", "S10": "strategy10", "S11": "strategy11", "S12": "strategy12",
             "S13": "strategy13", "S14": "strategy14", "S15": "strategy15"
         };
