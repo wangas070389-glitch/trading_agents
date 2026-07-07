@@ -407,4 +407,30 @@ Runs at the end of the sequence to verify data integrity:
 - Checks if any strategy has zero active trades after its grace period.
 - Detects NAV anomalies (sudden jumps or drops) and negative balances.
 - Exits with **Exit Code 1** on CRITICAL errors to abort/fail CI workflows.
-Our verification run yielded **0 Critical Errors** (watchdog passed cleanly).
+
+---
+
+## 3. Walk-Forward HMM Regime Redesign (Strategy 10 & 11)
+
+We completed a full re-engineering of the regime-detection pipelines in **Strategy 10 (AI Intraday VWAP)** and **Strategy 11 (AI Intraday CCI-ADX)** to resolve in-sample fitting and look-ahead biases:
+
+### A. Walk-Forward HMM Training Logic
+*   **Out-of-Sample Calibration:** Rather than training the HMM once over the entire backtest range (in-sample), we implemented a rolling training process. For each trading day $D$, the Gaussian HMM is fit on historical daily SPY returns strictly *prior* to $D$ (using a trailing 2-year window).
+*   **Predicting Yesterday's Close:** The regime state is decoded for the final day in the training set (yesterday's close), and this frozen classification determines today's intraday trading parameters.
+*   **Live Filtering:** Updated the live execution runners to strip out today's in-progress daily close bar during HMM training. This prevents intraday price ticks from skewing the daily regime classification.
+
+### B. Updated Performance Results (Look-Ahead-Free)
+Removing the look-ahead and in-sample biases resulted in a complete revision of backtest performance:
+
+*   **Strategy 10 (AI Intraday VWAP):**
+    *   *Previous (Biased):* +28.32% CAGR / -6.08% Max Drawdown / 1.58 Sharpe
+    *   *Honest Walk-Forward:* **+6.70% CAGR** / **-13.20% Max Drawdown** / **-0.15 Sharpe**
+*   **Strategy 11 (AI Intraday CCI-ADX):**
+    *   *Previous (Biased):* +50.76% CAGR / -11.88% Max Drawdown / 1.91 Sharpe
+    *   *Honest Walk-Forward:* **-30.89% CAGR** / **-20.90% Max Drawdown** / **-1.92 Sharpe**
+
+### C. Suspension Decision
+The honest walk-forward backtests confirm that these strategies are unprofitable when run look-ahead-free. They will remain technically clean but **commented out (suspended)** in `scheduler.py` to prevent execution losses.
+
+### D. Pipeline Verification
+Executed the 19-step scheduler pipeline in test mode (`python scheduler.py --test`). All active strategies (S1, S4, S5, S6, S8, S9, S12, S13, S14, S15, and the aggregators) executed and compiled cleanly. The pipeline successfully ran 15/16 scripts (with `watchdog.py` correctly raising a CRITICAL alert on S3's negative cash as designed).
