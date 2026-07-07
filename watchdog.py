@@ -230,6 +230,51 @@ def check_broker_reconciliation(dir_path, now):
         findings.append(Finding("OK", "broker", "W6", f"Reconciliado: cash ${cash:,.2f}, {len(positions) if isinstance(positions, list) else 0} posiciones"))
     return findings
 
+def get_active_strategies(dir_path):
+    active_map = {
+        "run_live_alpha_growth.py": "core",
+        "ingest_live_macd.py": "macd",
+        "run_live_alpaca_us_stocks.py": "us_stocks",
+        "run_live_alpaca_us_stocks_dcf.py": "us_dcs",
+        "run_live_alternatives.py": "alternatives",
+        "run_live_high_beta.py": "high_beta",
+        "run_live_dividends.py": "dividends",
+        "run_live_strategy9.py": "strategy9",
+        "run_live_strategy10.py": "strategy10",
+        "run_live_strategy11.py": "strategy11",
+        "run_live_strategy12.py": "strategy12",
+        "run_live_strategy13.py": "strategy13",
+        "run_live_strategy14.py": "strategy14",
+        "run_live_strategy15.py": "strategy15",
+    }
+    scheduler_path = os.path.join(dir_path, "scheduler.py")
+    if not os.path.exists(scheduler_path):
+        return set(active_map.values())
+    
+    active_strats = set()
+    try:
+        with open(scheduler_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        
+        match = re.search(r"STRATEGY_SCRIPTS\s*=\s*\[(.*?)\]", content, re.DOTALL)
+        if match:
+            list_block = match.group(1)
+            for line in list_block.split("\n"):
+                line_strip = line.strip()
+                if not line_strip or line_strip.startswith("#"):
+                    continue
+                if "#" in line_strip:
+                    line_strip = line_strip.split("#")[0].strip()
+                m_str = re.search(r"['\"](.*?)['\"]", line_strip)
+                if m_str:
+                    script = m_str.group(1)
+                    if script in active_map:
+                        active_strats.add(active_map[script])
+    except Exception as e:
+        print(f"Error parsing active strategies from scheduler.py: {e}")
+        return set(active_map.values())
+    return active_strats
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
@@ -246,6 +291,8 @@ def main():
         except Exception:
             nav_hist = {}
 
+    active_strats = get_active_strategies(dir_path)
+
     all_findings = []
     paths = sorted(glob.glob(os.path.join(dir_path, "portfolio_*.json")))
     core = os.path.join(dir_path, "portfolio.json")
@@ -256,6 +303,12 @@ def main():
             continue
         name = os.path.basename(p_path).replace("portfolio_", "").replace("portfolio", "core").replace(".json", "") or "core"
         f, nav_hist = check_strategy(name, p_path, dir_path, nav_hist, now)
+        
+        if name not in active_strats:
+            for finding in f:
+                if finding.level == "CRITICAL":
+                    finding.level = "WARNING"
+                    finding.msg = f"[INACTIVE STRATEGY] {finding.msg}"
         all_findings.extend(f)
 
     with open(hist_path, "w", encoding="utf-8") as f:
