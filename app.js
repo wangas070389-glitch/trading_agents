@@ -605,7 +605,7 @@ function filterTransactionsTable(query) {
     renderTransactionsTable(filtered);
 }
 
-// Render the new trades execution-point NAV chart in the transactions view
+// Render the new trades execution-point NAV chart in the transactions view with continuous daily dates and fluctuations
 function renderTxNavChart(selected) {
     if (!cachedHistory) return;
     const ctx = document.getElementById("txNavChart").getContext("2d");
@@ -621,12 +621,10 @@ function renderTxNavChart(selected) {
         dateTxs[date].push(tx);
     });
 
-    let labels = [];
-    let navValues = [];
+    const dateNavsMap = {};
     const currency = selected === "ALL" ? "MXN" : STRATEGY_METADATA[selected].currency;
 
     if (selected === "ALL") {
-        txChartTitle.textContent = "Historial Consolidado: NAV General y Puntos de Ejecución (Trades)";
         const dateNavs = {};
         Object.keys(cachedHistory).forEach(stratKey => {
             const points = cachedHistory[stratKey];
@@ -638,101 +636,160 @@ function renderTxNavChart(selected) {
                 dateNavs[date] += pt.nav * rate;
             });
         });
-        labels = Object.keys(dateNavs).sort();
-        navValues = labels.map(d => dateNavs[d]);
+        Object.assign(dateNavsMap, dateNavs);
     } else {
-        txChartTitle.textContent = `Evolución de ${selected} y Puntos de Ejecución (Trades)`;
         const mapKeyMap = {
-            "S1": "portfolio",
-            "S2": "macd",
-            "S3": "strategy3",
-            "S4": "portfolio_us_dcs",
-            "S5": "portfolio_alternatives",
-            "S6": "portfolio_high_beta",
-            "S8": "dividends",
-            "S9": "strategy9",
-            "S10": "strategy10",
-            "S11": "strategy11",
-            "S12": "strategy12",
-            "S13": "strategy13",
-            "S14": "strategy14",
-            "S15": "strategy15"
+            "S1": "portfolio", "S2": "macd", "S3": "strategy3", "S4": "portfolio_us_dcs",
+            "S5": "portfolio_alternatives", "S6": "portfolio_high_beta", "S8": "dividends",
+            "S9": "strategy9", "S10": "strategy10", "S11": "strategy11", "S12": "strategy12",
+            "S13": "strategy13", "S14": "strategy14", "S15": "strategy15"
         };
         const mappedKey = mapKeyMap[selected] || selected.toLowerCase();
         const selectedPoints = cachedHistory[mappedKey] || [];
-        labels = selectedPoints.map(pt => pt.ts.split(" ")[0]);
-        navValues = selectedPoints.map(pt => pt.nav);
+        selectedPoints.forEach(pt => {
+            const date = pt.ts.split(" ")[0];
+            dateNavsMap[date] = pt.nav;
+        });
     }
 
-    // Map point radius, colors, and styles according to transaction events on that date
+    const rawDates = Object.keys(dateNavsMap).sort();
+    if (rawDates.length === 0) return;
+
+    // Generate continuous date range
+    const minDateStr = rawDates[0];
+    const maxDateStr = rawDates[rawDates.length - 1];
+    
+    function generateDateRange(minD, maxD) {
+        const dates = [];
+        let curr = new Date(minD + "T00:00:00");
+        const end = new Date(maxD + "T00:00:00");
+        while (curr <= end) {
+            dates.push(curr.toISOString().split("T")[0]);
+            curr.setDate(curr.getDate() + 1);
+        }
+        return dates;
+    }
+    const allDates = generateDateRange(minDateStr, maxDateStr);
+
+    // Forward fill NAV values for missing dates (e.g. weekends)
+    let lastKnownNav = 0;
+    const continuousNavs = [];
+    const dailyChanges = [];
+
+    allDates.forEach((date, index) => {
+        if (dateNavsMap[date] !== undefined) {
+            lastKnownNav = dateNavsMap[date];
+        }
+        continuousNavs.push(lastKnownNav);
+        
+        if (index === 0) {
+            dailyChanges.push(0);
+        } else {
+            dailyChanges.push(continuousNavs[index] - continuousNavs[index - 1]);
+        }
+    });
+
+    // Color definitions for bars
+    const barColors = dailyChanges.map(change => change >= 0 ? 'rgba(16, 185, 129, 0.25)' : 'rgba(239, 68, 68, 0.25)');
+    const barBorderColors = dailyChanges.map(change => change >= 0 ? '#10b981' : '#ef4444');
+
+    // Build transaction highlights
     const pointRadii = [];
     const pointColors = [];
     const pointStyles = [];
 
-    labels.forEach((date, idx) => {
+    allDates.forEach(date => {
         const dayTxs = dateTxs[date];
         if (dayTxs && dayTxs.length > 0) {
             pointRadii.push(7);
-            
             const hasBuy = dayTxs.some(t => t.action === "BUY");
             const hasSell = dayTxs.some(t => t.action === "SELL");
 
             if (hasBuy && hasSell) {
-                pointColors.push('#f59e0b'); // Yellow/Orange mix
+                pointColors.push('#f59e0b');
                 pointStyles.push('rectRot');
             } else if (hasBuy) {
-                pointColors.push('#10b981'); // Emerald Green
+                pointColors.push('#10b981');
                 pointStyles.push('triangle');
             } else if (hasSell) {
-                pointColors.push('#ef4444'); // Rose Red
-                pointStyles.push('rectRot'); // Diamond style
+                pointColors.push('#ef4444');
+                pointStyles.push('rectRot');
             } else {
-                pointColors.push('#0ea5e9'); // Sweep yield/dividends (Blue)
+                pointColors.push('#0ea5e9');
                 pointStyles.push('circle');
             }
         } else {
-            pointRadii.push(1.5);
-            pointColors.push('rgba(255, 255, 255, 0.2)');
+            pointRadii.push(0);
+            pointColors.push('transparent');
             pointStyles.push('circle');
         }
     });
 
+    if (selected === "ALL") {
+        txChartTitle.textContent = "Historial Consolidado: NAV General y Puntos de Ejecución (Trades)";
+    } else {
+        txChartTitle.textContent = `Evolución de ${selected} y Puntos de Ejecución (Trades)`;
+    }
+
     txNavChartInstance = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
-            labels: labels,
-            datasets: [{
-                label: `NAV de Cartera (${currency})`,
-                data: navValues,
-                borderColor: '#64748b',
-                borderWidth: 1.5,
-                fill: false,
-                tension: 0.25,
-                pointRadius: pointRadii,
-                pointBackgroundColor: pointColors,
-                pointBorderColor: pointColors,
-                pointStyle: pointStyles,
-                pointHoverRadius: 9
-            }]
+            labels: allDates,
+            datasets: [
+                {
+                    type: 'line',
+                    label: `NAV de Cartera (${currency})`,
+                    data: continuousNavs,
+                    borderColor: '#38bdf8',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0.25,
+                    pointRadius: pointRadii,
+                    pointBackgroundColor: pointColors,
+                    pointBorderColor: pointColors,
+                    pointStyle: pointStyles,
+                    pointHoverRadius: 9,
+                    yAxisID: 'y'
+                },
+                {
+                    type: 'bar',
+                    label: `Cambio Diario (${currency})`,
+                    data: dailyChanges,
+                    backgroundColor: barColors,
+                    borderColor: barBorderColors,
+                    borderWidth: 1,
+                    yAxisID: 'yChange'
+                }
+            ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { display: false },
+                legend: { 
+                    display: true,
+                    position: 'top',
+                    labels: { color: '#94a3b8', font: { family: 'Outfit', size: 11 } }
+                },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
                             const index = context.dataIndex;
                             const date = context.chart.data.labels[index];
-                            const nav = context.raw;
-                            let label = `NAV: $${nav.toLocaleString("es-MX", {minimumFractionDigits: 2})} ${currency}`;
-
-                            if (dateTxs[date]) {
-                                const list = dateTxs[date].map(t => `${t.action} ${t.ticker} (${t.shares} shrs)`).join(' | ');
-                                label += ` [Trades: ${list}]`;
+                            const datasetIndex = context.datasetIndex;
+                            
+                            if (datasetIndex === 0) {
+                                const nav = context.raw;
+                                let label = `NAV: $${nav.toLocaleString("es-MX", {minimumFractionDigits: 2})} ${currency}`;
+                                if (dateTxs[date]) {
+                                    const list = dateTxs[date].map(t => `${t.action} ${t.ticker} (${t.shares} shrs)`).join(' | ');
+                                    label += ` [Trades: ${list}]`;
+                                }
+                                return label;
+                            } else {
+                                const change = context.raw;
+                                return `Cambio Diario: ${change >= 0 ? '+' : ''}$${change.toLocaleString("es-MX", {minimumFractionDigits: 2})} ${currency}`;
                             }
-                            return label;
                         }
                     }
                 }
@@ -743,16 +800,20 @@ function renderTxNavChart(selected) {
                     ticks: { color: '#64748b', font: { family: 'Outfit', size: 10 } }
                 },
                 y: {
+                    type: 'linear',
+                    position: 'left',
                     grid: { color: 'rgba(255, 255, 255, 0.03)' },
-                    ticks: { 
-                        color: '#64748b', 
-                        font: { family: 'Outfit', size: 10 },
-                        callback: function(value) {
-                            return value >= 1000 ? '$' + (value/1000).toFixed(0) + 'k' : '$' + value;
-                        }
-                    }
+                    ticks: { color: '#38bdf8', font: { family: 'Outfit', size: 10 } }
+                },
+                yChange: {
+                    type: 'linear',
+                    position: 'right',
+                    grid: { drawOnChartArea: false },
+                    ticks: { color: '#10b981', font: { family: 'Outfit', size: 10 } }
                 }
             }
         }
     });
 }
+
+
