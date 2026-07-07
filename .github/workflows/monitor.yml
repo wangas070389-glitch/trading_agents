@@ -6,9 +6,11 @@ on:
     - cron: '0 21 * * *'
     # Runs Monday to Friday, every 30 minutes during CST market hours (8:30 AM to 2:30 PM CST)
     # 8:30 AM CST = 14:30 UTC
-    # cadencia intradia retirada: S10/S11 suspendidas; el sistema decide 1x/dia
+    - cron: '30 14 * * 1-5'
     # 9:00 AM CST to 2:30 PM CST = 15:00 UTC to 20:30 UTC
-    - cron: '45 19 * * 1-5'   # 15:45 ET (verano): senal con cierres completos, ejecucion antes del cierre
+    - cron: '0,30 15-20 * * 1-5'
+    # 3:45 PM ET (19:45 UTC) - signal rebalancing before close
+    - cron: '45 19 * * 1-5'
   workflow_dispatch:
     # Allows you to manually trigger this run from the GitHub Actions tab
 
