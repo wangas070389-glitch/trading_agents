@@ -59,12 +59,14 @@ def calculate_adx(df, period=7):
 def main():
     dir_path = os.path.dirname(os.path.abspath(__file__))
     print("=" * 80)
-    print("STRATEGY 16: MULTI-ASSET HMM INTRADAY ROUTER BACKTEST")
+    print("STRATEGY 16-INVERSE: CONTRARIAN MULTI-ASSET HMM BACKTEST")
     print("=" * 80)
     
     universe = {
         "QQQ": {"bull": "TQQQ", "bear": "SQQQ"},
-        "SPY": {"bull": "UPRO", "bear": "SPXS"}
+        "SPY": {"bull": "UPRO", "bear": "SPXS"},
+        "SOXX": {"bull": "SOXL", "bear": "SOXS"},
+        "IWM": {"bull": "URTY", "bear": "SRTY"}
     }
     
     print("Downloading historical daily data (2 years) for HMM training...")
@@ -111,9 +113,6 @@ def main():
 
     INITIAL_NAV = 200000.0  # MXN
     TRANSACTION_FEE = 0.0029
-    MIN_CONFIDENCE_SCORE = 0.05  # Skip trading if best HMM score is below this
-    TRAIL_STOP_ATR = 3.0  # Trailing stop width in ATRs (EOD liquidation is the backstop)
-    MAX_TRADES_PER_DAY = 1  # Cap entries to limit fee churn
     
     cash = INITIAL_NAV
     portfolio_value = INITIAL_NAV
@@ -128,8 +127,7 @@ def main():
     print(f"\nSimulating {len(all_dates)} days of trading...")
     
     trade_logs = []
-    closed_trades = []  # per-trade PnL tagged by regime/exit for diagnostics
-
+    
     for date_str in all_dates:
         # 1. Daily HMM selection
         scores = {}
@@ -189,23 +187,12 @@ def main():
             target_asset = max(atr_vals, key=atr_vals.get)
             
         target_regime = regimes[target_asset]
-        target_score = scores[target_asset]
         target_df = intraday[target_asset]
         day_bars = target_df[target_df.index.strftime("%Y-%m-%d") == date_str]
         
         if day_bars.empty:
             continue
-
-        # Confidence gate: block new entries if best score is too low (exits still run)
-        low_confidence = target_score < MIN_CONFIDENCE_SCORE
-        if low_confidence and not active_pos:
-            # Flat with no clear signal -> stay in cash all day
-            portfolio_value = cash
-            nav_history.append(portfolio_value)
-            dates_list.append(date_str)
-            continue
-
-
+            
         # 2. Intraday Trading simulation on the locked target
         bull_etf = universe[target_asset]["bull"]
         bear_etf = universe[target_asset]["bear"]
@@ -214,9 +201,7 @@ def main():
         cum_pv = ((day_bars["High_base"] + day_bars["Low_base"] + day_bars["Close_base"]) / 3.0 * day_bars["Volume_base"]).sum()
         cum_vol = day_bars["Volume_base"].sum()
         vwap_base = cum_pv / cum_vol if cum_vol > 0 else float(day_bars["Close_base"].iloc[0])
-
-        trades_today = 0
-
+        
         for idx in range(len(day_bars)):
             time_val = day_bars.index[idx]
             is_eod = time_val.time() >= datetime.time(15, 30)
@@ -244,8 +229,8 @@ def main():
                 curr_price = close_bull if side == "long" else close_bear
                 active_pos["peak_price"] = max(active_pos.get("peak_price", curr_price), curr_price)
                 
-                # Trailing stop (EOD liquidation is the backstop)
-                stop_threshold = active_pos["peak_price"] - TRAIL_STOP_ATR * (atr_bull if side == "long" else atr_bear)
+                # S10 Stop-out: 1.5 * ATR trailing
+                stop_threshold = active_pos["peak_price"] - 1.5 * (atr_bull if side == "long" else atr_bear)
                 is_stop_out = curr_price < stop_threshold
                 
                 # Settle Condition
@@ -268,19 +253,27 @@ def main():
                     cash += val * (1.0 - TRANSACTION_FEE)
                     exit_reason = "TRAILING_STOP" if is_stop_out else ("VWAP_REVERSION" if is_settled else "EOD_LIQUIDATION")
                     trade_logs.append(f"  EXIT: {active_pos['ticker']} ({side}) at {time_val.strftime('%H:%M')} via {exit_reason} (Cash: ${cash:,.2f})")
-                    closed_trades.append({
-                        "regime": active_pos["regime"],
-                        "ticker": active_pos["ticker"],
-                        "exit": exit_reason,
-                        "pnl": val * (1.0 - TRANSACTION_FEE) - active_pos["cost"],
-                        "notional": active_pos["cost"] + val
-                    })
                     active_pos = None
                     
-            # Entry triggers (only if flat, confident, under daily trade cap, and not EOD)
-            if not active_pos and not is_eod and not low_confidence and trades_today < MAX_TRADES_PER_DAY:
+            # Entry triggers (only if flat and not EOD)
+            if not active_pos and not is_eod:
                 if target_regime == 0:
-                    # Bull Trend -> Buy Bull ETF on pullback
+                    # INVERTED: Bull Trend decoded -> Fade it, buy Bear ETF
+                    if cci_bear < -100.0 and adx_bear > 20.0:
+                        alloc = cash * 0.90
+                        shares = alloc / (close_bear * (1.0 + TRANSACTION_FEE))
+                        if shares > 0.01:
+                            cash -= alloc
+                            active_pos = {
+                                "ticker": bear_etf,
+                                "side": "short",
+                                "shares": shares,
+                                "buy_price": close_bear,
+                                "peak_price": close_bear
+                            }
+                            trade_logs.append(f"  ENTRY: {bear_etf} (INVERSE short) at {time_val.strftime('%H:%M')} (Regime: Bull {target_asset} -> FADE)")
+                elif target_regime == 1:
+                    # INVERTED: Bear Trend decoded -> Fade it, buy Bull ETF
                     if cci_bull < -100.0 and adx_bull > 20.0:
                         alloc = cash * 0.90
                         shares = alloc / (close_bull * (1.0 + TRANSACTION_FEE))
@@ -291,35 +284,14 @@ def main():
                                 "side": "long",
                                 "shares": shares,
                                 "buy_price": close_bull,
-                                "peak_price": close_bull,
-                                "cost": alloc,
-                                "regime": "BULL_TREND"
+                                "peak_price": close_bull
                             }
-                            trades_today += 1
-                            trade_logs.append(f"  ENTRY: {bull_etf} (long) at {time_val.strftime('%H:%M')} (Regime: Bull {target_asset})")
-                elif target_regime == 1:
-                    # Bear Trend -> Buy Bear ETF on rally
-                    if cci_bear < -100.0 and adx_bear > 20.0:
-                        alloc = cash * 0.50
-                        shares = alloc / (close_bear * (1.0 + TRANSACTION_FEE))
-                        if shares > 0.01:
-                            cash -= alloc
-                            active_pos = {
-                                "ticker": bear_etf,
-                                "side": "short",
-                                "shares": shares,
-                                "buy_price": close_bear,
-                                "peak_price": close_bear,
-                                "cost": alloc,
-                                "regime": "BEAR_TREND"
-                            }
-                            trades_today += 1
-                            trade_logs.append(f"  ENTRY: {bear_etf} (short) at {time_val.strftime('%H:%M')} (Regime: Bear {target_asset})")
+                            trade_logs.append(f"  ENTRY: {bull_etf} (INVERSE long) at {time_val.strftime('%H:%M')} (Regime: Bear {target_asset} -> FADE)")
                 else:
                     # Chop Regime -> VWAP Mean Reversion
                     if close_base < lower_band:
                         # Buy Bull ETF
-                        alloc = cash * 0.50
+                        alloc = cash * 0.90
                         shares = alloc / (close_bull * (1.0 + TRANSACTION_FEE))
                         if shares > 0.01:
                             cash -= alloc
@@ -328,15 +300,12 @@ def main():
                                 "side": "long",
                                 "shares": shares,
                                 "buy_price": close_bull,
-                                "peak_price": close_bull,
-                                "cost": alloc,
-                                "regime": "CHOP_LONG"
+                                "peak_price": close_bull
                             }
-                            trades_today += 1
                             trade_logs.append(f"  ENTRY: {bull_etf} (long reversion) at {time_val.strftime('%H:%M')} (Regime: Chop {target_asset})")
                     elif close_base > upper_band:
                         # Buy Bear ETF
-                        alloc = cash * 0.50
+                        alloc = cash * 0.90
                         shares = alloc / (close_bear * (1.0 + TRANSACTION_FEE))
                         if shares > 0.01:
                             cash -= alloc
@@ -345,11 +314,8 @@ def main():
                                 "side": "short",
                                 "shares": shares,
                                 "buy_price": close_bear,
-                                "peak_price": close_bear,
-                                "cost": alloc,
-                                "regime": "CHOP_SHORT"
+                                "peak_price": close_bear
                             }
-                            trades_today += 1
                             trade_logs.append(f"  ENTRY: {bear_etf} (short reversion) at {time_val.strftime('%H:%M')} (Regime: Chop {target_asset})")
 
         # Track EOD NAV
@@ -383,33 +349,17 @@ def main():
     print(f"Max Drawdown    : {max_dd:.2f}%")
     print("=" * 80)
 
-    # Diagnostic: PnL breakdown by regime and exit reason
-    if closed_trades:
-        tdf = pd.DataFrame(closed_trades)
-        print("\nPnL BY REGIME:")
-        by_regime = tdf.groupby("regime")["pnl"].agg(["count", "sum", "mean"])
-        by_regime["win_rate"] = tdf.groupby("regime")["pnl"].apply(lambda s: (s > 0).mean() * 100.0)
-        print(by_regime.round(2).to_string())
-        print("\nPnL BY EXIT REASON:")
-        by_exit = tdf.groupby("exit")["pnl"].agg(["count", "sum", "mean"])
-        by_exit["win_rate"] = tdf.groupby("exit")["pnl"].apply(lambda s: (s > 0).mean() * 100.0)
-        print(by_exit.round(2).to_string())
-        est_fees = (tdf["notional"] * TRANSACTION_FEE / (1.0 + TRANSACTION_FEE)).sum()
-        print(f"\nTotal trades: {len(tdf)}, Total PnL: ${tdf['pnl'].sum():,.2f}, Est. fees paid: ${est_fees:,.2f}")
-
     # Save to CSV
     nav_df = pd.DataFrame({"NAV": nav_series})
     nav_df.to_csv(os.path.join(dir_path, "strategy16_backtest_nav.csv"))
     print(f"Saved backtest curve to strategy16_backtest_nav.csv")
     
     # Write report
-    instruments_str = ", ".join(universe.keys())
-    tradables_str = ", ".join(f"{v['bull']}/{v['bear']}" for v in universe.values())
     report = (
         f"# Strategy 16 Backtest Report\n\n"
         f"**Strategy Name**: Multi-Asset HMM Intraday Router\n"
-        f"**Underlying Instruments**: {instruments_str}\n"
-        f"**Leveraged Tradables**: {tradables_str}\n\n"
+        f"**Underlying Instruments**: QQQ, SPY, SOXX, IWM\n"
+        f"**Leveraged Tradables**: TQQQ/SQQQ, UPRO/SPXS, SOXL/SOXS, URTY/SRTY\n\n"
         f"### Performance Metrics\n"
         f"* **Total Return**: {total_return:+.2f}%\n"
         f"* **Annualized Sharpe**: {sharpe:.2f}\n"
