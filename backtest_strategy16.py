@@ -243,7 +243,7 @@ def main():
                     # Settle when CCI crosses zero line during Trends
                     if side == "long" and cci_bull >= 0.0:
                         is_settled = True
-                    elif side == "short" and cci_bear >= 0.0: # SQQQ CCI crosses zero
+                    elif side == "short" and cci_bear >= 0.0:
                         is_settled = True
                         
                 if is_stop_out or is_settled or is_eod:

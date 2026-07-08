@@ -5,7 +5,7 @@
 **Leveraged Tradables**: TQQQ/SQQQ, UPRO/SPXS, SOXL/SOXS, URTY/SRTY
 
 ### Performance Metrics
-* **Total Return**: -11.29%
-* **Annualized Sharpe**: -1.27
-* **Maximum Drawdown**: -18.29%
+* **Total Return**: -35.81%
+* **Annualized Sharpe**: -6.70
+* **Maximum Drawdown**: -36.52%
 * **Backtest Period**: 2026-04-10 to 2026-07-07 (60 trading days)

@@ -331,7 +331,7 @@ def main():
         stop_threshold = active_pos["peak_price"] - 1.5 * atr_exec
         is_stop_out = current_price < stop_threshold
         
-        # Settle condition
+        # Settle condition (CCI zero-cross for trends, VWAP for chop)
         is_settled = False
         if target_regime == 2:
             if (side == "long" and close_base >= vwap_base) or (side == "short" and close_base <= vwap_base):
@@ -368,7 +368,7 @@ def main():
             else:
                 action_logs.append(f"EOD holding position in {ticker} overnight due to strong close.")
 
-    # Entry triggers (if flat and not EOD)
+    # Entry triggers (if flat and not EOD) — CCI/ADX confirmed pullback entries
     if not active_pos and not is_eod:
         if target_regime == 0:
             # Bull regime entry on bull ticker pullback
