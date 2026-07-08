@@ -267,7 +267,18 @@ def main():
             nav_local = nav_local + cash_usd * usd_mxn_rate
             cash_local = cash_local + cash_usd * usd_mxn_rate
 
-        total_cap = data.get("total_capital", 200000.0) if currency == "MXN" else data.get("total_capital", 100000.0)
+        if key in [
+            "S9: AI Regime Stat-Arb",
+            "S10: AI Intraday VWAP",
+            "S11: AI Intraday CCI-ADX",
+            "S12: Vol-Targeted Trend (VTTL)",
+            "S13: Risk Appetite (CARA)",
+            "S14: Aggregator (HEDGE)",
+            "S15: Tracker (TRACK)"
+        ]:
+            total_cap = 200000.0
+        else:
+            total_cap = data.get("total_capital", 200000.0) if currency == "MXN" else data.get("total_capital", 100000.0)
         
         # Adjust S3 to prevent negative deployed capital reporting ghost
         if key == "S3: US Stock Momentum":

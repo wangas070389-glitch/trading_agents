@@ -169,7 +169,7 @@ def main():
     # Parse S9
     s9_market_val = s9_cash = s9_invested = 0.0
     if port_strategy9:
-        s9_total_cap = port_strategy9.get("total_capital", 200000.0)
+        s9_total_cap = 200000.0
         s9_cash = port_strategy9.get("cash_balance", 200000.0)
         s9_invested = sum(float(h.get("allocated", h["shares"] * h["buy_price"])) for h in port_strategy9.get("holdings", []))
         s9_market_val = s9_cash + sum(h["shares"] * h.get("last_price", h["buy_price"]) for h in port_strategy9.get("holdings", []) if "shares" in h)
@@ -184,7 +184,7 @@ def main():
     # Parse S10
     s10_market_val = s10_cash = s10_invested = 0.0
     if port_strategy10:
-        s10_total_cap = port_strategy10.get("total_capital", 200000.0)
+        s10_total_cap = 200000.0
         s10_cash = port_strategy10.get("cash_balance", 200000.0)
         s10_invested = sum(float(h.get("allocated", h["shares"] * h["buy_price"])) for h in port_strategy10.get("holdings", []))
         s10_market_val = s10_cash
@@ -204,7 +204,7 @@ def main():
     # Parse S11
     s11_market_val = s11_cash = s11_invested = 0.0
     if port_strategy11:
-        s11_total_cap = port_strategy11.get("total_capital", 200000.0)
+        s11_total_cap = 200000.0
         s11_cash = port_strategy11.get("cash_balance", 200000.0)
         s11_invested = sum(float(h.get("allocated", h["shares"] * h["buy_price"])) for h in port_strategy11.get("holdings", []))
         s11_market_val = s11_cash
@@ -224,7 +224,7 @@ def main():
     # Parse S12
     s12_market_val = s12_cash = s12_invested = 0.0
     if port_strategy12:
-        s12_total_cap = port_strategy12.get("total_capital", 200000.0)
+        s12_total_cap = 200000.0
         s12_cash = port_strategy12.get("cash_balance", 200000.0)
         s12_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy12.get("holdings", []))
         s12_market_val = s12_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_strategy12.get("holdings", []))
@@ -239,7 +239,7 @@ def main():
     # Parse S13
     s13_market_val = s13_cash = s13_invested = 0.0
     if port_strategy13:
-        s13_total_cap = port_strategy13.get("total_capital", 200000.0)
+        s13_total_cap = 200000.0
         s13_cash_mxn = port_strategy13.get("cash_balance_mxn", 200000.0)
         s13_cash_usd = port_strategy13.get("cash_balance_usd", 0.0)
         # We will parse exchange rate from multi-strategy or use default 17.43 to evaluate S13 cash_usd
@@ -259,7 +259,7 @@ def main():
     # Parse S14
     s14_market_val = s14_cash = s14_invested = 0.0
     if port_strategy14:
-        s14_total_cap = port_strategy14.get("total_capital", 200000.0)
+        s14_total_cap = 200000.0
         s14_cash_mxn = port_strategy14.get("cash_balance_mxn", 200000.0)
         s14_cash_usd = port_strategy14.get("cash_balance_usd", 0.0)
         s14_cash = s14_cash_mxn + s14_cash_usd * usd_mxn_rate
@@ -276,7 +276,7 @@ def main():
     # Parse S15
     s15_market_val = s15_cash = s15_invested = 0.0
     if port_strategy15:
-        s15_total_cap = port_strategy15.get("total_capital", 200000.0)
+        s15_total_cap = 200000.0
         s15_cash_mxn = port_strategy15.get("cash_balance_mxn", 200000.0)
         s15_cash_usd = port_strategy15.get("cash_balance_usd", 0.0)
         s15_cash = s15_cash_mxn + s15_cash_usd * usd_mxn_rate

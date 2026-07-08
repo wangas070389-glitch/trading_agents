@@ -1,5 +1,5 @@
 # Daily Strategy Performance Comparison Report
-**Report Generated At:** 2026-07-07 22:12:59
+**Report Generated At:** 2026-07-07 21:12:43
 
 ## 1. Executive Performance Summary
 | Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |
@@ -11,13 +11,13 @@
 | **S5: Alternative Assets** | $101,136.69 | $50,773.52 | $50,081.25 | 49.5% | +$2,749.30 | +2.79% | 2026-06-23 | USD |
 | **S6: High-Beta Momentum** | $101,049.41 | $101,049.41 | $0.00 | 0.0% | +$0.00 | +0.00% | 2026-06-23 | USD |
 | **S8: Dividend Quality** | $200,493.75 | $39,579.15 | $160,000.00 | 79.8% | +$493.75 | +0.25% | 2026-06-25 | MXN |
-| **S9: AI Regime Stat-Arb** | $195,735.99 | $195,735.99 | $0.00 | 0.0% | +$0.00 | +0.00% | 2026-06-30 | MXN |
-| **S10: AI Intraday VWAP** | $200,173.55 | $200,173.55 | $0.00 | 0.0% | +$0.00 | +0.00% | 2026-07-02 | MXN |
-| **S11: AI Intraday CCI-ADX** | $202,132.93 | $202,132.93 | $0.00 | 0.0% | +$0.00 | +0.00% | 2026-07-02 | MXN |
-| **S12: Vol-Targeted Trend (VTTL)** | $199,573.15 | $161,655.41 | $38,402.39 | 19.2% | $-0.00 | -0.00% | 2026-07-06 | MXN |
-| **S13: Risk Appetite (CARA)** | $199,575.30 | $161,655.40 | $38,402.39 | 19.2% | +$0.00 | +0.00% | 2026-07-06 | MXN |
-| **S14: Aggregator (HEDGE)** | $199,623.58 | $169,694.44 | $30,304.75 | 15.2% | $-140.94 | -0.07% | 2026-07-06 | MXN |
-| **S15: Tracker (TRACK)** | $199,616.65 | $169,691.03 | $30,304.78 | 15.2% | $-140.97 | -0.07% | 2026-07-06 | MXN |
+| **S9: AI Regime Stat-Arb** | $195,735.99 | $195,735.99 | $0.00 | 0.0% | $-4,264.01 | -2.13% | 2026-06-30 | MXN |
+| **S10: AI Intraday VWAP** | $200,173.55 | $200,173.55 | $0.00 | 0.0% | +$173.55 | +0.09% | 2026-07-02 | MXN |
+| **S11: AI Intraday CCI-ADX** | $202,132.93 | $202,132.93 | $0.00 | 0.0% | +$2,132.93 | +1.07% | 2026-07-02 | MXN |
+| **S12: Vol-Targeted Trend (VTTL)** | $199,573.15 | $161,655.41 | $38,402.39 | 19.2% | $-426.85 | -0.21% | 2026-07-06 | MXN |
+| **S13: Risk Appetite (CARA)** | $199,575.30 | $161,655.40 | $38,402.39 | 19.2% | $-424.70 | -0.21% | 2026-07-06 | MXN |
+| **S14: Aggregator (HEDGE)** | $199,623.58 | $169,694.44 | $30,304.75 | 15.2% | $-376.42 | -0.19% | 2026-07-06 | MXN |
+| **S15: Tracker (TRACK)** | $199,616.65 | $169,691.03 | $30,304.78 | 15.2% | $-383.35 | -0.19% | 2026-07-06 | MXN |
 | **Strategy 7 (Consolidated Core)** | $394,879.13 | $302,391.17 | $92,487.96 | 23.4% | +$10,879.13 | +2.83% | 2026-07-02 | USD |
 
 *Note: CARA (S13) is retired standalone and survives only as an expert sleeve in S14/S15. Strategy 7 consolidated values represent all strategies rebalanced dynamically under risk parity.*
