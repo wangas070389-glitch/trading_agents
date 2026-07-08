@@ -45,4 +45,6 @@
 | 2026-07-07 | BONDIA | INTEREST | 1.0000 | $1.6620 | $0.00 | $1.66 | Accrued interest on sweep balance |
 | 2026-07-07 | BONDIA | INTEREST | 1.0000 | $0.1088 | $0.00 | $0.11 | Accrued interest on sweep balance |
 | 2026-07-07 | BONDIA | INTEREST | 1.0000 | $1.4897 | $0.00 | $1.49 | Accrued interest on sweep balance |
+| 2026-07-08 | BONDIA | INTEREST | 1.0000 | $10.2648 | $0.00 | $10.26 | Accrued interest on sweep balance |
+| 2026-07-08 | SPY | BUY | 13.0000 | $13078.3452 | $493.05 | $-170,511.54 | Bull regime allocation |
 ---
