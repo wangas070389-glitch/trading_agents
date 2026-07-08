@@ -1,6 +1,6 @@
 {
   "total_capital": 200000.0,
-  "cash_balance": 39586.18,
+  "cash_balance": 39586.32,
   "holdings": [
     {
       "ticker": "GFNORTEO.MX",
@@ -27,10 +27,10 @@
       "ticker": "PG",
       "shares": 15.480284315018704,
       "buy_price": 2583.9318701138254,
-      "last_price": 2605.1619381408673,
+      "last_price": 2607.790062269836,
       "target_weight": 0.2
     }
   ],
-  "last_updated": "2026-07-08 21:41:27",
+  "last_updated": "2026-07-08 22:08:53",
   "last_rebalance_date": "2026-07-01"
 }
