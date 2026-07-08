@@ -15,7 +15,7 @@ const STRATEGY_METADATA = {
     "S15": { name: "Tracker (TRACK)", file: "portfolio_strategy15.json", tx_file: "transactions_strategy15.md", currency: "MXN", active: true, assets: "S12, S13 + BONDIA", cagr: "15.05%", sharpe: "0.53", maxdd: "-14.73%" }
 };
 
-const FX_RATE = 20.0;
+let FX_RATE = 17.5;
 let cachedPortfolios = {};
 let cachedHistory = null;
 let parsedTransactions = [];
@@ -33,22 +33,42 @@ document.addEventListener("DOMContentLoaded", () => {
 // Setup tab navigation and filter dropdown listeners
 function initializeNavigation() {
     const tabDashboard = document.getElementById("tab-dashboard");
+    const tabPerformance = document.getElementById("tab-performance");
     const tabTransactions = document.getElementById("tab-transactions");
+    
     const dashboardView = document.getElementById("dashboard-view");
+    const performanceView = document.getElementById("performance-view");
     const transactionsView = document.getElementById("transactions-view");
 
     tabDashboard.addEventListener("click", () => {
         tabDashboard.classList.add("active");
+        tabPerformance.classList.remove("active");
         tabTransactions.classList.remove("active");
+        
         dashboardView.classList.remove("hidden");
+        performanceView.classList.add("hidden");
         transactionsView.classList.add("hidden");
+    });
+
+    tabPerformance.addEventListener("click", () => {
+        tabPerformance.classList.add("active");
+        tabDashboard.classList.remove("active");
+        tabTransactions.classList.remove("active");
+        
+        performanceView.classList.remove("hidden");
+        dashboardView.classList.add("hidden");
+        transactionsView.classList.add("hidden");
+        renderPerformanceHeatmap();
     });
 
     tabTransactions.addEventListener("click", () => {
         tabTransactions.classList.add("active");
         tabDashboard.classList.remove("active");
+        tabPerformance.classList.remove("active");
+        
         transactionsView.classList.remove("hidden");
         dashboardView.classList.add("hidden");
+        performanceView.classList.add("hidden");
         loadTransactionsData();
     });
 
@@ -58,6 +78,8 @@ function initializeNavigation() {
         updateUIForSelectedStrategy(selected);
         if (!transactionsView.classList.contains("hidden")) {
             loadTransactionsData();
+        } else if (!performanceView.classList.contains("hidden")) {
+            renderPerformanceHeatmap();
         }
     });
 
@@ -90,6 +112,20 @@ function checkHaltStatus() {
 
 // Load and aggregate data
 async function loadDashboardData() {
+    // Dynamic FX rate fetch
+    try {
+        const fxRes = await fetch("https://open.er-api.com/v6/latest/USD");
+        if (fxRes.ok) {
+            const fxData = await fxRes.json();
+            if (fxData && fxData.rates && fxData.rates.MXN) {
+                FX_RATE = fxData.rates.MXN;
+                console.log("Dynamic USD/MXN rate loaded:", FX_RATE);
+            }
+        }
+    } catch (e) {
+        console.warn("Failed to fetch dynamic FX rate, using fallback:", FX_RATE);
+    }
+
     const promises = Object.keys(STRATEGY_METADATA).map(async (key) => {
         const metadata = STRATEGY_METADATA[key];
         try {
@@ -173,8 +209,19 @@ function updateUIForSelectedStrategy(selected) {
 
         const rate = metadata.currency === "USD" ? FX_RATE : 1.0;
         const cashVal = data.cash_balance || 0;
-        const navVal = data.total_capital || data.total_portfolio_value || cashVal;
-        const investedVal = navVal - cashVal;
+        
+        let holdingsVal = 0;
+        if (data.holdings) {
+            data.holdings.forEach(pos => {
+                const shares = pos.shares || 0;
+                const buyPrice = pos.buy_price || pos.average_price || 0;
+                const lastPrice = pos.last_price || pos.current_price || buyPrice;
+                holdingsVal += shares * lastPrice;
+            });
+        }
+        
+        const navVal = cashVal + holdingsVal;
+        const investedVal = holdingsVal;
 
         navMxn += navVal * rate;
         cashMxn += cashVal * rate;
@@ -280,10 +327,29 @@ function renderStrategiesGrid() {
 
         if (data) {
             const cash = data.cash_balance || 0;
-            nav = data.total_capital || data.total_portfolio_value || cash;
+            let holdingsVal = 0;
+            if (data.holdings) {
+                data.holdings.forEach(pos => {
+                    const shares = pos.shares || 0;
+                    const buyPrice = pos.buy_price || pos.average_price || 0;
+                    const lastPrice = pos.last_price || pos.current_price || buyPrice;
+                    holdingsVal += shares * lastPrice;
+                });
+            }
+            nav = cash + holdingsVal;
             lastUpdated = data.last_updated || "Hoy";
 
-            const initial = metadata.currency === "USD" ? 100000.0 : 200000.0;
+            let initial = 200000.0;
+            if (key === "S1" || key === "S2") {
+                initial = 20000.0;
+            } else if (key === "S4" || key === "S5" || key === "S6") {
+                initial = data.total_capital || 100000.0;
+            } else if (key === "S3") {
+                initial = 100000.0;
+            } else {
+                initial = 200000.0;
+            }
+
             const profit = nav - initial;
             roi = `${profit >= 0 ? "+" : ""}${((profit / initial) * 100).toFixed(2)}%`;
         }
@@ -525,21 +591,37 @@ async function loadTransactionsData() {
             
             const lines = text.split("\n");
             lines.forEach(line => {
-                if (line.trim().startsWith("|") && !line.includes("Action") && !line.includes("---")) {
+                if (line.trim().startsWith("|") && !line.includes("Action") && !line.includes("---") && !line.includes("Ticker")) {
                     const cols = line.split("|").map(col => col.trim());
-                    if (cols.length >= 10 && cols[1] && cols[1] !== "") {
-                        parsedTransactions.push({
-                            date: cols[1],
-                            ticker: cols[2],
-                            strategy: key,
-                            action: cols[3],
-                            shares: cols[4],
-                            price: cols[5],
-                            netImpact: cols[6],
-                            orderType: cols[7],
-                            status: cols[8],
-                            note: cols[9] || "-"
-                        });
+                    if (cols.length >= 9 && cols[1] && cols[1] !== "") {
+                        const isFormatB = ["S9", "S10", "S11", "S12", "S13", "S14", "S15"].includes(key) || cols.length < 11;
+                        if (isFormatB) {
+                            parsedTransactions.push({
+                                date: cols[1],
+                                ticker: cols[2],
+                                strategy: key,
+                                action: cols[3],
+                                shares: cols[4],
+                                price: cols[5],
+                                netImpact: cols[7],
+                                orderType: "Market",
+                                status: "FILLED",
+                                note: cols[8] || "-"
+                            });
+                        } else {
+                            parsedTransactions.push({
+                                date: cols[1],
+                                ticker: cols[2],
+                                strategy: key,
+                                action: cols[3],
+                                shares: cols[4],
+                                price: cols[5],
+                                netImpact: cols[6],
+                                orderType: cols[7] || "Market",
+                                status: cols[8] || "FILLED",
+                                note: cols[9] || "-"
+                            });
+                        }
                     }
                 }
             });
@@ -569,8 +651,12 @@ function renderTransactionsTable(txs) {
     txs.forEach(tx => {
         const tr = document.createElement("tr");
         let opClass = "badge-usd";
-        if (tx.action === "BUY") opClass = "badge-strat";
-        else if (tx.action === "SELL") opClass = "badge";
+        const act = tx.action.toUpperCase();
+        if (act.includes("BUY") || act.includes("ENTER")) {
+            opClass = "badge-strat";
+        } else if (act.includes("SELL") || act.includes("SETTLE") || act.includes("EXIT")) {
+            opClass = "badge";
+        }
 
         tr.innerHTML = `
             <td>${tx.date}</td>
@@ -813,6 +899,177 @@ function renderTxNavChart(selected) {
                 }
             }
         }
+    });
+}
+
+// === PERFORMANCE HEATMAP & RETURN METRICS INTERACTIVE GENERATION ===
+
+function getHeatmapColor(val) {
+    if (val === null || val === undefined || isNaN(val)) return 'rgba(255, 255, 255, 0.02)';
+    const maxVal = 5.0; // 5% caps full green or red intensity
+    const intensity = Math.min(Math.abs(val) / maxVal, 1.0);
+    if (val >= 0) {
+        return `rgba(16, 185, 129, ${0.05 + intensity * 0.45})`;
+    } else {
+        return `rgba(239, 68, 68, ${0.05 + intensity * 0.45})`;
+    }
+}
+
+function getSharpeColor(val) {
+    if (val === null || val === undefined || isNaN(val)) return 'rgba(255, 255, 255, 0.02)';
+    if (val >= 2.0) return 'rgba(16, 185, 129, 0.45)';
+    if (val >= 1.0) return 'rgba(16, 185, 129, 0.25)';
+    if (val >= 0.0) return 'rgba(239, 68, 68, 0.15)';
+    return 'rgba(239, 68, 68, 0.4)';
+}
+
+function getMaxDDColor(valStr) {
+    if (!valStr) return 'rgba(255, 255, 255, 0.02)';
+    const val = parseFloat(valStr.replace('%', ''));
+    if (isNaN(val)) return 'rgba(255, 255, 255, 0.02)';
+    const absVal = Math.abs(val);
+    if (absVal <= 5) return 'rgba(16, 185, 129, 0.15)';
+    if (absVal <= 15) return 'rgba(239, 68, 68, 0.15)';
+    return 'rgba(239, 68, 68, 0.4)';
+}
+
+function calculateHistoricalReturn(stratKey, daysAgo) {
+    if (!cachedHistory) return 0.0;
+    const points = cachedHistory[stratKey];
+    if (!points || points.length < 2) return 0.0;
+
+    const latestPt = points[points.length - 1];
+    const latestNav = latestPt.nav;
+    const latestTime = new Date(latestPt.ts);
+
+    // Find point closest to latestTime - daysAgo
+    const targetTime = new Date(latestTime.getTime() - daysAgo * 24 * 60 * 60 * 1000);
+
+    let closestPt = points[0];
+    let minDiff = Math.abs(new Date(closestPt.ts) - targetTime);
+
+    for (let i = 1; i < points.length; i++) {
+        const diff = Math.abs(new Date(points[i].ts) - targetTime);
+        if (diff < minDiff) {
+            minDiff = diff;
+            closestPt = points[i];
+        }
+    }
+
+    if (closestPt.ts === latestPt.ts) {
+        if (points.length >= 2) {
+            closestPt = points[points.length - 2];
+        } else {
+            return 0.0;
+        }
+    }
+
+    const prevNav = closestPt.nav;
+    if (prevNav <= 0) return 0.0;
+
+    return ((latestNav - prevNav) / prevNav) * 100.0;
+}
+
+function renderPerformanceHeatmap() {
+    const tableBody = document.getElementById("heatmap-table-body");
+    tableBody.innerHTML = "";
+
+    const mapKeyMap = {
+        "S1": "core", "S2": "macd", "S3": "us_stocks", "S4": "us_dcs",
+        "S5": "alternatives", "S6": "high_beta", "S8": "dividends",
+        "S9": "strategy9", "S10": "strategy10", "S11": "strategy11", "S12": "strategy12",
+        "S13": "strategy13", "S14": "strategy14", "S15": "strategy15"
+    };
+
+    const rowData = [];
+
+    Object.keys(STRATEGY_METADATA).forEach(key => {
+        const metadata = STRATEGY_METADATA[key];
+        const data = cachedPortfolios[key];
+        const historyKey = mapKeyMap[key] || key.toLowerCase();
+
+        let nav = 0;
+        let dailyRet = 0.0;
+        let weeklyRet = 0.0;
+        let monthlyRet = 0.0;
+        let totalRoi = 0.0;
+
+        if (data) {
+            const cash = data.cash_balance || 0;
+            let holdingsVal = 0;
+            if (data.holdings) {
+                data.holdings.forEach(pos => {
+                    const shares = pos.shares || 0;
+                    const buyPrice = pos.buy_price || pos.average_price || 0;
+                    const lastPrice = pos.last_price || pos.current_price || buyPrice;
+                    holdingsVal += shares * lastPrice;
+                });
+            }
+            nav = cash + holdingsVal;
+
+            let initial = 200000.0;
+            if (key === "S1" || key === "S2") {
+                initial = 20000.0;
+            } else if (key === "S4" || key === "S5" || key === "S6") {
+                initial = data.total_capital || 100000.0;
+            } else if (key === "S3") {
+                initial = 100000.0;
+            } else {
+                initial = 200000.0;
+            }
+
+            totalRoi = ((nav - initial) / initial) * 100.0;
+        }
+
+        // Calculate historical returns from history json
+        dailyRet = calculateHistoricalReturn(historyKey, 1);
+        weeklyRet = calculateHistoricalReturn(historyKey, 7);
+        monthlyRet = calculateHistoricalReturn(historyKey, 30);
+
+        rowData.push({
+            key: key,
+            name: metadata.name,
+            currency: metadata.currency,
+            nav: nav,
+            daily: dailyRet,
+            weekly: weeklyRet,
+            monthly: monthlyRet,
+            roi: totalRoi,
+            sharpe: parseFloat(metadata.sharpe),
+            maxdd: metadata.maxdd
+        });
+    });
+
+    // Sort by Total ROI descending (to see best performing strategies first!)
+    rowData.sort((a, b) => b.roi - a.roi);
+
+    rowData.forEach(row => {
+        const tr = document.createElement("tr");
+
+        const dailyColor = getHeatmapColor(row.daily);
+        const weeklyColor = getHeatmapColor(row.weekly);
+        const monthlyColor = getHeatmapColor(row.monthly);
+        const roiColor = getHeatmapColor(row.roi);
+        const sharpeColor = getSharpeColor(row.sharpe);
+        const maxddColor = getMaxDDColor(row.maxdd);
+
+        const dailySign = row.daily >= 0 ? "+" : "";
+        const weeklySign = row.weekly >= 0 ? "+" : "";
+        const monthlySign = row.monthly >= 0 ? "+" : "";
+        const roiSign = row.roi >= 0 ? "+" : "";
+
+        tr.innerHTML = `
+            <td><strong>${row.key}: ${row.name}</strong></td>
+            <td><span class="badge badge-usd">${row.currency}</span></td>
+            <td><strong>${row.nav > 0 ? formatCurrency(row.nav, row.currency) : "N/D"}</strong></td>
+            <td style="text-align: center; background-color: ${dailyColor}; font-weight: 600;">${dailySign}${row.daily.toFixed(2)}%</td>
+            <td style="text-align: center; background-color: ${weeklyColor}; font-weight: 600;">${weeklySign}${row.weekly.toFixed(2)}%</td>
+            <td style="text-align: center; background-color: ${monthlyColor}; font-weight: 600;">${monthlySign}${row.monthly.toFixed(2)}%</td>
+            <td style="text-align: center; background-color: ${roiColor}; font-weight: 700;">${roiSign}${row.roi.toFixed(2)}%</td>
+            <td style="text-align: center; background-color: ${sharpeColor}; font-weight: 600;">${row.sharpe.toFixed(2)}</td>
+            <td style="text-align: center; background-color: ${maxddColor}; font-weight: 600; color: #ef4444;">${row.maxdd}</td>
+        `;
+        tableBody.appendChild(tr);
     });
 }
 

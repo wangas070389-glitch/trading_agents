@@ -58,6 +58,7 @@
                 </div>
                 <div class="tab-group">
                     <button id="tab-dashboard" class="tab-btn active">Resumen y Portafolio</button>
+                    <button id="tab-performance" class="tab-btn">Heatmap de Rendimiento</button>
                     <button id="tab-transactions" class="tab-btn">Historial de Transacciones</button>
                 </div>
             </div>
@@ -146,6 +147,40 @@
                 </div>
             </div>
 
+            <!-- Performance Heatmap View -->
+            <div id="performance-view" class="view-panel hidden">
+                <div class="glass-card table-card" style="margin-bottom: 2rem;">
+                    <div class="section-header">
+                        <h2>Matriz y Heatmap de Rendimiento</h2>
+                        <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:0.25rem;">
+                            Comparativa en tiempo real de los retornos históricos y las métricas estadísticas de cada estrategia. La intensidad del color representa la magnitud del retorno o riesgo.
+                        </p>
+                    </div>
+                    <div class="table-wrapper" style="margin-top: 1.5rem;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Estrategia</th>
+                                    <th>Moneda</th>
+                                    <th>NAV Actual</th>
+                                    <th style="text-align: center;">Retorno Diario</th>
+                                    <th style="text-align: center;">Retorno Semanal (7D)</th>
+                                    <th style="text-align: center;">Retorno Mensual (30D)</th>
+                                    <th style="text-align: center;">ROI Total</th>
+                                    <th style="text-align: center;">Sharpe Ratio</th>
+                                    <th style="text-align: center;">Max Drawdown</th>
+                                </tr>
+                            </thead>
+                            <tbody id="heatmap-table-body">
+                                <tr>
+                                    <td colspan="9" style="text-align: center; color: var(--text-secondary);">Generando matriz de rendimiento...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <!-- Transactions View -->
             <div id="transactions-view" class="view-panel hidden">
                 <!-- Visual Trades Timeline Chart -->
@@ -192,6 +227,6 @@
     </div>
 
     <!-- Application Logic Javascript -->
-    <script src="app.js"></script>
+    <script src="app.js?v=4"></script>
 </body>
 </html>
