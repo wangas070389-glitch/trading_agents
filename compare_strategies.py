@@ -26,6 +26,7 @@ def main():
     portfolio_strategy13_path = os.path.join(dir_path, "portfolio_strategy13.json")
     portfolio_strategy14_path = os.path.join(dir_path, "portfolio_strategy14.json")
     portfolio_strategy15_path = os.path.join(dir_path, "portfolio_strategy15.json")
+    portfolio_strategy16_path = os.path.join(dir_path, "portfolio_strategy16.json")
     comparison_report_path = os.path.join(dir_path, "comparison_report.md")
     
     port_val = load_json(portfolio_val_path)
@@ -42,10 +43,11 @@ def main():
     port_strategy13 = load_json(portfolio_strategy13_path)
     port_strategy14 = load_json(portfolio_strategy14_path)
     port_strategy15 = load_json(portfolio_strategy15_path)
+    port_strategy16 = load_json(portfolio_strategy16_path)
     port_multi_strategy = load_json(portfolio_multi_strategy_path)
     usd_mxn_rate = port_multi_strategy.get("usd_mxn_rate", 17.43) if port_multi_strategy else 17.43
     
-    if not port_val and not port_macd and not port_us and not port_us_dcs and not port_alternatives and not port_high_beta and not port_dividends and not port_strategy9 and not port_strategy10 and not port_strategy11 and not port_strategy12 and not port_strategy13 and not port_strategy14 and not port_strategy15 and not port_multi_strategy:
+    if not port_val and not port_macd and not port_us and not port_us_dcs and not port_alternatives and not port_high_beta and not port_dividends and not port_strategy9 and not port_strategy10 and not port_strategy11 and not port_strategy12 and not port_strategy13 and not port_strategy14 and not port_strategy15 and not port_strategy16 and not port_multi_strategy:
         print("Error: No portfolio files found. Cannot generate comparison.")
         return
         
@@ -289,6 +291,21 @@ def main():
         report.append(f"| **TRACK Tracker (S15)** | ${s15_market_val:,.2f} | ${s15_cash:,.2f} | ${s15_invested:,.2f} | {s15_alloc:.1f}% | {s15_sign}${s15_profit:,.2f} | {s15_sign}{s15_roi:.2f}% | 2026-07-06 | MXN |")
     else:
         report.append("| **TRACK Tracker (S15)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+
+    # Parse S16
+    s16_market_val = s16_cash = s16_invested = 0.0
+    if port_strategy16:
+        s16_total_cap = 200000.0
+        s16_cash = port_strategy16.get("cash_balance", 200000.0)
+        s16_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy16.get("holdings", []))
+        s16_market_val = s16_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_strategy16.get("holdings", []))
+        s16_profit = s16_market_val - s16_total_cap
+        s16_roi = (s16_profit / s16_total_cap) * 100.0
+        s16_alloc = (s16_invested / s16_market_val) * 100.0 if s16_market_val > 0 else 0.0
+        s16_sign = "+" if s16_profit >= 0 else ""
+        report.append(f"| **HMM Intraday Router (S16)** | ${s16_market_val:,.2f} | ${s16_cash:,.2f} | ${s16_invested:,.2f} | {s16_alloc:.1f}% | {s16_sign}${s16_profit:,.2f} | {s16_sign}{s16_roi:.2f}% | 2026-07-07 | MXN |")
+    else:
+        report.append("| **HMM Intraday Router (S16)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse Strategy 7 (Consolidated Multi-Strategy)
     if port_multi_strategy:

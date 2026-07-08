@@ -12,7 +12,8 @@ const STRATEGY_METADATA = {
     "S12": { name: "Vol-Targeted Trend (VTTL)", file: "portfolio_strategy12.json", tx_file: "transactions_strategy12.md", currency: "MXN", active: true, assets: "TQQQ + BONDIA", cagr: "17.13%", sharpe: "0.46", maxdd: "-21.34%" },
     "S13": { name: "Risk Appetite (CARA)", file: "portfolio_strategy13.json", tx_file: "transactions_strategy13.md", currency: "MXN", active: false, assets: "TQQQ + BONDIA", cagr: "15.95%", sharpe: "0.45", maxdd: "-25.02%" },
     "S14": { name: "Aggregator (HEDGE)", file: "portfolio_strategy14.json", tx_file: "transactions_strategy14.md", currency: "MXN", active: true, assets: "S12, S13 + BONDIA", cagr: "15.17%", sharpe: "0.53", maxdd: "-15.19%" },
-    "S15": { name: "Tracker (TRACK)", file: "portfolio_strategy15.json", tx_file: "transactions_strategy15.md", currency: "MXN", active: true, assets: "S12, S13 + BONDIA", cagr: "15.05%", sharpe: "0.53", maxdd: "-14.73%" }
+    "S15": { name: "Tracker (TRACK)", file: "portfolio_strategy15.json", tx_file: "transactions_strategy15.md", currency: "MXN", active: true, assets: "S12, S13 + BONDIA", cagr: "15.05%", sharpe: "0.53", maxdd: "-14.73%" },
+    "S16": { name: "HMM Intraday Router", file: "portfolio_strategy16.json", tx_file: "transactions_strategy16.md", currency: "MXN", active: true, assets: "TQQQ, UPRO, SOXL, URTY", cagr: "-11.29%", sharpe: "-1.27", maxdd: "-18.29%" }
 };
 
 let FX_RATE = 17.5;
@@ -978,7 +979,7 @@ function renderPerformanceHeatmap() {
         "S1": "core", "S2": "macd", "S3": "us_stocks", "S4": "us_dcs",
         "S5": "alternatives", "S6": "high_beta", "S8": "dividends",
         "S9": "strategy9", "S10": "strategy10", "S11": "strategy11", "S12": "strategy12",
-        "S13": "strategy13", "S14": "strategy14", "S15": "strategy15"
+        "S13": "strategy13", "S14": "strategy14", "S15": "strategy15", "S16": "strategy16"
     };
 
     const rowData = [];

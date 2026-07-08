@@ -42,7 +42,6 @@ MIN_DAYS_FOR_TRADE = 10       # dias habiles de gracia antes de exigir 1 trade
 NAV_JUMP_TOLERANCE = 0.35     # |dNAV| diario maximo plausible (3x ETF ~ +-25% extremo)
 DD_BREAKER_FACTOR = 1.25      # live DD no debe exceder 1.25x el MaxDD del backtest
 NAV_HISTORY_FILE = "watchdog_nav_history.json"
-SUSPENDED_STRATEGIES = {"us_stocks"}
 
 
 class Finding:
@@ -98,21 +97,6 @@ def total_exposure_ratio(p):
     return hv / nav
 
 
-def calculate_portfolio_nav(p, name):
-    # For S9-S16, total_capital is the correct, dynamically-updated NAV
-    if name in ("strategy9", "strategy10", "strategy11", "strategy12", "strategy13", "strategy14", "strategy15", "strategy16"):
-        return p.get("total_capital") or p.get("total_portfolio_value") or p.get("cash_balance", 0.0)
-
-    # For other strategies, we compute NAV = Cash + sum(shares * last_price)
-    cash = p.get("cash_balance") or 0.0
-    holdings_val = 0.0
-    for h in p.get("holdings", []):
-        shares = float(h.get("shares", 0.0))
-        price = float(h.get("last_price", h.get("buy_price", h.get("current_price", 0.0))))
-        holdings_val += shares * price
-    return cash + holdings_val
-
-
 def check_strategy(name, p_path, dir_path, nav_hist, now):
     findings = []
     try:
@@ -156,7 +140,7 @@ def check_strategy(name, p_path, dir_path, nav_hist, now):
                             f"Sin trades aun ({age}/{MIN_DAYS_FOR_TRADE} dias de gracia)"))
 
     # W3: salto de NAV vs historia propia del watchdog
-    nav = calculate_portfolio_nav(p, name)
+    nav = p.get("total_capital", None)
     hist = nav_hist.get(name, [])
     if nav is not None and hist:
         prev_nav = hist[-1]["nav"]
@@ -197,12 +181,10 @@ def check_strategy(name, p_path, dir_path, nav_hist, now):
 
 
 
-def check_broker_reconciliation(dir_path, now, active_strats=None):
+def check_broker_reconciliation(dir_path, now):
     """W6: reconciliacion contra Alpaca. Los libros locales pueden mentir
     (fills fantasma); el broker es la verdad. Requiere APCA_API_KEY_ID y
     APCA_API_SECRET_KEY en el entorno; si faltan, se omite con WARNING."""
-    if active_strats is None:
-        active_strats = set()
     import glob as _glob
     key = os.environ.get("APCA_API_KEY_ID")
     sec = os.environ.get("APCA_API_SECRET_KEY")
@@ -220,26 +202,19 @@ def check_broker_reconciliation(dir_path, now, active_strats=None):
     findings = []
     cash = float(acct.get("cash", 0.0))
     if cash < -0.01:
-        level = "CRITICAL" if "us_stocks" in active_strats else "WARNING"
-        prefix = "" if level == "CRITICAL" else "[INACTIVE STRATEGY] "
-        findings.append(Finding(level, "broker", "W6",
-                        f"{prefix}Cash de Alpaca NEGATIVO: ${cash:,.2f} (margen no intencional; probable fill fantasma previo)"))
+        findings.append(Finding("CRITICAL", "broker", "W6",
+                        f"Cash de Alpaca NEGATIVO: ${cash:,.2f} (margen no intencional; probable fill fantasma previo)"))
 
-    # holdings locales agregados de todos los portafolios (tickers US) y mapeo de ticker -> lista de estrategias
+    # holdings locales agregados de todos los portafolios (tickers US)
     local = {}
-    ticker_to_strats = {}
     for p_path in _glob.glob(os.path.join(dir_path, "portfolio_*.json")):
         try:
-            name = os.path.basename(p_path).replace("portfolio_", "").replace("portfolio", "core").replace(".json", "") or "core"
             with open(p_path, "r", encoding="utf-8") as f:
                 pj = json.load(f)
             for h in pj.get("holdings", []):
                 t = str(h.get("ticker", "")).upper()
                 if t and ".MX" not in t:
                     local[t] = local.get(t, 0.0) + float(h.get("shares", 0.0))
-                    if t not in ticker_to_strats:
-                        ticker_to_strats[t] = set()
-                    ticker_to_strats[t].add(name)
         except Exception:
             continue
 
@@ -248,64 +223,12 @@ def check_broker_reconciliation(dir_path, now, active_strats=None):
         qty_b = float(pos.get("qty", 0.0))
         qty_l = local.get(sym, 0.0)
         if qty_b - qty_l > max(0.02 * max(qty_b, 1.0), 0.5):
-            strats_for_ticker = ticker_to_strats.get(sym, set())
-            is_active_mismatch = any(s in active_strats for s in strats_for_ticker) or ("us_stocks" in active_strats)
-            
-            level = "CRITICAL" if is_active_mismatch else "WARNING"
-            prefix = "" if level == "CRITICAL" else "[INACTIVE STRATEGY] "
-            
-            findings.append(Finding(level, "broker", "W6",
-                            f"{prefix}HUERFANO en Alpaca: {sym} broker={qty_b:g} vs ledgers={qty_l:g} "
+            findings.append(Finding("CRITICAL", "broker", "W6",
+                            f"HUERFANO en Alpaca: {sym} broker={qty_b:g} vs ledgers={qty_l:g} "
                             f"(firma de SELL fantasma: el broker aun lo tiene)"))
     if not findings:
         findings.append(Finding("OK", "broker", "W6", f"Reconciliado: cash ${cash:,.2f}, {len(positions) if isinstance(positions, list) else 0} posiciones"))
     return findings
-
-def get_active_strategies(dir_path):
-    active_map = {
-        "run_live_alpha_growth.py": "core",
-        "ingest_live_macd.py": "macd",
-        "run_live_alpaca_us_stocks.py": "us_stocks",
-        "run_live_alpaca_us_stocks_dcf.py": "us_dcs",
-        "run_live_alternatives.py": "alternatives",
-        "run_live_high_beta.py": "high_beta",
-        "run_live_dividends.py": "dividends",
-        "run_live_strategy9.py": "strategy9",
-        "run_live_strategy10.py": "strategy10",
-        "run_live_strategy11.py": "strategy11",
-        "run_live_strategy12.py": "strategy12",
-        "run_live_strategy13.py": "strategy13",
-        "run_live_strategy14.py": "strategy14",
-        "run_live_strategy15.py": "strategy15",
-        "run_live_strategy16.py": "strategy16",
-    }
-    scheduler_path = os.path.join(dir_path, "scheduler.py")
-    if not os.path.exists(scheduler_path):
-        return set(active_map.values())
-    
-    active_strats = set()
-    try:
-        with open(scheduler_path, "r", encoding="utf-8") as f:
-            content = f.read()
-        
-        match = re.search(r"STRATEGY_SCRIPTS\s*=\s*\[(.*?)\]", content, re.DOTALL)
-        if match:
-            list_block = match.group(1)
-            for line in list_block.split("\n"):
-                line_strip = line.strip()
-                if not line_strip or line_strip.startswith("#"):
-                    continue
-                if "#" in line_strip:
-                    line_strip = line_strip.split("#")[0].strip()
-                m_str = re.search(r"['\"](.*?)['\"]", line_strip)
-                if m_str:
-                    script = m_str.group(1)
-                    if script in active_map:
-                        active_strats.add(active_map[script])
-    except Exception as e:
-        print(f"Error parsing active strategies from scheduler.py: {e}")
-        return set(active_map.values())
-    return active_strats
 
 def main():
     ap = argparse.ArgumentParser()
@@ -323,9 +246,6 @@ def main():
         except Exception:
             nav_hist = {}
 
-    active_strats = get_active_strategies(dir_path) - SUSPENDED_STRATEGIES
-    print(f"DEBUG: active_strats = {active_strats}")
-
     all_findings = []
     paths = sorted(glob.glob(os.path.join(dir_path, "portfolio_*.json")))
     core = os.path.join(dir_path, "portfolio.json")
@@ -336,18 +256,12 @@ def main():
             continue
         name = os.path.basename(p_path).replace("portfolio_", "").replace("portfolio", "core").replace(".json", "") or "core"
         f, nav_hist = check_strategy(name, p_path, dir_path, nav_hist, now)
-        
-        if name not in active_strats:
-            for finding in f:
-                if finding.level == "CRITICAL":
-                    finding.level = "WARNING"
-                    finding.msg = f"[INACTIVE STRATEGY] {finding.msg}"
         all_findings.extend(f)
 
     with open(hist_path, "w", encoding="utf-8") as f:
         json.dump(nav_hist, f, indent=1)
 
-    all_findings.extend(check_broker_reconciliation(dir_path, now, active_strats))
+    all_findings.extend(check_broker_reconciliation(dir_path, now))
 
     # HALT GATE: cada CRITICAL de estrategia escribe su flag -> los runners se detienen
     try:

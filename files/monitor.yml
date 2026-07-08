@@ -6,11 +6,9 @@ on:
     - cron: '0 21 * * *'
     # Runs Monday to Friday, every 30 minutes during CST market hours (8:30 AM to 2:30 PM CST)
     # 8:30 AM CST = 14:30 UTC
-    - cron: '30 14 * * 1-5'
+    # cadencia intradia retirada: S10/S11 suspendidas; el sistema decide 1x/dia
     # 9:00 AM CST to 2:30 PM CST = 15:00 UTC to 20:30 UTC
-    - cron: '0,30 15-20 * * 1-5'
-    # 3:45 PM ET (19:45 UTC) - signal rebalancing before close
-    - cron: '45 19 * * 1-5'
+    - cron: '45 19 * * 1-5'   # 15:45 ET (verano): senal con cierres completos, ejecucion antes del cierre
   workflow_dispatch:
     # Allows you to manually trigger this run from the GitHub Actions tab
 
@@ -56,8 +54,8 @@ jobs:
       run: python ingest_live_macd.py
 
     # 5c. Execute Live US Stock Momentum Strategy Ingestion (Isolated)
-    # - name: Run Live US Stock Momentum Strategy
-    #   run: python run_live_alpaca_us_stocks.py
+    - name: Run Live US Stock Momentum Strategy
+      run: python run_live_alpaca_us_stocks.py
 
     # 5d. Execute Live US Stock DCS Value-Growth Strategy (Isolated)
     - name: Run Live US Stock DCS Value-Growth Strategy
@@ -103,10 +101,6 @@ jobs:
     - name: Run Live Strategy 15 TRACK
       run: python run_live_strategy15.py
 
-    # 5fffffffff-2. Execute Live Strategy 16 HMM Router
-    - name: Run Live Strategy 16 HMM Router
-      run: python run_live_strategy16.py
-
     # 5g. Execute Live Multi-Strategy Orchestration
     - name: Run Live Multi-Strategy Orchestrator
       run: python run_live_multi_strategy.py
@@ -122,10 +116,6 @@ jobs:
     # 5j. Run Watchdog Auditor
     - name: Run Watchdog Audit
       run: python watchdog.py
-      env:
-        APCA_API_KEY_ID: ${{ secrets.ALPACA_API_KEY }}
-        APCA_API_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
-        APCA_API_BASE_URL: ${{ secrets.ALPACA_BASE_URL }}
 
     # 6. Automatically Commit & Push Updated Reports
     - name: Commit and Push Changes
@@ -133,7 +123,7 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         
-        git add HALT_*.flag 2>/dev/null; git add portfolio.json portfolio_status.md portfolio_macd.json transactions_macd.md portfolio_us_stocks.json transactions_us_stocks.md portfolio_us_dcs.json transactions_us_dcs.md us_stocks_dcf_report_live.md portfolio_alternatives.json transactions_alternatives.md alternatives_report_live.md portfolio_high_beta.json transactions_high_beta.md high_beta_report_live.md portfolio_multi_strategy.json multi_strategy_report_live.md multi_strategy_allocation_history.md all_strategies_allocation_history.md all_strategies_history.json consolidated_portfolio_nav.csv comparison_report.md mexican_value_equity_report_live.md mexican_value_equity_report_live_alpha.md transactions.md evaluation_history.md signal_history.json equity_curve.json learned_params.json portfolio_dividends.json transactions_dividends.md dividends_report_live.md dividends_backtest_nav.csv dividends_backtest_report.md portfolio_strategy9.json transactions_strategy9.md strategy9_report_live.md strategy9_backtest_nav.csv strategy9_backtest_report.md portfolio_strategy10.json transactions_strategy10.md strategy10_report_live.md strategy10_backtest_nav.csv strategy10_backtest_report.md portfolio_strategy11.json transactions_strategy11.md strategy11_report_live.md strategy11_backtest_nav.csv strategy11_backtest_report.md portfolio_strategy12.json transactions_strategy12.md strategy12_report_live.md strategy12_backtest_nav.csv strategy12_backtest_report.md portfolio_strategy13.json transactions_strategy13.md strategy13_report_live.md strategy13_backtest_nav.csv strategy13_backtest_report.md portfolio_strategy14.json transactions_strategy14.md strategy14_report_live.md strategy14_backtest_nav.csv strategy14_backtest_report.md portfolio_strategy15.json transactions_strategy15.md strategy15_report_live.md strategy15_backtest_nav.csv strategy15_backtest_report.md portfolio_strategy16.json transactions_strategy16.md strategy16_report_live.md strategy16_backtest_nav.csv strategy16_backtest_report.md watchdog_report.md watchdog_nav_history.json || true
+        git add HALT_*.flag 2>/dev/null; git add portfolio.json portfolio_status.md portfolio_macd.json transactions_macd.md portfolio_us_stocks.json transactions_us_stocks.md portfolio_us_dcs.json transactions_us_dcs.md us_stocks_dcf_report_live.md portfolio_alternatives.json transactions_alternatives.md alternatives_report_live.md portfolio_high_beta.json transactions_high_beta.md high_beta_report_live.md portfolio_multi_strategy.json multi_strategy_report_live.md multi_strategy_allocation_history.md all_strategies_allocation_history.md all_strategies_history.json consolidated_portfolio_nav.csv comparison_report.md mexican_value_equity_report_live.md mexican_value_equity_report_live_alpha.md transactions.md evaluation_history.md signal_history.json equity_curve.json learned_params.json portfolio_dividends.json transactions_dividends.md dividends_report_live.md dividends_backtest_nav.csv dividends_backtest_report.md portfolio_strategy9.json transactions_strategy9.md strategy9_report_live.md strategy9_backtest_nav.csv strategy9_backtest_report.md portfolio_strategy10.json transactions_strategy10.md strategy10_report_live.md strategy10_backtest_nav.csv strategy10_backtest_report.md portfolio_strategy11.json transactions_strategy11.md strategy11_report_live.md strategy11_backtest_nav.csv strategy11_backtest_report.md portfolio_strategy12.json transactions_strategy12.md strategy12_report_live.md strategy12_backtest_nav.csv strategy12_backtest_report.md portfolio_strategy13.json transactions_strategy13.md strategy13_report_live.md strategy13_backtest_nav.csv strategy13_backtest_report.md portfolio_strategy14.json transactions_strategy14.md strategy14_report_live.md strategy14_backtest_nav.csv strategy14_backtest_report.md portfolio_strategy15.json transactions_strategy15.md strategy15_report_live.md strategy15_backtest_nav.csv strategy15_backtest_report.md watchdog_report.md watchdog_nav_history.json || true
         
         # Commit only if files have changed (to prevent error crashes on identical runs)
         git diff-index --quiet HEAD || (git commit -m "Auto-update: Multi-strategy concentrated paper trading [$(date -u +'%Y-%m-%d %H:%M:%S UTC')]" && git push)

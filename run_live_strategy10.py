@@ -149,7 +149,7 @@ def main():
         fx_hist = usdmxn_ticker.history(period="1d")
         fx_rate = float(fx_hist["Close"].iloc[-1]) if not fx_hist.empty else 18.0
         
-        qqq_30m = yf.download("QQQ", period="30d", interval="30m", progress=False)
+        qqq_30m = yf.download("QQQ", period="60d", interval="30m", progress=False)
         tqqq_30m = yf.download("TQQQ", period="5d", interval="30m", progress=False)
         sqqq_30m = yf.download("SQQQ", period="5d", interval="30m", progress=False)
         

@@ -160,6 +160,17 @@ STRATEGY_KPIS = {
         "is_live": True,
         "inception": "2026-07-06"
     },
+    "S16: HMM Intraday Router": {
+        "asset": "Multi-Asset Index Universe",
+        "window": 60.0 / 365.0,
+        "cagr": -0.1129,
+        "max_dd": -0.1829,
+        "sharpe": -1.27,
+        "turnover": "Intraday",
+        "currency": "MXN",
+        "is_live": True,
+        "inception": "2026-07-07"
+    },
     "S7: Core Hybrid Portfolio": {
         "asset": "Consolidated Multi-Asset",
         "window": 4.0,
@@ -225,6 +236,7 @@ def main():
     s13_data = load_json(os.path.join(dir_path, "portfolio_strategy13.json"))
     s14_data = load_json(os.path.join(dir_path, "portfolio_strategy14.json"))
     s15_data = load_json(os.path.join(dir_path, "portfolio_strategy15.json"))
+    s16_data = load_json(os.path.join(dir_path, "portfolio_strategy16.json"))
     s7_data = load_json(os.path.join(dir_path, "portfolio_multi_strategy.json"))
 
     # Map strategies to their data
@@ -242,7 +254,9 @@ def main():
         "S12: Vol-Targeted Trend (VTTL)": (s12_data, "MXN"),
         "S13: Risk Appetite (CARA)": (s13_data, "MXN"),
         "S14: Aggregator (HEDGE)": (s14_data, "MXN"),
-        "S15: Tracker (TRACK)": (s15_data, "MXN")
+        "S15: Tracker (TRACK)": (s15_data, "MXN"),
+        "S16: HMM Intraday Router": (s16_data, "MXN"),
+        "S7: Core Hybrid Portfolio": (s7_data, "USD")
     }
 
     # Generate Report Lines
