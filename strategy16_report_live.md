@@ -1,9 +1,9 @@
 # Strategy 16: Multi-Asset HMM Intraday Router Execution Report
-**Execution Date:** 2026-07-08 05:15:28 | **Strategy Version:** Router V1
+**Execution Date:** 2026-07-08 13:03:16 | **Strategy Version:** Router V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $200,043.59 MXN
-* **Total Cash Balance:** $200,043.59 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Total Portfolio NAV:** $200,055.21 MXN
+* **Total Cash Balance:** $200,055.21 MXN (Parked compounding in Bondia sweep at 6.53% APR)
 * **Equity Exposure:** 0.0%
 * **Active Target Index:** **SPY** (Regime: State 0 - Strongest decoded intraday trend state on SPY (Score: 0.084))
 
@@ -12,7 +12,7 @@
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $10.4079 MXN sweep interest.
+* **[INTEREST ACCRUED]** Cash reserves earned $11.6173 MXN sweep interest.
 * No trades or rebalancing actions triggered in this 30-minute interval.
 
 ## 4. Multi-Asset HMM Telemetry
