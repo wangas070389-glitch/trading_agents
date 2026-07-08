@@ -1,13 +1,13 @@
 {
-  "total_capital": 195124.89,
-  "cash_balance": 25236.78,
+  "total_capital": 195441.15,
+  "cash_balance": 25237.12,
   "holdings": [
     {
       "ticker": "SPY",
       "shares": 13,
       "buy_price": 13078.345157544361,
-      "last_price": 13068.315978410654
+      "last_price": 13092.617799978703
     }
   ],
-  "last_updated": "2026-07-08 16:16:33"
+  "last_updated": "2026-07-08 18:04:55"
 }
