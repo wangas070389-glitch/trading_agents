@@ -1,6 +1,16 @@
 {
-  "total_capital": 200055.21,
-  "cash_balance": 200055.21,
-  "holdings": [],
-  "last_updated": "2026-07-08 13:03:19"
+  "total_capital": 199536.58,
+  "cash_balance": 20005.87,
+  "holdings": [
+    {
+      "ticker": "UPRO",
+      "side": "long",
+      "shares": 73.83310059381921,
+      "buy_price": 2431.5747580798343,
+      "last_price": 2431.5747580798343,
+      "peak_price": 137.86000061035156,
+      "allocated": 180052.85700000002
+    }
+  ],
+  "last_updated": "2026-07-08 15:25:18"
 }
