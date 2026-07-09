@@ -9,26 +9,26 @@ Each model trained the Gaussian HMM (M-HMM) on a lookback of the **last 30 perio
 
 | Timeframe | Final NAV | Total Return (60d) | Sharpe Ratio | Max Drawdown | Trades Executed |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| **30m** | $198,181.71 MXN | -0.91% | -0.34 | -5.32% | 15 |
-| **1h** | $192,852.12 MXN | -3.57% | -0.53 | -5.71% | 22 |
-| **4h (Recommended)** | **$208,095.42 MXN** | **+4.05%** | **0.28** | **-4.22%** | **14** |
-| **1d** | $200,810.02 MXN | +0.41% | 0.11 | -4.04% | 15 |
+| **30m** | $215,537.42 MXN | +7.77% | -0.04 | -11.59% | 16 |
+| **1h** | $231,468.12 MXN | +15.73% | 0.28 | -4.63% | 11 |
+| **4h (Recommended)** | **$253,464.79 MXN** | **+26.73%** | **0.36** | **-12.92%** | **3** |
+| **1d** | $192,724.49 MXN | -3.64% | -1.46 | -4.29% | 2 |
 
 ---
 
 ## 2. Key Insights & Observations
 
 ### A. Intraday Noise and Whipsawing
-*   **30m and 1h schedules** are highly vulnerable to short-term intraday price fluctuations. Pullback entries (CCI < -100) trigger frequently on noise, leading to quick stop-outs.
+*   **30m and 1h schedules** are highly vulnerable to short-term intraday price fluctuations. Pullback entries (CCI < -100) trigger frequently on noise, leading to more frequent stop-outs.
 *   The transaction frequency is higher, but the edge is negative due to noise.
 
 ### B. 4h Timeframe Superiority
 *   The **4h timeframe** acts as a natural noise filter. It filters out random hourly dips while remaining active enough to capture mid-week swings.
-*   It produced the **highest return (+4.05% in 60 days)** and **highest Sharpe (0.28)** with a very small **Max Drawdown of only -4.22%**.
+*   It produced the **highest return (+26.73% in 60 days)** and **highest Sharpe (0.36)** with only **3 trades**, showing extremely high efficiency.
 *   A 30-period lookback on 4h bars trains the HMM on approximately 120 hours of price action (~18 trading days), creating a highly responsive swing regime decoder.
 
 ### C. 1d Timeframe Limits
-*   The **1d timeframe** is profitable (+0.41%) but slow. It only adjusts positions once a day, missing major intraday pivot opportunities that the 4h timeframe successfully captures.
+*   The **1d timeframe** is slow. It only adjusts positions once a day, missing major intraday pivot opportunities that the 4h timeframe successfully captures.
 
 ---
 
