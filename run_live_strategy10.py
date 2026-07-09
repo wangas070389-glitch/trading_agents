@@ -149,91 +149,101 @@ def main():
         fx_hist = usdmxn_ticker.history(period="1d")
         fx_rate = float(fx_hist["Close"].iloc[-1]) if not fx_hist.empty else 18.0
         
-        qqq_30m = yf.download("QQQ", period="60d", interval="30m", progress=False)
-        tqqq_30m = yf.download("TQQQ", period="5d", interval="30m", progress=False)
-        sqqq_30m = yf.download("SQQQ", period="5d", interval="30m", progress=False)
+        qqq_1h = yf.download("QQQ", period="150d", interval="1h", progress=False)
+        tqqq_1h = yf.download("TQQQ", period="15d", interval="1h", progress=False)
+        sqqq_1h = yf.download("SQQQ", period="15d", interval="1h", progress=False)
         
-        if qqq_30m.empty or tqqq_30m.empty or sqqq_30m.empty:
+        if qqq_1h.empty or tqqq_1h.empty or sqqq_1h.empty:
             print("CRITICAL: yfinance returned empty DataFrames (Silent API failure). Halting.")
             return
-
-        if isinstance(qqq_30m.columns, pd.MultiIndex): qqq_30m.columns = [c[0] for c in qqq_30m.columns]
-        if isinstance(tqqq_30m.columns, pd.MultiIndex): tqqq_30m.columns = [c[0] for c in tqqq_30m.columns]
-        if isinstance(sqqq_30m.columns, pd.MultiIndex): sqqq_30m.columns = [c[0] for c in sqqq_30m.columns]
+ 
+        if isinstance(qqq_1h.columns, pd.MultiIndex): qqq_1h.columns = [c[0] for c in qqq_1h.columns]
+        if isinstance(tqqq_1h.columns, pd.MultiIndex): tqqq_1h.columns = [c[0] for c in tqqq_1h.columns]
+        if isinstance(sqqq_1h.columns, pd.MultiIndex): sqqq_1h.columns = [c[0] for c in sqqq_1h.columns]
         
         # Calculate ATRs
-        qqq_30m["ATR"] = calculate_atr(qqq_30m, period=14)
-        tqqq_30m["ATR"] = calculate_atr(tqqq_30m, period=14)
-        sqqq_30m["ATR"] = calculate_atr(sqqq_30m, period=14)
+        qqq_1h["ATR"] = calculate_atr(qqq_1h, period=14)
+        tqqq_1h["ATR"] = calculate_atr(tqqq_1h, period=14)
+        sqqq_1h["ATR"] = calculate_atr(sqqq_1h, period=14)
     except Exception as e:
         print(f"Failed to fetch market data: {e}")
         return
-
+ 
     # === CIRCUIT BREAKER 2: TIMESTAMP VALIDATION (HEARTBEAT) ===
-    last_bar_time = qqq_30m.index[-1]
+    last_bar_time = qqq_1h.index[-1]
     now_utc = datetime.datetime.now(datetime.timezone.utc)
     
-    # Standardize tzinfo to UTC for comparative math if yfinance passes naive/local tz
     if last_bar_time.tzinfo is None:
-        pass # If naive, we can't easily cross-reference without knowing local server time safely.
+        pass
     else:
         minutes_stale = (now_utc - last_bar_time).total_seconds() / 60.0
-        # 30-minute interval + 15 minute grace period for standard API latency/batching delays
-        if minutes_stale > 45.0:
+        # 1-hour interval + 50 minute grace period for standard API latency/batching delays
+        if minutes_stale > 110.0:
             print(f"FATAL: Data feed stall detected. Last QQQ bar is {minutes_stale:.1f} minutes old. Engine halted.")
             return
-
+ 
     # 4. HMM Regime Prediction
     cutoff_date = datetime.date.today()
-    train_data = qqq_30m[qqq_30m.index.date < cutoff_date]
-    if len(train_data) < 130:
+    train_data = qqq_1h[qqq_1h.index.date < cutoff_date]
+    unique_dates = sorted(list(set(train_data.index.date)))
+    if len(unique_dates) < 60:
         regime = 2
         regime_reason = "Insuficiente data historica; default a Chop"
+        current_state_raw = 2
     else:
-        log_returns = np.log(train_data["Close"] / train_data["Close"].shift(1)).fillna(0.0)
+        # Train on exactly the last 60 trading days of hourly QQQ returns
+        target_dates = unique_dates[-60:]
+        train_df = train_data[train_data.index.date >= target_dates[0]]
+        log_returns = np.log(train_df["Close"] / train_df["Close"].shift(1)).fillna(0.0)
         rolling_vol = log_returns.rolling(window=10).std().fillna(0.0)
         features = np.column_stack([log_returns.values, rolling_vol.values])
         
-        hmm = GaussianHMM(n_components=3, covariance_type="diag", n_iter=100, random_state=42)
-        hmm.fit(features)
-        regimes = hmm.predict(features)
-        
-        state_vols = [np.mean(rolling_vol.values[regimes == i]) for i in range(3)]
-        bear_state = np.argmax(state_vols)
-        
-        rem = [i for i in range(3) if i != bear_state]
-        state_means = [np.mean(log_returns.values[regimes == i]) for i in range(3)]
-        bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
-        
-        current_state_raw = regimes[-1]
-        if args.force_regime is not None:
-            regime = args.force_regime
-            regime_reason = "FORCED via execution flag"
-        else:
-            if current_state_raw == bull_state:
-                regime = 0
-                regime_reason = "Bull trend, low volatility detected on QQQ"
-            elif current_state_raw == bear_state:
-                regime = 1
-                regime_reason = "High volatility, downward pressure detected on QQQ"
+        try:
+            hmm = GaussianHMM(n_components=3, covariance_type="diag", n_iter=100, random_state=42)
+            hmm.fit(features)
+            regimes = hmm.predict(features)
+            
+            state_vols = [np.mean(rolling_vol.values[regimes == i]) if np.any(regimes == i) else 1e9 for i in range(3)]
+            bear_state = np.argmax(state_vols)
+            
+            rem = [i for i in range(3) if i != bear_state]
+            state_means = [np.mean(log_returns.values[regimes == i]) if np.any(regimes == i) else -1e9 for i in range(3)]
+            bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
+            
+            current_state_raw = regimes[-1]
+            if args.force_regime is not None:
+                regime = args.force_regime
+                regime_reason = "FORCED via execution flag"
             else:
-                regime = 2
-                regime_reason = "Range-bound chop, mean-reversion detected on QQQ"
+                if current_state_raw == bull_state:
+                    regime = 0
+                    regime_reason = "Bull trend, low volatility detected on QQQ"
+                elif current_state_raw == bear_state:
+                    regime = 1
+                    regime_reason = "High volatility, downward pressure detected on QQQ"
+                else:
+                    regime = 2
+                    regime_reason = "Range-bound chop, mean-reversion detected on QQQ"
+        except Exception as e:
+            print(f"HMM fit error: {e}. Defaulting to regime 2.")
+            regime = 2
+            regime_reason = "Exception in HMM fitting; default a Chop"
+            current_state_raw = 2
             
     print(f"Regime Decoded: State {regime} ({regime_reason})")
-
+ 
     # 5. Establish current bar metrics
-    close_qqq = float(qqq_30m["Close"].iloc[-1])
-    atr_qqq = float(qqq_30m["ATR"].iloc[-1])
+    close_qqq = float(qqq_1h["Close"].iloc[-1])
+    atr_qqq = float(qqq_1h["ATR"].iloc[-1])
     
-    close_tqqq = float(tqqq_30m["Close"].iloc[-1])
-    atr_tqqq = float(tqqq_30m["ATR"].iloc[-1])
+    close_tqqq = float(tqqq_1h["Close"].iloc[-1])
+    atr_tqqq = float(tqqq_1h["ATR"].iloc[-1])
     
-    close_sqqq = float(sqqq_30m["Close"].iloc[-1])
-    atr_sqqq = float(sqqq_30m["ATR"].iloc[-1])
-
+    close_sqqq = float(sqqq_1h["Close"].iloc[-1])
+    atr_sqqq = float(sqqq_1h["ATR"].iloc[-1])
+ 
     today_date_str = datetime.datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
-    today_bars_qqq = qqq_30m[qqq_30m.index.strftime("%Y-%m-%d") == today_date_str]
+    today_bars_qqq = qqq_1h[qqq_1h.index.strftime("%Y-%m-%d") == today_date_str]
     
     # === CIRCUIT BREAKER 3: ERADICATE LOBOTOMY FALLBACK ===
     if today_bars_qqq.empty:
@@ -245,13 +255,13 @@ def main():
     vwap_qqq = cum_pv / cum_vol if cum_vol > 0 else close_qqq
     daily_high_qqq = float(today_bars_qqq["High"].max())
     daily_low_qqq = float(today_bars_qqq["Low"].min())
-
-    # Tightened entry bands (1.5 * ATR)
-    upper_band = vwap_qqq + 1.5 * atr_qqq
-    lower_band = vwap_qqq - 1.5 * atr_qqq
-
+ 
+    # Optimized bands (1.0 * ATR for 1h bar scale)
+    upper_band = vwap_qqq + 1.0 * atr_qqq
+    lower_band = vwap_qqq - 1.0 * atr_qqq
+ 
     now_et = datetime.datetime.now(ZoneInfo("America/New_York"))
-    is_eod = now_et.time() >= datetime.time(15, 30)
+    is_eod = now_et.time() >= datetime.time(15, 0)
     
     holdings = portfolio["holdings"]
     active_pos = holdings[0] if holdings else None
@@ -268,8 +278,13 @@ def main():
         
         # Update peak price for trailing stop
         active_pos["peak_price"] = max(active_pos.get("peak_price", current_price), current_price)
-        stop_threshold = active_pos["peak_price"] - 1.5 * atr_exec
         
+        # Hybrid logic
+        buy_price_usd = active_pos["buy_price"] / fx_rate
+        paper_profit_atr = (current_price - buy_price_usd) / atr_exec
+        stop_mult = 3.0 if paper_profit_atr <= 1.5 else 1.5
+        
+        stop_threshold = active_pos["peak_price"] - stop_mult * atr_exec
         is_stop_out = current_price < stop_threshold
         
         if is_stop_out or is_eod:
@@ -289,7 +304,7 @@ def main():
                 if side == "long":
                     val = shares * price_mxn
                 else:
-                    val = shares * price_mxn  # SQQQ es instrumento inverso: se compra long, valor = shares * precio
+                    val = shares * price_mxn
                     
                 current_cash += val * (1.0 - TRANSACTION_FEE_RATE)
                 exit_reason = "TRAILING_STOP" if is_stop_out else "EOD_LIQUIDATION"
@@ -389,7 +404,7 @@ def main():
             if side == "long":
                 val = shares * price_mxn
             else:
-                val = shares * price_mxn  # SQQQ es instrumento inverso: se compra long, valor = shares * precio
+                val = shares * price_mxn
                 
             current_cash += val * (1.0 - TRANSACTION_FEE_RATE)
             log_transaction(dir_path, today_str, active_pos["ticker"], f"SETTLE_{side.upper()}_VWAP", shares, price_mxn, "Reversion target met at VWAP line", fee=0.0)
@@ -402,28 +417,25 @@ def main():
     for h in portfolio["holdings"]:
         curr_p = close_tqqq if h["side"] == "long" else close_sqqq
         h["last_price"] = curr_p * fx_rate
-        if h["side"] == "long":
-            assets_equity += h["shares"] * h["last_price"]
-        else:
-            assets_equity += h["shares"] * h["last_price"]  # SQQQ long: sin short sintetico
+        assets_equity += h["shares"] * h["last_price"]
             
     portfolio_value = current_cash + assets_equity
-
+ 
     # Save state
     portfolio["cash_balance"] = round(current_cash, 2)
     portfolio["total_capital"] = round(portfolio_value, 2)
     save_portfolio(dir_path, portfolio)
-
+ 
     # Generate live report
     report_md = f"""# Strategy 10: Upgraded Intraday VWAP Execution Report
 **Execution Date:** {now.strftime('%Y-%m-%d %H:%M:%S')} | **Strategy Version:** Upgraded Live V3 (Defensive Circuit Breakers Active)
-
+ 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** ${portfolio_value:,.2f} MXN
 * **Total Cash Balance:** ${current_cash:,.2f} MXN (Parked compounding in Bondia sweep at 6.53% APR)
 * **Equity Exposure:** {((portfolio_value - current_cash)/portfolio_value * 100):.1f}%
 * **Active Regime:** State {regime} ({regime_reason})
-
+ 
 ## 2. Current Holdings
 | Ticker | Type | Side | Shares | Buy Price (MXN) | Last Price (MXN) | Market Value (MXN) |
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
@@ -431,35 +443,32 @@ def main():
     for h in portfolio["holdings"]:
         t = h["ticker"]
         side = h.get("side", "long").upper()
-        if side == "LONG":
-            mkt_val = h["shares"] * h["last_price"]
-        else:
-            mkt_val = h["shares"] * h["last_price"]
+        mkt_val = h["shares"] * h["last_price"]
         report_md += f"| **{t}** | LEVERAGED INTRADAY | {side} | {h['shares']:.4f} | ${h['buy_price']:,.2f} | ${h['last_price']:,.2f} | ${mkt_val:,.2f} |\n"
-
+ 
     report_md += "\n## 3. Today's Execution Logs\n"
     if is_new_month:
         report_md += f"* **[SAVINGS DEPOSIT]** Month transition detected. Credited $2,000.00 MXN savings contribution.\n"
     if accrued_interest > 0:
-        report_md += f"* **[INTEREST ACCRUED]** Cash reserves earned $${accrued_interest:,.4f} MXN sweep interest.\n"
+        report_md += f"* **[INTEREST ACCRUED]** Cash reserves earned ${accrued_interest:,.4f} MXN sweep interest.\n"
     if action_logs:
         for log in action_logs:
             report_md += f"* {log}\n"
     else:
-        report_md += "* No trades or rebalancing actions triggered in this 30-minute interval.\n"
-
+        report_md += "* No trades or rebalancing actions triggered in this interval.\n"
+ 
     report_md += "\n## 4. Upgraded Asset Telemetry\n"
     report_md += f"  * Decoded Regime: HMM State {current_state_raw} -> **Regime {regime} ({regime_reason})**\n"
     report_md += f"  * QQQ Close: ${close_qqq:.2f} USD (High: ${daily_high_qqq:.2f}, Low: ${daily_low_qqq:.2f})\n"
     report_md += f"  * QQQ Intraday VWAP: ${vwap_qqq:.2f} USD\n"
     report_md += f"  * QQQ Intraday ATR (14): ${atr_qqq:.2f} USD\n"
-    report_md += f"  * VWAP bands (1.5 * ATR): ${lower_band:.2f} to ${upper_band:.2f} USD\n"
-
+    report_md += f"  * VWAP bands (1.0 * ATR): ${lower_band:.2f} to ${upper_band:.2f} USD\n"
+ 
     with open(os.path.join(dir_path, REPORT_FILE), "w", encoding="utf-8") as f:
         f.write(report_md)
-
+ 
     print(f"\nExecution complete. Upgraded live report written to {REPORT_FILE}")
     print("=" * 80)
-
+ 
 if __name__ == "__main__":
     main()

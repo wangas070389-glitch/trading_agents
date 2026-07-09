@@ -27,18 +27,17 @@ def main():
     print("UPGRADED STRATEGY 10: INTRADAY VWAP LEVERAGED BACKTEST")
     print("=" * 80)
     
-    # 1. Download daily SPY data for HMM training
-    print("Downloading historical daily SPY returns for HMM training (2 years)...")
-    spy_daily = yf.download("SPY", start="2024-05-01", end="2026-07-01", interval="1d", progress=False)
-    spy_daily.columns = [c[0] if isinstance(c, tuple) else c for c in spy_daily.columns]
-    spy_daily_returns = spy_daily["Close"].ffill().pct_change().dropna()
-    pass
+    # 1. Download daily QQQ returns for HMM training (not daily SPY, keeping signature but fetching QQQ)
+    print("Downloading historical daily QQQ returns for HMM training (2 years)...")
+    qqq_daily = yf.download("QQQ", start="2024-05-01", end="2026-07-01", interval="1d", progress=False)
+    qqq_daily.columns = [c[0] if isinstance(c, tuple) else c for c in qqq_daily.columns]
+    qqq_daily_returns = qqq_daily["Close"].ffill().pct_change().dropna()
             
-    # 2. Download Intraday QQQ, TQQQ, SQQQ 30-minute bars
-    print("\nDownloading QQQ, TQQQ, SQQQ 30m intraday bars (60 days)...")
-    qqq = yf.download("QQQ", period="60d", interval="30m", progress=False)
-    tqqq = yf.download("TQQQ", period="60d", interval="30m", progress=False)
-    sqqq = yf.download("SQQQ", period="60d", interval="30m", progress=False)
+    # 2. Download Intraday QQQ, TQQQ, SQQQ 1-hour bars
+    print("\nDownloading QQQ, TQQQ, SQQQ 1h intraday bars (150 days)...")
+    qqq = yf.download("QQQ", period="150d", interval="1h", progress=False)
+    tqqq = yf.download("TQQQ", period="150d", interval="1h", progress=False)
+    sqqq = yf.download("SQQQ", period="150d", interval="1h", progress=False)
     
     if isinstance(qqq.columns, pd.MultiIndex): qqq.columns = [c[0] for c in qqq.columns]
     if isinstance(tqqq.columns, pd.MultiIndex): tqqq.columns = [c[0] for c in tqqq.columns]
@@ -80,38 +79,55 @@ def main():
     regimes_list = []
     
     merged["DateOnly"] = merged.index.strftime("%Y-%m-%d")
-    grouped = merged.groupby("DateOnly")
+    dates_available = sorted(list(set(merged["DateOnly"])))
+    
+    # Run backtest on the last 60 days
+    backtest_dates = dates_available[-60:]
     
     trade_logs = []
     
-    for date_str, group in grouped:
+    for date_str in backtest_dates:
+        group = merged[merged["DateOnly"] == date_str]
+        if group.empty:
+            continue
+            
         # Get historical intraday QQQ data prior to the start of today
         first_bar_time = group.index[0]
         train_data = merged[merged.index < first_bar_time]
-        if len(train_data) < 130:
+        
+        unique_dates = sorted(list(set(train_data.index.date)))
+        if len(unique_dates) < 60:
             regime = 2
         else:
-            log_returns = np.log(train_data["Close_QQQ"] / train_data["Close_QQQ"].shift(1)).fillna(0.0)
+            # Train HMM on exactly the last 60 trading days of hourly data (~420 bars)
+            target_dates = unique_dates[-60:]
+            train_df = train_data[train_data.index.date >= target_dates[0]]
+            train_closes = train_df["Close_QQQ"]
+            
+            log_returns = np.log(train_closes / train_closes.shift(1)).fillna(0.0)
             rolling_vol = log_returns.rolling(window=10).std().fillna(0.0)
             features = np.column_stack([log_returns.values, rolling_vol.values])
             
-            hmm = GaussianHMM(n_components=3, covariance_type="diag", n_iter=100, random_state=42)
-            hmm.fit(features)
-            regimes = hmm.predict(features)
-            
-            state_vols = [np.mean(rolling_vol.values[regimes == i]) for i in range(3)]
-            bear_state = np.argmax(state_vols)
-            
-            rem = [i for i in range(3) if i != bear_state]
-            state_means = [np.mean(log_returns.values[regimes == i]) for i in range(3)]
-            bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
-            
-            last_state = regimes[-1]
-            if last_state == bull_state:
-                regime = 0
-            elif last_state == bear_state:
-                regime = 1
-            else:
+            try:
+                hmm = GaussianHMM(n_components=3, covariance_type="diag", n_iter=100, random_state=42)
+                hmm.fit(features)
+                regimes = hmm.predict(features)
+                
+                state_vols = [np.mean(rolling_vol.values[regimes == i]) if np.any(regimes == i) else 1e9 for i in range(3)]
+                bear_state = np.argmax(state_vols)
+                
+                rem = [i for i in range(3) if i != bear_state]
+                state_means = [np.mean(log_returns.values[regimes == i]) if np.any(regimes == i) else -1e9 for i in range(3)]
+                bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
+                
+                last_state = regimes[-1]
+                if last_state == bull_state:
+                    regime = 0
+                elif last_state == bear_state:
+                    regime = 1
+                else:
+                    regime = 2
+            except Exception:
                 regime = 2
         
         # Calculate daily variables
@@ -145,11 +161,11 @@ def main():
             cum_vol += vol_qqq
             vwap_qqq = cum_pv / cum_vol if cum_vol > 0 else close_qqq
             
-            # Tightened bands (1.5 * ATR)
-            upper_band = vwap_qqq + 1.5 * atr_qqq
-            lower_band = vwap_qqq - 1.5 * atr_qqq
+            # Optimized bands (1.0 * ATR for 1h bar scale)
+            upper_band = vwap_qqq + 1.0 * atr_qqq
+            lower_band = vwap_qqq - 1.0 * atr_qqq
             
-            is_eod = (bar_time.hour == 15 and bar_time.minute == 30) or i == (len(group) - 1)
+            is_eod = (bar_time.hour == 15 and bar_time.minute == 0) or i == (len(group) - 1)
             
             # Valuate active positions
             current_portfolio_value = cash
@@ -157,10 +173,13 @@ def main():
                 current_price = close_tqqq if active_position["side"] == "long" else close_sqqq
                 active_position["peak_price"] = max(active_position["peak_price"], current_price)
                 
-                # Check Trailing Stop exit
+                # Check Hybrid Trailing Stop exit
                 atr_exec = atr_tqqq if active_position["side"] == "long" else atr_sqqq
-                stop_threshold = active_position["peak_price"] - 1.5 * atr_exec
+                buy_price = active_position["entry_price"]
+                paper_profit_atr = (current_price - buy_price) / atr_exec
+                stop_mult = 3.0 if paper_profit_atr <= 1.5 else 1.5
                 
+                stop_threshold = active_position["peak_price"] - stop_mult * atr_exec
                 is_stop_out = current_price < stop_threshold
                 
                 # Valuation
@@ -357,8 +376,8 @@ def main():
 
 ## 2. Updated Settings
 * **Conditional Overnight Holds:** ACTIVE (Evaluates day-end trend strength)
-* **Entry Band Threshold:** 1.5 * ATR (Tightened)
-* **Trailing Stop-Loss:** 1.5 * ATR (Active)
+* **Entry Band Threshold:** 1.0 * ATR (Optimized for 1h Timeframe)
+* **Trailing Stop-Loss:** Hybrid 3.0 / 1.5 * ATR (Active)
 * **Broker Commission Rate:** 0.00% (Alpaca zero-commission)
 
 ## 3. Transaction Summary (Last 20 Closed Trades)
