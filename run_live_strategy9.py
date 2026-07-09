@@ -139,17 +139,24 @@ def main():
         usdmxn_ticker = yf.Ticker("MXN=X")
         fx_hist = usdmxn_ticker.history(period="1d")
         fx_rate = float(fx_hist["Close"].iloc[-1]) if not fx_hist.empty else 18.0
+        if not (np.isfinite(fx_rate) and fx_rate > 0):
+            fx_rate = 18.0
     except Exception as e:
         print(f"Failed to fetch market data: {e}")
         return
-        
+
     prices = pd.DataFrame()
     for t in US_TICKERS:
         if t in data.columns.levels[0]:
             prices[t] = data[t]["Close"].ffill().bfill()
     prices.index = pd.to_datetime(prices.index)
-    
-    current_prices = {t: float(prices[t].iloc[-1]) for t in US_TICKERS}
+
+    current_prices = {t: float(prices[t].iloc[-1]) for t in US_TICKERS if t in prices.columns}
+    invalid = [t for t in US_TICKERS
+               if t not in current_prices or not (np.isfinite(current_prices[t]) and current_prices[t] > 0)]
+    if invalid:
+        print(f"CRITICAL: no valid price for {invalid} (market closed or empty feed). Aborting run without trading.")
+        return
     
     # 4. HMM Regime Prediction
     spy_returns = prices["SPY"].pct_change().dropna().values.reshape(-1, 1)

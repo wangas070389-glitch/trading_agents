@@ -1,5 +1,6 @@
 import os
 import json
+import math
 import datetime
 import yfinance as yf
 import pandas as pd
@@ -184,20 +185,33 @@ STRATEGY_KPIS = {
     }
 }
 
+def valuation_price(h):
+    """Best available price for valuing a holding: last_price when it is a
+    finite positive number, otherwise fall back to buy_price. Protects the
+    report from NaN last_price values written while markets were closed."""
+    for key in ("last_price", "buy_price"):
+        try:
+            px = float(h.get(key, 0.0))
+            if math.isfinite(px) and px > 0:
+                return px
+        except (TypeError, ValueError):
+            continue
+    return 0.0
+
 def get_nav(portfolio_data):
     if not portfolio_data:
         return 0.0, 0.0, 0.0
     cash_mxn = float(portfolio_data.get("cash_balance_mxn", 0.0))
     cash_usd = float(portfolio_data.get("cash_balance_usd", 0.0))
     cash = float(portfolio_data.get("cash_balance", 0.0)) + cash_mxn
-    
+
     holdings_val = 0.0
     for h in portfolio_data.get("holdings", []):
         if "shares" in h:
-            holdings_val += float(h["shares"]) * float(h.get("last_price", h.get("buy_price", 0.0)))
+            holdings_val += float(h["shares"]) * valuation_price(h)
         elif "last_price" in h:
-            holdings_val += float(h.get("last_price", h.get("buy_price", 0.0)))
-            
+            holdings_val += valuation_price(h)
+
     return (cash + holdings_val), cash, cash_usd
 
 def load_json(path):
@@ -217,7 +231,9 @@ def main():
     usd_mxn_rate = 17.43
     try:
         fx = yf.download("USDMXN=X", period="5d", progress=False)
-        usd_mxn_rate = float(fx["Close"].iloc[-1])
+        rate = float(fx["Close"].dropna().iloc[-1])
+        if math.isfinite(rate) and rate > 0:
+            usd_mxn_rate = rate
     except Exception:
         pass
         
@@ -270,6 +286,11 @@ def main():
     for key, val_tuple in strat_data.items():
         data, currency = val_tuple
         kpi = STRATEGY_KPIS[key]
+        # S7 is the consolidated multi-strategy file: it has no cash_balance /
+        # holdings fields, so the generic NAV math would report a bogus
+        # $0 / -100% row. Its real numbers are added separately below.
+        if key == "S7: Core Hybrid Portfolio":
+            continue
         if not data:
             report.append(f"| **{key}** | *Not Initialized* | - | - | - | - | - | {kpi['inception']} | {currency} |")
             continue
@@ -298,7 +319,7 @@ def main():
         if key == "S3: US Stock Momentum":
             cash_local = float(data.get("cash_balance", -24637.34))
             invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in data.get("holdings", []))
-            nav_local = cash_local + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in data.get("holdings", []))
+            nav_local = cash_local + sum(h["shares"] * valuation_price(h) for h in data.get("holdings", []))
         else:
             invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in data.get("holdings", []))
             
@@ -309,8 +330,9 @@ def main():
         
         report.append(f"| **{key}** | ${nav_local:,.2f} | ${cash_local:,.2f} | ${invested:,.2f} | {alloc:.1f}% | {sign}${profit:,.2f} | {sign}{roi:.2f}% | {kpi['inception']} | {currency} |")
 
-    # Add S7 consolidated values
-    if s7_data:
+    # Add S7 consolidated values (skip if the aggregate NAV is NaN/invalid,
+    # e.g. after a run while markets were closed; next clean cycle restores it)
+    if s7_data and math.isfinite(float(s7_data.get("total_portfolio_value_usd", 0.0))):
         s7_nav = s7_data.get("total_portfolio_value_usd", 0.0)
         s7_cash = s7_data.get("total_cash_balance_usd", 0.0)
         s7_invested = s7_nav - s7_cash

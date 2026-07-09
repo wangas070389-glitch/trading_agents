@@ -202,10 +202,14 @@ def main():
                 continue
                 
             hist.columns = [c.lower() if isinstance(c, str) else c[0].lower() for c in hist.columns]
-            ticker_history[ticker] = hist
-            
+
             closes = hist["close"].values
-            current_prices[ticker] = float(closes[-1])
+            px = float(closes[-1])
+            if not (np.isfinite(px) and px > 0):
+                print(f"  Ticker {ticker:6} | SKIPPED (no valid close price)")
+                continue
+            ticker_history[ticker] = hist
+            current_prices[ticker] = px
             
             # SMA 20
             sma_20_values[ticker] = float(hist["close"].rolling(window=20).mean().iloc[-1])

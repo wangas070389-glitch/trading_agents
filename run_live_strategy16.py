@@ -432,12 +432,14 @@ def main():
                         log_transaction(dir_path, today_str, bear_ticker, f"BUY_{bear_ticker}", shares, price_mxn, "Bear swing pullback entry", fee=fee)
                     action_logs.append(f"ENTERED SHORT {bear_ticker} at ${price_mxn:,.2f} MXN (CCI={cci_bear:.1f} ADX={adx_bear:.1f}).")
 
-    # Update dynamic valuations
+    # Update dynamic valuations (keep cached last_price if fresh price is NaN/invalid)
     holdings_equity = 0.0
     for h in portfolio["holdings"]:
         t = h["ticker"]
         curr_price = close_bull if t == bull_ticker else close_bear
-        h["last_price"] = curr_price * fx_rate
+        px_mxn = curr_price * fx_rate
+        if np.isfinite(px_mxn) and px_mxn > 0:
+            h["last_price"] = px_mxn
         holdings_equity += h["shares"] * h["last_price"]
 
     portfolio_value = current_cash + holdings_equity

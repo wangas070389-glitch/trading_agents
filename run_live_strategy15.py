@@ -112,6 +112,11 @@ def main():
 
     fx_rate = float(fx_s.iloc[-1])
     tqqq_mxn = float(tqqq.iloc[-1]) * fx_rate
+    if not (np.isfinite(tqqq_mxn) and tqqq_mxn > 0):
+        print("CRITICAL: precio TQQQ/FX invalido (NaN). Halt.")
+        portfolio["cash_balance_mxn"], portfolio["cash_balance_usd"] = cash_mxn, cash_usd
+        save_portfolio(dir_path, portfolio)
+        return
 
     def completed(s):
         return s[s.index.strftime("%Y-%m-%d") < today_str] if now_et.time() < datetime.time(16, 0) else s

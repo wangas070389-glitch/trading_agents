@@ -121,6 +121,10 @@ def main():
 
     fx_rate = float(fx_hist["Close"].iloc[-1])
     tqqq_price_mxn = float(tqqq_now["Close"].iloc[-1]) * fx_rate
+    if not (np.isfinite(tqqq_price_mxn) and tqqq_price_mxn > 0):
+        print("CRITICAL: precio TQQQ/FX invalido (NaN). Halt sin tocar portafolio.")
+        save_portfolio(dir_path, portfolio)
+        return
 
     # Excluir la barra de hoy si el mercado sigue abierto (senal = cierres completados)
     qqq_idx_dates = qqq.index.tz_localize(None) if qqq.index.tz is not None else qqq.index

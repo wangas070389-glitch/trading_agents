@@ -412,11 +412,13 @@ def main():
             portfolio["holdings"] = []
             active_pos = None
 
-    # Recalculate valuations
+    # Recalculate valuations (keep cached last_price if fresh price is NaN/invalid)
     assets_equity = 0.0
     for h in portfolio["holdings"]:
         curr_p = close_tqqq if h["side"] == "long" else close_sqqq
-        h["last_price"] = curr_p * fx_rate
+        px_mxn = curr_p * fx_rate
+        if np.isfinite(px_mxn) and px_mxn > 0:
+            h["last_price"] = px_mxn
         assets_equity += h["shares"] * h["last_price"]
             
     portfolio_value = current_cash + assets_equity

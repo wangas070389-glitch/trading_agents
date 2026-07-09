@@ -1,7 +1,16 @@
 import os
 import json
+import math
 import datetime
 import yfinance as yf
+
+def is_valid_price(p):
+    """True if p is a usable price (finite float > 0). Guards against NaN
+    closes returned by yfinance when the market is closed or data is missing."""
+    try:
+        return p is not None and math.isfinite(float(p)) and float(p) > 0.0
+    except (TypeError, ValueError):
+        return False
 
 def load_portfolio(portfolio_path):
     """Load portfolio.json and return the dict."""
@@ -160,22 +169,27 @@ def monitor_portfolio():
         dcs = h.get("dcs", 0.0)
         hmm_state = h.get("hmm_state", 0)
 
-        # Fetch current price from yfinance
+        # Fetch current price from yfinance (fresh_price is in the asset's
+        # native currency; the cached last_price is already in MXN)
+        fresh_price = None
         try:
             t_obj = yf.Ticker(ticker)
             hist = t_obj.history(period="1d")
             if not hist.empty:
-                current_price = hist["Close"].iloc[-1]
+                fresh_price = hist["Close"].iloc[-1]
             else:
-                info = t_obj.info
-                current_price = info.get("currentPrice", h["last_price"])
+                fresh_price = t_obj.info.get("currentPrice")
         except Exception as e:
             print(f"Warning: Failed to fetch live price for {ticker}: {e}. Using last cached price.")
-            current_price = h["last_price"]
 
-        # Convert to MXN if it is a U.S. stock (doesn't end in .MX)
-        if not ticker.endswith(".MX"):
-            current_price = current_price * current_usd_mxn
+        if is_valid_price(fresh_price):
+            current_price = float(fresh_price)
+            # Convert to MXN if it is a U.S. stock (doesn't end in .MX)
+            if not ticker.endswith(".MX"):
+                current_price = current_price * current_usd_mxn
+        else:
+            print(f"Warning: No valid price for {ticker} (market closed or empty feed). Keeping last cached price.")
+            current_price = h["last_price"]
 
         current_price = round(current_price, 2)
         market_value = shares * current_price

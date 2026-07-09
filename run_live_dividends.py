@@ -124,6 +124,8 @@ def main():
         usdmxn_ticker = yf.Ticker("MXN=X")
         fx_hist = usdmxn_ticker.history(period="1d")
         fx_rate = float(fx_hist["Close"].iloc[-1]) if not fx_hist.empty else 18.0
+        if not (np.isfinite(fx_rate) and fx_rate > 0):
+            fx_rate = 18.0
     except Exception:
         fx_rate = 18.0
     print(f"Current FX exchange rate (USD/MXN): {fx_rate:.4f}")
@@ -138,11 +140,14 @@ def main():
         try:
             ticker = yf.Ticker(ticker_symbol)
             hist = ticker.history(period="5d")
-            if not hist.empty:
-                current_price = float(hist["Close"].iloc[-1])
-                if ticker_symbol in DIVIDEND_US_TICKERS:
-                    current_price *= fx_rate
-                current_prices[ticker_symbol] = current_price
+            if not hist.empty and hist["Close"].notna().any():
+                current_price = float(hist["Close"].dropna().iloc[-1])
+                if np.isfinite(current_price) and current_price > 0:
+                    if ticker_symbol in DIVIDEND_US_TICKERS:
+                        current_price *= fx_rate
+                    current_prices[ticker_symbol] = current_price
+                else:
+                    print(f"  [WARN] No valid close for {ticker_symbol} (market closed?). Keeping cached price.")
                 
                 # Check for dividends paid since last update
                 divs = ticker.dividends
@@ -160,7 +165,8 @@ def main():
                         print(dividend_credits[-1])
         except Exception as e:
             print(f"  [WARN] Failed to check status for {ticker_symbol}: {e}")
-            current_prices[ticker_symbol] = h["last_price"]
+            if np.isfinite(h.get("last_price", float("nan"))) and h.get("last_price", 0) > 0:
+                current_prices[ticker_symbol] = h["last_price"]
 
     # 6. Check if rebalancing is due (quarterly = 90 days)
     last_rebalance_str = portfolio.get("last_rebalance_date", "2000-01-01")
@@ -266,7 +272,8 @@ def main():
         portfolio["last_rebalance_date"] = today_str
         print("Rebalancing completed.")
 
-    # 7. Update prices of holdings
+    # 7. Update prices of holdings (skip NaN/invalid closes so a closed
+    # market never overwrites a valid cached last_price)
     for h in portfolio["holdings"]:
         ticker = h["ticker"]
         # Fetch current price if not fetched already
@@ -274,10 +281,12 @@ def main():
             try:
                 hist = yf.Ticker(ticker).history(period="1d")
                 if not hist.empty:
-                    current_prices[ticker] = float(hist["Close"].iloc[-1]) * (fx_rate if ticker in DIVIDEND_US_TICKERS else 1.0)
+                    px = float(hist["Close"].iloc[-1])
+                    if np.isfinite(px) and px > 0:
+                        current_prices[ticker] = px * (fx_rate if ticker in DIVIDEND_US_TICKERS else 1.0)
             except Exception:
                 pass
-        if ticker in current_prices:
+        if ticker in current_prices and np.isfinite(current_prices[ticker]) and current_prices[ticker] > 0:
             h["last_price"] = current_prices[ticker]
 
     # Calculate final stats

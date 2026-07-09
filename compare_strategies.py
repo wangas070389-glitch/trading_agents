@@ -1,6 +1,20 @@
-import os
+﻿import os
 import json
+import math
 import datetime
+
+def valuation_price(h):
+    """Best available price for valuing a holding: last_price when it is a
+    finite positive number, otherwise fall back to buy_price. Protects the
+    report from NaN last_price values written while markets were closed."""
+    for key in ("last_price", "buy_price"):
+        try:
+            px = float(h.get(key, 0.0))
+            if math.isfinite(px) and px > 0:
+                return px
+        except (TypeError, ValueError):
+            continue
+    return 0.0
 
 def load_json(path):
     if os.path.exists(path):
@@ -46,6 +60,12 @@ def main():
     port_strategy16 = load_json(portfolio_strategy16_path)
     port_multi_strategy = load_json(portfolio_multi_strategy_path)
     usd_mxn_rate = port_multi_strategy.get("usd_mxn_rate", 17.43) if port_multi_strategy else 17.43
+    try:
+        usd_mxn_rate = float(usd_mxn_rate)
+        if not (math.isfinite(usd_mxn_rate) and usd_mxn_rate > 0):
+            usd_mxn_rate = 17.43
+    except (TypeError, ValueError):
+        usd_mxn_rate = 17.43
     
     if not port_val and not port_macd and not port_us and not port_us_dcs and not port_alternatives and not port_high_beta and not port_dividends and not port_strategy9 and not port_strategy10 and not port_strategy11 and not port_strategy12 and not port_strategy13 and not port_strategy14 and not port_strategy15 and not port_strategy16 and not port_multi_strategy:
         print("Error: No portfolio files found. Cannot generate comparison.")
@@ -69,7 +89,7 @@ def main():
         v_total_cap = port_val.get("total_capital", 20000.0)
         s1_cash = port_val.get("cash_balance", 20000.0)
         s1_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_val.get("holdings", []))
-        s1_market_val = s1_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_val.get("holdings", []))
+        s1_market_val = s1_cash + sum(h["shares"] * valuation_price(h) for h in port_val.get("holdings", []))
         v_profit = s1_market_val - v_total_cap
         v_roi = (v_profit / v_total_cap) * 100.0
         v_alloc = (s1_invested / s1_market_val) * 100.0 if s1_market_val > 0 else 0.0
@@ -84,7 +104,7 @@ def main():
         m_total_cap = port_macd.get("total_capital", 20000.0)
         s2_cash = port_macd.get("cash_balance", 20000.0)
         s2_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_macd.get("holdings", []))
-        s2_market_val = s2_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_macd.get("holdings", []))
+        s2_market_val = s2_cash + sum(h["shares"] * valuation_price(h) for h in port_macd.get("holdings", []))
         m_profit = s2_market_val - m_total_cap
         m_roi = (m_profit / m_total_cap) * 100.0
         m_alloc = (s2_invested / s2_market_val) * 100.0 if s2_market_val > 0 else 0.0
@@ -99,7 +119,7 @@ def main():
         u_total_cap = port_us.get("total_capital", 100000.0)
         s3_cash = port_us.get("cash_balance", 100000.0)
         s3_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_us.get("holdings", []))
-        s3_market_val = s3_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_us.get("holdings", []))
+        s3_market_val = s3_cash + sum(h["shares"] * valuation_price(h) for h in port_us.get("holdings", []))
         u_profit = s3_market_val - u_total_cap
         u_roi = (u_profit / u_total_cap) * 100.0
         u_alloc = (s3_invested / s3_market_val) * 100.0 if s3_market_val > 0 else 0.0
@@ -114,7 +134,7 @@ def main():
         ud_total_cap = port_us_dcs.get("total_capital", 100000.0)
         s4_cash = port_us_dcs.get("cash_balance", 100000.0)
         s4_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_us_dcs.get("holdings", []))
-        s4_market_val = s4_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_us_dcs.get("holdings", []))
+        s4_market_val = s4_cash + sum(h["shares"] * valuation_price(h) for h in port_us_dcs.get("holdings", []))
         ud_profit = s4_market_val - ud_total_cap
         ud_roi = (ud_profit / ud_total_cap) * 100.0
         ud_alloc = (s4_invested / s4_market_val) * 100.0 if s4_market_val > 0 else 0.0
@@ -129,7 +149,7 @@ def main():
         a_total_cap = port_alternatives.get("total_capital", 100000.0)
         s5_cash = port_alternatives.get("cash_balance", 100000.0)
         s5_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_alternatives.get("holdings", []))
-        s5_market_val = s5_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_alternatives.get("holdings", []))
+        s5_market_val = s5_cash + sum(h["shares"] * valuation_price(h) for h in port_alternatives.get("holdings", []))
         a_profit = s5_market_val - a_total_cap
         a_roi = (a_profit / a_total_cap) * 100.0
         a_alloc = (s5_invested / s5_market_val) * 100.0 if s5_market_val > 0 else 0.0
@@ -144,7 +164,7 @@ def main():
         h_total_cap = port_high_beta.get("total_capital", 100000.0)
         s6_cash = port_high_beta.get("cash_balance", 100000.0)
         s6_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_high_beta.get("holdings", []))
-        s6_market_val = s6_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_high_beta.get("holdings", []))
+        s6_market_val = s6_cash + sum(h["shares"] * valuation_price(h) for h in port_high_beta.get("holdings", []))
         h_profit = s6_market_val - h_total_cap
         h_roi = (h_profit / h_total_cap) * 100.0
         h_alloc = (s6_invested / s6_market_val) * 100.0 if s6_market_val > 0 else 0.0
@@ -159,7 +179,7 @@ def main():
         div_total_cap = port_dividends.get("total_capital", 200000.0)
         s8_cash = port_dividends.get("cash_balance", 200000.0)
         s8_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_dividends.get("holdings", []))
-        s8_market_val = s8_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_dividends.get("holdings", []))
+        s8_market_val = s8_cash + sum(h["shares"] * valuation_price(h) for h in port_dividends.get("holdings", []))
         div_profit = s8_market_val - div_total_cap
         div_roi = (div_profit / div_total_cap) * 100.0
         div_alloc = (s8_invested / s8_market_val) * 100.0 if s8_market_val > 0 else 0.0
@@ -174,7 +194,7 @@ def main():
         s9_total_cap = 200000.0
         s9_cash = port_strategy9.get("cash_balance", 200000.0)
         s9_invested = sum(float(h.get("allocated", h["shares"] * h["buy_price"])) for h in port_strategy9.get("holdings", []))
-        s9_market_val = s9_cash + sum(h["shares"] * h.get("last_price", h["buy_price"]) for h in port_strategy9.get("holdings", []) if "shares" in h)
+        s9_market_val = s9_cash + sum(h["shares"] * valuation_price(h) for h in port_strategy9.get("holdings", []) if "shares" in h)
         s9_profit = s9_market_val - s9_total_cap
         s9_roi = (s9_profit / s9_total_cap) * 100.0
         s9_alloc = (s9_invested / s9_market_val) * 100.0 if s9_market_val > 0 else 0.0
@@ -192,9 +212,9 @@ def main():
         s10_market_val = s10_cash
         for h in port_strategy10.get("holdings", []):
             if h.get("side", "long") == "long":
-                s10_market_val += h["shares"] * h.get("last_price", h["buy_price"])
+                s10_market_val += h["shares"] * valuation_price(h)
             else:
-                s10_market_val += h["allocated"] + (h["allocated"] - h["shares"] * h.get("last_price", h["buy_price"]))
+                s10_market_val += h["allocated"] + (h["allocated"] - h["shares"] * valuation_price(h))
         s10_profit = s10_market_val - s10_total_cap
         s10_roi = (s10_profit / s10_total_cap) * 100.0
         s10_alloc = (s10_invested / s10_market_val) * 100.0 if s10_market_val > 0 else 0.0
@@ -212,9 +232,9 @@ def main():
         s11_market_val = s11_cash
         for h in port_strategy11.get("holdings", []):
             if h.get("side", "long") == "long":
-                s11_market_val += h["shares"] * h.get("last_price", h["buy_price"])
+                s11_market_val += h["shares"] * valuation_price(h)
             else:
-                s11_market_val += h["allocated"] + (h["allocated"] - h["shares"] * h.get("last_price", h["buy_price"]))
+                s11_market_val += h["allocated"] + (h["allocated"] - h["shares"] * valuation_price(h))
         s11_profit = s11_market_val - s11_total_cap
         s11_roi = (s11_profit / s11_total_cap) * 100.0
         s11_alloc = (s11_invested / s11_market_val) * 100.0 if s11_market_val > 0 else 0.0
@@ -229,7 +249,7 @@ def main():
         s12_total_cap = 200000.0
         s12_cash = port_strategy12.get("cash_balance", 200000.0)
         s12_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy12.get("holdings", []))
-        s12_market_val = s12_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_strategy12.get("holdings", []))
+        s12_market_val = s12_cash + sum(h["shares"] * valuation_price(h) for h in port_strategy12.get("holdings", []))
         s12_profit = s12_market_val - s12_total_cap
         s12_roi = (s12_profit / s12_total_cap) * 100.0
         s12_alloc = (s12_invested / s12_market_val) * 100.0 if s12_market_val > 0 else 0.0
@@ -249,7 +269,7 @@ def main():
         s13_cash = s13_cash_mxn + s13_cash_usd * rate_temp
         
         s13_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy13.get("holdings", []))
-        s13_market_val = s13_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_strategy13.get("holdings", []))
+        s13_market_val = s13_cash + sum(h["shares"] * valuation_price(h) for h in port_strategy13.get("holdings", []))
         s13_profit = s13_market_val - s13_total_cap
         s13_roi = (s13_profit / s13_total_cap) * 100.0
         s13_alloc = (s13_invested / s13_market_val) * 100.0 if s13_market_val > 0 else 0.0
@@ -266,7 +286,7 @@ def main():
         s14_cash_usd = port_strategy14.get("cash_balance_usd", 0.0)
         s14_cash = s14_cash_mxn + s14_cash_usd * usd_mxn_rate
         s14_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy14.get("holdings", []))
-        s14_market_val = s14_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_strategy14.get("holdings", []))
+        s14_market_val = s14_cash + sum(h["shares"] * valuation_price(h) for h in port_strategy14.get("holdings", []))
         s14_profit = s14_market_val - s14_total_cap
         s14_roi = (s14_profit / s14_total_cap) * 100.0
         s14_alloc = (s14_invested / s14_market_val) * 100.0 if s14_market_val > 0 else 0.0
@@ -283,7 +303,7 @@ def main():
         s15_cash_usd = port_strategy15.get("cash_balance_usd", 0.0)
         s15_cash = s15_cash_mxn + s15_cash_usd * usd_mxn_rate
         s15_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy15.get("holdings", []))
-        s15_market_val = s15_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_strategy15.get("holdings", []))
+        s15_market_val = s15_cash + sum(h["shares"] * valuation_price(h) for h in port_strategy15.get("holdings", []))
         s15_profit = s15_market_val - s15_total_cap
         s15_roi = (s15_profit / s15_total_cap) * 100.0
         s15_alloc = (s15_invested / s15_market_val) * 100.0 if s15_market_val > 0 else 0.0
@@ -298,7 +318,7 @@ def main():
         s16_total_cap = 200000.0
         s16_cash = port_strategy16.get("cash_balance", 200000.0)
         s16_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy16.get("holdings", []))
-        s16_market_val = s16_cash + sum(h["shares"] * h.get("last_price", h.get("buy_price", 0.0)) for h in port_strategy16.get("holdings", []))
+        s16_market_val = s16_cash + sum(h["shares"] * valuation_price(h) for h in port_strategy16.get("holdings", []))
         s16_profit = s16_market_val - s16_total_cap
         s16_roi = (s16_profit / s16_total_cap) * 100.0
         s16_alloc = (s16_invested / s16_market_val) * 100.0 if s16_market_val > 0 else 0.0
@@ -308,8 +328,8 @@ def main():
         report.append("| **HMM Intraday Router (S16)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse Strategy 7 (Consolidated Multi-Strategy)
-    if port_multi_strategy:
-        ms_val = port_multi_strategy.get("total_portfolio_value_usd", 0.0)
+    ms_val = float(port_multi_strategy.get("total_portfolio_value_usd", 0.0)) if port_multi_strategy else 0.0
+    if port_multi_strategy and math.isfinite(ms_val) and ms_val > 0:
         ms_cash = port_multi_strategy.get("total_cash_balance_usd", 0.0)
         ms_invested = ms_val - ms_cash
         
@@ -450,3 +470,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

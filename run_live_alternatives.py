@@ -196,7 +196,11 @@ def main():
                 
             hist.columns = [c.lower() if isinstance(c, str) else c[0].lower() for c in hist.columns]
             ticker_history[ticker] = hist
-            current_prices[ticker] = float(hist["close"].iloc[-1])
+            px = float(hist["close"].iloc[-1])
+            if not (np.isfinite(px) and px > 0):
+                print(f"  Ticker {ticker:10} | SKIPPED (no valid close price)")
+                continue
+            current_prices[ticker] = px
         except Exception as e:
             print(f"  Ticker {ticker:10} | Failed loading data: {e}")
 

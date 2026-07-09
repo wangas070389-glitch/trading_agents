@@ -24,6 +24,21 @@ PORTFOLIO_FILE = "portfolio_multi_strategy.json"
 REPORT_FILE = "multi_strategy_report_live.md"
 CSV_FILE = "consolidated_portfolio_nav.csv"
 
+def valuation_price(h):
+    """Best available price for valuing a holding: last_price when it is a
+    finite positive number, otherwise fall back to buy_price. Protects the
+    consolidated NAV (and its persisted history) from NaN last_price values
+    written while markets were closed."""
+    for key in ("last_price", "buy_price"):
+        px = h.get(key, 0.0)
+        try:
+            px = float(px)
+        except (TypeError, ValueError):
+            continue
+        if np.isfinite(px) and px > 0:
+            return px
+    return 0.0
+
 def get_nav(portfolio_data):
     if not portfolio_data:
         return 0.0, 0.0
@@ -31,13 +46,13 @@ def get_nav(portfolio_data):
     cash_mxn = float(portfolio_data.get("cash_balance_mxn", 0.0))
     cash_usd = float(portfolio_data.get("cash_balance_usd", 0.0))
     cash = float(portfolio_data.get("cash_balance", 0.0)) + cash_mxn
-    
+
     holdings_val = 0.0
     for h in portfolio_data.get("holdings", []):
         if "shares" in h:
-            holdings_val += float(h["shares"]) * float(h.get("last_price", h.get("buy_price", 0.0)))
+            holdings_val += float(h["shares"]) * valuation_price(h)
         elif "last_price" in h:
-            holdings_val += float(h.get("last_price", h.get("buy_price", 0.0)))
+            holdings_val += valuation_price(h)
             
     # Return (total value, only cash value) in local strategy units (MXN or USD)
     # Note: S13 returns USD cash separately, so cash_usd needs conversion or tracking.
@@ -57,7 +72,10 @@ def main():
     try:
         fx = yf.download("USDMXN=X", period="5d", progress=False)
         fx.columns = [c if isinstance(c, str) else c[0] for c in fx.columns]
-        usd_mxn_rate = float(fx["Close"].iloc[-1])
+        rate = float(fx["Close"].dropna().iloc[-1])
+        if not (np.isfinite(rate) and rate > 0):
+            raise ValueError(f"invalid FX rate: {rate}")
+        usd_mxn_rate = rate
         print(f"  USD/MXN Exchange Rate: {usd_mxn_rate:.4f}")
     except Exception as e:
         print(f"  [WARN] Failed to download USDMXN exchange rate: {e}. Using fallback {usd_mxn_rate:.4f}")

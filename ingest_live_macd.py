@@ -186,6 +186,8 @@ def main():
     try:
         usdmxn = yf.Ticker("MXN=X").history(period="1d")
         rate = float(usdmxn["Close"].iloc[-1])
+        if not (np.isfinite(rate) and rate > 0):
+            raise ValueError(f"invalid FX rate: {rate}")
         print(f"  |-- Current exchange rate: {rate:.4f} MXN/USD")
     except Exception:
         rate = 17.50
@@ -213,7 +215,13 @@ def main():
             macd_val = float(row["macd"])
             sig_val = float(row["signal"])
             sma50_val = float(row["sma50"])
-            
+
+            # Skip tickers with NaN/invalid closes (market closed / empty feed)
+            # so stale-but-valid last_price values are never overwritten with NaN
+            if not (np.isfinite(close) and close > 0):
+                print(f"  Ticker {ticker:12} | SKIPPED (no valid close price)")
+                continue
+
             is_bullish = macd_val > sig_val and close > sma50_val
             price_mxn = close * rate if not ticker.endswith(".MX") else close
             current_prices[ticker] = price_mxn

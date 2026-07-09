@@ -137,6 +137,12 @@ def main():
 
     fx_rate = float(fx_hist["Close"].iloc[-1])
     tqqq_mxn = float(tqqq.iloc[-1]) * fx_rate
+    if not (np.isfinite(tqqq_mxn) and tqqq_mxn > 0):
+        print("CRITICAL: precio TQQQ/FX invalido (NaN). Halt sin tocar portafolio.")
+        portfolio["cash_balance_mxn"] = cash_mxn
+        portfolio["cash_balance_usd"] = cash_usd
+        save_portfolio(dir_path, portfolio)
+        return
 
     # Solo cierres completados (excluir hoy si el mercado sigue abierto)
     def completed(s):

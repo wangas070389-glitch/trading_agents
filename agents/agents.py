@@ -178,6 +178,9 @@ class FundamentalScreener:
                 
                 # 3. Dynamic DCF Valuation
                 current_price = precios[-1]
+                if not (np.isfinite(current_price) and current_price > 0):
+                    print(f"  +-- [SKIP] {ticker}: sin precio valido (mercado cerrado / feed vacio)")
+                    continue
                 
                 if "raw_dcf_inputs" in data:
                     # Blind pipeline support

@@ -224,8 +224,12 @@ def main():
                 print(f"  [WARN] Insufficient history for {ticker}")
                 continue
                 
+            px = float(hist["Close"].iloc[-1])
+            if not (np.isfinite(px) and px > 0):
+                print(f"  [WARN] No valid close for {ticker}, skipping")
+                continue
             price_data[ticker] = hist
-            current_prices[ticker] = float(hist["Close"].iloc[-1])
+            current_prices[ticker] = px
             daily_returns[ticker] = hist["Close"].pct_change()
         except Exception as e:
             print(f"  [WARN] Error processing {ticker}: {e}")
