@@ -300,32 +300,6 @@ def main():
         tdf = pd.DataFrame(closed_trades)
         print(f"\nTotal trades: {len(tdf)}, Total PnL: ${tdf['pnl'].sum():,.2f}")
         print(tdf.groupby("exit")["pnl"].agg(["count", "sum", "mean"]))
-        
-    # Generate standard markdown backtest report
-    report_md = f"""# Strategy 16 v2 Backtest Report (Multi-Day Swing)
-**Executed:** {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-**Asset Universe:** QQQ, SPY, SOXX, IWM (3x Leveraged Bull/Bear Pairs)
-
-## Performance Metrics
-* **Final NAV:** ${final_nav:,.2f} MXN
-* **Total Return:** {total_ret*100:+.2f}%
-* **Time-Weighted CAGR:** {cagr*100:+.2f}%
-* **Annual Volatility:** {ann_vol*100:.2f}%
-* **Sharpe Ratio (Rf=9.5%):** {sharpe:.2f}
-* **Maximum Drawdown:** {max_dd*100:.2f}%
-"""
-    if closed_trades:
-        tdf = pd.DataFrame(closed_trades)
-        report_md += f"""
-## Summary Diagnostics
-* **Total Trades Executed:** {len(tdf)}
-* **Total PnL:** ${tdf['pnl'].sum():,.2f} MXN
-"""
-    with open(os.path.join(dir_path, "strategy16_backtest_report.md"), "w", encoding="utf-8") as f:
-        f.write(report_md)
-
-    df_nav.to_csv(os.path.join(dir_path, "strategy16_backtest_nav.csv"))
-    print("\nSaved NAV curve to strategy16_backtest_nav.csv")
 
 if __name__ == "__main__":
     main()

@@ -1,17 +1,15 @@
-# Strategy 16 v2 Backtest Report
-**Executed:** 2026-07-08 22:38:58
+# Strategy 16 v2 Backtest Report (Multi-Day Swing)
+**Executed:** 2026-07-08 22:46:11
 **Asset Universe:** QQQ, SPY, SOXX, IWM (3x Leveraged Bull/Bear Pairs)
 
 ## Performance Metrics
-* **Final NAV:** $242,346.44 MXN
-* **Total Return:** +21.17%
-* **Time-Weighted CAGR:** +126.07%
-* **Annual Volatility:** 31.22%
-* **Sharpe Ratio (Rf=9.5%):** 3.73
-* **Maximum Drawdown:** -10.12%
-* **Routing Days Map:** {'QQQ': 23, 'SPY': 2, 'SOXX': 29, 'IWM': 6}
+* **Final NAV:** $208,733.64 MXN
+* **Total Return:** +4.37%
+* **Time-Weighted CAGR:** +19.90%
+* **Annual Volatility:** 37.39%
+* **Sharpe Ratio (Rf=9.5%):** 0.28
+* **Maximum Drawdown:** -24.55%
 
 ## Summary Diagnostics
-* **Total Trades Executed:** 21
-* **Total PnL:** $41,987.34 MXN
-* **Overnight Held Trades:** 6 (PnL: $40,552.26 MXN)
+* **Total Trades Executed:** 23
+* **Total PnL:** $7,138.21 MXN

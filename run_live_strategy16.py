@@ -183,7 +183,7 @@ def main():
         print(f"Error fetching FX rate: {e}. Defaulting to 18.0")
         fx_rate = 18.0
 
-    # 4. Multi-asset HMM Regime Decoding (runs HMM on last 30 days of 30m data)
+    # 4. Multi-asset HMM Regime Decoding (runs HMM on last 2 years of daily bars)
     print("\nDecoding HMM regimes for universe...")
     regimes = {}
     scores = {}
@@ -193,9 +193,12 @@ def main():
 
     for base in universe.keys():
         try:
-            df = yf.download(base, period="60d", interval="30m", progress=False)
+            df = yf.download(base, period="2y", interval="1d", progress=False)
             if isinstance(df.columns, pd.MultiIndex):
                 df.columns = [c[0] for c in df.columns]
+            
+            # Exclude today's incomplete daily bar to avoid lookahead bias
+            df = df[df.index.date < datetime.date.today()]
             
             if len(df) < 130:
                 regimes[base] = 2
@@ -337,49 +340,38 @@ def main():
         current_price = close_bull if ticker == bull_ticker else close_bear
         atr_exec = atr_bull if ticker == bull_ticker else atr_bear
         
-        # Stop check
+        # Stop check: Wide 3.0 * ATR trailing stop
         active_pos["peak_price"] = max(active_pos.get("peak_price", current_price), current_price)
-        stop_threshold = active_pos["peak_price"] - 1.5 * atr_exec
+        stop_threshold = active_pos["peak_price"] - 3.0 * atr_exec
         is_stop_out = current_price < stop_threshold
         
-        # Settle condition (VWAP reversion for Chop, no early settle for Trends)
-        is_settled = False
-        if target_regime == 2:
-            if (side == "long" and close_base >= vwap_base) or (side == "short" and close_base <= vwap_base):
-                is_settled = True
+        # Regime flip exit check
+        is_regime_flip = False
+        if side == "long" and target_regime != 0:
+            is_regime_flip = True
+        elif side == "short" and target_regime != 1:
+            is_regime_flip = True
 
-        if is_stop_out or is_settled or is_eod:
-            should_hold_overnight = False
-            if is_eod and not is_stop_out and not is_settled:
-                # EOD Overnight logic
-                price_mxn = current_price * fx_rate
-                if price_mxn > active_pos["buy_price"]:
-                    if side == "long" and close_base >= (daily_high - 0.005 * daily_high) and target_regime == 0:
-                        should_hold_overnight = True
-                    elif side == "short" and close_base <= (daily_low + 0.005 * daily_low) and target_regime == 1:
-                        should_hold_overnight = True
+        if is_stop_out or is_regime_flip:
+            price_mxn = current_price * fx_rate
+            val = shares * price_mxn
+            fee = val * TRANSACTION_FEE_RATE
+            net_impact = val - fee
+            
+            if not args.dry_run:
+                current_cash += net_impact
+                exit_reason = "STOP_LOSS" if is_stop_out else "REGIME_FLIP"
+                log_transaction(dir_path, today_str, ticker, f"SELL_{ticker}", shares, price_mxn, f"Exit target {target_asset} via {exit_reason}", fee=fee)
+                portfolio["holdings"] = []
+            
+            active_pos = None
+            action_logs.append(f"LIQUIDATED position in {ticker} ({side}) at ${price_mxn:,.2f} MXN. Reason: {'STOP_LOSS' if is_stop_out else 'REGIME_FLIP'}. Net cash returned: ${net_impact:,.2f} MXN.")
 
-            if not should_hold_overnight:
-                price_mxn = current_price * fx_rate
-                val = shares * price_mxn
-                fee = val * TRANSACTION_FEE_RATE
-                net_impact = val - fee
-                
-                if not args.dry_run:
-                    current_cash += net_impact
-                    log_transaction(dir_path, today_str, ticker, f"SELL_{ticker}", shares, price_mxn, f"Exit target {target_asset} via {'STOP' if is_stop_out else ('VWAP_REV' if is_settled else 'EOD')}", fee=fee)
-                    portfolio["holdings"] = []
-                
-                active_pos = None
-                action_logs.append(f"LIQUIDATED position in {ticker} ({side}) at ${price_mxn:,.2f} MXN. Net cash returned: ${net_impact:,.2f} MXN.")
-            else:
-                action_logs.append(f"EOD holding position in {ticker} overnight due to strong close.")
-
-    # Entry triggers (if flat and not EOD) — S10-style VWAP breakout entries
+    # Entry triggers (if flat and not EOD) — Multi-day Swing pullback entries
     if not active_pos and not is_eod:
         if target_regime == 0:
-            # Bull regime entry on upper band breakout
-            if close_base > upper_band:
+            # Bull regime entry on bull ETF pullback
+            if cci_bull < -100.0 and adx_bull > 20.0:
                 price_mxn = close_bull * fx_rate
                 alloc = current_cash * 0.90
                 fee = alloc * TRANSACTION_FEE_RATE
@@ -397,11 +389,11 @@ def main():
                             "peak_price": close_bull,
                             "allocated": alloc
                         })
-                        log_transaction(dir_path, today_str, bull_ticker, f"BUY_{bull_ticker}", shares, price_mxn, "Bull VWAP breakout entry", fee=fee)
-                    action_logs.append(f"ENTERED LONG {bull_ticker} at ${price_mxn:,.2f} MXN (VWAP breakout: {close_base:.2f} > {upper_band:.2f}).")
+                        log_transaction(dir_path, today_str, bull_ticker, f"BUY_{bull_ticker}", shares, price_mxn, "Bull swing pullback entry", fee=fee)
+                    action_logs.append(f"ENTERED LONG {bull_ticker} at ${price_mxn:,.2f} MXN (CCI={cci_bull:.1f} ADX={adx_bull:.1f}).")
         elif target_regime == 1:
-            # Bear regime entry on lower band breakdown
-            if close_base < lower_band:
+            # Bear regime entry on bear ETF pullback
+            if cci_bear < -100.0 and adx_bear > 20.0:
                 price_mxn = close_bear * fx_rate
                 alloc = current_cash * 0.90
                 fee = alloc * TRANSACTION_FEE_RATE
@@ -419,50 +411,8 @@ def main():
                             "peak_price": close_bear,
                             "allocated": alloc
                         })
-                        log_transaction(dir_path, today_str, bear_ticker, f"BUY_{bear_ticker}", shares, price_mxn, "Bear VWAP breakdown entry", fee=fee)
-                    action_logs.append(f"ENTERED SHORT {bear_ticker} at ${price_mxn:,.2f} MXN (VWAP breakdown: {close_base:.2f} < {lower_band:.2f}).")
-        else:
-            # Chop Mean Reversion
-            if close_base < lower_band:
-                price_mxn = close_bull * fx_rate
-                alloc = current_cash * 0.90
-                fee = alloc * TRANSACTION_FEE_RATE
-                shares = (alloc - fee) / price_mxn
-                if shares > 0.01:
-                    if not args.dry_run:
-                        current_cash -= alloc
-                        portfolio["holdings"].append({
-                            "ticker": bull_ticker,
-                            "base": target_asset,
-                            "side": "long",
-                            "shares": shares,
-                            "buy_price": price_mxn,
-                            "last_price": price_mxn,
-                            "peak_price": close_bull,
-                            "allocated": alloc
-                        })
-                        log_transaction(dir_path, today_str, bull_ticker, f"BUY_{bull_ticker}", shares, price_mxn, "Chop lower band buy", fee=fee)
-                    action_logs.append(f"ENTERED LONG {bull_ticker} at ${price_mxn:,.2f} MXN (Price below lower band).")
-            elif close_base > upper_band:
-                price_mxn = close_bear * fx_rate
-                alloc = current_cash * 0.90
-                fee = alloc * TRANSACTION_FEE_RATE
-                shares = (alloc - fee) / price_mxn
-                if shares > 0.01:
-                    if not args.dry_run:
-                        current_cash -= alloc
-                        portfolio["holdings"].append({
-                            "ticker": bear_ticker,
-                            "base": target_asset,
-                            "side": "short",
-                            "shares": shares,
-                            "buy_price": price_mxn,
-                            "last_price": price_mxn,
-                            "peak_price": close_bear,
-                            "allocated": alloc
-                        })
-                        log_transaction(dir_path, today_str, bear_ticker, f"BUY_{bear_ticker}", shares, price_mxn, "Chop upper band buy", fee=fee)
-                    action_logs.append(f"ENTERED SHORT {bear_ticker} at ${price_mxn:,.2f} MXN (Price above upper band).")
+                        log_transaction(dir_path, today_str, bear_ticker, f"BUY_{bear_ticker}", shares, price_mxn, "Bear swing pullback entry", fee=fee)
+                    action_logs.append(f"ENTERED SHORT {bear_ticker} at ${price_mxn:,.2f} MXN (CCI={cci_bear:.1f} ADX={adx_bear:.1f}).")
 
     # Update dynamic valuations
     holdings_equity = 0.0
