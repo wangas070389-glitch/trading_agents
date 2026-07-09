@@ -21,6 +21,9 @@ Escanea portfolio_strategy*.json + transactions_strategy*.md y verifica:
 Salida: watchdog_report.md + exit code 1 si hay CRITICAL -> GitHub Actions
 marca la corrida EN ROJO. El fallo deja de ser silencioso.
 
+MODO AUDITORIA: el watchdog NO escribe HALT flags ni detiene estrategias;
+solo reporta. Los halts (HALT_<estrategia>.flag) se crean y borran a mano.
+
 Uso:  python watchdog.py            (auditar y fallar en critico)
       python watchdog.py --dry-run  (auditar sin exit code)
 Integracion en workflow (paso final, despues de los runners):
@@ -349,15 +352,13 @@ def main():
 
     all_findings.extend(check_broker_reconciliation(dir_path, now, active_strats))
 
-    # HALT GATE: cada CRITICAL de estrategia escribe su flag -> los runners se detienen
-    try:
-        from halt_gate import raise_halt
-        for f in all_findings:
-            if f.level == "CRITICAL" and f.strategy not in ("broker",):
-                flag = raise_halt(dir_path, f.strategy, f"[{now}] {f.code}: {f.msg}")
-                print(f"HALT flag escrito: {flag}")
-    except Exception as e:
-        print(f"(halt_gate no disponible: {e})")
+    # AUDIT-ONLY: el watchdog reporta hallazgos (watchdog_report.md + exit 1
+    # en CRITICAL para poner Actions en rojo) pero NO escribe HALT flags ni
+    # detiene estrategias. Los halts se gestionan manualmente creando o
+    # borrando HALT_<estrategia>.flag.
+    n_crit_flags = sum(1 for f in all_findings if f.level == "CRITICAL" and f.strategy not in ("broker",))
+    if n_crit_flags:
+        print(f"AUDIT-ONLY: {n_crit_flags} CRITICAL detectados; no se escriben HALT flags (revision manual).")
 
     n_crit = sum(1 for f in all_findings if f.level == "CRITICAL")
     n_warn = sum(1 for f in all_findings if f.level == "WARNING")
