@@ -1,5 +1,5 @@
 # Isolated High-Beta Value-Momentum Execution Report
-**Execution Date:** 2026-07-08 | **Strategy Version:** Upgraded High-Beta V1
+**Execution Date:** 2026-07-09 | **Strategy Version:** Upgraded High-Beta V1
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** $101,157.98 USD
@@ -19,7 +19,7 @@
 | Ticker | Signal | Price | Beta | DCS MOS | MACD Status | SMA 100 Status | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
 | **AAPL** | AVOID / SELL | $313.39 | 0.86 | -64.9% | MACD: 2.9703 (Sig: 0.5451) | BULL | Low DCS margin of safety (-64.9% < 15%) |
-| **AMD** | AVOID / SELL | $517.41 | 2.99 | -92.9% | MACD: 17.5787 (Sig: 23.3924) | BULL | Low DCS margin of safety (-92.9% < 15%) |
+| **AMD** | AVOID / SELL | $517.41 | 2.99 | -92.9% | MACD: 17.5791 (Sig: 23.3925) | BULL | Low DCS margin of safety (-92.9% < 15%) |
 | **AMZN** | AVOID / SELL | $243.62 | 1.42 | -71.7% | MACD: -2.5344 (Sig: -4.1664) | BULL | Low DCS margin of safety (-71.7% < 15%) |
 | **AVGO** | HOLD | $388.69 | 2.12 | 158.3% | MACD: -9.0275 (Sig: -9.6238) | BULL | Held position. Bull trend (Close > SMA 100) and healthy DCS (158.3%) |
 | **COST** | AVOID / SELL | $953.13 | -0.08 | -60.2% | MACD: -11.9071 (Sig: -13.2817) | BEAR | Low DCS margin of safety (-60.2% < 15%) and Bear trend (Close <= SMA 100) |
