@@ -165,9 +165,9 @@ def main():
         fx_hist = usdmxn_ticker.history(period="1d")
         fx_rate = float(fx_hist["Close"].iloc[-1]) if not fx_hist.empty else 18.0
         
-        qqq_30m = yf.download("QQQ", period="60d", interval="30m", progress=False)
-        tqqq_30m = yf.download("TQQQ", period="5d", interval="30m", progress=False)
-        sqqq_30m = yf.download("SQQQ", period="5d", interval="30m", progress=False)
+        qqq_30m = yf.download("QQQ", period="150d", interval="1h", progress=False)
+        tqqq_30m = yf.download("TQQQ", period="10d", interval="1h", progress=False)
+        sqqq_30m = yf.download("SQQQ", period="10d", interval="1h", progress=False)
         
         if isinstance(qqq_30m.columns, pd.MultiIndex): qqq_30m.columns = [c[0] for c in qqq_30m.columns]
         if isinstance(tqqq_30m.columns, pd.MultiIndex): tqqq_30m.columns = [c[0] for c in tqqq_30m.columns]
@@ -195,39 +195,48 @@ def main():
     # 4. HMM Regime Prediction
     cutoff_date = datetime.date.today()
     train_data = qqq_30m[qqq_30m.index.date < cutoff_date]
-    if len(train_data) < 130:
+    
+    unique_dates = sorted(list(set(train_data.index.date)))
+    if len(unique_dates) < 60:
         regime = 2
         regime_reason = "Insuficiente data historica; default a Chop"
     else:
+        target_dates = unique_dates[-60:]
+        train_data = train_data[train_data.index.date >= target_dates[0]]
+        
         log_returns = np.log(train_data["Close"] / train_data["Close"].shift(1)).fillna(0.0)
         rolling_vol = log_returns.rolling(window=10).std().fillna(0.0)
         features = np.column_stack([log_returns.values, rolling_vol.values])
         
-        hmm = GaussianHMM(n_components=3, covariance_type="diag", n_iter=100, random_state=42)
-        hmm.fit(features)
-        regimes = hmm.predict(features)
-        
-        state_vols = [np.mean(rolling_vol.values[regimes == i]) for i in range(3)]
-        bear_state = np.argmax(state_vols)
-        
-        rem = [i for i in range(3) if i != bear_state]
-        state_means = [np.mean(log_returns.values[regimes == i]) for i in range(3)]
-        bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
-        
-        current_state_raw = regimes[-1]
-        if args.force_regime is not None:
-            regime = args.force_regime
-            regime_reason = "FORCED via execution flag"
-        else:
-            if current_state_raw == bull_state:
-                regime = 0
-                regime_reason = "Bull trend, low volatility detected on QQQ"
-            elif current_state_raw == bear_state:
-                regime = 1
-                regime_reason = "High volatility, downward pressure detected on QQQ"
+        try:
+            hmm = GaussianHMM(n_components=3, covariance_type="diag", n_iter=100, random_state=42)
+            hmm.fit(features)
+            regimes = hmm.predict(features)
+            
+            state_vols = [np.mean(rolling_vol.values[regimes == i]) if np.any(regimes == i) else 1e9 for i in range(3)]
+            bear_state = np.argmax(state_vols)
+            
+            rem = [i for i in range(3) if i != bear_state]
+            state_means = [np.mean(log_returns.values[regimes == i]) if np.any(regimes == i) else -1e9 for i in range(3)]
+            bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
+            
+            current_state_raw = regimes[-1]
+            if args.force_regime is not None:
+                regime = args.force_regime
+                regime_reason = "FORCED via execution flag"
             else:
-                regime = 2
-                regime_reason = "Range-bound chop, mean-reversion detected on QQQ"
+                if current_state_raw == bull_state:
+                    regime = 0
+                    regime_reason = "Bull trend, low volatility detected on QQQ"
+                elif current_state_raw == bear_state:
+                    regime = 1
+                    regime_reason = "High volatility, downward pressure detected on QQQ"
+                else:
+                    regime = 2
+                    regime_reason = "Range-bound chop, mean-reversion detected on QQQ"
+        except Exception as e:
+            regime = 2
+            regime_reason = f"HMM training failure: {e}; default a Chop"
             
     print(f"Regime Decoded: State {regime} ({regime_reason})")
 
@@ -275,7 +284,16 @@ def main():
         atr_exec = atr_tqqq if side == "long" else atr_sqqq
         
         active_pos["peak_price"] = max(active_pos.get("peak_price", current_price), current_price)
-        stop_threshold = active_pos["peak_price"] - 1.5 * atr_exec
+        
+        # Hybrid ATR stop-tightening multiplier logic (starts at 3.0 ATR, tightens to 1.5 ATR)
+        buy_price = active_pos["buy_price"] / fx_rate
+        paper_profit_atr = (current_price - buy_price) / atr_exec
+        
+        stop_mult = 3.0
+        if paper_profit_atr > 1.5:
+            stop_mult = 1.5
+            
+        stop_threshold = active_pos["peak_price"] - stop_mult * atr_exec
         is_stop_out = current_price < stop_threshold
         
         if is_stop_out or is_eod:
@@ -294,7 +312,7 @@ def main():
                 if side == "long":
                     val = shares * price_mxn
                 else:
-                    val = shares * price_mxn  # SQQQ es instrumento inverso: se compra long, valor = shares * precio
+                    val = shares * price_mxn
                     
                 current_cash += val * (1.0 - TRANSACTION_FEE_RATE)
                 exit_reason = "TRAILING_STOP" if is_stop_out else "EOD_CLOSE"

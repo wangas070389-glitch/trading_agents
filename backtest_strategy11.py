@@ -69,11 +69,11 @@ def main():
     spy_daily_returns = spy_daily["Close"].ffill().pct_change().dropna()
     pass
             
-    # 2. Download Intraday QQQ, TQQQ, SQQQ 30-minute bars
-    print("\nDownloading QQQ, TQQQ, SQQQ 30m intraday bars (60 days)...")
-    qqq = yf.download("QQQ", period="60d", interval="30m", progress=False)
-    tqqq = yf.download("TQQQ", period="60d", interval="30m", progress=False)
-    sqqq = yf.download("SQQQ", period="60d", interval="30m", progress=False)
+    # 2. Download Intraday QQQ, TQQQ, SQQQ 1-hour bars
+    print("\nDownloading QQQ, TQQQ, SQQQ 1h intraday bars (150 days)...")
+    qqq = yf.download("QQQ", period="150d", interval="1h", progress=False)
+    tqqq = yf.download("TQQQ", period="150d", interval="1h", progress=False)
+    sqqq = yf.download("SQQQ", period="150d", interval="1h", progress=False)
     
     if isinstance(qqq.columns, pd.MultiIndex): qqq.columns = [c[0] for c in qqq.columns]
     if isinstance(tqqq.columns, pd.MultiIndex): tqqq.columns = [c[0] for c in tqqq.columns]
@@ -127,38 +127,50 @@ def main():
     regimes_list = []
     
     merged["DateOnly"] = merged.index.strftime("%Y-%m-%d")
-    grouped = merged.groupby("DateOnly")
+    dates_list_all = sorted(list(merged["DateOnly"].unique()))
+    backtest_dates = dates_list_all[-60:]
     
     trade_logs = []
     
-    for date_str, group in grouped:
+    for date_str in backtest_dates:
+        group = merged[merged["DateOnly"] == date_str]
+        if group.empty:
+            continue
+            
         # Get historical intraday QQQ data prior to the start of today
         first_bar_time = group.index[0]
         train_data = merged[merged.index < first_bar_time]
-        if len(train_data) < 130:
+        
+        unique_dates = sorted(list(set(train_data["DateOnly"])))
+        if len(unique_dates) < 60:
             regime = 2
         else:
-            log_returns = np.log(train_data["Close_QQQ"] / train_data["Close_QQQ"].shift(1)).fillna(0.0)
+            target_dates = unique_dates[-60:]
+            train_df = train_data[train_data["DateOnly"] >= target_dates[0]]
+            log_returns = np.log(train_df["Close_QQQ"] / train_df["Close_QQQ"].shift(1)).fillna(0.0)
             rolling_vol = log_returns.rolling(window=10).std().fillna(0.0)
             features = np.column_stack([log_returns.values, rolling_vol.values])
             
-            hmm = GaussianHMM(n_components=3, covariance_type="diag", n_iter=100, random_state=42)
-            hmm.fit(features)
-            regimes = hmm.predict(features)
-            
-            state_vols = [np.mean(rolling_vol.values[regimes == i]) for i in range(3)]
-            bear_state = np.argmax(state_vols)
-            
-            rem = [i for i in range(3) if i != bear_state]
-            state_means = [np.mean(log_returns.values[regimes == i]) for i in range(3)]
-            bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
-            
-            last_state = regimes[-1]
-            if last_state == bull_state:
-                regime = 0
-            elif last_state == bear_state:
-                regime = 1
-            else:
+            try:
+                hmm = GaussianHMM(n_components=3, covariance_type="diag", n_iter=100, random_state=42)
+                hmm.fit(features)
+                regimes = hmm.predict(features)
+                
+                state_vols = [np.mean(rolling_vol.values[regimes == i]) if np.any(regimes == i) else 1e9 for i in range(3)]
+                bear_state = np.argmax(state_vols)
+                
+                rem = [i for i in range(3) if i != bear_state]
+                state_means = [np.mean(log_returns.values[regimes == i]) if np.any(regimes == i) else -1e9 for i in range(3)]
+                bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
+                
+                last_state = regimes[-1]
+                if last_state == bull_state:
+                    regime = 0
+                elif last_state == bear_state:
+                    regime = 1
+                else:
+                    regime = 2
+            except Exception as e:
                 regime = 2
         
         # Calculate daily variables
@@ -193,9 +205,16 @@ def main():
                 current_price = close_tqqq if active_position["side"] == "long" else close_sqqq
                 active_position["peak_price"] = max(active_position["peak_price"], current_price)
                 
-                # Trailing Stop exit
+                # Hybrid ATR stop-tightening trailing stop-loss (starts at 3.0 ATR, tightens to 1.5 ATR)
                 atr_exec = atr_tqqq if active_position["side"] == "long" else atr_sqqq
-                stop_threshold = active_position["peak_price"] - 1.5 * atr_exec
+                buy_price = active_position["entry_price"]
+                paper_profit_atr = (current_price - buy_price) / atr_exec
+                
+                stop_mult = 3.0
+                if paper_profit_atr > 1.5:
+                    stop_mult = 1.5
+                    
+                stop_threshold = active_position["peak_price"] - stop_mult * atr_exec
                 is_stop_out = current_price < stop_threshold
                 
                 current_portfolio_value += active_position["shares"] * current_price
@@ -203,8 +222,8 @@ def main():
                 if is_stop_out or is_eod:
                     should_hold_overnight = False
                     if is_eod and not is_stop_out:
+                        should_hold_overnight = False
                         trade_profit = (current_price > active_position["entry_price"])
-                        # Determine overnight hold based on index closing state
                         if trade_profit:
                             if active_position["side"] == "long" and close_qqq >= (daily_high_qqq - 0.005 * daily_high_qqq) and (regime == 0 or regime == 2):
                                 should_hold_overnight = True
@@ -287,8 +306,6 @@ def main():
                         "pnl": 0.0
                     })
                 # 4. Mean Reversion Short Pullback (CCI < -150 on SQQQ)
-                # When SQQQ is oversold (CCI < -150), it means market spiked up, we buy SQQQ as it reverts down?
-                # No, if SQQQ's CCI < -150, SQQQ is extremely oversold, so we buy SQQQ expecting QQQ to revert down!
                 elif adx_sqqq < 22.0 and cci_sqqq < -150.0:
                     alloc = current_portfolio_value * 0.90
                     shares = alloc / (close_sqqq * (1.0 + commission_rate))
@@ -386,7 +403,7 @@ def main():
     report = f"""# Strategy 11: Intraday Direct Asset CCI-ADX Leveraged Report
 **Simulation Period:** {df_nav.index[0].date()} to {df_nav.index[-1].date()} ({years*365.25:.1f} Days)
 **Assets Traded:** TQQQ & SQQQ based on direct asset indicators.
-
+ 
 ## 1. Performance Summary
 * **Final Portfolio NAV**: ${final_nav:,.2f} MXN
 * **Total Return**: {total_ret*100:.2f}%
@@ -394,11 +411,11 @@ def main():
 * **Annualized Volatility**: {ann_vol*100:.2f}%
 * **Sharpe Ratio**: **{sharpe:.2f}**
 * **Maximum Drawdown**: **{max_dd*100:.2f}%**
-
+ 
 ## 2. Dynamic Settings
 * **CCI Channels (10-period):** Breakout $\pm 100$, Reversion $\pm 150$ (Direct traded assets)
 * **ADX Trend strength (7-period):** Threshold 22.0
-* **Trailing Stop-Loss:** 1.5 * ATR (Active)
+* **Trailing Stop-Loss:** Hybrid ATR trailing stop (3.0 to 1.5)
 * **Broker Commission Rate:** 0.00% (Alpaca zero-commission)
 
 ## 3. Transaction Summary (Last 20 Closed Trades)
