@@ -1,9 +1,9 @@
 # Strategy 8: Dividend Quality & Yield Execution Report
-**Execution Date:** 2026-07-09 21:03:47 | **Strategy Version:** Live V1
+**Execution Date:** 2026-07-09 21:07:41 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $196,393.44 MXN
-* **Total Cash Balance:** $39,593.18 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $196,393.46 MXN
+* **Total Cash Balance:** $39,593.20 MXN (Parked in Bondia Compound at 6.53% APR)
 * **Equity Exposure:** 79.8%
 * **Days Since Last Rebalance:** 8 days
 
@@ -16,13 +16,13 @@
 | **PG** | 15.48 | $2583.93 | $2575.75 | $39,873.33 | 20.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $0.5757 MXN over 0.0802 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $0.0195 MXN over 0.0027 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Signal | Yield | Payout Ratio | FCF Payout | Close vs SMA 200 | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **BBAJIOO.MX** | BUY / HOLD | 12.99% | 70.6% | 70.6% | $54.95 > SMA $49.90 | Passed all quality checks. Score: 0.0000 |
+| **BBAJIOO.MX** | BUY / HOLD | 12.94% | 70.6% | 70.6% | $54.95 > SMA $49.90 | Passed all quality checks. Score: 0.0000 |
 | **CVX** | SELL / AVOID | 4.05% | 120.4% | 120.4% | $174.05 > SMA $170.32 | Payout Ratio (120.4%) out of bounds and FCF Payout (120.4%) exceeds limit |
 | **FEMSAUBD.MX** | SELL / AVOID | 2.11% | 106.2% | 106.2% | $222.37 <= SMA $nan | Yield below 2.5% and Payout Ratio (106.2%) out of bounds and FCF Payout (106.2%) exceeds limit and Bear trend (Close <= SMA 200) |
 | **GFNORTEO.MX** | BUY / HOLD | 9.29% | 78.5% | 78.5% | $185.35 > SMA $174.77 | Passed all quality checks. Score: 0.0000 |
