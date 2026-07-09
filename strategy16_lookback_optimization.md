@@ -5,37 +5,29 @@ The simulation evaluated performance over the last 60 days.
 
 ---
 
-## 1. Grid Search Results Table
+## 1. Grid Search Results Table (Final Converged HMMs)
 
 | Timeframe | HMM Lookback | Final NAV | Total Return (60d) | Sharpe Ratio | Max Drawdown | Trades Executed |
 | :--- | :---: | :--- | :---: | :---: | :---: | :---: |
-| **1h** | **30 days** | **$231,468.12 MXN** | **+15.73%** | **0.28** | **-4.63%** | **11** |
-| 1h | 60 days | $217,665.41 MXN | +8.83% | 0.03 | -5.32% | 18 |
-| 1h | 90 days | $208,610.12 MXN | +4.31% | -0.19 | -5.32% | 15 |
-| **4h** | **30 days (Best)** | **$253,464.79 MXN** | **+26.73%** | **0.36** | **-12.92%** | **3** |
-| 4h | 60 days | $222,084.73 MXN | +11.04% | 0.05 | -4.94% | 13 |
-| 4h | 90 days | $208,733.64 MXN | +4.37% | -0.18 | -24.55% | 23 |
+| 1h | 30 days | $210,350.32 MXN | +5.18% | -0.13 | -10.13% | 17 |
+| **1h** | **60 days (Best)** | **$318,008.86 MXN** | **+59.00%** | **0.99** | **-10.70%** | **17** |
+| 1h | 90 days | $240,178.14 MXN | +20.09% | 0.18 | -21.62% | 17 |
+| 4h | 30 days | $210,044.97 MXN | +5.02% | -0.13 | -9.60% | 3 |
+| 4h | 60 days | $227,080.00 MXN | +13.54% | 0.12 | -13.04% | 2 |
+| **4h** | **90 days** | **$229,515.66 MXN** | **+14.76%** | **0.11** | **-13.04%** | **3** |
 
 ---
 
 ## 2. Key Insights & Observations
 
-### A. The Power of Recency (Short HMM Memory)
-*   **30-day HMM lookback** is the clear winner for both timeframes.
-    *   **4h TF + 30-day lookback:** Achieved the highest return (**+26.73%**) and Sharpe (**0.36**).
-    *   **1h TF + 30-day lookback:** Achieved a stellar **+15.73%** return with **0.28 Sharpe** and a very small Max Drawdown (**-4.63%**).
-*   Regimes in modern markets shift quickly. Longer training windows (60 and 90 days) carry too much stale memory of past trends, delaying the HMM's ability to decode recent momentum pivots. A shorter 30-day training lookback makes the model much more agile and adaptive.
+### A. The 60-day Lookback Sweet Spot on 1h
+*   **1h Timeframe + 60-day HMM training lookback** is the clear ultimate winner, achieving **+59.00% total return** in 60 trading days with a high Sharpe ratio of **0.99** and a controlled drawdown of **-10.70%**.
+*   A 60-day window on 1-hour bars (~420 data points) provides the HMM with enough samples to estimate stable regimes, while remaining recent enough to capture macro pivots before they fade.
 
-### B. Trailing Stop Dynamics on 4h
-*   While the 4h + 30-day lookback achieved the highest returns (+26.73%), it had a higher drawdown (-12.92%) over only 3 trades. 
-*   In comparison, the **1h + 30-day lookback** executed 11 trades and maintained a much smoother equity curve with a **Max Drawdown of only -4.63%**, which is extremely stable.
+### B. Lookback Sensitivity on 4h
+*   On the **4h timeframe**, a **90-day HMM lookback** performs best (**+14.76%** return), since 4h bars are less frequent and require a longer lookback in days to accumulate enough training samples (~180 bars) for HMM convergence.
 
 ---
 
 ## 3. Conclusions and Recommended Configuration
-*   **Optimal Lookback:** Use **30 days** of training lookback for the HMM model.
-*   **Optimal Schedule:** 
-    *   If you prefer **maximum return and low trade frequency**, choose the **4h timeframe**.
-    *   If you prefer **lower drawdown and a smoother equity curve**, choose the **1h timeframe**.
-
-I have saved this report and pushed the updates to your repository. Let me know if you would like me to implement one of these specific timeframe/lookback configurations in your live production script!
+*   **Ultimate Winner:** **1h timeframe with a 60-day HMM training lookback**. It delivers stellar profits (+59.00%) with a highly reliable Sharpe (0.99) and active trading (17 trades).
