@@ -1,15 +1,15 @@
 {
-  "total_capital": 201575.75,
-  "cash_balance": 161705.68,
+  "total_capital": 201729.51,
+  "cash_balance": 161707.03,
   "holdings": [
     {
       "ticker": "TQQQ",
       "side": "long",
       "shares": 29.96851712048336,
       "buy_price": 1281.4244229774486,
-      "last_price": 1330.3986535261502
+      "last_price": 1335.4841003530892
     }
   ],
   "last_signal_date": "2026-07-08",
-  "last_updated": "2026-07-09 15:57:05"
+  "last_updated": "2026-07-09 17:04:24"
 }
