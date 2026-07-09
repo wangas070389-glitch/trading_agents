@@ -1,5 +1,5 @@
 # Comprehensive Strategy KPI & Compounding Report
-**Report Compiled on:** 2026-07-07 | **Evidence-Quality Ranked**
+**Report Compiled on:** 2026-07-09 | **Evidence-Quality Ranked**
 
 ## 1. Evidence Quality Rank & 5-Year Projection Grid
 This table ranks strategies by **Evidence Quality Score** (`Sharpe * Backtest Window (Years)`), ensuring that 60-day in-sample strategies are properly contextualized behind long-window, walk-forward verified strategies.
@@ -21,6 +21,7 @@ This table ranks strategies by **Evidence Quality Score** (`Sharpe * Backtest Wi
 | **13. S9: AI Regime Stat-Arb** | **2.90** | 2.00 | 1.45 | 26.80% | -7.50% | **$669,753.18** | $389,753.18 | +139.2% |
 | **14. S10: AI Intraday VWAP** | **0.45** | 0.16 | 2.73 | 53.25% | -4.14% | **$1,462,659.29** | $1,182,659.29 | +422.4% |
 | **15. S11: AI Intraday CCI-ADX** | **0.02** | 0.16 | 0.10 | 11.88% | -16.31% | **$415,621.33** | $135,621.33 | +48.4% |
+| **16. S16: HMM Intraday Router** | **-0.21** | 0.16 | -1.27 | -11.29% | -18.29% | **$191,032.04** | $-88,967.96 | -31.8% |
 
 ---
 

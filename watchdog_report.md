@@ -1,14 +1,14 @@
-# Watchdog Report - 2026-07-09 06:15:00
+# Watchdog Report - 2026-07-09 00:50:14
 
 **CRITICAL: 0 | WARNING: 6**
 
 | Nivel | Estrategia | Check | Detalle |
 | :--- | :--- | :--- | :--- |
-| [ OK ] | core | - | NAV $nan | sin anomalias |
+| [ OK ] | core | - | NAV $20,745.94 | sin anomalias |
 | [ OK ] | alternatives | - | NAV $101,288.69 | sin anomalias |
-| [ OK ] | dividends | - | NAV $nan | sin anomalias |
+| [ OK ] | dividends | - | NAV $198,515.38 | sin anomalias |
 | [ OK ] | high_beta | - | NAV $101,157.98 | sin anomalias |
-| [ OK ] | macd | - | NAV $nan | sin anomalias |
+| [ OK ] | macd | - | NAV $19,628.12 | sin anomalias |
 | [ OK ] | multi_strategy | - | NAV $0.00 | sin anomalias |
 | [WARN] | strategy10 | W2 | Sin trades aun (5/10 dias de gracia) |
 | [ OK ] | strategy11 | - | NAV $202,181.16 | sin anomalias |
@@ -22,4 +22,4 @@
 | [WARN] | us_stocks | W4 | [INACTIVE STRATEGY] Cash negativo: [-44816.83] |
 | [WARN] | us_stocks | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-07-06 22:15:20 (3 dias habiles): cron muerto o script crasheando |
 | [WARN] | us_stocks | W5 | [INACTIVE STRATEGY] DD live -44.6% excede 1.25x el MaxDD del backtest (-25.1%): fuera de distribucion validada |
-| [WARN] | broker | W6 | [INACTIVE STRATEGY] Cash de Alpaca NEGATIVO: $-62,477.39 (margen no intencional; probable fill fantasma previo) |
+| [WARN] | broker | W6 | Sin credenciales Alpaca en env; reconciliacion omitida |
