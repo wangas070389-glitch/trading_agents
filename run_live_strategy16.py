@@ -183,7 +183,7 @@ def main():
         print(f"Error fetching FX rate: {e}. Defaulting to 18.0")
         fx_rate = 18.0
 
-    # 4. Multi-asset HMM Regime Decoding (runs HMM on last 2 years of daily bars)
+    # 4. Multi-asset HMM Regime Decoding (runs HMM on last 60 days of 1h bars)
     print("\nDecoding HMM regimes for universe...")
     regimes = {}
     scores = {}
@@ -193,19 +193,30 @@ def main():
 
     for base in universe.keys():
         try:
-            df = yf.download(base, period="2y", interval="1d", progress=False)
+            df = yf.download(base, period="730d", interval="1h", progress=False)
             if isinstance(df.columns, pd.MultiIndex):
                 df.columns = [c[0] for c in df.columns]
             
+            # Strip timezone
+            if df.index.tz is not None:
+                df.index = df.index.tz_convert("America/New_York").tz_localize(None)
+                
             # Exclude today's incomplete daily bar to avoid lookahead bias
-            df = df[df.index.date < datetime.date.today()]
+            df_train = df[df.index.date < datetime.date.today()]
             
-            if len(df) < 130:
+            # Filter to exactly the last 60 trading days of history
+            unique_dates = sorted(list(set(df_train.index.date)))
+            if len(unique_dates) >= 60:
+                target_dates = unique_dates[-60:]
+                df_train = df_train[df_train.index.date >= target_dates[0]]
+            
+            if len(df_train) < 130:
                 regimes[base] = 2
                 scores[base] = -1
                 continue
 
-            log_returns = np.log(df["Close"] / df["Close"].shift(1)).fillna(0.0)
+            train_closes = df_train["Close"]
+            log_returns = np.log(train_closes / train_closes.shift(1)).fillna(0.0)
             rolling_vol = log_returns.rolling(window=10).std().fillna(0.0)
             features = np.column_stack([log_returns.values, rolling_vol.values])
             
@@ -213,10 +224,10 @@ def main():
             hmm.fit(features)
             states = hmm.predict(features)
             
-            state_vols = [np.mean(rolling_vol.values[states == i]) for i in range(3)]
+            state_vols = [np.mean(rolling_vol.values[states == i]) if np.any(states == i) else 1e9 for i in range(3)]
             bear_state = np.argmax(state_vols)
             rem = [i for i in range(3) if i != bear_state]
-            state_means = [np.mean(log_returns.values[states == i]) for i in range(3)]
+            state_means = [np.mean(log_returns.values[states == i]) if np.any(states == i) else -1e9 for i in range(3)]
             bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
             
             curr_state_raw = states[-1]
@@ -272,9 +283,9 @@ def main():
 
     print(f"\nFetching intraday metrics for {target_asset}, {bull_ticker}, {bear_ticker}...")
     try:
-        base_df = yf.download(target_asset, period="10d", interval="30m", progress=False)
-        bull_df = yf.download(bull_ticker, period="5d", interval="30m", progress=False)
-        bear_df = yf.download(bear_ticker, period="5d", interval="30m", progress=False)
+        base_df = yf.download(target_asset, period="10d", interval="1h", progress=False)
+        bull_df = yf.download(bull_ticker, period="10d", interval="1h", progress=False)
+        bear_df = yf.download(bear_ticker, period="10d", interval="1h", progress=False)
 
         if isinstance(base_df.columns, pd.MultiIndex): base_df.columns = [c[0] for c in base_df.columns]
         if isinstance(bull_df.columns, pd.MultiIndex): bull_df.columns = [c[0] for c in bull_df.columns]
@@ -340,9 +351,16 @@ def main():
         current_price = close_bull if ticker == bull_ticker else close_bear
         atr_exec = atr_bull if ticker == bull_ticker else atr_bear
         
-        # Stop check: Wide 3.0 * ATR trailing stop
+        # Stop check: starts at 3.0 ATR, tightens to 1.5 ATR when profit > 1.5 ATR
         active_pos["peak_price"] = max(active_pos.get("peak_price", current_price), current_price)
-        stop_threshold = active_pos["peak_price"] - 3.0 * atr_exec
+        buy_price_usd = active_pos["buy_price"] / fx_rate
+        paper_profit_atr = (current_price - buy_price_usd) / atr_exec
+        
+        stop_mult = 3.0
+        if paper_profit_atr > 1.5:
+            stop_mult = 1.5
+            
+        stop_threshold = active_pos["peak_price"] - stop_mult * atr_exec
         is_stop_out = current_price < stop_threshold
         
         # Regime flip exit check
@@ -430,8 +448,8 @@ def main():
         save_portfolio(dir_path, portfolio)
 
     # Live report markdown
-    report_md = f"""# Strategy 16: Multi-Asset HMM Intraday Router Execution Report
-**Execution Date:** {now.strftime('%Y-%m-%d %H:%M:%S')} | **Strategy Version:** Router V1
+    report_md = f"""# Strategy 16: Multi-Asset HMM Swing Router Execution Report
+**Execution Date:** {now.strftime('%Y-%m-%d %H:%M:%S')} | **Strategy Version:** Router V2 (Hybrid Swing)
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** ${portfolio_value:,.2f} MXN
@@ -447,7 +465,7 @@ def main():
         t = h["ticker"]
         side = h.get("side", "long").upper()
         mkt_val = h["shares"] * h["last_price"]
-        report_md += f"| **{t}** | LEVERAGED INTRADAY | {side} | {h['shares']:.4f} | ${h['buy_price']:,.2f} | ${h['last_price']:,.2f} | ${mkt_val:,.2f} |\n"
+        report_md += f"| **{t}** | LEVERAGED SWING | {side} | {h['shares']:.4f} | ${h['buy_price']:,.2f} | ${h['last_price']:,.2f} | ${mkt_val:,.2f} |\n"
 
     report_md += "\n## 3. Today's Execution Logs\n"
     if is_new_month:

@@ -50,11 +50,6 @@ def calculate_adx(df, period=7):
     return adx.fillna(20.0)
 
 def main():
-    dir_path = os.path.dirname(os.path.abspath(__file__))
-    print("=" * 80)
-    print("STRATEGY 16: MULTI-ASSET HMM HYBRID SWING BACKTEST")
-    print("=" * 80)
-    
     universe = {
         "QQQ": {"bull": "TQQQ", "bear": "SQQQ"},
         "SPY": {"bull": "UPRO", "bear": "SPXS"},
@@ -94,18 +89,13 @@ def main():
         intraday[base] = merged.dropna()
 
     INITIAL_NAV = 200000.0
-    TRANSACTION_FEE = 0.0000
-    
     cash = INITIAL_NAV
-    active_pos = None  # {ticker, side, shares, buy_price, peak_price, allocated, base}
+    active_pos = None
     nav_history = []
     
     dates_available = sorted(list(set(intraday["QQQ"].index.strftime("%Y-%m-%d"))))
     backtest_dates = dates_available[-60:]
     
-    print(f"\nSimulating {len(backtest_dates)} days of trading...")
-    
-    trade_logs = []
     closed_trades = []
     
     for date_str in backtest_dates:
@@ -134,10 +124,10 @@ def main():
                 hmm.fit(features)
                 states = hmm.predict(features)
                 
-                state_vols = [np.mean(rolling_vol.values[states == i]) if np.any(states == i) else 1e9 for i in range(3)]
+                state_vols = [np.mean(rolling_vol.values[states == i]) for i in range(3)]
                 bear_state = np.argmax(state_vols)
                 rem = [i for i in range(3) if i != bear_state]
-                state_means = [np.mean(log_returns.values[states == i]) if np.any(states == i) else -1e9 for i in range(3)]
+                state_means = [np.mean(log_returns.values[states == i]) for i in range(3)]
                 bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
                 
                 curr_state_raw = states[-1]
@@ -168,8 +158,6 @@ def main():
         day_bars = intraday[target_asset][intraday[target_asset].index.strftime("%Y-%m-%d") == date_str]
         
         if day_bars.empty:
-            if active_pos:
-                pass
             continue
             
         bull_etf = universe[target_asset]["bull"]
@@ -219,16 +207,11 @@ def main():
                 if is_stop_out or is_regime_flip:
                     shares = active_pos["shares"]
                     val = shares * curr_price
-                    cash += val * (1.0 - TRANSACTION_FEE)
+                    cash += val
                     pnl = val - active_pos["allocated"]
                     
                     exit_reason = "STOP_LOSS" if is_stop_out else "REGIME_FLIP"
-                    trade_logs.append(f"  EXIT: {active_pos['ticker']} ({side}) at {time_val} via {exit_reason} (Cash: ${cash:,.2f})")
-                    closed_trades.append({
-                        "ticker": active_pos["ticker"],
-                        "pnl": pnl,
-                        "exit": exit_reason
-                    })
+                    closed_trades.append({"pnl": pnl, "exit": exit_reason})
                     active_pos = None
                     
             # Entry triggers
@@ -236,7 +219,7 @@ def main():
                 if target_regime == 0:
                     if cci_bull < -100.0 and adx_bull > 20.0:
                         alloc = cash * 0.90
-                        shares = alloc / (close_bull * (1.0 + TRANSACTION_FEE))
+                        shares = alloc / close_bull
                         if shares > 0.01:
                             cash -= alloc
                             active_pos = {
@@ -248,11 +231,10 @@ def main():
                                 "allocated": alloc,
                                 "base": target_asset
                             }
-                            trade_logs.append(f"  ENTRY: {bull_etf} (long) at {time_val} (Regime: Bull {target_asset})")
                 elif target_regime == 1:
                     if cci_bear < -100.0 and adx_bear > 20.0:
                         alloc = cash * 0.90
-                        shares = alloc / (close_bear * (1.0 + TRANSACTION_FEE))
+                        shares = alloc / close_bear
                         if shares > 0.01:
                             cash -= alloc
                             active_pos = {
@@ -264,7 +246,6 @@ def main():
                                 "allocated": alloc,
                                 "base": target_asset
                             }
-                            trade_logs.append(f"  ENTRY: {bear_etf} (short) at {time_val} (Regime: Bear {target_asset})")
                             
         # Day Close NAV
         eod_holding_val = 0.0
@@ -273,28 +254,22 @@ def main():
             eod_holding_val = active_pos["shares"] * curr_close
         nav_history.append(cash + eod_holding_val)
         
-    df_nav = pd.DataFrame({"NAV": nav_history}, index=pd.DatetimeIndex(backtest_dates))
-    final_nav = float(df_nav["NAV"].iloc[-1])
+    df_nav = pd.DataFrame({"NAV": nav_history})
+    final_nav = df_nav["NAV"].iloc[-1]
     total_ret = final_nav / INITIAL_NAV - 1.0
-    
-    days = (df_nav.index[-1] - df_nav.index[0]).days
-    years = max(days / 365.25, 0.01)
-    cagr = (final_nav / INITIAL_NAV) ** (1.0 / years) - 1.0
     
     daily_pct = df_nav["NAV"].pct_change().dropna()
     ann_vol = daily_pct.std() * np.sqrt(252)
-    sharpe = (cagr - 0.095) / ann_vol if ann_vol > 0 else 0.0
+    sharpe = (total_ret - 0.095) / ann_vol if ann_vol > 0 else 0.0
     
     roll_max = df_nav["NAV"].cummax()
     max_dd = float(((df_nav["NAV"] - roll_max) / roll_max).min())
     
     print("\n" + "=" * 80)
-    print("BACKTEST RESULTS: S16 HYBRID SWING + STOP-TIGHTENING")
+    print("HYBRID PULLBACK SWING + PROFIT-TIGHTENING STOP BACKTEST")
     print("=" * 80)
     print(f"Final NAV       : ${final_nav:,.2f} MXN")
     print(f"Total Return    : {total_ret*100:+.2f}%")
-    print(f"CAGR            : {cagr*100:+.2f}%")
-    print(f"Annual Vol      : {ann_vol*100:.2f}%")
     print(f"Sharpe (Rf=9.5%): {sharpe:.2f}")
     print(f"Max Drawdown    : {max_dd*100:.2f}%")
     print("=" * 80)
@@ -303,32 +278,6 @@ def main():
         tdf = pd.DataFrame(closed_trades)
         print(f"\nTotal trades: {len(tdf)}, Total PnL: ${tdf['pnl'].sum():,.2f}")
         print(tdf.groupby("exit")["pnl"].agg(["count", "sum", "mean"]))
-        
-    # Generate standard markdown backtest report
-    report_md = f"""# Strategy 16 v2 Backtest Report (Hybrid Swing + Stop-Tightening)
-**Executed:** {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-**Asset Universe:** QQQ, SPY, SOXX, IWM (3x Leveraged Bull/Bear Pairs)
-
-## Performance Metrics
-* **Final NAV:** ${final_nav:,.2f} MXN
-* **Total Return:** {total_ret*100:+.2f}%
-* **Time-Weighted CAGR:** {cagr*100:+.2f}%
-* **Annual Volatility:** {ann_vol*100:.2f}%
-* **Sharpe Ratio (Rf=9.5%):** {sharpe:.2f}
-* **Maximum Drawdown:** {max_dd*100:.2f}%
-"""
-    if closed_trades:
-        tdf = pd.DataFrame(closed_trades)
-        report_md += f"""
-## Summary Diagnostics
-* **Total Trades Executed:** {len(tdf)}
-* **Total PnL:** ${tdf['pnl'].sum():,.2f} MXN
-"""
-    with open(os.path.join(dir_path, "strategy16_backtest_report.md"), "w", encoding="utf-8") as f:
-        f.write(report_md)
-
-    df_nav.to_csv(os.path.join(dir_path, "strategy16_backtest_nav.csv"))
-    print("\nSaved NAV curve to strategy16_backtest_nav.csv")
 
 if __name__ == "__main__":
     main()

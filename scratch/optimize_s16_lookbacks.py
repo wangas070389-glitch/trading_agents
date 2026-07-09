@@ -49,30 +49,33 @@ def calculate_adx(df, period=7):
     adx = dx.rolling(window=period).mean()
     return adx.fillna(20.0)
 
-def main():
-    dir_path = os.path.dirname(os.path.abspath(__file__))
-    print("=" * 80)
-    print("STRATEGY 16: MULTI-ASSET HMM HYBRID SWING BACKTEST")
-    print("=" * 80)
+def run_backtest(tf, lookback_days, universe):
+    # 1. Download data: we need 90d + 60d = 150d of data to support 90d lookback training
+    download_period = "730d" if tf == "1d" else "730d" # Just download yfinance max
     
-    universe = {
-        "QQQ": {"bull": "TQQQ", "bear": "SQQQ"},
-        "SPY": {"bull": "UPRO", "bear": "SPXS"},
-        "SOXX": {"bull": "SOXL", "bear": "SOXS"},
-        "IWM": {"bull": "URTY", "bear": "SRTY"}
-    }
-    
-    print("Downloading 1h data (730 days) for all assets...")
     intraday = {}
     for base, assets in universe.items():
-        df_base = _strip_tz(yf.download(base, period="730d", interval="1h", progress=False))
-        df_bull = _strip_tz(yf.download(assets["bull"], period="730d", interval="1h", progress=False))
-        df_bear = _strip_tz(yf.download(assets["bear"], period="730d", interval="1h", progress=False))
-        
-        for d in (df_base, df_bull, df_bear):
-            if isinstance(d.columns, pd.MultiIndex):
-                d.columns = [c[0] for c in d.columns]
-                
+        if tf == "4h":
+            df_base_1h = _strip_tz(yf.download(base, period="730d", interval="1h", progress=False))
+            df_bull_1h = _strip_tz(yf.download(assets["bull"], period="730d", interval="1h", progress=False))
+            df_bear_1h = _strip_tz(yf.download(assets["bear"], period="730d", interval="1h", progress=False))
+            
+            for d in (df_base_1h, df_bull_1h, df_bear_1h):
+                if isinstance(d.columns, pd.MultiIndex):
+                    d.columns = [c[0] for c in d.columns]
+                    
+            df_base = df_base_1h.resample("4h").agg({"Open": "first", "High": "max", "Low": "min", "Close": "last", "Volume": "sum"}).dropna()
+            df_bull = df_bull_1h.resample("4h").agg({"Open": "first", "High": "max", "Low": "min", "Close": "last", "Volume": "sum"}).dropna()
+            df_bear = df_bear_1h.resample("4h").agg({"Open": "first", "High": "max", "Low": "min", "Close": "last", "Volume": "sum"}).dropna()
+        else:
+            df_base = _strip_tz(yf.download(base, period="730d", interval=tf, progress=False))
+            df_bull = _strip_tz(yf.download(assets["bull"], period="730d", interval=tf, progress=False))
+            df_bear = _strip_tz(yf.download(assets["bear"], period="730d", interval=tf, progress=False))
+            
+            for d in (df_base, df_bull, df_bear):
+                if isinstance(d.columns, pd.MultiIndex):
+                    d.columns = [c[0] for c in d.columns]
+                    
         df_base["ATR"] = calculate_atr(df_base)
         df_bull["ATR"] = calculate_atr(df_bull)
         df_bull["CCI"] = calculate_cci(df_bull)
@@ -93,20 +96,17 @@ def main():
         ]
         intraday[base] = merged.dropna()
 
+    # Simulation setup
     INITIAL_NAV = 200000.0
-    TRANSACTION_FEE = 0.0000
-    
     cash = INITIAL_NAV
-    active_pos = None  # {ticker, side, shares, buy_price, peak_price, allocated, base}
+    active_pos = None
     nav_history = []
     
     dates_available = sorted(list(set(intraday["QQQ"].index.strftime("%Y-%m-%d"))))
+    # We evaluate strictly over the last 60 days
     backtest_dates = dates_available[-60:]
     
-    print(f"\nSimulating {len(backtest_dates)} days of trading...")
-    
-    trade_logs = []
-    closed_trades = []
+    trade_count = 0
     
     for date_str in backtest_dates:
         regimes = {}
@@ -115,13 +115,16 @@ def main():
         for base in universe.keys():
             df = intraday[base]
             sub_df = df[df.index.strftime("%Y-%m-%d") < date_str]
+            
+            # Find trading dates in history
             unique_dates = sorted(list(set(sub_df.index.date)))
-            if len(unique_dates) < 60:
+            if len(unique_dates) < lookback_days:
                 scores[base] = -1
                 regimes[base] = 2
                 continue
                 
-            target_dates = unique_dates[-60:]
+            # Filter training data to the last N trading days
+            target_dates = unique_dates[-lookback_days:]
             train_df = sub_df[sub_df.index.date >= target_dates[0]]
             train_closes = train_df["Close_base"]
             
@@ -134,10 +137,10 @@ def main():
                 hmm.fit(features)
                 states = hmm.predict(features)
                 
-                state_vols = [np.mean(rolling_vol.values[states == i]) if np.any(states == i) else 1e9 for i in range(3)]
+                state_vols = [np.mean(rolling_vol.values[states == i]) for i in range(3)]
                 bear_state = np.argmax(state_vols)
                 rem = [i for i in range(3) if i != bear_state]
-                state_means = [np.mean(log_returns.values[states == i]) if np.any(states == i) else -1e9 for i in range(3)]
+                state_means = [np.mean(log_returns.values[states == i]) for i in range(3)]
                 bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
                 
                 curr_state_raw = states[-1]
@@ -154,7 +157,7 @@ def main():
                 regimes[base] = 2
                 scores[base] = -1.0
                 
-        # Target Selection
+        # Locked target selection
         if active_pos:
             target_asset = active_pos["base"]
         else:
@@ -168,8 +171,6 @@ def main():
         day_bars = intraday[target_asset][intraday[target_asset].index.strftime("%Y-%m-%d") == date_str]
         
         if day_bars.empty:
-            if active_pos:
-                pass
             continue
             
         bull_etf = universe[target_asset]["bull"]
@@ -178,6 +179,7 @@ def main():
         for idx in range(len(day_bars)):
             time_val = day_bars.index[idx]
             close_base = float(day_bars["Close_base"].iloc[idx])
+            atr_base = float(day_bars["ATR_base"].iloc[idx])
             
             close_bull = float(day_bars["Close_bull"].iloc[idx])
             atr_bull = float(day_bars["ATR_bull"].iloc[idx])
@@ -195,19 +197,8 @@ def main():
                 curr_price = close_bull if side == "long" else close_bear
                 active_pos["peak_price"] = max(active_pos.get("peak_price", curr_price), curr_price)
                 
-                # Check paper profit to tighten trailing stop
                 atr_val = atr_bull if side == "long" else atr_bear
-                buy_price = active_pos["buy_price"]
-                paper_profit_atr = (curr_price - buy_price) / atr_val
-                
-                # Default trailing stop multiplier is 3.0 ATR
-                stop_mult = 3.0
-                
-                # Tightening rule: if profit > 1.5 ATR, tighten stop multiplier to 1.5 ATR
-                if paper_profit_atr > 1.5:
-                    stop_mult = 1.5
-                    
-                stop_threshold = active_pos["peak_price"] - stop_mult * atr_val
+                stop_threshold = active_pos["peak_price"] - 3.0 * atr_val
                 is_stop_out = curr_price < stop_threshold
                 
                 is_regime_flip = False
@@ -219,24 +210,16 @@ def main():
                 if is_stop_out or is_regime_flip:
                     shares = active_pos["shares"]
                     val = shares * curr_price
-                    cash += val * (1.0 - TRANSACTION_FEE)
-                    pnl = val - active_pos["allocated"]
-                    
-                    exit_reason = "STOP_LOSS" if is_stop_out else "REGIME_FLIP"
-                    trade_logs.append(f"  EXIT: {active_pos['ticker']} ({side}) at {time_val} via {exit_reason} (Cash: ${cash:,.2f})")
-                    closed_trades.append({
-                        "ticker": active_pos["ticker"],
-                        "pnl": pnl,
-                        "exit": exit_reason
-                    })
+                    cash += val
                     active_pos = None
+                    trade_count += 1
                     
             # Entry triggers
             if not active_pos:
                 if target_regime == 0:
                     if cci_bull < -100.0 and adx_bull > 20.0:
                         alloc = cash * 0.90
-                        shares = alloc / (close_bull * (1.0 + TRANSACTION_FEE))
+                        shares = alloc / close_bull
                         if shares > 0.01:
                             cash -= alloc
                             active_pos = {
@@ -248,11 +231,10 @@ def main():
                                 "allocated": alloc,
                                 "base": target_asset
                             }
-                            trade_logs.append(f"  ENTRY: {bull_etf} (long) at {time_val} (Regime: Bull {target_asset})")
                 elif target_regime == 1:
                     if cci_bear < -100.0 and adx_bear > 20.0:
                         alloc = cash * 0.90
-                        shares = alloc / (close_bear * (1.0 + TRANSACTION_FEE))
+                        shares = alloc / close_bear
                         if shares > 0.01:
                             cash -= alloc
                             active_pos = {
@@ -264,71 +246,67 @@ def main():
                                 "allocated": alloc,
                                 "base": target_asset
                             }
-                            trade_logs.append(f"  ENTRY: {bear_etf} (short) at {time_val} (Regime: Bear {target_asset})")
                             
-        # Day Close NAV
+        # Day Close
         eod_holding_val = 0.0
         if active_pos:
             curr_close = close_bull if active_pos["side"] == "long" else close_bear
             eod_holding_val = active_pos["shares"] * curr_close
         nav_history.append(cash + eod_holding_val)
         
-    df_nav = pd.DataFrame({"NAV": nav_history}, index=pd.DatetimeIndex(backtest_dates))
-    final_nav = float(df_nav["NAV"].iloc[-1])
+    df_nav = pd.DataFrame({"NAV": nav_history})
+    final_nav = df_nav["NAV"].iloc[-1]
     total_ret = final_nav / INITIAL_NAV - 1.0
-    
-    days = (df_nav.index[-1] - df_nav.index[0]).days
-    years = max(days / 365.25, 0.01)
-    cagr = (final_nav / INITIAL_NAV) ** (1.0 / years) - 1.0
     
     daily_pct = df_nav["NAV"].pct_change().dropna()
     ann_vol = daily_pct.std() * np.sqrt(252)
-    sharpe = (cagr - 0.095) / ann_vol if ann_vol > 0 else 0.0
+    sharpe = (total_ret - 0.095) / ann_vol if ann_vol > 0 else 0.0
     
     roll_max = df_nav["NAV"].cummax()
     max_dd = float(((df_nav["NAV"] - roll_max) / roll_max).min())
     
-    print("\n" + "=" * 80)
-    print("BACKTEST RESULTS: S16 HYBRID SWING + STOP-TIGHTENING")
-    print("=" * 80)
-    print(f"Final NAV       : ${final_nav:,.2f} MXN")
-    print(f"Total Return    : {total_ret*100:+.2f}%")
-    print(f"CAGR            : {cagr*100:+.2f}%")
-    print(f"Annual Vol      : {ann_vol*100:.2f}%")
-    print(f"Sharpe (Rf=9.5%): {sharpe:.2f}")
-    print(f"Max Drawdown    : {max_dd*100:.2f}%")
-    print("=" * 80)
+    return {
+        "final_nav": final_nav,
+        "total_return": total_ret * 100.0,
+        "sharpe": sharpe,
+        "max_dd": max_dd * 100.0,
+        "trade_count": trade_count
+    }
+
+def main():
+    universe = {
+        "QQQ": {"bull": "TQQQ", "bear": "SQQQ"},
+        "SPY": {"bull": "UPRO", "bear": "SPXS"},
+        "SOXX": {"bull": "SOXL", "bear": "SOXS"},
+        "IWM": {"bull": "URTY", "bear": "SRTY"}
+    }
     
-    if closed_trades:
-        tdf = pd.DataFrame(closed_trades)
-        print(f"\nTotal trades: {len(tdf)}, Total PnL: ${tdf['pnl'].sum():,.2f}")
-        print(tdf.groupby("exit")["pnl"].agg(["count", "sum", "mean"]))
-        
-    # Generate standard markdown backtest report
-    report_md = f"""# Strategy 16 v2 Backtest Report (Hybrid Swing + Stop-Tightening)
-**Executed:** {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-**Asset Universe:** QQQ, SPY, SOXX, IWM (3x Leveraged Bull/Bear Pairs)
-
-## Performance Metrics
-* **Final NAV:** ${final_nav:,.2f} MXN
-* **Total Return:** {total_ret*100:+.2f}%
-* **Time-Weighted CAGR:** {cagr*100:+.2f}%
-* **Annual Volatility:** {ann_vol*100:.2f}%
-* **Sharpe Ratio (Rf=9.5%):** {sharpe:.2f}
-* **Maximum Drawdown:** {max_dd*100:.2f}%
-"""
-    if closed_trades:
-        tdf = pd.DataFrame(closed_trades)
-        report_md += f"""
-## Summary Diagnostics
-* **Total Trades Executed:** {len(tdf)}
-* **Total PnL:** ${tdf['pnl'].sum():,.2f} MXN
-"""
-    with open(os.path.join(dir_path, "strategy16_backtest_report.md"), "w", encoding="utf-8") as f:
-        f.write(report_md)
-
-    df_nav.to_csv(os.path.join(dir_path, "strategy16_backtest_nav.csv"))
-    print("\nSaved NAV curve to strategy16_backtest_nav.csv")
+    timeframes = ["1h", "4h"]
+    lookbacks = [30, 60, 90] # in days
+    
+    results = {}
+    
+    for tf in timeframes:
+        results[tf] = {}
+        for lb in lookbacks:
+            try:
+                print(f"Running optimization: Timeframe={tf}, HMM Lookback={lb} days...")
+                res = run_backtest(tf, lb, universe)
+                results[tf][lb] = res
+            except Exception as e:
+                print(f"Error testing Timeframe={tf}, Lookback={lb}: {e}")
+                
+    print("\n" + "=" * 80)
+    print("M-HMM LOOKBACK DAYS COMPARISON GRID FOR S16 SWING HOLDER")
+    print("=" * 80)
+    print(f"{'TF':<4} | {'Lookback':<9} | {'Final NAV':<16} | {'Total Return':<14} | {'Sharpe':<8} | {'Max DD':<10} | {'Trades':<8}")
+    print("-" * 80)
+    for tf in timeframes:
+        for lb in lookbacks:
+            if lb in results[tf]:
+                res = results[tf][lb]
+                print(f"{tf:<4} | {lb:<9} | ${res['final_nav']:,.2f} MXN | {res['total_return']:+12.2f}% | {res['sharpe']:8.2f} | {res['max_dd']:9.2f}% | {res['trade_count']:<8}")
+    print("=" * 80)
 
 if __name__ == "__main__":
     main()
