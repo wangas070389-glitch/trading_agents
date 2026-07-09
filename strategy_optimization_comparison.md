@@ -33,5 +33,27 @@ This table contrasts the original baselines and final optimized versions for **S
 * Calibrating the entry channel band to **1.0 ATR** for Strategy 10 restored trade triggers, capturing higher-quality breakout and reversion opportunities without noise contamination.
 
 ### 3. Gaussian HMM Training Convergence Sweet Spot
-* Very short HMM training lookbacks (e.g. 30 periods of 30m bars) create unstable state transitions, causing the HMM model to misclassify regimes. 
+* Very short HMM training lookbacks (e.g. 30 periods of 30m bars) create unstable state transitions, causing the HMM model to misclassify regimes.
 * A **60-day window of hourly bars** (~420 bars) was verified as the HMM sweet spot for all systems, balancing prediction stability with responsiveness.
+
+### 4. The HMM Observation Count Principle (Extended Discovery)
+
+After optimizing S10, S11, and S16, a full portfolio eligibility scan was run across all 9 strategies. A comprehensive grid search tested S9 and S2/MACD across **5 timeframes × 4 lookbacks (20 combinations)**.
+
+**Critical finding — HMM regime quality by config:**
+
+| Config | %Bear Detected | Transition Rate | HMM Valid? |
+|:---|:---:|:---:|:---:|
+| Any 30d/60d/90d lookback (any TF) | 0.0% | 100% | ❌ Noise |
+| 1h/ALL | 2.1% | 99.3% | ⚠️ Marginal |
+| **1d/ALL (S9 & S2 production)** | **9.2%** | **91.1%** | ✅ **Only valid** |
+
+The rule is: **3-state Gaussian HMM needs ≥400 observations to converge.**
+- At **1h bars**: 60 trading days = ~420 bars → the sweet spot for intraday strategies
+- At **1d bars**: need 2-5 year full history (~1,260 bars) → short lookbacks break the HMM completely
+
+**S9 and S2/MACD were confirmed optimal at their current `1d/ALL` configuration. No changes applied.**
+
+---
+
+> **See [`optimization_master_journey.md`](optimization_master_journey.md) for the complete end-to-end optimization story covering all 9 strategies, the extended grid search, and all findings.**
