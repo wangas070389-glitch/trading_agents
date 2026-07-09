@@ -15,7 +15,7 @@ PORTFOLIO_FILE = "portfolio_strategy16.json"
 TRANSACTIONS_FILE = "transactions_strategy16.md"
 REPORT_FILE = "strategy16_report_live.md"
 
-TRANSACTION_FEE_RATE = 0.0029
+TRANSACTION_FEE_RATE = 0.0000
 MONTHLY_CONTRIBUTION = 2000.0  # MXN
 BONDIA_YIELD = 0.0653          # 6.53% MXN cash sweep yield
 
@@ -113,8 +113,13 @@ def calculate_adx(df, period=7):
     
     dx = (np.abs(plus_di - minus_di) / (plus_di + minus_di).replace(0.0, np.nan)) * 100.0
     adx = dx.rolling(window=period).mean()
-    
     return adx.fillna(20.0)
+
+def get_base_from_ticker(ticker, universe):
+    for base, assets in universe.items():
+        if ticker in [assets["bull"], assets["bear"]]:
+            return base
+    return "QQQ"
 
 def main():
     parser = argparse.ArgumentParser()
@@ -228,7 +233,13 @@ def main():
             scores[base] = -1.0
 
     # Target selection
-    if args.force_target:
+    active_pos = portfolio["holdings"][0] if portfolio["holdings"] else None
+
+    if active_pos:
+        target_asset = active_pos.get("base", get_base_from_ticker(active_pos["ticker"], universe))
+        target_regime = regimes[target_asset]
+        target_reason = f"LOCKED to base asset of active holding ({target_asset})"
+    elif args.force_target:
         target_asset = args.force_target
         target_regime = regimes[target_asset]
         target_reason = f"FORCED target selection via execution argument."
@@ -331,14 +342,10 @@ def main():
         stop_threshold = active_pos["peak_price"] - 1.5 * atr_exec
         is_stop_out = current_price < stop_threshold
         
-        # Settle condition (CCI zero-cross for trends, VWAP for chop)
+        # Settle condition (VWAP reversion for Chop, no early settle for Trends)
         is_settled = False
         if target_regime == 2:
             if (side == "long" and close_base >= vwap_base) or (side == "short" and close_base <= vwap_base):
-                is_settled = True
-        else:
-            cci_val = cci_bull if ticker == bull_ticker else cci_bear
-            if cci_val >= 0.0:
                 is_settled = True
 
         if is_stop_out or is_settled or is_eod:
@@ -368,11 +375,11 @@ def main():
             else:
                 action_logs.append(f"EOD holding position in {ticker} overnight due to strong close.")
 
-    # Entry triggers (if flat and not EOD) — CCI/ADX confirmed pullback entries
+    # Entry triggers (if flat and not EOD) — S10-style VWAP breakout entries
     if not active_pos and not is_eod:
         if target_regime == 0:
-            # Bull regime entry on bull ticker pullback
-            if cci_bull < -100.0 and adx_bull > 20.0:
+            # Bull regime entry on upper band breakout
+            if close_base > upper_band:
                 price_mxn = close_bull * fx_rate
                 alloc = current_cash * 0.90
                 fee = alloc * TRANSACTION_FEE_RATE
@@ -382,6 +389,7 @@ def main():
                         current_cash -= alloc
                         portfolio["holdings"].append({
                             "ticker": bull_ticker,
+                            "base": target_asset,
                             "side": "long",
                             "shares": shares,
                             "buy_price": price_mxn,
@@ -389,11 +397,11 @@ def main():
                             "peak_price": close_bull,
                             "allocated": alloc
                         })
-                        log_transaction(dir_path, today_str, bull_ticker, f"BUY_{bull_ticker}", shares, price_mxn, "Intraday Bull regime entry", fee=fee)
-                    action_logs.append(f"ENTERED LONG {bull_ticker} at ${price_mxn:,.2f} MXN (CCI={cci_bull:.1f} ADX={adx_bull:.1f}).")
+                        log_transaction(dir_path, today_str, bull_ticker, f"BUY_{bull_ticker}", shares, price_mxn, "Bull VWAP breakout entry", fee=fee)
+                    action_logs.append(f"ENTERED LONG {bull_ticker} at ${price_mxn:,.2f} MXN (VWAP breakout: {close_base:.2f} > {upper_band:.2f}).")
         elif target_regime == 1:
-            # Bear regime entry on bear ticker pullback
-            if cci_bear < -100.0 and adx_bear > 20.0:
+            # Bear regime entry on lower band breakdown
+            if close_base < lower_band:
                 price_mxn = close_bear * fx_rate
                 alloc = current_cash * 0.90
                 fee = alloc * TRANSACTION_FEE_RATE
@@ -403,6 +411,7 @@ def main():
                         current_cash -= alloc
                         portfolio["holdings"].append({
                             "ticker": bear_ticker,
+                            "base": target_asset,
                             "side": "short",
                             "shares": shares,
                             "buy_price": price_mxn,
@@ -410,8 +419,8 @@ def main():
                             "peak_price": close_bear,
                             "allocated": alloc
                         })
-                        log_transaction(dir_path, today_str, bear_ticker, f"BUY_{bear_ticker}", shares, price_mxn, "Intraday Bear regime entry", fee=fee)
-                    action_logs.append(f"ENTERED SHORT {bear_ticker} at ${price_mxn:,.2f} MXN (CCI={cci_bear:.1f} ADX={adx_bear:.1f}).")
+                        log_transaction(dir_path, today_str, bear_ticker, f"BUY_{bear_ticker}", shares, price_mxn, "Bear VWAP breakdown entry", fee=fee)
+                    action_logs.append(f"ENTERED SHORT {bear_ticker} at ${price_mxn:,.2f} MXN (VWAP breakdown: {close_base:.2f} < {lower_band:.2f}).")
         else:
             # Chop Mean Reversion
             if close_base < lower_band:
@@ -424,6 +433,7 @@ def main():
                         current_cash -= alloc
                         portfolio["holdings"].append({
                             "ticker": bull_ticker,
+                            "base": target_asset,
                             "side": "long",
                             "shares": shares,
                             "buy_price": price_mxn,
@@ -443,6 +453,7 @@ def main():
                         current_cash -= alloc
                         portfolio["holdings"].append({
                             "ticker": bear_ticker,
+                            "base": target_asset,
                             "side": "short",
                             "shares": shares,
                             "buy_price": price_mxn,
@@ -509,8 +520,6 @@ def main():
 * Active Telemetry ({target_asset}):
   * Base Price: ${close_base:.2f} USD | ATR (14): {atr_base:.2f}
   * VWAP: ${vwap_base:.2f} USD (Lower: ${lower_band:.2f} | Upper: ${upper_band:.2f})
-  * {bull_ticker} CCI: {cci_bull:.1f} | ADX: {adx_bull:.1f}
-  * {bear_ticker} CCI: {cci_bear:.1f} | ADX: {adx_bear:.1f}
 """
 
     if not args.dry_run:

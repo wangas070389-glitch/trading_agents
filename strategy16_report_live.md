@@ -1,9 +1,9 @@
 # Strategy 16: Multi-Asset HMM Intraday Router Execution Report
-**Execution Date:** 2026-07-08 22:09:27 | **Strategy Version:** Router V1
+**Execution Date:** 2026-07-08 22:40:36 | **Strategy Version:** Router V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $202,209.66 MXN
-* **Total Cash Balance:** $202,209.66 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Total Portfolio NAV:** $200,069.55 MXN
+* **Total Cash Balance:** $200,069.55 MXN (Parked compounding in Bondia sweep at 6.53% APR)
 * **Equity Exposure:** 0.0%
 * **Active Target Index:** **SOXX** (Regime: State 0 - Strongest decoded intraday trend state on SOXX (Score: 0.119))
 
@@ -12,7 +12,7 @@
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $0.6847 MXN sweep interest.
+* **[INTEREST ACCRUED]** Cash reserves earned $25.9560 MXN sweep interest.
 * No trades or rebalancing actions triggered in this 30-minute interval.
 
 ## 4. Multi-Asset HMM Telemetry
@@ -23,6 +23,4 @@
   * **IWM:** State 0 (Trend Score: 0.059)
 * Active Telemetry (SOXX):
   * Base Price: $562.71 USD | ATR (14): 7.10
-  * VWAP: $557.74 USD (Lower: $547.09 | Upper: $568.40)
-  * SOXL CCI: 53.1 | ADX: 53.8
-  * SOXS CCI: -55.0 | ADX: 61.2
+  * VWAP: $562.71 USD (Lower: $552.05 | Upper: $573.36)

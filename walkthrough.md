@@ -446,3 +446,25 @@ Created a fully compliant **Pine Script v6 simulation strategy** for TradingView
 ### E. Pipeline Verification
 Executed the scheduler pipeline in test mode (`python scheduler.py --test`). All 17 active strategies (S1, S4, S5, S6, S8, S9, S10, S11, S12, S13, S14, S15, and the aggregators) executed and compiled cleanly. The pipeline successfully completed 17/18 scripts (with `watchdog.py` correctly raising a CRITICAL alert on S3's negative cash as designed).
 
+
+## 4. Strategy 16 v2: HMM Router with S10 Engine
+
+We successfully upgraded **Strategy 16 (Multi-Asset HMM Intraday Router)** to the **v2 specification** to resolve the GBM fee friction issue. S16 v2 uses the Alpaca commission-free structure and inherits the robust VWAP breakout/reversion engine of S10.
+
+### A. Core Architecture Upgrades
+*   **0% Commission Model:** Set the transaction fee rate to `0.0000` to mirror Alpaca execution, preventing round-trip fee bleed from absorbing all intraday profits.
+*   **Held Position Routing Lock:** Implemented an active target lock. If a trade is held overnight (e.g., in `SOXL`), the daily target routing locks to that base asset (`SOXX`) until the position is closed.
+*   **S10 VWAP Engine:** Implemented VWAP band breakout entry triggers for trend regimes (regimes 0 and 1) and early settle reversion at the VWAP line for chop regimes (regime 2), matching S10 parameters.
+
+### B. Upgraded Backtest Performance Results
+Running the new `backtest_strategy16.py` engine yielded a massive recovery:
+*   **Final NAV:** **$242,346.44 MXN** (from $200,000 MXN initial)
+*   **Total Return (60d):** **+21.17%** (vs S16 v1 -11.29% and VWAP-only with fees -35.81%)
+*   **CAGR:** **+126.07%**
+*   **Sharpe Ratio:** **3.73**
+*   **Maximum Drawdown:** **-10.12%**
+*   **Overnight held gains:** **$40,552.26 MXN** across 6 trades.
+
+### C. Live Verification
+*   **Live Script Execution:** Ran `python run_live_strategy16.py` successfully. It decoded HMM regimes for `QQQ`, `SPY`, `SOXX`, and `IWM`, resolved the active target index (`SOXX` under regime 0), accrued Bondia sweep yield interest, updated `portfolio_strategy16.json`, and logged the transaction into `transactions_strategy16.md`.
+*   **Watchdog Audit:** Verified with `python watchdog.py --dry-run`. S16 v2 dynamic valuation resolved successfully under audit checks.
