@@ -104,6 +104,7 @@
 | 2026-07-09 | GFNORTEO.MX | SELL | 20 | 187.11 | +3,738.46 | Market | FILLED | 1D MACD systematic signal |
 | 2026-07-09 | BONDIA | INTEREST | 1 | 0.04 | +0.0390 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0133 days. |
 | 2026-07-09 | BONDIA | INTEREST | 1 | 0.21 | +0.2142 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0731 days. |
+| 2026-07-09 | BONDIA | INTEREST | 1 | 0.23 | +0.2347 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0801 days. |
 ---
 
 
@@ -113,5 +114,5 @@
 
 * **Initial Starting Capital (2026-06-03)**: 20,000.00 MXN
 * **Total Deployed Capital**: 3,534.72 MXN (18.1% invested)
-* **Unallocated Cash Reserves**: 16,145.75 MXN (82.5% cash)
-* **Current Portfolio Market Value**: 19,579.91 MXN (including cash)
+* **Unallocated Cash Reserves**: 16,145.98 MXN (82.5% cash)
+* **Current Portfolio Market Value**: 19,579.82 MXN (including cash)
