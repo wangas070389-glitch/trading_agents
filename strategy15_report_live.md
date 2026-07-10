@@ -1,7 +1,7 @@
 # Strategy 15: TRACK Live Report
-**Execution:** 2026-07-10 20:00:02 | **Signal date:** 2026-07-10 | **alpha:** 1/252
+**Execution:** 2026-07-10 20:54:41 | **Signal date:** 2026-07-10 | **alpha:** 1/252
 
-* **NAV:** $201,693.44 MXN | Cash MXN $141,529.22 | Cash USD $1,620.51 | TQQQ $31,845.91
+* **NAV:** $201,645.17 MXN | Cash MXN $141,530.18 | Cash USD $1,620.52 | TQQQ $31,815.89
 * **Objetivo mezclado:** w_TQQQ=0.167, f_USD=0.167
 
 ## Pesos fixed-share (piso garantizado alpha/N = 0.066%)
@@ -13,4 +13,4 @@
 * CASH_USD: **16.7%** (G=-0.0022)
 
 ## Acciones
-* Dentro de bandas; sin operacion.
+* Senal ya procesada; solo valuacion.
