@@ -1,6 +1,6 @@
 {
-  "total_capital": 202053.85,
-  "cash_balance_mxn": 161740.96,
+  "total_capital": 202054.89,
+  "cash_balance_mxn": 161742.0,
   "cash_balance_usd": 0.0,
   "holdings": [
     {
@@ -12,6 +12,6 @@
     }
   ],
   "last_signal_date": "2026-07-10",
-  "last_updated": "2026-07-10 21:14:45",
+  "last_updated": "2026-07-10 22:06:38",
   "low_score_streak": 0
 }
