@@ -43,6 +43,7 @@ STRATEGY_SCRIPTS = [
     "run_live_multi_strategy.py",
     "compare_strategies.py",
     "generate_clean_report.py",
+    "graduation_report.py",
     "watchdog.py"
 ]
 

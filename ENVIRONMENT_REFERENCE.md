@@ -183,7 +183,8 @@ Logging:   scheduler.log + scheduler_logs/<script>_<timestamp>.log
 17. `run_live_multi_strategy.py` — Cross-strategy aggregator
 18. `compare_strategies.py` — Generates comparison reports
 19. `generate_clean_report.py` — Builds executive summary
-20. `watchdog.py` — Final safety audit
+20. `graduation_report.py` — Paper→live readiness scorecard
+21. `watchdog.py` — Final safety audit
 
 **To run the scheduler:**
 ```powershell
@@ -452,6 +453,7 @@ Credentials are read from environment variables only (never hardcode them):
 | `pipeline_orchestrator.py` | Alternative orchestration utility |
 | `compare_strategies.py` | Cross-strategy performance comparison generator |
 | `generate_clean_report.py` | Executive summary report builder |
+| `graduation_report.py` | Paper→live readiness scorecard (`graduation_report.md`): 90-day history, Bondia 6.53% hurdle, 1.25× DD bound, Sharpe > 0 |
 | `app.py` | Dash web dashboard backend |
 | `run_dashboard.py` | Dashboard launch script |
 | `run.py` | Utility launcher |
