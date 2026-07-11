@@ -15,6 +15,11 @@
 | 2026-07-06 | GOOGL | SELL | 14 | 366.46 | +5,130.44 | Market | FILLED | Alpaca Order 1e1b266f-3512-4c81-be7c-08b1ecd682b7 | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
 | 2026-07-06 | JPM | SELL | 15 | 337.87 | +5,068.05 | Market | FILLED | Alpaca Order c93e948a-33e0-4606-8610-0a56c1ef6439 | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
 | 2026-07-06 | TSLA | BUY | 47 | 419.77 | -19,729.19 | Market | FILLED | Alpaca Order b4af4c8f-381e-4df8-b6e0-e4928a3b4ead | Isolated US Stock Momentum strategy: Buy Rebalance to 20.0% |
+| 2026-07-10 | TSLA | SELL | 47 | 407.76 | +19,164.72 | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-10 | JPM | SELL | 59 | 336.47 | +19,851.73 | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-10 | NVDA | BUY | 79 | 210.96 | -16,665.84 | Market | FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
+| 2026-07-10 | META | BUY | 24 | 669.21 | -16,061.04 | Market | FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
+| 2026-07-10 | AVGO | BUY | 41 | 399.97 | -16,398.77 | Market | FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
 ---
 
 
@@ -22,7 +27,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $99,321.45 USD
-* **Total Deployed Capital**: $98,810.22 USD (179.5% invested)
-* **Unallocated Cash Reserves**: $-44,816.83 USD (-81.4% cash)
-* **Current Portfolio Market Value**: $55,033.35 USD (including cash)
+* **Initial Starting Capital**: $100,000.00 USD
+* **Total Deployed Capital**: $108,492.42 USD (54.5% invested)
+* **Unallocated Cash Reserves**: $89,890.80 USD (45.1% cash)
+* **Current Portfolio Market Value**: $199,203.11 USD (including cash)

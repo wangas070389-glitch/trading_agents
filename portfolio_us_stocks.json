@@ -1,21 +1,13 @@
 {
-  "total_capital": 99321.45,
-  "cash_balance": -44816.83,
+  "total_capital": 100000.0,
+  "cash_balance": 89890.8,
   "holdings": [
-    {
-      "ticker": "JPM",
-      "shares": 59,
-      "buy_price": 334.1400146484375,
-      "last_price": 337.8699951171875,
-      "peak_price": 343.45001220703125,
-      "target_weight": 0.2
-    },
     {
       "ticker": "AMZN",
       "shares": 82,
       "buy_price": 241.6999969482422,
       "last_price": 244.16000366210938,
-      "peak_price": 246.72000122070312,
+      "peak_price": 251.02999877929688,
       "target_weight": 0.2
     },
     {
@@ -23,7 +15,7 @@
       "shares": 64,
       "buy_price": 308.6300048828125,
       "last_price": 312.6600036621094,
-      "peak_price": 314.20001220703125,
+      "peak_price": 316.9100036621094,
       "target_weight": 0.2
     },
     {
@@ -35,13 +27,29 @@
       "target_weight": 0.2
     },
     {
-      "ticker": "TSLA",
-      "shares": 47,
-      "buy_price": 419.7699890136719,
-      "last_price": 419.7699890136719,
-      "peak_price": 420.0,
-      "target_weight": 0.2
+      "ticker": "NVDA",
+      "shares": 79,
+      "buy_price": 210.9600067138672,
+      "last_price": 210.9600067138672,
+      "peak_price": 211.0,
+      "target_weight": 0.16666666666666666
+    },
+    {
+      "ticker": "META",
+      "shares": 24,
+      "buy_price": 669.2100219726562,
+      "last_price": 669.2100219726562,
+      "peak_price": 677.8599853515625,
+      "target_weight": 0.16666666666666666
+    },
+    {
+      "ticker": "AVGO",
+      "shares": 41,
+      "buy_price": 399.9700012207031,
+      "last_price": 399.9700012207031,
+      "peak_price": 402.44000244140625,
+      "target_weight": 0.16666666666666666
     }
   ],
-  "last_updated": "2026-07-06 22:15:20"
+  "last_updated": "2026-07-10 22:41:15"
 }

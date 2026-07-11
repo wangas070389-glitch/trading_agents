@@ -1,9 +1,9 @@
 # Strategy 8: Dividend Quality & Yield Execution Report
-**Execution Date:** 2026-07-10 22:06:05 | **Strategy Version:** Live V1
+**Execution Date:** 2026-07-10 22:41:36 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $197,557.20 MXN
-* **Total Cash Balance:** $39,600.68 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $197,557.38 MXN
+* **Total Cash Balance:** $39,600.86 MXN (Parked in Bondia Compound at 6.53% APR)
 * **Equity Exposure:** 80.0%
 * **Days Since Last Rebalance:** 9 days
 
@@ -16,7 +16,7 @@
 | **PG** | 15.48 | $2583.93 | $2567.61 | $39,747.37 | 20.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $0.2586 MXN over 0.0360 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $0.1772 MXN over 0.0247 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
@@ -34,7 +34,7 @@
 | **ORBIA.MX** | SELL / AVOID | 0.00% | 0.0% | 0.0% | $22.47 > SMA $19.42 | Yield below 2.5% and Payout Ratio (0.0%) out of bounds and Non-positive EPS (-4.03) and Debt/Equity (2.13) exceeds 1.5 |
 | **PEP** | SELL / AVOID | 4.15% | 89.3% | 89.3% | $137.38 <= SMA $147.59 | Payout Ratio (89.3%) out of bounds and FCF Payout (89.3%) exceeds limit and Debt/Equity (2.45) exceeds 1.5 and Bear trend (Close <= SMA 200) |
 | **PG** | BUY / HOLD | 2.90% | 61.8% | 61.8% | $147.04 > SMA $146.97 | Passed all quality checks. Score: 0.0000 |
-| **T** | SELL / AVOID | 5.28% | 37.4% | 37.4% | $21.13 <= SMA $25.21 | Bear trend (Close <= SMA 200) |
-| **VZ** | SELL / AVOID | 6.70% | 67.4% | 67.4% | $42.12 <= SMA $43.69 | Debt/Equity (1.92) exceeds 1.5 and Bear trend (Close <= SMA 200) |
+| **T** | SELL / AVOID | 5.28% | 37.4% | 37.4% | $21.13 <= SMA $24.88 | Bear trend (Close <= SMA 200) |
+| **VZ** | SELL / AVOID | 6.70% | 67.4% | 67.4% | $42.12 <= SMA $42.96 | Debt/Equity (1.92) exceeds 1.5 and Bear trend (Close <= SMA 200) |
 | **WALMEX.MX** | SELL / AVOID | 4.10% | 58.6% | 58.6% | $49.32 <= SMA $56.30 | Bear trend (Close <= SMA 200) |
 | **XOM** | BUY / HOLD | 3.00% | 68.0% | 68.0% | $138.88 > SMA $135.00 | Passed all quality checks. Score: 0.0000 |

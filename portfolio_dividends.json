@@ -1,6 +1,6 @@
 {
   "total_capital": 200000.0,
-  "cash_balance": 39600.68,
+  "cash_balance": 39600.86,
   "holdings": [
     {
       "ticker": "GFNORTEO.MX",
@@ -31,6 +31,6 @@
       "target_weight": 0.2
     }
   ],
-  "last_updated": "2026-07-10 22:06:05",
+  "last_updated": "2026-07-10 22:41:36",
   "last_rebalance_date": "2026-07-01"
 }
