@@ -1,23 +1,35 @@
 {
   "total_capital": 20000.0,
-  "cash_balance": 16149.35,
+  "cash_balance": 14198.05,
   "holdings": [
     {
       "ticker": "GAPB.MX",
       "shares": 4,
       "buy_price": 436.68,
-      "last_price": 412.4700012207031,
+      "last_price": 412.1199951171875,
       "target_weight": 0.07142857142857142,
-      "hmm_state": 0
+      "hmm_state": 0,
+      "peak_price": 436.68
     },
     {
       "ticker": "FEMSAUBD.MX",
       "shares": 8,
       "buy_price": 223.5,
-      "last_price": 223.30999755859375,
+      "last_price": 222.72999572753906,
       "target_weight": 0.08333333333333333,
-      "hmm_state": 0
+      "hmm_state": 0,
+      "peak_price": 223.5
+    },
+    {
+      "ticker": "CEMEXCPO.MX",
+      "shares": 90,
+      "buy_price": 21.65999984741211,
+      "last_price": 21.65999984741211,
+      "target_weight": 0.1,
+      "hmm_state": 0,
+      "peak_price": 21.65999984741211,
+      "trailing_armed": false
     }
   ],
-  "last_updated": "2026-07-11 00:35:41"
+  "last_updated": "2026-07-11 01:04:31"
 }

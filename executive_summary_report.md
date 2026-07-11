@@ -18,8 +18,8 @@ A continuación se detallan las 15 estrategias que componen el repositorio, espe
 
 #### **S2: 1d MACD Systematic (Seguimiento de Tendencia)**
 *   **Activos Evaluados:** 22 acciones líderes de la BMV más 5 acciones de EE. UU. en el SIC.
-*   **Lógica:** Cruce de MACD estándar (12, 26, 9) filtrado por una SMA de 200 días para operar únicamente en mercados alcistas, combinado con un Trailing Stop dinámico del 2% tras alcanzar un 5% de ganancia.
-*   **Expectativas (KPIs):** CAGR: **13.10%** | Sharpe: **1.27** | Drawdown Máximo: **-10.94%**.
+*   **Lógica:** Cruce de MACD estándar (12, 26, 9) filtrado por una EMA de 50 días para operar únicamente en mercados alcistas, combinado con un Trailing Stop dinámico del 2% tras alcanzar un 15% de ganancia.
+*   **Expectativas (KPIs):** CAGR: **18.44%** | Sharpe: **1.76** | Drawdown Máximo: **-9.49%**.
 *   **DCA Propuesto:** $2,000 MXN / mes.
 
 #### **S8: Dividend Quality & Yield (Flujo de Efectivo)**

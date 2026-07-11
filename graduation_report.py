@@ -51,7 +51,7 @@ STRATS = [
          block=None, note="BMV data quality degraded; see Known Issues"),
     dict(key="macd", label="S2 MACD Systematic", pf="portfolio_macd.json",
          ledger="transactions_macd.md", initial=20000.0, ccy="MXN", inception="2026-06-03",
-         ms_key=None, bt=dict(window=5.0, sharpe=1.27, cagr=0.1310, max_dd=-0.1094),
+         ms_key=None, bt=dict(window=5.0, sharpe=1.7566, cagr=0.1844, max_dd=-0.0949),
          block=None, note=""),
     dict(key="us_stocks", label="S3 US Stock Momentum", pf="portfolio_us_stocks.json",
          ledger="transactions_us_stocks.md", initial=100000.0, ccy="USD", inception="2026-06-23",

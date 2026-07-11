@@ -1,7 +1,10 @@
 {
+    "longTermMALength": 50,
+    "maType": "EMA",
     "fastLength": 12,
     "slowLength": 26,
-    "profitTriggerPercent": 5.0,
-    "trailingStopPercent": 1.0,
+    "signalLength": 9,
+    "profitTriggerPercent": 15.0,
+    "trailingStopPercent": 2.0,
     "pyramiding": 1
 }

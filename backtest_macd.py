@@ -1,4 +1,5 @@
 import os
+import json
 import argparse
 import datetime
 import numpy as np
@@ -9,12 +10,12 @@ from skills.macd_trend import calculate_all_indicators
 
 # Define Default Systematic Parameters matching Pine Script
 DEFAULT_PARAMS = {
-    "longTermMALength": 200,
-    "maType": "SMA",
+    "longTermMALength": 50,
+    "maType": "EMA",
     "fastLength": 12,
     "slowLength": 26,
     "signalLength": 9,
-    "profitTriggerPercent": 5.0,
+    "profitTriggerPercent": 15.0,
     "trailingStopPercent": 2.0,
     "defaultQtyValue": 10.0,
     "pyramiding": 1,
@@ -414,12 +415,25 @@ def main():
     start_date = args.start
     end_date = args.end
     
+    # Load learned parameters
+    params = DEFAULT_PARAMS.copy()
+    dir_path = os.path.dirname(os.path.abspath(__file__))
+    param_file = os.path.join(dir_path, "macd_learned_params.json")
+    if os.path.exists(param_file):
+        try:
+            with open(param_file, "r", encoding="utf-8") as f:
+                learned = json.load(f)
+                params.update(learned)
+                print(f"Loaded optimal parameters: {learned}")
+        except Exception as e:
+            print(f"Error loading optimal parameters: {e}")
+            
     print(f"Loading data for {ticker}...")
     if ticker == "ALL":
         tickers = ["SPY", "NVDA", "AAPL", "MSFT", "TSLA", "QQQ", "IWM"]
         data_dict = download_data(tickers, start_date, end_date)
         print("Running multi-asset portfolio simulation...")
-        nav_df, trades = run_multi_asset_simulation(data_dict, DEFAULT_PARAMS)
+        nav_df, trades = run_multi_asset_simulation(data_dict, params)
         bench_df = data_dict["SPY"]
         bench_label = "SPY Buy & Hold"
     else:
@@ -429,7 +443,7 @@ def main():
             return
         df = data_dict[ticker]
         print(f"Running simulation for {ticker}...")
-        nav_df, trades = run_single_asset_simulation(df, ticker, DEFAULT_PARAMS)
+        nav_df, trades = run_single_asset_simulation(df, ticker, params)
         bench_df = df
         bench_label = f"Buy & Hold {ticker}"
     

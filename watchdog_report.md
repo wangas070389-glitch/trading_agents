@@ -1,4 +1,4 @@
-# Watchdog Report - 2026-07-11 00:39:49
+# Watchdog Report - 2026-07-11 01:04:35
 
 **CRITICAL: 0 | WARNING: 3**
 
@@ -8,7 +8,7 @@
 | [ OK ] | alternatives | - | NAV $101,362.35 | sin anomalias |
 | [ OK ] | dividends | - | NAV $196,299.29 | sin anomalias |
 | [ OK ] | high_beta | - | NAV $101,709.00 | sin anomalias |
-| [ OK ] | macd | - | NAV $19,585.71 | sin anomalias |
+| [ OK ] | macd | - | NAV $19,577.77 | sin anomalias |
 | [ OK ] | multi_strategy | - | NAV $0.00 | sin anomalias |
 | [WARN] | strategy10 | W2 | Sin trades aun (7/10 dias de gracia) |
 | [ OK ] | strategy11 | - | NAV $201,936.16 | sin anomalias |

@@ -22,7 +22,7 @@ EXPANDED_UNIVERSE = [
 
 COMMISSION_RATE = 0.0010
 BONDIA_APR = 0.0653  # CETES/Bondia 6.53% APR
-DEAD_ZONE = 0.10
+DEAD_ZONE = 0.01
 
 def load_portfolio(dir_path):
     portfolio_path = os.path.join(dir_path, "portfolio_macd.json")
@@ -124,6 +124,29 @@ def main():
     portfolio = load_portfolio(dir_path)
     cash = portfolio["cash_balance"]
     
+    # Load optimal parameters
+    params = {
+        "longTermMALength": 50,
+        "maType": "EMA",
+        "fastLength": 12,
+        "slowLength": 26,
+        "signalLength": 9,
+        "profitTriggerPercent": 15.0,
+        "trailingStopPercent": 2.0,
+        "pyramiding": 1,
+        "position_pct": 0.10,
+        "max_positions": 10,
+    }
+    param_file = os.path.join(dir_path, "macd_learned_params.json")
+    if os.path.exists(param_file):
+        try:
+            with open(param_file, "r", encoding="utf-8") as f:
+                learned = json.load(f)
+                params.update(learned)
+                print(f"Loaded optimal parameters: {learned}")
+        except Exception as e:
+            print(f"Error loading optimal parameters: {e}")
+    
     # 2. Accrue Bondia overnight yield
     last_updated_str = portfolio.get("last_updated")
     days_elapsed = 0.0
@@ -195,52 +218,135 @@ def main():
 
     # 5. Fetch signals
     print(f"\nAnalyzing signals for all {len(EXPANDED_UNIVERSE)} assets...")
-    bullish_assets = []
     current_prices = {}
+    ticker_histories = {}
     
     for ticker in EXPANDED_UNIVERSE:
         try:
-            hist = yf.download(ticker, period="1y", interval="1d", progress=False)
-            if hist.empty or len(hist) < 50:
+            hist = yf.download(ticker, period="2y", interval="1d", progress=False)
+            if hist.empty:
                 continue
             hist.columns = [c if isinstance(c, str) else c[0] for c in hist.columns]
+            hist = hist.dropna(subset=["Close"])
+            if hist.empty or len(hist) < params.get("longTermMALength", 50):
+                continue
             hist.index = pd.to_datetime(hist.index).tz_localize(None)
             
             # Calculate Indicators
-            hist["macd"], hist["signal"] = calculate_macd(hist["Close"])
-            hist["sma50"] = hist["Close"].rolling(window=50).mean()
+            ma_len = params.get("longTermMALength", 50)
+            ma_type = params.get("maType", "EMA")
+            if ma_type == "SMA":
+                hist["ma_long"] = hist["Close"].rolling(window=ma_len).mean()
+            else:
+                hist["ma_long"] = hist["Close"].ewm(span=ma_len, adjust=False).mean()
+                
+            fast_len = params.get("fastLength", 12)
+            slow_len = params.get("slowLength", 26)
+            sig_len = params.get("signalLength", 9)
+            hist["macd"], hist["signal"] = calculate_macd(hist["Close"], fast_len, slow_len, sig_len)
             
             row = hist.iloc[-1]
             close = float(row["Close"])
-            macd_val = float(row["macd"])
-            sig_val = float(row["signal"])
-            sma50_val = float(row["sma50"])
-
-            # Skip tickers with NaN/invalid closes (market closed / empty feed)
-            # so stale-but-valid last_price values are never overwritten with NaN
             if not (np.isfinite(close) and close > 0):
                 print(f"  Ticker {ticker:12} | SKIPPED (no valid close price)")
                 continue
 
-            is_bullish = macd_val > sig_val and close > sma50_val
             price_mxn = close * rate if not ticker.endswith(".MX") else close
             current_prices[ticker] = price_mxn
+            ticker_histories[ticker] = hist
             
-            status_str = "BULLISH" if is_bullish else "BEARISH/NEUTRAL"
-            print(f"  Ticker {ticker:12} | Price: {price_mxn:8,.2f} MXN | Signal: {status_str:15}")
-            
-            if is_bullish:
-                bullish_assets.append(ticker)
+            status_str = "DATA_OK"
+            print(f"  Ticker {ticker:12} | Price: {price_mxn:8,.2f} MXN | Indicators calculated")
         except Exception as e:
             print(f"  Ticker {ticker:12} | Failed to fetch/calculate: {e}")
 
-    # Calculate target weights
+    # Calculate target weights using Trailing Stops & Crossover Signals
     target_weights = {t: 0.0 for t in EXPANDED_UNIVERSE}
-    if len(bullish_assets) > 0:
-        weight_per_asset = max_equity_exposure / len(bullish_assets)
-        weight_per_asset = min(0.20, weight_per_asset)  # 20% cap per position
-        for ticker in bullish_assets:
-            target_weights[ticker] = weight_per_asset
+    weight_per_asset = params.get("position_pct", 0.10)
+    profit_trigger = params.get("profitTriggerPercent", 15.0)
+    trail_pct = params.get("trailingStopPercent", 2.0)
+    max_positions = params.get("max_positions", 10)
+    
+    held_tickers = {h["ticker"]: h for h in portfolio["holdings"]}
+    active_positions_count = 0
+    
+    # Process exits for currently held assets
+    for h in portfolio["holdings"]:
+        ticker = h["ticker"]
+        if ticker not in current_prices:
+            # If no price feed, keep holding it with its target weight
+            target_weights[ticker] = h.get("target_weight", weight_per_asset)
+            active_positions_count += 1
+            continue
+            
+        close_mxn = current_prices[ticker]
+        buy_price = h["buy_price"]
+        
+        # Track peak price in MXN since entry
+        peak_price = max(h.get("peak_price", buy_price), close_mxn)
+        h["peak_price"] = peak_price
+        
+        # Check trailing stop
+        unrealized_pct = (close_mxn / buy_price - 1.0) * 100.0
+        armed = h.get("trailing_armed", False)
+        if not armed and unrealized_pct >= profit_trigger:
+            armed = True
+            h["trailing_armed"] = True
+            
+        triggered = False
+        if armed:
+            stop_price = peak_price * (1.0 - trail_pct / 100.0)
+            if close_mxn <= stop_price:
+                triggered = True
+                
+        if triggered:
+            print(f"  Ticker {ticker:12} | Trailing stop triggered at ${close_mxn:.2f} MXN (peak ${peak_price:.2f} MXN)")
+            target_weights[ticker] = 0.0
+        else:
+            # Keep holding
+            target_weights[ticker] = h.get("target_weight", weight_per_asset)
+            active_positions_count += 1
+
+    # Now check for new buys among non-held assets
+    new_buys = []
+    current_exposure = sum(target_weights[t] for t in target_weights if target_weights[t] > 0.0)
+    
+    for ticker in EXPANDED_UNIVERSE:
+        if ticker in held_tickers:
+            continue
+        if ticker not in current_prices or ticker not in ticker_histories:
+            continue
+            
+        hist = ticker_histories[ticker]
+        if len(hist) < 2:
+            continue
+            
+        row_today = hist.iloc[-1]
+        row_yesterday = hist.iloc[-2]
+        
+        macd_today = row_today["macd"]
+        sig_today = row_today["signal"]
+        macd_yesterday = row_yesterday["macd"]
+        sig_yesterday = row_yesterday["signal"]
+        
+        crossover = (macd_yesterday <= sig_yesterday) and (macd_today > sig_today)
+        is_bull = float(row_today["Close"]) > float(row_today["ma_long"])
+        
+        if crossover and is_bull:
+            new_buys.append(ticker)
+            
+    # Process new buys up to max_positions and max_exposure
+    for ticker in new_buys:
+        if active_positions_count >= max_positions:
+            break
+        if current_exposure + weight_per_asset > max_equity_exposure:
+            print(f"  [REGIME GATE] Skip buying {ticker} - would exceed max HMM regime exposure of {max_equity_exposure*100:.0f}%")
+            break
+            
+        print(f"  Ticker {ticker:12} | BUY SIGNAL: Crossover + Bull Trend (Allocating {weight_per_asset*100:.1f}%)")
+        target_weights[ticker] = weight_per_asset
+        active_positions_count += 1
+        current_exposure += weight_per_asset
 
     # 6. Reconcile Holdings & Calculate Trades
     print("\nReconciling portfolio targets...")
@@ -344,6 +450,8 @@ def main():
                 h["last_price"] = price
                 h["target_weight"] = target_weights[ticker]
                 h["hmm_state"] = current_regime
+                h["peak_price"] = max(h.get("peak_price", h["buy_price"]), price)
+                h["trailing_armed"] = h.get("trailing_armed", False)
             else:
                 updated_holdings_dict[ticker] = {
                     "ticker": ticker,
@@ -351,7 +459,9 @@ def main():
                     "buy_price": price,
                     "last_price": price,
                     "target_weight": target_weights[ticker],
-                    "hmm_state": current_regime
+                    "hmm_state": current_regime,
+                    "peak_price": price,
+                    "trailing_armed": False
                 }
         elif action == "SELL":
             if ticker in updated_holdings_dict:
