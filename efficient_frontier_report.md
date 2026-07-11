@@ -1,71 +1,84 @@
-# Strategy Portfolio Efficient Frontier Optimization Report
+# Efficient Frontier v2 — Graduation-Day Target Allocation
+**Generated:** 2026-07-10 23:15:27 | Window: 2022-06-21 → 2026-07-02 (1472 overlapping trading days) | Hurdle/Rf: Bondia 6.53% | Cap: 25%/strategy
 
-**Period Evaluated:** 2022-06-21 to 2026-07-01
+Covariances and returns come from each strategy's own backtest NAV series over
+the common window. **Intraday sleeves (S10/S11/S16) are excluded**: only ~60
+in-sample days of NAV exist, and the walk-forward validation showed
+near-zero/negative out-of-sample edge — see the satellite policy below.
 
-## 1. Individual Strategy Annualized Metrics
-| Strategy Component | Annualized Return | Annualized Volatility | Sharpe Ratio (Rf=9.5%) |
-| :--- | :---: | :---: | :---: |
-| S1 Alpha Growth | 39.17% | 18.71% | 1.59 |
-| S2 MACD Trend | 25.95% | 10.98% | 1.50 |
-| S4 US DCS | 26.34% | 17.81% | 0.95 |
-| S5 Alternatives | 9.93% | 5.79% | 0.07 |
-| S6 High Beta | 11.14% | 8.78% | 0.19 |
-| S8 Dividends | 17.07% | 11.55% | 0.65 |
+## 1. Individual Strategy Metrics (common window)
+| Strategy | Ann. return | Ann. vol | Sharpe (Rf 6.53%) | Max DD |
+| :--- | ---: | ---: | ---: | ---: |
+| S1 Alpha Growth | +38.62% | 24.51% | +1.31 | -22.69% |
+| S2 MACD | +1.88% | 2.02% | -2.30 | -3.84% |
+| S4 US DCF | +26.25% | 17.78% | +1.11 | -16.99% |
+| S5 Alternatives | +9.90% | 5.78% | +0.58 | -7.12% |
+| S6 High Beta | +11.10% | 8.76% | +0.52 | -5.72% |
+| S8 Dividends | +17.01% | 11.53% | +0.91 | -11.39% |
+| S9 Stat-Arb | +15.47% | 13.87% | +0.64 | -6.00% |
+| S12 VTTL | +17.19% | 15.23% | +0.70 | -13.43% |
+| S13 CARA | +10.77% | 13.32% | +0.32 | -14.00% |
+| S14 HEDGE | +11.37% | 10.10% | +0.48 | -10.91% |
+| S15 TRACK | +11.12% | 9.84% | +0.47 | -10.54% |
 
 ## 2. Correlation Matrix
-| | S1 Alpha Growth | S2 MACD Trend | S4 US DCS | S5 Alternatives | S6 High Beta | S8 Dividends |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| S1 Alpha Growth | 1.000 | 0.747 | 0.226 | 0.192 | 0.157 | 0.536 |
-| S2 MACD Trend | 0.747 | 1.000 | 0.324 | 0.192 | 0.211 | 0.483 |
-| S4 US DCS | 0.226 | 0.324 | 1.000 | 0.041 | 0.555 | 0.178 |
-| S5 Alternatives | 0.192 | 0.192 | 0.041 | 1.000 | 0.090 | 0.099 |
-| S6 High Beta | 0.157 | 0.211 | 0.555 | 0.090 | 1.000 | 0.094 |
-| S8 Dividends | 0.536 | 0.483 | 0.178 | 0.099 | 0.094 | 1.000 |
+| | S1 | S2 | S4 | S5 | S6 | S8 | S9 | S12 | S13 | S14 | S15 |
+| :--- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| S1 | 1.00 | 0.25 | 0.23 | 0.13 | 0.08 | 0.29 | 0.15 | 0.17 | 0.15 | 0.20 | 0.20 |
+| S2 | 0.25 | 1.00 | 0.57 | -0.01 | 0.24 | 0.29 | 0.22 | 0.54 | 0.55 | 0.69 | 0.69 |
+| S4 | 0.23 | 0.57 | 1.00 | 0.04 | 0.55 | 0.18 | 0.37 | 0.59 | 0.64 | 0.67 | 0.67 |
+| S5 | 0.13 | -0.01 | 0.04 | 1.00 | 0.09 | 0.10 | 0.10 | 0.04 | 0.05 | 0.03 | 0.03 |
+| S6 | 0.08 | 0.24 | 0.55 | 0.09 | 1.00 | 0.09 | 0.18 | 0.36 | 0.37 | 0.36 | 0.36 |
+| S8 | 0.29 | 0.29 | 0.18 | 0.10 | 0.09 | 1.00 | 0.24 | 0.09 | 0.12 | 0.20 | 0.21 |
+| S9 | 0.15 | 0.22 | 0.37 | 0.10 | 0.18 | 0.24 | 1.00 | 0.26 | 0.26 | 0.29 | 0.29 |
+| S12 | 0.17 | 0.54 | 0.59 | 0.04 | 0.36 | 0.09 | 0.26 | 1.00 | 0.89 | 0.93 | 0.93 |
+| S13 | 0.15 | 0.55 | 0.64 | 0.05 | 0.37 | 0.12 | 0.26 | 0.89 | 1.00 | 0.92 | 0.92 |
+| S14 | 0.20 | 0.69 | 0.67 | 0.03 | 0.36 | 0.20 | 0.29 | 0.93 | 0.92 | 1.00 | 1.00 |
+| S15 | 0.20 | 0.69 | 0.67 | 0.03 | 0.36 | 0.21 | 0.29 | 0.93 | 0.92 | 1.00 | 1.00 |
 
-## 3. Key Optimized Portfolios
-| Portfolio | Annualized Return | Annualized Volatility | Sharpe Ratio | Description |
-| :--- | :---: | :---: | :---: | :--- |
-| **Maximum Sharpe (MSR)** | 31.65% | 12.81% | **1.73** | Portfolio that maximizes return-to-risk |
-| **Global Minimum Variance (GMV)** | 11.48% | 4.79% | 0.41 | Portfolio with the absolute lowest risk |
-| **Current Target Allocation (S7)** | 23.77% | 9.86% | 1.45 | S4=30%, S1=25%, S8=20%, S6=15%, S5=10% |
+## 3. Candidate Portfolios
+| Portfolio | Ann. return | Ann. vol | Sharpe | Max DD |
+| :--- | ---: | ---: | ---: | ---: |
+| **Risk Parity, hurdle-filtered (RECOMMENDED)** | +14.59% | 6.48% | +1.24 | -3.44% |
+| **Risk Parity (all)** | +11.18% | 4.95% | +0.94 | -3.17% |
+| **Max Sharpe (25% cap)** | +22.30% | 9.51% | +1.66 | -5.54% |
+| **Min Variance (25% cap)** | +9.38% | 4.07% | +0.70 | -2.27% |
+| **Current S7 targets** | +19.24% | 9.21% | +1.38 | -5.64% |
 
-## 4. Portfolio Allocation Comparison
-| Asset Strategy | Current Target Weight % | Max Sharpe (MSR) % | Min Variance (GMV) % |
-| :--- | :---: | :---: | :---: |
-| S1 Alpha Growth | 25.0% | 42.5% | 0.0% |
-| S2 MACD Trend | 0.0% | 35.4% | 2.8% |
-| S4 US DCS | 30.0% | 22.2% | 0.0% |
-| S5 Alternatives | 10.0% | 0.0% | 61.8% |
-| S6 High Beta | 15.0% | 0.0% | 24.0% |
-| S8 Dividends | 20.0% | 0.0% | 11.4% |
+## 4. Weights
+| Strategy | **RP hurdle-filtered** | RP (all) | Max Sharpe | Min Variance | Current S7 |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| S1 Alpha Growth | **5.7%** | 4.0% | 22.5% | 0.0% | 12.5% |
+| S2 MACD | **0.0%** | 25.0% | 0.0% | 25.0% | 0.0% |
+| S4 US DCF | **4.9%** | 3.5% | 24.5% | 0.0% | 18.7% |
+| S5 Alternatives | **25.0%** | 22.6% | 25.0% | 25.0% | 6.2% |
+| S6 High Beta | **14.2%** | 10.0% | 0.0% | 23.6% | 6.2% |
+| S8 Dividends | **12.4%** | 8.6% | 23.3% | 12.0% | 12.5% |
+| S9 Stat-Arb | **9.1%** | 6.4% | 3.5% | 4.1% | 18.7% |
+| S12 VTTL | **5.7%** | 4.0% | 1.2% | 0.0% | 6.2% |
+| S13 CARA | **6.5%** | 4.5% | 0.0% | 0.0% | 6.2% |
+| S14 HEDGE | **8.1%** | 5.6% | 0.0% | 0.0% | 6.2% |
+| S15 TRACK | **8.3%** | 5.8% | 0.0% | 10.3% | 6.2% |
 
-## 5. Efficient Frontier Visual Mapping (ASCII Plot)
+*Hurdle filter dropped (return < Bondia 6.53% on this window): S2 MACD — their slice belongs in Bondia cash, not in a strategy that underperforms it.*
 
-```text
-   Annualized Return
-     ^
-  43.1% |                                                             
-  40.9% |                                                             
-  38.7% |                                                    o        
-  36.5% |                                             o               
-  34.3% |                                       o                     
-  32.2% |                                  o                          
-  30.0% |                              o*                             
-  27.8% |                          o                                  
-  25.6% |                       o                                     
-  23.4% |                   oX                                        
-  21.3% |            o   o                                            
-  19.1% |         o                                                   
-  16.9% |       o                                                     
-  14.7% |     o                                                       
-  12.5% |   o                                                         
-  10.3% |  #                                                          
-        +------------------------------------------------------------
-         4.3%                                             20.6%   Annualized Volatility
-```
+## 5. Satellite policy for the intraday sleeves (from walk-forward evidence)
+- **S10 VWAP:** out-of-sample mean +1.2%/60d, contained drawdowns → optional
+  satellite, **max 5%** of the live portfolio, and only after its 90-day live
+  record confirms the walk-forward.
+- **S11 CCI-ADX:** out-of-sample mean −3.2%/60d → **0%** until a live record
+  contradicts the walk-forward.
+- **S16 Router:** out-of-sample mean +0.9%/60d with a −48% drawdown window →
+  **0%**; research project, not an allocation.
 
-### Legend:
-* **`o`** : Efficient Frontier boundary (minimum risk portfolios for any target return)
-* **`*`** : **Max Sharpe Ratio (MSR)** Portfolio
-* **`#`** : **Global Minimum Variance (GMV)** Portfolio
-* **`X`** : **Current Target Allocation (S7)** Portfolio
+## 6. How to use this
+- **Hurdle-filtered risk parity is the recommended core**: risk contributions are
+  equalized (no dependence on noisy expected-return estimates) but only across
+  strategies that actually beat Bondia on the common window.
+- Max Sharpe shows what historical means would suggest — treat it as an upper
+  bound on concentration, not a target; backtest means are noisy.
+- Strategies only receive their weight once they reach **READY** in
+  graduation_report.md; until then their slice stays in Bondia cash.
+- Caveats: MXN and USD series are mixed (FX exposure differs by sleeve); the
+  common window (2022→) is mostly one market era; S13 is retired standalone
+  and its weight should be folded into S14/S15 at implementation.
