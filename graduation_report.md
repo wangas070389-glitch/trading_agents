@@ -1,91 +1,91 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-07-10 23:23:09 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-07-11 00:39:46 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| S12 VTTL Trend+Vol | **ON TRACK** | 4 | +1.0% | +93.7% | pending | n/a | n/a | -26.7% | 10.35 | 0.46 (22.5y) |
-| S14 HEDGE Aggregator | **ON TRACK** | 4 | +0.8% | +75.3% | pending | n/a | n/a | -19.0% | 10.18 | 0.53 (19.2y) |
-| S15 TRACK Tracker | **ON TRACK** | 4 | +0.8% | +75.0% | pending | n/a | n/a | -18.4% | 10.18 | 0.53 (19.2y) |
-| S13 CARA Cross-Asset | **ON TRACK** | 4 | +1.0% | +93.8% | pending | n/a | n/a | -31.3% | 8.64 | 0.45 (19.2y) |
-| S8 Dividend Quality | **ON TRACK** | 15 | -1.2% | -29.7% | pending | -6.43 | -1.6% | -14.2% | 5.60 | 1.12 (5.0y) |
-| S4 US DCF Value-Growth | **ON TRACK** | 17 | +1.2% | +25.9% | pending | 3.97 | -1.0% | -15.2% | 4.56 | 1.14 (4.0y) |
-| S6 High-Beta Momentum | **ON TRACK** | 17 | +0.7% | +15.1% | pending | 5.35 | +0.0% | -24.4% | 4.20 | 1.05 (4.0y) |
-| S5 Alternatives | **ON TRACK** | 17 | +0.4% | +7.7% | pending | 4.74 | -0.1% | -19.0% | 3.80 | 0.95 (4.0y) |
-| S1 Adaptive Value (BMV) | **ON TRACK** | 37 | +3.7% | +37.0% | PASS | 3.87 | -1.8% | -35.2% | 3.28 | 0.82 (4.0y) |
-| S9 AI Regime Stat-Arb | **ON TRACK** | 10 | -3.0% | -108.4% | pending | -16.35 | -2.2% | -7.5% | 2.35 | 0.47 (5.0y) |
-| S10 Intraday VWAP | **ON TRACK** | 8 | +0.1% | +6.4% | pending | -2.47 | -0.6% | -4.0% | 0.52 | 3.27 (0.2y) |
-| S16 MACD-HMM Router | **ON TRACK** | 3 | +0.1% | +8.6% | pending | n/a | n/a | -13.4% | 0.16 | 0.99 (0.2y) |
-| S11 Intraday CCI-ADX | **ON TRACK** | 8 | +1.0% | +44.1% | pending | 3.68 | -0.3% | -8.4% | 0.06 | 0.35 (0.2y) |
-| S2 MACD Systematic | **NOT READY** | 37 | -2.1% | -20.4% | FAIL | n/a | n/a | -4.8% | 6.35 | 1.27 (5.0y) |
-| S3 US Stock Momentum | **BLOCKED** | 17 | +99.2% | +2129.9% | pending | n/a | n/a | -22.7% | 5.75 | 1.15 (5.0y) |
+| S12 VTTL Trend+Vol | **ON TRACK** | 5 | +1.0% | +75.0% | pending | n/a | n/a | -26.7% | 10.35 | 0.46 (22.5y) |
+| S14 HEDGE Aggregator | **ON TRACK** | 5 | +0.8% | +60.3% | pending | n/a | n/a | -19.0% | 10.18 | 0.53 (19.2y) |
+| S15 TRACK Tracker | **ON TRACK** | 5 | +0.8% | +60.1% | pending | n/a | n/a | -18.4% | 10.18 | 0.53 (19.2y) |
+| S13 CARA Cross-Asset | **ON TRACK** | 5 | +1.0% | +75.1% | pending | n/a | n/a | -31.3% | 8.64 | 0.45 (19.2y) |
+| S8 Dividend Quality | **ON TRACK** | 16 | -1.9% | -42.2% | pending | -8.62 | -2.3% | -14.2% | 5.60 | 1.12 (5.0y) |
+| S4 US DCF Value-Growth | **ON TRACK** | 18 | +1.2% | +24.4% | pending | 3.58 | -1.0% | -15.2% | 4.56 | 1.14 (4.0y) |
+| S6 High-Beta Momentum | **ON TRACK** | 18 | +0.7% | +14.2% | pending | 4.71 | -0.1% | -24.4% | 4.20 | 1.05 (4.0y) |
+| S5 Alternatives | **ON TRACK** | 18 | +0.4% | +7.3% | pending | 4.29 | -0.1% | -19.0% | 3.80 | 0.95 (4.0y) |
+| S1 Adaptive Value (BMV) | **ON TRACK** | 38 | +3.7% | +36.0% | PASS | 0.59 | -3.3% | -35.2% | 3.28 | 0.82 (4.0y) |
+| S9 AI Regime Stat-Arb | **ON TRACK** | 11 | -3.0% | -98.5% | pending | -15.66 | -2.2% | -7.5% | 2.35 | 0.47 (5.0y) |
+| S10 Intraday VWAP | **ON TRACK** | 9 | +0.1% | +5.7% | pending | -2.04 | -0.6% | -4.0% | 0.52 | 3.27 (0.2y) |
+| S16 MACD-HMM Router | **ON TRACK** | 4 | +0.1% | +6.6% | pending | n/a | n/a | -13.4% | 0.16 | 0.99 (0.2y) |
+| S11 Intraday CCI-ADX | **ON TRACK** | 9 | +1.0% | +39.3% | pending | 3.72 | -0.3% | -8.4% | 0.06 | 0.35 (0.2y) |
+| S2 MACD Systematic | **NOT READY** | 38 | -2.1% | -19.9% | FAIL | n/a | n/a | -4.8% | 6.35 | 1.27 (5.0y) |
+| S3 US Stock Momentum | **BLOCKED** | 18 | +99.2% | +2011.6% | pending | n/a | n/a | -22.7% | 5.75 | 1.15 (5.0y) |
 
 ## Verdict Detail
 
 **S12 VTTL Trend+Vol** — ON TRACK
-- needs 86 more live days (C1: 4/90)
-- return/Sharpe judged from day 30 (now 4); current figures are informational
-- risk stats pending (5 daily samples, need 8) [multi-strategy daily USD]
+- needs 85 more live days (C1: 5/90)
+- return/Sharpe judged from day 30 (now 5); current figures are informational
+- risk stats pending (6 daily samples, need 8) [multi-strategy daily USD]
 
 **S14 HEDGE Aggregator** — ON TRACK
-- needs 86 more live days (C1: 4/90)
-- return/Sharpe judged from day 30 (now 4); current figures are informational
-- risk stats pending (5 daily samples, need 8) [multi-strategy daily USD]
+- needs 85 more live days (C1: 5/90)
+- return/Sharpe judged from day 30 (now 5); current figures are informational
+- risk stats pending (6 daily samples, need 8) [multi-strategy daily USD]
 
 **S15 TRACK Tracker** — ON TRACK
-- needs 86 more live days (C1: 4/90)
-- return/Sharpe judged from day 30 (now 4); current figures are informational
-- risk stats pending (5 daily samples, need 8) [multi-strategy daily USD]
+- needs 85 more live days (C1: 5/90)
+- return/Sharpe judged from day 30 (now 5); current figures are informational
+- risk stats pending (6 daily samples, need 8) [multi-strategy daily USD]
 
 **S13 CARA Cross-Asset** — ON TRACK
-- needs 86 more live days (C1: 4/90)
-- return/Sharpe judged from day 30 (now 4); current figures are informational
-- risk stats pending (5 daily samples, need 8) [multi-strategy daily USD]
+- needs 85 more live days (C1: 5/90)
+- return/Sharpe judged from day 30 (now 5); current figures are informational
+- risk stats pending (6 daily samples, need 8) [multi-strategy daily USD]
 - Retired standalone; survives as expert sleeve in S14/S15
 
 **S8 Dividend Quality** — ON TRACK
-- needs 75 more live days (C1: 15/90)
-- return/Sharpe judged from day 30 (now 15); current figures are informational
+- needs 74 more live days (C1: 16/90)
+- return/Sharpe judged from day 30 (now 16); current figures are informational
 
 **S4 US DCF Value-Growth** — ON TRACK
-- needs 73 more live days (C1: 17/90)
-- return/Sharpe judged from day 30 (now 17); current figures are informational
+- needs 72 more live days (C1: 18/90)
+- return/Sharpe judged from day 30 (now 18); current figures are informational
 
 **S6 High-Beta Momentum** — ON TRACK
-- needs 73 more live days (C1: 17/90)
-- return/Sharpe judged from day 30 (now 17); current figures are informational
+- needs 72 more live days (C1: 18/90)
+- return/Sharpe judged from day 30 (now 18); current figures are informational
 
 **S5 Alternatives** — ON TRACK
-- needs 73 more live days (C1: 17/90)
-- return/Sharpe judged from day 30 (now 17); current figures are informational
+- needs 72 more live days (C1: 18/90)
+- return/Sharpe judged from day 30 (now 18); current figures are informational
 
 **S1 Adaptive Value (BMV)** — ON TRACK
-- needs 53 more live days (C1: 37/90)
+- needs 52 more live days (C1: 38/90)
 - BMV data quality degraded; see Known Issues
 
 **S9 AI Regime Stat-Arb** — ON TRACK
-- needs 80 more live days (C1: 10/90)
-- return/Sharpe judged from day 30 (now 10); current figures are informational
+- needs 79 more live days (C1: 11/90)
+- return/Sharpe judged from day 30 (now 11); current figures are informational
 
 **S10 Intraday VWAP** — ON TRACK
-- needs 82 more live days (C1: 8/90)
-- return/Sharpe judged from day 30 (now 8); current figures are informational
+- needs 81 more live days (C1: 9/90)
+- return/Sharpe judged from day 30 (now 9); current figures are informational
 - 60d in-sample backtest; params tuned July 2026 -- treat backtest as ceiling
 
 **S16 MACD-HMM Router** — ON TRACK
-- needs 87 more live days (C1: 3/90)
-- return/Sharpe judged from day 30 (now 3); current figures are informational
-- risk stats pending (4 daily samples, need 8) [watchdog snapshots (local ccy)]
+- needs 86 more live days (C1: 4/90)
+- return/Sharpe judged from day 30 (now 4); current figures are informational
+- risk stats pending (5 daily samples, need 8) [watchdog snapshots (local ccy)]
 - 60d in-sample backtest; params tuned July 2026 -- treat backtest as ceiling
 
 **S11 Intraday CCI-ADX** — ON TRACK
-- needs 82 more live days (C1: 8/90)
-- return/Sharpe judged from day 30 (now 8); current figures are informational
+- needs 81 more live days (C1: 9/90)
+- return/Sharpe judged from day 30 (now 9); current figures are informational
 - 60d in-sample backtest; params tuned July 2026 -- treat backtest as ceiling
 
 **S2 MACD Systematic** — NOT READY
-- needs 53 more live days (C1: 37/90)
-- annualized live return -20.4% below Bondia hurdle 6.53% (C2)
-- risk stats pending (5 daily samples, need 8) [watchdog snapshots (local ccy)]
+- needs 52 more live days (C1: 38/90)
+- annualized live return -19.9% below Bondia hurdle 6.53% (C2)
+- risk stats pending (6 daily samples, need 8) [watchdog snapshots (local ccy)]
 
 **S3 US Stock Momentum** — BLOCKED
 - Reactivated 2026-07-10 but broker reconciliation still pending: books were re-based in mock mode; run reconcile_s3.py with Alpaca keys before trusting its P&L
@@ -106,7 +106,7 @@
 | S10 Intraday VWAP | OK | no kill triggers active |
 | S16 MACD-HMM Router | OK | no kill triggers active |
 | S11 Intraday CCI-ADX | OK | no kill triggers active |
-| S2 MACD Systematic | WATCH (K2) | below hurdle (-20.4% ann.); P1 review at day 180 (37/180) |
+| S2 MACD Systematic | WATCH (K2) | below hurdle (-19.9% ann.); P1 review at day 180 (38/180) |
 | S3 US Stock Momentum | OK | no kill triggers active |
 
 ## Criteria

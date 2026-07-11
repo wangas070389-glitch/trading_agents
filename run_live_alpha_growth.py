@@ -188,6 +188,7 @@ def main():
     for ticker in BMV_TICKERS + US_TICKERS:
         try:
             hist = _strip_tz(yf.Ticker(ticker).history(period="5y"))
+            hist = hist.dropna(subset=["Close"])
             if hist.empty or len(hist) < 252:
                 continue
             
