@@ -134,11 +134,19 @@ def main():
         print(f"Alpaca credentials missing or error connecting: {e}")
         print("US trades will run in mock/dry-run mode.")
         alpaca_client = None
-        account_equity = 100000.0
-        account_cash = 100000.0
+        account_equity = None
+        account_cash = None
 
     # 2. Load local tracking portfolio
     portfolio = load_portfolio(dir_path)
+    if account_cash is None:
+        # Mock mode: keep the local book's cash/equity instead of fabricating
+        # a fresh $100k baseline (that overwrite is how the -44k divergence
+        # vs the real Alpaca account was created). Broker values still win
+        # whenever credentials are available.
+        account_cash = float(portfolio.get("cash_balance", 100000.0))
+        account_equity = float(portfolio.get("total_capital", 100000.0))
+        print(f"Mock mode: using local book cash ${account_cash:,.2f} / equity ${account_equity:,.2f}")
     portfolio["total_capital"] = account_equity
     
     # Map currently held items

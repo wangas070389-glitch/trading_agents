@@ -27,7 +27,7 @@ STRATEGY_SCRIPTS = [
     "monitor_portfolio.py",
     "run_live_alpha_growth.py",
     "ingest_live_macd.py",
-    # "run_live_alpaca_us_stocks.py",   # S3 SUSPENDIDA: reconciliar margen -44k vs Alpaca antes de reactivar
+    "run_live_alpaca_us_stocks.py",   # S3 reactivada 2026-07-10 por instruccion del usuario (margen -44k pendiente de reconciliar)
     "run_live_alpaca_us_stocks_dcf.py",
     "run_live_alternatives.py",
     "run_live_high_beta.py",

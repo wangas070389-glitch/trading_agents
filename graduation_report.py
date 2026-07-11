@@ -56,7 +56,7 @@ STRATS = [
     dict(key="us_stocks", label="S3 US Stock Momentum", pf="portfolio_us_stocks.json",
          ledger="transactions_us_stocks.md", initial=100000.0, ccy="USD", inception="2026-06-23",
          ms_key=None, bt=dict(window=5.0, sharpe=1.15, cagr=0.2540, max_dd=-0.1820),
-         block="SUSPENDED: -$44k MXN margin gap vs Alpaca unreconciled", note=""),
+         block="Reactivated 2026-07-10 but broker reconciliation still pending: books were re-based in mock mode; run reconcile_s3.py with Alpaca keys before trusting its P&L", note=""),
     dict(key="us_dcs", label="S4 US DCF Value-Growth", pf="portfolio_us_dcs.json",
          ledger="transactions_us_dcs.md", initial=100000.0, ccy="USD", inception="2026-06-23",
          ms_key="s4_nav_usd", bt=dict(window=4.0, sharpe=1.14, cagr=0.2193, max_dd=-0.1219),

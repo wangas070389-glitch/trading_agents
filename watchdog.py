@@ -45,7 +45,7 @@ MIN_DAYS_FOR_TRADE = 10       # dias habiles de gracia antes de exigir 1 trade
 NAV_JUMP_TOLERANCE = 0.35     # |dNAV| diario maximo plausible (3x ETF ~ +-25% extremo)
 DD_BREAKER_FACTOR = 1.25      # live DD no debe exceder 1.25x el MaxDD del backtest
 NAV_HISTORY_FILE = "watchdog_nav_history.json"
-SUSPENDED_STRATEGIES = {"us_stocks"}
+SUSPENDED_STRATEGIES = set()  # us_stocks (S3) reactivada 2026-07-10 por el usuario
 
 
 class Finding:
