@@ -357,6 +357,13 @@ NaN closes for BMV tickers while the market is closed):
 - Trading runners (S9, S12–S15) abort the cycle without trading if the fresh price or FX rate is invalid
 - Report generators (`compare_strategies.py`, `generate_clean_report.py`, `run_live_multi_strategy.py`) fall back to `buy_price` when `last_price` is invalid
 
+### Capital Exit Rules
+
+`KILL_CRITERIA.md` defines the binding, mechanical rules for removing money
+from a strategy (DD breach, sustained hurdle failure, untrusted books,
+behavior drift, portfolio circuit breaker). `graduation_report.py` evaluates
+the paper-record equivalents every cycle in its Kill-Criteria Watch table.
+
 ### Emergency Kill-Switch Protocol (manual)
 
 1. Watchdog detects CRITICAL → `watchdog_report.md` + GitHub Actions CI run marked RED (audit-only; no flags written)
@@ -453,7 +460,8 @@ Credentials are read from environment variables only (never hardcode them):
 | `pipeline_orchestrator.py` | Alternative orchestration utility |
 | `compare_strategies.py` | Cross-strategy performance comparison generator |
 | `generate_clean_report.py` | Executive summary report builder |
-| `graduation_report.py` | Paper→live readiness scorecard (`graduation_report.md`): 90-day history, Bondia 6.53% hurdle, 1.25× DD bound, Sharpe > 0 |
+| `graduation_report.py` | Paper→live readiness scorecard (`graduation_report.md`): 90-day history, Bondia 6.53% hurdle, 1.25× DD bound, Sharpe > 0; includes the Kill-Criteria Watch |
+| `KILL_CRITERIA.md` | **Binding policy** for taking money out: K1 DD breach → liquidate, K2 hurdle failure → staged demotion, K3 bad books → suspend, K5 portfolio −15% breaker; no overrides, re-entry from zero |
 | `app.py` | Dash web dashboard backend |
 | `run_dashboard.py` | Dashboard launch script |
 | `run.py` | Utility launcher |

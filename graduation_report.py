@@ -339,6 +339,33 @@ def main():
             lines.append("- all criteria pass")
         lines.append("")
 
+    # Kill-Criteria Watch (see KILL_CRITERIA.md): the reverse of graduation.
+    # P2/K1: live DD breaches 1.25x backtest MaxDD -> parameters invalidated.
+    # P1/K2: sustained sub-hurdle returns -> retire candidate / demotion watch.
+    lines += ["## Kill-Criteria Watch (KILL_CRITERIA.md)",
+              "| Strategy | Status | Detail |",
+              "| :--- | :---: | :--- |"]
+    for r in rows:
+        s = r["s"]
+        if r["live_dd"] is not None and r["live_dd"] < r["dd_bound"]:
+            status, detail = "**BREACH (P2/K1)**", (
+                f"live DD {r['live_dd']*100:.1f}% exceeds 1.25× backtest bound "
+                f"{r['dd_bound']*100:.1f}% — parameters invalidated, back to research")
+        elif (r["ann_ret"] is not None and r["live_days"] >= 180
+              and r["ann_ret"] < BONDIA_HURDLE):
+            status, detail = "**RETIRE CANDIDATE (P1)**", (
+                f"{r['live_days']}d live and {r['ann_ret']*100:+.1f}% annualized "
+                f"< Bondia {BONDIA_HURDLE*100:.2f}%")
+        elif (r["ann_ret"] is not None and r["live_days"] >= EVAL_MIN_DAYS
+              and r["ann_ret"] < BONDIA_HURDLE):
+            status, detail = "WATCH (K2)", (
+                f"below hurdle ({r['ann_ret']*100:+.1f}% ann.); "
+                f"P1 review at day 180 ({r['live_days']}/180)")
+        else:
+            status, detail = "OK", "no kill triggers active"
+        lines.append(f"| {s['label']} | {status} | {detail} |")
+    lines.append("")
+
     lines += [
         "## Criteria",
         f"- **C1 History:** ≥ {MIN_LIVE_DAYS} calendar days of live paper record",

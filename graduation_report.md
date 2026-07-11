@@ -1,5 +1,5 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-07-10 22:47:38 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-07-10 23:23:09 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -89,6 +89,25 @@
 
 **S3 US Stock Momentum** — BLOCKED
 - Reactivated 2026-07-10 but broker reconciliation still pending: books were re-based in mock mode; run reconcile_s3.py with Alpaca keys before trusting its P&L
+
+## Kill-Criteria Watch (KILL_CRITERIA.md)
+| Strategy | Status | Detail |
+| :--- | :---: | :--- |
+| S12 VTTL Trend+Vol | OK | no kill triggers active |
+| S14 HEDGE Aggregator | OK | no kill triggers active |
+| S15 TRACK Tracker | OK | no kill triggers active |
+| S13 CARA Cross-Asset | OK | no kill triggers active |
+| S8 Dividend Quality | OK | no kill triggers active |
+| S4 US DCF Value-Growth | OK | no kill triggers active |
+| S6 High-Beta Momentum | OK | no kill triggers active |
+| S5 Alternatives | OK | no kill triggers active |
+| S1 Adaptive Value (BMV) | OK | no kill triggers active |
+| S9 AI Regime Stat-Arb | OK | no kill triggers active |
+| S10 Intraday VWAP | OK | no kill triggers active |
+| S16 MACD-HMM Router | OK | no kill triggers active |
+| S11 Intraday CCI-ADX | OK | no kill triggers active |
+| S2 MACD Systematic | WATCH (K2) | below hurdle (-20.4% ann.); P1 review at day 180 (37/180) |
+| S3 US Stock Momentum | OK | no kill triggers active |
 
 ## Criteria
 - **C1 History:** ≥ 90 calendar days of live paper record
