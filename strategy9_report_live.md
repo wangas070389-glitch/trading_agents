@@ -1,23 +1,23 @@
 # Strategy 9: AI-Regime Adaptive Statistical Arbitrage Execution Report
-**Execution Date:** 2026-07-11 00:36:16 | **Strategy Version:** Upgraded Live V1
+**Execution Date:** 2026-07-11 20:46:42 | **Strategy Version:** Upgraded Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $194,062.24 MXN
-* **Total Cash Balance:** $194,062.24 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Total Portfolio NAV:** $194,091.40 MXN
+* **Total Cash Balance:** $194,091.40 MXN (Parked compounding in Bondia sweep at 6.53% APR)
 * **Equity Exposure:** 0.0%
-* **Active Regime:** State 2 (Range-bound chop, mean-reversion detected on SPY)
+* **Active Regime:** State 2 (Range-bound chop, mean-reversion detected on SPY (3-day HMM consensus))
 
 ## 2. Current Holdings
 | Ticker | Type | Shares/Qty Y | Shares/Qty X | Buy Price/Alloc | Last Price | Market Value (MXN) |
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $$2.7431 MXN sweep interest.
+* **[INTEREST ACCRUED]** Cash reserves earned $$29.1630 MXN sweep interest.
 * No trades or rebalancing actions triggered today.
 
 ## 4. Asset Evaluation Diagnostics (Regime & Arbitrage checks)
 * **Regime Signal Classifier (HMM on SPY):**
-  * Current Decoded Regime: HMM State 0 -> **Regime 2 (Range-bound chop, mean-reversion detected on SPY)**
+  * Current Decoded Regime: HMM State 0 -> **Regime 2 (Range-bound chop, mean-reversion detected on SPY (3-day HMM consensus))**
 
 ### Statistical Arbitrage Pairs Cointegration Telemetry:
 | Pair | Cointegrated? | Current Z-Score | Hedge Ratio (Beta) | Decision |

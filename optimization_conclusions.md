@@ -16,3 +16,8 @@ The stability of a Gaussian HMM regime predictor is sensitive to training lookba
 
 ### 4. Hybrid Stops act as High-Performance Capital Protectors
 Wider trailing stops (**3.0 ATR**) are necessary at position entry to prevent premature stop-outs from local pullback noise. However, once a trade moves in-favor by **1.5 ATR**, tightening the stop to **1.5 ATR** secures accrued profits. This hybrid model provides the maximum benefit of both wide breathing room and tight profit-locking.
+
+### 5. HMM Regime Consensus Filters Prevent Transaction Fee Bleed
+Fitting a Hidden Markov Model (HMM) on daily returns is highly sensitive to recent data points and random initialization. Under a naive implementation, this causes the predicted regime (Bull vs Bear vs Chop) to flip back and forth frequently. For strategies that scale exposure based on regime (e.g., S9 holding 85% SPY in Bull and cash in Chop), this state instability triggers constant liquidations and repurchases. Under standard broker commissions (0.29% per side), this transaction fee bleed can cost a portfolio ~3% of its capital in just 10 days.
+
+Applying a **3-day rolling consensus filter (majority vote)** on the HMM output series acts as an elegant low-pass filter. The strategy only acts on a regime rotation if the majority of the last 3 days agree, filtering out single-day noise flips while maintaining macro responsiveness.

@@ -145,17 +145,29 @@ def main():
         if len(sub_prices) < 200:
             continue
             
-        # 1. Determine active regime
+        # Determine active regime
         spy_sub_rets = sub_prices["SPY"].pct_change().dropna().values.reshape(-1, 1)
-        # Predict regime today
-        current_state_raw = hmm.predict(spy_sub_rets)[-1]
+        # Predict regimes for the last 3 days
+        all_pred = hmm.predict(spy_sub_rets)
+        last_3_raw = all_pred[-3:] if len(all_pred) >= 3 else all_pred
         
-        if current_state_raw == bull_state:
-            regime = 0  # Bull
-        elif current_state_raw == bear_state:
-            regime = 1  # Bear
+        last_3_regimes = []
+        for r_raw in last_3_raw:
+            if r_raw == bull_state:
+                last_3_regimes.append(0)
+            elif r_raw == bear_state:
+                last_3_regimes.append(1)
+            else:
+                last_3_regimes.append(2)
+                
+        # Consensus filter: take the mode (majority vote) of the last 3 days
+        from collections import Counter
+        counts = Counter(last_3_regimes)
+        mode_val, mode_count = counts.most_common(1)[0]
+        if mode_count >= 2:
+            regime = mode_val
         else:
-            regime = 2  # Chop
+            regime = last_3_regimes[-1]
             
         regimes_list.append(regime)
         

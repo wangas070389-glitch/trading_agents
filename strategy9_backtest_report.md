@@ -6,14 +6,14 @@
 * **Final Portfolio NAV**: $506,490.33 MXN
 * **Total Return (TWR)**: 153.25%
 * **Time-Weighted CAGR**: **15.92%**
-* **Annualized Volatility**: 13.53%
+* **Annualized Volatility**: 13.52%
 * **Sharpe Ratio**: **0.47**
 * **Maximum Drawdown**: **-6.00%**
 
 ## 2. Regime Allocation breakdown
 * **Bull Regime (State 0) Days:** 750 (47.3%)
-* **Bear Regime (State 1) Days:** 49 (3.1%)
-* **Chop Regime (State 2) Days:** 786 (49.6%)
+* **Bear Regime (State 1) Days:** 65 (4.1%)
+* **Chop Regime (State 2) Days:** 770 (48.6%)
 
 ---
 *Report generated automatically by the Antigravity trading simulation engine.*

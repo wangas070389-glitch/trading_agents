@@ -175,23 +175,42 @@ def main():
     bull_state = rem[0] if state_means[rem[0]] > state_means[rem[1]] else rem[1]
     chop_state = [i for i in range(3) if i != bear_state and i != bull_state][0]
     
+    # Map raw HMM states to strategic regimes for the last 3 days to apply consensus filter
+    last_3_raw = regimes[-3:] if len(regimes) >= 3 else regimes
+    last_3_regimes = []
+    for r_raw in last_3_raw:
+        if r_raw == bull_state:
+            last_3_regimes.append(0)
+        elif r_raw == bear_state:
+            last_3_regimes.append(1)
+        else:
+            last_3_regimes.append(2)
+            
+    # Consensus filter: take the mode (majority vote) of the last 3 days
+    from collections import Counter
+    counts = Counter(last_3_regimes)
+    mode_val, mode_count = counts.most_common(1)[0]
+    if mode_count >= 2:
+        consensus_regime = mode_val
+    else:
+        consensus_regime = last_3_regimes[-1]
+        
     current_state_raw = regimes[-1]
+    raw_regime = 0 if current_state_raw == bull_state else (1 if current_state_raw == bear_state else 2)
     
     if args.force_regime is not None:
         regime = args.force_regime
         regime_reason = "FORCED via execution flag"
     else:
-        if current_state_raw == bull_state:
-            regime = 0
-            regime_reason = "Bull trend, low volatility detected on SPY"
-        elif current_state_raw == bear_state:
-            regime = 1
-            regime_reason = "High volatility, downward pressure detected on SPY"
-        else:
-            regime = 2
-            regime_reason = "Range-bound chop, mean-reversion detected on SPY"
-            
-    print(f"\nRegime Decoded: State {regime} ({regime_reason})")
+        regime = consensus_regime
+        reasons = {
+            0: "Bull trend, low volatility detected on SPY (3-day HMM consensus)",
+            1: "High volatility, downward pressure detected on SPY (3-day HMM consensus)",
+            2: "Range-bound chop, mean-reversion detected on SPY (3-day HMM consensus)"
+        }
+        regime_reason = reasons[regime]
+        
+    print(f"\nRegime Decoded: Raw today={raw_regime} | Consensus={regime} ({regime_reason})")
     
     # 5. Process Exits
     holdings_dict = {h["ticker"]: h for h in portfolio["holdings"]}

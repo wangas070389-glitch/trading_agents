@@ -1,5 +1,5 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-07-11 20:38:18 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-07-11 20:46:50 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -13,7 +13,7 @@
 | S6 High-Beta Momentum | **ON TRACK** | 18 | +0.7% | +14.2% | pending | 4.71 | -0.1% | -24.4% | 4.20 | 1.05 (4.0y) |
 | S5 Alternatives | **ON TRACK** | 18 | +0.4% | +7.3% | pending | 4.29 | -0.1% | -19.0% | 3.80 | 0.95 (4.0y) |
 | S1 Adaptive Value (BMV) | **ON TRACK** | 38 | +3.7% | +36.0% | PASS | 0.59 | -3.3% | -35.2% | 3.28 | 0.82 (4.0y) |
-| S9 AI Regime Stat-Arb | **ON TRACK** | 11 | -3.0% | -98.5% | pending | -15.66 | -2.2% | -7.5% | 2.35 | 0.47 (5.0y) |
+| S9 AI Regime Stat-Arb | **ON TRACK** | 11 | -3.0% | -98.0% | pending | -15.66 | -2.2% | -7.5% | 2.35 | 0.47 (5.0y) |
 | S10 Intraday VWAP | **ON TRACK** | 9 | +0.1% | +5.7% | pending | -2.04 | -0.6% | -4.0% | 0.52 | 3.27 (0.2y) |
 | S16 MACD-HMM Router | **ON TRACK** | 4 | +0.1% | +6.6% | pending | n/a | n/a | -13.4% | 0.16 | 0.99 (0.2y) |
 | S11 Intraday CCI-ADX | **ON TRACK** | 9 | +1.0% | +39.3% | pending | 3.72 | -0.3% | -8.4% | 0.06 | 0.35 (0.2y) |
