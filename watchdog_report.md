@@ -1,4 +1,4 @@
-# Watchdog Report - 2026-07-11 01:04:35
+# Watchdog Report - 2026-07-11 20:44:07
 
 **CRITICAL: 0 | WARNING: 3**
 
@@ -20,4 +20,4 @@
 | [ OK ] | strategy9 | - | NAV $194,062.24 | sin anomalias |
 | [ OK ] | us_dcs | - | NAV $102,216.64 | sin anomalias |
 | [ OK ] | us_stocks | - | NAV $199,203.11 | sin anomalias |
-| [WARN] | broker | W6 | Sin credenciales Alpaca en env; reconciliacion omitida |
+| [WARN] | broker | W6 | Alpaca respondio HTTP 401/401 (credenciales invalidas o vencidas?); reconciliacion omitida |
