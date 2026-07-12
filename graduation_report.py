@@ -50,9 +50,14 @@ STRATS = [
          ms_key="s1_nav_usd", bt=dict(window=4.0, sharpe=0.82, cagr=0.2007, max_dd=-0.2818),
          block=None, note="BMV data quality degraded; see Known Issues"),
     dict(key="macd", label="S2 MACD Systematic", pf="portfolio_macd.json",
-         ledger="transactions_macd.md", initial=20000.0, ccy="MXN", inception="2026-06-03",
+         # inception reset 2026-07-11 per KILL_CRITERIA.md P3: parameters were
+         # re-optimized on 2026-07-11, so the prior live record (from 2026-06-03,
+         # below hurdle) belongs to a different strategy config
+         # initial = NAV at the P3 reset (2026-07-10 watchdog), so the old
+         # config's P&L does not contaminate the new config's record
+         ledger="transactions_macd.md", initial=19585.48, ccy="MXN", inception="2026-07-11",
          ms_key=None, bt=dict(window=5.0, sharpe=1.7566, cagr=0.1844, max_dd=-0.0949),
-         block=None, note=""),
+         block=None, note="Re-tuned 2026-07-11; graduation clock restarted (P3)"),
     dict(key="us_stocks", label="S3 US Stock Momentum", pf="portfolio_us_stocks.json",
          ledger="transactions_us_stocks.md", initial=100000.0, ccy="USD", inception="2026-06-23",
          ms_key=None, bt=dict(window=5.0, sharpe=1.15, cagr=0.2540, max_dd=-0.1820),
