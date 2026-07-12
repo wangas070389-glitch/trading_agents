@@ -79,9 +79,11 @@ STRATS = [
          ms_key="s8_nav_usd", bt=dict(window=5.0, sharpe=1.12, cagr=0.1450, max_dd=-0.1120),
          block=None, note=""),
     dict(key="strategy9", label="S9 AI Regime Stat-Arb", pf="portfolio_strategy9.json",
-         ledger="transactions_strategy9.md", initial=200000.0, ccy="MXN", inception="2026-06-30",
+         # P3 reset 2026-07-11: 3-day HMM consensus filter added -> new config,
+         # new clock; initial = NAV at reset so old P&L doesn't contaminate it
+         ledger="transactions_strategy9.md", initial=194091.40, ccy="MXN", inception="2026-07-11",
          ms_key="s9_nav_usd", bt=dict(window=5.0, sharpe=0.47, cagr=0.1592, max_dd=-0.0600),
-         block=None, note=""),
+         block=None, note="Re-tuned 2026-07-11 (consensus filter); graduation clock restarted (P3)"),
     dict(key="strategy10", label="S10 Intraday VWAP", pf="portfolio_strategy10.json",
          ledger="transactions_strategy10.md", initial=200000.0, ccy="MXN", inception="2026-07-02",
          ms_key="s10_nav_usd", bt=dict(window=0.16, sharpe=3.27, cagr=0.5325, max_dd=-0.0414),
