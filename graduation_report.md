@@ -1,5 +1,5 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-07-11 20:21:49 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-07-11 20:38:18 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -89,7 +89,7 @@
 - 60d in-sample backtest; params tuned July 2026 -- treat backtest as ceiling
 
 **S3 US Stock Momentum** — BLOCKED
-- Reactivated 2026-07-10 but broker reconciliation still pending: books were re-based in mock mode; run reconcile_s3.py with Alpaca keys before trusting its P&L
+- Reconciliation in progress: de-leverage sells (TSLA 47, JPM 59, DBA 733, AVGO 10) queued 2026-07-11, fill at Monday open; then run reconcile_s3.py and split AVGO claim with S4 (shared Alpaca account)
 
 ## Kill-Criteria Watch (KILL_CRITERIA.md)
 | Strategy | Status | Detail |

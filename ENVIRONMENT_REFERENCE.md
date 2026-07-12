@@ -555,10 +555,11 @@ Each strategy has a `*_backtest_nav.csv` and some have `*_backtest_report.md`:
 
 ## 12. Known Issues & Operational Notes
 
-### ⚠️ S3 SUSPENDED
-- **Status:** `HALT_us_stocks.flag` is active
-- **Issue:** −$44,000 MXN margin discrepancy between paper simulation and Alpaca paper account
-- **Action required:** Reconcile position tracking before re-enabling
+### ⚠️ S3 / Alpaca reconciliation (in progress 2026-07-11)
+- **Root cause found:** S3's runner traded in mock mode without the broker following (phantom fills), and **S3 and S4 share ONE Alpaca paper account**, so neither book alone matches the broker
+- Real broker state discovered 2026-07-11: cash **−$62,477 USD**, orphan DBA 733 position claimed by no book, S3 phantom NVDA/META book entries
+- De-leverage sells queued (TSLA 47, JPM 59, DBA 733, AVGO 10 ≈ $63k) → fill Monday 2026-07-13 open → then `reconcile_s3.py` + manual AVGO split (S3 38 / S4 65)
+- **Structural note:** with a shared account, each book's `cash_balance` is its own simulation; the broker's cash is the only shared truth. Watchdog W6 compares the broker against the *combined* ledgers — that is the check that matters
 
 ### ⚠️ S1 Alpha Growth Underperforming
 - NAV has declined to ~$1,181 USD (from ~$11,000 starting capital equivalent)
