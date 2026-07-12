@@ -215,8 +215,19 @@ def check_broker_reconciliation(dir_path, now, active_strats=None):
     try:
         import requests
         hdr = {"APCA-API-KEY-ID": key, "APCA-API-SECRET-KEY": sec}
-        acct = requests.get(f"{base}/v2/account", headers=hdr, timeout=15).json()
-        positions = requests.get(f"{base}/v2/positions", headers=hdr, timeout=15).json()
+        acct_r = requests.get(f"{base}/v2/account", headers=hdr, timeout=15)
+        pos_r = requests.get(f"{base}/v2/positions", headers=hdr, timeout=15)
+        # Un 401 devuelve JSON de error que parsea como cuenta vacia (cash 0,
+        # 0 posiciones) y se disfrazaba de reconciliacion limpia. Validar HTTP.
+        if acct_r.status_code != 200 or pos_r.status_code != 200:
+            return [Finding("WARNING", "broker", "W6",
+                            f"Alpaca respondio HTTP {acct_r.status_code}/{pos_r.status_code} "
+                            f"(credenciales invalidas o vencidas?); reconciliacion omitida")]
+        acct = acct_r.json()
+        positions = pos_r.json()
+        if not isinstance(positions, list):
+            return [Finding("WARNING", "broker", "W6",
+                            "Respuesta de posiciones no valida; reconciliacion omitida")]
     except Exception as e:
         return [Finding("WARNING", "broker", "W6", f"Alpaca inaccesible: {e}")]
 

@@ -18,7 +18,30 @@ permissions:
   contents: write # Permits the bot to commit changes back to your repository
 
 jobs:
+  # GitHub delays crons unpredictably (a delayed run once fired at 06:15 UTC =
+  # 00:15 CDMX and traded on stale/NaN data). Scheduled runs outside the
+  # 13:00-22:59 UTC window are skipped; manual dispatches always pass.
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      go: ${{ steps.check.outputs.go }}
+    steps:
+      - id: check
+        run: |
+          H=$(date -u +%H)
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            echo "go=true" >> "$GITHUB_OUTPUT"
+            echo "Manual dispatch: gate bypassed."
+          elif [ "$H" -ge 13 ] && [ "$H" -le 22 ]; then
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=false" >> "$GITHUB_OUTPUT"
+            echo "Outside 13:00-22:59 UTC trading window (UTC hour $H); skipping."
+          fi
+
   run-paper-trading:
+    needs: gate
+    if: needs.gate.outputs.go == 'true'
     runs-on: ubuntu-latest
     env:
       ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
