@@ -602,19 +602,20 @@ Each strategy has a `*_backtest_nav.csv` and some have `*_backtest_report.md`:
 ```
 trading_agents/
 ├── .github/            # GitHub Actions workflows
+├── _archive/           # Stale snapshots (formerly files/ and
+│                       #   updates_in_trading_system/) — never edit or run
 ├── agents/             # Agent skill definitions
 ├── connectors/         # MCP data connectors
-├── files/              # Historical snapshots of runners (NOT production)
 ├── scratch/            # Research scripts (not production)
 ├── scheduler_logs/     # Per-run script logs
 ├── skills/             # Python skill modules
-├── tests/              # pytest test suite
+├── tests/              # pytest test suite (incl. test_data_guards.py
+│                       #   regression tests for the NaN/W6 guards)
 ├── correction_files/   # Manual correction utilities
-├── update_v2/, update_v3/  # Version migration files
-└── updates_in_trading_system/  # Historical snapshots (NOT production)
+└── update_v2/, update_v3/  # Version migration files
 ```
 
-> **Canonical source:** the scripts in the **repo root** are production — they are what `scheduler.py` and the GitHub Actions workflow execute. The copies under `files/` and `updates_in_trading_system/` are stale snapshots that have already drifted (e.g. they still use `covariance_type="full"` for intraday HMMs). Never edit or run them.
+> **Canonical source:** the scripts in the **repo root** are production — they are what `scheduler.py` and the GitHub Actions workflow execute. Everything under `_archive/` is a drifted historical snapshot (archived 2026-07-11); never edit or run it.
 
 ### Auto-Commit Workflow
 The scheduler or a GitHub Action auto-commits after each pipeline run:
