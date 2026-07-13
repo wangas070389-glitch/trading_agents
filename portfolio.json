@@ -1,6 +1,6 @@
 {
   "total_capital": 120000.0,
-  "cash_balance": 101737.4,
+  "cash_balance": 101737.99,
   "holdings": [
     {
       "ticker": "GRUMAB.MX",
@@ -42,7 +42,7 @@
       "ticker": "GFNORTEO.MX",
       "shares": 32.26361682335487,
       "buy_price": 189.47999572753906,
-      "last_price": 181.91000366210938,
+      "last_price": 182.07000732421875,
       "target_weight": 0.3,
       "dcs": 0.1687403499821262,
       "garch_vol": 0.01983195010230015,
@@ -51,7 +51,7 @@
       "zg_t": 0.0
     }
   ],
-  "last_updated": "2026-07-13 20:43:31",
+  "last_updated": "2026-07-13 21:29:35",
   "slippage_savings": 0.0,
   "last_rebalance_date": "2026-06-21"
 }
