@@ -161,6 +161,7 @@ jobs:
     # 6. Automatically Commit & Push Updated Reports
     - name: Commit and Push Changes
       run: |
+        git config --global --add safe.directory '*'
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
         
