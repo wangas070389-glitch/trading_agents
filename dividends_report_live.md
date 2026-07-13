@@ -1,11 +1,11 @@
 # Strategy 8: Dividend Quality & Yield Execution Report
-**Execution Date:** 2026-07-11 22:27:03 | **Strategy Version:** Live V1
+**Execution Date:** 2026-07-13 01:46:35 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $197,658.42 MXN
-* **Total Cash Balance:** $39,607.97 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $197,782.69 MXN
+* **Total Cash Balance:** $39,616.15 MXN (Parked in Bondia Compound at 6.53% APR)
 * **Equity Exposure:** 80.0%
-* **Days Since Last Rebalance:** 10 days
+* **Days Since Last Rebalance:** 12 days
 
 ## 2. Current Holdings
 | Ticker | Shares Held | Buy Price | Last Price | Market Value | Target Weight |
@@ -13,10 +13,10 @@
 | **GFNORTEO.MX** | 210.78 | $189.77 | $186.51 | $39,312.85 | 20.0% |
 | **BBAJIOO.MX** | 707.59 | $56.53 | $56.19 | $39,759.42 | 20.0% |
 | **KOFUBL.MX** | 215.46 | $185.65 | $182.08 | $39,230.81 | 20.0% |
-| **PG** | 15.48 | $2583.93 | $2567.61 | $39,747.37 | 20.0% |
+| **PG** | 15.48 | $2583.93 | $2575.11 | $39,863.46 | 20.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $0.0121 MXN over 0.0017 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $8.1800 MXN over 1.1386 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
@@ -32,9 +32,9 @@
 | **KOFUBL.MX** | BUY / HOLD | 4.25% | 59.9% | 59.9% | $182.08 > SMA $172.85 | Passed all quality checks. Score: 0.0000 |
 | **MCD** | SELL / AVOID | 2.69% | 59.9% | 59.9% | $274.60 <= SMA $299.72 | Bear trend (Close <= SMA 200) |
 | **ORBIA.MX** | SELL / AVOID | 0.00% | 0.0% | 0.0% | $22.53 > SMA $19.42 | Yield below 2.5% and Payout Ratio (0.0%) out of bounds and Non-positive EPS (-4.03) and Debt/Equity (2.13) exceeds 1.5 |
-| **PEP** | SELL / AVOID | 4.15% | 89.3% | 89.3% | $137.38 <= SMA $147.59 | Payout Ratio (89.3%) out of bounds and FCF Payout (89.3%) exceeds limit and Debt/Equity (2.45) exceeds 1.5 and Bear trend (Close <= SMA 200) |
+| **PEP** | SELL / AVOID | 4.31% | 75.3% | 75.3% | $137.38 <= SMA $147.59 | Debt/Equity (2.39) exceeds 1.5 and Bear trend (Close <= SMA 200) |
 | **PG** | BUY / HOLD | 2.90% | 61.8% | 61.8% | $147.04 > SMA $146.97 | Passed all quality checks. Score: 0.0000 |
-| **T** | SELL / AVOID | 5.28% | 37.4% | 37.4% | $21.13 <= SMA $24.88 | Bear trend (Close <= SMA 200) |
+| **T** | SELL / AVOID | 5.25% | 37.4% | 37.4% | $21.13 <= SMA $24.88 | Bear trend (Close <= SMA 200) |
 | **VZ** | SELL / AVOID | 6.72% | 67.4% | 67.4% | $42.12 <= SMA $42.96 | Debt/Equity (1.92) exceeds 1.5 and Bear trend (Close <= SMA 200) |
 | **WALMEX.MX** | SELL / AVOID | 4.10% | 58.6% | 58.6% | $49.31 <= SMA $56.30 | Bear trend (Close <= SMA 200) |
 | **XOM** | BUY / HOLD | 2.97% | 68.0% | 68.0% | $138.88 > SMA $135.00 | Passed all quality checks. Score: 0.0000 |

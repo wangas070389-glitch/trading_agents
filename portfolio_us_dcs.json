@@ -1,5 +1,5 @@
 {
-  "total_capital": 100000.0,
+  "total_capital": 100118.27,
   "cash_balance": 76218.59,
   "holdings": [
     {
@@ -11,6 +11,6 @@
       "dcs": 1.7012468407519223
     }
   ],
-  "last_updated": "2026-07-11 22:26:58",
+  "last_updated": "2026-07-13 01:46:31",
   "last_rebalance_date": "2026-06-23"
 }

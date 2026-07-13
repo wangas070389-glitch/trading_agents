@@ -1,6 +1,6 @@
 {
-  "total_capital": 100000.0,
-  "cash_balance": 89890.8,
+  "total_capital": 100118.27,
+  "cash_balance": -62477.4,
   "holdings": [
     {
       "ticker": "AMZN",
@@ -51,5 +51,5 @@
       "target_weight": 0.16666666666666666
     }
   ],
-  "last_updated": "2026-07-11 22:26:56"
+  "last_updated": "2026-07-13 01:46:28"
 }

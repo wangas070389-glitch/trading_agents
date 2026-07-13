@@ -122,6 +122,10 @@
 | 2026-07-11 | BONDIA | INTEREST | 1 | 2.29 | +2.2890 | Market | FILLED | Bondia overnight yield on cash reserves for 0.8888 days. |
 | 2026-07-11 | BONDIA | INTEREST | 1 | 0.00 | +0.0041 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0016 days. |
 | 2026-07-12 | CASH | DEPOSIT | 1 | 100000.00 | +100,000.00 | Market | FILLED | Manual cash injection of 100K MXN |
+| 2026-07-13 | BONDIA | INTEREST | 1 | 23.58 | +23.5846 | Market | FILLED | Bondia overnight yield on cash reserves for 1.1385 days. |
+| 2026-07-13 | FEMSAUBD.MX | BUY | 36 | 223.20 | -8,043.38 | Market | FILLED | 1D MACD systematic signal |
+| 2026-07-13 | CEMEXCPO.MX | BUY | 458 | 21.82 | -10,003.56 | Market | FILLED | 1D MACD systematic signal |
+| 2026-07-13 | GAPB.MX | BUY | 16 | 412.01 | -6,599.06 | Market | FILLED | 1D MACD systematic signal |
 ---
 
 
@@ -130,6 +134,6 @@
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 120,000.00 MXN
-* **Total Deployed Capital**: 5,484.12 MXN (4.6% invested)
-* **Unallocated Cash Reserves**: 114,200.34 MXN (95.5% cash)
-* **Current Portfolio Market Value**: 119,597.78 MXN (including cash)
+* **Total Deployed Capital**: 30,102.72 MXN (25.2% invested)
+* **Unallocated Cash Reserves**: 89,577.92 MXN (74.9% cash)
+* **Current Portfolio Market Value**: 119,596.28 MXN (including cash)
