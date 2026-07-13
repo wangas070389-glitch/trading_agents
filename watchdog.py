@@ -28,7 +28,7 @@ Uso:  python watchdog.py            (auditar y fallar en critico)
       python watchdog.py --dry-run  (auditar sin exit code)
 Integracion en workflow (paso final, despues de los runners):
       - run: python watchdog.py
-"""
+
 import os
 import re
 import sys
@@ -394,3 +394,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+"""
