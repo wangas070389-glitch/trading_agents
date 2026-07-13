@@ -7,30 +7,46 @@
       "shares": 210.78146756307328,
       "buy_price": 189.77000427246094,
       "last_price": 186.50999450683594,
-      "target_weight": 0.2
+      "target_weight": 0.2,
+      "dividend_rate": 17.44,
+      "last_dividend": 10.448829,
+      "ex_dividend_date": "2026-05-28",
+      "payment_date": "N/A"
     },
     {
       "ticker": "BBAJIOO.MX",
       "shares": 707.5889061340172,
       "buy_price": 56.529998779296875,
       "last_price": 56.189998626708984,
-      "target_weight": 0.2
+      "target_weight": 0.2,
+      "dividend_rate": 7.3,
+      "last_dividend": 1.906996,
+      "ex_dividend_date": "2026-05-08",
+      "payment_date": "N/A"
     },
     {
       "ticker": "KOFUBL.MX",
       "shares": 215.4592044980265,
       "buy_price": 185.64999389648438,
       "last_price": 182.0800018310547,
-      "target_weight": 0.2
+      "target_weight": 0.2,
+      "dividend_rate": 7.74,
+      "last_dividend": 1.935,
+      "ex_dividend_date": "2026-07-13",
+      "payment_date": "N/A"
     },
     {
       "ticker": "PG",
       "shares": 15.480284315018704,
       "buy_price": 2583.9318701138254,
-      "last_price": 2575.1114742169157,
-      "target_weight": 0.2
+      "last_price": 2576.0964375508483,
+      "target_weight": 0.2,
+      "dividend_rate": 4.26,
+      "last_dividend": 1.089,
+      "ex_dividend_date": "2026-04-24",
+      "payment_date": "2026-05-15"
     }
   ],
-  "last_updated": "2026-07-13 01:46:35",
+  "last_updated": "2026-07-12 19:55:28",
   "last_rebalance_date": "2026-07-01"
 }

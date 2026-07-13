@@ -163,6 +163,23 @@ def main():
                         log_transaction(dir_path, today_str, ticker_symbol, "DIVIDEND", h["shares"], div_amt_mxn, f"Reinvested dividend paid on {pay_date.strftime('%Y-%m-%d')}")
                         dividend_credits.append(f"  |-- Dividend from {ticker_symbol}: +${payout:,.2f} MXN")
                         print(dividend_credits[-1])
+                
+                # Fetch expected dividend info
+                try:
+                    info = ticker.info
+                    def format_epoch_date(val):
+                        if not val:
+                            return "N/A"
+                        try:
+                            return datetime.datetime.utcfromtimestamp(int(val)).strftime('%Y-%m-%d')
+                        except Exception:
+                            return "N/A"
+                    h["dividend_rate"] = info.get("dividendRate") or info.get("trailingAnnualDividendRate") or 0.0
+                    h["last_dividend"] = info.get("lastDividendValue") or 0.0
+                    h["ex_dividend_date"] = format_epoch_date(info.get("exDividendDate"))
+                    h["payment_date"] = format_epoch_date(info.get("dividendDate"))
+                except Exception as e:
+                    print(f"  [WARN] Failed to fetch dividend metadata for {ticker_symbol}: {e}")
         except Exception as e:
             print(f"  [WARN] Failed to check status for {ticker_symbol}: {e}")
             if np.isfinite(h.get("last_price", float("nan"))) and h.get("last_price", 0) > 0:
@@ -272,20 +289,35 @@ def main():
         portfolio["last_rebalance_date"] = today_str
         print("Rebalancing completed.")
 
-    # 7. Update prices of holdings (skip NaN/invalid closes so a closed
-    # market never overwrites a valid cached last_price)
+    # 7. Update prices of holdings & ensure dividend info is cached
     for h in portfolio["holdings"]:
         ticker = h["ticker"]
-        # Fetch current price if not fetched already
-        if ticker not in current_prices:
+        if ticker not in current_prices or "dividend_rate" not in h:
             try:
-                hist = yf.Ticker(ticker).history(period="1d")
-                if not hist.empty:
-                    px = float(hist["Close"].iloc[-1])
-                    if np.isfinite(px) and px > 0:
-                        current_prices[ticker] = px * (fx_rate if ticker in DIVIDEND_US_TICKERS else 1.0)
-            except Exception:
-                pass
+                ticker_obj = yf.Ticker(ticker)
+                if ticker not in current_prices:
+                    hist = ticker_obj.history(period="1d")
+                    if not hist.empty:
+                        px = float(hist["Close"].iloc[-1])
+                        if np.isfinite(px) and px > 0:
+                            current_prices[ticker] = px * (fx_rate if ticker in DIVIDEND_US_TICKERS else 1.0)
+                
+                if "dividend_rate" not in h:
+                    info = ticker_obj.info
+                    def format_epoch_date(val):
+                        if not val:
+                            return "N/A"
+                        try:
+                            return datetime.datetime.utcfromtimestamp(int(val)).strftime('%Y-%m-%d')
+                        except Exception:
+                            return "N/A"
+                    h["dividend_rate"] = info.get("dividendRate") or info.get("trailingAnnualDividendRate") or 0.0
+                    h["last_dividend"] = info.get("lastDividendValue") or 0.0
+                    h["ex_dividend_date"] = format_epoch_date(info.get("exDividendDate"))
+                    h["payment_date"] = format_epoch_date(info.get("dividendDate"))
+            except Exception as e:
+                print(f"  [WARN] Failed to fetch dividend metadata for {ticker}: {e}")
+        
         if ticker in current_prices and np.isfinite(current_prices[ticker]) and current_prices[ticker] > 0:
             h["last_price"] = current_prices[ticker]
 
@@ -320,12 +352,24 @@ def main():
 * **Days Since Last Rebalance:** {(now.date() - last_rebalance_date).days} days
 
 ## 2. Current Holdings
-| Ticker | Shares Held | Buy Price | Last Price | Market Value | Target Weight |
-| :--- | :---: | :---: | :---: | ---: | :---: |
+| Ticker | Shares Held | Buy Price | Last Price | Market Value | Expected Dividend (Annual) | Next Ex-Div / Pay Date | Target Weight |
+| :--- | :---: | :---: | :---: | ---: | :--- | :--- | :---: |
 """
     for h in portfolio["holdings"]:
         mkt_val = h["shares"] * h["last_price"]
-        report_markdown += f"| **{h['ticker']}** | {h['shares']:.2f} | ${h['buy_price']:.2f} | ${h['last_price']:.2f} | ${mkt_val:,.2f} | {h.get('target_weight', 0.20)*100:.1f}% |\n"
+        
+        # Calculate expected dividend
+        rate = h.get("dividend_rate", 0.0)
+        is_us = h["ticker"] in DIVIDEND_US_TICKERS
+        ccy = "USD" if is_us else "MXN"
+        
+        rate_mxn = rate * fx_rate if is_us else rate
+        ann_div_mxn = h["shares"] * rate_mxn
+        
+        div_str = f"${rate:.2f} {ccy}/sh (Annual: ${ann_div_mxn:,.2f} MXN)"
+        date_str = f"Ex: {h.get('ex_dividend_date', 'N/A')} / Pay: {h.get('payment_date', 'N/A')}"
+        
+        report_markdown += f"| **{h['ticker']}** | {h['shares']:.2f} | ${h['buy_price']:.2f} | ${h['last_price']:.2f} | ${mkt_val:,.2f} | {div_str} | {date_str} | {h.get('target_weight', 0.20)*100:.1f}% |\n"
 
     report_markdown += "\n## 3. Today's Execution Logs\n"
     if is_new_month:
