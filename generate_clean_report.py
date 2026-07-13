@@ -462,13 +462,6 @@ def main():
     with open(kpi_file_path, "w", encoding="utf-8") as f:
         f.write("\n".join(proj_lines))
         
-    brain_kpi_path = "C:\\Users\\wanga\\.gemini\\antigravity-ide\\brain\\f2a437bd-cc29-4824-904c-e361c9d6209f\\comprehensive_strategy_kpis.md"
-    try:
-        with open(brain_kpi_path, "w", encoding="utf-8") as f:
-            f.write("\n".join(proj_lines))
-    except Exception:
-        pass
-        
     print(f"Successfully generated comprehensive KPI reports.")
 
 if __name__ == "__main__":
