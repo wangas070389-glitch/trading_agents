@@ -76,4 +76,6 @@
 | 2026-07-12 | BONDIA | INTEREST | 1.0000 | $0.1592 | $0.00 | $0.16 | Accrued interest on sweep balance |
 | 2026-07-13 | BONDIA | INTEREST | 1.0000 | $9.6948 | $0.00 | $9.69 | Accrued interest on sweep balance |
 | 2026-07-13 | BONDIA | INTEREST | 1.0000 | $15.0004 | $0.00 | $15.00 | Accrued interest on sweep balance |
+| 2026-07-13 | BONDIA | INTEREST | 1.0000 | $4.5684 | $0.00 | $4.57 | Accrued interest on sweep balance |
+| 2026-07-13 | SQQQ | BUY_SQQQ | 263.8888 | $689.0614 | $0.00 | $-181,835.60 | Direct asset trend breakdown entry |
 ---
