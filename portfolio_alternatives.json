@@ -6,7 +6,7 @@
       "ticker": "EURUSD=X",
       "shares": 13154,
       "buy_price": 1.1370097398757935,
-      "last_price": 1.1397310495376587,
+      "last_price": 1.1398608684539795,
       "peak_price": 1.1370097398757935,
       "armed": false,
       "target_weight": 0.15,
@@ -17,7 +17,7 @@
       "ticker": "GBPUSD=X",
       "shares": 11354,
       "buy_price": 1.3164650201797485,
-      "last_price": 1.337846279144287,
+      "last_price": 1.3380253314971924,
       "peak_price": 1.3164650201797485,
       "armed": false,
       "target_weight": 0.15,
@@ -36,5 +36,5 @@
       "entry_date": "2026-07-06"
     }
   ],
-  "last_updated": "2026-07-12 20:29:34"
+  "last_updated": "2026-07-12 20:35:49"
 }

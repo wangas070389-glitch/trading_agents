@@ -126,6 +126,7 @@
 | 2026-07-13 | FEMSAUBD.MX | BUY | 36 | 223.20 | -8,043.38 | Market | FILLED | 1D MACD systematic signal |
 | 2026-07-13 | CEMEXCPO.MX | BUY | 458 | 21.82 | -10,003.56 | Market | FILLED | 1D MACD systematic signal |
 | 2026-07-13 | GAPB.MX | BUY | 16 | 412.01 | -6,599.06 | Market | FILLED | 1D MACD systematic signal |
+| 2026-07-12 | BONDIA | INTEREST | 1 | 0.07 | +0.0687 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0042 days. |
 ---
 
 
@@ -135,5 +136,5 @@
 
 * **Initial Starting Capital (2026-06-03)**: 120,000.00 MXN
 * **Total Deployed Capital**: 30,102.72 MXN (25.2% invested)
-* **Unallocated Cash Reserves**: 89,577.92 MXN (74.9% cash)
-* **Current Portfolio Market Value**: 119,596.28 MXN (including cash)
+* **Unallocated Cash Reserves**: 89,577.99 MXN (74.9% cash)
+* **Current Portfolio Market Value**: 119,596.35 MXN (including cash)

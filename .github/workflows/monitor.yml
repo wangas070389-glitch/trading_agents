@@ -142,6 +142,10 @@ jobs:
     - name: Run Shadow Frontier Tracker
       run: python shadow_frontier.py
 
+    # 5g-3. Execute Live Strategy 18 Efficient Frontier Portfolio
+    - name: Run Live Strategy 18 Efficient Frontier
+      run: python run_live_strategy18.py
+
     # 5h. Run Performance Comparison
     - name: Compare Strategy Performances
       run: python compare_strategies.py

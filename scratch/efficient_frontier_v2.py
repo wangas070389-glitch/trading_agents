@@ -42,6 +42,7 @@ SERIES = {
     "S13 CARA": ("strategy13_backtest_nav.csv", "Date", "NAV"),
     "S14 HEDGE": ("strategy14_backtest_nav.csv", "Date", "NAV"),
     "S15 TRACK": ("strategy15_backtest_nav.csv", "Date", "NAV"),
+    "S17 FIBRAs": ("strategy17_backtest_nav.csv", "date", "nav"),
 }
 
 # Current S7 target weights (run_live_multi_strategy.py) restricted to the
