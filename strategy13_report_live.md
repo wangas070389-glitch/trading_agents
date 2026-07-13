@@ -1,5 +1,5 @@
 # Strategy 13: CARA Live Report
-**Execution:** 2026-07-13 01:47:02 | **Signal date:** 2026-07-10
+**Execution:** 2026-07-12 20:30:58 | **Signal date:** 2026-07-10
 
 * **NAV:** $202,241.82 MXN
 * **Cash MXN (Bondia):** $161,804.26 | **Cash USD:** $0.00 ($0.00 MXN) | **TQQQ:** $40,437.56 MXN

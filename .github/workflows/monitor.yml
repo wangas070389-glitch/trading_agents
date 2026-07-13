@@ -130,6 +130,10 @@ jobs:
     - name: Run Live Strategy 16 HMM Router
       run: python run_live_strategy16.py
 
+    # 5fffffffff-3. Execute Live Strategy 17 FIBRAs
+    - name: Run Live Strategy 17 FIBRAs
+      run: python run_live_strategy17.py
+
     # 5g. Execute Live Multi-Strategy Orchestration
     - name: Run Live Multi-Strategy Orchestrator
       run: python run_live_multi_strategy.py

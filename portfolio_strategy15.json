@@ -1,5 +1,5 @@
 {
-  "total_capital": 201893.47,
+  "total_capital": 201882.11,
   "cash_balance_mxn": 141585.92,
   "cash_balance_usd": 1620.9574,
   "holdings": [
@@ -8,7 +8,7 @@
       "side": "long",
       "shares": 23.651862403778363,
       "buy_price": 1281.2850785742194,
-      "last_price": 1349.3114369760733
+      "last_price": 1349.0571131542674
     }
   ],
   "last_signal_date": "2026-07-10",
@@ -28,5 +28,5 @@
     "TSMOM": 0.001068443070628896,
     "CASH_USD": -0.0021849319804320413
   },
-  "last_updated": "2026-07-13 01:47:09"
+  "last_updated": "2026-07-12 20:31:08"
 }

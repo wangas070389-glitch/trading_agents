@@ -1,5 +1,5 @@
 # Strategy 16: Multi-Asset HMM Swing Router Execution Report
-**Execution Date:** 2026-07-13 01:47:10 | **Strategy Version:** Router V2 (Hybrid Swing)
+**Execution Date:** 2026-07-12 20:31:13 | **Strategy Version:** Router V2 (Hybrid Swing)
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** $200,217.27 MXN
@@ -12,7 +12,6 @@
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $40.7355 MXN sweep interest.
 * No trades or rebalancing actions triggered in this 30-minute interval.
 
 ## 4. Multi-Asset HMM Telemetry

@@ -1,5 +1,5 @@
 # Shadow Frontier — Live Track Record of the Allocation Layer
-**Generated:** 2026-07-13 01:47:15 | Inception: 2026-07-11 (2 calendar days) | Virtual capital: $100,000 USD
+**Generated:** 2026-07-12 20:31:33 | Inception: 2026-07-11 (1 calendar days) | Virtual capital: $100,000 USD
 **Weights (frozen):** efficient_frontier_report.md 2026-07-11 -- Risk Parity, hurdle-filtered (RECOMMENDED)
 
 This book paper-trades the recommended frontier allocation itself, marked
@@ -34,7 +34,7 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 | S15 TRACK Tracker | 7.6% | 7.6% | -0.17% | 2026-07-13 | multi-strategy USD |
 
 ## 3. Correlation check (realized vs. backtest)
-*Needs >= 15 daily return observations; have 1.*
+*Needs >= 15 daily return observations; have 2.*
 
 ## 4. Rebalances
 *None yet (monthly, first mark of each month).*
@@ -43,7 +43,7 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 *None this cycle.*
 
 ## 6. Method notes
-- USD-denominated; MXN sleeves converted at usd_mxn_rate (17.5120), so they carry FX exposure — same caveat as the frontier report.
+- USD-denominated; MXN sleeves converted at usd_mxn_rate (17.5158), so they carry FX exposure — same caveat as the frontier report.
 - S2 is marked from watchdog snapshots (it has no multi-strategy NAV column), so its marks can lag the others by one cycle.
 - A weight change is a new allocation config (KILL_CRITERIA P3): delete portfolio_shadow_frontier.json to restart the clock, and say so here.
 - This is evidence for the ALLOCATION layer only; individual strategies still graduate (or die) via graduation_report.md / KILL_CRITERIA.md.

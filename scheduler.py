@@ -40,6 +40,7 @@ STRATEGY_SCRIPTS = [
     "run_live_strategy14.py",
     "run_live_strategy15.py",
     "run_live_strategy16.py",
+    "run_live_strategy17.py",
     "run_live_multi_strategy.py",
     "shadow_frontier.py",
     "compare_strategies.py",

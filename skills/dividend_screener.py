@@ -6,8 +6,8 @@ import pandas as pd
 import yfinance as yf
 
 # BMV and US Seed Universes
-DIVIDEND_BMV_TICKERS = ["BBAJIOO.MX", "GFNORTEO.MX", "WALMEX.MX", "ORBIA.MX", "FEMSAUBD.MX", "KOFUBL.MX", "GRUMAB.MX"]
-DIVIDEND_US_TICKERS = ["JNJ", "PG", "KO", "PEP", "XOM", "CVX", "VZ", "T", "MCD"]
+DIVIDEND_BMV_TICKERS = ["BBAJIOO.MX", "GFNORTEO.MX", "WALMEX.MX", "ORBIA.MX", "FEMSAUBD.MX", "KOFUBL.MX", "GRUMAB.MX", "FUNO11.MX", "FIBRAMQ12.MX", "AC.MX", "OMAB.MX", "GAPB.MX"]
+DIVIDEND_US_TICKERS = ["JNJ", "PG", "KO", "PEP", "XOM", "CVX", "VZ", "T", "MCD", "ABBV", "MMM", "TGT", "LOW", "O", "SPG", "ABT"]
 
 def get_dividend_metrics(ticker_symbol: str, history_df: pd.DataFrame = None) -> dict:
     """
