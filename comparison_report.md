@@ -1,5 +1,5 @@
 # Daily Strategy Performance Comparison Report
-**Report Generated At:** 2026-07-13 03:04:05
+**Report Generated At:** 2026-07-12 21:14:58
 
 ## 1. Executive Performance Summary
 | Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |
@@ -19,6 +19,8 @@
 | **S14: Aggregator (HEDGE)** | $201,768.01 | $169,850.47 | $30,304.75 | 15.0% | +$1,768.01 | +0.88% | 2026-07-06 | MXN |
 | **S15: Tracker (TRACK)** | $201,750.40 | $169,847.06 | $30,304.78 | 15.0% | +$1,750.40 | +0.88% | 2026-07-06 | MXN |
 | **S16: HMM Intraday Router** | $200,227.03 | $200,227.03 | $0.00 | 0.0% | +$0.00 | +0.00% | 2026-07-07 | MXN |
+| **S17: FIBRAs Dynamic** | $99,710.84 | $0.00 | $99,710.84 | 100.0% | $-289.16 | -0.29% | 2026-07-12 | MXN |
+| **S18: Efficient Frontier** | $100,000.44 | $0.00 | $0.00 | 0.0% | +$0.44 | +0.00% | 2026-07-12 | USD |
 | **Strategy 7 (Consolidated Core)** | $403,617.68 | $279,348.39 | $124,269.29 | 30.8% | +$19,617.68 | +5.11% | 2026-07-02 | USD |
 
 *Note: CARA (S13) is retired standalone and survives only as an expert sleeve in S14/S15. Strategy 7 consolidated values represent all strategies rebalanced dynamically under risk parity.*

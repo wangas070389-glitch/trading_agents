@@ -172,6 +172,28 @@ STRATEGY_KPIS = {
         "is_live": True,
         "inception": "2026-07-07"
     },
+    "S17: FIBRAs Dynamic": {
+        "asset": "BMV FIBRAs Basket",
+        "window": 4.0,
+        "cagr": 0.0746,
+        "max_dd": -0.1693,
+        "sharpe": 0.08,
+        "turnover": "Quarterly",
+        "currency": "MXN",
+        "is_live": True,
+        "inception": "2026-07-12"
+    },
+    "S18: Efficient Frontier": {
+        "asset": "Risk Parity (12 strategies)",
+        "window": 4.0,
+        "cagr": 0.1366,
+        "max_dd": -0.0329,
+        "sharpe": 1.16,
+        "turnover": "Monthly Rebalancing",
+        "currency": "USD",
+        "is_live": True,
+        "inception": "2026-07-12"
+    },
     "S7: Core Hybrid Portfolio": {
         "asset": "Consolidated Multi-Asset",
         "window": 4.0,
@@ -201,6 +223,10 @@ def valuation_price(h):
 def get_nav(portfolio_data):
     if not portfolio_data:
         return 0.0, 0.0, 0.0
+    if "total_portfolio_value_usd" in portfolio_data and "sleeves" in portfolio_data:
+        # Strategy 18 (Efficient Frontier)
+        nav = float(portfolio_data["total_portfolio_value_usd"])
+        return nav, 0.0, nav
     cash_mxn = float(portfolio_data.get("cash_balance_mxn", 0.0))
     cash_usd = float(portfolio_data.get("cash_balance_usd", 0.0))
     cash = float(portfolio_data.get("cash_balance", 0.0)) + cash_mxn
@@ -253,6 +279,8 @@ def main():
     s14_data = load_json(os.path.join(dir_path, "portfolio_strategy14.json"))
     s15_data = load_json(os.path.join(dir_path, "portfolio_strategy15.json"))
     s16_data = load_json(os.path.join(dir_path, "portfolio_strategy16.json"))
+    s17_data = load_json(os.path.join(dir_path, "portfolio_strategy17.json"))
+    s18_data = load_json(os.path.join(dir_path, "portfolio_strategy18.json"))
     s7_data = load_json(os.path.join(dir_path, "portfolio_multi_strategy.json"))
 
     # Map strategies to their data
@@ -272,6 +300,8 @@ def main():
         "S14: Aggregator (HEDGE)": (s14_data, "MXN"),
         "S15: Tracker (TRACK)": (s15_data, "MXN"),
         "S16: HMM Intraday Router": (s16_data, "MXN"),
+        "S17: FIBRAs Dynamic": (s17_data, "MXN"),
+        "S18: Efficient Frontier": (s18_data, "USD"),
         "S7: Core Hybrid Portfolio": (s7_data, "USD")
     }
 
