@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-""
-=======
 """
 WATCHDOG: auditor de fallo silencioso para todos los portafolios del repo.
 ==========================================================================
