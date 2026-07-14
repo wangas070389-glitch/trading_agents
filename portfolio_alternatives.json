@@ -1,12 +1,12 @@
 {
-  "total_capital": 100000.0,
+  "total_capital": 99446.82,
   "cash_balance": 50773.52,
   "holdings": [
     {
       "ticker": "EURUSD=X",
       "shares": 13154,
       "buy_price": 1.1370097398757935,
-      "last_price": 1.1394712924957275,
+      "last_price": 1.1397310495376587,
       "peak_price": 1.1370097398757935,
       "armed": false,
       "target_weight": 0.15,
@@ -17,7 +17,7 @@
       "ticker": "GBPUSD=X",
       "shares": 11354,
       "buy_price": 1.3164650201797485,
-      "last_price": 1.3361481428146362,
+      "last_price": 1.3366303443908691,
       "peak_price": 1.3164650201797485,
       "armed": false,
       "target_weight": 0.15,
@@ -36,5 +36,5 @@
       "entry_date": "2026-07-06"
     }
   ],
-  "last_updated": "2026-07-13 22:47:22"
+  "last_updated": "2026-07-14 05:29:07"
 }

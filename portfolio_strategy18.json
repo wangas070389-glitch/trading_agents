@@ -18,10 +18,10 @@
   },
   "sleeves": {
     "core": {
-      "alloc_usd": 4500.887006378396,
-      "last_nav": 6896.573359948261,
-      "last_date": "2026-07-13",
-      "tr_index": 1.0001971125285327
+      "alloc_usd": 4503.1663851266385,
+      "last_nav": 6900.065983231202,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0007036411392534
     },
     "macd": {
       "alloc_usd": 4206.589261465696,
@@ -30,22 +30,22 @@
       "tr_index": 1.0015688717775466
     },
     "us_dcs": {
-      "alloc_usd": 3899.999999999999,
-      "last_nav": 102216.6400793457,
-      "last_date": "2026-07-13",
-      "tr_index": 1.0
+      "alloc_usd": 3860.5179411023682,
+      "last_nav": 101181.83920654297,
+      "last_date": "2026-07-14",
+      "tr_index": 0.9898763951544536
     },
     "alternatives": {
-      "alloc_usd": 24999.548769602345,
-      "last_nav": 101309.03063299178,
-      "last_date": "2026-07-13",
-      "tr_index": 0.999981950784094
+      "alloc_usd": 24987.549073605376,
+      "last_nav": 101260.40265252112,
+      "last_date": "2026-07-14",
+      "tr_index": 0.9995019629442153
     },
     "high_beta": {
-      "alloc_usd": 11699.999999999998,
-      "last_nav": 101719.1276390645,
-      "last_date": "2026-07-13",
-      "tr_index": 1.0
+      "alloc_usd": 11610.548341806416,
+      "last_nav": 100941.44006322528,
+      "last_date": "2026-07-14",
+      "tr_index": 0.9923545591287537
     },
     "dividends": {
       "alloc_usd": 9389.92457454589,
@@ -126,9 +126,27 @@
         "strategy15": 1.000885,
         "strategy17": 1.001475
       }
+    },
+    {
+      "date": "2026-07-14",
+      "nav_usd": 99874.5,
+      "idx": {
+        "core": 1.000704,
+        "macd": 1.001569,
+        "us_dcs": 0.989876,
+        "alternatives": 0.999502,
+        "high_beta": 0.992355,
+        "dividends": 0.998928,
+        "strategy9": 0.997008,
+        "strategy12": 1.001111,
+        "strategy13": 1.001059,
+        "strategy14": 1.000866,
+        "strategy15": 1.000885,
+        "strategy17": 1.001475
+      }
     }
   ],
   "rebalances": [],
-  "last_updated": "2026-07-13 22:49:38",
-  "total_portfolio_value_usd": 100013.1506497935
+  "last_updated": "2026-07-14 05:30:03",
+  "total_portfolio_value_usd": 99874.49661545357
 }
