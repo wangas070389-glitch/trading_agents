@@ -1,14 +1,14 @@
 # Strategy 18: Efficient Frontier Allocation Execution Report
-**Execution Date:** 2026-07-14 05:30:03 | **Strategy Version:** Live V1
-* **Total Portfolio NAV:** $99,874.50 USD
+**Execution Date:** 2026-07-14 16:01:52 | **Strategy Version:** Live V1
+* **Total Portfolio NAV:** $99,772.94 USD
 * **Inception Date:** 2026-07-12 (2 calendar days elapsed)
 * **Virtual Capital Base:** $100,000.00 USD
-* **USD/MXN Rate:** 17.4853
+* **USD/MXN Rate:** 17.4341
 
 ## 1. Portfolio Performance Summary
 | Metric | Realized (live) |
 | :--- | ---: |
-| Return since inception | -0.13% |
+| Return since inception | -0.23% |
 | Sharpe (Rf 6.53%) | -- |
 | Realized Volatility (Ann.) | -- |
 | Max drawdown | -- |
@@ -17,17 +17,17 @@
 | Sleeve | Target weight | Current weight | TR since inception | Last mark date |
 | :--- | ---: | ---: | ---: | :--- |
 | S1 Alpha Growth (S1) | 4.5% | 4.5% | +0.07% | 2026-07-14 |
-| S2 MACD Systematic (S2) | 4.2% | 4.2% | +0.16% | 2026-07-13 |
+| S2 MACD Systematic (S2) | 4.2% | 4.2% | +0.49% | 2026-07-14 |
 | S4 US DCF Value-Growth (S4) | 3.9% | 3.9% | -1.01% | 2026-07-14 |
 | S5 Alternatives (S5) | 25.0% | 25.0% | -0.05% | 2026-07-14 |
 | S6 High-Beta Momentum (S6) | 11.7% | 11.6% | -0.76% | 2026-07-14 |
-| S8 Dividend Quality (S8) | 9.4% | 9.4% | -0.11% | 2026-07-13 |
-| S9 AI Regime Stat-Arb (S9) | 7.4% | 7.4% | -0.30% | 2026-07-13 |
-| S12 VTTL Trend+Vol (S12) | 4.7% | 4.7% | +0.11% | 2026-07-13 |
-| S13 CARA Cross-Asset (S13) | 5.2% | 5.2% | +0.11% | 2026-07-13 |
-| S14 HEDGE Aggregator (S14) | 6.4% | 6.4% | +0.09% | 2026-07-13 |
-| S15 TRACK Tracker (S15) | 6.6% | 6.6% | +0.09% | 2026-07-13 |
-| S17 FIBRAs Dynamic (S17) | 11.0% | 11.0% | +0.15% | 2026-07-13 |
+| S8 Dividend Quality (S8) | 9.4% | 9.4% | -0.13% | 2026-07-14 |
+| S9 AI Regime Stat-Arb (S9) | 7.4% | 7.4% | -0.28% | 2026-07-14 |
+| S12 VTTL Trend+Vol (S12) | 4.7% | 4.7% | -0.68% | 2026-07-14 |
+| S13 CARA Cross-Asset (S13) | 5.2% | 5.2% | -0.69% | 2026-07-14 |
+| S14 HEDGE Aggregator (S14) | 6.4% | 6.4% | -0.46% | 2026-07-14 |
+| S15 TRACK Tracker (S15) | 6.6% | 6.6% | -0.46% | 2026-07-14 |
+| S17 FIBRAs Dynamic (S17) | 11.0% | 11.1% | +0.47% | 2026-07-14 |
 
 ## 3. Rebalances
 *None yet (monthly, first mark of each month).*

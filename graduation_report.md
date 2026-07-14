@@ -1,22 +1,22 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-07-14 05:30:03 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-07-14 16:01:53 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| S12 VTTL Trend+Vol | **ON TRACK** | 8 | -0.0% | -2.0% | pending | -3.57 | -1.6% | -26.7% | 10.35 | 0.46 (22.5y) |
-| S14 HEDGE Aggregator | **ON TRACK** | 8 | +0.0% | +0.3% | pending | -3.67 | -1.3% | -19.0% | 10.18 | 0.53 (19.2y) |
-| S15 TRACK Tracker | **ON TRACK** | 8 | +0.0% | +0.3% | pending | -3.68 | -1.3% | -18.4% | 10.18 | 0.53 (19.2y) |
-| S2 MACD Systematic | **ON TRACK** | 3 | +0.0% | +3.6% | pending | 5.97 | -2.1% | -11.9% | 8.78 | 1.76 (5.0y) |
-| S13 CARA Cross-Asset | **ON TRACK** | 8 | -0.0% | -2.2% | pending | -3.57 | -1.6% | -31.3% | 8.64 | 0.45 (19.2y) |
-| S8 Dividend Quality | **ON TRACK** | 19 | -1.7% | -32.6% | pending | -6.66 | -2.3% | -14.2% | 5.60 | 1.12 (5.0y) |
-| S4 US DCF Value-Growth | **ON TRACK** | 21 | +0.2% | +3.1% | pending | 1.16 | -1.1% | -15.2% | 4.56 | 1.14 (4.0y) |
-| S6 High-Beta Momentum | **ON TRACK** | 21 | -0.1% | -1.0% | pending | 1.16 | -0.8% | -24.4% | 4.20 | 1.05 (4.0y) |
+| S12 VTTL Trend+Vol | **ON TRACK** | 8 | +0.5% | +21.6% | pending | -3.57 | -1.6% | -26.7% | 10.35 | 0.46 (22.5y) |
+| S14 HEDGE Aggregator | **ON TRACK** | 8 | +0.4% | +17.3% | pending | -3.67 | -1.3% | -19.0% | 10.18 | 0.53 (19.2y) |
+| S15 TRACK Tracker | **ON TRACK** | 8 | +0.4% | +17.1% | pending | -3.68 | -1.3% | -18.4% | 10.18 | 0.53 (19.2y) |
+| S2 MACD Systematic | **ON TRACK** | 3 | +0.2% | +20.2% | pending | 5.59 | -2.1% | -11.9% | 8.78 | 1.76 (5.0y) |
+| S13 CARA Cross-Asset | **ON TRACK** | 8 | +0.5% | +21.7% | pending | -3.57 | -1.6% | -31.3% | 8.64 | 0.45 (19.2y) |
+| S8 Dividend Quality | **ON TRACK** | 19 | -1.2% | -22.8% | pending | -6.66 | -2.3% | -14.2% | 5.60 | 1.12 (5.0y) |
+| S4 US DCF Value-Growth | **ON TRACK** | 21 | +0.9% | +14.9% | pending | 1.16 | -1.1% | -15.2% | 4.56 | 1.14 (4.0y) |
+| S6 High-Beta Momentum | **ON TRACK** | 21 | +0.5% | +7.9% | pending | 1.16 | -0.8% | -24.4% | 4.20 | 1.05 (4.0y) |
 | S5 Alternatives | **ON TRACK** | 21 | +0.3% | +4.5% | pending | 2.99 | -0.1% | -19.0% | 3.80 | 0.95 (4.0y) |
-| S9 AI Regime Stat-Arb | **ON TRACK** | 3 | -1.0% | -120.7% | pending | -15.90 | -3.2% | -7.5% | 2.35 | 0.47 (5.0y) |
-| S10 Intraday VWAP | **ON TRACK** | 12 | +0.2% | +5.9% | pending | -2.59 | -0.6% | -4.0% | 0.52 | 3.27 (0.2y) |
-| S16 MACD-HMM Router | **ON TRACK** | 7 | +0.1% | +6.9% | pending | n/a | n/a | -13.4% | 0.16 | 0.99 (0.2y) |
-| S11 Intraday CCI-ADX | **ON TRACK** | 12 | +2.2% | +68.1% | pending | 4.54 | -0.3% | -8.4% | 0.06 | 0.35 (0.2y) |
-| S1 Adaptive Value (BMV) | **NOT READY** | 41 | +0.5% | +4.8% | FAIL | 3.65 | -3.3% | -35.2% | 3.28 | 0.82 (4.0y) |
+| S1 Adaptive Value (BMV) | **ON TRACK** | 41 | +0.9% | +7.7% | PASS | 3.65 | -3.3% | -35.2% | 3.28 | 0.82 (4.0y) |
+| S9 AI Regime Stat-Arb | **ON TRACK** | 3 | -1.1% | -131.1% | pending | -15.90 | -3.2% | -7.5% | 2.35 | 0.47 (5.0y) |
+| S10 Intraday VWAP | **ON TRACK** | 12 | +0.2% | +6.4% | pending | -2.59 | -0.6% | -4.0% | 0.52 | 3.27 (0.2y) |
+| S16 MACD-HMM Router | **ON TRACK** | 7 | +0.1% | +7.4% | pending | -28.00 | +0.0% | -13.4% | 0.16 | 0.99 (0.2y) |
+| S11 Intraday CCI-ADX | **ON TRACK** | 12 | +2.2% | +68.4% | pending | 4.54 | -0.3% | -8.4% | 0.06 | 0.35 (0.2y) |
 | S3 US Stock Momentum | **BLOCKED** | 21 | +9.8% | +171.0% | pending | n/a | n/a | -22.7% | 5.75 | 1.15 (5.0y) |
 
 ## Verdict Detail
@@ -59,6 +59,10 @@
 - needs 69 more live days (C1: 21/90)
 - return/Sharpe judged from day 30 (now 21); current figures are informational
 
+**S1 Adaptive Value (BMV)** — ON TRACK
+- needs 49 more live days (C1: 41/90)
+- BMV data quality degraded; see Known Issues
+
 **S9 AI Regime Stat-Arb** — ON TRACK
 - needs 87 more live days (C1: 3/90)
 - return/Sharpe judged from day 30 (now 3); current figures are informational
@@ -72,18 +76,12 @@
 **S16 MACD-HMM Router** — ON TRACK
 - needs 83 more live days (C1: 7/90)
 - return/Sharpe judged from day 30 (now 7); current figures are informational
-- risk stats pending (7 daily samples, need 8) [watchdog snapshots (local ccy)]
 - 60d in-sample backtest; params tuned July 2026 -- treat backtest as ceiling
 
 **S11 Intraday CCI-ADX** — ON TRACK
 - needs 78 more live days (C1: 12/90)
 - return/Sharpe judged from day 30 (now 12); current figures are informational
 - 60d in-sample backtest; params tuned July 2026 -- treat backtest as ceiling
-
-**S1 Adaptive Value (BMV)** — NOT READY
-- needs 49 more live days (C1: 41/90)
-- annualized live return +4.8% below Bondia hurdle 6.53% (C2)
-- BMV data quality degraded; see Known Issues
 
 **S3 US Stock Momentum** — BLOCKED
 - Reconciliation in progress: de-leverage sells (TSLA 47, JPM 59, DBA 733, AVGO 10) queued 2026-07-11, fill at Monday open; then run reconcile_s3.py and split AVGO claim with S4 (shared Alpaca account)
@@ -100,11 +98,11 @@
 | S4 US DCF Value-Growth | OK | no kill triggers active |
 | S6 High-Beta Momentum | OK | no kill triggers active |
 | S5 Alternatives | OK | no kill triggers active |
+| S1 Adaptive Value (BMV) | OK | no kill triggers active |
 | S9 AI Regime Stat-Arb | OK | no kill triggers active |
 | S10 Intraday VWAP | OK | no kill triggers active |
 | S16 MACD-HMM Router | OK | no kill triggers active |
 | S11 Intraday CCI-ADX | OK | no kill triggers active |
-| S1 Adaptive Value (BMV) | WATCH (K2) | below hurdle (+4.8% ann.); P1 review at day 180 (41/180) |
 | S3 US Stock Momentum | OK | no kill triggers active |
 
 ## Criteria
