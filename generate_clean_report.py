@@ -227,6 +227,17 @@ STRATEGY_KPIS = {
         "is_live": True,
         "inception": "2026-07-13"
     },
+    "S22: Walk-Forward ML Classifier": {
+        "asset": "QQQ, TQQQ, SQQQ",
+        "window": 16.42,
+        "cagr": 0.2113,
+        "max_dd": -0.5866,
+        "sharpe": 0.26,
+        "turnover": "~12.2 trades/year",
+        "currency": "MXN",
+        "is_live": True,
+        "inception": "2026-07-14"
+    },
     "S7: Core Hybrid Portfolio": {
         "asset": "Consolidated Multi-Asset",
         "window": 4.0,
@@ -317,6 +328,7 @@ def main():
     s19_data = load_json(os.path.join(dir_path, "portfolio_strategy19.json"))
     s20_data = load_json(os.path.join(dir_path, "portfolio_strategy20.json"))
     s21_data = load_json(os.path.join(dir_path, "portfolio_strategy21.json"))
+    s22_data = load_json(os.path.join(dir_path, "portfolio_strategy22.json"))
     s7_data = load_json(os.path.join(dir_path, "portfolio_multi_strategy.json"))
 
     # Map strategies to their data
@@ -341,6 +353,7 @@ def main():
         "S19: Particle Filter QQQ/TQQQ/SQQQ": (s19_data, "MXN"),
         "S20: Hurst Exponent Dynamic": (s20_data, "MXN"),
         "S21: Shannon Entropy Dynamic": (s21_data, "MXN"),
+        "S22: Walk-Forward ML Classifier": (s22_data, "MXN"),
         "S7: Core Hybrid Portfolio": (s7_data, "USD")
     }
 
@@ -382,7 +395,8 @@ def main():
             "S16: HMM Intraday Router",
             "S19: Particle Filter QQQ/TQQQ/SQQQ",
             "S20: Hurst Exponent Dynamic",
-            "S21: Shannon Entropy Dynamic"
+            "S21: Shannon Entropy Dynamic",
+            "S22: Walk-Forward ML Classifier"
         ]:
             total_cap = 200000.0
         else:

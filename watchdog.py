@@ -103,7 +103,7 @@ def total_exposure_ratio(p):
 
 def calculate_portfolio_nav(p, name):
     # For S9-S18 and shadow_frontier, total_capital/value is the correct dynamically-updated NAV
-    if name in ("strategy9", "strategy10", "strategy11", "strategy12", "strategy13", "strategy14", "strategy15", "strategy16", "strategy17", "strategy18", "strategy19", "strategy20", "strategy21"):
+    if name in ("strategy9", "strategy10", "strategy11", "strategy12", "strategy13", "strategy14", "strategy15", "strategy16", "strategy17", "strategy18", "strategy19", "strategy20", "strategy21", "strategy22"):
         return p.get("total_capital") or p.get("total_portfolio_value") or p.get("total_portfolio_value_usd") or p.get("cash_balance", 0.0)
     if name == "shadow_frontier":
         return sum(s.get("alloc_usd", 0.0) for s in p.get("sleeves", {}).values())
@@ -299,6 +299,7 @@ def get_active_strategies(dir_path):
         "run_live_strategy19.py": "strategy19",
         "run_live_strategy20.py": "strategy20",
         "run_live_strategy21.py": "strategy21",
+        "run_live_strategy22.py": "strategy22",
         "shadow_frontier.py": "shadow_frontier",
     }
     scheduler_path = os.path.join(dir_path, "scheduler.py")

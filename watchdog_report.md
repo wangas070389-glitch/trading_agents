@@ -1,4 +1,4 @@
-# Watchdog Report - 2026-07-13 21:23:55
+# Watchdog Report - 2026-07-13 22:26:33
 
 **CRITICAL: 1 | WARNING: 3**
 
@@ -23,6 +23,7 @@
 | [ OK ] | strategy19 | - | NAV $199,420.94 | sin anomalias |
 | [ OK ] | strategy20 | - | NAV $199,421.12 | sin anomalias |
 | [ OK ] | strategy21 | - | NAV $199,421.27 | sin anomalias |
+| [ OK ] | strategy22 | - | NAV $200,000.00 | sin anomalias |
 | [ OK ] | strategy9 | - | NAV $192,764.46 | sin anomalias |
 | [ OK ] | us_dcs | - | NAV $101,181.84 | sin anomalias |
 | [CRIT] | us_stocks | W5 | DD live -76.5% excede 1.25x el MaxDD del backtest (-25.1%): fuera de distribucion validada |

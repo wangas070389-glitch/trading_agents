@@ -1,5 +1,5 @@
 # Daily Strategy Performance Comparison Report
-**Report Generated At:** 2026-07-13 21:27:09
+**Report Generated At:** 2026-07-13 22:26:30
 
 ## 1. Executive Performance Summary
 | Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |
@@ -24,6 +24,7 @@
 | **S19: Particle Filter QQQ/TQQQ/SQQQ** | $199,420.94 | $0.00 | $199,420.94 | 100.0% | $-579.06 | -0.29% | 2026-07-13 | MXN |
 | **S20: Hurst Exponent Dynamic** | $199,421.12 | $0.00 | $199,421.12 | 100.0% | $-578.88 | -0.29% | 2026-07-13 | MXN |
 | **S21: Shannon Entropy Dynamic** | $199,421.27 | $0.00 | $199,421.27 | 100.0% | $-578.73 | -0.29% | 2026-07-13 | MXN |
+| **S22: Walk-Forward ML Classifier** | $199,421.68 | $0.00 | $199,421.68 | 100.0% | $-578.32 | -0.29% | 2026-07-14 | MXN |
 | **S7: Core Hybrid Portfolio** | $401,241.15 | $289,234.88 | $112,006.27 | 27.9% | +$17,241.15 | +4.49% | 2026-07-02 | USD |
 
 *Note: CARA (S13) is retired standalone and survives only as an expert sleeve in S14/S15. Strategy 7 consolidated values represent all strategies rebalanced dynamically under risk parity.*
