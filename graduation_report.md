@@ -1,21 +1,21 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-07-14 20:43:07 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-07-14 20:46:18 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| S12 VTTL Trend+Vol | **ON TRACK** | 8 | +0.5% | +23.3% | pending | -3.57 | -1.6% | -26.7% | 10.35 | 0.46 (22.5y) |
-| S14 HEDGE Aggregator | **ON TRACK** | 8 | +0.4% | +18.4% | pending | -3.67 | -1.3% | -19.0% | 10.18 | 0.53 (19.2y) |
-| S15 TRACK Tracker | **ON TRACK** | 8 | +0.4% | +18.1% | pending | -3.68 | -1.3% | -18.4% | 10.18 | 0.53 (19.2y) |
-| S2 MACD Systematic | **ON TRACK** | 3 | +0.3% | +31.7% | pending | 5.59 | -2.1% | -11.9% | 8.78 | 1.76 (5.0y) |
-| S13 CARA Cross-Asset | **ON TRACK** | 8 | +0.5% | +23.4% | pending | -3.57 | -1.6% | -31.3% | 8.64 | 0.45 (19.2y) |
-| S8 Dividend Quality | **ON TRACK** | 19 | -1.4% | -27.3% | pending | -6.66 | -2.3% | -14.2% | 5.60 | 1.12 (5.0y) |
+| S12 VTTL Trend+Vol | **ON TRACK** | 8 | +0.5% | +23.7% | pending | -3.57 | -1.6% | -26.7% | 10.35 | 0.46 (22.5y) |
+| S14 HEDGE Aggregator | **ON TRACK** | 8 | +0.4% | +18.3% | pending | -3.67 | -1.3% | -19.0% | 10.18 | 0.53 (19.2y) |
+| S15 TRACK Tracker | **ON TRACK** | 8 | +0.4% | +18.0% | pending | -3.68 | -1.3% | -18.4% | 10.18 | 0.53 (19.2y) |
+| S2 MACD Systematic | **ON TRACK** | 3 | +0.3% | +31.4% | pending | 5.59 | -2.1% | -11.9% | 8.78 | 1.76 (5.0y) |
+| S13 CARA Cross-Asset | **ON TRACK** | 8 | +0.5% | +23.7% | pending | -3.57 | -1.6% | -31.3% | 8.64 | 0.45 (19.2y) |
+| S8 Dividend Quality | **ON TRACK** | 19 | -1.4% | -27.1% | pending | -6.66 | -2.3% | -14.2% | 5.60 | 1.12 (5.0y) |
 | S4 US DCF Value-Growth | **ON TRACK** | 21 | +0.5% | +8.8% | pending | 1.16 | -1.1% | -15.2% | 4.56 | 1.14 (4.0y) |
 | S6 High-Beta Momentum | **ON TRACK** | 21 | +0.2% | +3.2% | pending | 1.16 | -0.8% | -24.4% | 4.20 | 1.05 (4.0y) |
 | S5 Alternatives | **ON TRACK** | 21 | +0.3% | +4.4% | pending | 2.99 | -0.1% | -19.0% | 3.80 | 0.95 (4.0y) |
 | S1 Adaptive Value (BMV) | **ON TRACK** | 41 | +0.8% | +7.5% | PASS | 3.65 | -3.3% | -35.2% | 3.28 | 0.82 (4.0y) |
-| S9 AI Regime Stat-Arb | **ON TRACK** | 3 | -1.0% | -118.6% | pending | -15.90 | -3.2% | -7.5% | 2.35 | 0.47 (5.0y) |
+| S9 AI Regime Stat-Arb | **ON TRACK** | 3 | -1.0% | -121.3% | pending | -15.90 | -3.2% | -7.5% | 2.35 | 0.47 (5.0y) |
 | S10 Intraday VWAP | **ON TRACK** | 12 | +0.2% | +6.4% | pending | -2.59 | -0.6% | -4.0% | 0.52 | 3.27 (0.2y) |
-| S16 MACD-HMM Router | **ON TRACK** | 7 | +0.1% | +7.5% | pending | -89.45 | +0.0% | -13.4% | 0.16 | 0.99 (0.2y) |
+| S16 MACD-HMM Router | **ON TRACK** | 7 | +0.1% | +7.5% | pending | -90.10 | +0.0% | -13.4% | 0.16 | 0.99 (0.2y) |
 | S11 Intraday CCI-ADX | **ON TRACK** | 12 | +2.1% | +62.8% | pending | 4.54 | -0.3% | -8.4% | 0.06 | 0.35 (0.2y) |
 | S3 US Stock Momentum | **BLOCKED** | 21 | +9.8% | +171.0% | pending | n/a | n/a | -22.7% | 5.75 | 1.15 (5.0y) |
 
