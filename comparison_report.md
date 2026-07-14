@@ -1,5 +1,5 @@
 # Daily Strategy Performance Comparison Report
-**Report Generated At:** 2026-07-13 22:00:11
+**Report Generated At:** 2026-07-13 21:23:51
 
 ## 1. Executive Performance Summary
 | Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |
@@ -18,9 +18,12 @@
 | **S13: Risk Appetite (CARA)** | $199,959.47 | $161,834.97 | $38,402.39 | 19.2% | $-40.53 | -0.02% | 2026-07-06 | MXN |
 | **S14: Aggregator (HEDGE)** | $199,973.94 | $169,873.18 | $30,304.75 | 15.2% | $-26.06 | -0.01% | 2026-07-06 | MXN |
 | **S15: Tracker (TRACK)** | $199,966.93 | $169,869.76 | $30,304.78 | 15.2% | $-33.07 | -0.02% | 2026-07-06 | MXN |
-| **S16: HMM Intraday Router** | $200,255.27 | $200,255.27 | $0.00 | 0.0% | +$0.00 | +0.00% | 2026-07-07 | MXN |
+| **S16: HMM Intraday Router** | $200,255.27 | $200,255.27 | $0.00 | 0.0% | +$255.27 | +0.13% | 2026-07-07 | MXN |
 | **S17: FIBRAs Dynamic** | $99,678.72 | $0.00 | $99,710.84 | 100.0% | $-321.28 | -0.32% | 2026-07-12 | MXN |
 | **S18: Efficient Frontier** | $100,013.15 | $0.00 | $0.00 | 0.0% | +$13.15 | +0.01% | 2026-07-12 | USD |
+| **S19: Particle Filter QQQ/TQQQ/SQQQ** | $199,420.94 | $0.00 | $199,420.94 | 100.0% | $-579.06 | -0.29% | 2026-07-13 | MXN |
+| **S20: Hurst Exponent Dynamic** | $199,421.12 | $0.00 | $199,421.12 | 100.0% | $-578.88 | -0.29% | 2026-07-13 | MXN |
+| **S21: Shannon Entropy Dynamic** | $199,421.27 | $0.00 | $199,421.27 | 100.0% | $-578.73 | -0.29% | 2026-07-13 | MXN |
 | **Strategy 7 (Consolidated Core)** | $401,241.15 | $289,234.88 | $112,006.27 | 27.9% | +$17,241.15 | +4.49% | 2026-07-02 | USD |
 
 *Note: CARA (S13) is retired standalone and survives only as an expert sleeve in S14/S15. Strategy 7 consolidated values represent all strategies rebalanced dynamically under risk parity.*

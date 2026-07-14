@@ -43,6 +43,9 @@ def main():
     portfolio_strategy16_path = os.path.join(dir_path, "portfolio_strategy16.json")
     portfolio_strategy17_path = os.path.join(dir_path, "portfolio_strategy17.json")
     portfolio_strategy18_path = os.path.join(dir_path, "portfolio_strategy18.json")
+    portfolio_strategy19_path = os.path.join(dir_path, "portfolio_strategy19.json")
+    portfolio_strategy20_path = os.path.join(dir_path, "portfolio_strategy20.json")
+    portfolio_strategy21_path = os.path.join(dir_path, "portfolio_strategy21.json")
     comparison_report_path = os.path.join(dir_path, "comparison_report.md")
     
     port_val = load_json(portfolio_val_path)
@@ -62,6 +65,9 @@ def main():
     port_strategy16 = load_json(portfolio_strategy16_path)
     port_strategy17 = load_json(portfolio_strategy17_path)
     port_strategy18 = load_json(portfolio_strategy18_path)
+    port_strategy19 = load_json(portfolio_strategy19_path)
+    port_strategy20 = load_json(portfolio_strategy20_path)
+    port_strategy21 = load_json(portfolio_strategy21_path)
     port_multi_strategy = load_json(portfolio_multi_strategy_path)
     usd_mxn_rate = port_multi_strategy.get("usd_mxn_rate", 17.43) if port_multi_strategy else 17.43
     try:
@@ -71,7 +77,7 @@ def main():
     except (TypeError, ValueError):
         usd_mxn_rate = 17.43
     
-    if not port_val and not port_macd and not port_us and not port_us_dcs and not port_alternatives and not port_high_beta and not port_dividends and not port_strategy9 and not port_strategy10 and not port_strategy11 and not port_strategy12 and not port_strategy13 and not port_strategy14 and not port_strategy15 and not port_strategy16 and not port_strategy17 and not port_strategy18 and not port_multi_strategy:
+    if not port_val and not port_macd and not port_us and not port_us_dcs and not port_alternatives and not port_high_beta and not port_dividends and not port_strategy9 and not port_strategy10 and not port_strategy11 and not port_strategy12 and not port_strategy13 and not port_strategy14 and not port_strategy15 and not port_strategy16 and not port_strategy17 and not port_strategy18 and not port_strategy19 and not port_strategy20 and not port_strategy21 and not port_multi_strategy:
         print("Error: No portfolio files found. Cannot generate comparison.")
         return
         
@@ -357,6 +363,51 @@ def main():
         report.append(f"| **Efficient Frontier (S18)** | ${s18_market_val:,.2f} | $0.00 | ${s18_market_val:,.2f} | 100.0% | {s18_sign}${s18_profit:,.2f} | {s18_sign}{s18_roi:.2f}% | 2026-07-12 | USD |")
     else:
         report.append("| **Efficient Frontier (S18)** | *Not Initialized* | - | - | - | - | - | - | USD |")
+
+    # Parse S19
+    s19_market_val = s19_cash = s19_invested = 0.0
+    if port_strategy19:
+        s19_total_cap = 200000.0
+        s19_cash = port_strategy19.get("cash_balance", 200000.0)
+        s19_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy19.get("holdings", []))
+        s19_market_val = s19_cash + sum(h["shares"] * valuation_price(h) for h in port_strategy19.get("holdings", []))
+        s19_profit = s19_market_val - s19_total_cap
+        s19_roi = (s19_profit / s19_total_cap) * 100.0
+        s19_alloc = (s19_invested / s19_market_val) * 100.0 if s19_market_val > 0 else 0.0
+        s19_sign = "+" if s19_profit >= 0 else ""
+        report.append(f"| **Particle Filter systematic (S19)** | ${s19_market_val:,.2f} | ${s19_cash:,.2f} | ${s19_invested:,.2f} | {s19_alloc:.1f}% | {s19_sign}${s19_profit:,.2f} | {s19_sign}{s19_roi:.2f}% | 2026-07-13 | MXN |")
+    else:
+        report.append("| **Particle Filter systematic (S19)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+
+    # Parse S20
+    s20_market_val = s20_cash = s20_invested = 0.0
+    if port_strategy20:
+        s20_total_cap = 200000.0
+        s20_cash = port_strategy20.get("cash_balance", 200000.0)
+        s20_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy20.get("holdings", []))
+        s20_market_val = s20_cash + sum(h["shares"] * valuation_price(h) for h in port_strategy20.get("holdings", []))
+        s20_profit = s20_market_val - s20_total_cap
+        s20_roi = (s20_profit / s20_total_cap) * 100.0
+        s20_alloc = (s20_invested / s20_market_val) * 100.0 if s20_market_val > 0 else 0.0
+        s20_sign = "+" if s20_profit >= 0 else ""
+        report.append(f"| **Hurst systematic (S20)** | ${s20_market_val:,.2f} | ${s20_cash:,.2f} | ${s20_invested:,.2f} | {s20_alloc:.1f}% | {s20_sign}${s20_profit:,.2f} | {s20_sign}{s20_roi:.2f}% | 2026-07-13 | MXN |")
+    else:
+        report.append("| **Hurst systematic (S20)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+
+    # Parse S21
+    s21_market_val = s21_cash = s21_invested = 0.0
+    if port_strategy21:
+        s21_total_cap = 200000.0
+        s21_cash = port_strategy21.get("cash_balance", 200000.0)
+        s21_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy21.get("holdings", []))
+        s21_market_val = s21_cash + sum(h["shares"] * valuation_price(h) for h in port_strategy21.get("holdings", []))
+        s21_profit = s21_market_val - s21_total_cap
+        s21_roi = (s21_profit / s21_total_cap) * 100.0
+        s21_alloc = (s21_invested / s21_market_val) * 100.0 if s21_market_val > 0 else 0.0
+        s21_sign = "+" if s21_profit >= 0 else ""
+        report.append(f"| **Entropy systematic (S21)** | ${s21_market_val:,.2f} | ${s21_cash:,.2f} | ${s21_invested:,.2f} | {s21_alloc:.1f}% | {s21_sign}${s21_profit:,.2f} | {s21_sign}{s21_roi:.2f}% | 2026-07-13 | MXN |")
+    else:
+        report.append("| **Entropy systematic (S21)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse Strategy 7 (Consolidated Multi-Strategy)
     ms_val = float(port_multi_strategy.get("total_portfolio_value_usd", 0.0)) if port_multi_strategy else 0.0

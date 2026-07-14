@@ -1,6 +1,6 @@
-# Watchdog Report - 2026-07-13 22:00:11
+# Watchdog Report - 2026-07-13 21:23:55
 
-**CRITICAL: 1 | WARNING: 2**
+**CRITICAL: 1 | WARNING: 3**
 
 | Nivel | Estrategia | Check | Detalle |
 | :--- | :--- | :--- | :--- |
@@ -20,7 +20,10 @@
 | [WARN] | strategy16 | W2 | Sin trades aun (4/10 dias de gracia) |
 | [ OK ] | strategy17 | - | NAV $100,000.00 | sin anomalias |
 | [ OK ] | strategy18 | - | NAV $100,013.15 | sin anomalias |
+| [ OK ] | strategy19 | - | NAV $199,420.94 | sin anomalias |
+| [ OK ] | strategy20 | - | NAV $199,421.12 | sin anomalias |
+| [ OK ] | strategy21 | - | NAV $199,421.27 | sin anomalias |
 | [ OK ] | strategy9 | - | NAV $192,764.46 | sin anomalias |
 | [ OK ] | us_dcs | - | NAV $101,181.84 | sin anomalias |
 | [CRIT] | us_stocks | W5 | DD live -76.5% excede 1.25x el MaxDD del backtest (-25.1%): fuera de distribucion validada |
-| [ OK ] | broker | W6 | Reconciliado: cash $527.71, 4 posiciones |
+| [WARN] | broker | W6 | Alpaca respondio HTTP 401/401 (credenciales invalidas o vencidas?); reconciliacion omitida |

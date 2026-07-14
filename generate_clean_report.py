@@ -194,6 +194,39 @@ STRATEGY_KPIS = {
         "is_live": True,
         "inception": "2026-07-12"
     },
+    "S19: Particle Filter QQQ/TQQQ/SQQQ": {
+        "asset": "QQQ, TQQQ, SQQQ",
+        "window": 16.41,
+        "cagr": 0.2192,
+        "max_dd": -0.5178,
+        "sharpe": 0.31,
+        "turnover": "~9 trades/year",
+        "currency": "MXN",
+        "is_live": True,
+        "inception": "2026-07-13"
+    },
+    "S20: Hurst Exponent Dynamic": {
+        "asset": "QQQ, TQQQ, SQQQ",
+        "window": 16.41,
+        "cagr": 0.2429,
+        "max_dd": -0.6371,
+        "sharpe": 0.34,
+        "turnover": "~4.4 trades/year",
+        "currency": "MXN",
+        "is_live": True,
+        "inception": "2026-07-13"
+    },
+    "S21: Shannon Entropy Dynamic": {
+        "asset": "QQQ, TQQQ, SQQQ",
+        "window": 16.41,
+        "cagr": 0.1085,
+        "max_dd": -0.7025,
+        "sharpe": 0.03,
+        "turnover": "~5.2 trades/year",
+        "currency": "MXN",
+        "is_live": True,
+        "inception": "2026-07-13"
+    },
     "S7: Core Hybrid Portfolio": {
         "asset": "Consolidated Multi-Asset",
         "window": 4.0,
@@ -281,6 +314,9 @@ def main():
     s16_data = load_json(os.path.join(dir_path, "portfolio_strategy16.json"))
     s17_data = load_json(os.path.join(dir_path, "portfolio_strategy17.json"))
     s18_data = load_json(os.path.join(dir_path, "portfolio_strategy18.json"))
+    s19_data = load_json(os.path.join(dir_path, "portfolio_strategy19.json"))
+    s20_data = load_json(os.path.join(dir_path, "portfolio_strategy20.json"))
+    s21_data = load_json(os.path.join(dir_path, "portfolio_strategy21.json"))
     s7_data = load_json(os.path.join(dir_path, "portfolio_multi_strategy.json"))
 
     # Map strategies to their data
@@ -302,6 +338,9 @@ def main():
         "S16: HMM Intraday Router": (s16_data, "MXN"),
         "S17: FIBRAs Dynamic": (s17_data, "MXN"),
         "S18: Efficient Frontier": (s18_data, "USD"),
+        "S19: Particle Filter QQQ/TQQQ/SQQQ": (s19_data, "MXN"),
+        "S20: Hurst Exponent Dynamic": (s20_data, "MXN"),
+        "S21: Shannon Entropy Dynamic": (s21_data, "MXN"),
         "S7: Core Hybrid Portfolio": (s7_data, "USD")
     }
 
@@ -339,7 +378,11 @@ def main():
             "S12: Vol-Targeted Trend (VTTL)",
             "S13: Risk Appetite (CARA)",
             "S14: Aggregator (HEDGE)",
-            "S15: Tracker (TRACK)"
+            "S15: Tracker (TRACK)",
+            "S16: HMM Intraday Router",
+            "S19: Particle Filter QQQ/TQQQ/SQQQ",
+            "S20: Hurst Exponent Dynamic",
+            "S21: Shannon Entropy Dynamic"
         ]:
             total_cap = 200000.0
         else:
