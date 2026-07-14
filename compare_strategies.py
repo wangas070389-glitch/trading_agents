@@ -104,9 +104,9 @@ def main():
         v_roi = (v_profit / v_total_cap) * 100.0
         v_alloc = (s1_invested / s1_market_val) * 100.0 if s1_market_val > 0 else 0.0
         v_sign = "+" if v_profit >= 0 else ""
-        report.append(f"| **Adaptive Dynamic Value (S1)** | ${s1_market_val:,.2f} | ${s1_cash:,.2f} | ${s1_invested:,.2f} | {v_alloc:.1f}% | {v_sign}${v_profit:,.2f} | {v_sign}{v_roi:.2f}% | 2026-06-03 | MXN |")
+        report.append(f"| **S1: Adaptive Value** | ${s1_market_val:,.2f} | ${s1_cash:,.2f} | ${s1_invested:,.2f} | {v_alloc:.1f}% | {v_sign}${v_profit:,.2f} | {v_sign}{v_roi:.2f}% | 2026-06-03 | MXN |")
     else:
-        report.append("| **Adaptive Dynamic Value (S1)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        report.append("| **S1: Adaptive Value** | *Not Initialized* | - | - | - | - | - | - | MXN |")
         
     # Parse S2
     s2_market_val = s2_cash = s2_invested = 0.0
@@ -119,9 +119,9 @@ def main():
         m_roi = (m_profit / m_total_cap) * 100.0
         m_alloc = (s2_invested / s2_market_val) * 100.0 if s2_market_val > 0 else 0.0
         m_sign = "+" if m_profit >= 0 else ""
-        report.append(f"| **1d MACD Systematic (S2)** | ${s2_market_val:,.2f} | ${s2_cash:,.2f} | ${s2_invested:,.2f} | {m_alloc:.1f}% | {m_sign}${m_profit:,.2f} | {m_sign}{m_roi:.2f}% | 2026-06-03 | MXN |")
+        report.append(f"| **S2: 1d MACD Systematic** | ${s2_market_val:,.2f} | ${s2_cash:,.2f} | ${s2_invested:,.2f} | {m_alloc:.1f}% | {m_sign}${m_profit:,.2f} | {m_sign}{m_roi:.2f}% | 2026-06-03 | MXN |")
     else:
-        report.append("| **1d MACD Systematic (S2)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        report.append("| **S2: 1d MACD Systematic** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse S3
     s3_market_val = s3_cash = s3_invested = 0.0
@@ -134,9 +134,9 @@ def main():
         u_roi = (u_profit / u_total_cap) * 100.0
         u_alloc = (s3_invested / s3_market_val) * 100.0 if s3_market_val > 0 else 0.0
         u_sign = "+" if u_profit >= 0 else ""
-        report.append(f"| **US Stock Momentum (S3)** | ${s3_market_val:,.2f} | ${s3_cash:,.2f} | ${s3_invested:,.2f} | {u_alloc:.1f}% | {u_sign}${u_profit:,.2f} | {u_sign}{u_roi:.2f}% | 2026-06-23 | USD |")
+        report.append(f"| **S3: US Stock Momentum** | ${s3_market_val:,.2f} | ${s3_cash:,.2f} | ${s3_invested:,.2f} | {u_alloc:.1f}% | {u_sign}${u_profit:,.2f} | {u_sign}{u_roi:.2f}% | 2026-06-23 | USD |")
     else:
-        report.append("| **US Stock Momentum (S3)** | *Not Initialized* | - | - | - | - | - | - | USD |")
+        report.append("| **S3: US Stock Momentum** | *Not Initialized* | - | - | - | - | - | - | USD |")
         
     # Parse S4
     s4_market_val = s4_cash = s4_invested = 0.0
@@ -149,9 +149,9 @@ def main():
         ud_roi = (ud_profit / ud_total_cap) * 100.0
         ud_alloc = (s4_invested / s4_market_val) * 100.0 if s4_market_val > 0 else 0.0
         ud_sign = "+" if ud_profit >= 0 else ""
-        report.append(f"| **US DCS Value-Growth (S4)** | ${s4_market_val:,.2f} | ${s4_cash:,.2f} | ${s4_invested:,.2f} | {ud_alloc:.1f}% | {ud_sign}${ud_profit:,.2f} | {ud_sign}{ud_roi:.2f}% | 2026-06-23 | USD |")
+        report.append(f"| **S4: US DCS Value-Growth** | ${s4_market_val:,.2f} | ${s4_cash:,.2f} | ${s4_invested:,.2f} | {ud_alloc:.1f}% | {ud_sign}${ud_profit:,.2f} | {ud_sign}{ud_roi:.2f}% | 2026-06-23 | USD |")
     else:
-        report.append("| **US DCS Value-Growth (S4)** | *Not Initialized* | - | - | - | - | - | - | USD |")
+        report.append("| **S4: US DCS Value-Growth** | *Not Initialized* | - | - | - | - | - | - | USD |")
         
     # Parse S5
     s5_market_val = s5_cash = s5_invested = 0.0
@@ -164,9 +164,9 @@ def main():
         a_roi = (a_profit / a_total_cap) * 100.0
         a_alloc = (s5_invested / s5_market_val) * 100.0 if s5_market_val > 0 else 0.0
         a_sign = "+" if a_profit >= 0 else ""
-        report.append(f"| **Alternative Assets (S5)** | ${s5_market_val:,.2f} | ${s5_cash:,.2f} | ${s5_invested:,.2f} | {a_alloc:.1f}% | {a_sign}${a_profit:,.2f} | {a_sign}{a_roi:.2f}% | 2026-06-23 | USD |")
+        report.append(f"| **S5: Alternative Assets** | ${s5_market_val:,.2f} | ${s5_cash:,.2f} | ${s5_invested:,.2f} | {a_alloc:.1f}% | {a_sign}${a_profit:,.2f} | {a_sign}{a_roi:.2f}% | 2026-06-23 | USD |")
     else:
-        report.append("| **Alternative Assets (S5)** | *Not Initialized* | - | - | - | - | - | - | USD |")
+        report.append("| **S5: Alternative Assets** | *Not Initialized* | - | - | - | - | - | - | USD |")
 
     # Parse S6
     s6_market_val = s6_cash = s6_invested = 0.0
@@ -179,9 +179,9 @@ def main():
         h_roi = (h_profit / h_total_cap) * 100.0
         h_alloc = (s6_invested / s6_market_val) * 100.0 if s6_market_val > 0 else 0.0
         h_sign = "+" if h_profit >= 0 else ""
-        report.append(f"| **High-Beta Momentum (S6)** | ${s6_market_val:,.2f} | ${s6_cash:,.2f} | ${s6_invested:,.2f} | {h_alloc:.1f}% | {h_sign}${h_profit:,.2f} | {h_sign}{h_roi:.2f}% | 2026-06-23 | USD |")
+        report.append(f"| **S6: High-Beta Momentum** | ${s6_market_val:,.2f} | ${s6_cash:,.2f} | ${s6_invested:,.2f} | {h_alloc:.1f}% | {h_sign}${h_profit:,.2f} | {h_sign}{h_roi:.2f}% | 2026-06-23 | USD |")
     else:
-        report.append("| **High-Beta Momentum (S6)** | *Not Initialized* | - | - | - | - | - | - | USD |")
+        report.append("| **S6: High-Beta Momentum** | *Not Initialized* | - | - | - | - | - | - | USD |")
 
     # Parse S8
     s8_market_val = s8_cash = s8_invested = 0.0
@@ -194,9 +194,9 @@ def main():
         div_roi = (div_profit / div_total_cap) * 100.0
         div_alloc = (s8_invested / s8_market_val) * 100.0 if s8_market_val > 0 else 0.0
         div_sign = "+" if div_profit >= 0 else ""
-        report.append(f"| **Dividend Quality (S8)** | ${s8_market_val:,.2f} | ${s8_cash:,.2f} | ${s8_invested:,.2f} | {div_alloc:.1f}% | {div_sign}${div_profit:,.2f} | {div_sign}{div_roi:.2f}% | 2026-06-25 | MXN |")
+        report.append(f"| **S8: Dividend Quality** | ${s8_market_val:,.2f} | ${s8_cash:,.2f} | ${s8_invested:,.2f} | {div_alloc:.1f}% | {div_sign}${div_profit:,.2f} | {div_sign}{div_roi:.2f}% | 2026-06-25 | MXN |")
     else:
-        report.append("| **Dividend Quality (S8)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        report.append("| **S8: Dividend Quality** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse S9
     s9_market_val = s9_cash = s9_invested = 0.0
@@ -209,9 +209,9 @@ def main():
         s9_roi = (s9_profit / s9_total_cap) * 100.0
         s9_alloc = (s9_invested / s9_market_val) * 100.0 if s9_market_val > 0 else 0.0
         s9_sign = "+" if s9_profit >= 0 else ""
-        report.append(f"| **AI Regime Stat-Arb (S9)** | ${s9_market_val:,.2f} | ${s9_cash:,.2f} | ${s9_invested:,.2f} | {s9_alloc:.1f}% | {s9_sign}${s9_profit:,.2f} | {s9_sign}{s9_roi:.2f}% | 2026-06-30 | MXN |")
+        report.append(f"| **S9: AI Regime Stat-Arb** | ${s9_market_val:,.2f} | ${s9_cash:,.2f} | ${s9_invested:,.2f} | {s9_alloc:.1f}% | {s9_sign}${s9_profit:,.2f} | {s9_sign}{s9_roi:.2f}% | 2026-06-30 | MXN |")
     else:
-        report.append("| **AI Regime Stat-Arb (S9)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        report.append("| **S9: AI Regime Stat-Arb** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse S10
     s10_market_val = s10_cash = s10_invested = 0.0
@@ -229,9 +229,9 @@ def main():
         s10_roi = (s10_profit / s10_total_cap) * 100.0
         s10_alloc = (s10_invested / s10_market_val) * 100.0 if s10_market_val > 0 else 0.0
         s10_sign = "+" if s10_profit >= 0 else ""
-        report.append(f"| **AI Intraday VWAP (S10)** | ${s10_market_val:,.2f} | ${s10_cash:,.2f} | ${s10_invested:,.2f} | {s10_alloc:.1f}% | {s10_sign}${s10_profit:,.2f} | {s10_sign}{s10_roi:.2f}% | 2026-07-02 | MXN |")
+        report.append(f"| **S10: AI Intraday VWAP** | ${s10_market_val:,.2f} | ${s10_cash:,.2f} | ${s10_invested:,.2f} | {s10_alloc:.1f}% | {s10_sign}${s10_profit:,.2f} | {s10_sign}{s10_roi:.2f}% | 2026-07-02 | MXN |")
     else:
-        report.append("| **AI Intraday VWAP (S10)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        report.append("| **S10: AI Intraday VWAP** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse S11
     s11_market_val = s11_cash = s11_invested = 0.0
@@ -249,9 +249,9 @@ def main():
         s11_roi = (s11_profit / s11_total_cap) * 100.0
         s11_alloc = (s11_invested / s11_market_val) * 100.0 if s11_market_val > 0 else 0.0
         s11_sign = "+" if s11_profit >= 0 else ""
-        report.append(f"| **AI Intraday CCI-ADX (S11)** | ${s11_market_val:,.2f} | ${s11_cash:,.2f} | ${s11_invested:,.2f} | {s11_alloc:.1f}% | {s11_sign}${s11_profit:,.2f} | {s11_sign}{s11_roi:.2f}% | 2026-07-02 | MXN |")
+        report.append(f"| **S11: AI Intraday CCI-ADX** | ${s11_market_val:,.2f} | ${s11_cash:,.2f} | ${s11_invested:,.2f} | {s11_alloc:.1f}% | {s11_sign}${s11_profit:,.2f} | {s11_sign}{s11_roi:.2f}% | 2026-07-02 | MXN |")
     else:
-        report.append("| **AI Intraday CCI-ADX (S11)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        report.append("| **S11: AI Intraday CCI-ADX** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse S12
     s12_market_val = s12_cash = s12_invested = 0.0
@@ -264,9 +264,9 @@ def main():
         s12_roi = (s12_profit / s12_total_cap) * 100.0
         s12_alloc = (s12_invested / s12_market_val) * 100.0 if s12_market_val > 0 else 0.0
         s12_sign = "+" if s12_profit >= 0 else ""
-        report.append(f"| **VTTL Trend-Carry (S12)** | ${s12_market_val:,.2f} | ${s12_cash:,.2f} | ${s12_invested:,.2f} | {s12_alloc:.1f}% | {s12_sign}${s12_profit:,.2f} | {s12_sign}{s12_roi:.2f}% | 2026-07-06 | MXN |")
+        report.append(f"| **S12: Vol-Targeted Trend (VTTL)** | ${s12_market_val:,.2f} | ${s12_cash:,.2f} | ${s12_invested:,.2f} | {s12_alloc:.1f}% | {s12_sign}${s12_profit:,.2f} | {s12_sign}{s12_roi:.2f}% | 2026-07-06 | MXN |")
     else:
-        report.append("| **VTTL Trend-Carry (S12)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        report.append("| **S12: Vol-Targeted Trend (VTTL)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse S13
     s13_market_val = s13_cash = s13_invested = 0.0
@@ -284,9 +284,9 @@ def main():
         s13_roi = (s13_profit / s13_total_cap) * 100.0
         s13_alloc = (s13_invested / s13_market_val) * 100.0 if s13_market_val > 0 else 0.0
         s13_sign = "+" if s13_profit >= 0 else ""
-        report.append(f"| **CARA Cross-Asset (S13)** | ${s13_market_val:,.2f} | ${s13_cash:,.2f} | ${s13_invested:,.2f} | {s13_alloc:.1f}% | {s13_sign}${s13_profit:,.2f} | {s13_sign}{s13_roi:.2f}% | 2026-07-06 | MXN |")
+        report.append(f"| **S13: Risk Appetite (CARA)** | ${s13_market_val:,.2f} | ${s13_cash:,.2f} | ${s13_invested:,.2f} | {s13_alloc:.1f}% | {s13_sign}${s13_profit:,.2f} | {s13_sign}{s13_roi:.2f}% | 2026-07-06 | MXN |")
     else:
-        report.append("| **CARA Cross-Asset (S13)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        report.append("| **S13: Risk Appetite (CARA)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse S14
     s14_market_val = s14_cash = s14_invested = 0.0
@@ -301,9 +301,9 @@ def main():
         s14_roi = (s14_profit / s14_total_cap) * 100.0
         s14_alloc = (s14_invested / s14_market_val) * 100.0 if s14_market_val > 0 else 0.0
         s14_sign = "+" if s14_profit >= 0 else ""
-        report.append(f"| **HEDGE Aggregator (S14)** | ${s14_market_val:,.2f} | ${s14_cash:,.2f} | ${s14_invested:,.2f} | {s14_alloc:.1f}% | {s14_sign}${s14_profit:,.2f} | {s14_sign}{s14_roi:.2f}% | 2026-07-06 | MXN |")
+        report.append(f"| **S14: Aggregator (HEDGE)** | ${s14_market_val:,.2f} | ${s14_cash:,.2f} | ${s14_invested:,.2f} | {s14_alloc:.1f}% | {s14_sign}${s14_profit:,.2f} | {s14_sign}{s14_roi:.2f}% | 2026-07-06 | MXN |")
     else:
-        report.append("| **HEDGE Aggregator (S14)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        report.append("| **S14: Aggregator (HEDGE)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse S15
     s15_market_val = s15_cash = s15_invested = 0.0
@@ -318,9 +318,9 @@ def main():
         s15_roi = (s15_profit / s15_total_cap) * 100.0
         s15_alloc = (s15_invested / s15_market_val) * 100.0 if s15_market_val > 0 else 0.0
         s15_sign = "+" if s15_profit >= 0 else ""
-        report.append(f"| **TRACK Tracker (S15)** | ${s15_market_val:,.2f} | ${s15_cash:,.2f} | ${s15_invested:,.2f} | {s15_alloc:.1f}% | {s15_sign}${s15_profit:,.2f} | {s15_sign}{s15_roi:.2f}% | 2026-07-06 | MXN |")
+        report.append(f"| **S15: Tracker (TRACK)** | ${s15_market_val:,.2f} | ${s15_cash:,.2f} | ${s15_invested:,.2f} | {s15_alloc:.1f}% | {s15_sign}${s15_profit:,.2f} | {s15_sign}{s15_roi:.2f}% | 2026-07-06 | MXN |")
     else:
-        report.append("| **TRACK Tracker (S15)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        report.append("| **S15: Tracker (TRACK)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse S16
     s16_market_val = s16_cash = s16_invested = 0.0
@@ -333,9 +333,9 @@ def main():
         s16_roi = (s16_profit / s16_total_cap) * 100.0
         s16_alloc = (s16_invested / s16_market_val) * 100.0 if s16_market_val > 0 else 0.0
         s16_sign = "+" if s16_profit >= 0 else ""
-        report.append(f"| **HMM Intraday Router (S16)** | ${s16_market_val:,.2f} | ${s16_cash:,.2f} | ${s16_invested:,.2f} | {s16_alloc:.1f}% | {s16_sign}${s16_profit:,.2f} | {s16_sign}{s16_roi:.2f}% | 2026-07-07 | MXN |")
+        report.append(f"| **S16: HMM Intraday Router** | ${s16_market_val:,.2f} | ${s16_cash:,.2f} | ${s16_invested:,.2f} | {s16_alloc:.1f}% | {s16_sign}${s16_profit:,.2f} | {s16_sign}{s16_roi:.2f}% | 2026-07-07 | MXN |")
     else:
-        report.append("| **HMM Intraday Router (S16)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        report.append("| **S16: HMM Intraday Router** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse S17
     s17_market_val = s17_cash = s17_invested = 0.0
@@ -348,9 +348,9 @@ def main():
         s17_roi = (s17_profit / s17_total_cap) * 100.0
         s17_alloc = (s17_invested / s17_market_val) * 100.0 if s17_market_val > 0 else 0.0
         s17_sign = "+" if s17_profit >= 0 else ""
-        report.append(f"| **FIBRAs Dynamic (S17)** | ${s17_market_val:,.2f} | ${s17_cash:,.2f} | ${s17_invested:,.2f} | {s17_alloc:.1f}% | {s17_sign}${s17_profit:,.2f} | {s17_sign}{s17_roi:.2f}% | 2026-07-12 | MXN |")
+        report.append(f"| **S17: FIBRAs Dynamic** | ${s17_market_val:,.2f} | ${s17_cash:,.2f} | ${s17_invested:,.2f} | {s17_alloc:.1f}% | {s17_sign}${s17_profit:,.2f} | {s17_sign}{s17_roi:.2f}% | 2026-07-12 | MXN |")
     else:
-        report.append("| **FIBRAs Dynamic (S17)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        report.append("| **S17: FIBRAs Dynamic** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse S18
     s18_market_val = 0.0
@@ -360,9 +360,9 @@ def main():
         s18_profit = s18_market_val - s18_total_cap
         s18_roi = (s18_profit / s18_total_cap) * 100.0
         s18_sign = "+" if s18_profit >= 0 else ""
-        report.append(f"| **Efficient Frontier (S18)** | ${s18_market_val:,.2f} | $0.00 | ${s18_market_val:,.2f} | 100.0% | {s18_sign}${s18_profit:,.2f} | {s18_sign}{s18_roi:.2f}% | 2026-07-12 | USD |")
+        report.append(f"| **S18: Efficient Frontier** | ${s18_market_val:,.2f} | $0.00 | ${s18_market_val:,.2f} | 100.0% | {s18_sign}${s18_profit:,.2f} | {s18_sign}{s18_roi:.2f}% | 2026-07-12 | USD |")
     else:
-        report.append("| **Efficient Frontier (S18)** | *Not Initialized* | - | - | - | - | - | - | USD |")
+        report.append("| **S18: Efficient Frontier** | *Not Initialized* | - | - | - | - | - | - | USD |")
 
     # Parse S19
     s19_market_val = s19_cash = s19_invested = 0.0
@@ -375,7 +375,7 @@ def main():
         s19_roi = (s19_profit / s19_total_cap) * 100.0
         s19_alloc = (s19_invested / s19_market_val) * 100.0 if s19_market_val > 0 else 0.0
         s19_sign = "+" if s19_profit >= 0 else ""
-        report.append(f"| **Particle Filter systematic (S19)** | ${s19_market_val:,.2f} | ${s19_cash:,.2f} | ${s19_invested:,.2f} | {s19_alloc:.1f}% | {s19_sign}${s19_profit:,.2f} | {s19_sign}{s19_roi:.2f}% | 2026-07-13 | MXN |")
+        report.append(f"| **S19: Particle Filter QQQ/TQQQ/SQQQ** | ${s19_market_val:,.2f} | ${s19_cash:,.2f} | ${s19_invested:,.2f} | {s19_alloc:.1f}% | {s19_sign}${s19_profit:,.2f} | {s19_sign}{s19_roi:.2f}% | 2026-07-13 | MXN |")
     else:
         report.append("| **Particle Filter systematic (S19)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
@@ -390,9 +390,9 @@ def main():
         s20_roi = (s20_profit / s20_total_cap) * 100.0
         s20_alloc = (s20_invested / s20_market_val) * 100.0 if s20_market_val > 0 else 0.0
         s20_sign = "+" if s20_profit >= 0 else ""
-        report.append(f"| **Hurst systematic (S20)** | ${s20_market_val:,.2f} | ${s20_cash:,.2f} | ${s20_invested:,.2f} | {s20_alloc:.1f}% | {s20_sign}${s20_profit:,.2f} | {s20_sign}{s20_roi:.2f}% | 2026-07-13 | MXN |")
+        report.append(f"| **S20: Hurst Exponent Dynamic** | ${s20_market_val:,.2f} | ${s20_cash:,.2f} | ${s20_invested:,.2f} | {s20_alloc:.1f}% | {s20_sign}${s20_profit:,.2f} | {s20_sign}{s20_roi:.2f}% | 2026-07-13 | MXN |")
     else:
-        report.append("| **Hurst systematic (S20)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        report.append("| **S20: Hurst Exponent Dynamic** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse S21
     s21_market_val = s21_cash = s21_invested = 0.0
@@ -405,9 +405,9 @@ def main():
         s21_roi = (s21_profit / s21_total_cap) * 100.0
         s21_alloc = (s21_invested / s21_market_val) * 100.0 if s21_market_val > 0 else 0.0
         s21_sign = "+" if s21_profit >= 0 else ""
-        report.append(f"| **Entropy systematic (S21)** | ${s21_market_val:,.2f} | ${s21_cash:,.2f} | ${s21_invested:,.2f} | {s21_alloc:.1f}% | {s21_sign}${s21_profit:,.2f} | {s21_sign}{s21_roi:.2f}% | 2026-07-13 | MXN |")
+        report.append(f"| **S21: Shannon Entropy Dynamic** | ${s21_market_val:,.2f} | ${s21_cash:,.2f} | ${s21_invested:,.2f} | {s21_alloc:.1f}% | {s21_sign}${s21_profit:,.2f} | {s21_sign}{s21_roi:.2f}% | 2026-07-13 | MXN |")
     else:
-        report.append("| **Entropy systematic (S21)** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+        report.append("| **S21: Shannon Entropy Dynamic** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse Strategy 7 (Consolidated Multi-Strategy)
     ms_val = float(port_multi_strategy.get("total_portfolio_value_usd", 0.0)) if port_multi_strategy else 0.0
@@ -430,9 +430,9 @@ def main():
         roi_ms = (profit_usd / incept_capital) * 100.0 if ms_val > 0 else 0.0
         ms_sign = "+" if profit_usd >= 0 else ""
         
-        report.append(f"| **Strategy 7 (Consolidated Core)** | ${ms_val:,.2f} | ${ms_cash:,.2f} | ${ms_invested:,.2f} | {((ms_invested/ms_val)*100.0):.1f}% | {ms_sign}${profit_usd:,.2f} | {ms_sign}{roi_ms:.2f}% | 2026-07-02 | USD |")
+        report.append(f"| **S7: Core Hybrid Portfolio** | ${ms_val:,.2f} | ${ms_cash:,.2f} | ${ms_invested:,.2f} | {((ms_invested/ms_val)*100.0):.1f}% | {ms_sign}${profit_usd:,.2f} | {ms_sign}{roi_ms:.2f}% | 2026-07-02 | USD |")
     else:
-        report.append("| **Strategy 7 (Consolidated Core)** | *Not Initialized* | - | - | - | - | - | - | USD |")
+        report.append("| **S7: Core Hybrid Portfolio** | *Not Initialized* | - | - | - | - | - | - | USD |")
         
     report.append("\n*Note: Strategy 7 consolidated values represent all strategies rebalanced dynamically under risk parity.*")
 

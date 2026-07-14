@@ -413,7 +413,7 @@ def main():
         s7_roi = (s7_profit / 384000.0) * 100.0
         s7_alloc = (s7_invested / s7_nav) * 100.0 if s7_nav > 0 else 0.0
         s7_sign = "+" if s7_profit >= 0 else ""
-        report.append(f"| **Strategy 7 (Consolidated Core)** | ${s7_nav:,.2f} | ${s7_cash:,.2f} | ${s7_invested:,.2f} | {s7_alloc:.1f}% | {s7_sign}${s7_profit:,.2f} | {s7_sign}{s7_roi:.2f}% | 2026-07-02 | USD |")
+        report.append(f"| **S7: Core Hybrid Portfolio** | ${s7_nav:,.2f} | ${s7_cash:,.2f} | ${s7_invested:,.2f} | {s7_alloc:.1f}% | {s7_sign}${s7_profit:,.2f} | {s7_sign}{s7_roi:.2f}% | 2026-07-02 | USD |")
 
     report.append("\n*Note: CARA (S13) is retired standalone and survives only as an expert sleeve in S14/S15. Strategy 7 consolidated values represent all strategies rebalanced dynamically under risk parity.*\n")
 
