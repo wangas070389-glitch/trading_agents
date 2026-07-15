@@ -121,6 +121,9 @@ def main():
     if os.path.exists(s15_path):
         with open(s15_path, 'r', encoding='utf-8') as f: s15_data = json.load(f)
 
+    s17_path = os.path.join(dir_path, "portfolio_strategy17.json")
+    s19_path = os.path.join(dir_path, "portfolio_strategy19.json")
+    s20_path = os.path.join(dir_path, "portfolio_strategy20.json")
     s21_path = os.path.join(dir_path, "portfolio_strategy21.json")
     s22_path = os.path.join(dir_path, "portfolio_strategy22.json")
     s23_path = os.path.join(dir_path, "portfolio_strategy23.json")
@@ -129,8 +132,14 @@ def main():
     s27_path = os.path.join(dir_path, "portfolio_strategy27.json")
     s29_path = os.path.join(dir_path, "portfolio_strategy29.json")
     s30_path = os.path.join(dir_path, "portfolio_strategy30.json")
-    s21_data = s22_data = s23_data = s24_data = s25_data = s27_data = s29_data = s30_data = None
+    s17_data = s19_data = s20_data = s21_data = s22_data = s23_data = s24_data = s25_data = s27_data = s29_data = s30_data = None
 
+    if os.path.exists(s17_path):
+        with open(s17_path, 'r', encoding='utf-8') as f: s17_data = json.load(f)
+    if os.path.exists(s19_path):
+        with open(s19_path, 'r', encoding='utf-8') as f: s19_data = json.load(f)
+    if os.path.exists(s20_path):
+        with open(s20_path, 'r', encoding='utf-8') as f: s20_data = json.load(f)
     if os.path.exists(s21_path):
         with open(s21_path, 'r', encoding='utf-8') as f: s21_data = json.load(f)
     if os.path.exists(s22_path):
@@ -161,6 +170,9 @@ def main():
     s13_nav_mxn, s13_cash_mxn, s13_cash_usd = get_nav(s13_data)
     s14_nav_mxn, s14_cash_mxn, s14_cash_usd = get_nav(s14_data)
     s15_nav_mxn, s15_cash_mxn, s15_cash_usd = get_nav(s15_data)
+    s17_nav_mxn, _, _ = get_nav(s17_data)
+    s19_nav_mxn, _, _ = get_nav(s19_data)
+    s20_nav_mxn, _, _ = get_nav(s20_data)
     s21_nav_mxn, _, _ = get_nav(s21_data)
     s22_nav_mxn, _, _ = get_nav(s22_data)
     s23_nav_mxn, _, _ = get_nav(s23_data)
@@ -180,6 +192,9 @@ def main():
     s13_nav_usd, s13_cash_usd = s13_nav_mxn / usd_mxn_rate, (s13_cash_mxn / usd_mxn_rate + s13_cash_usd)
     s14_nav_usd, s14_cash_usd = s14_nav_mxn / usd_mxn_rate + s14_cash_usd, (s14_cash_mxn / usd_mxn_rate + s14_cash_usd)
     s15_nav_usd, s15_cash_usd = s15_nav_mxn / usd_mxn_rate + s15_cash_usd, (s15_cash_mxn / usd_mxn_rate + s15_cash_usd)
+    s17_nav_usd = s17_nav_mxn / usd_mxn_rate
+    s19_nav_usd = s19_nav_mxn / usd_mxn_rate
+    s20_nav_usd = s20_nav_mxn / usd_mxn_rate
     s21_nav_usd = s21_nav_mxn / usd_mxn_rate
     s22_nav_usd = s22_nav_mxn / usd_mxn_rate
     s23_nav_usd = s23_nav_mxn / usd_mxn_rate
@@ -354,6 +369,9 @@ def main():
             "s13_nav_usd": s13_nav_usd,
             "s14_nav_usd": s14_nav_usd,
             "s15_nav_usd": s15_nav_usd,
+            "s17_nav_usd": s17_nav_usd,
+            "s19_nav_usd": s19_nav_usd,
+            "s20_nav_usd": s20_nav_usd,
             "s21_nav_usd": s21_nav_usd,
             "s22_nav_usd": s22_nav_usd,
             "s23_nav_usd": s23_nav_usd,
@@ -379,6 +397,9 @@ def main():
             "s13_nav_usd": s13_nav_usd,
             "s14_nav_usd": s14_nav_usd,
             "s15_nav_usd": s15_nav_usd,
+            "s17_nav_usd": s17_nav_usd,
+            "s19_nav_usd": s19_nav_usd,
+            "s20_nav_usd": s20_nav_usd,
             "s21_nav_usd": s21_nav_usd,
             "s22_nav_usd": s22_nav_usd,
             "s23_nav_usd": s23_nav_usd,
