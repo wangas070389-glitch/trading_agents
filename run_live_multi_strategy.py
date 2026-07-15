@@ -121,12 +121,24 @@ def main():
     if os.path.exists(s15_path):
         with open(s15_path, 'r', encoding='utf-8') as f: s15_data = json.load(f)
 
+    s21_path = os.path.join(dir_path, "portfolio_strategy21.json")
+    s22_path = os.path.join(dir_path, "portfolio_strategy22.json")
+    s23_path = os.path.join(dir_path, "portfolio_strategy23.json")
+    s24_path = os.path.join(dir_path, "portfolio_strategy24.json")
     s25_path = os.path.join(dir_path, "portfolio_strategy25.json")
     s27_path = os.path.join(dir_path, "portfolio_strategy27.json")
     s29_path = os.path.join(dir_path, "portfolio_strategy29.json")
     s30_path = os.path.join(dir_path, "portfolio_strategy30.json")
-    s25_data = s27_data = s29_data = s30_data = None
+    s21_data = s22_data = s23_data = s24_data = s25_data = s27_data = s29_data = s30_data = None
 
+    if os.path.exists(s21_path):
+        with open(s21_path, 'r', encoding='utf-8') as f: s21_data = json.load(f)
+    if os.path.exists(s22_path):
+        with open(s22_path, 'r', encoding='utf-8') as f: s22_data = json.load(f)
+    if os.path.exists(s23_path):
+        with open(s23_path, 'r', encoding='utf-8') as f: s23_data = json.load(f)
+    if os.path.exists(s24_path):
+        with open(s24_path, 'r', encoding='utf-8') as f: s24_data = json.load(f)
     if os.path.exists(s25_path):
         with open(s25_path, 'r', encoding='utf-8') as f: s25_data = json.load(f)
     if os.path.exists(s27_path):
@@ -149,6 +161,10 @@ def main():
     s13_nav_mxn, s13_cash_mxn, s13_cash_usd = get_nav(s13_data)
     s14_nav_mxn, s14_cash_mxn, s14_cash_usd = get_nav(s14_data)
     s15_nav_mxn, s15_cash_mxn, s15_cash_usd = get_nav(s15_data)
+    s21_nav_mxn, _, _ = get_nav(s21_data)
+    s22_nav_mxn, _, _ = get_nav(s22_data)
+    s23_nav_mxn, _, _ = get_nav(s23_data)
+    s24_nav_mxn, _, _ = get_nav(s24_data)
     s25_nav_mxn, _, _ = get_nav(s25_data)
     s27_nav_mxn, _, _ = get_nav(s27_data)
     s29_nav_mxn, _, _ = get_nav(s29_data)
@@ -164,6 +180,10 @@ def main():
     s13_nav_usd, s13_cash_usd = s13_nav_mxn / usd_mxn_rate, (s13_cash_mxn / usd_mxn_rate + s13_cash_usd)
     s14_nav_usd, s14_cash_usd = s14_nav_mxn / usd_mxn_rate + s14_cash_usd, (s14_cash_mxn / usd_mxn_rate + s14_cash_usd)
     s15_nav_usd, s15_cash_usd = s15_nav_mxn / usd_mxn_rate + s15_cash_usd, (s15_cash_mxn / usd_mxn_rate + s15_cash_usd)
+    s21_nav_usd = s21_nav_mxn / usd_mxn_rate
+    s22_nav_usd = s22_nav_mxn / usd_mxn_rate
+    s23_nav_usd = s23_nav_mxn / usd_mxn_rate
+    s24_nav_usd = s24_nav_mxn / usd_mxn_rate
     s25_nav_usd = s25_nav_mxn / usd_mxn_rate
     s27_nav_usd = s27_nav_mxn / usd_mxn_rate
     s29_nav_usd = s29_nav_mxn / usd_mxn_rate
@@ -317,29 +337,57 @@ def main():
     max_dd = drawdowns.min()
 
     # Update state history
-    if is_new_day or not state.get("history"):
-        if not state.get("history") or state["history"][-1]["date"] != today_str:
-            state["history"].append({
-                "date": today_str,
-                "nav_usd": total_nav_usd,
-                "cash_usd": total_cash_usd,
-                "s1_nav_usd": s1_nav_usd,
-                "s4_nav_usd": s4_nav_usd,
-                "s5_nav_usd": s5_nav_usd,
-                "s6_nav_usd": s6_nav_usd,
-                "s8_nav_usd": s8_nav_usd,
-                "s9_nav_usd": s9_nav_usd,
-                "s10_nav_usd": s10_nav_usd,
-                "s11_nav_usd": s11_nav_usd,
-                "s12_nav_usd": s12_nav_usd,
-                "s13_nav_usd": s13_nav_usd,
-                "s14_nav_usd": s14_nav_usd,
-                "s15_nav_usd": s15_nav_usd,
-                "s25_nav_usd": s25_nav_usd,
-                "s27_nav_usd": s27_nav_usd,
-                "s29_nav_usd": s29_nav_usd,
-                "s30_nav_usd": s30_nav_usd
-            })
+    if not state.get("history") or state["history"][-1]["date"] != today_str:
+        state["history"].append({
+            "date": today_str,
+            "nav_usd": total_nav_usd,
+            "cash_usd": total_cash_usd,
+            "s1_nav_usd": s1_nav_usd,
+            "s4_nav_usd": s4_nav_usd,
+            "s5_nav_usd": s5_nav_usd,
+            "s6_nav_usd": s6_nav_usd,
+            "s8_nav_usd": s8_nav_usd,
+            "s9_nav_usd": s9_nav_usd,
+            "s10_nav_usd": s10_nav_usd,
+            "s11_nav_usd": s11_nav_usd,
+            "s12_nav_usd": s12_nav_usd,
+            "s13_nav_usd": s13_nav_usd,
+            "s14_nav_usd": s14_nav_usd,
+            "s15_nav_usd": s15_nav_usd,
+            "s21_nav_usd": s21_nav_usd,
+            "s22_nav_usd": s22_nav_usd,
+            "s23_nav_usd": s23_nav_usd,
+            "s24_nav_usd": s24_nav_usd,
+            "s25_nav_usd": s25_nav_usd,
+            "s27_nav_usd": s27_nav_usd,
+            "s29_nav_usd": s29_nav_usd,
+            "s30_nav_usd": s30_nav_usd
+        })
+    else:
+        state["history"][-1].update({
+            "nav_usd": total_nav_usd,
+            "cash_usd": total_cash_usd,
+            "s1_nav_usd": s1_nav_usd,
+            "s4_nav_usd": s4_nav_usd,
+            "s5_nav_usd": s5_nav_usd,
+            "s6_nav_usd": s6_nav_usd,
+            "s8_nav_usd": s8_nav_usd,
+            "s9_nav_usd": s9_nav_usd,
+            "s10_nav_usd": s10_nav_usd,
+            "s11_nav_usd": s11_nav_usd,
+            "s12_nav_usd": s12_nav_usd,
+            "s13_nav_usd": s13_nav_usd,
+            "s14_nav_usd": s14_nav_usd,
+            "s15_nav_usd": s15_nav_usd,
+            "s21_nav_usd": s21_nav_usd,
+            "s22_nav_usd": s22_nav_usd,
+            "s23_nav_usd": s23_nav_usd,
+            "s24_nav_usd": s24_nav_usd,
+            "s25_nav_usd": s25_nav_usd,
+            "s27_nav_usd": s27_nav_usd,
+            "s29_nav_usd": s29_nav_usd,
+            "s30_nav_usd": s30_nav_usd
+        })
 
     # Update meta values
     state["total_portfolio_value_usd"] = total_nav_usd
