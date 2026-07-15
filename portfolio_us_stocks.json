@@ -1,55 +1,15 @@
 {
   "total_capital": 99810.4,
-  "cash_balance": 527.55,
+  "cash_balance": NaN,
   "holdings": [
     {
-      "ticker": "AMZN",
-      "shares": 82,
-      "buy_price": 241.6999969482422,
-      "last_price": 244.16000366210938,
-      "peak_price": 251.02999877929688,
-      "target_weight": 0.2
-    },
-    {
-      "ticker": "AAPL",
-      "shares": 64,
-      "buy_price": 308.6300048828125,
-      "last_price": 312.6600036621094,
-      "peak_price": 323.45001220703125,
-      "target_weight": 0.2
-    },
-    {
-      "ticker": "GOOGL",
-      "shares": 55,
-      "buy_price": 359.9100036621094,
-      "last_price": 366.4599914550781,
-      "peak_price": 367.92999267578125,
-      "target_weight": 0.2
-    },
-    {
-      "ticker": "NVDA",
-      "shares": 79,
-      "buy_price": 210.9600067138672,
-      "last_price": 210.9600067138672,
-      "peak_price": 212.5399932861328,
-      "target_weight": 0.16666666666666666
-    },
-    {
       "ticker": "META",
-      "shares": 24,
-      "buy_price": 669.2100219726562,
-      "last_price": 669.2100219726562,
+      "shares": 37,
+      "buy_price": 666.34,
+      "last_price": 661.0399780273438,
       "peak_price": 677.8599853515625,
-      "target_weight": 0.16666666666666666
-    },
-    {
-      "ticker": "AVGO",
-      "shares": 41,
-      "buy_price": 399.9700012207031,
-      "last_price": 399.9700012207031,
-      "peak_price": 402.44000244140625,
-      "target_weight": 0.16666666666666666
+      "target_weight": 0.25
     }
   ],
-  "last_updated": "2026-07-14 21:59:52"
+  "last_updated": "2026-07-14 23:00:04"
 }

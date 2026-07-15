@@ -134,9 +134,50 @@ jobs:
     - name: Run Live Strategy 17 FIBRAs
       run: python run_live_strategy17.py
 
+    # 5fffffffff-4. Execute Live Strategy 19 Particle Filter QQQ
+    - name: Run Live Strategy 19 Particle Filter QQQ
+      run: python run_live_strategy19.py
+
+    # 5fffffffff-5. Execute Live Strategy 20 Hurst Exponent Dynamic
+    - name: Run Live Strategy 20 Hurst Exponent Dynamic
+      run: python run_live_strategy20.py
+
+    # 5fffffffff-6. Execute Live Strategy 21 Golden Entropy
+    - name: Run Live Strategy 21 Golden Entropy
+      run: python run_live_strategy21.py
+
+    # 5fffffffff-7. Execute Live Strategy 22 Walk-Forward ML
+    - name: Run Live Strategy 22 Walk-Forward ML
+      run: python run_live_strategy22.py
+
+    # 5fffffffff-8. Execute Live Strategy 23 Calculus S&R
+    - name: Run Live Strategy 23 Calculus S&R
+      run: python run_live_strategy23.py
+
+    # 5fffffffff-9. Execute Live Strategy 24 ML Classifier
+    - name: Run Live Strategy 24 ML Classifier
+      run: python run_live_strategy24.py
+
+    # 5fffffffff-10. Execute Live Strategy 25 Golden MACD BMV
+    - name: Run Live Strategy 25 Golden MACD BMV
+      run: python run_live_strategy25.py
+
+    # 5fffffffff-11. Execute Live Strategy 27 Golden Hurst
+    - name: Run Live Strategy 27 Golden Hurst
+      run: python run_live_strategy27.py
+
+    # 5fffffffff-12. Execute Live Strategy 29 Golden Stat-Arb
+    - name: Run Live Strategy 29 Golden Stat-Arb
+      run: python run_live_strategy29.py
+
+    # 5fffffffff-13. Execute Live Strategy 30 Golden MACD US Stocks
+    - name: Run Live Strategy 30 Golden MACD US Stocks
+      run: python run_live_strategy30.py
+
     # 5g. Execute Live Multi-Strategy Orchestration
     - name: Run Live Multi-Strategy Orchestrator
       run: python run_live_multi_strategy.py
+
 
     # 5g-2. Execute Shadow Frontier Tracker
     - name: Run Shadow Frontier Tracker

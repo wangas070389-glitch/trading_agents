@@ -1,7 +1,7 @@
 {
   "total_capital": 200812.43,
-  "cash_balance_mxn": 141638.08,
-  "cash_balance_usd": 1621.5663,
+  "cash_balance_mxn": 141639.15,
+  "cash_balance_usd": 1621.5747,
   "holdings": [
     {
       "ticker": "TQQQ",
@@ -20,5 +20,5 @@
     "TSMOM": -0.005606302707061249,
     "CASH_USD": -0.006704611816261009
   },
-  "last_updated": "2026-07-14 22:00:42"
+  "last_updated": "2026-07-14 23:01:27"
 }

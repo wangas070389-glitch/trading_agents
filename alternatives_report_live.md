@@ -2,7 +2,7 @@
 **Execution Date:** 2026-07-14 | **Strategy Version:** Alternative Assets Isolated V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $101,255.69 USD
+* **Total Portfolio NAV:** $101,292.32 USD
 * **Total Cash Balance:** $50,773.52 USD
 * **Equity Exposure:** 49.9%
 * **Active Holdings Count:** 3 of 5 positions
@@ -10,8 +10,8 @@
 ## 2. Current Holdings
 | Ticker | Type | Shares Held | Avg Cost | Last Price | Market Value | Target Weight |
 | :--- | :---: | :---: | :---: | :---: | ---: | :---: |
-| **EURUSD=X** | FOREX | 13154.0000 | $1.1370 | $1.1426 | $15,029.71 | 15.0% |
-| **GBPUSD=X** | FOREX | 11354.0000 | $1.3165 | $1.3387 | $15,199.67 | 15.0% |
+| **EURUSD=X** | FOREX | 13154.0000 | $1.1370 | $1.1440 | $15,048.62 | 15.0% |
+| **GBPUSD=X** | FOREX | 11354.0000 | $1.3165 | $1.3403 | $15,217.39 | 15.0% |
 | **DBA** | COMMODITY | 733.0000 | $27.5278 | $27.6300 | $20,252.79 | 20.0% |
 
 ## 3. Today's Execution Logs
@@ -20,13 +20,13 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Asset Type | Signal | Price | Indicator Diagnostics | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :--- | :--- |
-| **BTC-USD** | CRYPTO | SELL | $64,634.8008 | SMA 200: $73,627.16, MACD: -107.0082, Signal: -554.5670 | MACD cross down or bearish trend break |
-| **ETH-USD** | CRYPTO | SELL | $1,875.4100 | SMA 200: $2,210.65, MACD: 22.6172, Signal: 1.9899 | MACD cross down or bearish trend break |
-| **GLD** | COMMODITY | SELL | $372.1500 | SMA 100: $421.94, Donchian High: $402.04, Donchian Low: $365.77 | Breakout below 10-day low or bearish trend break |
-| **SLV** | COMMODITY | SELL | $53.1700 | SMA 100: $67.03, Donchian High: $64.69, Donchian Low: $51.72 | Breakout below 10-day low or bearish trend break |
-| **USO** | COMMODITY | SELL | $120.1700 | SMA 100: $121.40, Donchian High: $129.77, Donchian Low: $102.42 | Breakout below 10-day low or bearish trend break |
-| **DBA** | COMMODITY | HOLD | $27.6300 | SMA 100: $27.08, Donchian High: $27.90, Donchian Low: $26.45 | Inside Donchian Channel limits |
-| **EURUSD=X** | FOREX | HOLD | $1.1426 | RSI: 43.9, Lower BB: $1.1315, Upper BB: $1.1540 | No extreme volatility or RSI signals |
-| **GBPUSD=X** | FOREX | HOLD | $1.3387 | RSI: 54.7, Lower BB: $1.3122, Upper BB: $1.3473 | No extreme volatility or RSI signals |
-| **USDMXN=X** | FOREX | HOLD | $17.3947 | RSI: 47.1, Lower BB: $17.2481, Upper BB: $17.6658 | No extreme volatility or RSI signals |
-| **USDJPY=X** | FOREX | HOLD | $162.1880 | RSI: 60.4, Lower BB: $160.5923, Upper BB: $162.9752 | No extreme volatility or RSI signals |
+| **BTC-USD** | CRYPTO | SELL | $64,719.1289 | SMA 200: $73,627.58, MACD: -100.2812, Signal: -553.2216 | MACD cross down or bearish trend break |
+| **ETH-USD** | CRYPTO | SELL | $1,875.4000 | SMA 200: $2,210.65, MACD: 22.6165, Signal: 1.9898 | MACD cross down or bearish trend break |
+| **GLD** | - | N/A | - | Data download failed | - |
+| **SLV** | - | N/A | - | Data download failed | - |
+| **USO** | - | N/A | - | Data download failed | - |
+| **DBA** | - | N/A | - | Data download failed | - |
+| **EURUSD=X** | FOREX | HOLD | $1.1440 | RSI: 47.1, Lower BB: $1.1343, Upper BB: $1.1492 | No extreme volatility or RSI signals |
+| **GBPUSD=X** | FOREX | HOLD | $1.3403 | RSI: 55.6, Lower BB: $1.3125, Upper BB: $1.3463 | No extreme volatility or RSI signals |
+| **USDMXN=X** | FOREX | HOLD | $17.4100 | RSI: 47.6, Lower BB: $17.3008, Upper BB: $17.6458 | No extreme volatility or RSI signals |
+| **USDJPY=X** | FOREX | HOLD | $162.2170 | RSI: 59.5, Lower BB: $160.8481, Upper BB: $162.9233 | No extreme volatility or RSI signals |

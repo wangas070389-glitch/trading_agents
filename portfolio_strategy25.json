@@ -1,6 +1,6 @@
 {
-  "total_capital": 199895.6,
-  "cash_balance": 163895.6,
+  "total_capital": 199895.99,
+  "cash_balance": 163895.99,
   "holdings": [
     {
       "ticker": "FEMSAUBD.MX",
@@ -11,7 +11,7 @@
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-07-14 22:43:05",
+  "last_updated": "2026-07-14 23:02:10",
   "last_rebalance_date": "2026-07-15",
-  "total_portfolio_value_mxn": 199895.6
+  "total_portfolio_value_mxn": 199895.99
 }

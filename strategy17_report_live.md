@@ -1,5 +1,5 @@
 # Strategy 17: FIBRAs Dynamic Income Execution Report
-**Execution Date:** 2026-07-14 22:00:47 | **Strategy Version:** Live V1
+**Execution Date:** 2026-07-14 23:01:40 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** $99,654.62 MXN
@@ -21,13 +21,13 @@
 ## 4. FIBRA Evaluation Diagnostics (Signals Checked)
 | Ticker | Signal | Yield | Debt / Equity | Close vs SMA 200 | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :--- |
-| **DANHOS13.MX** | BUY / HOLD | 6.43% | 16.3% | $27.89 > SMA $27.21 | Passed quality screens. Score: 0.0553 |
+| **DANHOS13.MX** | BUY / HOLD | 6.46% | 16.3% | $27.89 > SMA $27.21 | Passed quality screens. Score: 0.0555 |
 | **FIBRAMQ12.MX** | BUY / HOLD | 5.32% | 51.0% | $45.46 > SMA $36.69 | Passed quality screens. Score: 0.0352 |
-| **FIBRAPL14.MX** | SELL / AVOID | 3.61% | 34.0% | $77.25 <= SMA $77.41 | Yield below 4.0% and Bear trend (Close <= SMA 200) |
+| **FIBRAPL14.MX** | SELL / AVOID | 3.65% | 34.0% | $77.25 <= SMA $77.41 | Yield below 4.0% and Bear trend (Close <= SMA 200) |
 | **FIDE12.MX** | - | - | - | - | Data failed | 
-| **FIHO12.MX** | SELL / AVOID | 8.07% | 39.6% | $7.57 <= SMA $7.70 | Bear trend (Close <= SMA 200) |
+| **FIHO12.MX** | SELL / AVOID | 8.02% | 39.6% | $7.57 <= SMA $7.70 | Bear trend (Close <= SMA 200) |
 | **FINN13.MX** | SELL / AVOID | 7.64% | 43.2% | $4.75 <= SMA $4.89 | Bear trend (Close <= SMA 200) |
-| **FMTY14.MX** | BUY / HOLD | 8.01% | 30.2% | $14.84 > SMA $14.31 | Passed quality screens. Score: 0.0615 |
+| **FMTY14.MX** | BUY / HOLD | 8.04% | 30.2% | $14.84 > SMA $14.31 | Passed quality screens. Score: 0.0618 |
 | **FSHOP13.MX** | BUY / HOLD | 6.01% | 64.7% | $11.85 > SMA $9.93 | Passed quality screens. Score: 0.0365 |
 | **FUNO11.MX** | BUY / HOLD | 8.19% | 63.3% | $30.14 > SMA $27.70 | Passed quality screens. Score: 0.0502 |
 | **TERRA13.MX** | - | - | - | - | Data failed | 

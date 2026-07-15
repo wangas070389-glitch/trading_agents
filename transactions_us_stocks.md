@@ -20,6 +20,12 @@
 | 2026-07-10 | NVDA | BUY | 79 | 210.96 | -16,665.84 | Market | FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
 | 2026-07-10 | META | BUY | 24 | 669.21 | -16,061.04 | Market | FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
 | 2026-07-10 | AVGO | BUY | 41 | 399.97 | -16,398.77 | Market | FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
+| 2026-07-14 | AAPL | SELL | 64 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-14 | NVDA | SELL | 79 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-14 | AMZN | SELL | 82 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-14 | GOOGL | SELL | 55 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-14 | AVGO | SELL | 41 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-14 | META | BUY | 13 | 661.04 | -8,593.52 | Market | FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 ---
 
 
@@ -28,6 +34,6 @@
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital**: $99,810.40 USD
-* **Total Deployed Capital**: $108,492.42 USD (98.8% invested)
-* **Unallocated Cash Reserves**: $527.55 USD (0.5% cash)
-* **Current Portfolio Market Value**: $109,839.86 USD (including cash)
+* **Total Deployed Capital**: $24,654.58 USD (nan% invested)
+* **Unallocated Cash Reserves**: $nan USD (nan% cash)
+* **Current Portfolio Market Value**: $nan USD (including cash)

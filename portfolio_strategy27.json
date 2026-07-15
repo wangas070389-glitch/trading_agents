@@ -1,8 +1,8 @@
 {
-  "total_capital": 200000.02,
-  "cash_balance": 200000.02,
+  "total_capital": 200000.47,
+  "cash_balance": 200000.47,
   "holdings": [],
-  "last_updated": "2026-07-14 22:44:02",
+  "last_updated": "2026-07-14 23:02:11",
   "last_rebalance_date": "2026-07-15",
-  "total_portfolio_value_mxn": 200000.02
+  "total_portfolio_value_mxn": 200000.47
 }
