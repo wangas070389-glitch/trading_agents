@@ -53,4 +53,6 @@
 | 2026-07-14 | BONDIA | INTEREST | 1.0000 | $2.1810 | $0.00 | $2.18 | Accrued interest on sweep balance |
 | 2026-07-14 | BONDIA | INTEREST | 1.0000 | $2.4055 | $0.00 | $2.41 | Accrued interest on sweep balance |
 | 2026-07-14 | BONDIA | INTEREST | 1.0000 | $5.5232 | $0.00 | $5.52 | Accrued interest on sweep balance |
+| 2026-07-15 | BONDIA | INTEREST | 1.0000 | $31.0407 | $0.00 | $31.04 | Accrued interest on sweep balance |
+| 2026-07-15 | TQQQ | BUY_TQQQ | 142.3527 | $1267.3366 | $0.00 | $-180,408.82 | Lower band mean-reversion buy |
 ---

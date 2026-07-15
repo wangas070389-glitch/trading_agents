@@ -1,15 +1,47 @@
 {
-  "total_capital": 100482.13,
-  "cash_balance": 527.55,
+  "total_capital": 101879.64,
+  "cash_balance": -57231.79,
   "holdings": [
     {
       "ticker": "META",
       "shares": 37,
       "buy_price": 666.34,
       "last_price": 661.0399780273438,
-      "peak_price": 677.8599853515625,
+      "peak_price": 685.0700073242188,
       "target_weight": 0.25
+    },
+    {
+      "ticker": "AAPL",
+      "shares": 44.0,
+      "buy_price": 326.85,
+      "last_price": 326.85,
+      "peak_price": 327.1000061035156,
+      "target_weight": 0.14285714285714285
+    },
+    {
+      "ticker": "NVDA",
+      "shares": 70.0,
+      "buy_price": 207.77,
+      "last_price": 207.77,
+      "peak_price": 213.80999755859375,
+      "target_weight": 0.14285714285714285
+    },
+    {
+      "ticker": "GOOGL",
+      "shares": 39.0,
+      "buy_price": 372.09,
+      "last_price": 372.09,
+      "peak_price": 372.42999267578125,
+      "target_weight": 0.14285714285714285
+    },
+    {
+      "ticker": "JPM",
+      "shares": 41.0,
+      "buy_price": 349.33,
+      "last_price": 349.33,
+      "peak_price": 351.239990234375,
+      "target_weight": 0.14285714285714285
     }
   ],
-  "last_updated": "2026-07-15 05:44:22"
+  "last_updated": "2026-07-15 16:05:29"
 }
