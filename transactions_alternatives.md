@@ -6,6 +6,7 @@
 | 2026-06-24 | GBPUSD=X | BUY | 11354.0000 | $1.3165 | $43.35 | $-14,990.49 | Entry: Oversold (RSI=32.5) at lower Bollinger Band |
 | 2026-07-01 | CASH | DEPOSIT | 1.0000 | $1000.0000 | $0.00 | $-1,000.00 | Monthly savings contribution |
 | 2026-07-06 | DBA | BUY | 733.0000 | $27.5278 | $58.52 | $-20,236.39 | Alpaca Order filled | Entry: Breakout above 20-day high in bullish trend |
+| 2026-07-15 | GBPUSD=X | SELL | 11354.0000 | $1.3544 | $44.60 | $15,333.77 | Exit: Overbought (RSI=65.0) at upper Bollinger Band |
 ---
 
 
@@ -13,7 +14,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $101,765.00 USD
-* **Total Deployed Capital**: $50,081.25 USD (49.3% invested)
-* **Unallocated Cash Reserves**: $50,773.52 USD (50.0% cash)
-* **Current Portfolio Market Value**: $101,622.33 USD (including cash)
+* **Initial + Inflow Capital**: $102,278.39 USD
+* **Total Deployed Capital**: $35,134.10 USD (34.5% invested)
+* **Unallocated Cash Reserves**: $66,107.29 USD (65.0% cash)
+* **Current Portfolio Market Value**: $101,713.81 USD (including cash)

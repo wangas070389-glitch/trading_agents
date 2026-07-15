@@ -56,4 +56,6 @@
 | 2026-07-15 | BONDIA | INTEREST | 1.0000 | $31.0407 | $0.00 | $31.04 | Accrued interest on sweep balance |
 | 2026-07-15 | TQQQ | BUY_TQQQ | 142.3527 | $1267.3366 | $0.00 | $-180,408.82 | Lower band mean-reversion buy |
 | 2026-07-15 | BONDIA | INTEREST | 1.0000 | $0.0401 | $0.00 | $0.04 | Accrued interest on sweep balance |
+| 2026-07-15 | BONDIA | INTEREST | 1.0000 | $0.2130 | $0.00 | $0.21 | Accrued interest on sweep balance |
+| 2026-07-15 | TQQQ | SETTLE_LONG_VWAP | 142.3527 | $1286.2024 | $0.00 | $183,094.42 | Reversion target met at VWAP line |
 ---
