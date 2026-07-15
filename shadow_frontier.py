@@ -71,6 +71,14 @@ SLEEVES = {
                          ms_key="s14_nav_usd", ledger="transactions_strategy14.md", ledger_ccy="MXN"),
     "strategy15":   dict(short="S15", label="S15 TRACK Tracker", weight=0.076,
                          ms_key="s15_nav_usd", ledger="transactions_strategy15.md", ledger_ccy="MXN"),
+    "strategy25":   dict(short="S25", label="S25 Golden MACD BMV", weight=0.000,
+                         ms_key="s25_nav_usd", ledger="transactions_strategy25.md", ledger_ccy="MXN"),
+    "strategy27":   dict(short="S27", label="S27 Golden Hurst", weight=0.000,
+                         ms_key="s27_nav_usd", ledger="transactions_strategy27.md", ledger_ccy="MXN"),
+    "strategy29":   dict(short="S29", label="S29 Golden Stat-Arb", weight=0.000,
+                         ms_key="s29_nav_usd", ledger="transactions_strategy29.md", ledger_ccy="MXN"),
+    "strategy30":   dict(short="S30", label="S30 Golden MACD US", weight=0.000,
+                         ms_key="s30_nav_usd", ledger="transactions_strategy30.md", ledger_ccy="USD"),
 }
 
 # Backtest correlation matrix from efficient_frontier_report.md (2026-07-11),

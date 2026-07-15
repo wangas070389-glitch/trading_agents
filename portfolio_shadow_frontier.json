@@ -1,5 +1,5 @@
 {
-  "inception": "2026-07-11",
+  "inception": "2026-07-14",
   "initial_capital_usd": 100000.0,
   "weights_version": "efficient_frontier_report.md 2026-07-11 -- Risk Parity, hurdle-filtered (RECOMMENDED)",
   "weights": {
@@ -13,79 +13,107 @@
     "strategy12": 0.053,
     "strategy13": 0.06,
     "strategy14": 0.074,
-    "strategy15": 0.076
+    "strategy15": 0.076,
+    "strategy25": 0.0,
+    "strategy27": 0.0,
+    "strategy29": 0.0,
+    "strategy30": 0.0
   },
   "sleeves": {
     "core": {
-      "alloc_usd": 5498.634265481462,
-      "last_nav": 6896.710977357838,
-      "last_date": "2026-07-13",
-      "tr_index": 1.0182656047187892
+      "alloc_usd": 5400.0,
+      "last_nav": 6929.613741307961,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0
     },
     "macd": {
-      "alloc_usd": 4892.551917842675,
-      "last_nav": 6838.620437909367,
-      "last_date": "2026-07-13",
-      "tr_index": 0.998479983233199
-    },
-    "us_dcs": {
-      "alloc_usd": 4500.0,
-      "last_nav": 102216.6400793457,
+      "alloc_usd": 4900.0,
+      "last_nav": 6870.563567787128,
       "last_date": "2026-07-13",
       "tr_index": 1.0
     },
+    "us_dcs": {
+      "alloc_usd": 4500.0,
+      "last_nav": 101181.83920654297,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0
+    },
     "alternatives": {
-      "alloc_usd": 24988.92501501695,
-      "last_nav": 101317.44622828483,
-      "last_date": "2026-07-13",
-      "tr_index": 0.999557000600678
+      "alloc_usd": 25000.0,
+      "last_nav": 101251.51089169501,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0
     },
     "high_beta": {
-      "alloc_usd": 13501.343733358763,
-      "last_nav": 101719.1276390645,
-      "last_date": "2026-07-13",
-      "tr_index": 1.0000995358043527
+      "alloc_usd": 13500.0,
+      "last_nav": 100941.44006322528,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0
     },
     "dividends": {
-      "alloc_usd": 11855.225399269992,
-      "last_nav": 11294.124026816753,
-      "last_date": "2026-07-13",
-      "tr_index": 1.0046801185822027
+      "alloc_usd": 11800.0,
+      "last_nav": 11294.522951628613,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0
     },
     "strategy9": {
-      "alloc_usd": 8556.561067574516,
-      "last_nav": 11057.268657971446,
-      "last_date": "2026-07-13",
-      "tr_index": 0.9949489613458739
+      "alloc_usd": 8600.0,
+      "last_nav": 11043.741096257558,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0
     },
     "strategy12": {
-      "alloc_usd": 5289.497107446724,
-      "last_nav": 11548.230413162195,
-      "last_date": "2026-07-13",
-      "tr_index": 0.9980183221597593
+      "alloc_usd": 5300.0,
+      "last_nav": 11482.992405965178,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0
     },
     "strategy13": {
-      "alloc_usd": 5988.315162159152,
-      "last_nav": 11548.756877195536,
-      "last_date": "2026-07-13",
-      "tr_index": 0.9980525270265254
+      "alloc_usd": 6000.0,
+      "last_nav": 11483.716147812842,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0
     },
     "strategy14": {
-      "alloc_usd": 7387.643815801496,
-      "last_nav": 11528.842988601627,
-      "last_date": "2026-07-13",
-      "tr_index": 0.9983302453785806
+      "alloc_usd": 7400.0,
+      "last_nav": 11482.462496277893,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0
     },
     "strategy15": {
-      "alloc_usd": 7587.309370364548,
-      "last_nav": 11528.42982258088,
-      "last_date": "2026-07-13",
-      "tr_index": 0.9983301803111247
+      "alloc_usd": 7600.0,
+      "last_nav": 11482.08039380637,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0
+    },
+    "strategy25": {
+      "alloc_usd": 0.0,
+      "last_nav": 11481.654322341265,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0
+    },
+    "strategy27": {
+      "alloc_usd": 0.0,
+      "last_nav": 11487.652024863675,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0
+    },
+    "strategy29": {
+      "alloc_usd": 0.0,
+      "last_nav": 11487.650876098587,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0
+    },
+    "strategy30": {
+      "alloc_usd": 0.0,
+      "last_nav": 100000.0,
+      "last_date": "2026-07-14",
+      "tr_index": 1.0
     }
   },
   "history": [
     {
-      "date": "2026-07-11",
+      "date": "2026-07-14",
       "nav_usd": 100000.0,
       "idx": {
         "core": 1.0,
@@ -98,61 +126,14 @@
         "strategy12": 1.0,
         "strategy13": 1.0,
         "strategy14": 1.0,
-        "strategy15": 1.0
-      }
-    },
-    {
-      "date": "2026-07-13",
-      "nav_usd": 100039.46,
-      "idx": {
-        "core": 1.018266,
-        "macd": 0.997145,
-        "us_dcs": 1.0,
-        "alternatives": 0.999557,
-        "high_beta": 1.0001,
-        "dividends": 1.00468,
-        "strategy9": 0.994949,
-        "strategy12": 0.998018,
-        "strategy13": 0.998053,
-        "strategy14": 0.99833,
-        "strategy15": 0.99833
-      }
-    },
-    {
-      "date": "2026-07-12",
-      "nav_usd": 100039.46,
-      "idx": {
-        "core": 1.018266,
-        "macd": 0.997145,
-        "us_dcs": 1.0,
-        "alternatives": 0.999557,
-        "high_beta": 1.0001,
-        "dividends": 1.00468,
-        "strategy9": 0.994949,
-        "strategy12": 0.998018,
-        "strategy13": 0.998053,
-        "strategy14": 0.99833,
-        "strategy15": 0.99833
-      }
-    },
-    {
-      "date": "2026-07-13",
-      "nav_usd": 100046.01,
-      "idx": {
-        "core": 1.018266,
-        "macd": 0.99848,
-        "us_dcs": 1.0,
-        "alternatives": 0.999557,
-        "high_beta": 1.0001,
-        "dividends": 1.00468,
-        "strategy9": 0.994949,
-        "strategy12": 0.998018,
-        "strategy13": 0.998053,
-        "strategy14": 0.99833,
-        "strategy15": 0.99833
+        "strategy15": 1.0,
+        "strategy25": 1.0,
+        "strategy27": 1.0,
+        "strategy29": 1.0,
+        "strategy30": 1.0
       }
     }
   ],
   "rebalances": [],
-  "last_updated": "2026-07-13 22:49:38"
+  "last_updated": "2026-07-14 22:49:17"
 }

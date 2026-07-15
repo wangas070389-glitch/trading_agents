@@ -1,0 +1,7 @@
+{
+    "max_depth": 4,
+    "thresh": 0.35,
+    "min_hold_bars": 26,
+    "trailing_stop_pct": null,
+    "n_estimators": 30
+}

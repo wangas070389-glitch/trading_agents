@@ -121,6 +121,21 @@ def main():
     if os.path.exists(s15_path):
         with open(s15_path, 'r', encoding='utf-8') as f: s15_data = json.load(f)
 
+    s25_path = os.path.join(dir_path, "portfolio_strategy25.json")
+    s27_path = os.path.join(dir_path, "portfolio_strategy27.json")
+    s29_path = os.path.join(dir_path, "portfolio_strategy29.json")
+    s30_path = os.path.join(dir_path, "portfolio_strategy30.json")
+    s25_data = s27_data = s29_data = s30_data = None
+
+    if os.path.exists(s25_path):
+        with open(s25_path, 'r', encoding='utf-8') as f: s25_data = json.load(f)
+    if os.path.exists(s27_path):
+        with open(s27_path, 'r', encoding='utf-8') as f: s27_data = json.load(f)
+    if os.path.exists(s29_path):
+        with open(s29_path, 'r', encoding='utf-8') as f: s29_data = json.load(f)
+    if os.path.exists(s30_path):
+        with open(s30_path, 'r', encoding='utf-8') as f: s30_data = json.load(f)
+
     # Calculate NAVs
     s1_nav_mxn, s1_cash_mxn, _ = get_nav(s1_data)
     s4_nav_usd, s4_cash_usd, _ = get_nav(s4_data)
@@ -134,6 +149,10 @@ def main():
     s13_nav_mxn, s13_cash_mxn, s13_cash_usd = get_nav(s13_data)
     s14_nav_mxn, s14_cash_mxn, s14_cash_usd = get_nav(s14_data)
     s15_nav_mxn, s15_cash_mxn, s15_cash_usd = get_nav(s15_data)
+    s25_nav_mxn, _, _ = get_nav(s25_data)
+    s27_nav_mxn, _, _ = get_nav(s27_data)
+    s29_nav_mxn, _, _ = get_nav(s29_data)
+    s30_nav_usd, _, _ = get_nav(s30_data)
 
     # Convert MXN assets to USD
     s1_nav_usd, s1_cash_usd = s1_nav_mxn / usd_mxn_rate, s1_cash_mxn / usd_mxn_rate
@@ -145,6 +164,9 @@ def main():
     s13_nav_usd, s13_cash_usd = s13_nav_mxn / usd_mxn_rate, (s13_cash_mxn / usd_mxn_rate + s13_cash_usd)
     s14_nav_usd, s14_cash_usd = s14_nav_mxn / usd_mxn_rate + s14_cash_usd, (s14_cash_mxn / usd_mxn_rate + s14_cash_usd)
     s15_nav_usd, s15_cash_usd = s15_nav_mxn / usd_mxn_rate + s15_cash_usd, (s15_cash_mxn / usd_mxn_rate + s15_cash_usd)
+    s25_nav_usd = s25_nav_mxn / usd_mxn_rate
+    s27_nav_usd = s27_nav_mxn / usd_mxn_rate
+    s29_nav_usd = s29_nav_mxn / usd_mxn_rate
 
     # Consolidated NAV
     total_nav_usd = (s1_nav_usd + s4_nav_usd + s5_nav_usd + s6_nav_usd + s8_nav_usd + s9_nav_usd + 
@@ -312,7 +334,11 @@ def main():
                 "s12_nav_usd": s12_nav_usd,
                 "s13_nav_usd": s13_nav_usd,
                 "s14_nav_usd": s14_nav_usd,
-                "s15_nav_usd": s15_nav_usd
+                "s15_nav_usd": s15_nav_usd,
+                "s25_nav_usd": s25_nav_usd,
+                "s27_nav_usd": s27_nav_usd,
+                "s29_nav_usd": s29_nav_usd,
+                "s30_nav_usd": s30_nav_usd
             })
 
     # Update meta values

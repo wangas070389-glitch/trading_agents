@@ -1,0 +1,17 @@
+{
+  "total_capital": 199895.6,
+  "cash_balance": 163895.6,
+  "holdings": [
+    {
+      "ticker": "FEMSAUBD.MX",
+      "shares": 154.9987120099602,
+      "buy_price": 232.25999450683594,
+      "last_price": 232.25999450683594,
+      "peak_price": 232.25999450683594,
+      "trailing_armed": false
+    }
+  ],
+  "last_updated": "2026-07-14 22:43:05",
+  "last_rebalance_date": "2026-07-15",
+  "total_portfolio_value_mxn": 199895.6
+}

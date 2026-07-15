@@ -1,0 +1,11 @@
+# Strategy 25 Live Status Report
+
+**Last Run:** 2026-07-14 22:43:05
+**Total Capital:** $199,895.60 MXN
+**Cash Balance:** $163,895.60 MXN
+
+## Current Holdings
+
+| Ticker | Shares | Buy Price | Current Price | Return | Peak Price |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| FEMSAUBD.MX | 154.9987 | $232.26 | $232.26 | +0.00% | $232.26 |

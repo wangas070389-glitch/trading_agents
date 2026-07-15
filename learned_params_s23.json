@@ -1,0 +1,12 @@
+{
+    "window_length": 35,
+    "polyorder": 3,
+    "rsi_period": 14,
+    "srp_buy": 0.2,
+    "srp_sell": 0.7,
+    "rsi_buy": 45,
+    "rsi_sell": 65,
+    "trailing_stop_pct": null,
+    "rsi_breakout_up": 55,
+    "rsi_breakout_down": 45
+}
