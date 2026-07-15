@@ -1,163 +1,163 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-07-14 23:02:21 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-07-15 05:46:00 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| S29 Golden Stat-Arb | **ON TRACK** | -1 | +0.0% | +0.1% | pending | n/a | n/a | -0.0% | 25.18 | 5.04 (5.0y) |
-| S12 VTTL Trend+Vol | **ON TRACK** | 8 | +0.5% | +23.7% | pending | -1.40 | -1.6% | -26.7% | 10.35 | 0.46 (22.5y) |
-| S14 HEDGE Aggregator | **ON TRACK** | 8 | +0.4% | +18.1% | pending | -1.43 | -1.3% | -19.0% | 10.18 | 0.53 (19.2y) |
-| S15 TRACK Tracker | **ON TRACK** | 8 | +0.4% | +17.9% | pending | -1.45 | -1.3% | -18.4% | 10.18 | 0.53 (19.2y) |
-| S30 Golden MACD US | **ON TRACK** | -1 | +0.0% | +0.1% | pending | n/a | n/a | -28.8% | 8.80 | 0.55 (16.0y) |
-| S2 MACD Systematic | **ON TRACK** | 3 | +0.3% | +31.5% | pending | 5.59 | -2.1% | -11.9% | 8.78 | 1.76 (5.0y) |
-| S13 CARA Cross-Asset | **ON TRACK** | 8 | +0.5% | +23.6% | pending | -1.41 | -1.6% | -31.3% | 8.64 | 0.45 (19.2y) |
-| S27 Golden Hurst | **ON TRACK** | -1 | +0.0% | +0.1% | pending | n/a | n/a | -61.4% | 7.68 | 0.48 (16.0y) |
-| S25 Golden MACD BMV | **ON TRACK** | -1 | -0.1% | -19.0% | pending | n/a | n/a | -12.7% | 7.20 | 0.45 (16.0y) |
-| S23 Calculus S&R | **ON TRACK** | -1 | +0.0% | +0.4% | pending | n/a | n/a | -88.2% | 6.72 | 0.42 (16.0y) |
-| S8 Dividend Quality | **ON TRACK** | 19 | -1.1% | -21.3% | pending | -3.80 | -2.3% | -14.2% | 5.60 | 1.12 (5.0y) |
-| S20 Hurst Exponent Dynamic | **ON TRACK** | 1 | -0.3% | -105.6% | pending | n/a | n/a | -79.6% | 5.58 | 0.34 (16.4y) |
-| S19 Particle Filter QQQ | **ON TRACK** | 1 | -0.3% | -105.7% | pending | n/a | n/a | -64.7% | 5.09 | 0.31 (16.4y) |
-| S4 US DCF Value-Growth | **ON TRACK** | 21 | +0.5% | +8.8% | pending | 1.73 | -1.0% | -15.2% | 4.56 | 1.14 (4.0y) |
-| S22 Walk-Forward ML | **ON TRACK** | 1 | -0.3% | -105.5% | pending | n/a | n/a | -73.3% | 4.27 | 0.26 (16.4y) |
-| S6 High-Beta Momentum | **ON TRACK** | 21 | +0.2% | +3.2% | pending | 1.95 | -0.6% | -24.4% | 4.20 | 1.05 (4.0y) |
-| S5 Alternatives | **ON TRACK** | 21 | +0.3% | +5.0% | pending | 3.12 | -0.1% | -19.0% | 3.80 | 0.95 (4.0y) |
-| S1 Adaptive Value (BMV) | **ON TRACK** | 41 | +0.8% | +7.5% | PASS | 3.65 | -3.3% | -35.2% | 3.28 | 0.82 (4.0y) |
-| S9 AI Regime Stat-Arb | **ON TRACK** | 3 | -1.2% | -150.3% | pending | -16.06 | -3.0% | -7.5% | 2.35 | 0.47 (5.0y) |
-| S10 Intraday VWAP | **ON TRACK** | 12 | +0.2% | +6.4% | pending | 0.04 | -0.6% | -4.0% | 0.52 | 3.27 (0.2y) |
-| S21 Golden Entropy | **ON TRACK** | 1 | -0.3% | -105.6% | pending | n/a | n/a | -87.8% | 0.49 | 0.03 (16.4y) |
-| S17 FIBRAs Dynamic | **ON TRACK** | 2 | -50.2% | -9156.5% | pending | n/a | n/a | -21.2% | 0.40 | 0.10 (4.0y) |
-| S16 MACD-HMM Router | **ON TRACK** | 7 | +0.1% | +7.6% | pending | -103.93 | +0.0% | -13.4% | 0.16 | 0.99 (0.2y) |
-| S24 ML Classifier | **ON TRACK** | -1 | +0.0% | +0.4% | pending | n/a | n/a | -14.9% | 0.14 | 0.59 (0.2y) |
-| S11 Intraday CCI-ADX | **ON TRACK** | 12 | +2.1% | +62.9% | pending | 4.64 | -0.3% | -8.4% | 0.06 | 0.35 (0.2y) |
-| S3 US Stock Momentum | **BLOCKED** | 21 | +nan% | +nan% | pending | n/a | n/a | -22.7% | 5.75 | 1.15 (5.0y) |
+| S29 Golden Stat-Arb | **ON TRACK** | 0 | +0.0% | +1.9% | pending | n/a | n/a | -0.0% | 25.18 | 5.04 (5.0y) |
+| S12 VTTL Trend+Vol | **ON TRACK** | 9 | +0.5% | +21.2% | pending | -1.32 | -1.6% | -26.7% | 10.35 | 0.46 (22.5y) |
+| S14 HEDGE Aggregator | **ON TRACK** | 9 | +0.4% | +16.1% | pending | -1.36 | -1.3% | -19.0% | 10.18 | 0.53 (19.2y) |
+| S15 TRACK Tracker | **ON TRACK** | 9 | +0.4% | +15.9% | pending | -1.38 | -1.3% | -18.4% | 10.18 | 0.53 (19.2y) |
+| S30 Golden MACD US | **ON TRACK** | 0 | +0.0% | +1.3% | pending | n/a | n/a | -28.8% | 8.80 | 0.55 (16.0y) |
+| S2 MACD Systematic | **ON TRACK** | 4 | +0.3% | +23.9% | pending | 5.59 | -2.1% | -11.9% | 8.78 | 1.76 (5.0y) |
+| S13 CARA Cross-Asset | **ON TRACK** | 9 | +0.5% | +21.2% | pending | -1.33 | -1.6% | -31.3% | 8.64 | 0.45 (19.2y) |
+| S27 Golden Hurst | **ON TRACK** | 0 | +0.0% | +1.9% | pending | n/a | n/a | -61.4% | 7.68 | 0.48 (16.0y) |
+| S25 Golden MACD BMV | **ON TRACK** | 0 | -0.0% | -17.5% | pending | n/a | n/a | -12.7% | 7.20 | 0.45 (16.0y) |
+| S23 Calculus S&R | **ON TRACK** | 0 | +0.0% | +2.2% | pending | n/a | n/a | -88.2% | 6.72 | 0.42 (16.0y) |
+| S8 Dividend Quality | **ON TRACK** | 20 | -1.1% | -20.2% | pending | -3.66 | -2.3% | -14.2% | 5.60 | 1.12 (5.0y) |
+| S20 Hurst Exponent Dynamic | **ON TRACK** | 2 | -0.3% | -52.8% | pending | n/a | n/a | -79.6% | 5.58 | 0.34 (16.4y) |
+| S19 Particle Filter QQQ | **ON TRACK** | 2 | -0.3% | -52.8% | pending | n/a | n/a | -64.7% | 5.09 | 0.31 (16.4y) |
+| S4 US DCF Value-Growth | **ON TRACK** | 22 | +0.5% | +8.4% | pending | 1.65 | -1.0% | -15.2% | 4.56 | 1.14 (4.0y) |
+| S22 Walk-Forward ML | **ON TRACK** | 2 | -0.3% | -52.8% | pending | n/a | n/a | -73.3% | 4.27 | 0.26 (16.4y) |
+| S6 High-Beta Momentum | **ON TRACK** | 22 | +0.2% | +3.1% | pending | 1.83 | -0.6% | -24.4% | 4.20 | 1.05 (4.0y) |
+| S5 Alternatives | **ON TRACK** | 22 | +0.3% | +5.1% | pending | 3.00 | -0.1% | -19.0% | 3.80 | 0.95 (4.0y) |
+| S1 Adaptive Value (BMV) | **ON TRACK** | 42 | +0.8% | +7.3% | PASS | 3.56 | -3.3% | -35.2% | 3.28 | 0.82 (4.0y) |
+| S9 AI Regime Stat-Arb | **ON TRACK** | 4 | -1.2% | -112.3% | pending | -14.89 | -3.0% | -7.5% | 2.35 | 0.47 (5.0y) |
+| S10 Intraday VWAP | **ON TRACK** | 13 | +0.2% | +5.9% | pending | 0.05 | -0.6% | -4.0% | 0.52 | 3.27 (0.2y) |
+| S21 Golden Entropy | **ON TRACK** | 2 | -0.3% | -52.8% | pending | n/a | n/a | -87.8% | 0.49 | 0.03 (16.4y) |
+| S17 FIBRAs Dynamic | **ON TRACK** | 3 | -50.2% | -6104.3% | pending | n/a | n/a | -21.2% | 0.40 | 0.10 (4.0y) |
+| S16 MACD-HMM Router | **ON TRACK** | 8 | +0.2% | +6.9% | pending | -111.41 | +0.0% | -13.4% | 0.16 | 0.99 (0.2y) |
+| S24 ML Classifier | **ON TRACK** | 0 | +0.0% | +2.2% | pending | n/a | n/a | -14.9% | 0.14 | 0.59 (0.2y) |
+| S11 Intraday CCI-ADX | **ON TRACK** | 13 | +2.1% | +58.2% | pending | 4.47 | -0.3% | -8.4% | 0.06 | 0.35 (0.2y) |
+| S3 US Stock Momentum | **BLOCKED** | 22 | -75.0% | -1244.5% | pending | n/a | n/a | -22.7% | 5.75 | 1.15 (5.0y) |
 
 ## Verdict Detail
 
 **S29 Golden Stat-Arb** — ON TRACK
-- needs 91 more live days (C1: -1/90)
-- return/Sharpe judged from day 30 (now -1); current figures are informational
-- risk stats pending (0 daily samples, need 8) [watchdog snapshots (local ccy)]
+- needs 90 more live days (C1: 0/90)
+- return/Sharpe judged from day 30 (now 0); current figures are informational
+- risk stats pending (2 daily samples, need 8) [multi-strategy daily USD]
 - Golden Cointegration parameter (89-day lookback) on Pairs
 
 **S12 VTTL Trend+Vol** — ON TRACK
-- needs 82 more live days (C1: 8/90)
-- return/Sharpe judged from day 30 (now 8); current figures are informational
+- needs 81 more live days (C1: 9/90)
+- return/Sharpe judged from day 30 (now 9); current figures are informational
 
 **S14 HEDGE Aggregator** — ON TRACK
-- needs 82 more live days (C1: 8/90)
-- return/Sharpe judged from day 30 (now 8); current figures are informational
+- needs 81 more live days (C1: 9/90)
+- return/Sharpe judged from day 30 (now 9); current figures are informational
 
 **S15 TRACK Tracker** — ON TRACK
-- needs 82 more live days (C1: 8/90)
-- return/Sharpe judged from day 30 (now 8); current figures are informational
+- needs 81 more live days (C1: 9/90)
+- return/Sharpe judged from day 30 (now 9); current figures are informational
 
 **S30 Golden MACD US** — ON TRACK
-- needs 91 more live days (C1: -1/90)
-- return/Sharpe judged from day 30 (now -1); current figures are informational
-- risk stats pending (0 daily samples, need 8) [watchdog snapshots (local ccy)]
+- needs 90 more live days (C1: 0/90)
+- return/Sharpe judged from day 30 (now 0); current figures are informational
+- risk stats pending (2 daily samples, need 8) [multi-strategy daily USD]
 - Golden MACD parameters (55 EMA, 13/34/8) on US Stocks
 
 **S2 MACD Systematic** — ON TRACK
-- needs 87 more live days (C1: 3/90)
-- return/Sharpe judged from day 30 (now 3); current figures are informational
+- needs 86 more live days (C1: 4/90)
+- return/Sharpe judged from day 30 (now 4); current figures are informational
 - Re-tuned 2026-07-11; graduation clock restarted (P3)
 
 **S13 CARA Cross-Asset** — ON TRACK
-- needs 82 more live days (C1: 8/90)
-- return/Sharpe judged from day 30 (now 8); current figures are informational
+- needs 81 more live days (C1: 9/90)
+- return/Sharpe judged from day 30 (now 9); current figures are informational
 - Retired standalone; survives as expert sleeve in S14/S15
 
 **S27 Golden Hurst** — ON TRACK
-- needs 91 more live days (C1: -1/90)
-- return/Sharpe judged from day 30 (now -1); current figures are informational
-- risk stats pending (0 daily samples, need 8) [watchdog snapshots (local ccy)]
+- needs 90 more live days (C1: 0/90)
+- return/Sharpe judged from day 30 (now 0); current figures are informational
+- risk stats pending (2 daily samples, need 8) [multi-strategy daily USD]
 - Golden Hurst parameter (55-day window, 21/55 EMA) on QQQ Index
 
 **S25 Golden MACD BMV** — ON TRACK
-- needs 91 more live days (C1: -1/90)
-- return/Sharpe judged from day 30 (now -1); current figures are informational
-- risk stats pending (0 daily samples, need 8) [watchdog snapshots (local ccy)]
+- needs 90 more live days (C1: 0/90)
+- return/Sharpe judged from day 30 (now 0); current figures are informational
+- risk stats pending (2 daily samples, need 8) [multi-strategy daily USD]
 - Golden MACD parameters (55 EMA, 13/34/8) on BMV Stocks
 
 **S23 Calculus S&R** — ON TRACK
-- needs 91 more live days (C1: -1/90)
-- return/Sharpe judged from day 30 (now -1); current figures are informational
-- risk stats pending (0 daily samples, need 8) [watchdog snapshots (local ccy)]
+- needs 90 more live days (C1: 0/90)
+- return/Sharpe judged from day 30 (now 0); current figures are informational
+- risk stats pending (2 daily samples, need 8) [multi-strategy daily USD]
 - Tuned 2026-07-15 to 35-day window length
 
 **S8 Dividend Quality** — ON TRACK
-- needs 71 more live days (C1: 19/90)
-- return/Sharpe judged from day 30 (now 19); current figures are informational
+- needs 70 more live days (C1: 20/90)
+- return/Sharpe judged from day 30 (now 20); current figures are informational
 
 **S20 Hurst Exponent Dynamic** — ON TRACK
-- needs 89 more live days (C1: 1/90)
-- return/Sharpe judged from day 30 (now 1); current figures are informational
-- risk stats pending (2 daily samples, need 8) [watchdog snapshots (local ccy)]
+- needs 88 more live days (C1: 2/90)
+- return/Sharpe judged from day 30 (now 2); current figures are informational
+- risk stats pending (2 daily samples, need 8) [multi-strategy daily USD]
 - Hurst Exponent dynamic QQQ allocation
 
 **S19 Particle Filter QQQ** — ON TRACK
-- needs 89 more live days (C1: 1/90)
-- return/Sharpe judged from day 30 (now 1); current figures are informational
-- risk stats pending (2 daily samples, need 8) [watchdog snapshots (local ccy)]
+- needs 88 more live days (C1: 2/90)
+- return/Sharpe judged from day 30 (now 2); current figures are informational
+- risk stats pending (2 daily samples, need 8) [multi-strategy daily USD]
 - Particle Filter systematic QQQ allocation
 
 **S4 US DCF Value-Growth** — ON TRACK
-- needs 69 more live days (C1: 21/90)
-- return/Sharpe judged from day 30 (now 21); current figures are informational
+- needs 68 more live days (C1: 22/90)
+- return/Sharpe judged from day 30 (now 22); current figures are informational
 
 **S22 Walk-Forward ML** — ON TRACK
-- needs 89 more live days (C1: 1/90)
-- return/Sharpe judged from day 30 (now 1); current figures are informational
-- risk stats pending (2 daily samples, need 8) [watchdog snapshots (local ccy)]
+- needs 88 more live days (C1: 2/90)
+- return/Sharpe judged from day 30 (now 2); current figures are informational
+- risk stats pending (2 daily samples, need 8) [multi-strategy daily USD]
 - Adaptive Random Forest Walk-Forward classifier
 
 **S6 High-Beta Momentum** — ON TRACK
-- needs 69 more live days (C1: 21/90)
-- return/Sharpe judged from day 30 (now 21); current figures are informational
+- needs 68 more live days (C1: 22/90)
+- return/Sharpe judged from day 30 (now 22); current figures are informational
 
 **S5 Alternatives** — ON TRACK
-- needs 69 more live days (C1: 21/90)
-- return/Sharpe judged from day 30 (now 21); current figures are informational
+- needs 68 more live days (C1: 22/90)
+- return/Sharpe judged from day 30 (now 22); current figures are informational
 
 **S1 Adaptive Value (BMV)** — ON TRACK
-- needs 49 more live days (C1: 41/90)
+- needs 48 more live days (C1: 42/90)
 - BMV data quality degraded; see Known Issues
 
 **S9 AI Regime Stat-Arb** — ON TRACK
-- needs 87 more live days (C1: 3/90)
-- return/Sharpe judged from day 30 (now 3); current figures are informational
+- needs 86 more live days (C1: 4/90)
+- return/Sharpe judged from day 30 (now 4); current figures are informational
 - Re-tuned 2026-07-11 (consensus filter); graduation clock restarted (P3)
 
 **S10 Intraday VWAP** — ON TRACK
-- needs 78 more live days (C1: 12/90)
-- return/Sharpe judged from day 30 (now 12); current figures are informational
+- needs 77 more live days (C1: 13/90)
+- return/Sharpe judged from day 30 (now 13); current figures are informational
 - 60d in-sample backtest; params tuned July 2026 -- treat backtest as ceiling
 
 **S21 Golden Entropy** — ON TRACK
-- needs 89 more live days (C1: 1/90)
-- return/Sharpe judged from day 30 (now 1); current figures are informational
-- risk stats pending (2 daily samples, need 8) [watchdog snapshots (local ccy)]
+- needs 88 more live days (C1: 2/90)
+- return/Sharpe judged from day 30 (now 2); current figures are informational
+- risk stats pending (2 daily samples, need 8) [multi-strategy daily USD]
 - Shannon Entropy dynamic allocation
 
 **S17 FIBRAs Dynamic** — ON TRACK
-- needs 88 more live days (C1: 2/90)
-- return/Sharpe judged from day 30 (now 2); current figures are informational
-- risk stats pending (3 daily samples, need 8) [watchdog snapshots (local ccy)]
+- needs 87 more live days (C1: 3/90)
+- return/Sharpe judged from day 30 (now 3); current figures are informational
+- risk stats pending (2 daily samples, need 8) [multi-strategy daily USD]
 - Dynamic FIBRA portfolio based on quality screens
 
 **S16 MACD-HMM Router** — ON TRACK
-- needs 83 more live days (C1: 7/90)
-- return/Sharpe judged from day 30 (now 7); current figures are informational
+- needs 82 more live days (C1: 8/90)
+- return/Sharpe judged from day 30 (now 8); current figures are informational
 - 60d in-sample backtest; params tuned July 2026 -- treat backtest as ceiling
 
 **S24 ML Classifier** — ON TRACK
-- needs 91 more live days (C1: -1/90)
-- return/Sharpe judged from day 30 (now -1); current figures are informational
-- risk stats pending (0 daily samples, need 8) [watchdog snapshots (local ccy)]
+- needs 90 more live days (C1: 0/90)
+- return/Sharpe judged from day 30 (now 0); current figures are informational
+- risk stats pending (2 daily samples, need 8) [multi-strategy daily USD]
 - Tuned 2026-07-15 to 35-bar Golden Ratio scale + 26-bar min hold
 
 **S11 Intraday CCI-ADX** — ON TRACK
-- needs 78 more live days (C1: 12/90)
-- return/Sharpe judged from day 30 (now 12); current figures are informational
+- needs 77 more live days (C1: 13/90)
+- return/Sharpe judged from day 30 (now 13); current figures are informational
 - 60d in-sample backtest; params tuned July 2026 -- treat backtest as ceiling
 
 **S3 US Stock Momentum** — BLOCKED

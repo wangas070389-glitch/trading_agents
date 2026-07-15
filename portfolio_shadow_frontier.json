@@ -28,10 +28,10 @@
   },
   "sleeves": {
     "core": {
-      "alloc_usd": 5400.0,
-      "last_nav": 6949.3755973067,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "alloc_usd": 5401.971617852591,
+      "last_nav": 6951.912914527443,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0003651144171466
     },
     "macd": {
       "alloc_usd": 4900.0,
@@ -42,122 +42,122 @@
     "us_dcs": {
       "alloc_usd": 4500.0,
       "last_nav": 101510.73904785156,
-      "last_date": "2026-07-14",
+      "last_date": "2026-07-15",
       "tr_index": 1.0
     },
     "alternatives": {
-      "alloc_usd": 25000.0,
-      "last_nav": 101255.68536474227,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "alloc_usd": 25012.79025037034,
+      "last_nav": 101307.4887874317,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0005116100148137
     },
     "high_beta": {
       "alloc_usd": 13500.0,
       "last_nav": 101188.61932930806,
-      "last_date": "2026-07-14",
+      "last_date": "2026-07-15",
       "tr_index": 1.0
     },
     "dividends": {
-      "alloc_usd": 11800.0,
-      "last_nav": 11321.426357779126,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "alloc_usd": 11842.846149167286,
+      "last_nav": 11362.5347918903,
+      "last_date": "2026-07-15",
+      "tr_index": 1.003631029590448
     },
     "strategy9": {
-      "alloc_usd": 8600.0,
-      "last_nav": 11008.901409931796,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "alloc_usd": 8603.214037028745,
+      "last_nav": 11013.01571420823,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0003737252359006
     },
     "strategy12": {
-      "alloc_usd": 5300.0,
-      "last_nav": 11545.570421503971,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "alloc_usd": 5301.9211660760075,
+      "last_nav": 11549.755507960943,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0003624841652845
     },
     "strategy13": {
-      "alloc_usd": 6000.0,
-      "last_nav": 11545.438731718159,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "alloc_usd": 6002.174908172243,
+      "last_nav": 11549.623776559783,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0003624846953738
     },
     "strategy14": {
-      "alloc_usd": 7400.0,
-      "last_nav": 11531.58824016165,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "alloc_usd": 7402.352158286422,
+      "last_nav": 11535.253661896071,
+      "last_date": "2026-07-15",
+      "tr_index": 1.000317859227895
     },
     "strategy15": {
-      "alloc_usd": 7600.0,
-      "last_nav": 11531.079296746084,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "alloc_usd": 7602.415771803909,
+      "last_nav": 11534.74461993473,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0003178647110407
     },
     "strategy17": {
       "alloc_usd": 0.0,
-      "last_nav": 5723.165673208993,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "last_nav": 5724.974253264937,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0003160104318507
     },
     "strategy19": {
       "alloc_usd": 0.0,
-      "last_nav": 11222.996049962881,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "last_nav": 11456.364795420051,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0207938009082647
     },
     "strategy20": {
       "alloc_usd": 0.0,
-      "last_nav": 10787.386919257979,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "last_nav": 11456.375106099907,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0620157774861705
     },
     "strategy21": {
       "alloc_usd": 0.0,
-      "last_nav": 10787.361053399352,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "last_nav": 11456.383698333122,
+      "last_date": "2026-07-15",
+      "tr_index": 1.062019120489431
     },
     "strategy22": {
       "alloc_usd": 0.0,
-      "last_nav": 11451.250437542525,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "last_nav": 11456.40729914397,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0004503317458273
     },
     "strategy23": {
       "alloc_usd": 0.0,
-      "last_nav": 11486.045979521676,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "last_nav": 11490.33519468445,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0003734283469194
     },
     "strategy24": {
       "alloc_usd": 0.0,
-      "last_nav": 11486.045979521676,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "last_nav": 11490.330024350555,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0003729782064705
     },
     "strategy25": {
       "alloc_usd": 0.0,
-      "last_nav": 11480.005491498949,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "last_nav": 11484.127347119818,
+      "last_date": "2026-07-15",
+      "tr_index": 1.000359046485119
     },
     "strategy27": {
       "alloc_usd": 0.0,
-      "last_nav": 11486.002332717175,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "last_nav": 11490.233511451159,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0003683769697602
     },
     "strategy29": {
       "alloc_usd": 0.0,
-      "last_nav": 11486.001184117058,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "last_nav": 11490.233511451159,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0003684770065977
     },
     "strategy30": {
       "alloc_usd": 0.0,
-      "last_nav": 100000.0,
-      "last_date": "2026-07-14",
-      "tr_index": 1.0
+      "last_nav": 100003.61,
+      "last_date": "2026-07-15",
+      "tr_index": 1.0000361
     }
   },
   "history": [
@@ -188,8 +188,36 @@
         "strategy29": 1.0,
         "strategy30": 1.0
       }
+    },
+    {
+      "date": "2026-07-15",
+      "nav_usd": 100069.69,
+      "idx": {
+        "core": 1.000365,
+        "macd": 1.0,
+        "us_dcs": 1.0,
+        "alternatives": 1.000512,
+        "high_beta": 1.0,
+        "dividends": 1.003631,
+        "strategy9": 1.000374,
+        "strategy12": 1.000362,
+        "strategy13": 1.000362,
+        "strategy14": 1.000318,
+        "strategy15": 1.000318,
+        "strategy17": 1.000316,
+        "strategy19": 1.020794,
+        "strategy20": 1.062016,
+        "strategy21": 1.062019,
+        "strategy22": 1.00045,
+        "strategy23": 1.000373,
+        "strategy24": 1.000373,
+        "strategy25": 1.000359,
+        "strategy27": 1.000368,
+        "strategy29": 1.000368,
+        "strategy30": 1.000036
+      }
     }
   ],
   "rebalances": [],
-  "last_updated": "2026-07-14 23:02:19"
+  "last_updated": "2026-07-15 05:45:59"
 }

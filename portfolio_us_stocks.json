@@ -1,6 +1,6 @@
 {
-  "total_capital": 99810.4,
-  "cash_balance": NaN,
+  "total_capital": 100482.13,
+  "cash_balance": 527.55,
   "holdings": [
     {
       "ticker": "META",
@@ -11,5 +11,5 @@
       "target_weight": 0.25
     }
   ],
-  "last_updated": "2026-07-14 23:00:04"
+  "last_updated": "2026-07-15 05:44:22"
 }

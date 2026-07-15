@@ -1,11 +1,11 @@
 # Isolated US Stock DCS Value-Growth Execution Report
-**Execution Date:** 2026-07-14 | **Strategy Version:** DCS Value-Growth Isolated V1
+**Execution Date:** 2026-07-15 | **Strategy Version:** DCS Value-Growth Isolated V1
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** $101,510.74 USD
 * **Total Cash Balance:** $76,218.59 USD
 * **Equity Exposure:** 24.9%
-* **Days Since Last Rebalance:** 21 days
+* **Days Since Last Rebalance:** 22 days
 
 ## 2. Current Holdings
 | Ticker | Shares Held | Last Price | Market Value | Target Weight | DCS Conviction |

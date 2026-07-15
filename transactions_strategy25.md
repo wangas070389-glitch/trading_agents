@@ -4,4 +4,5 @@
 | :--- | :--- | :---: | :---: | :---: | :--- | :--- | :--- | :--- |
 | 2026-07-14 | FEMSAUBD.MX | BUY | 154.9987 | $232.2600 | $-36,104.40 | Market | FILLED | Golden MACD entry |
 | 2026-07-14 | BONDIA | INTEREST | 1.0000 | $0.3880 | $+0.39 | Market | FILLED | Sweep interest |
+| 2026-07-15 | BONDIA | INTEREST | 1.0000 | $8.2150 | $+8.21 | Market | FILLED | Sweep interest |
 ---
