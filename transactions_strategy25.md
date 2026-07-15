@@ -10,4 +10,5 @@
 | 2026-07-15 | BONDIA | INTEREST | 1.0000 | $0.2605 | $+0.26 | Market | FILLED | Sweep interest |
 | 2026-07-15 | BONDIA | INTEREST | 1.0000 | $1.3535 | $+1.35 | Market | FILLED | Sweep interest |
 | 2026-07-15 | FEMSAUBD.MX | SELL | 154.9987 | $224.2800 | $+34,662.30 | Market | FILLED | MACD crossover or Trend break exit |
+| 2026-07-15 | BONDIA | INTEREST | 1.0000 | $1.6438 | $+1.64 | Market | FILLED | Sweep interest |
 ---
