@@ -7,4 +7,5 @@
 | 2026-07-15 | BONDIA | INTEREST | 1.0000 | $8.2150 | $+8.21 | Market | FILLED | Sweep interest |
 | 2026-07-15 | BONDIA | INTEREST | 1.0000 | $12.6431 | $+12.64 | Market | FILLED | Sweep interest |
 | 2026-07-15 | AMXB.MX | BUY | 1580.9647 | $22.7600 | $-36,087.11 | Market | FILLED | Golden MACD entry |
+| 2026-07-15 | BONDIA | INTEREST | 1.0000 | $0.2605 | $+0.26 | Market | FILLED | Sweep interest |
 ---

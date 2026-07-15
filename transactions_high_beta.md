@@ -11,7 +11,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $101,178.61 USD
-* **Total Deployed Capital**: $18,997.89 USD (18.8% invested)
-* **Unallocated Cash Reserves**: $82,180.72 USD (81.2% cash)
-* **Current Portfolio Market Value**: $101,178.61 USD (including cash)
+* **Initial + Inflow Capital**: $101,113.88 USD
+* **Total Deployed Capital**: $18,933.16 USD (18.7% invested)
+* **Unallocated Cash Reserves**: $82,180.72 USD (81.3% cash)
+* **Current Portfolio Market Value**: $101,113.88 USD (including cash)
