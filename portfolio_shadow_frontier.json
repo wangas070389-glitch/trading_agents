@@ -132,6 +132,23 @@
         "strategy29": 1.0,
         "strategy30": 1.0
       }
+    },
+    {
+      "date": "2026-07-14",
+      "nav_usd": 99568.49,
+      "idx": {
+        "core": 1.018761,
+        "macd": 1.001795,
+        "us_dcs": 0.989876,
+        "alternatives": 0.998994,
+        "high_beta": 0.992453,
+        "dividends": 1.000252,
+        "strategy9": 0.988907,
+        "strategy12": 0.988079,
+        "strategy13": 0.988028,
+        "strategy14": 0.990541,
+        "strategy15": 0.990579
+      }
     }
   ],
   "rebalances": [],

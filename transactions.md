@@ -162,11 +162,20 @@
 | 2026-07-13 | BONDIA | INTEREST | 1 | 0.5875 | +0.5875 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0318 days. |
 | 2026-07-13 | BONDIA | INTEREST | 1 | 0.3751 | +0.3751 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0203 days. |
 | 2026-07-13 | BONDIA | INTEREST | 1 | 0.6120 | +0.6120 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0332 days. |
+| 2026-07-14 | BONDIA | INTEREST | 1 | 5.1504 | +5.1504 | Market | FILLED | Bondia overnight yield on cash reserves for 0.2791 days. |
+| 2026-07-14 | BONDIA | INTEREST | 1 | 8.0874 | +8.0874 | Market | FILLED | Bondia overnight yield on cash reserves for 0.4382 days. |
+| 2026-07-14 | BONDIA | INTEREST | 1 | 0.1691 | +0.1691 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0092 days. |
+| 2026-07-14 | BONDIA | INTEREST | 1 | 1.1199 | +1.1199 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0607 days. |
+| 2026-07-14 | BONDIA | INTEREST | 1 | 1.2385 | +1.2385 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0671 days. |
+| 2026-07-14 | BONDIA | INTEREST | 1 | 1.0213 | +1.0213 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0553 days. |
+| 2026-07-14 | BONDIA | INTEREST | 1 | 0.0382 | +0.0382 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0021 days. |
+| 2026-07-14 | BONDIA | INTEREST | 1 | 0.0405 | +0.0405 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0022 days. |
+| 2026-07-14 | BONDIA | INTEREST | 1 | 0.9591 | +0.9591 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0520 days. |
 ---
 
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 120,000.00 MXN
 * **Total Deployed Capital**: 18,631.39 MXN (15.4% invested)
-* **Unallocated Cash Reserves**: 101,738.98 MXN (84.3% cash)
-* **Current Portfolio Market Value**: 120,644.57 MXN (including cash)
+* **Unallocated Cash Reserves**: 101,756.81 MXN (84.1% cash)
+* **Current Portfolio Market Value**: 121,006.00 MXN (including cash)

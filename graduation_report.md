@@ -147,6 +147,7 @@
 | S4 US DCF Value-Growth | OK | no kill triggers active |
 | S6 High-Beta Momentum | OK | no kill triggers active |
 | S5 Alternatives | OK | no kill triggers active |
+| S1 Adaptive Value (BMV) | OK | no kill triggers active |
 | S9 AI Regime Stat-Arb | OK | no kill triggers active |
 | S10 Intraday VWAP | OK | no kill triggers active |
 | S16 MACD-HMM Router | OK | no kill triggers active |
