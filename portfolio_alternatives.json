@@ -1,5 +1,5 @@
 {
-  "total_capital": 99596.69,
+  "total_capital": 99625.0,
   "cash_balance": 66107.29,
   "holdings": [
     {
@@ -17,7 +17,7 @@
       "ticker": "DBA",
       "shares": 733,
       "buy_price": 27.527799606323242,
-      "last_price": 27.604999542236328,
+      "last_price": 27.600000381469727,
       "peak_price": 27.527799606323242,
       "armed": false,
       "target_weight": 0.2,
@@ -25,5 +25,5 @@
       "entry_date": "2026-07-06"
     }
   ],
-  "last_updated": "2026-07-16 17:41:34"
+  "last_updated": "2026-07-16 17:46:43"
 }
