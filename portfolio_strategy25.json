@@ -1,6 +1,6 @@
 {
-  "total_capital": 198636.47305209952,
-  "cash_balance": 162527.24,
+  "total_capital": 198637.11305209954,
+  "cash_balance": 162527.88,
   "holdings": [
     {
       "ticker": "AMXB.MX",
@@ -11,7 +11,7 @@
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-07-16 21:34:45",
+  "last_updated": "2026-07-16 22:06:36",
   "last_rebalance_date": "2026-07-15",
-  "total_portfolio_value_mxn": 198636.47305209952
+  "total_portfolio_value_mxn": 198637.11305209954
 }

@@ -1,6 +1,6 @@
 {
   "total_capital": 120000.0,
-  "cash_balance": 65662.08,
+  "cash_balance": 65662.34,
   "holdings": [
     {
       "ticker": "GAPB.MX",
@@ -53,5 +53,5 @@
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-07-16 21:33:24"
+  "last_updated": "2026-07-16 22:05:17"
 }
