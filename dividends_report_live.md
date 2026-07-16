@@ -1,22 +1,22 @@
 # Strategy 8: Dividend Quality & Yield Execution Report
-**Execution Date:** 2026-07-16 20:36:36 | **Strategy Version:** Live V1
+**Execution Date:** 2026-07-16 21:33:31 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $197,693.16 MXN
-* **Total Cash Balance:** $39,645.15 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $197,649.86 MXN
+* **Total Cash Balance:** $39,645.43 MXN (Parked in Bondia Compound at 6.53% APR)
 * **Equity Exposure:** 79.9%
 * **Days Since Last Rebalance:** 15 days
 
 ## 2. Current Holdings
 | Ticker | Shares Held | Buy Price | Last Price | Market Value | Expected Dividend (Annual) | Next Ex-Div / Pay Date | Target Weight |
 | :--- | :---: | :---: | :---: | ---: | :--- | :--- | :---: |
-| **GFNORTEO.MX** | 210.78 | $189.77 | $180.87 | $38,124.04 | $17.44 MXN/sh (Annual: $3,676.03 MXN) | Ex: 2026-05-28 / Pay: N/A | 20.0% |
-| **BBAJIOO.MX** | 707.59 | $56.53 | $57.11 | $40,410.40 | $7.30 MXN/sh (Annual: $5,165.40 MXN) | Ex: 2026-05-08 / Pay: N/A | 20.0% |
-| **KOFUBL.MX** | 215.46 | $185.65 | $179.47 | $38,668.46 | $7.74 MXN/sh (Annual: $1,667.65 MXN) | Ex: 2026-10-12 / Pay: N/A | 20.0% |
-| **PG** | 15.48 | $2583.93 | $2638.52 | $40,845.10 | $4.35 USD/sh (Annual: $1,172.78 MXN) | Ex: 2026-07-24 / Pay: 2026-05-15 | 20.0% |
+| **GFNORTEO.MX** | 210.78 | $189.77 | $180.39 | $38,022.87 | $17.44 MXN/sh (Annual: $3,676.03 MXN) | Ex: 2026-05-28 / Pay: N/A | 20.0% |
+| **BBAJIOO.MX** | 707.59 | $56.53 | $57.35 | $40,580.22 | $7.30 MXN/sh (Annual: $5,165.40 MXN) | Ex: 2026-05-08 / Pay: N/A | 20.0% |
+| **KOFUBL.MX** | 215.46 | $185.65 | $178.96 | $38,558.58 | $7.74 MXN/sh (Annual: $1,667.65 MXN) | Ex: 2026-10-12 / Pay: N/A | 20.0% |
+| **PG** | 15.48 | $2583.93 | $2638.37 | $40,842.76 | $4.35 USD/sh (Annual: $1,172.71 MXN) | Ex: 2026-07-24 / Pay: 2026-05-15 | 20.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $0.0480 MXN over 0.0067 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $0.2843 MXN over 0.0395 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
@@ -24,29 +24,29 @@
 | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
 | **ABBV** | SELL / AVOID | 2.83% | 326.0% | 326.0% | $254.39 > SMA $219.76 | Payout Ratio (326.0%) out of bounds and FCF Payout (326.0%) exceeds limit |
 | **ABT** | SELL / AVOID | 2.82% | 67.2% | 67.2% | $98.83 <= SMA $108.45 | Bear trend (Close <= SMA 200) |
-| **AC.MX** | SELL / AVOID | 4.46% | 79.1% | 79.1% | $196.73 <= SMA $197.49 | Bear trend (Close <= SMA 200) |
-| **BBAJIOO.MX** | BUY / HOLD | 12.56% | 70.6% | 70.6% | $57.11 > SMA $50.21 | Passed all quality checks. Score: 0.0000 |
+| **AC.MX** | SELL / AVOID | 4.46% | 79.1% | 79.1% | $196.01 <= SMA $197.49 | Bear trend (Close <= SMA 200) |
+| **BBAJIOO.MX** | BUY / HOLD | 12.56% | 70.6% | 70.6% | $57.35 > SMA $50.21 | Passed all quality checks. Score: 0.0000 |
 | **CVX** | SELL / AVOID | 3.92% | 120.4% | 120.4% | $183.86 > SMA $171.00 | Payout Ratio (120.4%) out of bounds and FCF Payout (120.4%) exceeds limit |
-| **FEMSAUBD.MX** | SELL / AVOID | 2.13% | 106.2% | 106.2% | $225.20 <= SMA $nan | Yield below 2.5% and Payout Ratio (106.2%) out of bounds and FCF Payout (106.2%) exceeds limit and Bear trend (Close <= SMA 200) |
-| **FIBRAMQ12.MX** | SELL / AVOID | 5.44% | 710.9% | 710.9% | $45.29 > SMA $36.84 | Payout Ratio (710.9%) out of bounds and FCF Payout (710.9%) exceeds limit and Non-positive EPS (-1.80) |
-| **FUNO11.MX** | BUY / HOLD | 8.08% | 46.6% | 46.6% | $31.09 > SMA $27.75 | Passed all quality checks. Score: 0.0000 |
-| **GAPB.MX** | SELL / AVOID | 4.23% | 45.6% | 45.6% | $391.88 <= SMA $436.56 | Bear trend (Close <= SMA 200) |
-| **GFNORTEO.MX** | BUY / HOLD | 9.48% | 78.5% | 78.5% | $180.87 > SMA $175.25 | Passed all quality checks. Score: 0.0000 |
-| **GRUMAB.MX** | SELL / AVOID | 2.05% | 16.9% | 16.9% | $286.75 <= SMA $305.97 | Yield below 2.5% and Bear trend (Close <= SMA 200) |
+| **FEMSAUBD.MX** | SELL / AVOID | 2.13% | 106.2% | 106.2% | $225.06 <= SMA $nan | Yield below 2.5% and Payout Ratio (106.2%) out of bounds and FCF Payout (106.2%) exceeds limit and Bear trend (Close <= SMA 200) |
+| **FIBRAMQ12.MX** | SELL / AVOID | 5.44% | 710.9% | 710.9% | $45.27 > SMA $36.84 | Payout Ratio (710.9%) out of bounds and FCF Payout (710.9%) exceeds limit and Non-positive EPS (-1.80) |
+| **FUNO11.MX** | BUY / HOLD | 8.08% | 46.6% | 46.6% | $31.10 > SMA $27.75 | Passed all quality checks. Score: 0.0000 |
+| **GAPB.MX** | SELL / AVOID | 4.23% | 45.6% | 45.6% | $391.76 <= SMA $436.56 | Bear trend (Close <= SMA 200) |
+| **GFNORTEO.MX** | BUY / HOLD | 9.48% | 78.5% | 78.5% | $180.39 > SMA $175.25 | Passed all quality checks. Score: 0.0000 |
+| **GRUMAB.MX** | SELL / AVOID | 2.05% | 16.9% | 16.9% | $286.36 <= SMA $305.97 | Yield below 2.5% and Bear trend (Close <= SMA 200) |
 | **JNJ** | SELL / AVOID | 2.17% | 60.8% | 60.8% | $249.97 > SMA $220.74 | Yield below 2.5% |
 | **KO** | BUY / HOLD | 2.57% | 64.8% | 64.8% | $84.92 > SMA $74.29 | Passed all quality checks. Score: 0.0000 |
-| **KOFUBL.MX** | BUY / HOLD | 4.37% | 59.9% | 59.9% | $179.47 > SMA $171.63 | Passed all quality checks. Score: 0.0000 |
+| **KOFUBL.MX** | BUY / HOLD | 4.37% | 59.9% | 59.9% | $178.96 > SMA $171.62 | Passed all quality checks. Score: 0.0000 |
 | **LOW** | SELL / AVOID | 2.38% | 40.6% | 40.6% | $216.16 <= SMA $239.81 | Yield below 2.5% and Bear trend (Close <= SMA 200) |
 | **MCD** | SELL / AVOID | 2.81% | 59.9% | 59.9% | $273.46 <= SMA $299.16 | Bear trend (Close <= SMA 200) |
 | **MMM** | SELL / AVOID | 1.94% | 57.2% | 57.2% | $161.77 > SMA $157.01 | Yield below 2.5% and Debt/Equity (3.96) exceeds 1.5 |
 | **O** | SELL / AVOID | 5.14% | 265.0% | 265.0% | $65.75 > SMA $59.82 | Payout Ratio (265.0%) out of bounds and FCF Payout (265.0%) exceeds limit |
-| **OMAB.MX** | SELL / AVOID | 5.14% | 84.2% | 84.2% | $231.98 <= SMA $235.77 | Payout Ratio (84.2%) out of bounds and FCF Payout (84.2%) exceeds limit and Bear trend (Close <= SMA 200) |
-| **ORBIA.MX** | SELL / AVOID | 0.00% | 0.0% | 0.0% | $22.78 > SMA $19.55 | Yield below 2.5% and Payout Ratio (0.0%) out of bounds and Non-positive EPS (-4.03) and Debt/Equity (2.13) exceeds 1.5 |
+| **OMAB.MX** | SELL / AVOID | 5.14% | 84.2% | 84.2% | $233.09 <= SMA $235.77 | Payout Ratio (84.2%) out of bounds and FCF Payout (84.2%) exceeds limit and Bear trend (Close <= SMA 200) |
+| **ORBIA.MX** | SELL / AVOID | 0.00% | 0.0% | 0.0% | $22.84 > SMA $19.55 | Yield below 2.5% and Payout Ratio (0.0%) out of bounds and Non-positive EPS (-4.03) and Debt/Equity (2.13) exceeds 1.5 |
 | **PEP** | SELL / AVOID | 4.37% | 75.3% | 75.3% | $139.43 <= SMA $147.59 | Debt/Equity (2.39) exceeds 1.5 and Bear trend (Close <= SMA 200) |
 | **PG** | BUY / HOLD | 2.94% | 61.8% | 61.8% | $151.50 > SMA $146.96 | Passed all quality checks. Score: 0.0000 |
 | **SPG** | BUY / HOLD | 3.96% | 60.2% | 60.2% | $228.49 > SMA $190.69 | Passed all quality checks. Score: 0.0000 |
 | **T** | SELL / AVOID | 5.18% | 37.4% | 37.4% | $21.98 <= SMA $24.76 | Bear trend (Close <= SMA 200) |
 | **TGT** | BUY / HOLD | 3.36% | 60.0% | 60.0% | $140.21 > SMA $110.06 | Passed all quality checks. Score: 0.0000 |
 | **VZ** | SELL / AVOID | 6.61% | 67.4% | 67.4% | $43.88 > SMA $43.01 | Debt/Equity (1.92) exceeds 1.5 |
-| **WALMEX.MX** | SELL / AVOID | 4.05% | 58.6% | 58.6% | $49.59 <= SMA $56.19 | Bear trend (Close <= SMA 200) |
+| **WALMEX.MX** | SELL / AVOID | 4.05% | 58.6% | 58.6% | $49.56 <= SMA $56.19 | Bear trend (Close <= SMA 200) |
 | **XOM** | BUY / HOLD | 2.85% | 68.0% | 68.0% | $145.95 > SMA $135.64 | Passed all quality checks. Score: 0.0000 |
