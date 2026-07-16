@@ -49,6 +49,10 @@ def main():
     portfolio_strategy22_path = os.path.join(dir_path, "portfolio_strategy22.json")
     portfolio_strategy23_path = os.path.join(dir_path, "portfolio_strategy23.json")
     portfolio_strategy24_path = os.path.join(dir_path, "portfolio_strategy24.json")
+    portfolio_strategy25_path = os.path.join(dir_path, "portfolio_strategy25.json")
+    portfolio_strategy27_path = os.path.join(dir_path, "portfolio_strategy27.json")
+    portfolio_strategy29_path = os.path.join(dir_path, "portfolio_strategy29.json")
+    portfolio_strategy30_path = os.path.join(dir_path, "portfolio_strategy30.json")
     comparison_report_path = os.path.join(dir_path, "comparison_report.md")
     
     port_val = load_json(portfolio_val_path)
@@ -74,6 +78,10 @@ def main():
     port_strategy22 = load_json(portfolio_strategy22_path)
     port_strategy23 = load_json(portfolio_strategy23_path)
     port_strategy24 = load_json(portfolio_strategy24_path)
+    port_strategy25 = load_json(portfolio_strategy25_path)
+    port_strategy27 = load_json(portfolio_strategy27_path)
+    port_strategy29 = load_json(portfolio_strategy29_path)
+    port_strategy30 = load_json(portfolio_strategy30_path)
     port_multi_strategy = load_json(portfolio_multi_strategy_path)
     usd_mxn_rate = port_multi_strategy.get("usd_mxn_rate", 17.43) if port_multi_strategy else 17.43
     try:
@@ -459,6 +467,66 @@ def main():
         report.append(f"| **S24: 30m Random Forest Classifier** | ${s24_market_val:,.2f} | ${s24_cash:,.2f} | ${s24_invested:,.2f} | {s24_alloc:.1f}% | {s24_sign}${s24_profit:,.2f} | {s24_sign}{s24_roi:.2f}% | 2026-07-15 | MXN |")
     else:
         report.append("| **S24: 30m Random Forest Classifier** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+
+    # Parse S25
+    s25_market_val = s25_cash = s25_invested = 0.0
+    if port_strategy25:
+        s25_total_cap = 200000.0
+        s25_cash = port_strategy25.get("cash_balance", 200000.0)
+        s25_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy25.get("holdings", []))
+        s25_market_val = s25_cash + sum(h["shares"] * valuation_price(h) for h in port_strategy25.get("holdings", []))
+        s25_profit = s25_market_val - s25_total_cap
+        s25_roi = (s25_profit / s25_total_cap) * 100.0
+        s25_alloc = (s25_invested / s25_market_val) * 100.0 if s25_market_val > 0 else 0.0
+        s25_sign = "+" if s25_profit >= 0 else ""
+        report.append(f"| **S25: Golden MACD BMV** | ${s25_market_val:,.2f} | ${s25_cash:,.2f} | ${s25_invested:,.2f} | {s25_alloc:.1f}% | {s25_sign}${s25_profit:,.2f} | {s25_sign}{s25_roi:.2f}% | 2026-07-15 | MXN |")
+    else:
+        report.append("| **S25: Golden MACD BMV** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+
+    # Parse S27
+    s27_market_val = s27_cash = s27_invested = 0.0
+    if port_strategy27:
+        s27_total_cap = 200000.0
+        s27_cash = port_strategy27.get("cash_balance", 200000.0)
+        s27_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy27.get("holdings", []))
+        s27_market_val = s27_cash + sum(h["shares"] * valuation_price(h) for h in port_strategy27.get("holdings", []))
+        s27_profit = s27_market_val - s27_total_cap
+        s27_roi = (s27_profit / s27_total_cap) * 100.0
+        s27_alloc = (s27_invested / s27_market_val) * 100.0 if s27_market_val > 0 else 0.0
+        s27_sign = "+" if s27_profit >= 0 else ""
+        report.append(f"| **S27: Golden Hurst** | ${s27_market_val:,.2f} | ${s27_cash:,.2f} | ${s27_invested:,.2f} | {s27_alloc:.1f}% | {s27_sign}${s27_profit:,.2f} | {s27_sign}{s27_roi:.2f}% | 2026-07-15 | MXN |")
+    else:
+        report.append("| **S27: Golden Hurst** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+
+    # Parse S29
+    s29_market_val = s29_cash = s29_invested = 0.0
+    if port_strategy29:
+        s29_total_cap = 200000.0
+        s29_cash = port_strategy29.get("cash_balance", 200000.0)
+        s29_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy29.get("holdings", []))
+        s29_market_val = s29_cash + sum(h["shares"] * valuation_price(h) for h in port_strategy29.get("holdings", []))
+        s29_profit = s29_market_val - s29_total_cap
+        s29_roi = (s29_profit / s29_total_cap) * 100.0
+        s29_alloc = (s29_invested / s29_market_val) * 100.0 if s29_market_val > 0 else 0.0
+        s29_sign = "+" if s29_profit >= 0 else ""
+        report.append(f"| **S29: Golden Stat-Arb** | ${s29_market_val:,.2f} | ${s29_cash:,.2f} | ${s29_invested:,.2f} | {s29_alloc:.1f}% | {s29_sign}${s29_profit:,.2f} | {s29_sign}{s29_roi:.2f}% | 2026-07-15 | MXN |")
+    else:
+        report.append("| **S29: Golden Stat-Arb** | *Not Initialized* | - | - | - | - | - | - | MXN |")
+
+    # Parse S30
+    s30_market_val = s30_cash = s30_invested = 0.0
+    if port_strategy30:
+        s30_total_cap = port_strategy30.get("total_capital", 100000.0)
+        s30_cash = port_strategy30.get("cash_balance", 100000.0)
+        s30_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy30.get("holdings", []))
+        s30_market_val = s30_cash + sum(h["shares"] * valuation_price(h) for h in port_strategy30.get("holdings", []))
+        s30_profit = s30_market_val - s30_total_cap
+        s30_roi = (s30_profit / s30_total_cap) * 100.0
+        s30_alloc = (s30_invested / s30_market_val) * 100.0 if s30_market_val > 0 else 0.0
+        s30_sign = "+" if s30_profit >= 0 else ""
+        report.append(f"| **S30: Golden MACD US Stocks** | ${s30_market_val:,.2f} | ${s30_cash:,.2f} | ${s30_invested:,.2f} | {s30_alloc:.1f}% | {s30_sign}${s30_profit:,.2f} | {s30_sign}{s30_roi:.2f}% | 2026-07-15 | USD |")
+    else:
+        report.append("| **S30: Golden MACD US Stocks** | *Not Initialized* | - | - | - | - | - | - | USD |")
 
     # Parse Strategy 7 (Consolidated Multi-Strategy)
     ms_val = float(port_multi_strategy.get("total_portfolio_value_usd", 0.0)) if port_multi_strategy else 0.0
