@@ -1,6 +1,6 @@
 {
-  "total_capital": 102652.29,
-  "cash_balance": -57231.79,
+  "total_capital": 101452.3,
+  "cash_balance": -172042.79,
   "holdings": [
     {
       "ticker": "META",
@@ -15,7 +15,7 @@
       "shares": 44.0,
       "buy_price": 326.85,
       "last_price": 326.85,
-      "peak_price": 328.7200012207031,
+      "peak_price": 332.2799987792969,
       "target_weight": 0.14285714285714285
     },
     {
@@ -31,7 +31,7 @@
       "shares": 39.0,
       "buy_price": 372.09,
       "last_price": 372.09,
-      "peak_price": 373.6499938964844,
+      "peak_price": 375.2699890136719,
       "target_weight": 0.14285714285714285
     },
     {
@@ -41,7 +41,23 @@
       "last_price": 349.33,
       "peak_price": 351.239990234375,
       "target_weight": 0.14285714285714285
+    },
+    {
+      "ticker": "AMZN",
+      "shares": 56.0,
+      "buy_price": 256.19,
+      "last_price": 256.19,
+      "peak_price": 258.0824890136719,
+      "target_weight": 0.14285714285714285
+    },
+    {
+      "ticker": "AVGO",
+      "shares": 37.0,
+      "buy_price": 382.11,
+      "last_price": 382.11,
+      "peak_price": 386.739990234375,
+      "target_weight": 0.14285714285714285
     }
   ],
-  "last_updated": "2026-07-15 22:04:33"
+  "last_updated": "2026-07-16 15:59:42"
 }

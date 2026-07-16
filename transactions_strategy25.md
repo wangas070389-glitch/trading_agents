@@ -14,4 +14,5 @@
 | 2026-07-15 | BONDIA | INTEREST | 1.0000 | $1.7240 | $+1.72 | Market | FILLED | Sweep interest |
 | 2026-07-15 | BONDIA | INTEREST | 1.0000 | $0.2035 | $+0.20 | Market | FILLED | Sweep interest |
 | 2026-07-15 | BONDIA | INTEREST | 1.0000 | $1.6145 | $+1.61 | Market | FILLED | Sweep interest |
+| 2026-07-16 | BONDIA | INTEREST | 1.0000 | $21.7073 | $+21.71 | Market | FILLED | Sweep interest |
 ---
