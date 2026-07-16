@@ -1,6 +1,6 @@
 {
-  "total_capital": 197307.03,
-  "cash_balance": 20036.03,
+  "total_capital": 197340.85,
+  "cash_balance": 20036.05,
   "holdings": [
     {
       "ticker": "SOXL",
@@ -8,10 +8,10 @@
       "side": "long",
       "shares": 71.41617390021563,
       "buy_price": 2524.8956105089746,
-      "last_price": 2482.2248454979854,
+      "last_price": 2482.69807757737,
       "peak_price": 144.8699951171875,
       "allocated": 180318.38400000002
     }
   ],
-  "last_updated": "2026-07-16 20:28:01"
+  "last_updated": "2026-07-16 20:37:49"
 }
