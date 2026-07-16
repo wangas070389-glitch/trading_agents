@@ -64,4 +64,5 @@
 | 2026-07-16 | BONDIA | INTEREST | 1.0000 | $26.7592 | $0.00 | $26.76 | Accrued interest on sweep balance |
 | 2026-07-16 | SOXL | BUY_SOXL | 71.4162 | $2524.8956 | $0.00 | $-180,318.38 | Bull swing pullback entry |
 | 2026-07-16 | BONDIA | INTEREST | 1.0000 | $0.0425 | $0.00 | $0.04 | Accrued interest on sweep balance |
+| 2026-07-16 | BONDIA | INTEREST | 1.0000 | $0.2093 | $0.00 | $0.21 | Accrued interest on sweep balance |
 ---
