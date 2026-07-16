@@ -1,20 +1,20 @@
 # Strategy 16: Multi-Asset HMM Swing Router Execution Report
-**Execution Date:** 2026-07-16 16:01:33 | **Strategy Version:** Router V2 (Hybrid Swing)
+**Execution Date:** 2026-07-16 16:18:41 | **Strategy Version:** Router V2 (Hybrid Swing)
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $200,353.76 MXN
-* **Total Cash Balance:** $20,035.38 MXN (Parked compounding in Bondia sweep at 6.53% APR)
-* **Equity Exposure:** 90.0%
-* **Active Target Index:** **SOXX** (Regime: State 0 - Strongest decoded intraday trend state on SOXX (Score: 0.102))
+* **Total Portfolio NAV:** $196,768.42 MXN
+* **Total Cash Balance:** $20,035.42 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Equity Exposure:** 89.8%
+* **Active Target Index:** **SOXX** (Regime: State 0 - LOCKED to base asset of active holding (SOXX))
 
 ## 2. Current Holdings
 | Ticker | Type | Side | Shares | Buy Price (MXN) | Last Price (MXN) | Market Value (MXN) |
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
-| **SOXL** | LEVERAGED SWING | LONG | 71.4162 | $2,524.90 | $2,524.90 | $180,318.38 |
+| **SOXL** | LEVERAGED SWING | LONG | 71.4162 | $2,524.90 | $2,474.69 | $176,733.00 |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $26.7592 MXN sweep interest.
-* ENTERED LONG SOXL at $2,524.90 MXN (CCI=-120.0 ADX=71.0).
+* **[INTEREST ACCRUED]** Cash reserves earned $0.0425 MXN sweep interest.
+* No trades or rebalancing actions triggered in this 30-minute interval.
 
 ## 4. Multi-Asset HMM Telemetry
 * Decoded Regimes:
@@ -23,5 +23,5 @@
   * **SOXX:** State 0 (Trend Score: 0.102)
   * **IWM:** State 2 (Trend Score: -0.500)
 * Active Telemetry (SOXX):
-  * Base Price: $533.30 USD | ATR (14): 9.19
-  * VWAP: $538.44 USD (Lower: $524.66 | Upper: $552.22)
+  * Base Price: $529.92 USD | ATR (14): 9.45
+  * VWAP: $537.82 USD (Lower: $523.64 | Upper: $552.00)

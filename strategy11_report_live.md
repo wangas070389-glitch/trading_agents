@@ -1,9 +1,9 @@
 # Strategy 11: CCI-ADX Twin Strategy Execution Report
-**Execution Date:** 2026-07-16 16:01:21 | **Strategy Version:** Twin V1
+**Execution Date:** 2026-07-16 16:18:33 | **Strategy Version:** Twin V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $205,029.65 MXN
-* **Total Cash Balance:** $205,029.65 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Total Portfolio NAV:** $205,030.09 MXN
+* **Total Cash Balance:** $205,030.09 MXN (Parked compounding in Bondia sweep at 6.53% APR)
 * **Equity Exposure:** 0.0%
 * **Active Regime:** State 0 (Bull trend, low volatility detected on QQQ)
 
@@ -12,11 +12,11 @@
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $$27.3827 MXN sweep interest.
+* **[INTEREST ACCRUED]** Cash reserves earned $$0.4375 MXN sweep interest.
 * No trades or rebalancing actions triggered in this 30-minute interval.
 
 ## 4. CCI-ADX Telemetry
   * Decoded Regime: HMM State 0 -> **Regime 0 (Bull trend, low volatility detected on QQQ)**
-  * QQQ Close: $709.61 USD
-  * TQQQ CCI (10): -102.8 | ADX (7): 29.8
-  * SQQQ CCI (10): 103.1 | ADX (7): 30.1
+  * QQQ Close: $707.97 USD
+  * TQQQ CCI (10): -124.2 | ADX (7): 30.5
+  * SQQQ CCI (10): 123.0 | ADX (7): 30.8
