@@ -78,4 +78,5 @@
 | 2026-07-17 | URTY | BUY_URTY | 119.8624 | $1427.2041 | $0.00 | $-171,068.13 | Bull swing pullback entry |
 | 2026-07-17 | BONDIA | INTEREST | 1.0000 | $0.1126 | $0.00 | $0.11 | Accrued interest on sweep balance |
 | 2026-07-17 | BONDIA | INTEREST | 1.0000 | $0.0376 | $0.00 | $0.04 | Accrued interest on sweep balance |
+| 2026-07-17 | BONDIA | INTEREST | 1.0000 | $0.1945 | $0.00 | $0.19 | Accrued interest on sweep balance |
 ---
