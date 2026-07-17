@@ -24,7 +24,8 @@
     "strategy25": 0.0,
     "strategy27": 0.0,
     "strategy29": 0.0,
-    "strategy30": 0.0
+    "strategy30": 0.0,
+    "strategy31": 0.0
   },
   "sleeves": {
     "core": {
@@ -158,6 +159,12 @@
       "last_nav": 100021.21,
       "last_date": "2026-07-16",
       "tr_index": 1.0002121000000002
+    },
+    "strategy31": {
+      "alloc_usd": 0.0,
+      "last_nav": 1.0,
+      "last_date": "2026-07-16",
+      "tr_index": 1.0
     }
   },
   "history": [
@@ -242,10 +249,11 @@
         "strategy25": 0.993603,
         "strategy27": 0.99913,
         "strategy29": 0.99913,
-        "strategy30": 1.000212
+        "strategy30": 1.000212,
+        "strategy31": 1.0
       }
     }
   ],
   "rebalances": [],
-  "last_updated": "2026-07-16 22:06:41"
+  "last_updated": "2026-07-16 23:48:12"
 }

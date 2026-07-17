@@ -1,5 +1,5 @@
 # Shadow Frontier — Live Track Record of the Allocation Layer
-**Generated:** 2026-07-16 22:06:41 | Inception: 2026-07-14 (2 calendar days) | Virtual capital: $100,000 USD
+**Generated:** 2026-07-16 23:48:12 | Inception: 2026-07-14 (2 calendar days) | Virtual capital: $100,000 USD
 **Weights (frozen):** efficient_frontier_report.md 2026-07-11 -- Risk Parity, hurdle-filtered (RECOMMENDED)
 
 This book paper-trades the recommended frontier allocation itself, marked
@@ -43,6 +43,7 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 | S27 Golden Hurst | 0.0% | 0.0% | -0.09% | 2026-07-16 | multi-strategy USD |
 | S29 Golden Stat-Arb | 0.0% | 0.0% | -0.09% | 2026-07-16 | multi-strategy USD |
 | S30 Golden MACD US | 0.0% | 0.0% | +0.02% | 2026-07-16 | multi-strategy USD |
+| S31 Fibonacci S&R | 0.0% | 0.0% | +0.00% | 2026-07-16 | multi-strategy USD |
 
 ## 3. Correlation check (realized vs. backtest)
 *Needs >= 15 daily return observations; have 2.*
