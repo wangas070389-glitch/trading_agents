@@ -156,6 +156,10 @@ STRATS = [
          ledger="transactions_strategy30.md", initial=100000.0, ccy="USD", inception="2026-07-15",
          ms_key="s30_nav_usd", bt=dict(window=16.0, sharpe=0.55, cagr=0.1520, max_dd=-0.1800),
          block=None, note="Golden MACD parameters (55 EMA, 13/34/8) on US Stocks"),
+    dict(key="strategy31", label="S31 Fibonacci S&R", pf="portfolio_strategy31.json",
+         ledger="transactions_strategy31.md", initial=200000.0, ccy="MXN", inception="2026-07-15",
+         ms_key="s31_nav_usd", bt=dict(window=16.51, sharpe=0.15, cagr=0.1356, max_dd=-0.4960),
+         block=None, note="Fibonacci confluence reversion zones on TQQQ & Cash"),
 ]
 
 

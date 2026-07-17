@@ -53,6 +53,7 @@ def main():
     portfolio_strategy27_path = os.path.join(dir_path, "portfolio_strategy27.json")
     portfolio_strategy29_path = os.path.join(dir_path, "portfolio_strategy29.json")
     portfolio_strategy30_path = os.path.join(dir_path, "portfolio_strategy30.json")
+    portfolio_strategy31_path = os.path.join(dir_path, "portfolio_strategy31.json")
     comparison_report_path = os.path.join(dir_path, "comparison_report.md")
     
     port_val = load_json(portfolio_val_path)
@@ -82,6 +83,7 @@ def main():
     port_strategy27 = load_json(portfolio_strategy27_path)
     port_strategy29 = load_json(portfolio_strategy29_path)
     port_strategy30 = load_json(portfolio_strategy30_path)
+    port_strategy31 = load_json(portfolio_strategy31_path)
     port_multi_strategy = load_json(portfolio_multi_strategy_path)
     usd_mxn_rate = port_multi_strategy.get("usd_mxn_rate", 17.43) if port_multi_strategy else 17.43
     try:
@@ -91,7 +93,7 @@ def main():
     except (TypeError, ValueError):
         usd_mxn_rate = 17.43
     
-    if not port_val and not port_macd and not port_us and not port_us_dcs and not port_alternatives and not port_high_beta and not port_dividends and not port_strategy9 and not port_strategy10 and not port_strategy11 and not port_strategy12 and not port_strategy13 and not port_strategy14 and not port_strategy15 and not port_strategy16 and not port_strategy17 and not port_strategy18 and not port_strategy19 and not port_strategy20 and not port_strategy21 and not port_strategy22 and not port_strategy23 and not port_strategy24 and not port_multi_strategy:
+    if not port_val and not port_macd and not port_us and not port_us_dcs and not port_alternatives and not port_high_beta and not port_dividends and not port_strategy9 and not port_strategy10 and not port_strategy11 and not port_strategy12 and not port_strategy13 and not port_strategy14 and not port_strategy15 and not port_strategy16 and not port_strategy17 and not port_strategy18 and not port_strategy19 and not port_strategy20 and not port_strategy21 and not port_strategy22 and not port_strategy23 and not port_strategy24 and not port_strategy25 and not port_strategy27 and not port_strategy29 and not port_strategy30 and not port_strategy31 and not port_multi_strategy:
         print("Error: No portfolio files found. Cannot generate comparison.")
         return
         
@@ -527,6 +529,21 @@ def main():
         report.append(f"| **S30: Golden MACD US Stocks** | ${s30_market_val:,.2f} | ${s30_cash:,.2f} | ${s30_invested:,.2f} | {s30_alloc:.1f}% | {s30_sign}${s30_profit:,.2f} | {s30_sign}{s30_roi:.2f}% | 2026-07-15 | USD |")
     else:
         report.append("| **S30: Golden MACD US Stocks** | *Not Initialized* | - | - | - | - | - | - | USD |")
+
+    # Parse S31
+    s31_market_val = s31_cash = s31_invested = 0.0
+    if port_strategy31:
+        s31_total_cap = port_strategy31.get("total_capital", 200000.0)
+        s31_cash = port_strategy31.get("cash_balance", 200000.0)
+        s31_invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in port_strategy31.get("holdings", []))
+        s31_market_val = s31_cash + sum(h["shares"] * valuation_price(h) for h in port_strategy31.get("holdings", []))
+        s31_profit = s31_market_val - s31_total_cap
+        s31_roi = (s31_profit / s31_total_cap) * 100.0
+        s31_alloc = (s31_invested / s31_market_val) * 100.0 if s31_market_val > 0 else 0.0
+        s31_sign = "+" if s31_profit >= 0 else ""
+        report.append(f"| **S31: Fibonacci S&R** | ${s31_market_val:,.2f} | ${s31_cash:,.2f} | ${s31_invested:,.2f} | {s31_alloc:.1f}% | {s31_sign}${s31_profit:,.2f} | {s31_sign}{s31_roi:.2f}% | 2026-07-15 | MXN |")
+    else:
+        report.append("| **S31: Fibonacci S&R** | *Not Initialized* | - | - | - | - | - | - | MXN |")
 
     # Parse Strategy 7 (Consolidated Multi-Strategy)
     ms_val = float(port_multi_strategy.get("total_portfolio_value_usd", 0.0)) if port_multi_strategy else 0.0

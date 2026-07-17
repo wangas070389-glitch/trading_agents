@@ -93,6 +93,8 @@ SLEEVES = {
                          ms_key="s29_nav_usd", ledger="transactions_strategy29.md", ledger_ccy="MXN"),
     "strategy30":   dict(short="S30", label="S30 Golden MACD US", weight=0.000,
                          ms_key="s30_nav_usd", ledger="transactions_strategy30.md", ledger_ccy="USD"),
+    "strategy31":   dict(short="S31", label="S31 Fibonacci S&R", weight=0.000,
+                         ms_key="s31_nav_usd", ledger="transactions_strategy31.md", ledger_ccy="MXN"),
 }
 
 # Backtest correlation matrix from efficient_frontier_report.md (2026-07-11),
@@ -343,6 +345,21 @@ def main():
         )
         print(f"[shadow_frontier] libro sombra inicializado ({today}, "
               f"${INITIAL_CAPITAL_USD:,.0f} USD virtuales)")
+
+    # Ensure any new strategies in SLEEVES are initialized in state["sleeves"]
+    for k in SLEEVES:
+        if k not in state["sleeves"]:
+            mark = marks.get(k)
+            last_nav = mark[1] if (mark and mark[1] is not None) else 1.0
+            last_date = mark[0] if (mark and mark[0]) else today
+            state["sleeves"][k] = dict(
+                alloc_usd=weights.get(k, 0.0) * state["initial_capital_usd"],
+                last_nav=last_nav,
+                last_date=last_date,
+                tr_index=1.0
+            )
+        if k not in state["weights"]:
+            state["weights"][k] = round(weights.get(k, 0.0), 4)
 
     prev_hist_date = state["history"][-1]["date"] if state["history"] else None
 

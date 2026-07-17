@@ -132,7 +132,8 @@ def main():
     s27_path = os.path.join(dir_path, "portfolio_strategy27.json")
     s29_path = os.path.join(dir_path, "portfolio_strategy29.json")
     s30_path = os.path.join(dir_path, "portfolio_strategy30.json")
-    s17_data = s19_data = s20_data = s21_data = s22_data = s23_data = s24_data = s25_data = s27_data = s29_data = s30_data = None
+    s31_path = os.path.join(dir_path, "portfolio_strategy31.json")
+    s17_data = s19_data = s20_data = s21_data = s22_data = s23_data = s24_data = s25_data = s27_data = s29_data = s30_data = s31_data = None
 
     if os.path.exists(s17_path):
         with open(s17_path, 'r', encoding='utf-8') as f: s17_data = json.load(f)
@@ -156,6 +157,8 @@ def main():
         with open(s29_path, 'r', encoding='utf-8') as f: s29_data = json.load(f)
     if os.path.exists(s30_path):
         with open(s30_path, 'r', encoding='utf-8') as f: s30_data = json.load(f)
+    if os.path.exists(s31_path):
+        with open(s31_path, 'r', encoding='utf-8') as f: s31_data = json.load(f)
 
     # Calculate NAVs
     s1_nav_mxn, s1_cash_mxn, _ = get_nav(s1_data)
@@ -181,6 +184,7 @@ def main():
     s27_nav_mxn, _, _ = get_nav(s27_data)
     s29_nav_mxn, _, _ = get_nav(s29_data)
     s30_nav_usd, _, _ = get_nav(s30_data)
+    s31_nav_mxn, _, _ = get_nav(s31_data)
 
     # Convert MXN assets to USD
     s1_nav_usd, s1_cash_usd = s1_nav_mxn / usd_mxn_rate, s1_cash_mxn / usd_mxn_rate
@@ -202,6 +206,7 @@ def main():
     s25_nav_usd = s25_nav_mxn / usd_mxn_rate
     s27_nav_usd = s27_nav_mxn / usd_mxn_rate
     s29_nav_usd = s29_nav_mxn / usd_mxn_rate
+    s31_nav_usd = s31_nav_mxn / usd_mxn_rate
 
     # Consolidated NAV
     total_nav_usd = (s1_nav_usd + s4_nav_usd + s5_nav_usd + s6_nav_usd + s8_nav_usd + s9_nav_usd + 
@@ -379,7 +384,8 @@ def main():
             "s25_nav_usd": s25_nav_usd,
             "s27_nav_usd": s27_nav_usd,
             "s29_nav_usd": s29_nav_usd,
-            "s30_nav_usd": s30_nav_usd
+            "s30_nav_usd": s30_nav_usd,
+            "s31_nav_usd": s31_nav_usd
         })
     else:
         state["history"][-1].update({
@@ -407,7 +413,8 @@ def main():
             "s25_nav_usd": s25_nav_usd,
             "s27_nav_usd": s27_nav_usd,
             "s29_nav_usd": s29_nav_usd,
-            "s30_nav_usd": s30_nav_usd
+            "s30_nav_usd": s30_nav_usd,
+            "s31_nav_usd": s31_nav_usd
         })
 
     # Update meta values

@@ -282,16 +282,34 @@ def main():
     bear_ticker = universe[target_asset]["bear"]
 
     print(f"\nFetching intraday metrics for {target_asset}, {bull_ticker}, {bear_ticker}...")
+    import time
+    base_df = bull_df = bear_df = pd.DataFrame()
+    for attempt in range(3):
+        try:
+            base_df = yf.download(target_asset, period="10d", interval="1h", progress=False)
+            bull_df = yf.download(bull_ticker, period="10d", interval="1h", progress=False)
+            bear_df = yf.download(bear_ticker, period="10d", interval="1h", progress=False)
+
+            if isinstance(base_df.columns, pd.MultiIndex): base_df.columns = [c[0] for c in base_df.columns]
+            if isinstance(bull_df.columns, pd.MultiIndex): bull_df.columns = [c[0] for c in bull_df.columns]
+            if isinstance(bear_df.columns, pd.MultiIndex): bear_df.columns = [c[0] for c in bear_df.columns]
+
+            if not base_df.empty and not bull_df.empty and not bear_df.empty:
+                break
+        except Exception:
+            pass
+        if attempt < 2:
+            print(f"  [Attempt {attempt+1}/3] Intraday download failed or empty. Retrying in 2 seconds...")
+            time.sleep(2)
+
+    if base_df.empty or bull_df.empty or bear_df.empty:
+        print("CRITICAL WARNING: Failed to download target intraday data after retries. Gracefully skipping today's execution run.")
+        sys.exit(0)
+
     try:
-        base_df = yf.download(target_asset, period="10d", interval="1h", progress=False)
-        bull_df = yf.download(bull_ticker, period="10d", interval="1h", progress=False)
-        bear_df = yf.download(bear_ticker, period="10d", interval="1h", progress=False)
-
-        if isinstance(base_df.columns, pd.MultiIndex): base_df.columns = [c[0] for c in base_df.columns]
-        if isinstance(bull_df.columns, pd.MultiIndex): bull_df.columns = [c[0] for c in bull_df.columns]
-        if isinstance(bear_df.columns, pd.MultiIndex): bear_df.columns = [c[0] for c in bear_df.columns]
-
         base_df["ATR"] = calculate_atr(base_df)
+        base_df["CCI"] = calculate_cci(base_df)
+        base_df["ADX"] = calculate_adx(base_df)
         
         bull_df["ATR"] = calculate_atr(bull_df)
         bull_df["CCI"] = calculate_cci(bull_df)
@@ -301,8 +319,8 @@ def main():
         bear_df["CCI"] = calculate_cci(bear_df)
         bear_df["ADX"] = calculate_adx(bear_df)
     except Exception as e:
-        print(f"CRITICAL: Failed to download intraday bars: {e}")
-        sys.exit(1)
+        print(f"CRITICAL: Failed to calculate indicators on downloaded bars: {e}")
+        sys.exit(0)
 
     # 6. Extract indicators
     close_base = float(base_df["Close"].iloc[-1])
