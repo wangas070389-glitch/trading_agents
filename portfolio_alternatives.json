@@ -1,12 +1,12 @@
 {
-  "total_capital": 97162.49,
-  "cash_balance": 66107.29,
+  "total_capital": 93991.05,
+  "cash_balance": 45843.9,
   "holdings": [
     {
       "ticker": "EURUSD=X",
       "shares": 13154,
       "buy_price": 1.1370097398757935,
-      "last_price": 1.144819736480713,
+      "last_price": 1.1442956924438477,
       "peak_price": 1.1370097398757935,
       "armed": false,
       "target_weight": 0.15,
@@ -17,13 +17,24 @@
       "ticker": "DBA",
       "shares": 733,
       "buy_price": 27.527799606323242,
-      "last_price": 27.59000015258789,
+      "last_price": 27.75,
       "peak_price": 27.527799606323242,
       "armed": false,
       "target_weight": 0.2,
       "asset_type": "commodity",
       "entry_date": "2026-07-06"
+    },
+    {
+      "ticker": "USO",
+      "shares": 164,
+      "buy_price": 123.19999694824219,
+      "last_price": 123.19999694824219,
+      "peak_price": 123.19999694824219,
+      "armed": false,
+      "target_weight": 0.2,
+      "asset_type": "commodity",
+      "entry_date": "2026-07-17"
     }
   ],
-  "last_updated": "2026-07-16 22:05:21"
+  "last_updated": "2026-07-17 14:18:32"
 }

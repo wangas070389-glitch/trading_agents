@@ -1,6 +1,6 @@
 {
-  "total_capital": 97167.14,
-  "cash_balance": -153975.49,
+  "total_capital": 94056.16,
+  "cash_balance": -154543.2,
   "holdings": [
     {
       "ticker": "META",
@@ -15,7 +15,7 @@
       "shares": 44.0,
       "buy_price": 326.85,
       "last_price": 326.85,
-      "peak_price": 334.67999267578125,
+      "peak_price": 334.9800109863281,
       "target_weight": 0.14285714285714285
     },
     {
@@ -27,37 +27,29 @@
       "target_weight": 0.14285714285714285
     },
     {
-      "ticker": "GOOGL",
-      "shares": 39.0,
-      "buy_price": 372.09,
-      "last_price": 372.09,
-      "peak_price": 375.2699890136719,
-      "target_weight": 0.14285714285714285
-    },
-    {
       "ticker": "JPM",
-      "shares": 41.0,
-      "buy_price": 349.33,
-      "last_price": 349.33,
+      "shares": 54.0,
+      "buy_price": 348.09,
+      "last_price": 344.163077,
       "peak_price": 351.239990234375,
-      "target_weight": 0.14285714285714285
+      "target_weight": 0.2
     },
     {
       "ticker": "AMZN",
-      "shares": 56.0,
-      "buy_price": 256.19,
-      "last_price": 256.19,
+      "shares": 75.0,
+      "buy_price": 254.25,
+      "last_price": 248.55,
       "peak_price": 258.0824890136719,
-      "target_weight": 0.14285714285714285
+      "target_weight": 0.2
     },
     {
       "ticker": "AVGO",
-      "shares": 37.0,
-      "buy_price": 382.11,
-      "last_price": 382.11,
+      "shares": 50.0,
+      "buy_price": 379.7,
+      "last_price": 372.83,
       "peak_price": 386.739990234375,
-      "target_weight": 0.14285714285714285
+      "target_weight": 0.2
     }
   ],
-  "last_updated": "2026-07-16 22:05:18"
+  "last_updated": "2026-07-17 14:18:24"
 }

@@ -1,19 +1,19 @@
 # PORTFOLIO PERFORMANCE MONITOR
-**Status Check Time:** 2026-07-16 22:05:01
+**Status Check Time:** 2026-07-17 14:17:42
 
 ## 1. Current Holdings Value
 | Ticker | Shares Held | Buy Price (MXN) | Current Price (MXN) | Market Value (MXN) | Unrealized P/L | P/L % | DCS | HMM State | Target Weight |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| GRUMAB.MX | 1 | 291.46 | 286.36 | 286.36 | **-5.10** | **-1.75%** | 0.7146 | Bear | 2.8% |
-| ORBIA.MX | 288.36366782265185 | 21.20 | 22.84 | 6,586.23 | **+472.92** | **+7.74%** | 1.0000 | Bull | 30.0% |
-| BBAJIOO.MX | 111.39413008131325 | 54.88 | 57.35 | 6,388.45 | **+275.14** | **+4.50%** | 0.8256 | Bull | 30.0% |
-| GFNORTEO.MX | 32.26361682335487 | 189.48 | 180.39 | 5,820.03 | **-293.28** | **-4.80%** | 0.1687 | Sideways | 30.0% |
+| GRUMAB.MX | 1 | 291.46 | 288.79 | 288.79 | **-2.67** | **-0.92%** | 0.7146 | Bear | 2.8% |
+| ORBIA.MX | 288.36366782265185 | 21.20 | 22.64 | 6,528.55 | **+415.24** | **+6.79%** | 1.0000 | Bull | 30.0% |
+| BBAJIOO.MX | 111.39413008131325 | 54.88 | 57.30 | 6,382.88 | **+269.57** | **+4.41%** | 0.8256 | Bull | 30.0% |
+| GFNORTEO.MX | 32.26361682335487 | 189.48 | 178.78 | 5,768.09 | **-345.22** | **-5.65%** | 0.1687 | Sideways | 30.0% |
 
-* **Current Market Value of Shares**: 19,081.07 MXN (15.8% allocation)
-* **Bondia Cash Routing Reserves (6.53% APR)**: 101,793.73 MXN (84.2% cash reserve)
-* **Total Portfolio Value**: **120,874.80 MXN**
-* **Total Unrealized Profit/Loss**: **+874.80 MXN (+0.73%)**
+* **Current Market Value of Shares**: 18,968.32 MXN (15.7% allocation)
+* **Bondia Cash Routing Reserves (6.53% APR)**: 101,806.20 MXN (84.3% cash reserve)
+* **Total Portfolio Value**: **120,774.52 MXN**
+* **Total Unrealized Profit/Loss**: **+774.52 MXN (+0.65%)**
 
 ## 2. Active Cash Routing & Yield Generation
-* Overnight interest accrued in this step: **+0.4066 MXN** (for 0.0220 days elapsed)
-* Expected daily interest accrual at 6.53% APR: **+18.4643 MXN**
+* Overnight interest accrued in this step: **+12.4701 MXN** (for 0.6754 days elapsed)
+* Expected daily interest accrual at 6.53% APR: **+18.4665 MXN**

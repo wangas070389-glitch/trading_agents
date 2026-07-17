@@ -1,14 +1,14 @@
 # Strategy 18: Efficient Frontier Allocation Execution Report
-**Execution Date:** 2026-07-16 22:06:41 | **Strategy Version:** Live V1
-* **Total Portfolio NAV:** $99,790.96 USD
-* **Inception Date:** 2026-07-12 (4 calendar days elapsed)
+**Execution Date:** 2026-07-17 14:20:27 | **Strategy Version:** Live V1
+* **Total Portfolio NAV:** $99,709.89 USD
+* **Inception Date:** 2026-07-12 (5 calendar days elapsed)
 * **Virtual Capital Base:** $100,000.00 USD
-* **USD/MXN Rate:** 17.4173
+* **USD/MXN Rate:** 17.5056
 
 ## 1. Portfolio Performance Summary
 | Metric | Realized (live) |
 | :--- | ---: |
-| Return since inception | -0.21% |
+| Return since inception | -0.29% |
 | Sharpe (Rf 6.53%) | -- |
 | Realized Volatility (Ann.) | -- |
 | Max drawdown | -- |
@@ -16,11 +16,11 @@
 ## 2. Current Allocations & Sleeves
 | Sleeve | Target weight | Current weight | TR since inception | Last mark date |
 | :--- | ---: | ---: | ---: | :--- |
-| S1 Alpha Growth (S1) | 4.5% | 4.5% | +0.65% | 2026-07-16 |
+| S1 Alpha Growth (S1) | 4.5% | 4.5% | +0.06% | 2026-07-17 |
 | S2 MACD Systematic (S2) | 4.2% | 4.3% | +1.02% | 2026-07-16 |
-| S4 US DCF Value-Growth (S4) | 3.9% | 3.9% | -1.14% | 2026-07-16 |
-| S5 Alternatives (S5) | 25.0% | 25.1% | +0.09% | 2026-07-16 |
-| S6 High-Beta Momentum (S6) | 11.7% | 11.6% | -0.86% | 2026-07-16 |
+| S4 US DCF Value-Growth (S4) | 3.9% | 3.8% | -1.77% | 2026-07-17 |
+| S5 Alternatives (S5) | 25.0% | 25.1% | +0.13% | 2026-07-17 |
+| S6 High-Beta Momentum (S6) | 11.7% | 11.6% | -1.19% | 2026-07-17 |
 | S8 Dividend Quality (S8) | 9.4% | 9.5% | +0.51% | 2026-07-16 |
 | S9 AI Regime Stat-Arb (S9) | 7.4% | 7.4% | -0.54% | 2026-07-16 |
 | S12 VTTL Trend+Vol (S12) | 4.7% | 4.7% | -1.14% | 2026-07-16 |

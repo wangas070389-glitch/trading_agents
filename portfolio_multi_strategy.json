@@ -1,8 +1,8 @@
 {
-  "total_portfolio_value_usd": 400716.3981571208,
-  "total_cash_balance_usd": 311582.3791186724,
-  "last_updated": "2026-07-16 22:06:41",
-  "usd_mxn_rate": 17.417299270629883,
+  "total_portfolio_value_usd": 399859.5563884324,
+  "total_cash_balance_usd": 280454.2545317823,
+  "last_updated": "2026-07-17 14:20:26",
+  "usd_mxn_rate": 17.505599975585938,
   "history": [
     {
       "date": "2026-06-24",
@@ -344,95 +344,124 @@
       "s27_nav_usd": 11486.88995298894,
       "s29_nav_usd": 11486.88995298894,
       "s30_nav_usd": 100024.33
+    },
+    {
+      "date": "2026-07-17",
+      "nav_usd": 399859.5563884324,
+      "cash_usd": 280454.2545317823,
+      "s1_nav_usd": 6899.193194489263,
+      "s4_nav_usd": 100404.43976196289,
+      "s5_nav_usd": 101441.51503791808,
+      "s6_nav_usd": 100513.20054256218,
+      "s8_nav_usd": 11320.689166745035,
+      "s9_nav_usd": 10880.043819326977,
+      "s10_nav_usd": 11608.139697205572,
+      "s11_nav_usd": 11714.178222168373,
+      "s12_nav_usd": 11239.703405316503,
+      "s13_nav_usd": 11238.135459878413,
+      "s14_nav_usd": 11300.863877178865,
+      "s15_nav_usd": 11299.454203680274,
+      "s17_nav_usd": 5777.138487826829,
+      "s19_nav_usd": 10939.105581825224,
+      "s20_nav_usd": 10053.746938635897,
+      "s21_nav_usd": 10063.11448087235,
+      "s22_nav_usd": 10686.727684826163,
+      "s23_nav_usd": 11430.43199199475,
+      "s24_nav_usd": 10751.27367652936,
+      "s25_nav_usd": 11361.730384862032,
+      "s27_nav_usd": 11430.330310247053,
+      "s29_nav_usd": 11430.330310247053,
+      "s30_nav_usd": 100032.66,
+      "s31_nav_usd": 11424.915471559307
     }
   ],
   "allocations": {
     "strategy_11_intraday_cci_adx": {
-      "nav_usd": 11772.143132761646,
-      "nav_mxn": 205038.94,
-      "current_weight": 0.029377742430560058,
+      "nav_usd": 11714.178222168373,
+      "nav_mxn": 205063.718,
+      "current_weight": 0.029295731551277376,
       "target_weight": 0.1,
-      "deviation": -0.07062225756943995
+      "deviation": -0.07070426844872263
     },
     "strategy_10_intraday_vwap": {
-      "nav_usd": 11665.323471969728,
-      "nav_mxn": 203178.43,
-      "current_weight": 0.02911117070730846,
+      "nav_usd": 11608.139697205572,
+      "nav_mxn": 203207.45,
+      "current_weight": 0.029030542128469648,
       "target_weight": 0.1,
-      "deviation": -0.07088882929269155
+      "deviation": -0.07096945787153036
     },
     "strategy_9_ai_arb": {
-      "nav_usd": 10937.747221438487,
-      "nav_mxn": 190506.01670229458,
-      "current_weight": 0.027295481971141594,
+      "nav_usd": 10880.043819326977,
+      "nav_mxn": 190461.69481798424,
+      "current_weight": 0.02720966310670805,
       "target_weight": 0.15,
-      "deviation": -0.1227045180288584
+      "deviation": -0.12279033689329194
     },
     "strategy_4_us_dcs": {
-      "nav_usd": 100557.84079345703,
-      "current_weight": 0.2509451603575962,
+      "nav_usd": 100404.43976196289,
+      "current_weight": 0.2510992626231691,
       "target_weight": 0.15,
-      "deviation": 0.10094516035759618
+      "deviation": 0.10109926262316912
     },
     "strategy_1_mxn_value": {
-      "nav_usd": 6939.928018318571,
-      "nav_mxn": 120874.80321168393,
-      "current_weight": 0.01731880215093525,
+      "nav_usd": 6899.193194489263,
+      "nav_mxn": 120774.51621701391,
+      "current_weight": 0.01725404103581617,
       "target_weight": 0.1,
-      "deviation": -0.08268119784906475
+      "deviation": -0.08274595896418384
     },
     "strategy_8_dividend_quality": {
-      "nav_usd": 11348.31553805005,
-      "nav_mxn": 197657.0079437569,
-      "current_weight": 0.028320067734289172,
+      "nav_usd": 11320.689166745035,
+      "nav_mxn": 198175.45600098785,
+      "current_weight": 0.028311663397505165,
       "target_weight": 0.1,
-      "deviation": -0.07167993226571083
+      "deviation": -0.07168833660249484
     },
     "strategy_12_vttl": {
-      "nav_usd": 11382.627897440663,
-      "nav_mxn": 198254.63657594463,
-      "current_weight": 0.028405695274236163,
+      "nav_usd": 11239.703405316503,
+      "nav_mxn": 196757.75165770174,
+      "current_weight": 0.028109127881885625,
       "target_weight": 0.05,
-      "deviation": -0.02159430472576384
+      "deviation": -0.021890872118114378
     },
     "strategy_13_cara": {
-      "nav_usd": 11382.502243606792,
-      "nav_mxn": 198252.4480255156,
-      "current_weight": 0.028405381701259242,
+      "nav_usd": 11238.135459878413,
+      "nav_mxn": 196730.303832079,
+      "current_weight": 0.0281052066415075,
       "target_weight": 0.05,
-      "deviation": -0.02159461829874076
+      "deviation": -0.021894793358492502
     },
     "strategy_14_hedge": {
-      "nav_usd": 11413.726052568552,
-      "nav_mxn": 170546.0047714055,
-      "current_weight": 0.028483301669359768,
+      "nav_usd": 11300.863877178865,
+      "nav_mxn": 169432.53893252445,
+      "current_weight": 0.028262082765382144,
       "target_weight": 0.05,
-      "deviation": -0.021516698330640235
+      "deviation": -0.02173791723461786
     },
     "strategy_15_track": {
-      "nav_usd": 11413.324319432895,
-      "nav_mxn": 170542.43887311115,
-      "current_weight": 0.02848229913206031,
+      "nav_usd": 11299.454203680274,
+      "nav_mxn": 169411.31035535713,
+      "current_weight": 0.02825855734382833,
       "target_weight": 0.05,
-      "deviation": -0.021517700867939693
+      "deviation": -0.021741442656171672
     },
     "strategy_6_high_beta": {
       "nav_usd": 100513.20054256218,
-      "current_weight": 0.25083375924923085,
+      "current_weight": 0.25137126007542865,
       "target_weight": 0.05,
-      "deviation": 0.20083375924923086
+      "deviation": 0.20137126007542866
     },
     "strategy_5_alternatives": {
-      "nav_usd": 101389.71892551421,
-      "current_weight": 0.253021137622023,
+      "nav_usd": 101441.51503791808,
+      "current_weight": 0.25369286144902226,
       "target_weight": 0.05,
-      "deviation": 0.203021137622023
+      "deviation": 0.20369286144902227
     }
   },
   "performance": {
-    "cagr": 0.36807713628786254,
+    "cagr": 0.3661005450706061,
     "max_drawdown": -0.08817494039335753,
-    "sharpe_ratio": 1.0940505121083965,
-    "cum_twr": 3.616016529562868
+    "sharpe_ratio": 1.0887762115116324,
+    "cum_twr": 3.5977091327660644
   }
 }
