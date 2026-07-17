@@ -1,17 +1,17 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-07-17 21:25:22 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-07-17 21:57:50 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| S29 Golden Stat-Arb | **ON TRACK** | 2 | +0.1% | +9.6% | pending | n/a | n/a | -0.0% | 25.18 | 5.04 (5.0y) |
-| S12 VTTL Trend+Vol | **ON TRACK** | 11 | -1.8% | -60.3% | pending | -5.84 | -3.3% | -26.7% | 10.35 | 0.46 (22.5y) |
+| S29 Golden Stat-Arb | **ON TRACK** | 2 | +0.1% | +9.7% | pending | n/a | n/a | -0.0% | 25.18 | 5.04 (5.0y) |
+| S12 VTTL Trend+Vol | **ON TRACK** | 11 | -1.8% | -60.2% | pending | -5.84 | -3.3% | -26.7% | 10.35 | 0.46 (22.5y) |
 | S14 HEDGE Aggregator | **ON TRACK** | 11 | -1.2% | -39.4% | pending | -5.71 | -2.4% | -19.0% | 10.18 | 0.53 (19.2y) |
 | S15 TRACK Tracker | **ON TRACK** | 11 | -1.2% | -39.5% | pending | -5.74 | -2.4% | -18.4% | 10.18 | 0.53 (19.2y) |
-| S30 Golden MACD US | **ON TRACK** | 2 | +0.0% | +6.6% | pending | n/a | n/a | -28.8% | 8.80 | 0.55 (16.0y) |
-| S2 MACD Systematic | **ON TRACK** | 6 | +0.3% | +18.2% | pending | 4.77 | -2.1% | -11.9% | 8.78 | 1.76 (5.0y) |
+| S30 Golden MACD US | **ON TRACK** | 2 | +0.0% | +6.7% | pending | n/a | n/a | -28.8% | 8.80 | 0.55 (16.0y) |
+| S2 MACD Systematic | **ON TRACK** | 6 | +0.3% | +18.3% | pending | 4.77 | -2.1% | -11.9% | 8.78 | 1.76 (5.0y) |
 | S13 CARA Cross-Asset | **ON TRACK** | 11 | -1.8% | -60.2% | pending | -5.84 | -3.3% | -31.3% | 8.64 | 0.45 (19.2y) |
-| S27 Golden Hurst | **ON TRACK** | 2 | +0.1% | +9.6% | pending | n/a | n/a | -61.4% | 7.68 | 0.48 (16.0y) |
-| S25 Golden MACD BMV | **ON TRACK** | 2 | -0.5% | -88.6% | pending | n/a | n/a | -12.7% | 7.20 | 0.45 (16.0y) |
+| S27 Golden Hurst | **ON TRACK** | 2 | +0.1% | +9.7% | pending | n/a | n/a | -61.4% | 7.68 | 0.48 (16.0y) |
+| S25 Golden MACD BMV | **ON TRACK** | 2 | -0.5% | -88.5% | pending | n/a | n/a | -12.7% | 7.20 | 0.45 (16.0y) |
 | S23 Calculus S&R | **ON TRACK** | 2 | +0.1% | +9.8% | pending | n/a | n/a | -88.2% | 6.72 | 0.42 (16.0y) |
 | S8 Dividend Quality | **ON TRACK** | 22 | -0.9% | -14.6% | pending | -4.48 | -2.3% | -14.2% | 5.60 | 1.12 (5.0y) |
 | S20 Hurst Exponent Dynamic | **ON TRACK** | 4 | -12.6% | -1145.9% | pending | n/a | n/a | -79.6% | 5.58 | 0.34 (16.4y) |

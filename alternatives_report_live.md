@@ -20,8 +20,8 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Asset Type | Signal | Price | Indicator Diagnostics | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :--- | :--- |
-| **BTC-USD** | CRYPTO | SELL | $64,119.0000 | SMA 200: $73,277.99, MACD: 113.7729, Signal: -241.8088 | MACD cross down or bearish trend break |
-| **ETH-USD** | CRYPTO | SELL | $1,844.7100 | SMA 200: $2,194.69, MACD: 36.2046, Signal: 18.3742 | MACD cross down or bearish trend break |
+| **BTC-USD** | CRYPTO | SELL | $64,055.3281 | SMA 200: $73,277.67, MACD: 108.6937, Signal: -242.8246 | MACD cross down or bearish trend break |
+| **ETH-USD** | CRYPTO | SELL | $1,840.5400 | SMA 200: $2,194.67, MACD: 35.8720, Signal: 18.3076 | MACD cross down or bearish trend break |
 | **GLD** | COMMODITY | SELL | $368.4100 | SMA 100: $418.90, Donchian High: $402.04, Donchian Low: $364.05 | Breakout below 10-day low or bearish trend break |
 | **SLV** | COMMODITY | SELL | $50.7800 | SMA 100: $66.29, Donchian High: $64.69, Donchian Low: $50.02 | Breakout below 10-day low or bearish trend break |
 | **USO** | COMMODITY | BUY | $123.9600 | SMA 100: $122.61, Donchian High: $121.87, Donchian Low: $102.42 | Breakout above 20-day high in bullish trend |

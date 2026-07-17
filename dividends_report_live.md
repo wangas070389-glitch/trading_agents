@@ -1,9 +1,9 @@
 # Strategy 8: Dividend Quality & Yield Execution Report
-**Execution Date:** 2026-07-17 21:23:46 | **Strategy Version:** Live V1
+**Execution Date:** 2026-07-17 21:56:12 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $198,236.93 MXN
-* **Total Cash Balance:** $39,652.58 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $198,237.09 MXN
+* **Total Cash Balance:** $39,652.74 MXN (Parked in Bondia Compound at 6.53% APR)
 * **Equity Exposure:** 80.0%
 * **Days Since Last Rebalance:** 16 days
 
@@ -16,14 +16,14 @@
 | **PG** | 15.48 | $2583.93 | $2628.55 | $40,690.69 | $4.35 USD/sh (Annual: $1,180.19 MXN) | Ex: 2026-07-24 / Pay: 2026-05-15 | 20.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $0.2417 MXN over 0.0336 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $0.1621 MXN over 0.0225 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Signal | Yield | Payout Ratio | FCF Payout | Close vs SMA 200 | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
 | **ABBV** | SELL / AVOID | 2.72% | 326.0% | 326.0% | $254.49 > SMA $219.95 | Payout Ratio (326.0%) out of bounds and FCF Payout (326.0%) exceeds limit |
-| **ABT** | SELL / AVOID | 2.82% | 67.2% | 67.2% | $100.68 <= SMA $108.30 | Bear trend (Close <= SMA 200) |
+| **ABT** | SELL / AVOID | 2.82% | 0.0% | 0.0% | $100.68 <= SMA $108.30 | Payout Ratio (0.0%) out of bounds and Non-positive EPS (0.00) and Bear trend (Close <= SMA 200) |
 | **AC.MX** | BUY / HOLD | 4.46% | 79.1% | 79.1% | $200.45 > SMA $197.57 | Passed all quality checks. Score: 0.0000 |
 | **BBAJIOO.MX** | BUY / HOLD | 12.78% | 70.6% | 70.6% | $57.61 > SMA $50.28 | Passed all quality checks. Score: 0.0000 |
 | **CVX** | SELL / AVOID | 3.87% | 120.4% | 120.4% | $187.38 > SMA $171.18 | Payout Ratio (120.4%) out of bounds and FCF Payout (120.4%) exceeds limit |
@@ -48,5 +48,5 @@
 | **T** | SELL / AVOID | 5.05% | 37.4% | 37.4% | $21.81 <= SMA $24.74 | Bear trend (Close <= SMA 200) |
 | **TGT** | BUY / HOLD | 3.36% | 60.0% | 60.0% | $139.60 > SMA $110.33 | Passed all quality checks. Score: 0.0000 |
 | **VZ** | SELL / AVOID | 6.45% | 67.4% | 67.4% | $43.59 > SMA $43.03 | Debt/Equity (1.92) exceeds 1.5 |
-| **WALMEX.MX** | SELL / AVOID | 4.05% | 58.6% | 58.6% | $49.49 <= SMA $56.17 | Bear trend (Close <= SMA 200) |
+| **WALMEX.MX** | SELL / AVOID | 4.05% | 0.0% | 0.0% | $49.49 <= SMA $56.17 | Payout Ratio (0.0%) out of bounds and Non-positive EPS (0.00) and Bear trend (Close <= SMA 200) |
 | **XOM** | BUY / HOLD | 2.82% | 68.0% | 68.0% | $147.36 > SMA $135.82 | Passed all quality checks. Score: 0.0000 |
