@@ -68,6 +68,7 @@
 | 2026-07-17 | AMZN | BUY | 19.0 | 248.55 | -4,722.45 | Market | FILLED | Alpaca Order fcb58107-99b0-42cc-9e3c-a28040047891 FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 20.0% |
 | 2026-07-17 | AVGO | BUY | 13.0 | 372.83 | -4,846.79 | Market | FILLED | Alpaca Order 3ef59557-4d5f-4218-a4c8-2a11c107462e FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 20.0% |
 | 2026-07-17 | JPM | BUY | 13.0 | 344.16 | -4,474.12 | Market | FILLED | Alpaca Order 9626fdf9-74ff-4d29-aa8a-1a2622eba54e FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 20.0% |
+| 2026-07-17 | META | SELL-REJECTED | 37 | 628.53 | +23,255.61 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 ---
 
 
@@ -75,7 +76,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $94,056.16 USD
-* **Total Deployed Capital**: $110,430.49 USD (-243.8% invested)
-* **Unallocated Cash Reserves**: $-154,543.20 USD (341.2% cash)
-* **Current Portfolio Market Value**: $-45,291.86 USD (including cash)
+* **Initial Starting Capital**: $93,382.05 USD
+* **Total Deployed Capital**: $110,430.49 USD (-168.6% invested)
+* **Unallocated Cash Reserves**: $-174,751.28 USD (266.8% cash)
+* **Current Portfolio Market Value**: $-65,499.94 USD (including cash)

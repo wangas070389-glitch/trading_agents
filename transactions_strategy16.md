@@ -74,4 +74,6 @@
 | 2026-07-16 | BONDIA | INTEREST | 1.0000 | $0.0792 | $0.00 | $0.08 | Accrued interest on sweep balance |
 | 2026-07-17 | BONDIA | INTEREST | 1.0000 | $2.4216 | $0.00 | $2.42 | Accrued interest on sweep balance |
 | 2026-07-17 | SOXL | SELL_SOXL | 71.4162 | $2380.9139 | $0.00 | $170,035.76 | Exit target SOXX via REGIME_FLIP |
+| 2026-07-17 | BONDIA | INTEREST | 1.0000 | $1.2547 | $0.00 | $1.25 | Accrued interest on sweep balance |
+| 2026-07-17 | URTY | BUY_URTY | 119.8624 | $1427.2041 | $0.00 | $-171,068.13 | Bull swing pullback entry |
 ---

@@ -1,16 +1,6 @@
 {
-  "total_capital": 205063.72,
-  "cash_balance": 20506.37,
-  "holdings": [
-    {
-      "ticker": "SQQQ",
-      "side": "short",
-      "shares": 248.93088661696444,
-      "buy_price": 741.3999544539547,
-      "last_price": 741.3999544539547,
-      "peak_price": 42.36000061035156,
-      "allocated": 184557.348
-    }
-  ],
-  "last_updated": "2026-07-17 14:19:33"
+  "total_capital": 208187.98,
+  "cash_balance": 208187.98,
+  "holdings": [],
+  "last_updated": "2026-07-17 15:12:55"
 }

@@ -1,6 +1,17 @@
 {
-  "total_capital": 190074.45,
-  "cash_balance": 190074.45,
-  "holdings": [],
-  "last_updated": "2026-07-17 14:19:55"
+  "total_capital": 190075.7,
+  "cash_balance": 19007.57,
+  "holdings": [
+    {
+      "ticker": "URTY",
+      "base": "IWM",
+      "side": "long",
+      "shares": 119.8624165593496,
+      "buy_price": 1427.2040803990967,
+      "last_price": 1427.2040803990967,
+      "peak_price": 81.43000030517578,
+      "allocated": 171068.13
+    }
+  ],
+  "last_updated": "2026-07-17 15:13:09"
 }
