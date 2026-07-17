@@ -1,5 +1,5 @@
 {
-  "total_capital": 94252.44,
+  "total_capital": 94036.56,
   "cash_balance": 45532.55,
   "holdings": [
     {
@@ -28,7 +28,7 @@
       "ticker": "USO",
       "shares": 164,
       "buy_price": 122.75,
-      "last_price": 122.75,
+      "last_price": 123.79499816894531,
       "peak_price": 122.75,
       "armed": false,
       "target_weight": 0.2,
@@ -36,5 +36,5 @@
       "entry_date": "2026-07-17"
     }
   ],
-  "last_updated": "2026-07-17 15:59:41"
+  "last_updated": "2026-07-17 16:15:38"
 }
