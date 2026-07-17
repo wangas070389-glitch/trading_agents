@@ -1,6 +1,6 @@
 {
-  "total_capital": 189131.29,
-  "cash_balance": 19008.12,
+  "total_capital": 190355.78,
+  "cash_balance": 19008.31,
   "holdings": [
     {
       "ticker": "URTY",
@@ -8,10 +8,10 @@
       "side": "long",
       "shares": 119.8624165593496,
       "buy_price": 1427.2040803990967,
-      "last_price": 1419.320335440003,
+      "last_price": 1429.5346247957787,
       "peak_price": 82.38999938964844,
       "allocated": 171068.13
     }
   ],
-  "last_updated": "2026-07-17 19:07:14"
+  "last_updated": "2026-07-17 20:29:54"
 }
