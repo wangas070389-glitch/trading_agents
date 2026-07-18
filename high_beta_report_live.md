@@ -1,5 +1,5 @@
 # Isolated High-Beta Value-Momentum Execution Report
-**Execution Date:** 2026-07-17 | **Strategy Version:** Upgraded High-Beta V1
+**Execution Date:** 2026-07-18 | **Strategy Version:** Upgraded High-Beta V1
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** $100,513.20 USD
@@ -20,7 +20,7 @@
 | **AAPL** | AVOID / SELL | $333.74 | 0.84 | -66.9% | MACD: 8.8221 (Sig: 5.4879) | BULL | Low DCS margin of safety (-66.9% < 15%) |
 | **AMD** | AVOID / SELL | $495.76 | 3.04 | -92.6% | MACD: 7.3791 (Sig: 15.2985) | BULL | Low DCS margin of safety (-92.6% < 15%) |
 | **AMZN** | AVOID / SELL | $247.23 | 1.42 | -72.0% | MACD: 0.5921 (Sig: -0.9836) | BULL | Low DCS margin of safety (-72.0% < 15%) |
-| **AVGO** | AVOID / SELL | $370.83 | 2.16 | 175.6% | MACD: -4.3182 (Sig: -5.1568) | BEAR | Bear trend (Close <= SMA 100) |
+| **AVGO** | AVOID / SELL | $370.83 | 2.16 | 175.6% | MACD: -4.3178 (Sig: -5.1567) | BEAR | Bear trend (Close <= SMA 100) |
 | **COST** | AVOID / SELL | $940.87 | -0.12 | -59.4% | MACD: -12.2449 (Sig: -14.0584) | BEAR | Low DCS margin of safety (-59.4% < 15%) and Bear trend (Close <= SMA 100) |
 | **GOOGL** | AVOID / SELL | $346.77 | 1.37 | -68.9% | MACD: -2.0810 (Sig: -2.0244) | BULL | Low DCS margin of safety (-68.9% < 15%) |
 | **JPM** | AVOID / SELL | $341.10 | 0.82 | -32.8% | MACD: 7.0202 (Sig: 6.9169) | BULL | Low DCS margin of safety (-32.8% < 15%) |

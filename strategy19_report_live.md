@@ -1,5 +1,5 @@
 # Strategy 19: Particle Filter QQQ / TQQQ / SQQQ Live Execution Report
-**Execution Timestamp:** 2026-07-17 21:57:30 | **Strategy Version:** Live V1
+**Execution Timestamp:** 2026-07-18 21:54:26 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** $191,237.75 MXN
@@ -14,9 +14,9 @@
 | **QQQ** | 15.6928 | $725.08 | $695.33 | $10,911.66 | $191,237.75 | 100.0% |
 
 ## 3. Sequential Monte Carlo (SMC) Estimates
-* **Latent Drift (Posterior $\hat{\mu}_t$):** +28.47% annualized
-* **Latent Volatility (Posterior $\hat{\sigma}_t$):** 26.41% annualized
-* **Probability of Bull Regime ($P(\mu_t > 0)$):** 76.4%
+* **Latent Drift (Posterior $\hat{\mu}_t$):** +20.53% annualized
+* **Latent Volatility (Posterior $\hat{\sigma}_t$):** 26.36% annualized
+* **Probability of Bull Regime ($P(\mu_t > 0)$):** 62.9%
 * **Volatility Drag Regime:** HIGH VOLATILITY (Leverage Disabled)
 
 ## 4. Today's Execution Logs
