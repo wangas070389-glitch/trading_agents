@@ -78,6 +78,7 @@
 | 2026-07-17 | META | SELL-REJECTED | 12 | 646.01 | +7,752.12 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 16.7% |
 | 2026-07-17 | META | SELL-REJECTED | 12 | 646.01 | +7,752.12 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 16.7% |
 | 2026-07-18 | META | SELL-REJECTED | 12 | 646.01 | +7,752.12 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 16.7% |
+| 2026-07-19 | META | SELL-REJECTED | 12 | 646.01 | +7,752.12 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 16.7% |
 ---
 
 
