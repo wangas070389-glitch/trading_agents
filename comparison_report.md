@@ -1,5 +1,5 @@
 # Daily Strategy Performance Comparison Report
-**Report Generated At:** 2026-07-18 21:54:47
+**Report Generated At:** 2026-07-19 00:20:20
 
 ## 1. Executive Performance Summary
 | Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |
@@ -16,31 +16,38 @@
 | **S11: AI Intraday CCI-ADX** | $208,235.57 | $208,235.57 | $0.00 | 0.0% | +$8,235.57 | +4.12% | 2026-07-02 | MXN |
 | **S12: Vol-Targeted Trend (VTTL)** | $196,395.43 | $149,703.46 | $50,554.02 | 25.7% | $-3,604.57 | -1.80% | 2026-07-06 | MXN |
 | **S13: Risk Appetite (CARA)** | $196,398.60 | $149,701.57 | $50,556.61 | 25.7% | $-3,601.40 | -1.80% | 2026-07-06 | MXN |
-| **S14: Aggregator (HEDGE)** | $197,496.82 | $163,989.18 | $36,270.86 | 18.4% | $-2,503.18 | -1.25% | 2026-07-06 | MXN |
-| **S15: Tracker (TRACK)** | $197,489.86 | $163,983.19 | $36,274.17 | 18.4% | $-2,510.14 | -1.26% | 2026-07-06 | MXN |
+| **S14: Aggregator (HEDGE)** | $197,652.57 | $164,144.93 | $36,270.86 | 18.4% | $-2,347.43 | -1.17% | 2026-07-06 | MXN |
+| **S15: Tracker (TRACK)** | $197,645.59 | $164,138.92 | $36,274.17 | 18.4% | $-2,354.41 | -1.18% | 2026-07-06 | MXN |
 | **S16: HMM Intraday Router** | $190,345.70 | $190,345.70 | $0.00 | 0.0% | $-9,654.30 | -4.83% | 2026-07-07 | MXN |
-| **S17: FIBRAs Dynamic** | $100,955.91 | $0.00 | $99,710.84 | 98.8% | +$955.91 | +0.96% | 2026-07-12 | MXN |
-| **S18: Efficient Frontier** | $99,144.53 | $0.00 | $0.00 | 0.0% | $-855.47 | -0.86% | 2026-07-12 | USD |
+| **S17: FIBRAs Dynamic** | $100,955.91 | $-0.00 | $99,710.84 | 98.8% | +$955.91 | +0.96% | 2026-07-12 | MXN |
+| **S18: Efficient Frontier** | $99,144.53 | $0.00 | $99,144.53 | 100.0% | $-855.47 | -0.86% | 2026-07-12 | USD |
 | **S19: Particle Filter QQQ/TQQQ/SQQQ** | $191,237.75 | $0.00 | $199,420.94 | 104.3% | $-8,762.25 | -4.38% | 2026-07-13 | MXN |
 | **S20: Hurst Exponent Dynamic** | $174,884.16 | $0.00 | $199,421.12 | 114.0% | $-25,115.84 | -12.56% | 2026-07-13 | MXN |
 | **S21: Shannon Entropy Dynamic** | $174,914.74 | $0.00 | $199,421.27 | 114.0% | $-25,085.26 | -12.54% | 2026-07-13 | MXN |
 | **S22: Walk-Forward ML Classifier** | $185,645.60 | $0.00 | $199,421.68 | 107.4% | $-14,354.40 | -7.18% | 2026-07-14 | MXN |
-| **S7: Core Hybrid Portfolio** | $399,494.00 | $291,385.09 | $108,108.91 | 27.1% | +$15,494.00 | +4.03% | 2026-07-02 | USD |
+| **S23: Calculus S&R & RSI Systematic** | $200,143.64 | $200,143.64 | $0.00 | 0.0% | +$143.64 | +0.07% | 2026-07-15 | MXN |
+| **S24: 30m Random Forest Classifier** | $186,588.45 | $0.00 | $199,449.20 | 106.9% | $-13,411.55 | -6.71% | 2026-07-15 | MXN |
+| **S25: Golden MACD BMV** | $198,947.94 | $162,585.75 | $35,982.76 | 18.1% | $-1,052.06 | -0.53% | 2026-07-15 | MXN |
+| **S27: Golden Hurst** | $200,141.86 | $200,141.86 | $0.00 | 0.0% | +$141.86 | +0.07% | 2026-07-15 | MXN |
+| **S29: Golden Stat-Arb** | $200,141.86 | $200,141.86 | $0.00 | 0.0% | +$141.86 | +0.07% | 2026-07-15 | MXN |
+| **S30: Golden MACD US Stocks** | $100,048.88 | $100,048.88 | $0.00 | 0.0% | +$0.00 | +0.00% | 2026-07-15 | USD |
+| **S31: Fibonacci S&R** | $200,000.00 | $200,000.00 | $0.00 | 0.0% | +$0.00 | +0.00% | 2026-07-15 | MXN |
+| **S7: Core Hybrid Portfolio** | $399,494.00 | $291,385.09 | $108,108.91 | 27.1% | +$16,352.02 | +4.27% | 2026-07-02 | USD |
 
-*Note: CARA (S13) is retired standalone and survives only as an expert sleeve in S14/S15. Strategy 7 consolidated values represent all strategies rebalanced dynamically under risk parity.*
+*Note: Strategy 7 consolidated values represent all strategies rebalanced dynamically under risk parity.*
 
 ## 2. Dynamic Weight Deviations (Strategy 7 Core Components)
 | Component Strategy | Current Value (USD) | Target Weight % | Current Weight % | Deviation % |
 | :--- | :---: | :---: | :---: | :---: |
-| S11: AI Intraday CCI-ADX | $11,946.96 | 10.0% | 3.0% | -7.0% |
-| S10: AI Intraday VWAP | $11,658.90 | 10.0% | 2.9% | -7.1% |
-| S9: AI Regime Stat-Arb | $10,734.56 | 15.0% | 2.7% | -12.3% |
-| S4: US DCS Large Cap | $100,322.54 | 15.0% | 25.1% | +10.1% |
-| S1: MXN Value Equity | $6,941.25 | 10.0% | 1.7% | -8.3% |
-| S8: Dividend Quality | $11,373.74 | 10.0% | 2.8% | -7.2% |
-| S12: Vol-Targeted Trend (VTTL) | $11,267.67 | 5.0% | 2.8% | -2.2% |
-| S13: Risk Appetite (CARA) | $11,267.85 | 5.0% | 2.8% | -2.2% |
-| S14: Aggregator (HEDGE) | $11,330.86 | 5.0% | 2.8% | -2.2% |
-| S15: Tracker (TRACK) | $11,330.46 | 5.0% | 2.8% | -2.2% |
-| S6: High-Beta Momentum | $100,513.20 | 5.0% | 25.2% | +20.2% |
-| S5: Alternatives (BTC/Gold) | $101,324.22 | 5.0% | 25.4% | +20.4% |
+| 11 Intraday Cci Adx | $11,881.52 | 10.0% | 3.0% | -7.0% |
+| 10 Intraday Vwap | $11,595.04 | 10.0% | 2.9% | -7.1% |
+| 9 Ai Arb | $10,675.76 | 15.0% | 2.7% | -12.3% |
+| 4 Us Dcs | $100,322.54 | 15.0% | 25.1% | +10.1% |
+| 1 Mxn Value | $6,903.23 | 10.0% | 1.7% | -8.3% |
+| 8 Dividend Quality | $11,311.44 | 10.0% | 2.8% | -7.2% |
+| 12 Vttl | $11,205.95 | 5.0% | 2.8% | -2.2% |
+| 13 Cara | $11,206.13 | 5.0% | 2.8% | -2.2% |
+| 14 Hedge | $11,277.68 | 5.0% | 2.8% | -2.2% |
+| 15 Track | $11,277.28 | 5.0% | 2.8% | -2.2% |
+| 6 High Beta | $100,513.20 | 5.0% | 25.2% | +20.2% |
+| 5 Alternatives | $101,324.22 | 5.0% | 25.4% | +20.4% |
