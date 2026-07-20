@@ -84,6 +84,7 @@
 | 2026-07-20 | NVDA | BUY | 24.0 | 206.32 | -4,951.76 | Market | FILLED | Alpaca Order a778f843-63be-4b77-b056-bd57a4a41168 FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 20.0% |
 | 2026-07-20 | META | SELL-REJECTED | 7 | 645.85 | +4,520.95 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
 | 2026-07-20 | META | SELL-REJECTED | 7 | 645.85 | +4,520.95 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
+| 2026-07-20 | META | SELL-REJECTED | 7 | 645.85 | +4,520.95 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
 ---
 
 
@@ -91,7 +92,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $95,321.93 USD
+* **Initial Starting Capital**: $95,502.04 USD
 * **Total Deployed Capital**: $101,466.25 USD (-153.5% invested)
 * **Unallocated Cash Reserves**: $-166,424.95 USD (251.8% cash)
 * **Current Portfolio Market Value**: $-66,091.83 USD (including cash)
