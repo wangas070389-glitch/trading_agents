@@ -1,22 +1,23 @@
 # Strategy 11: CCI-ADX Twin Strategy Execution Report
-**Execution Date:** 2026-07-19 21:56:01 | **Strategy Version:** Twin V1
+**Execution Date:** 2026-07-20 16:11:51 | **Strategy Version:** Twin V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $208,272.85 MXN
-* **Total Cash Balance:** $208,272.85 MXN (Parked compounding in Bondia sweep at 6.53% APR)
-* **Equity Exposure:** 0.0%
+* **Total Portfolio NAV:** $208,301.19 MXN
+* **Total Cash Balance:** $20,830.12 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Equity Exposure:** 90.0%
 * **Active Regime:** State 0 (Bull trend, low volatility detected on QQQ)
 
 ## 2. Current Holdings
 | Ticker | Type | Side | Shares | Buy Price (MXN) | Last Price (MXN) | Market Value (MXN) |
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
+| **TQQQ** | LEVERAGED INTRADAY | LONG | 153.9405 | $1,217.81 | $1,217.81 | $187,471.07 |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $$37.2784 MXN sweep interest.
-* No trades or rebalancing actions triggered in this 30-minute interval.
+* **[INTEREST ACCRUED]** Cash reserves earned $$28.3358 MXN sweep interest.
+* ENTERED LONG trend breakout on TQQQ at $1,217.81 MXN (ADX=57.8, CCI=108.3).
 
 ## 4. CCI-ADX Telemetry
   * Decoded Regime: HMM State 0 -> **Regime 0 (Bull trend, low volatility detected on QQQ)**
-  * QQQ Close: $695.30 USD
-  * TQQQ CCI (10): -62.3 | ADX (7): 68.6
-  * SQQQ CCI (10): 62.8 | ADX (7): 69.7
+  * QQQ Close: $703.75 USD
+  * TQQQ CCI (10): 108.3 | ADX (7): 57.8
+  * SQQQ CCI (10): -113.8 | ADX (7): 59.1
