@@ -28,7 +28,7 @@
       "ticker": "FUNO11.MX",
       "shares": 832.5008134654364,
       "buy_price": 30.030000686645508,
-      "last_price": 30.8799991607666,
+      "last_price": 30.8700008392334,
       "target_weight": 0.25,
       "dividend_rate": 2.47,
       "last_dividend": 0.62,
@@ -47,6 +47,6 @@
       "payment_date": "N/A"
     }
   ],
-  "last_updated": "2026-07-20 16:12:10",
+  "last_updated": "2026-07-20 16:24:41",
   "last_rebalance_date": "2026-07-12"
 }
