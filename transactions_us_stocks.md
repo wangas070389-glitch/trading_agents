@@ -82,6 +82,7 @@
 | 2026-07-20 | JPM | SELL | 54.0 | 339.95 | +18,357.30 | Market | FILLED | Alpaca Order 53a72893-36d0-4a7f-b481-543e5dbf1910 FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-07-20 | AAPL | BUY | 15.0 | 325.38 | -4,880.72 | Market | FILLED | Alpaca Order 250238cb-372e-4f63-b7e8-2e59b35e6e70 FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 20.0% |
 | 2026-07-20 | NVDA | BUY | 24.0 | 206.32 | -4,951.76 | Market | FILLED | Alpaca Order a778f843-63be-4b77-b056-bd57a4a41168 FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 20.0% |
+| 2026-07-20 | META | SELL-REJECTED | 7 | 645.85 | +4,520.95 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
 ---
 
 
@@ -89,7 +90,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $96,289.34 USD
+* **Initial Starting Capital**: $95,368.67 USD
 * **Total Deployed Capital**: $101,466.25 USD (-153.5% invested)
 * **Unallocated Cash Reserves**: $-166,424.95 USD (251.8% cash)
 * **Current Portfolio Market Value**: $-66,091.83 USD (including cash)

@@ -1,14 +1,14 @@
 # Strategy 31: Fibonacci S&R Reversal Execution Report
-**Execution Date:** 2026-07-20 18:30:41
+**Execution Date:** 2026-07-20 20:10:28
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $200,000.00 MXN (approx. $11,484.02 USD)
+* **Total Portfolio NAV:** $200,000.00 MXN (approx. $11,477.76 USD)
 * **Total Cash Balance:** $200,000.00 MXN
 * **TQQQ Exposure:** 0.0%
 
 ## 2. Technical Diagnostics
-* **QQQ Close Price:** $699.61 USD
-* **14-Day RSI:** 43.5
+* **QQQ Close Price:** $696.06 USD
+* **14-Day RSI:** 41.8
 * **Savitzky-Golay Support:** $723.28 USD
 * **Savitzky-Golay Resistance:** $717.74 USD
 * **Support-Resistance Position (SRP):** 0.50
