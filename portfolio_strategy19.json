@@ -1,15 +1,15 @@
 {
-  "total_capital": 190236.98843962577,
+  "total_capital": 190215.13337436752,
   "cash_balance": 0.0,
   "holdings": [
     {
       "ticker": "QQQ",
       "shares": 15.6927790983143,
       "buy_price": 12707.815233021509,
-      "last_price": 12122.581172385253,
+      "last_price": 12121.188489475404,
       "target_weight": 1.0
     }
   ],
-  "last_updated": "2026-07-20 21:44:01",
+  "last_updated": "2026-07-20 22:03:25",
   "last_rebalance_date": "2026-07-13"
 }
