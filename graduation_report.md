@@ -1,34 +1,34 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-07-21 17:55:55 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-07-21 19:21:38 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| S12 VTTL Trend+Vol | **ON TRACK** | 15 | -0.6% | -13.5% | pending | -1.93 | -3.3% | -26.7% | 10.35 | 0.46 (22.5y) |
-| S14 HEDGE Aggregator | **ON TRACK** | 15 | -0.4% | -9.0% | pending | -1.91 | -2.4% | -19.0% | 10.18 | 0.53 (19.2y) |
-| S15 TRACK Tracker | **ON TRACK** | 15 | -0.4% | -9.2% | pending | -1.93 | -2.4% | -18.4% | 10.18 | 0.53 (19.2y) |
-| S30 Golden MACD US | **ON TRACK** | 6 | +0.1% | +5.1% | pending | -280.38 | +0.0% | -28.8% | 8.80 | 0.55 (16.0y) |
-| S2 MACD Systematic | **ON TRACK** | 10 | -0.2% | -6.4% | pending | 4.08 | -2.1% | -11.9% | 8.78 | 1.76 (5.0y) |
-| S13 CARA Cross-Asset | **ON TRACK** | 15 | -0.6% | -13.5% | pending | -1.94 | -3.3% | -31.3% | 8.64 | 0.45 (19.2y) |
-| S27 Golden Hurst | **ON TRACK** | 6 | +0.1% | +7.4% | pending | 0.37 | -0.8% | -61.4% | 7.68 | 0.48 (16.0y) |
-| S25 Golden MACD BMV | **ON TRACK** | 6 | -0.9% | -54.8% | pending | -6.89 | -1.1% | -12.7% | 7.20 | 0.45 (16.0y) |
-| S23 Calculus S&R | **ON TRACK** | 6 | +0.1% | +7.5% | pending | 0.37 | -0.8% | -88.2% | 6.72 | 0.42 (16.0y) |
-| S8 Dividend Quality | **ON TRACK** | 26 | -1.0% | -14.3% | pending | -2.87 | -2.3% | -14.2% | 5.60 | 1.12 (5.0y) |
-| S20 Hurst Exponent Dynamic | **ON TRACK** | 8 | -8.0% | -363.9% | pending | -4.53 | -12.9% | -79.6% | 5.58 | 0.34 (16.4y) |
-| S19 Particle Filter QQQ | **ON TRACK** | 8 | -3.2% | -144.1% | pending | -5.02 | -4.7% | -64.7% | 5.09 | 0.31 (16.4y) |
-| S4 US DCF Value-Growth | **ON TRACK** | 28 | +0.3% | +4.4% | pending | 0.86 | -2.0% | -15.2% | 4.56 | 1.14 (4.0y) |
-| S22 Walk-Forward ML | **ON TRACK** | 8 | -2.3% | -106.9% | pending | -1.06 | -9.2% | -73.3% | 4.27 | 0.26 (16.4y) |
+| S12 VTTL Trend+Vol | **ON TRACK** | 15 | -0.6% | -15.0% | pending | -2.02 | -3.3% | -26.7% | 10.35 | 0.46 (22.5y) |
+| S14 HEDGE Aggregator | **ON TRACK** | 15 | -0.4% | -10.1% | pending | -1.99 | -2.4% | -19.0% | 10.18 | 0.53 (19.2y) |
+| S15 TRACK Tracker | **ON TRACK** | 15 | -0.4% | -10.3% | pending | -2.01 | -2.4% | -18.4% | 10.18 | 0.53 (19.2y) |
+| S30 Golden MACD US | **ON TRACK** | 6 | +0.1% | +5.1% | pending | -418.10 | +0.0% | -28.8% | 8.80 | 0.55 (16.0y) |
+| S2 MACD Systematic | **ON TRACK** | 10 | -0.0% | -0.4% | pending | 4.08 | -2.1% | -11.9% | 8.78 | 1.76 (5.0y) |
+| S13 CARA Cross-Asset | **ON TRACK** | 15 | -0.6% | -14.8% | pending | -2.01 | -3.3% | -31.3% | 8.64 | 0.45 (19.2y) |
+| S27 Golden Hurst | **ON TRACK** | 6 | +0.1% | +7.5% | pending | 0.40 | -0.8% | -61.4% | 7.68 | 0.48 (16.0y) |
+| S25 Golden MACD BMV | **ON TRACK** | 6 | -0.8% | -49.4% | pending | -6.02 | -1.1% | -12.7% | 7.20 | 0.45 (16.0y) |
+| S23 Calculus S&R | **ON TRACK** | 6 | +0.1% | +7.5% | pending | 0.40 | -0.8% | -88.2% | 6.72 | 0.42 (16.0y) |
+| S8 Dividend Quality | **ON TRACK** | 26 | -1.0% | -14.2% | pending | -2.84 | -2.3% | -14.2% | 5.60 | 1.12 (5.0y) |
+| S20 Hurst Exponent Dynamic | **ON TRACK** | 8 | -8.3% | -379.0% | pending | -4.90 | -12.9% | -79.6% | 5.58 | 0.34 (16.4y) |
+| S19 Particle Filter QQQ | **ON TRACK** | 8 | -3.3% | -149.0% | pending | -5.33 | -4.7% | -64.7% | 5.09 | 0.31 (16.4y) |
+| S4 US DCF Value-Growth | **ON TRACK** | 28 | +0.3% | +3.8% | pending | 0.81 | -2.0% | -15.2% | 4.56 | 1.14 (4.0y) |
+| S22 Walk-Forward ML | **ON TRACK** | 8 | -2.7% | -121.4% | pending | -1.30 | -9.2% | -73.3% | 4.27 | 0.26 (16.4y) |
 | S6 High-Beta Momentum | **ON TRACK** | 28 | -0.5% | -6.1% | pending | -0.26 | -1.3% | -24.4% | 4.20 | 1.05 (4.0y) |
-| S5 Alternatives | **ON TRACK** | 28 | +1.2% | +15.7% | pending | 3.92 | -0.4% | -19.0% | 3.80 | 0.95 (4.0y) |
+| S5 Alternatives | **ON TRACK** | 28 | +1.3% | +16.7% | pending | 4.02 | -0.4% | -19.0% | 3.80 | 0.95 (4.0y) |
 | S1 Adaptive Value (BMV) | **ON TRACK** | 48 | +1.1% | +8.1% | PASS | 3.12 | -3.3% | -35.2% | 3.28 | 0.82 (4.0y) |
 | S31 Fibonacci S&R | **ON TRACK** | 6 | +0.0% | +0.0% | pending | n/a | n/a | -62.0% | 2.48 | 0.15 (16.5y) |
-| S9 AI Regime Stat-Arb | **ON TRACK** | 10 | -4.0% | -147.7% | pending | -8.82 | -6.4% | -7.5% | 2.35 | 0.47 (5.0y) |
-| S10 Intraday VWAP | **ON TRACK** | 19 | +1.7% | +32.3% | pending | 2.49 | -0.8% | -4.0% | 0.52 | 3.27 (0.2y) |
-| S21 Golden Entropy | **ON TRACK** | 8 | -8.0% | -364.9% | pending | -4.55 | -12.9% | -87.8% | 0.49 | 0.03 (16.4y) |
-| S17 FIBRAs Dynamic | **ON TRACK** | 9 | -50.0% | -2029.1% | pending | 1.58 | -0.6% | -21.2% | 0.40 | 0.10 (4.0y) |
+| S9 AI Regime Stat-Arb | **ON TRACK** | 10 | -4.1% | -149.0% | pending | -8.91 | -6.4% | -7.5% | 2.35 | 0.47 (5.0y) |
+| S10 Intraday VWAP | **ON TRACK** | 19 | +1.7% | +32.3% | pending | 2.50 | -0.8% | -4.0% | 0.52 | 3.27 (0.2y) |
+| S21 Golden Entropy | **ON TRACK** | 8 | -8.3% | -379.7% | pending | -4.91 | -12.9% | -87.8% | 0.49 | 0.03 (16.4y) |
+| S17 FIBRAs Dynamic | **ON TRACK** | 9 | -50.0% | -2029.8% | pending | 1.36 | -0.6% | -21.2% | 0.40 | 0.10 (4.0y) |
 | S16 MACD-HMM Router | **ON TRACK** | 14 | -4.8% | -124.6% | pending | -5.88 | -5.0% | -13.4% | 0.16 | 0.99 (0.2y) |
-| S24 ML Classifier | **ON TRACK** | 6 | -7.2% | -436.3% | pending | -3.49 | -9.3% | -14.9% | 0.14 | 0.59 (0.2y) |
-| S11 Intraday CCI-ADX | **ON TRACK** | 19 | +4.4% | +85.0% | pending | 7.04 | -0.3% | -8.4% | 0.06 | 0.35 (0.2y) |
-| S29 Golden Stat-Arb | **NOT READY** | 6 | +0.1% | +7.4% | pending | 0.37 | -0.8% | -0.0% | 25.18 | 5.04 (5.0y) |
+| S24 ML Classifier | **ON TRACK** | 6 | -6.8% | -414.2% | pending | -3.35 | -9.3% | -14.9% | 0.14 | 0.59 (0.2y) |
+| S11 Intraday CCI-ADX | **ON TRACK** | 19 | +4.4% | +85.1% | pending | 7.05 | -0.3% | -8.4% | 0.06 | 0.35 (0.2y) |
+| S29 Golden Stat-Arb | **NOT READY** | 6 | +0.1% | +7.5% | pending | 0.40 | -0.8% | -0.0% | 25.18 | 5.04 (5.0y) |
 | S3 US Stock Momentum | **BLOCKED** | 28 | -166.1% | -2165.1% | pending | n/a | n/a | -22.7% | 5.75 | 1.15 (5.0y) |
 
 ## Verdict Detail
