@@ -1,6 +1,6 @@
-# Watchdog Report - 2026-07-20 22:03:45
+# Watchdog Report - 2026-07-20 23:16:06
 
-**CRITICAL: 7 | WARNING: 4**
+**CRITICAL: 2 | WARNING: 5**
 
 | Nivel | Estrategia | Check | Detalle |
 | :--- | :--- | :--- | :--- |
@@ -35,8 +35,4 @@
 | [ OK ] | us_dcs | - | NAV $100,798.99 | sin anomalias |
 | [CRIT] | us_stocks | W4 | Cash negativo: [-166424.95] |
 | [CRIT] | us_stocks | W5 | DD live -133.2% excede 1.25x el MaxDD del backtest (-25.1%): fuera de distribucion validada |
-| [CRIT] | broker | W6 | Cash de Alpaca NEGATIVO: $-166,424.95 (margen no intencional; probable fill fantasma previo) |
-| [CRIT] | broker | W6 | HUERFANO en Alpaca: AAPL broker=121 vs ledgers=59 (firma de SELL fantasma: el broker aun lo tiene) |
-| [CRIT] | broker | W6 | HUERFANO en Alpaca: AMZN broker=328 vs ledgers=75 (firma de SELL fantasma: el broker aun lo tiene) |
-| [CRIT] | broker | W6 | HUERFANO en Alpaca: AVGO broker=216 vs ledgers=115 (firma de SELL fantasma: el broker aun lo tiene) |
-| [CRIT] | broker | W6 | HUERFANO en Alpaca: GOOGL broker=54 vs ledgers=0 (firma de SELL fantasma: el broker aun lo tiene) |
+| [WARN] | broker | W6 | Alpaca respondio HTTP 401/401 (credenciales invalidas o vencidas?); reconciliacion omitida |

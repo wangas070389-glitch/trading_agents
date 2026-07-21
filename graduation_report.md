@@ -1,5 +1,5 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-07-20 22:03:45 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-07-20 23:16:03 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -26,7 +26,7 @@
 | S10 Intraday VWAP | **ON TRACK** | 18 | +1.7% | +33.7% | pending | 2.33 | -0.8% | -4.0% | 0.52 | 3.27 (0.2y) |
 | S21 Golden Entropy | **ON TRACK** | 7 | -12.9% | -675.1% | pending | n/a | n/a | -87.8% | 0.49 | 0.03 (16.4y) |
 | S17 FIBRAs Dynamic | **ON TRACK** | 8 | -49.9% | -2275.8% | pending | n/a | n/a | -21.2% | 0.40 | 0.10 (4.0y) |
-| S16 MACD-HMM Router | **ON TRACK** | 13 | -4.8% | -134.6% | pending | -6.11 | -5.0% | -13.4% | 0.16 | 0.99 (0.2y) |
+| S16 MACD-HMM Router | **ON TRACK** | 13 | -4.8% | -134.6% | pending | -6.10 | -5.0% | -13.4% | 0.16 | 0.99 (0.2y) |
 | S24 ML Classifier | **ON TRACK** | 5 | -1.3% | -95.0% | pending | n/a | n/a | -14.9% | 0.14 | 0.59 (0.2y) |
 | S11 Intraday CCI-ADX | **ON TRACK** | 18 | +4.2% | +84.6% | pending | 6.62 | -0.3% | -8.4% | 0.06 | 0.35 (0.2y) |
 | S3 US Stock Momentum | **BLOCKED** | 27 | -166.1% | -2245.3% | pending | n/a | n/a | -22.7% | 5.75 | 1.15 (5.0y) |
