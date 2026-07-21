@@ -1,9 +1,9 @@
 # Strategy 8: Dividend Quality & Yield Execution Report
-**Execution Date:** 2026-07-21 20:44:48 | **Strategy Version:** Live V1
+**Execution Date:** 2026-07-21 20:49:19 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $198,163.29 MXN
-* **Total Cash Balance:** $39,681.16 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $198,156.84 MXN
+* **Total Cash Balance:** $39,681.18 MXN (Parked in Bondia Compound at 6.53% APR)
 * **Equity Exposure:** 80.0%
 * **Days Since Last Rebalance:** 20 days
 
@@ -13,10 +13,10 @@
 | **GFNORTEO.MX** | 210.78 | $189.77 | $187.07 | $39,430.89 | $17.44 MXN/sh (Annual: $3,676.03 MXN) | Ex: 2026-05-28 / Pay: N/A | 20.0% |
 | **BBAJIOO.MX** | 707.59 | $56.53 | $56.92 | $40,275.96 | $7.30 MXN/sh (Annual: $5,165.40 MXN) | Ex: 2026-05-08 / Pay: N/A | 20.0% |
 | **KOFUBL.MX** | 215.46 | $185.65 | $180.47 | $38,883.92 | $7.74 MXN/sh (Annual: $1,667.65 MXN) | Ex: 2026-10-12 / Pay: N/A | 20.0% |
-| **PG** | 15.48 | $2583.93 | $2576.91 | $39,891.35 | $4.35 USD/sh (Annual: $1,171.69 MXN) | Ex: 2026-07-24 / Pay: 2026-08-17 | 20.0% |
+| **PG** | 15.48 | $2583.93 | $2576.50 | $39,884.89 | $4.35 USD/sh (Annual: $1,171.50 MXN) | Ex: 2026-07-24 / Pay: 2026-08-17 | 20.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $0.4228 MXN over 0.0587 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $0.0227 MXN over 0.0031 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
