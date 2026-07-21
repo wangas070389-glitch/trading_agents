@@ -238,6 +238,83 @@ STRATEGY_KPIS = {
         "is_live": True,
         "inception": "2026-07-14"
     },
+    "S23: Calculus S&R & RSI Systematic": {
+        "asset": "QQQ, TQQQ, SQQQ",
+        "window": 16.0,
+        "cagr": 0.3082,
+        "max_dd": -0.7053,
+        "sharpe": 0.42,
+        "turnover": "~15 trades/year",
+        "currency": "MXN",
+        "is_live": True,
+        "inception": "2026-07-15"
+    },
+    "S24: 30m Random Forest Classifier": {
+        "asset": "Leveraged Index ETFs",
+        "window": 0.24,
+        "cagr": 0.3737,
+        "max_dd": -0.1192,
+        "sharpe": 0.59,
+        "turnover": "Intraday",
+        "currency": "MXN",
+        "is_live": True,
+        "inception": "2026-07-15"
+    },
+    "S25: Golden MACD BMV": {
+        "asset": "BMV Stocks",
+        "window": 16.0,
+        "cagr": 0.2086,
+        "max_dd": -0.1869,
+        "sharpe": 0.45,
+        "turnover": "~4.0x",
+        "currency": "MXN",
+        "is_live": True,
+        "inception": "2026-07-15"
+    },
+    "S27: Golden Hurst": {
+        "asset": "QQQ Index",
+        "window": 16.0,
+        "cagr": 0.0540,
+        "max_dd": -0.4381,
+        "sharpe": 0.48,
+        "turnover": "~5.0x",
+        "currency": "MXN",
+        "is_live": True,
+        "inception": "2026-07-15"
+    },
+    "S29: Golden Stat-Arb": {
+        "asset": "Statistical Arbitrage Pairs",
+        "window": 5.0,
+        "cagr": 2.5345,
+        "max_dd": -0.0001,
+        "sharpe": 5.0354,
+        "turnover": "~12 trades/year",
+        "currency": "MXN",
+        "is_live": True,
+        "inception": "2026-07-15"
+    },
+    "S30: Golden MACD US Stocks": {
+        "asset": "US Large Cap Equity",
+        "window": 16.0,
+        "cagr": 0.1520,
+        "max_dd": -0.1800,
+        "sharpe": 0.55,
+        "turnover": "~3.5x",
+        "currency": "USD",
+        "is_live": True,
+        "inception": "2026-07-15"
+    },
+    "S31: Fibonacci S&R": {
+        "asset": "TQQQ & Cash",
+        "window": 16.51,
+        "cagr": 0.1356,
+        "max_dd": -0.4960,
+        "sharpe": 0.15,
+        "turnover": "~8.0 trades/year",
+        "currency": "MXN",
+        "is_live": True,
+        "inception": "2026-07-15"
+    },
     "S7: Core Hybrid Portfolio": {
         "asset": "Consolidated Multi-Asset",
         "window": 4.0,
@@ -356,142 +433,6 @@ def main():
         "S22: Walk-Forward ML Classifier": (s22_data, "MXN"),
         "S7: Core Hybrid Portfolio": (s7_data, "USD")
     }
-
-    # Generate Report Lines
-    report = []
-    report.append("# Daily Strategy Performance Comparison Report")
-    report.append(f"**Report Generated At:** {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-    report.append("## 1. Executive Performance Summary")
-    report.append("| Strategy | Total Portfolio Value | Cash Balance | Capital Invested | Allocation % | Total Profit/Loss | ROI % | Inception Date | Currency |")
-    report.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
-
-    for key, val_tuple in strat_data.items():
-        data, currency = val_tuple
-        kpi = STRATEGY_KPIS[key]
-        # S7 is the consolidated multi-strategy file: it has no cash_balance /
-        # holdings fields, so the generic NAV math would report a bogus
-        # $0 / -100% row. Its real numbers are added separately below.
-        if key == "S7: Core Hybrid Portfolio":
-            continue
-        if not data:
-            report.append(f"| **{key}** | *Not Initialized* | - | - | - | - | - | {kpi['inception']} | {currency} |")
-            continue
-            
-        nav_local, cash_local, cash_usd = get_nav(data)
-        
-        # Adjust MXN strategies with USD sleeves
-        if key in ["S13: Risk Appetite (CARA)", "S14: Aggregator (HEDGE)", "S15: Tracker (TRACK)"]:
-            nav_local = nav_local + cash_usd * usd_mxn_rate
-            cash_local = cash_local + cash_usd * usd_mxn_rate
-
-        if key in [
-            "S9: AI Regime Stat-Arb",
-            "S10: AI Intraday VWAP",
-            "S11: AI Intraday CCI-ADX",
-            "S12: Vol-Targeted Trend (VTTL)",
-            "S13: Risk Appetite (CARA)",
-            "S14: Aggregator (HEDGE)",
-            "S15: Tracker (TRACK)",
-            "S16: HMM Intraday Router",
-            "S19: Particle Filter QQQ/TQQQ/SQQQ",
-            "S20: Hurst Exponent Dynamic",
-            "S21: Shannon Entropy Dynamic",
-            "S22: Walk-Forward ML Classifier"
-        ]:
-            total_cap = 200000.0
-        else:
-            total_cap = data.get("total_capital", 200000.0) if currency == "MXN" else data.get("total_capital", 100000.0)
-        
-        # Adjust S3 to prevent negative deployed capital reporting ghost
-        if key == "S3: US Stock Momentum":
-            cash_local = float(data.get("cash_balance", -24637.34))
-            invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in data.get("holdings", []))
-            nav_local = cash_local + sum(h["shares"] * valuation_price(h) for h in data.get("holdings", []))
-        else:
-            invested = sum(h["shares"] * h.get("buy_price", 0.0) for h in data.get("holdings", []))
-            
-        profit = nav_local - total_cap
-        roi = (profit / total_cap) * 100.0
-        alloc = (invested / nav_local) * 100.0 if nav_local > 0 else 0.0
-        sign = "+" if profit >= 0 else ""
-        
-        report.append(f"| **{key}** | ${nav_local:,.2f} | ${cash_local:,.2f} | ${invested:,.2f} | {alloc:.1f}% | {sign}${profit:,.2f} | {sign}{roi:.2f}% | {kpi['inception']} | {currency} |")
-
-    # Add S7 consolidated values (skip if the aggregate NAV is NaN/invalid,
-    # e.g. after a run while markets were closed; next clean cycle restores it)
-    if s7_data and math.isfinite(float(s7_data.get("total_portfolio_value_usd", 0.0))):
-        s7_nav = s7_data.get("total_portfolio_value_usd", 0.0)
-        s7_cash = s7_data.get("total_cash_balance_usd", 0.0)
-        s7_invested = s7_nav - s7_cash
-        s7_profit = s7_nav - 384000.0
-        s7_roi = (s7_profit / 384000.0) * 100.0
-        s7_alloc = (s7_invested / s7_nav) * 100.0 if s7_nav > 0 else 0.0
-        s7_sign = "+" if s7_profit >= 0 else ""
-        report.append(f"| **S7: Core Hybrid Portfolio** | ${s7_nav:,.2f} | ${s7_cash:,.2f} | ${s7_invested:,.2f} | {s7_alloc:.1f}% | {s7_sign}${s7_profit:,.2f} | {s7_sign}{s7_roi:.2f}% | 2026-07-02 | USD |")
-
-    report.append("\n*Note: CARA (S13) is retired standalone and survives only as an expert sleeve in S14/S15. Strategy 7 consolidated values represent all strategies rebalanced dynamically under risk parity.*\n")
-
-    # Dynamic weights deviation
-    report.append("## 2. Dynamic Weight Deviations (Strategy 7 Core Components)")
-    report.append("| Component Strategy | Current Value (USD) | Target Weight % | Current Weight % | Deviation % |")
-    report.append("| :--- | :---: | :---: | :---: | :---: |")
-    
-    if s7_data:
-        comp_targets = {
-            "S11: AI Intraday CCI-ADX": 0.10,
-            "S10: AI Intraday VWAP": 0.10,
-            "S9: AI Regime Stat-Arb": 0.15,
-            "S4: US DCS Large Cap": 0.15,
-            "S1: MXN Value Equity": 0.10,
-            "S8: Dividend Quality": 0.10,
-            "S12: Vol-Targeted Trend (VTTL)": 0.05,
-            "S13: Risk Appetite (CARA)": 0.05,
-            "S14: Aggregator (HEDGE)": 0.05,
-            "S15: Tracker (TRACK)": 0.05,
-            "S6: High-Beta Momentum": 0.05,
-            "S5: Alternatives (BTC/Gold)": 0.05
-        }
-        
-        usd_vals = {}
-        for name, tuple_val in strat_data.items():
-            data, curr = tuple_val
-            if not data:
-                usd_vals[name] = 0.0
-                continue
-            nav_l, cash_l, cash_usd = get_nav(data)
-            if name in ["S13: Risk Appetite (CARA)", "S14: Aggregator (HEDGE)", "S15: Tracker (TRACK)"]:
-                nav_l += cash_usd * usd_mxn_rate
-            usd_vals[name] = nav_l / usd_mxn_rate if curr == "MXN" else nav_l
-            
-        s7_nav = s7_data.get("total_portfolio_value_usd", 1.0)
-        
-        comp_mapping = {
-            "S11: AI Intraday CCI-ADX": "S11: AI Intraday CCI-ADX",
-            "S10: AI Intraday VWAP": "S10: AI Intraday VWAP",
-            "S9: AI Regime Stat-Arb": "S9: AI Regime Stat-Arb",
-            "S4: US DCS Large Cap": "S4: US DCS Value-Growth",
-            "S1: MXN Value Equity": "S1: Adaptive Value",
-            "S8: Dividend Quality": "S8: Dividend Quality",
-            "S12: Vol-Targeted Trend (VTTL)": "S12: Vol-Targeted Trend (VTTL)",
-            "S13: Risk Appetite (CARA)": "S13: Risk Appetite (CARA)",
-            "S14: Aggregator (HEDGE)": "S14: Aggregator (HEDGE)",
-            "S15: Tracker (TRACK)": "S15: Tracker (TRACK)",
-            "S6: High-Beta Momentum": "S6: High-Beta Momentum",
-            "S5: Alternatives (BTC/Gold)": "S5: Alternative Assets"
-        }
-        
-        for comp_name, target in comp_targets.items():
-            mapped_key = comp_mapping[comp_name]
-            val_usd = usd_vals.get(mapped_key, 0.0)
-            curr_w = val_usd / s7_nav if s7_nav > 0 else 0.0
-            dev = curr_w - target
-            report.append(f"| {comp_name} | ${val_usd:,.2f} | {target*100:.1f}% | {curr_w*100:.1f}% | {dev*100:+.1f}% |")
-
-    report_file_path = os.path.join(dir_path, "comparison_report.md")
-    with open(report_file_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(report))
-        
-    print(f"Successfully generated comparison report: {report_file_path}")
 
     # Generate the Comprehensive KPI Report (using Evidence ranking)
     evidence_ranking = []
