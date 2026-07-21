@@ -222,6 +222,6 @@ jobs:
         if ! git diff-index --quiet HEAD; then
           git commit -m "Auto-update: Multi-strategy concentrated paper trading [$(date -u +'%Y-%m-%d %H:%M:%S UTC')]"
           git pull --rebase origin main
-          git push
+          git push origin HEAD:main
         fi
 
