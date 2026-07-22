@@ -5,9 +5,9 @@
 
 ## Key Performance Metrics
 
-- **Final Portfolio Value:** $2,748.90 MXN
-- **Total Return:** -98.63%
-- **CAGR:** -57.38%
-- **Annualized Volatility:** 10.90%
-- **Sharpe Ratio:** -6.1352
-- **Maximum Drawdown:** -98.64%
+- **Final Portfolio Value:** $136,899.98 MXN
+- **Total Return:** -31.55%
+- **CAGR:** -7.26%
+- **Annualized Volatility:** 18.51%
+- **Sharpe Ratio:** -0.9059
+- **Maximum Drawdown:** -52.18%

@@ -13,6 +13,7 @@ import yfinance as yf
 from hmmlearn.hmm import GaussianHMM
 from statsmodels.tsa.stattools import coint
 import statsmodels.api as sm
+from skills.kalman_hedge_ratio import calculate_kalman_hedge_ratio
 
 TRADING_DAYS = 252
 TRANSACTION_COST = 0.0029
@@ -46,17 +47,14 @@ def main():
     n = len(prices)
     nav = np.zeros(n)
     initial_nav = 200000.0
-    nav[0] = initial_nav
     cash = initial_nav
+    nav[0] = initial_nav
     rf_daily = RF_MXN / 252.0
     
-    r_btc = prices["BTC-USD"].pct_change().fillna(0.0).values
-    r_eth = prices["ETH-USD"].pct_change().fillna(0.0).values
     r_blended = prices["SPY"].pct_change().fillna(0.0).values
     r_gld = prices["GLD"].pct_change().fillna(0.0).values
     
-    current_position = 0 # 0: Cash, 1: Bull Blended, 2: Bear Gold, 3: Stat-Arb Pair
-    pair_beta = 1.0
+    active_trade = None  # None or dict tracking active pair trade
     
     for t in range(1, n):
         date = prices.index[t]
@@ -76,43 +74,81 @@ def main():
                 else: last_3_regimes.append(2)
             regime = max(set(last_3_regimes), key=last_3_regimes.count)
             
-        fee = 0.0
-        ret = 0.0
+        y_price = float(sub_prices["BTC-USD"].iloc[-1])
+        x_price = float(sub_prices["ETH-USD"].iloc[-1])
         
-        if regime == 0:
-            target_pos = 1
-            ret = r_blended[t]
-        elif regime == 1:
-            target_pos = 2
-            ret = 0.5 * r_gld[t] + 0.5 * rf_daily
-        else:
-            # Chop - check cointegration of BTC vs ETH over 89d
-            y_series = np.log(sub_prices["BTC-USD"].iloc[-89:].astype(float))
-            x_series = np.log(sub_prices["ETH-USD"].iloc[-89:].astype(float))
-            
-            try:
-                _, p_val, _ = coint(y_series, x_series)
-            except Exception:
-                p_val = 1.0
-                
-            if p_val < 0.05:
-                target_pos = 3
-                try:
-                    ols = sm.OLS(y_series, sm.add_constant(x_series)).fit()
-                    pair_beta = float(ols.params.iloc[1])
-                except Exception:
-                    pair_beta = 1.0
-                # Spread return: 0.5 * BTC return - 0.5 * beta * ETH return + 0.5 * rf_daily
-                ret = 0.5 * r_btc[t] - 0.5 * pair_beta * r_eth[t] + 0.5 * rf_daily
+        # Close pair trade if regime exits Chop (2)
+        if regime != 2 and active_trade is not None:
+            if active_trade["side"] == "long_spread":
+                trade_val = (active_trade["qty_y"] * y_price) - (active_trade["qty_x"] * x_price)
             else:
-                target_pos = 0
-                ret = rf_daily
-
-        if target_pos != current_position:
-            fee = nav[t-1] * TRANSACTION_COST
-            current_position = target_pos
-
-        nav[t] = nav[t-1] * (1.0 + ret) - fee
+                trade_val = -(active_trade["qty_y"] * y_price) + (active_trade["qty_x"] * x_price)
+            cash += max(0.0, trade_val) * (1.0 - TRANSACTION_COST)
+            active_trade = None
+            
+        if regime == 0:
+            # Bull regime: SPY market return
+            cash = cash * (1.0 + r_blended[t])
+            current_portfolio = cash
+        elif regime == 1:
+            # Bear regime: 50% Gold + 50% Cash
+            cash = cash * (1.0 + 0.5 * r_gld[t] + 0.5 * rf_daily)
+            current_portfolio = cash
+        else:
+            # Chop regime: Stat-Arb Cointegration testing & Z-score trading
+            cash = cash * (1.0 + rf_daily)
+            current_portfolio = cash
+            
+            # Calculate 60d rolling cointegration and Kalman Z-score
+            if len(sub_prices) >= 60:
+                y_series = np.log(sub_prices["BTC-USD"].iloc[-60:].values.astype(float))
+                x_series = np.log(sub_prices["ETH-USD"].iloc[-60:].values.astype(float))
+                
+                try:
+                    _, p_val, _ = coint(y_series, x_series)
+                    kalman_res = calculate_kalman_hedge_ratio(y_series, x_series)
+                    beta = kalman_res["beta"]
+                    z_score = kalman_res["current_zscore"]
+                except Exception:
+                    p_val = 1.0
+                    z_score = 0.0
+                    beta = 1.0
+                    
+                is_coint = p_val < 0.05
+                
+                if active_trade is not None:
+                    # Update active trade value
+                    if active_trade["side"] == "long_spread":
+                        trade_val = (active_trade["qty_y"] * y_price) - (active_trade["qty_x"] * x_price)
+                        reverted = z_score >= 0.0 or z_score < -3.5  # Mean reversion or stop loss
+                    else:
+                        trade_val = -(active_trade["qty_y"] * y_price) + (active_trade["qty_x"] * x_price)
+                        reverted = z_score <= 0.0 or z_score > 3.5
+                        
+                    current_portfolio = cash + max(0.0, trade_val)
+                    
+                    if reverted:
+                        cash += max(0.0, trade_val) * (1.0 - TRANSACTION_COST)
+                        active_trade = None
+                        current_portfolio = cash
+                else:
+                    # Entry check
+                    if is_coint and abs(z_score) > 1.5:
+                        alloc = cash * 0.15  # Risk 15% capital per pair trade
+                        if alloc > 0:
+                            cash -= alloc * (1.0 + TRANSACTION_COST)
+                            qty_y = alloc / y_price
+                            qty_x = (qty_y * beta * y_price) / x_price if x_price > 0 else 0.0
+                            side = "long_spread" if z_score < -1.5 else "short_spread"
+                            active_trade = {
+                                "side": side,
+                                "qty_y": qty_y,
+                                "qty_x": qty_x,
+                                "entry_alloc": alloc
+                            }
+                            current_portfolio = cash + alloc
+                            
+        nav[t] = current_portfolio
             
     # Save CSV
     pd.DataFrame(nav, index=prices.index, columns=["strategy"]).to_csv(os.path.join(dir_path, "strategy29_backtest_nav.csv"))
