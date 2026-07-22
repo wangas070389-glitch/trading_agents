@@ -86,6 +86,8 @@
 | 2026-07-20 | META | SELL-REJECTED | 7 | 645.85 | +4,520.95 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
 | 2026-07-20 | META | SELL-REJECTED | 7 | 645.85 | +4,520.95 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
 | 2026-07-20 | META | SELL-REJECTED | 7 | 645.85 | +4,520.95 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
+| 2026-07-22 | META | SELL-REJECTED | 37 | 628.50 | +23,254.62 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-22 | JPM | BUY | 56.0 | 348.53 | -19,517.68 | Market | FILLED | Alpaca Order c2a5917b-ec5e-48c7-ae8d-c97f2a4967ec FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 20.0% |
 ---
 
 
@@ -93,7 +95,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $96,691.83 USD
-* **Total Deployed Capital**: $101,466.25 USD (-153.5% invested)
-* **Unallocated Cash Reserves**: $-166,424.97 USD (251.8% cash)
+* **Initial Starting Capital**: $98,158.77 USD
+* **Total Deployed Capital**: $120,983.93 USD (-183.1% invested)
+* **Unallocated Cash Reserves**: $-185,942.65 USD (281.3% cash)
 * **Current Portfolio Market Value**: $-66,091.85 USD (including cash)
