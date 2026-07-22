@@ -1,12 +1,12 @@
 {
-  "total_capital": 198505.27761790963,
-  "cash_balance": 126765.47,
+  "total_capital": 198506.76917861265,
+  "cash_balance": 126766.84,
   "holdings": [
     {
       "ticker": "AMXB.MX",
       "shares": 1580.964658969504,
       "buy_price": 22.760000228881836,
-      "last_price": 22.670000076293945,
+      "last_price": 22.690000534057617,
       "peak_price": 23.31999969482422,
       "trailing_armed": false
     },
@@ -14,12 +14,12 @@
       "ticker": "FEMSAUBD.MX",
       "shares": 157.49468410083543,
       "buy_price": 227.41000366210938,
-      "last_price": 227.94000244140625,
+      "last_price": 227.74000549316406,
       "peak_price": 228.5800018310547,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-07-22 19:17:18",
+  "last_updated": "2026-07-22 20:44:14",
   "last_rebalance_date": "2026-07-15",
-  "total_portfolio_value_mxn": 198505.27761790963
+  "total_portfolio_value_mxn": 198506.76917861265
 }
