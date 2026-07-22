@@ -83,13 +83,25 @@ def check_signals():
     
     curr_support = np.nan
     curr_resistance = np.nan
+    last_sup_idx = None
+    last_res_idx = None
     
     # Calculate historical pivots
     for i in range(13, len(df)):
         if deriv1[i-1] < 0 and deriv1[i] >= 0 and deriv2[i] > 0:
             curr_support = prices[i]
+            last_sup_idx = i
         elif deriv1[i-1] > 0 and deriv1[i] <= 0 and deriv2[i] < 0:
             curr_resistance = prices[i]
+            last_res_idx = i
+            
+        # Resolve inverted bounds
+        if not np.isnan(curr_support) and not np.isnan(curr_resistance):
+            if curr_support >= curr_resistance:
+                if last_res_idx is not None and last_res_idx < i:
+                    curr_support = float(np.min(prices[last_res_idx : i + 1]))
+                elif last_sup_idx is not None and last_sup_idx < i:
+                    curr_resistance = float(np.max(prices[last_sup_idx : i + 1]))
             
     # Macro Swing High and Low (55-day lookback)
     swing_high = df["qqq_high"].rolling(55).max().iloc[-1]

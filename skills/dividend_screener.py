@@ -203,6 +203,56 @@ def evaluate_and_rank_dividend_universe(tickers=None, min_yield=0.025, max_payou
     ranked_candidates = sorted(passed_candidates, key=lambda x: x["dividend_score"], reverse=True)
     return ranked_candidates
 
+
+def filter_dividend_quality(
+    metrics: dict,
+    max_fcf_payout: float = 0.85,
+    max_debt_equity: float = 3.0,
+    min_eps: float = 0.0
+) -> dict:
+    """
+    Evaluates whether a candidate dividend asset is a sustainable quality asset vs a yield trap.
+    Returns dictionary with boolean 'is_quality', 'rejection_reasons', and 'quality_score'.
+    """
+    reasons = []
+    
+    if metrics is None:
+        return {"is_quality": False, "rejection_reasons": ["Missing metrics"], "quality_score": 0.0}
+
+    dy = metrics.get("dividend_yield", 0.0)
+    pr = metrics.get("payout_ratio", 0.0)
+    fcf_pr = metrics.get("fcf_payout_ratio")
+    eps = metrics.get("eps", 0.0)
+    de = metrics.get("debt_to_equity", 0.0)
+    is_reit = metrics.get("is_reit", False)
+
+    # 1. Negative EPS
+    if eps <= min_eps:
+        reasons.append(f"Non-positive EPS ({eps:.2f})")
+
+    # 2. FCF Payout exceeds maximum allowed threshold
+    if fcf_pr is not None and fcf_pr > (0.95 if is_reit else max_fcf_payout):
+        reasons.append(f"FCF payout ratio ({fcf_pr*100:.1f}%) exceeds max ({max_fcf_payout*100:.0f}%)")
+
+    # 3. Earnings Payout exceeds limit
+    payout_cap = 0.95 if is_reit else 0.85
+    if pr > payout_cap:
+        reasons.append(f"Earnings payout ratio ({pr*100:.1f}%) exceeds cap ({payout_cap*100:.0f}%)")
+
+    # 4. Excessive Leverage
+    if not is_reit and de > max_debt_equity:
+        reasons.append(f"Debt-to-Equity ratio ({de:.2f}) exceeds max ({max_debt_equity:.2f})")
+
+    is_quality = len(reasons) == 0
+    quality_score = dy * 0.7 + (metrics.get("div_growth_3y", 0.0) * 0.3) if is_quality else 0.0
+
+    return {
+        "ticker": metrics.get("ticker", "UNKNOWN"),
+        "is_quality": is_quality,
+        "rejection_reasons": reasons,
+        "quality_score": quality_score
+    }
+
 if __name__ == "__main__":
     # Test screening
     results = evaluate_and_rank_dividend_universe()

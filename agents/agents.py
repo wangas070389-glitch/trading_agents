@@ -11,20 +11,46 @@ from connectors.mock_data_connector import get_filing_data
 _mbono_cache = None
 _us_yield_cache = None
 
+def _get_cache_dir():
+    dir_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    cache_dir = os.path.join(dir_path, ".cache")
+    os.makedirs(cache_dir, exist_ok=True)
+    return cache_dir
+
 def get_mbono_yield_series():
     global _mbono_cache
     if _mbono_cache is not None:
         return _mbono_cache
-    try:
-        url = "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01MXM156N"
-        df = pd.read_csv(url, parse_dates=['DATE'], index_col='DATE')
-        # Clean any missing indicators
-        df = df[df['IRLTLT01MXM156N'] != '.']
-        _mbono_cache = pd.to_numeric(df['IRLTLT01MXM156N']) / 100.0
-    except Exception as e:
-        print(f"Error downloading Mbono yield from FRED: {e}. Falling back to default 0.095.")
-        dates = pd.date_range("2020-01-01", "2027-01-01", freq="ME")
-        _mbono_cache = pd.Series(0.095, index=dates)
+        
+    cache_path = os.path.join(_get_cache_dir(), "mbono_yield.csv")
+    now = datetime.datetime.now().timestamp()
+    
+    # 1. Try downloading fresh data if cache is missing or stale (>24h)
+    is_stale = not os.path.exists(cache_path) or (now - os.path.getmtime(cache_path) > 86400)
+    if is_stale:
+        try:
+            url = "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01MXM156N"
+            df = pd.read_csv(url, parse_dates=['DATE'], index_col='DATE')
+            df = df[df['IRLTLT01MXM156N'] != '.']
+            series = pd.to_numeric(df['IRLTLT01MXM156N']) / 100.0
+            series.to_csv(cache_path)
+            _mbono_cache = series
+            return _mbono_cache
+        except Exception as e:
+            print(f"Warning: Remote download of Mbono yield failed ({e}). Checking disk cache...")
+            
+    # 2. Fall back to existing disk cache if available
+    if os.path.exists(cache_path):
+        try:
+            df = pd.read_csv(cache_path, parse_dates=['DATE'], index_col='DATE')
+            _mbono_cache = df.iloc[:, 0]
+            return _mbono_cache
+        except Exception as e:
+            print(f"Warning: Failed to load Mbono disk cache: {e}")
+            
+    # 3. Last fallback: default constant series
+    dates = pd.date_range("2020-01-01", "2027-01-01", freq="ME")
+    _mbono_cache = pd.Series(0.095, index=dates)
     return _mbono_cache
 
 def get_mbono_yield_at(date_val) -> float:
@@ -44,14 +70,40 @@ def get_us_yield_series():
     global _us_yield_cache
     if _us_yield_cache is not None:
         return _us_yield_cache
-    try:
-        tnx = yf.Ticker("^TNX").history(period="5y")
-        tnx.index = tnx.index.tz_localize(None)
-        _us_yield_cache = tnx["Close"] / 100.0
-    except Exception as e:
-        print(f"Error downloading US yield from yfinance: {e}. Falling back to default 0.04.")
-        dates = pd.date_range("2020-01-01", "2027-01-01", freq="D")
-        _us_yield_cache = pd.Series(0.04, index=dates)
+        
+    cache_path = os.path.join(_get_cache_dir(), "us_yield.csv")
+    now = datetime.datetime.now().timestamp()
+    
+    # 1. Try downloading fresh data if cache is missing or stale (>24h)
+    is_stale = not os.path.exists(cache_path) or (now - os.path.getmtime(cache_path) > 86400)
+    if is_stale:
+        try:
+            tnx = yf.Ticker("^TNX").history(period="5y")
+            tnx.index = tnx.index.tz_localize(None)
+            series = tnx["Close"] / 100.0
+            series.to_csv(cache_path)
+            _us_yield_cache = series
+            return _us_yield_cache
+        except Exception as e:
+            print(f"Warning: Remote download of US yield failed ({e}). Checking disk cache...")
+            
+    # 2. Fall back to existing disk cache if available
+    if os.path.exists(cache_path):
+        try:
+            df = pd.read_csv(cache_path, parse_dates=['Date'], index_col='Date')
+            _us_yield_cache = df.iloc[:, 0]
+            return _us_yield_cache
+        except Exception:
+            try:
+                df = pd.read_csv(cache_path, parse_dates=['DATE'], index_col='DATE')
+                _us_yield_cache = df.iloc[:, 0]
+                return _us_yield_cache
+            except Exception as e:
+                print(f"Warning: Failed to load US yield disk cache: {e}")
+                
+    # 3. Last fallback: default constant series
+    dates = pd.date_range("2020-01-01", "2027-01-01", freq="D")
+    _us_yield_cache = pd.Series(0.04, index=dates)
     return _us_yield_cache
 
 def get_us_yield_at(date_val) -> float:

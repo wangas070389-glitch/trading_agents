@@ -113,3 +113,76 @@ def calculate_dcf_intrinsic_value(
     results["terminal_value"] = terminal_value
     
     return results
+
+
+def calculate_monte_carlo_dcf(
+    current_price: float,
+    shares_outstanding: float,
+    base_fcff: float,
+    wacc: float,
+    total_debt: float,
+    cash_and_equivalents: float,
+    growth_rate_stage1: float = 0.06,
+    terminal_growth: float = 0.03,
+    stage1_years: int = 5,
+    stage2_years: int = 5,
+    num_simulations: int = 1000,
+    wacc_std: float = 0.008,
+    growth_std: float = 0.02,
+    seed: int = 42
+) -> dict:
+    """
+    Performs a stochastic Monte Carlo DCF simulation across randomized WACC
+    and stage-1 growth distributions.
+    
+    Returns statistical percentile metrics for Intrinsic Value (mean, 10th, 50th, 90th percentile).
+    """
+    import numpy as np
+    
+    if seed is not None:
+        np.random.seed(seed)
+        
+    wacc_samples = np.random.normal(loc=wacc, scale=wacc_std, size=num_simulations)
+    growth_samples = np.random.normal(loc=growth_rate_stage1, scale=growth_std, size=num_simulations)
+    
+    iv_results = []
+    
+    for i in range(num_simulations):
+        sim_wacc = max(0.04, float(wacc_samples[i]))
+        sim_growth = float(growth_samples[i])
+        
+        res = calculate_dcf_intrinsic_value(
+            current_price=current_price,
+            shares_outstanding=shares_outstanding,
+            base_fcff=base_fcff,
+            wacc=sim_wacc,
+            total_debt=total_debt,
+            cash_and_equivalents=cash_and_equivalents,
+            growth_rate_stage1=sim_growth,
+            terminal_growth=terminal_growth,
+            stage1_years=stage1_years,
+            stage2_years=stage2_years
+        )
+        iv_results.append(res["intrinsic_value"])
+        
+    iv_array = np.array(iv_results)
+    iv_mean = float(np.mean(iv_array))
+    iv_p10 = float(np.percentile(iv_array, 10))
+    iv_p50 = float(np.percentile(iv_array, 50))
+    iv_p90 = float(np.percentile(iv_array, 90))
+    
+    mos_p10 = (iv_p10 - current_price) / current_price if current_price > 0 else 0.0
+    
+    return {
+        "intrinsic_value_base": calculate_dcf_intrinsic_value(
+            current_price, shares_outstanding, base_fcff, wacc, total_debt, cash_and_equivalents,
+            growth_rate_stage1, terminal_growth, stage1_years, stage2_years
+        )["intrinsic_value"],
+        "iv_mean": iv_mean,
+        "iv_p10": iv_p10,
+        "iv_p50": iv_p50,
+        "iv_p90": iv_p90,
+        "margin_of_safety_p10": mos_p10,
+        "is_undervalued_p10": mos_p10 >= 0.15
+    }
+

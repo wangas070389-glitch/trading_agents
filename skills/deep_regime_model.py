@@ -92,6 +92,51 @@ def train_and_predict_regime(inputs, target_states, next_step_input, seq_len=10,
         
     return pred_probs
 
+
+def check_multi_timeframe_regime_confluence(daily_regime: int, intraday_regime: int) -> dict:
+    """
+    Evaluates confluence between macro daily regime and tactical intraday regime.
+    
+    Regime conventions:
+        0: Bull Market
+        1: Bear Market
+        2: Sideways / High-Volatility Chop
+        
+    Returns structured action recommendation enforcing multi-timeframe agreement.
+    """
+    confluence = False
+    action = "CHOP_NEUTRAL"
+    confidence = 0.5
+    
+    if daily_regime == 0 and intraday_regime == 0:
+        confluence = True
+        action = "BULL_LONG"
+        confidence = 0.95
+    elif daily_regime == 1 and intraday_regime == 1:
+        confluence = True
+        action = "BEAR_SHORT"
+        confidence = 0.95
+    elif daily_regime == 0 and intraday_regime == 1:
+        confluence = False
+        action = "DIP_BUY"
+        confidence = 0.65
+    elif daily_regime == 1 and intraday_regime == 0:
+        confluence = False
+        action = "BEAR_RALLY"
+        confidence = 0.60
+    else:
+        confluence = False
+        action = "CHOP_NEUTRAL"
+        confidence = 0.50
+        
+    return {
+        "daily_regime": int(daily_regime),
+        "intraday_regime": int(intraday_regime),
+        "has_confluence": confluence,
+        "action": action,
+        "confidence": confidence
+    }
+
 if __name__ == "__main__":
     # Test harness
     print("Testing LSTM-Transformer HMM Transition Prediction...")

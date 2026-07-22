@@ -127,19 +127,17 @@ def fetch_historical_asset(ticker_symbol: str) -> pd.DataFrame:
     hist = ticker.history(period="5y")
     return hist
 
+from skills.file_io_utils import atomic_save_json, safe_load_json
+
 def load_portfolio(dir_path):
-    """Load portfolio.json from project root."""
+    """Load portfolio.json from project root safely."""
     portfolio_path = os.path.join(dir_path, "portfolio.json")
-    if os.path.exists(portfolio_path):
-        with open(portfolio_path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return None
+    return safe_load_json(portfolio_path, default=None)
 
 def save_portfolio(dir_path, portfolio):
-    """Save portfolio.json."""
+    """Save portfolio.json atomically."""
     portfolio_path = os.path.join(dir_path, "portfolio.json")
-    with open(portfolio_path, "w", encoding="utf-8") as f:
-        json.dump(portfolio, f, indent=2)
+    atomic_save_json(portfolio_path, portfolio)
 
 def log_transaction(dir_path, date_str, ticker, action, shares, price, note, fee=0.0):
     """Append a transaction row to transactions.md. Net capital impact includes fees."""

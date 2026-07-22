@@ -608,12 +608,12 @@ class DashboardAPIHandler(SimpleHTTPRequestHandler):
             
         self.send_error(404, "Endpoint not found")
 
-def start_server(port=8000):
-    server_address = ('', port)
+def start_server(host='127.0.0.1', port=8000):
+    server_address = (host, port)
     httpd = HTTPServer(server_address, DashboardAPIHandler)
     print("=" * 80)
-    print(f"PORTFOLIO DASHBOARD SERVER RUNNING AT: http://localhost:{port}")
-    print("Open http://localhost:8000 in your browser to view the dashboard.")
+    print(f"PORTFOLIO DASHBOARD SERVER RUNNING AT: http://{host}:{port}")
+    print(f"Open http://{host}:{port} in your browser to view the dashboard.")
     print("Press Ctrl+C to terminate.")
     print("=" * 80)
     try:

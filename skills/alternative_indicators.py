@@ -177,3 +177,38 @@ def evaluate_signals(ticker: str, asset_type: str, df: pd.DataFrame) -> dict:
             }
             
     return {"ticker": ticker, "signal": "neutral", "reason": "Unknown asset type"}
+
+
+def calculate_dynamic_fib_confluence(
+    level_price: float,
+    fib_levels: list,
+    atr_val: float = 3.0,
+    base_tolerance: float = 0.015,
+    max_tolerance: float = 0.025,
+    baseline_atr: float = 3.0
+) -> dict:
+    """
+    Evaluates dynamic Fibonacci level confluence.
+    Expands tolerance from base_tolerance (1.5%) up to max_tolerance (2.5%) during high ATR regimes.
+    
+    returns: dict with 'is_confluent', 'nearest_fib', and 'effective_tolerance'.
+    """
+    if level_price <= 0 or not fib_levels:
+        return {"is_confluent": False, "nearest_fib": None, "effective_tolerance": base_tolerance}
+
+    # Dynamically expand tolerance based on ATR ratio
+    atr_ratio = max(1.0, atr_val / baseline_atr) if baseline_atr > 0 else 1.0
+    effective_tol = min(max_tolerance, base_tolerance * np.sqrt(atr_ratio))
+
+    nearest_fib = min(fib_levels, key=lambda f: abs(level_price - f))
+    pct_diff = abs(level_price - nearest_fib) / nearest_fib
+
+    is_confluent = pct_diff <= effective_tol
+
+    return {
+        "is_confluent": bool(is_confluent),
+        "nearest_fib": float(nearest_fib),
+        "pct_diff": float(pct_diff),
+        "effective_tolerance": float(effective_tol)
+    }
+

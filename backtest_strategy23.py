@@ -116,19 +116,31 @@ def run_simulation(data, initial_nav=200000.0, window_length=31, polyorder=3, rs
     # Calculate RSI
     rsi = calculate_rsi(data["qqq"], rsi_period).values
     
-    # Track dynamic support and resistance levels
+    # Track    # Find support and resistance levels historically
     support_levels = np.full(n_days, np.nan)
     resistance_levels = np.full(n_days, np.nan)
+    
     curr_support = np.nan
     curr_resistance = np.nan
+    last_sup_idx = None
+    last_res_idx = None
     
     for i in range(window_length, n_days):
-        # Zero crossings
         if deriv1[i-1] < 0 and deriv1[i] >= 0 and deriv2[i] > 0:
             curr_support = prices[i]
+            last_sup_idx = i
         elif deriv1[i-1] > 0 and deriv1[i] <= 0 and deriv2[i] < 0:
             curr_resistance = prices[i]
+            last_res_idx = i
             
+        # Resolve inverted bounds (support >= resistance during trend changes)
+        if not np.isnan(curr_support) and not np.isnan(curr_resistance):
+            if curr_support >= curr_resistance:
+                if last_res_idx is not None and last_res_idx < i:
+                    curr_support = float(np.min(prices[last_res_idx : i + 1]))
+                elif last_sup_idx is not None and last_sup_idx < i:
+                    curr_resistance = float(np.max(prices[last_sup_idx : i + 1]))
+                    
         support_levels[i] = curr_support
         resistance_levels[i] = curr_resistance
         

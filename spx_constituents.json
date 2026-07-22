@@ -1,5 +1,5 @@
 {
- "fetched_on": "2026-06-22",
+ "fetched_on": "2026-07-22",
  "source": "github_dataset",
  "count": 503,
  "tickers": [
@@ -77,7 +77,6 @@
   "BX",
   "BXP",
   "C",
-  "CAG",
   "CAH",
   "CARR",
   "CASY",
@@ -157,6 +156,7 @@
   "DXCM",
   "EA",
   "EBAY",
+  "ECHO",
   "ECL",
   "ED",
   "EFX",
@@ -231,6 +231,7 @@
   "HII",
   "HLT",
   "HON",
+  "HONA",
   "HOOD",
   "HPE",
   "HPQ",
@@ -402,7 +403,6 @@
   "RSG",
   "RTX",
   "RVTY",
-  "SATS",
   "SBAC",
   "SBUX",
   "SCHW",
