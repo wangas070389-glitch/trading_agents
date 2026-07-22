@@ -50,12 +50,13 @@ def main():
     cash = initial_nav
     rf_daily = RF_MXN / 252.0
     
-    # Simulating S1/S4 index proxy returns
+    r_btc = prices["BTC-USD"].pct_change().fillna(0.0).values
+    r_eth = prices["ETH-USD"].pct_change().fillna(0.0).values
     r_blended = prices["SPY"].pct_change().fillna(0.0).values
     r_gld = prices["GLD"].pct_change().fillna(0.0).values
     
-    pairs = [("BTC-USD", "ETH-USD")]
-    active_trades = {}
+    current_position = 0 # 0: Cash, 1: Bull Blended, 2: Bear Gold, 3: Stat-Arb Pair
+    pair_beta = 1.0
     
     for t in range(1, n):
         date = prices.index[t]
@@ -75,49 +76,43 @@ def main():
                 else: last_3_regimes.append(2)
             regime = max(set(last_3_regimes), key=last_3_regimes.count)
             
-        # Pairs liquidation on regime exit
-        if regime != 2 and active_trades:
-            for pair in list(active_trades.keys()):
-                trade = active_trades[pair]
-                y_p = float(sub_prices["BTC-USD"].iloc[-1])
-                x_p = float(sub_prices["ETH-USD"].iloc[-1])
-                val = (trade["qty_y"] * y_p) - (trade["qty_x"] * x_p) if trade["side"] == "long" else -(trade["qty_y"] * y_p) + (trade["qty_x"] * x_p)
-                cash += val * (1.0 - TRANSACTION_COST)
-                del active_trades[pair]
-                
+        fee = 0.0
+        ret = 0.0
+        
         if regime == 0:
-            nav[t] = nav[t-1] * (1.0 + r_blended[t])
-            cash = cash * (1.0 + rf_daily)
+            target_pos = 1
+            ret = r_blended[t]
         elif regime == 1:
-            nav[t] = nav[t-1] * (1.0 + 0.5 * r_gld[t] + 0.5 * rf_daily)
-            cash = cash * (1.0 + rf_daily)
+            target_pos = 2
+            ret = 0.5 * r_gld[t] + 0.5 * rf_daily
         else:
-            # Chop
-            cash = cash * (1.0 + rf_daily)
-            nav[t] = cash
+            # Chop - check cointegration of BTC vs ETH over 89d
+            y_series = np.log(sub_prices["BTC-USD"].iloc[-89:].astype(float))
+            x_series = np.log(sub_prices["ETH-USD"].iloc[-89:].astype(float))
             
-            for pair in pairs:
-                y_series = np.log(sub_prices["BTC-USD"].iloc[-89:].astype(float))
-                x_series = np.log(sub_prices["ETH-USD"].iloc[-89:].astype(float))
-                y_p = float(sub_prices["BTC-USD"].iloc[-1])
-                x_p = float(sub_prices["ETH-USD"].iloc[-1])
+            try:
+                _, p_val, _ = coint(y_series, x_series)
+            except Exception:
+                p_val = 1.0
                 
+            if p_val < 0.05:
+                target_pos = 3
                 try:
-                    _, p_val, _ = coint(y_series, x_series)
+                    ols = sm.OLS(y_series, sm.add_constant(x_series)).fit()
+                    pair_beta = float(ols.params.iloc[1])
                 except Exception:
-                    p_val = 1.0
-                    
-                if p_val < 0.05 and pair not in active_trades:
-                    try:
-                        ols = sm.OLS(y_series, sm.add_constant(x_series)).fit()
-                        beta = ols.params.iloc[1]
-                        active_trades[pair] = {"side": "long", "qty_y": 1.0, "qty_x": beta, "entry_val": y_p - beta * x_p}
-                        cash -= (y_p + beta * x_p) * TRANSACTION_COST
-                    except Exception:
-                        pass
-                        
-        if regime != 2:
-            nav[t] = nav[t-1]
+                    pair_beta = 1.0
+                # Spread return: 0.5 * BTC return - 0.5 * beta * ETH return + 0.5 * rf_daily
+                ret = 0.5 * r_btc[t] - 0.5 * pair_beta * r_eth[t] + 0.5 * rf_daily
+            else:
+                target_pos = 0
+                ret = rf_daily
+
+        if target_pos != current_position:
+            fee = nav[t-1] * TRANSACTION_COST
+            current_position = target_pos
+
+        nav[t] = nav[t-1] * (1.0 + ret) - fee
             
     # Save CSV
     pd.DataFrame(nav, index=prices.index, columns=["strategy"]).to_csv(os.path.join(dir_path, "strategy29_backtest_nav.csv"))
