@@ -1,9 +1,9 @@
 # Strategy 18: Efficient Frontier Allocation Execution Report
-**Execution Date:** 2026-07-23 19:16:21 | **Strategy Version:** Live V1
+**Execution Date:** 2026-07-23 20:37:45 | **Strategy Version:** Live V1
 * **Total Portfolio NAV:** $99,695.24 USD
 * **Inception Date:** 2026-07-12 (11 calendar days elapsed)
 * **Virtual Capital Base:** $100,000.00 USD
-* **USD/MXN Rate:** 17.5312
+* **USD/MXN Rate:** 17.5193
 
 ## 1. Portfolio Performance Summary
 | Metric | Realized (live) |
