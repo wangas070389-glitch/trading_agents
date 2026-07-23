@@ -53,4 +53,5 @@
 | 2026-07-23 | CASH_SWEEP | INTEREST | 1.0000 | $0.7702 | $+0.77 | Market | FILLED | USD Sweep interest |
 | 2026-07-23 | CASH_SWEEP | INTEREST | 1.0000 | $0.6799 | $+0.68 | Market | FILLED | USD Sweep interest |
 | 2026-07-23 | CASH_SWEEP | INTEREST | 1.0000 | $0.6971 | $+0.70 | Market | FILLED | USD Sweep interest |
+| 2026-07-23 | CASH_SWEEP | INTEREST | 1.0000 | $0.0709 | $+0.07 | Market | FILLED | USD Sweep interest |
 ---
