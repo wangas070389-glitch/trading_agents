@@ -1,9 +1,9 @@
 # Strategy 9: AI-Regime Adaptive Statistical Arbitrage Execution Report
-**Execution Date:** 2026-07-23 17:56:19 | **Strategy Version:** Upgraded Live V1
+**Execution Date:** 2026-07-23 19:15:39 | **Strategy Version:** Upgraded Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $184,734.69 MXN
-* **Total Cash Balance:** $184,734.69 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Total Portfolio NAV:** $184,736.51 MXN
+* **Total Cash Balance:** $184,736.51 MXN (Parked compounding in Bondia sweep at 6.53% APR)
 * **Equity Exposure:** 0.0%
 * **Active Regime:** State 2 (Range-bound chop, mean-reversion detected on SPY (3-day HMM consensus))
 
@@ -12,7 +12,7 @@
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $$2.0627 MXN sweep interest.
+* **[INTEREST ACCRUED]** Cash reserves earned $$1.8197 MXN sweep interest.
 * No trades or rebalancing actions triggered today.
 
 ## 4. Asset Evaluation Diagnostics (Regime & Arbitrage checks)

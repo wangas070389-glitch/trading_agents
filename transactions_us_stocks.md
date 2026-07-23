@@ -98,6 +98,7 @@
 | 2026-07-23 | META | SELL-REJECTED | 37 | 602.08 | +22,276.78 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-07-23 | META | SELL-REJECTED | 37 | 604.12 | +22,352.62 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-07-23 | META | SELL-REJECTED | 37 | 606.28 | +22,432.36 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-23 | META | SELL-REJECTED | 37 | 605.75 | +22,412.75 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 ---
 
 
@@ -105,7 +106,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $93,737.89 USD
+* **Initial Starting Capital**: $92,844.44 USD
 * **Total Deployed Capital**: $101,915.18 USD (-151.7% invested)
 * **Unallocated Cash Reserves**: $-168,400.90 USD (250.6% cash)
 * **Current Portfolio Market Value**: $-67,191.35 USD (including cash)
