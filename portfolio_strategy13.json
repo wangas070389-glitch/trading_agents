@@ -1,6 +1,6 @@
 {
-  "total_capital": 195713.65,
-  "cash_balance_mxn": 149829.07,
+  "total_capital": 196017.65,
+  "cash_balance_mxn": 149829.34,
   "cash_balance_usd": 0.0,
   "holdings": [
     {
@@ -8,10 +8,10 @@
       "side": "long",
       "shares": 39.45570096447304,
       "buy_price": 1281.351113271332,
-      "last_price": 1162.939171380247
+      "last_price": 1170.6370781724545
     }
   ],
   "last_signal_date": "2026-07-22",
-  "last_updated": "2026-07-23 16:11:44",
+  "last_updated": "2026-07-23 16:26:31",
   "low_score_streak": 0
 }
