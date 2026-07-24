@@ -20,13 +20,13 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Asset Type | Signal | Price | Indicator Diagnostics | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :--- | :--- |
-| **BTC-USD** | CRYPTO | SELL | $64,104.0391 | SMA 200: $72,406.68, MACD: 483.0988, Signal: 319.8261 | MACD cross down or bearish trend break |
-| **ETH-USD** | CRYPTO | SELL | $1,859.3500 | SMA 200: $2,153.07, MACD: 41.8074, Signal: 38.2919 | MACD cross down or bearish trend break |
+| **BTC-USD** | CRYPTO | SELL | $64,076.0586 | SMA 200: $72,406.54, MACD: 480.8667, Signal: 319.3797 | MACD cross down or bearish trend break |
+| **ETH-USD** | CRYPTO | SELL | $1,857.5601 | SMA 200: $2,153.06, MACD: 41.6646, Signal: 38.2634 | MACD cross down or bearish trend break |
 | **GLD** | COMMODITY | SELL | $371.9000 | SMA 100: $413.56, Donchian High: $383.60, Donchian Low: $363.60 | Breakout below 10-day low or bearish trend break |
 | **SLV** | COMMODITY | SELL | $52.5900 | SMA 100: $64.85, Donchian High: $56.37, Donchian Low: $49.61 | Breakout below 10-day low or bearish trend break |
 | **USO** | COMMODITY | HOLD | $136.6900 | SMA 100: $125.14, Donchian High: $142.33, Donchian Low: $107.49 | Inside Donchian Channel limits |
 | **DBA** | COMMODITY | HOLD | $28.2400 | SMA 100: $27.24, Donchian High: $28.34, Donchian Low: $27.50 | Inside Donchian Channel limits |
 | **EURUSD=X** | FOREX | HOLD | $1.1375 | RSI: 39.3, Lower BB: $1.1368, Upper BB: $1.1464 | No extreme volatility or RSI signals |
 | **GBPUSD=X** | FOREX | HOLD | $1.3319 | RSI: 44.9, Lower BB: $1.3204, Upper BB: $1.3530 | No extreme volatility or RSI signals |
-| **USDMXN=X** | FOREX | HOLD | $17.4925 | RSI: 52.9, Lower BB: $17.3500, Upper BB: $17.5964 | No extreme volatility or RSI signals |
+| **USDMXN=X** | FOREX | HOLD | $17.4750 | RSI: 52.1, Lower BB: $17.3496, Upper BB: $17.5943 | No extreme volatility or RSI signals |
 | **USDJPY=X** | FOREX | SELL | $163.7910 | RSI: 71.7, Lower BB: $161.2305, Upper BB: $163.4825 | Overbought (RSI=71.7) at upper Bollinger Band |
