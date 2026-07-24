@@ -1,5 +1,5 @@
 # Strategy 17: FIBRAs Dynamic Income Execution Report
-**Execution Date:** 2026-07-24 20:51:29 | **Strategy Version:** Live V1
+**Execution Date:** 2026-07-24 21:03:15 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** $100,882.37 MXN
@@ -22,7 +22,7 @@
 | Ticker | Signal | Yield | Debt / Equity | Close vs SMA 200 | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :--- |
 | **DANHOS13.MX** | BUY / HOLD | 6.37% | 16.9% | $28.65 > SMA $27.28 | Passed quality screens. Score: 0.0545 |
-| **FIBRAMQ12.MX** | BUY / HOLD | 5.44% | 51.0% | $45.15 > SMA $37.30 | Passed quality screens. Score: 0.0360 |
+| **FIBRAMQ12.MX** | BUY / HOLD | 5.41% | 51.0% | $45.15 > SMA $37.30 | Passed quality screens. Score: 0.0358 |
 | **FIBRAPL14.MX** | SELL / AVOID | 3.65% | 34.0% | $75.81 <= SMA $77.62 | Yield below 4.0% and Bear trend (Close <= SMA 200) |
 | **FIDE12.MX** | - | - | - | - | Data failed | 
 | **FIHO12.MX** | SELL / AVOID | 8.14% | 41.1% | $7.50 <= SMA $7.68 | Bear trend (Close <= SMA 200) |
