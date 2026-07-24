@@ -1,26 +1,22 @@
 # Strategy 9: AI-Regime Adaptive Statistical Arbitrage Execution Report
-**Execution Date:** 2026-07-23 22:07:51 | **Strategy Version:** Upgraded Live V1
+**Execution Date:** 2026-07-24 15:49:33 | **Strategy Version:** Upgraded Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $184,740.46 MXN
-* **Total Cash Balance:** $184,740.46 MXN (Parked compounding in Bondia sweep at 6.53% APR)
-* **Equity Exposure:** 0.0%
-* **Active Regime:** State 2 (Range-bound chop, mean-reversion detected on SPY (3-day HMM consensus))
+* **Total Portfolio NAV:** $184,764.81 MXN
+* **Total Cash Balance:** $28,806.52 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Equity Exposure:** 84.4%
+* **Active Regime:** State 0 (Bull trend, low volatility detected on SPY (3-day HMM consensus))
 
 ## 2. Current Holdings
 | Ticker | Type | Shares/Qty Y | Shares/Qty X | Buy Price/Alloc | Last Price | Market Value (MXN) |
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
+| **SPY** | REGIME ASSET | 12.0000 | -- | $12,958.94 | $12,958.94 | $155,507.32 |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $$1.8988 MXN sweep interest.
-* No trades or rebalancing actions triggered today.
+* **[INTEREST ACCRUED]** Cash reserves earned $$24.3513 MXN sweep interest.
+* BOUGHT 12 shares of SPY at $12,958.94 MXN.
 
 ## 4. Asset Evaluation Diagnostics (Regime & Arbitrage checks)
 * **Regime Signal Classifier (HMM on SPY):**
-  * Current Decoded Regime: HMM State 0 -> **Regime 2 (Range-bound chop, mean-reversion detected on SPY (3-day HMM consensus))**
+  * Current Decoded Regime: HMM State 1 -> **Regime 0 (Bull trend, low volatility detected on SPY (3-day HMM consensus))**
 
-### Statistical Arbitrage Pairs Cointegration Telemetry:
-| Pair | Cointegrated? | Current Z-Score | Hedge Ratio (Beta) | Decision |
-| :--- | :---: | :---: | :---: | :--- |
-| BTC-USD/ETH-USD | NO | 0.000 | 1.000 | No signal |
-| EURUSD=X/GBPUSD=X | NO | 0.000 | 1.000 | No signal |
