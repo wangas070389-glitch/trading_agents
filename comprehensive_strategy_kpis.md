@@ -1,5 +1,5 @@
 # Comprehensive Strategy KPI & Compounding Report
-**Report Compiled on:** 2026-07-24 | **Evidence-Quality Ranked**
+**Report Compiled on:** 2026-07-25 | **Evidence-Quality Ranked**
 
 ## 1. Evidence Quality Rank & 5-Year Projection Grid
 This table ranks strategies by **Evidence Quality Score** (`Sharpe * Backtest Window (Years)`), ensuring that 60-day in-sample strategies are properly contextualized behind long-window, walk-forward verified strategies.
