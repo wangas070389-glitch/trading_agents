@@ -1,14 +1,14 @@
 {
-  "total_capital": 195893.69,
-  "cash_balance_mxn": 129100.85,
-  "cash_balance_usd": 1623.765,
+  "total_capital": 195782.33,
+  "cash_balance_mxn": 129123.96,
+  "cash_balance_usd": 1623.9653,
   "holdings": [
     {
       "ticker": "TQQQ",
       "side": "long",
       "shares": 34.374109190756336,
       "buy_price": 1281.131044248963,
-      "last_price": 1118.4000244140625
+      "last_price": 1115.64794921875
     }
   ],
   "last_signal_date": "2026-07-24",
@@ -20,5 +20,5 @@
     "TSMOM": -0.04540080498802547,
     "CASH_USD": -0.0024451298068752236
   },
-  "last_updated": "2026-07-25 22:01:22"
+  "last_updated": "2026-07-26 22:03:07"
 }

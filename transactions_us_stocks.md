@@ -115,6 +115,7 @@
 | 2026-07-25 | META | SELL-REJECTED | 37 | nan | +nan | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-07-25 | AVGO | SELL-REJECTED | 50 | nan | +nan | Market | FILLED | Alpaca accepted | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-07-25 | JPM | SELL-REJECTED | 56 | nan | +nan | Market | FILLED | Alpaca accepted | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-26 | META | SELL-REJECTED | 37 | 595.19 | +22,022.03 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 ---
 
 

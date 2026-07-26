@@ -1,6 +1,6 @@
 {
   "total_capital": 120000.0,
-  "cash_balance": 101959.82,
+  "cash_balance": 101978.36,
   "holdings": [
     {
       "ticker": "GRUMAB.MX",
@@ -51,7 +51,7 @@
       "zg_t": 0.0
     }
   ],
-  "last_updated": "2026-07-25 21:58:22",
+  "last_updated": "2026-07-26 22:02:19",
   "slippage_savings": 0.0,
   "last_rebalance_date": "2026-06-21"
 }
