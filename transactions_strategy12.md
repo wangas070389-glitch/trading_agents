@@ -146,4 +146,6 @@
 | 2026-07-24 | BONDIA | INTEREST | 1.0000 | $1.1967 | $0.00 | Sweep interest |
 | 2026-07-25 | BONDIA | INTEREST | 1.0000 | $26.6799 | $0.00 | Sweep interest |
 | 2026-07-26 | BONDIA | INTEREST | 1.0000 | $26.8305 | $0.00 | Sweep interest |
+| 2026-07-27 | BONDIA | INTEREST | 1.0000 | $20.8071 | $0.00 | Sweep interest |
+| 2026-07-27 | TQQQ | BUY | 9.9759 | $1101.3913 | $0.00 | Rebalanceo a w=0.281 |
 ---
