@@ -24,7 +24,7 @@
 | **AVGO** | BUY / HOLD | $383.22 | 1.606 | $998.66 | BULL | BULL | Strong conviction (DCS=1.606) and bull trend (Close > SMA 100) | Eligible for active DCA |
 | **COST** | SELL / AVOID | $951.58 | -0.606 | $375.16 | BEAR | BULL | Low conviction (DCS=-0.606 < 0.15) and Bear trend (Close <= SMA 100) |
 | **GOOGL** | SELL / AVOID | $326.56 | -0.674 | $106.55 | BEAR | BEAR | Low conviction (DCS=-0.674 < 0.15) and Bear trend (Close <= SMA 100) |
-| **JPM** | SELL / AVOID | $356.15 | -0.368 | $225.25 | BULL | BULL | Low conviction (DCS=-0.368 < 0.15) |
+| **JPM** | SELL / AVOID | $356.20 | -0.368 | $225.25 | BULL | BULL | Low conviction (DCS=-0.368 < 0.15) |
 | **META** | SELL / AVOID | $593.87 | -0.378 | $369.16 | BEAR | BEAR | Low conviction (DCS=-0.378 < 0.15) and Bear trend (Close <= SMA 100) |
 | **MSFT** | SELL / AVOID | $389.10 | -0.537 | $180.02 | BEAR | BULL | Low conviction (DCS=-0.537 < 0.15) and Bear trend (Close <= SMA 100) |
 | **NFLX** | SELL / AVOID | $70.40 | 4.015 | $353.06 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
