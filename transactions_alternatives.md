@@ -12,6 +12,7 @@
 | 2026-07-17 | USO | BUY | 164.0000 | $122.7500 | $58.38 | $-20,189.38 | Alpaca Order FILLED (e67af73c-5f34-4f64-977c-0c3ab02078fe) | Entry: Breakout above 20-day high in bullish trend |
 | 2026-07-27 | USO | SELL-REJECTED | 164.0000 | $124.7300 | $0.00 | $20,455.72 | Alpaca accepted |
 | 2026-07-27 | USO | SELL-REJECTED | 164.0000 | $124.7600 | $0.00 | $20,460.64 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-27 | USO | SELL-REJECTED | 164.0000 | $124.7600 | $0.00 | $20,460.64 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 ---
 
 
@@ -19,7 +20,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $91,315.22 USD
-* **Total Deployed Capital**: $55,265.10 USD (38.9% invested)
-* **Unallocated Cash Reserves**: $86,330.25 USD (60.8% cash)
-* **Current Portfolio Market Value**: $141,994.28 USD (including cash)
+* **Initial + Inflow Capital**: $91,380.05 USD
+* **Total Deployed Capital**: $55,265.10 USD (34.0% invested)
+* **Unallocated Cash Reserves**: $106,731.55 USD (65.7% cash)
+* **Current Portfolio Market Value**: $162,398.98 USD (including cash)
