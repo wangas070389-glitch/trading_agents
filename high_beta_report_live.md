@@ -17,7 +17,7 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Signal | Price | Beta | DCS MOS | MACD Status | SMA 100 Status | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **AAPL** | AVOID / SELL | $336.91 | 0.85 | -67.7% | MACD: 8.9310 (Sig: 7.8223) | BULL | Low DCS margin of safety (-67.7% < 15%) |
+| **AAPL** | AVOID / SELL | $336.91 | 0.85 | -67.7% | MACD: 8.7614 (Sig: 7.6072) | BULL | Low DCS margin of safety (-67.7% < 15%) |
 | **AMD** | AVOID / SELL | $494.95 | 3.06 | -92.7% | MACD: 3.7320 (Sig: 8.6579) | BULL | Low DCS margin of safety (-92.7% < 15%) |
 | **AMZN** | AVOID / SELL | $231.39 | 1.44 | -70.4% | MACD: -2.3013 (Sig: -0.8491) | BEAR | Low DCS margin of safety (-70.4% < 15%) and Bear trend (Close <= SMA 100) |
 | **AVGO** | WATCH | $383.22 | 2.13 | 160.6% | MACD: -1.7582 (Sig: -2.9881) | BULL | Bull trend and healthy DCS (160.6%), but waiting for MACD Cross |

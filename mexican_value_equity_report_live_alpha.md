@@ -2,8 +2,8 @@
 **Execution Date:** 2026-07-27 | **Strategy Version:** DCF Alpha-Momentum Concentrated V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $122,293.43 MXN
-* **Total Cash Balance:** $101,996.54 MXN (Compounding in Bondia Cash at 11% APR)
+* **Total Portfolio NAV:** $122,293.83 MXN
+* **Total Cash Balance:** $101,996.94 MXN (Compounding in Bondia Cash at 11% APR)
 * **Equity Exposure:** 16.6%
 * **Days Since Last Rebalance:** 36 days
 
