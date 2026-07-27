@@ -2,7 +2,7 @@
 **Execution Date:** 2026-07-27 | **Strategy Version:** Alternative Assets Isolated V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $101,460.83 USD
+* **Total Portfolio NAV:** $101,507.29 USD
 * **Total Cash Balance:** $45,532.55 USD
 * **Equity Exposure:** 55.1%
 * **Active Holdings Count:** 3 of 5 positions
@@ -10,9 +10,9 @@
 ## 2. Current Holdings
 | Ticker | Type | Shares Held | Avg Cost | Last Price | Market Value | Target Weight |
 | :--- | :---: | :---: | :---: | :---: | ---: | :---: |
-| **EURUSD=X** | FOREX | 13154.0000 | $1.1370 | $1.1387 | $14,978.36 | 15.0% |
-| **DBA** | COMMODITY | 733.0000 | $27.5278 | $27.6998 | $20,303.95 | 20.0% |
-| **USO** | COMMODITY | 164.0000 | $122.7500 | $125.8900 | $20,645.96 | 20.0% |
+| **EURUSD=X** | FOREX | 13154.0000 | $1.1370 | $1.1383 | $14,973.25 | 15.0% |
+| **DBA** | COMMODITY | 733.0000 | $27.5278 | $27.6650 | $20,278.45 | 20.0% |
+| **USO** | COMMODITY | 164.0000 | $122.7500 | $126.3600 | $20,723.04 | 20.0% |
 
 ## 3. Today's Execution Logs
 * No actions required today. Positions match target indicator profiles.
@@ -20,13 +20,13 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Asset Type | Signal | Price | Indicator Diagnostics | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :--- | :--- |
-| **BTC-USD** | CRYPTO | SELL | $64,842.6602 | SMA 200: $71,998.81, MACD: 422.1667, Signal: 373.0357 | MACD cross down or bearish trend break |
-| **ETH-USD** | CRYPTO | SELL | $1,939.3000 | SMA 200: $2,134.06, MACD: 44.7236, Signal: 40.5095 | MACD cross down or bearish trend break |
-| **GLD** | COMMODITY | SELL | $375.2100 | SMA 100: $413.59, Donchian High: $383.60, Donchian Low: $363.60 | Breakout below 10-day low or bearish trend break |
-| **SLV** | COMMODITY | SELL | $53.2050 | SMA 100: $64.86, Donchian High: $56.37, Donchian Low: $49.61 | Breakout below 10-day low or bearish trend break |
-| **USO** | COMMODITY | HOLD | $125.8900 | SMA 100: $125.03, Donchian High: $142.33, Donchian Low: $107.49 | Inside Donchian Channel limits |
-| **DBA** | COMMODITY | HOLD | $27.6998 | SMA 100: $27.24, Donchian High: $28.34, Donchian Low: $27.50 | Inside Donchian Channel limits |
-| **EURUSD=X** | FOREX | HOLD | $1.1387 | RSI: 41.4, Lower BB: $1.1369, Upper BB: $1.1464 | No extreme volatility or RSI signals |
-| **GBPUSD=X** | FOREX | HOLD | $1.3309 | RSI: 44.2, Lower BB: $1.3227, Upper BB: $1.3517 | No extreme volatility or RSI signals |
-| **USDMXN=X** | FOREX | HOLD | $17.4207 | RSI: 48.7, Lower BB: $17.3446, Upper BB: $17.5946 | No extreme volatility or RSI signals |
-| **USDJPY=X** | FOREX | HOLD | $163.6000 | RSI: 68.1, Lower BB: $161.2187, Upper BB: $163.6797 | No extreme volatility or RSI signals |
+| **BTC-USD** | CRYPTO | SELL | $64,780.4805 | SMA 200: $71,998.49, MACD: 417.2065, Signal: 372.0437 | MACD cross down or bearish trend break |
+| **ETH-USD** | CRYPTO | SELL | $1,936.1000 | SMA 200: $2,134.05, MACD: 44.4684, Signal: 40.4584 | MACD cross down or bearish trend break |
+| **GLD** | COMMODITY | SELL | $374.4151 | SMA 100: $412.62, Donchian High: $383.60, Donchian Low: $363.60 | Breakout below 10-day low or bearish trend break |
+| **SLV** | COMMODITY | SELL | $52.9900 | SMA 100: $64.63, Donchian High: $56.37, Donchian Low: $49.61 | Breakout below 10-day low or bearish trend break |
+| **USO** | COMMODITY | HOLD | $126.3600 | SMA 100: $125.50, Donchian High: $142.33, Donchian Low: $111.71 | Inside Donchian Channel limits |
+| **DBA** | COMMODITY | HOLD | $27.6650 | SMA 100: $27.26, Donchian High: $28.36, Donchian Low: $27.55 | Inside Donchian Channel limits |
+| **EURUSD=X** | FOREX | HOLD | $1.1383 | RSI: 40.7, Lower BB: $1.1368, Upper BB: $1.1464 | No extreme volatility or RSI signals |
+| **GBPUSD=X** | FOREX | HOLD | $1.3303 | RSI: 43.7, Lower BB: $1.3226, Upper BB: $1.3518 | No extreme volatility or RSI signals |
+| **USDMXN=X** | FOREX | HOLD | $17.4339 | RSI: 49.4, Lower BB: $17.3462, Upper BB: $17.5943 | No extreme volatility or RSI signals |
+| **USDJPY=X** | FOREX | HOLD | $163.6500 | RSI: 68.9, Lower BB: $161.2112, Upper BB: $163.6922 | No extreme volatility or RSI signals |
