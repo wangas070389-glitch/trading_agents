@@ -1,16 +1,16 @@
 # Strategy 22: Walk-Forward ML Live Report
-**Report Generated:** 2026-07-27 22:11:34
+**Report Generated:** 2026-07-28 16:21:02
 
 ## Current Status
-* **Total Portfolio Value:** $173,576.87 MXN
+* **Total Portfolio Value:** $170,228.39 MXN
 * **Cash Balance:** $0.00 MXN
 * **Holding Asset:** TQQQ
 
 ## ML Prediction Details
-* **Bear (SQQQ) Probability:** 31.45%
-* **Chop (CASH) Probability:** 27.57%
-* **Bull (TQQQ) Probability:** 40.98%
-* **Proposed Target:** TQQQ (Confidence: 40.98%)
+* **Bear (SQQQ) Probability:** 27.69%
+* **Chop (CASH) Probability:** 29.38%
+* **Bull (TQQQ) Probability:** 42.92%
+* **Proposed Target:** TQQQ (Confidence: 42.92%)
 * **Gate Triggered:** False (Threshold: 45.0%)
 
 ## Execution Log

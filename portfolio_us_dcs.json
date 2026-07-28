@@ -1,16 +1,16 @@
 {
-  "total_capital": 91401.96,
+  "total_capital": 91556.99,
   "cash_balance": 76218.59,
   "holdings": [
     {
       "ticker": "AVGO",
       "shares": 65,
       "buy_price": 380.1499938964844,
-      "last_price": 383.2200012207031,
+      "last_price": 382.7200012207031,
       "target_weight": 0.25,
       "dcs": 1.7012468407519223
     }
   ],
-  "last_updated": "2026-07-27 22:10:19",
+  "last_updated": "2026-07-28 16:19:53",
   "last_rebalance_date": "2026-06-23"
 }
