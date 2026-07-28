@@ -1,12 +1,12 @@
 {
   "total_capital": 120000.0,
-  "cash_balance": 65803.44,
+  "cash_balance": 65804.33,
   "holdings": [
     {
       "ticker": "GAPB.MX",
       "shares": 20,
       "buy_price": 416.94,
-      "last_price": 381.7300109863281,
+      "last_price": 378.05999755859375,
       "target_weight": 0.07142857142857142,
       "hmm_state": 0,
       "peak_price": 436.68,
@@ -16,7 +16,7 @@
       "ticker": "FEMSAUBD.MX",
       "shares": 44,
       "buy_price": 223.25,
-      "last_price": 223.44000244140625,
+      "last_price": 224.61000061035156,
       "target_weight": 0.08333333333333333,
       "hmm_state": 0,
       "peak_price": 233.4600067138672,
@@ -26,7 +26,7 @@
       "ticker": "CEMEXCPO.MX",
       "shares": 548,
       "buy_price": 21.79,
-      "last_price": 21.049999237060547,
+      "last_price": 20.90999984741211,
       "target_weight": 0.1,
       "hmm_state": 0,
       "peak_price": 22.979999542236328,
@@ -36,7 +36,7 @@
       "ticker": "AMXB.MX",
       "shares": 524,
       "buy_price": 22.850000381469727,
-      "last_price": 22.559999465942383,
+      "last_price": 22.520000457763672,
       "target_weight": 0.1,
       "hmm_state": 0,
       "peak_price": 23.350000381469727,
@@ -46,12 +46,12 @@
       "ticker": "BIMBOA.MX",
       "shares": 208,
       "buy_price": 57.58000183105469,
-      "last_price": 60.939998626708984,
+      "last_price": 60.150001525878906,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 61.470001220703125,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-07-28 18:13:51"
+  "last_updated": "2026-07-28 20:00:57"
 }
