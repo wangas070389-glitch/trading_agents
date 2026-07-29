@@ -1,5 +1,5 @@
 # Strategy 17: FIBRAs Dynamic Income Execution Report
-**Execution Date:** 2026-07-29 20:31:42 | **Strategy Version:** Live V1
+**Execution Date:** 2026-07-29 20:38:41 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** $102,745.13 MXN
@@ -21,13 +21,13 @@
 ## 4. FIBRA Evaluation Diagnostics (Signals Checked)
 | Ticker | Signal | Yield | Debt / Equity | Close vs SMA 200 | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :--- |
-| **DANHOS13.MX** | BUY / HOLD | 6.12% | 16.9% | $29.24 > SMA $27.32 | Passed quality screens. Score: 0.0523 |
-| **FIBRAMQ12.MX** | SELL / AVOID | 1.83% | 50.4% | $45.00 > SMA $37.02 | Yield below 4.0% |
-| **FIBRAPL14.MX** | SELL / AVOID | 3.69% | 35.1% | $77.11 <= SMA $77.68 | Yield below 4.0% and Bear trend (Close <= SMA 200) |
+| **DANHOS13.MX** | BUY / HOLD | 6.08% | 16.9% | $29.24 > SMA $27.32 | Passed quality screens. Score: 0.0520 |
+| **FIBRAMQ12.MX** | SELL / AVOID | 1.81% | 50.4% | $45.00 > SMA $37.02 | Yield below 4.0% |
+| **FIBRAPL14.MX** | SELL / AVOID | 3.67% | 35.1% | $77.11 <= SMA $77.68 | Yield below 4.0% and Bear trend (Close <= SMA 200) |
 | **FIDE12.MX** | - | - | - | - | Data failed | 
-| **FIHO12.MX** | BUY / HOLD | 8.29% | 41.1% | $7.68 > SMA $7.68 | Passed quality screens. Score: 0.0587 |
-| **FINN13.MX** | SELL / AVOID | 7.54% | 43.2% | $4.81 <= SMA $4.91 | Bear trend (Close <= SMA 200) |
-| **FMTY14.MX** | BUY / HOLD | 7.84% | 30.2% | $15.24 > SMA $14.40 | Passed quality screens. Score: 0.0602 |
+| **FIHO12.MX** | BUY / HOLD | 8.23% | 41.1% | $7.68 > SMA $7.68 | Passed quality screens. Score: 0.0583 |
+| **FINN13.MX** | SELL / AVOID | 7.59% | 43.2% | $4.81 <= SMA $4.91 | Bear trend (Close <= SMA 200) |
+| **FMTY14.MX** | BUY / HOLD | 7.74% | 30.2% | $15.24 > SMA $14.40 | Passed quality screens. Score: 0.0595 |
 | **FSHOP13.MX** | BUY / HOLD | 6.00% | 64.4% | $11.90 > SMA $10.13 | Passed quality screens. Score: 0.0365 |
-| **FUNO11.MX** | BUY / HOLD | 7.76% | 63.3% | $31.47 > SMA $27.98 | Passed quality screens. Score: 0.0475 |
+| **FUNO11.MX** | BUY / HOLD | 7.92% | 63.3% | $31.47 > SMA $27.98 | Passed quality screens. Score: 0.0485 |
 | **TERRA13.MX** | - | - | - | - | Data failed | 
