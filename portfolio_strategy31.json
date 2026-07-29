@@ -1,7 +1,15 @@
 {
     "strategy_name": "S31 Fibonacci S&R Reversal",
-    "total_capital": 176262.12337137657,
-    "cash_balance": 176262.12337137657,
-    "holdings": [],
-    "last_updated": "2026-07-29 20:39:04"
+    "total_capital": 175750.96321359958,
+    "cash_balance": 0.0,
+    "holdings": [
+        {
+            "ticker": "TQQQ",
+            "shares": 174.57159546576148,
+            "buy_price": 1006.7557826042175,
+            "last_price": 1006.7557826042175,
+            "ccy": "MXN"
+        }
+    ],
+    "last_updated": "2026-07-29 21:31:29"
 }
