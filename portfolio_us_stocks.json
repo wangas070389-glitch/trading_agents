@@ -1,6 +1,6 @@
 {
-  "total_capital": 88543.02,
-  "cash_balance": -92103.22,
+  "total_capital": 89002.55,
+  "cash_balance": -73515.22,
   "holdings": [
     {
       "ticker": "META",
@@ -27,14 +27,6 @@
       "target_weight": 0.2
     },
     {
-      "ticker": "AVGO",
-      "shares": 50.0,
-      "buy_price": 379.7,
-      "last_price": 372.83,
-      "peak_price": 398.5849914550781,
-      "target_weight": 0.2
-    },
-    {
       "ticker": "JPM",
       "shares": 56.0,
       "buy_price": 348.53,
@@ -51,5 +43,5 @@
       "target_weight": 0.25
     }
   ],
-  "last_updated": "2026-07-29 16:04:20"
+  "last_updated": "2026-07-29 16:21:11"
 }
