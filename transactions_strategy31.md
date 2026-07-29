@@ -36,3 +36,4 @@
 | 2026-07-29 | TQQQ | STOP_OUT | 170.7166 | $1,027.80 | $175,463.05 | Live Reversal Signal |
 | 2026-07-29 | TQQQ | BUY | 166.1922 | $1,049.67 | $174,446.84 | Live Reversal Signal |
 | 2026-07-29 | TQQQ | STOP_OUT | 166.1922 | $1,070.20 | $177,859.13 | Live Reversal Signal |
+| 2026-07-29 | TQQQ | BUY | 175.3508 | $1,008.43 | $176,829.04 | Live Reversal Signal |
