@@ -150,6 +150,8 @@
 | 2026-07-29 | NVDA | SELL-REJECTED | 94 | 191.85 | +18,033.43 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-07-29 | META | SELL-REJECTED | 37 | 593.05 | +21,942.85 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-07-29 | AVGO | BUY | 59.0 | 376.19 | -22,195.45 | Market | FILLED | Alpaca Order 3687205f-8d8c-425a-b7a1-da726bf7aad2 FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
+| 2026-07-29 | NVDA | SELL-REJECTED | 94 | 194.96 | +18,326.24 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-29 | META | SELL-REJECTED | 37 | 595.30 | +22,026.10 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 ---
 
 
@@ -157,7 +159,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $90,097.50 USD
+* **Initial Starting Capital**: $91,861.45 USD
 * **Total Deployed Capital**: $127,526.25 USD (405.4% invested)
 * **Unallocated Cash Reserves**: $-95,710.67 USD (-304.3% cash)
 * **Current Portfolio Market Value**: $31,453.45 USD (including cash)
