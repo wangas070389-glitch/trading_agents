@@ -13,4 +13,6 @@
 | 2026-07-20 | SQQQ | BUY | 265.5946 | $719.65 | $-191,688.89 | Market | FILLED | Purchased 265.5946 shares of SQQQ at $719.65 MXN (Fee: $554.29 MXN). |
 | 2026-07-24 | SQQQ | SELL | 265.5946 | $763.66 | $+202,236.29 | Market | FILLED | Sold all 265.5946 shares of SQQQ at $763.66 MXN (Fee: $588.19 MXN). |
 | 2026-07-24 | TQQQ | BUY | 176.0928 | $1145.14 | $-202,236.29 | Market | FILLED | Purchased 176.0928 shares of TQQQ at $1,145.14 MXN (Fee: $584.79 MXN). |
+| 2026-07-29 | TQQQ | SELL | 176.0928 | $1048.80 | $+184,149.79 | Market | FILLED | Sold all 176.0928 shares of TQQQ at $1,048.80 MXN (Fee: $535.59 MXN). |
+| 2026-07-29 | SQQQ | BUY | 219.7691 | $835.50 | $-184,149.79 | Market | FILLED | Purchased 219.7691 shares of SQQQ at $835.50 MXN (Fee: $532.49 MXN). |
 ---

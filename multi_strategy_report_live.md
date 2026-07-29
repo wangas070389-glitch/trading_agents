@@ -2,9 +2,9 @@
 **Execution Date:** 2026-07-29 | **Orchestrator Version:** Live V2.2
 
 ## 1. Consolidated Portfolio Summary
-* **Total Portfolio Value (USD):** $617,792.90 USD
-* **Total Unallocated Cash (USD):** $516,957.37 USD
-* **Currency Rate (USD/MXN):** 17.5243
+* **Total Portfolio Value (USD):** $638,479.56 USD
+* **Total Unallocated Cash (USD):** $537,208.10 USD
+* **Currency Rate (USD/MXN):** 17.4950
 * **Combined Cumulative Return (TWR Multiplier):** 3.6275 (+262.75%)
 
 ## 2. Multi-Strategy Performance Statistics (Historical + Live)
@@ -15,18 +15,18 @@
 ## 3. Allocation Target Deviation
 | Strategy Component | Target Allocation % | Current Allocation % | Deviation % | Current Value (USD) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Strategy 11: AI Intraday CCI-ADX** | 10.0% | 1.9% | -8.1% | $11,854.21 |
-| **Strategy 10: AI Intraday VWAP** | 10.0% | 1.9% | -8.1% | $11,620.80 |
-| **Strategy 9: AI Stat-Arb & Regime** | 15.0% | 1.7% | -13.3% | $10,341.68 |
-| **Strategy 4: US DCS Value-Growth** | 15.0% | 16.3% | +1.3% | $100,392.41 |
-| **Strategy 1: MXN Dynamic Value** | 10.0% | 1.1% | -8.9% | $6,978.88 |
-| **Strategy 8: Dividend Quality & Yield** | 10.0% | 1.9% | -8.1% | $11,634.42 |
-| **Strategy 12: VTTL Trend-Carry** | 5.0% | 1.8% | -3.2% | $10,825.04 |
-| **Strategy 13: CARA Cross-Asset** | 5.0% | 1.8% | -3.2% | $10,825.11 |
-| **Strategy 14: HEDGE Aggregator** | 5.0% | 1.8% | -3.2% | $11,008.48 |
-| **Strategy 15: TRACK Tracker** | 5.0% | 1.8% | -3.2% | $11,010.45 |
-| **Strategy 6: US High-Beta Momentum** | 5.0% | 16.3% | +11.3% | $100,537.97 |
-| **Strategy 5: Alternatives (Crypto/Forex/ETFs)** | 5.0% | 51.9% | +46.9% | $320,763.44 |
+| **Strategy 11: AI Intraday CCI-ADX** | 10.0% | 1.9% | -8.1% | $11,874.22 |
+| **Strategy 10: AI Intraday VWAP** | 10.0% | 1.8% | -8.2% | $11,640.41 |
+| **Strategy 9: AI Stat-Arb & Regime** | 15.0% | 1.6% | -13.4% | $10,359.14 |
+| **Strategy 4: US DCS Value-Growth** | 15.0% | 15.8% | +0.8% | $100,672.89 |
+| **Strategy 1: MXN Dynamic Value** | 10.0% | 1.1% | -8.9% | $6,988.52 |
+| **Strategy 8: Dividend Quality & Yield** | 10.0% | 1.8% | -8.2% | $11,611.14 |
+| **Strategy 12: VTTL Trend-Carry** | 5.0% | 1.7% | -3.3% | $10,910.65 |
+| **Strategy 13: CARA Cross-Asset** | 5.0% | 1.7% | -3.3% | $10,909.87 |
+| **Strategy 14: HEDGE Aggregator** | 5.0% | 1.7% | -3.3% | $11,070.63 |
+| **Strategy 15: TRACK Tracker** | 5.0% | 1.7% | -3.3% | $11,068.73 |
+| **Strategy 6: US High-Beta Momentum** | 5.0% | 15.7% | +10.7% | $100,537.97 |
+| **Strategy 5: Alternatives (Crypto/Forex/ETFs)** | 5.0% | 53.4% | +48.4% | $340,835.39 |
 
 
 ## 4. Underlying Strategy Holdings Detail
@@ -40,23 +40,23 @@
 ### C. Strategy 1: MXN Dynamic Value Holdings (MXN / USD)
 | Ticker | Shares Held | Buy Price (MXN) | Current Price (MXN) | Market Value (MXN) | Market Value (USD) | Strategy Weight |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **GRUMAB.MX** | 1.0000 | $291.46 | $267.07 | $267.07 | $15.24 | 0.2% |
-| **ORBIA.MX** | 288.3637 | $21.20 | $24.16 | $6,966.87 | $397.55 | 5.7% |
-| **BBAJIOO.MX** | 111.3941 | $54.88 | $59.89 | $6,671.39 | $380.69 | 5.5% |
-| **GFNORTEO.MX** | 32.2636 | $189.48 | $197.30 | $6,365.61 | $363.24 | 5.2% |
+| **GRUMAB.MX** | 1.0000 | $291.46 | $267.74 | $267.74 | $15.30 | 0.2% |
+| **ORBIA.MX** | 288.3637 | $21.20 | $24.24 | $6,989.94 | $399.54 | 5.7% |
+| **BBAJIOO.MX** | 111.3941 | $54.88 | $59.62 | $6,641.32 | $379.61 | 5.4% |
+| **GFNORTEO.MX** | 32.2636 | $189.48 | $196.34 | $6,334.64 | $362.08 | 5.2% |
 
 ### D. Strategy 4: US DCS Value-Growth Holdings (USD)
 | Ticker | Shares Held | Buy Price (USD) | Current Price (USD) | Market Value (USD) | Strategy Weight | DCS MOS |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **AVGO** | 65.00 | $380.15 | $371.90 | $24,173.82 | 24.1% | 1.701 |
+| **AVGO** | 65.00 | $380.15 | $376.22 | $24,454.30 | 24.3% | 1.701 |
 
 ### E. Strategy 8: Dividend Quality & Yield Holdings (MXN / USD)
 | Ticker | Shares Held | Buy Price (Local) | Current Price (Local) | Market Value (MXN) | Market Value (USD) | Strategy Weight |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **GFNORTEO.MX** | 210.7815 | $189.77 | $197.29 | $41,585.07 | $2,372.99 | 20.4% |
-| **BBAJIOO.MX** | 707.5889 | $56.53 | $59.75 | $42,278.44 | $2,412.55 | 20.7% |
-| **KOFUBL.MX** | 215.4592 | $185.65 | $190.22 | $40,984.65 | $2,338.73 | 20.1% |
-| **PG** | 15.4803 | $2,583.93 | $2,538.72 | $39,300.04 | $2,242.60 | 19.3% |
+| **GFNORTEO.MX** | 210.7815 | $189.77 | $196.35 | $41,386.94 | $2,365.64 | 20.4% |
+| **BBAJIOO.MX** | 707.5889 | $56.53 | $59.62 | $42,186.45 | $2,411.34 | 20.8% |
+| **KOFUBL.MX** | 215.4592 | $185.65 | $187.99 | $40,504.18 | $2,315.19 | 19.9% |
+| **PG** | 15.4803 | $2,583.93 | $2,540.10 | $39,321.39 | $2,247.58 | 19.4% |
 
 ### F. Strategy 9: AI-Regime Adaptive Stat-Arb Holdings (MXN / USD)
 *No open arbitrage positions. Strategy is 100% Cash / Bondia sweep.*
@@ -64,22 +64,22 @@
 ### G. Strategy 12: Vol-Targeted Trend Leverage (VTTL) Holdings (MXN / USD)
 | Ticker | Type | Shares Held | Buy Price (Local) | Current Price (Local) | Market Value (MXN) | Market Value (USD) | Strategy Weight |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **TQQQ** | TQQQ Trend | 49.4273 | $1,281.42 | $1,025.77 | $50,701.00 | $2,893.17 | 26.7% |
+| **TQQQ** | TQQQ Trend | 49.4273 | $1,281.42 | $1,049.62 | $51,879.67 | $2,965.40 | 27.2% |
 
 ### H. Strategy 13: Cross-Asset Risk Appetite (CARA) Holdings (MXN / USD)
 | Ticker | Type | Shares Held | Buy Price (Local) | Current Price (Local) | Market Value (MXN) | Market Value (USD) | Strategy Weight |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **TQQQ** | CARA Trend | 49.4204 | $1,281.35 | $1,025.77 | $50,694.13 | $2,892.78 | 26.7% |
+| **TQQQ** | CARA Trend | 49.4204 | $1,281.35 | $1,049.32 | $51,857.70 | $2,964.14 | 27.2% |
 
 ### I. Strategy 14: HEDGE Aggregator Positions (MXN / USD)
 | Ticker | Type | Shares Held | Buy Price (Local) | Current Price (Local) | Market Value (MXN) | Market Value (USD) | Strategy Weight |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **TQQQ** | Expert Mixture | 34.3741 | $1,281.13 | $1,025.77 | $35,260.02 | $2,012.06 | 18.3% |
+| **TQQQ** | Expert Mixture | 34.3741 | $1,281.13 | $1,049.35 | $36,070.36 | $2,061.75 | 18.6% |
 
 ### J. Strategy 15: TRACK Tracker Positions (MXN / USD)
 | Ticker | Type | Shares Held | Buy Price (Local) | Current Price (Local) | Market Value (MXN) | Market Value (USD) | Strategy Weight |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **TQQQ** | Expert Tracker | 34.3732 | $1,281.29 | $1,026.98 | $35,300.65 | $2,014.38 | 18.3% |
+| **TQQQ** | Expert Tracker | 34.3732 | $1,281.29 | $1,048.58 | $36,043.11 | $2,060.20 | 18.6% |
 
 ### K. Strategy 6: US High-Beta Momentum Holdings (USD)
 *No open stock positions currently held. Strategy is 100% Cash.*
@@ -87,9 +87,9 @@
 ### L. Strategy 5: Alternatives Holdings (USD)
 | Ticker | Asset Type | Shares Held | Buy Price (USD) | Current Price (USD) | Market Value (USD) | Strategy Weight |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **EURUSD=X** | FOREX | 13,154.0000 | $1.14 | $1.14 | $14,973.25 | 4.7% |
-| **DBA** | COMMODITY | 733.0000 | $27.53 | $27.58 | $20,216.14 | 6.3% |
-| **USO** | COMMODITY | 164.0000 | $122.75 | $128.88 | $21,136.32 | 6.6% |
+| **EURUSD=X** | FOREX | 13,154.0000 | $1.14 | $1.14 | $14,995.44 | 4.4% |
+| **DBA** | COMMODITY | 733.0000 | $27.53 | $27.54 | $20,186.82 | 5.9% |
+| **USO** | COMMODITY | 164.0000 | $122.75 | $128.58 | $21,087.12 | 6.2% |
 
 ---
-*Generated by daily orchestrator at 2026-07-29 16:22:32*
+*Generated by daily orchestrator at 2026-07-29 17:48:59*
