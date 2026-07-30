@@ -1,5 +1,5 @@
 {
-  "total_capital": 92245.2,
+  "total_capital": 91919.0,
   "cash_balance": -71324.73,
   "holdings": [
     {
@@ -47,9 +47,9 @@
       "shares": 50.0,
       "buy_price": 453.2268,
       "last_price": 453.2268,
-      "peak_price": 456.489990234375,
+      "peak_price": 457.9100036621094,
       "target_weight": 0.25
     }
   ],
-  "last_updated": "2026-07-30 16:25:57"
+  "last_updated": "2026-07-30 17:57:05"
 }

@@ -9,4 +9,5 @@
 | 2026-07-12 | FSHOP13.MX | BUY | 2081.79 | $11.87 | $-24,782.50 | Market | FILLED | Target weight allocation (25.0%) |
 | 2026-07-30 | FMTY14.MX | DIVIDEND | 1683.50 | $0.08 | $+127.81 | Market | FILLED | Reinvested distribution paid on 2026-07-30 |
 | 2026-07-30 | BONDIA | INTEREST | 1.00 | $0.00 | $+0.00 | Market | FILLED | Yield on cash for 0.0117 days. |
+| 2026-07-30 | BONDIA | INTEREST | 1.00 | $0.00 | $+0.00 | Market | FILLED | Yield on cash for 0.0634 days. |
 ---
