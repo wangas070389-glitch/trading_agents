@@ -1,6 +1,6 @@
 {
-  "total_capital": 92179.06,
-  "cash_balance": -51592.28,
+  "total_capital": 92245.2,
+  "cash_balance": -71324.73,
   "holdings": [
     {
       "ticker": "META",
@@ -47,9 +47,9 @@
       "shares": 50.0,
       "buy_price": 453.2268,
       "last_price": 453.2268,
-      "peak_price": 454.2699890136719,
+      "peak_price": 456.489990234375,
       "target_weight": 0.25
     }
   ],
-  "last_updated": "2026-07-30 16:08:52"
+  "last_updated": "2026-07-30 16:25:57"
 }
