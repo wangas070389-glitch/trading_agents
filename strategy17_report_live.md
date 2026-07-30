@@ -1,33 +1,34 @@
 # Strategy 17: FIBRAs Dynamic Income Execution Report
-**Execution Date:** 2026-07-29 22:04:01 | **Strategy Version:** Live V1
+**Execution Date:** 2026-07-30 16:09:52 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $102,826.36 MXN
-* **Total Cash Balance:** $-0.00 MXN (Parked in Bondia Compound at 6.53% APR)
-* **FIBRA Equity Exposure:** 100.0%
-* **Days Since Last Rebalance:** 17 days
+* **Total Portfolio NAV:** $102,721.46 MXN
+* **Total Cash Balance:** $127.81 MXN (Parked in Bondia Compound at 6.53% APR)
+* **FIBRA Equity Exposure:** 99.9%
+* **Days Since Last Rebalance:** 18 days
 
 ## 2. Current Holdings
 | Ticker | Shares Held | Buy Price | Last Price | Market Value | Expected Yield (Annual) | Next Ex-Div / Pay Date | Target Weight |
 | :--- | :---: | :---: | :---: | ---: | :--- | :--- | :---: |
-| **FMTY14.MX** | 1683.50 | $14.85 | $15.22 | $25,622.90 | $1.19 MXN/sh (Annual: $2,003.37 MXN) | Ex: 2026-06-17 / Pay: N/A | 25.0% |
-| **DANHOS13.MX** | 893.18 | $27.99 | $29.35 | $26,214.72 | $1.80 MXN/sh (Annual: $1,607.72 MXN) | Ex: 2026-05-12 / Pay: N/A | 25.0% |
-| **FUNO11.MX** | 832.50 | $30.03 | $31.49 | $26,215.45 | $2.47 MXN/sh (Annual: $2,056.28 MXN) | Ex: 2026-05-08 / Pay: N/A | 25.0% |
+| **FMTY14.MX** | 1683.50 | $14.85 | $15.11 | $25,437.71 | $1.19 MXN/sh (Annual: $2,003.37 MXN) | Ex: 2026-06-17 / Pay: N/A | 25.0% |
+| **DANHOS13.MX** | 893.18 | $27.99 | $29.39 | $26,250.45 | $1.80 MXN/sh (Annual: $1,607.72 MXN) | Ex: 2026-05-12 / Pay: N/A | 25.0% |
+| **FUNO11.MX** | 832.50 | $30.03 | $31.39 | $26,132.20 | $2.47 MXN/sh (Annual: $2,056.28 MXN) | Ex: 2026-05-08 / Pay: N/A | 25.0% |
 | **FSHOP13.MX** | 2081.79 | $11.87 | $11.90 | $24,773.29 | $0.71 MXN/sh (Annual: $1,478.07 MXN) | Ex: 2026-05-11 / Pay: N/A | 25.0% |
 
 ## 3. Today's Execution Logs
-* No actions required today. Portfolio matches target weights and cash remains compounding.
+### Distributions Credited (DRIP):
+* |-- Distribution from FMTY14.MX: +$127.81 MXN
 
 ## 4. FIBRA Evaluation Diagnostics (Signals Checked)
 | Ticker | Signal | Yield | Debt / Equity | Close vs SMA 200 | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :--- |
-| **DANHOS13.MX** | BUY / HOLD | 6.08% | 16.9% | $29.35 > SMA $27.32 | Passed quality screens. Score: 0.0520 |
-| **FIBRAMQ12.MX** | SELL / AVOID | 1.81% | 50.4% | $45.03 > SMA $37.02 | Yield below 4.0% |
-| **FIBRAPL14.MX** | SELL / AVOID | 3.67% | 35.1% | $77.12 <= SMA $77.68 | Yield below 4.0% and Bear trend (Close <= SMA 200) |
+| **DANHOS13.MX** | BUY / HOLD | 5.55% | 16.9% | $29.39 > SMA $27.33 | Passed quality screens. Score: 0.0475 |
+| **FIBRAMQ12.MX** | SELL / AVOID | 1.82% | 50.4% | $44.92 > SMA $37.10 | Yield below 4.0% |
+| **FIBRAPL14.MX** | SELL / AVOID | 3.66% | 35.1% | $77.81 > SMA $77.72 | Yield below 4.0% |
 | **FIDE12.MX** | - | - | - | - | Data failed | 
-| **FIHO12.MX** | BUY / HOLD | 8.23% | 41.1% | $7.70 > SMA $7.68 | Passed quality screens. Score: 0.0583 |
-| **FINN13.MX** | SELL / AVOID | 7.59% | 43.2% | $4.81 <= SMA $4.91 | Bear trend (Close <= SMA 200) |
-| **FMTY14.MX** | BUY / HOLD | 7.74% | 30.2% | $15.22 > SMA $14.40 | Passed quality screens. Score: 0.0595 |
-| **FSHOP13.MX** | BUY / HOLD | 6.00% | 64.4% | $11.90 > SMA $10.13 | Passed quality screens. Score: 0.0365 |
-| **FUNO11.MX** | BUY / HOLD | 7.92% | 63.3% | $31.49 > SMA $27.98 | Passed quality screens. Score: 0.0485 |
+| **FIHO12.MX** | BUY / HOLD | 8.10% | 41.1% | $7.80 > SMA $7.68 | Passed quality screens. Score: 0.0574 |
+| **FINN13.MX** | SELL / AVOID | 7.59% | 43.2% | $4.82 <= SMA $4.91 | Bear trend (Close <= SMA 200) |
+| **FMTY14.MX** | BUY / HOLD | 7.72% | 30.2% | $15.11 > SMA $14.34 | Passed quality screens. Score: 0.0593 |
+| **FSHOP13.MX** | BUY / HOLD | 6.00% | 65.5% | $11.90 > SMA $10.15 | Passed quality screens. Score: 0.0363 |
+| **FUNO11.MX** | BUY / HOLD | 7.83% | 63.3% | $31.39 > SMA $28.01 | Passed quality screens. Score: 0.0479 |
 | **TERRA13.MX** | - | - | - | - | Data failed | 

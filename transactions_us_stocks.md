@@ -164,6 +164,11 @@
 | 2026-07-29 | NVDA | SELL-REJECTED | 94 | 190.01 | +17,860.94 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-07-29 | META | SELL-REJECTED | 37 | 585.61 | +21,667.57 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-07-29 | AVGO | SELL-REJECTED | 59 | 370.32 | +21,848.88 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-30 | NVDA | SELL-REJECTED | 94 | 194.07 | +18,243.05 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-30 | META | SELL-REJECTED | 37 | 535.65 | +19,819.05 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-30 | COST | SELL | 23.0 | 953.03 | +21,919.69 | Market | FILLED | Alpaca Order 79f5e45e-a332-4e86-8176-b4cf72583a94 FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-30 | JPM | SELL-REJECTED | 56 | 349.81 | +19,589.36 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-07-30 | MSFT | BUY | 50.0 | 453.23 | -22,661.34 | Market | FILLED | Alpaca Order f6fcd2a3-2252-4f3e-ab3d-464ce9c7d97c FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 ---
 
 
@@ -171,7 +176,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $87,363.82 USD
-* **Total Deployed Capital**: $127,526.25 USD (405.4% invested)
-* **Unallocated Cash Reserves**: $-95,710.67 USD (-304.3% cash)
-* **Current Portfolio Market Value**: $31,453.45 USD (including cash)
+* **Initial Starting Capital**: $92,179.06 USD
+* **Total Deployed Capital**: $127,786.97 USD (168.5% invested)
+* **Unallocated Cash Reserves**: $-51,592.28 USD (-68.0% cash)
+* **Current Portfolio Market Value**: $75,832.56 USD (including cash)
