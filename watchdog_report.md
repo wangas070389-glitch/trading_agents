@@ -1,32 +1,32 @@
-# Watchdog Report - 2026-07-30 20:48:21
+# Watchdog Report - 2026-07-30 22:09:54
 
 **CRITICAL: 7 | WARNING: 3**
 
 | Nivel | Estrategia | Check | Detalle |
 | :--- | :--- | :--- | :--- |
-| [ OK ] | core | - | NAV $122,290.71 | sin anomalias |
-| [ OK ] | alternatives | - | NAV $501,373.61 | sin anomalias |
-| [ OK ] | dividends | - | NAV $202,381.37 | sin anomalias |
+| [ OK ] | core | - | NAV $122,291.75 | sin anomalias |
+| [ OK ] | alternatives | - | NAV $521,463.84 | sin anomalias |
+| [ OK ] | dividends | - | NAV $202,375.49 | sin anomalias |
 | [ OK ] | high_beta | - | NAV $100,528.84 | sin anomalias |
-| [ OK ] | macd | - | NAV $118,588.36 | sin anomalias |
+| [ OK ] | macd | - | NAV $118,589.03 | sin anomalias |
 | [ OK ] | multi_strategy | - | NAV $0.00 | sin anomalias |
 | [ OK ] | shadow_frontier | - | NAV $183,052.01 | sin anomalias |
 | [ OK ] | strategy10 | - | NAV $203,688.02 | sin anomalias |
-| [ OK ] | strategy11 | - | NAV $207,869.12 | sin anomalias |
-| [ OK ] | strategy12 | - | NAV $193,273.25 | sin anomalias |
-| [ OK ] | strategy13 | - | NAV $191,579.17 | sin anomalias |
-| [ OK ] | strategy14 | - | NAV $195,106.78 | sin anomalias |
-| [ OK ] | strategy15 | - | NAV $195,111.19 | sin anomalias |
-| [ OK ] | strategy16 | - | NAV $194,990.08 | sin anomalias |
+| [ OK ] | strategy11 | - | NAV $207,871.22 | sin anomalias |
+| [ OK ] | strategy12 | - | NAV $193,255.88 | sin anomalias |
+| [ OK ] | strategy13 | - | NAV $191,586.19 | sin anomalias |
+| [ OK ] | strategy14 | - | NAV $195,115.36 | sin anomalias |
+| [ OK ] | strategy15 | - | NAV $195,078.49 | sin anomalias |
+| [ OK ] | strategy16 | - | NAV $194,992.05 | sin anomalias |
 | [ OK ] | strategy17 | - | NAV $100,000.00 | sin anomalias |
 | [ OK ] | strategy18 | - | NAV $183,160.87 | sin anomalias |
-| [ OK ] | strategy19 | - | NAV $165,873.60 | sin anomalias |
-| [ OK ] | strategy20 | - | NAV $162,208.86 | sin anomalias |
-| [ OK ] | strategy21 | - | NAV $162,218.24 | sin anomalias |
+| [ OK ] | strategy19 | - | NAV $165,891.48 | sin anomalias |
+| [ OK ] | strategy20 | - | NAV $162,179.30 | sin anomalias |
+| [ OK ] | strategy21 | - | NAV $162,207.66 | sin anomalias |
 | [ OK ] | strategy22 | - | NAV $200,000.00 | sin anomalias |
-| [ OK ] | strategy23 | - | NAV $188,399.82 | sin anomalias |
-| [ OK ] | strategy24 | - | NAV $170,008.33 | sin anomalias |
-| [ OK ] | strategy25 | - | NAV $198,080.11 | sin anomalias |
+| [ OK ] | strategy23 | - | NAV $188,365.48 | sin anomalias |
+| [ OK ] | strategy24 | - | NAV $170,026.66 | sin anomalias |
+| [ OK ] | strategy25 | - | NAV $198,082.11 | sin anomalias |
 | [WARN] | strategy27 | W2 | [INACTIVE STRATEGY] 12 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
 | [WARN] | strategy29 | W2 | [INACTIVE STRATEGY] 12 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
 | [WARN] | strategy30 | W2 | [INACTIVE STRATEGY] 12 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
