@@ -30,6 +30,7 @@
 | 2026-07-30 | USDJPY=X | BUY | 414.0000 | $159.4500 | $191.44 | $-66,203.73 | Entry: Oversold (RSI=32.0) at lower Bollinger Band |
 | 2026-07-30 | DBA | SELL-REJECTED | 733.0000 | $27.4800 | $0.00 | $20,142.84 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-07-30 | DBA | SELL-REJECTED | 733.0000 | $27.4800 | $0.00 | $20,142.84 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-30 | DBA | SELL-REJECTED | 733.0000 | $27.4800 | $0.00 | $20,142.84 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 ---
 
 
@@ -37,7 +38,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $94,785.21 USD
-* **Total Deployed Capital**: $121,277.40 USD (25.2% invested)
-* **Unallocated Cash Reserves**: $359,018.81 USD (74.6% cash)
-* **Current Portfolio Market Value**: $481,276.67 USD (including cash)
+* **Initial + Inflow Capital**: $94,796.65 USD
+* **Total Deployed Capital**: $121,277.40 USD (24.2% invested)
+* **Unallocated Cash Reserves**: $379,103.24 USD (75.6% cash)
+* **Current Portfolio Market Value**: $501,373.61 USD (including cash)
