@@ -1,17 +1,17 @@
 # Strategy 19: Particle Filter QQQ / TQQQ / SQQQ Live Execution Report
-**Execution Timestamp:** 2026-07-31 20:50:17 | **Strategy Version:** Live V1
+**Execution Timestamp:** 2026-07-31 21:38:54 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $166,700.66 MXN
+* **Total Portfolio NAV:** $166,864.35 MXN
 * **Total Cash sweep Balance:** $0.00 MXN (Parked in Bondia compound at 6.53% APR)
 * **Equity Exposure:** 100.0%
 * **Asset Allocation Target:** QQQ
-* **USD/MXN Exchange Rate:** 17.3110
+* **USD/MXN Exchange Rate:** 17.3280
 
 ## 2. Current Holdings
 | Ticker | Shares Held | Buy Price (USD) | Last Price (USD) | Market Value (USD) | Market Value (MXN) | Target Weight |
 | :--- | :---: | :---: | :---: | ---: | ---: | :---: |
-| **QQQ** | 13.9969 | $683.98 | $687.99 | $9,629.75 | $166,700.66 | 100.0% |
+| **QQQ** | 13.9969 | $683.31 | $687.99 | $9,629.75 | $166,864.35 | 100.0% |
 
 ## 3. Sequential Monte Carlo (SMC) Estimates
 * **Latent Drift (Posterior $\hat{\mu}_t$):** +12.89% annualized
