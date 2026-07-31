@@ -1,12 +1,12 @@
 {
   "total_capital": 120000.0,
-  "cash_balance": 50336.56,
+  "cash_balance": 50337.16,
   "holdings": [
     {
       "ticker": "GAPB.MX",
       "shares": 20,
       "buy_price": 416.94,
-      "last_price": 378.4200134277344,
+      "last_price": 376.5400085449219,
       "target_weight": 0.07142857142857142,
       "hmm_state": 0,
       "peak_price": 436.68,
@@ -16,7 +16,7 @@
       "ticker": "FEMSAUBD.MX",
       "shares": 44,
       "buy_price": 223.25,
-      "last_price": 220.27000427246094,
+      "last_price": 220.0,
       "target_weight": 0.08333333333333333,
       "hmm_state": 0,
       "peak_price": 233.4600067138672,
@@ -26,7 +26,7 @@
       "ticker": "CEMEXCPO.MX",
       "shares": 548,
       "buy_price": 21.79,
-      "last_price": 20.479999542236328,
+      "last_price": 20.549999237060547,
       "target_weight": 0.1,
       "hmm_state": 0,
       "peak_price": 22.979999542236328,
@@ -36,7 +36,7 @@
       "ticker": "AMXB.MX",
       "shares": 524,
       "buy_price": 22.850000381469727,
-      "last_price": 22.079999923706055,
+      "last_price": 22.06999969482422,
       "target_weight": 0.1,
       "hmm_state": 0,
       "peak_price": 23.350000381469727,
@@ -46,32 +46,32 @@
       "ticker": "BIMBOA.MX",
       "shares": 208,
       "buy_price": 57.58000183105469,
-      "last_price": 62.18000030517578,
+      "last_price": 62.20000076293945,
       "target_weight": 0.1,
       "hmm_state": 1,
-      "peak_price": 62.18000030517578,
+      "peak_price": 62.20000076293945,
       "trailing_armed": false
     },
     {
       "ticker": "AMZN",
       "shares": 2,
       "buy_price": 4682.457812654728,
-      "last_price": 4690.667930633295,
+      "last_price": 4705.947255612235,
       "target_weight": 0.1,
       "hmm_state": 1,
-      "peak_price": 4690.667930633295,
+      "peak_price": 4705.947255612235,
       "trailing_armed": false
     },
     {
       "ticker": "GOOGL",
       "shares": 1,
       "buy_price": 6113.23715521011,
-      "last_price": 6121.713624278083,
+      "last_price": 6168.82633967424,
       "target_weight": 0.1,
       "hmm_state": 1,
-      "peak_price": 6121.713624278083,
+      "peak_price": 6168.82633967424,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-07-31 16:46:22"
+  "last_updated": "2026-07-31 18:21:06"
 }
