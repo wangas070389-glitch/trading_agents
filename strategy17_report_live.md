@@ -1,5 +1,5 @@
 # Strategy 17: FIBRAs Dynamic Income Execution Report
-**Execution Date:** 2026-07-31 21:38:51 | **Strategy Version:** Live V1
+**Execution Date:** 2026-07-31 22:08:48 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** $102,056.49 MXN
@@ -16,7 +16,7 @@
 | **FSHOP13.MX** | 2081.79 | $11.87 | $11.80 | $24,565.11 | $0.71 MXN/sh (Annual: $1,478.07 MXN) | Ex: 2026-05-11 / Pay: N/A | 25.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $0.0008 MXN over 0.0338 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $0.0005 MXN over 0.0208 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. FIBRA Evaluation Diagnostics (Signals Checked)
@@ -27,7 +27,7 @@
 | **FIBRAPL14.MX** | SELL / AVOID | 3.64% | 35.1% | $77.78 > SMA $77.75 | Yield below 4.0% |
 | **FIDE12.MX** | - | - | - | - | Data failed | 
 | **FIHO12.MX** | BUY / HOLD | 7.92% | 41.1% | $7.67 > SMA $7.53 | Passed quality screens. Score: 0.0561 |
-| **FINN13.MX** | SELL / AVOID | 7.59% | 43.2% | $4.70 <= SMA $4.91 | Bear trend (Close <= SMA 200) |
+| **FINN13.MX** | SELL / AVOID | 7.54% | 43.2% | $4.70 <= SMA $4.91 | Bear trend (Close <= SMA 200) |
 | **FMTY14.MX** | BUY / HOLD | 7.84% | 30.2% | $14.98 > SMA $14.35 | Passed quality screens. Score: 0.0602 |
 | **FSHOP13.MX** | BUY / HOLD | 6.33% | 65.5% | $11.80 > SMA $10.17 | Passed quality screens. Score: 0.0382 |
 | **FUNO11.MX** | BUY / HOLD | 7.83% | 63.3% | $31.19 > SMA $28.04 | Passed quality screens. Score: 0.0479 |

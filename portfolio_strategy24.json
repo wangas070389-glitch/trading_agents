@@ -7,11 +7,11 @@
       "shares": 219.76913231406022,
       "buy_price": 835.5008635520935,
       "last_price": 757.7533933663944,
-      "bars_held": 18,
+      "bars_held": 19,
       "peak_price": 863.3212507388307
     }
   ],
-  "last_updated": "2026-07-31 21:39:04",
+  "last_updated": "2026-07-31 22:09:04",
   "last_rebalance_date": "2026-07-29",
   "total_portfolio_value_mxn": 166530.81
 }

@@ -1,5 +1,5 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-07-31 21:39:14 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-07-31 22:09:14 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -8,7 +8,7 @@
 | S14 HEDGE Aggregator | **ON TRACK** | 25 | -2.1% | -30.0% | pending | -2.23 | -4.7% | -19.0% | 10.18 | 0.53 (19.2y) |
 | S15 TRACK Tracker | **ON TRACK** | 25 | -2.1% | -30.1% | pending | -2.24 | -4.7% | -18.4% | 10.18 | 0.53 (19.2y) |
 | S30 Golden MACD US | **ON TRACK** | 16 | +0.4% | +9.8% | pending | -0.20 | +0.0% | -28.8% | 8.80 | 0.55 (16.0y) |
-| S2 MACD Systematic | **ON TRACK** | 20 | -0.6% | -10.7% | pending | 3.22 | -2.1% | -11.9% | 8.78 | 1.76 (5.0y) |
+| S2 MACD Systematic | **ON TRACK** | 20 | -0.6% | -10.6% | pending | 3.22 | -2.1% | -11.9% | 8.78 | 1.76 (5.0y) |
 | S13 CARA Cross-Asset | **ON TRACK** | 25 | -3.7% | -53.5% | pending | -3.04 | -6.5% | -31.3% | 8.64 | 0.45 (19.2y) |
 | S27 Golden Hurst | **ON TRACK** | 16 | +0.3% | +6.9% | pending | 0.97 | -0.8% | -61.4% | 7.68 | 0.48 (16.0y) |
 | S25 Golden MACD BMV | **ON TRACK** | 16 | -0.9% | -21.5% | pending | -2.11 | -1.6% | -12.7% | 7.20 | 0.45 (16.0y) |
