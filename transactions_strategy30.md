@@ -94,4 +94,7 @@
 | 2026-07-30 | CASH_SWEEP | INTEREST | 1.0000 | $0.6520 | $+0.65 | Market | FILLED | USD Sweep interest |
 | 2026-07-30 | CASH_SWEEP | INTEREST | 1.0000 | $0.0207 | $+0.02 | Market | FILLED | USD Sweep interest |
 | 2026-07-30 | CASH_SWEEP | INTEREST | 1.0000 | $0.6990 | $+0.70 | Market | FILLED | USD Sweep interest |
+| 2026-07-31 | CASH_SWEEP | INTEREST | 1.0000 | $9.3513 | $+9.35 | Market | FILLED | USD Sweep interest |
+| 2026-07-31 | GOOGL | BUY | 51.0731 | $353.1300 | $-18,037.26 | Market | FILLED | Golden MACD US entry |
+| 2026-07-31 | AMZN | BUY | 66.6745 | $270.5000 | $-18,037.26 | Market | FILLED | Golden MACD US entry |
 ---

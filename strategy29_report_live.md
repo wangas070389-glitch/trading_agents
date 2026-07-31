@@ -1,9 +1,9 @@
 # Strategy 29 Live Status Report
 
-**Last Run:** 2026-07-30 22:09:49
-**HMM Regime State:** Chop
-**Total Capital:** $200,572.01 MXN
-**Cash Balance:** $200,572.01 MXN
+**Last Run:** 2026-07-31 16:20:39
+**HMM Regime State:** Bull
+**Total Capital:** $200,599.17 MXN
+**Cash Balance:** $200,599.17 MXN
 
 ## Current Holdings
 
