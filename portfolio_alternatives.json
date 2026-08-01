@@ -1,6 +1,6 @@
 {
-  "total_capital": 99758.03,
-  "cash_balance": 399187.67,
+  "total_capital": 101920.42,
+  "cash_balance": 400187.67,
   "holdings": [
     {
       "ticker": "EURUSD=X",
@@ -47,5 +47,5 @@
       "entry_date": "2026-07-30"
     }
   ],
-  "last_updated": "2026-07-31 22:07:50"
+  "last_updated": "2026-08-01 21:59:08"
 }

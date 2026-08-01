@@ -32,6 +32,7 @@
 | 2026-07-30 | DBA | SELL-REJECTED | 733.0000 | $27.4800 | $0.00 | $20,142.84 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-07-30 | DBA | SELL-REJECTED | 733.0000 | $27.4800 | $0.00 | $20,142.84 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-07-30 | DBA | SELL-REJECTED | 733.0000 | $27.4800 | $0.00 | $20,142.84 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-01 | CASH | DEPOSIT | 1.0000 | $1000.0000 | $0.00 | $-1,000.00 | Monthly savings contribution |
 ---
 
 
@@ -39,7 +40,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $99,758.03 USD
-* **Total Deployed Capital**: $121,277.40 USD (23.3% invested)
-* **Unallocated Cash Reserves**: $399,187.67 USD (76.6% cash)
-* **Current Portfolio Market Value**: $520,863.09 USD (including cash)
+* **Initial + Inflow Capital**: $101,920.42 USD
+* **Total Deployed Capital**: $121,277.40 USD (23.2% invested)
+* **Unallocated Cash Reserves**: $400,187.67 USD (76.7% cash)
+* **Current Portfolio Market Value**: $521,863.09 USD (including cash)

@@ -5,6 +5,8 @@
 | 2026-06-23 | AVGO | BUY | 65.00 | $380.15 | $71.66 | $-24,781.41 | Quarterly Rebalance (Target weight 25.0%) |
 | 2026-06-23 | AVGO | BUY | 65.00 | $380.15 | $71.66 | $-24,781.41 | Quarterly Rebalance (Target weight 25.0%) |
 | 2026-07-01 | CASH | DEPOSIT | 1.00 | $1000.00 | $0.00 | $-1,000.00 | Monthly savings contribution |
+| 2026-08-01 | CASH | DEPOSIT | 1.00 | $1000.00 | $0.00 | $-1,000.00 | Monthly savings contribution |
+| 2026-08-01 | AVGO | BUY-REJECTED | 2.00 | $389.28 | $0.00 | $778.56 | Alpaca accepted |
 ---
 
 
@@ -12,7 +14,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $99,758.03 USD
-* **Total Deployed Capital**: $24,709.75 USD (24.3% invested)
-* **Unallocated Cash Reserves**: $76,218.59 USD (75.1% cash)
-* **Current Portfolio Market Value**: $101,521.79 USD (including cash)
+* **Initial + Inflow Capital**: $101,920.42 USD
+* **Total Deployed Capital**: $24,709.75 USD (24.1% invested)
+* **Unallocated Cash Reserves**: $77,218.59 USD (75.3% cash)
+* **Current Portfolio Market Value**: $102,521.79 USD (including cash)
