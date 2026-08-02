@@ -1,6 +1,6 @@
 {
   "total_capital": 120000.0,
-  "cash_balance": 50347.66,
+  "cash_balance": 50356.79,
   "holdings": [
     {
       "ticker": "GAPB.MX",
@@ -56,7 +56,7 @@
       "ticker": "AMZN",
       "shares": 2,
       "buy_price": 4682.457812654728,
-      "last_price": 4705.394905366818,
+      "last_price": 4701.864232933964,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 4705.947255612235,
@@ -66,12 +66,12 @@
       "ticker": "GOOGL",
       "shares": 1,
       "buy_price": 6113.23715521011,
-      "last_price": 6170.308540677186,
+      "last_price": 6165.678676722106,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 6171.020409430843,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-08-01 21:58:32"
+  "last_updated": "2026-08-02 21:58:26"
 }

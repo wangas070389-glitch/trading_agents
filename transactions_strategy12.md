@@ -185,4 +185,5 @@
 | 2026-07-31 | BONDIA | INTEREST | 1.0000 | $0.5175 | $0.00 | Sweep interest |
 | 2026-08-01 | BONDIA | INTEREST | 1.0000 | $24.7094 | $0.00 | Sweep interest |
 | 2026-08-01 | CASH | DEPOSIT | 1.0000 | $2000.0000 | $0.00 | Monthly DCA |
+| 2026-08-02 | BONDIA | INTEREST | 1.0000 | $25.2100 | $0.00 | Sweep interest |
 ---

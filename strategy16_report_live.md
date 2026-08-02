@@ -1,9 +1,9 @@
 # Strategy 16: Multi-Asset HMM Swing Router Execution Report
-**Execution Date:** 2026-08-01 21:59:58 | **Strategy Version:** Router V2 (Hybrid Swing)
+**Execution Date:** 2026-08-02 21:59:16 | **Strategy Version:** Router V2 (Hybrid Swing)
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $197,061.54 MXN
-* **Total Cash Balance:** $197,061.54 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Total Portfolio NAV:** $197,096.75 MXN
+* **Total Cash Balance:** $197,096.75 MXN (Parked compounding in Bondia sweep at 6.53% APR)
 * **Equity Exposure:** 0.0%
 * **Active Target Index:** **SOXX** (Regime: State 0 - Strongest decoded intraday trend state on SOXX (Score: 0.040))
 
@@ -12,8 +12,7 @@
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
 
 ## 3. Today's Execution Logs
-* **[SAVINGS DEPOSIT]** Month transition detected. Credited $2,000.00 MXN savings contribution.
-* **[INTEREST ACCRUED]** Cash reserves earned $34.6541 MXN sweep interest.
+* **[INTEREST ACCRUED]** Cash reserves earned $35.2129 MXN sweep interest.
 * No trades or rebalancing actions triggered in this 30-minute interval.
 
 ## 4. Multi-Asset HMM Telemetry
