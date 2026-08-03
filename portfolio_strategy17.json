@@ -1,6 +1,6 @@
 {
   "total_capital": 101000.0,
-  "cash_balance": 1128.42,
+  "cash_balance": 1128.43,
   "holdings": [
     {
       "ticker": "FMTY14.MX",
@@ -47,6 +47,6 @@
       "payment_date": "N/A"
     }
   ],
-  "last_updated": "2026-08-03 20:48:34",
+  "last_updated": "2026-08-03 22:12:10",
   "last_rebalance_date": "2026-07-12"
 }
