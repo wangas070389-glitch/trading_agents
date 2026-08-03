@@ -223,6 +223,9 @@
 | 2026-08-03 | NVDA | SELL-REJECTED | 94 | 207.07 | +19,464.58 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-08-03 | META | SELL-REJECTED | 37 | 590.97 | +21,866.07 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-08-03 | JPM | SELL-REJECTED | 56 | 351.52 | +19,685.12 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-03 | NVDA | SELL-REJECTED | 94 | 208.52 | +19,600.88 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-03 | META | SELL-REJECTED | 37 | 594.12 | +21,982.62 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-03 | JPM | SELL-REJECTED | 56 | 351.32 | +19,673.92 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 ---
 
 
@@ -230,7 +233,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $108,960.89 USD
+* **Initial Starting Capital**: $108,912.78 USD
 * **Total Deployed Capital**: $158,124.49 USD (298.2% invested)
 * **Unallocated Cash Reserves**: $-104,799.88 USD (-197.6% cash)
 * **Current Portfolio Market Value**: $53,027.30 USD (including cash)

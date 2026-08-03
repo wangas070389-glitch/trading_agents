@@ -1,12 +1,12 @@
 {
   "total_capital": 120000.0,
-  "cash_balance": 50364.09,
+  "cash_balance": 50364.84,
   "holdings": [
     {
       "ticker": "GAPB.MX",
       "shares": 20,
       "buy_price": 416.94,
-      "last_price": 372.989990234375,
+      "last_price": 376.25,
       "target_weight": 0.07142857142857142,
       "hmm_state": 0,
       "peak_price": 436.68,
@@ -16,7 +16,7 @@
       "ticker": "FEMSAUBD.MX",
       "shares": 44,
       "buy_price": 223.25,
-      "last_price": 216.3000030517578,
+      "last_price": 217.1999969482422,
       "target_weight": 0.08333333333333333,
       "hmm_state": 0,
       "peak_price": 233.4600067138672,
@@ -26,7 +26,7 @@
       "ticker": "CEMEXCPO.MX",
       "shares": 548,
       "buy_price": 21.79,
-      "last_price": 20.649999618530273,
+      "last_price": 20.559999465942383,
       "target_weight": 0.1,
       "hmm_state": 0,
       "peak_price": 22.979999542236328,
@@ -36,7 +36,7 @@
       "ticker": "AMXB.MX",
       "shares": 524,
       "buy_price": 22.850000381469727,
-      "last_price": 21.670000076293945,
+      "last_price": 21.549999237060547,
       "target_weight": 0.1,
       "hmm_state": 0,
       "peak_price": 23.350000381469727,
@@ -46,7 +46,7 @@
       "ticker": "BIMBOA.MX",
       "shares": 208,
       "buy_price": 57.58000183105469,
-      "last_price": 61.45000076293945,
+      "last_price": 61.34000015258789,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 62.20000076293945,
@@ -56,7 +56,7 @@
       "ticker": "AMZN",
       "shares": 2,
       "buy_price": 4682.457812654728,
-      "last_price": 4937.043650627136,
+      "last_price": 4907.729058390309,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 4937.043650627136,
@@ -66,12 +66,12 @@
       "ticker": "GOOGL",
       "shares": 1,
       "buy_price": 6113.23715521011,
-      "last_price": 6509.355472940719,
+      "last_price": 6497.520080625021,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 6511.096296202391,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-08-03 17:08:30"
+  "last_updated": "2026-08-03 19:06:26"
 }
