@@ -1,17 +1,8 @@
 {
   "total_capital": 200027.88049241886,
-  "cash_balance": 0.0,
-  "holdings": [
-    {
-      "ticker": "SQQQ",
-      "shares": 219.76913231406022,
-      "buy_price": 835.5008635520935,
-      "last_price": 717.4971845263062,
-      "bars_held": 25,
-      "peak_price": 863.3212507388307
-    }
-  ],
-  "last_updated": "2026-08-03 20:44:57",
-  "last_rebalance_date": "2026-07-29",
-  "total_portfolio_value_mxn": 157683.73
+  "cash_balance": 157261.67,
+  "holdings": [],
+  "last_updated": "2026-08-03 20:48:51",
+  "last_rebalance_date": "2026-08-03",
+  "total_portfolio_value_mxn": 157261.67
 }
