@@ -1,6 +1,6 @@
 {
     "strategy_name": "S31 Fibonacci S&R Reversal",
-    "total_capital": 187438.69942297044,
+    "total_capital": 187683.49236006045,
     "cash_balance": 0.0,
     "holdings": [
         {
@@ -11,5 +11,5 @@
             "ccy": "MXN"
         }
     ],
-    "last_updated": "2026-08-03 16:58:43"
+    "last_updated": "2026-08-03 17:09:46"
 }

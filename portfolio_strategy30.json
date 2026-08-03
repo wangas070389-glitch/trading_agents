@@ -1,12 +1,12 @@
 {
-  "total_capital": 102348.37936702139,
-  "cash_balance": 64155.74,
+  "total_capital": 102310.69432042807,
+  "cash_balance": 64155.8,
   "holdings": [
     {
       "ticker": "GOOGL",
       "shares": 51.07314006348776,
       "buy_price": 353.1300048828125,
-      "last_price": 376.135009765625,
+      "last_price": 375.3699951171875,
       "peak_price": 376.135009765625,
       "trailing_armed": false
     },
@@ -14,11 +14,11 @@
       "ticker": "AMZN",
       "shares": 66.67452199630314,
       "buy_price": 270.5,
-      "last_price": 284.7001037597656,
-      "peak_price": 284.7001037597656,
+      "last_price": 284.7200012207031,
+      "peak_price": 284.7200012207031,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-08-03 16:58:42",
+  "last_updated": "2026-08-03 17:09:45",
   "last_rebalance_date": "2026-07-15"
 }

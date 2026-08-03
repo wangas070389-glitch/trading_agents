@@ -6,12 +6,12 @@
       "ticker": "SQQQ",
       "shares": 219.76913231406022,
       "buy_price": 835.5008635520935,
-      "last_price": 723.711179691818,
-      "bars_held": 22,
+      "last_price": 723.3804829156725,
+      "bars_held": 23,
       "peak_price": 863.3212507388307
     }
   ],
-  "last_updated": "2026-08-03 16:58:36",
+  "last_updated": "2026-08-03 17:09:39",
   "last_rebalance_date": "2026-07-29",
-  "total_portfolio_value_mxn": 159049.38
+  "total_portfolio_value_mxn": 158976.7
 }
