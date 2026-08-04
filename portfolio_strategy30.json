@@ -1,20 +1,20 @@
 {
-  "total_capital": 102044.3215612571,
-  "cash_balance": 45771.02,
+  "total_capital": 102306.27525169021,
+  "cash_balance": 45771.39,
   "holdings": [
     {
       "ticker": "GOOGL",
       "shares": 51.07314006348776,
       "buy_price": 353.1300048828125,
-      "last_price": 377.45001220703125,
-      "peak_price": 377.45001220703125,
+      "last_price": 380.0400085449219,
+      "peak_price": 380.0400085449219,
       "trailing_armed": false
     },
     {
       "ticker": "AMZN",
       "shares": 66.67452199630314,
       "buy_price": 270.5,
-      "last_price": 278.3599853515625,
+      "last_price": 277.92340087890625,
       "peak_price": 284.7200012207031,
       "trailing_armed": false
     },
@@ -22,11 +22,11 @@
       "ticker": "NVDA",
       "shares": 87.52065411256837,
       "buy_price": 210.13009643554688,
-      "last_price": 210.64999389648438,
-      "peak_price": 210.64999389648438,
+      "last_price": 212.4600067138672,
+      "peak_price": 212.4600067138672,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-08-04 16:52:45",
+  "last_updated": "2026-08-04 18:28:17",
   "last_rebalance_date": "2026-07-15"
 }
