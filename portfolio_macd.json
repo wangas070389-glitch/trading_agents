@@ -1,12 +1,12 @@
 {
   "total_capital": 120000.0,
-  "cash_balance": 39393.03,
+  "cash_balance": 39393.27,
   "holdings": [
     {
       "ticker": "GAPB.MX",
       "shares": 20,
       "buy_price": 416.94,
-      "last_price": 381.30999755859375,
+      "last_price": 381.05999755859375,
       "target_weight": 0.07142857142857142,
       "hmm_state": 0,
       "peak_price": 436.68,
@@ -16,7 +16,7 @@
       "ticker": "FEMSAUBD.MX",
       "shares": 44,
       "buy_price": 223.25,
-      "last_price": 217.41000366210938,
+      "last_price": 217.39999389648438,
       "target_weight": 0.08333333333333333,
       "hmm_state": 0,
       "peak_price": 233.4600067138672,
@@ -26,7 +26,7 @@
       "ticker": "CEMEXCPO.MX",
       "shares": 548,
       "buy_price": 21.79,
-      "last_price": 20.100000381469727,
+      "last_price": 20.079999923706055,
       "target_weight": 0.1,
       "hmm_state": 0,
       "peak_price": 22.979999542236328,
@@ -36,7 +36,7 @@
       "ticker": "AMXB.MX",
       "shares": 524,
       "buy_price": 22.850000381469727,
-      "last_price": 21.469999313354492,
+      "last_price": 21.479999542236328,
       "target_weight": 0.1,
       "hmm_state": 0,
       "peak_price": 23.350000381469727,
@@ -46,7 +46,7 @@
       "ticker": "BIMBOA.MX",
       "shares": 208,
       "buy_price": 57.58000183105469,
-      "last_price": 60.869998931884766,
+      "last_price": 60.900001525878906,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 62.20000076293945,
@@ -56,7 +56,7 @@
       "ticker": "AMZN",
       "shares": 2,
       "buy_price": 4682.457812654728,
-      "last_price": 4786.188929820259,
+      "last_price": 4785.939177305729,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 4937.043650627136,
@@ -66,7 +66,7 @@
       "ticker": "GOOGL",
       "shares": 1,
       "buy_price": 6113.23715521011,
-      "last_price": 6515.406721385953,
+      "last_price": 6515.06673497177,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 6560.139816972369,
@@ -76,12 +76,12 @@
       "ticker": "NVDA",
       "shares": 3,
       "buy_price": 3656.495005308534,
-      "last_price": 3656.495005308534,
+      "last_price": 3656.3042023888556,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 3656.495005308534,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-08-04 20:09:53"
+  "last_updated": "2026-08-04 20:57:38"
 }
