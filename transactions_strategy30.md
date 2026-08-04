@@ -113,4 +113,5 @@
 | 2026-08-03 | CASH_SWEEP | INTEREST | 1.0000 | $0.4585 | $+0.46 | Market | FILLED | USD Sweep interest |
 | 2026-08-04 | CASH_SWEEP | INTEREST | 1.0000 | $6.0260 | $+6.03 | Market | FILLED | USD Sweep interest |
 | 2026-08-04 | NVDA | BUY | 87.5207 | $210.1301 | $-18,392.56 | Market | FILLED | Golden MACD US entry |
+| 2026-08-04 | CASH_SWEEP | INTEREST | 1.0000 | $0.0880 | $+0.09 | Market | FILLED | USD Sweep interest |
 ---
