@@ -1,6 +1,6 @@
 {
-  "total_capital": 102105.73546704384,
-  "cash_balance": 45771.99,
+  "total_capital": 102105.93546704385,
+  "cash_balance": 45772.19,
   "holdings": [
     {
       "ticker": "GOOGL",
@@ -27,6 +27,6 @@
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-08-04 20:59:08",
+  "last_updated": "2026-08-04 21:50:32",
   "last_rebalance_date": "2026-07-15"
 }
