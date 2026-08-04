@@ -237,4 +237,5 @@
 | 2026-08-04 | BONDIA | INTEREST | 1.0000 | $0.0589 | $0.00 | $0.06 | Accrued interest on sweep balance |
 | 2026-08-04 | TQQQ | SETTLE_LONG_CCI_ZERO | 150.0825 | $1276.5336 | $0.00 | $191,585.35 | Direct CCI returned to zero line |
 | 2026-08-04 | BONDIA | INTEREST | 1.0000 | $2.5268 | $0.00 | $2.53 | Accrued interest on sweep balance |
+| 2026-08-04 | BONDIA | INTEREST | 1.0000 | $2.7259 | $0.00 | $2.73 | Accrued interest on sweep balance |
 ---
