@@ -30,4 +30,6 @@
 | 2026-08-03 | BONDIA | INTEREST | 1.00 | $0.01 | $+0.01 | Market | FILLED | Yield on cash for 0.0675 days. |
 | 2026-08-03 | BONDIA | INTEREST | 1.00 | $0.00 | $+0.00 | Market | FILLED | Yield on cash for 0.0027 days. |
 | 2026-08-03 | BONDIA | INTEREST | 1.00 | $0.01 | $+0.01 | Market | FILLED | Yield on cash for 0.0581 days. |
+| 2026-08-04 | BONDIA | INTEREST | 1.00 | $0.16 | $+0.16 | Market | FILLED | Yield on cash for 0.7623 days. |
+| 2026-08-04 | FSHOP13.MX | DIVIDEND | 2081.79 | $0.20 | $+424.78 | Market | FILLED | Reinvested distribution paid on 2026-08-04 |
 ---

@@ -1,12 +1,12 @@
 {
   "total_capital": 120000.0,
-  "cash_balance": 50366.01,
+  "cash_balance": 50372.97,
   "holdings": [
     {
       "ticker": "GAPB.MX",
       "shares": 20,
       "buy_price": 416.94,
-      "last_price": 376.0799865722656,
+      "last_price": 382.8800048828125,
       "target_weight": 0.07142857142857142,
       "hmm_state": 0,
       "peak_price": 436.68,
@@ -16,7 +16,7 @@
       "ticker": "FEMSAUBD.MX",
       "shares": 44,
       "buy_price": 223.25,
-      "last_price": 217.27000427246094,
+      "last_price": 217.82000732421875,
       "target_weight": 0.08333333333333333,
       "hmm_state": 0,
       "peak_price": 233.4600067138672,
@@ -26,7 +26,7 @@
       "ticker": "CEMEXCPO.MX",
       "shares": 548,
       "buy_price": 21.79,
-      "last_price": 20.600000381469727,
+      "last_price": 20.31999969482422,
       "target_weight": 0.1,
       "hmm_state": 0,
       "peak_price": 22.979999542236328,
@@ -36,7 +36,7 @@
       "ticker": "AMXB.MX",
       "shares": 524,
       "buy_price": 22.850000381469727,
-      "last_price": 21.610000610351562,
+      "last_price": 21.639999389648438,
       "target_weight": 0.1,
       "hmm_state": 0,
       "peak_price": 23.350000381469727,
@@ -46,7 +46,7 @@
       "ticker": "BIMBOA.MX",
       "shares": 208,
       "buy_price": 57.58000183105469,
-      "last_price": 61.290000915527344,
+      "last_price": 61.150001525878906,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 62.20000076293945,
@@ -56,7 +56,7 @@
       "ticker": "AMZN",
       "shares": 2,
       "buy_price": 4682.457812654728,
-      "last_price": 4921.183375963417,
+      "last_price": 4805.712685485836,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 4937.043650627136,
@@ -66,12 +66,12 @@
       "ticker": "GOOGL",
       "shares": 1,
       "buy_price": 6113.23715521011,
-      "last_price": 6471.767206237186,
+      "last_price": 6493.538667535409,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 6511.096296202391,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-08-03 22:11:12"
+  "last_updated": "2026-08-04 16:28:49"
 }

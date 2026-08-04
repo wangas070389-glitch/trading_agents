@@ -1,19 +1,19 @@
 # Isolated Alternative Assets Strategy Execution Report
-**Execution Date:** 2026-08-03 | **Strategy Version:** Alternative Assets Isolated V1
+**Execution Date:** 2026-08-04 | **Strategy Version:** Alternative Assets Isolated V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $640,559.34 USD
-* **Total Cash Balance:** $519,867.09 USD
-* **Equity Exposure:** 18.8%
+* **Total Portfolio NAV:** $658,410.23 USD
+* **Total Cash Balance:** $538,834.28 USD
+* **Equity Exposure:** 18.2%
 * **Active Holdings Count:** 4 of 5 positions
 
 ## 2. Current Holdings
 | Ticker | Type | Shares Held | Avg Cost | Last Price | Market Value | Target Weight |
 | :--- | :---: | :---: | :---: | :---: | ---: | :---: |
-| **EURUSD=X** | FOREX | 13154.0000 | $1.1370 | $1.1510 | $15,140.42 | 15.0% |
-| **DBA** | COMMODITY | 733.0000 | $27.5278 | $27.7900 | $20,370.07 | 20.0% |
-| **USO** | COMMODITY | 164.0000 | $122.7500 | $122.1200 | $20,027.68 | 20.0% |
-| **USDJPY=X** | FOREX | 414.0000 | $159.4500 | $157.3770 | $65,154.08 | 15.0% |
+| **EURUSD=X** | FOREX | 13154.0000 | $1.1370 | $1.1523 | $15,157.87 | 15.0% |
+| **DBA** | COMMODITY | 733.0000 | $27.5278 | $27.5600 | $20,201.48 | 20.0% |
+| **USO** | COMMODITY | 164.0000 | $122.7500 | $115.9900 | $19,022.36 | 20.0% |
+| **USDJPY=X** | FOREX | 414.0000 | $159.4500 | $157.4740 | $65,194.24 | 15.0% |
 
 ## 3. Today's Execution Logs
 * No actions required today. Positions match target indicator profiles.
@@ -21,13 +21,13 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Asset Type | Signal | Price | Indicator Diagnostics | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :--- | :--- |
-| **BTC-USD** | CRYPTO | SELL | $63,459.8008 | SMA 200: $70,964.72, MACD: -119.8719, Signal: 76.6641 | MACD cross down or bearish trend break |
-| **ETH-USD** | CRYPTO | SELL | $1,856.0200 | SMA 200: $2,087.91, MACD: 20.8488, Signal: 31.1666 | MACD cross down or bearish trend break |
-| **GLD** | COMMODITY | SELL | $371.7100 | SMA 100: $407.61, Donchian High: $383.60, Donchian Low: $366.53 | Breakout below 10-day low or bearish trend break |
-| **SLV** | COMMODITY | SELL | $52.4600 | SMA 100: $63.41, Donchian High: $56.37, Donchian Low: $50.95 | Breakout below 10-day low or bearish trend break |
-| **USO** | COMMODITY | SELL | $122.1200 | SMA 100: $126.71, Donchian High: $142.33, Donchian Low: $118.48 | Breakout below 10-day low or bearish trend break |
-| **DBA** | COMMODITY | HOLD | $27.7900 | SMA 100: $27.31, Donchian High: $28.36, Donchian Low: $27.44 | Inside Donchian Channel limits |
-| **EURUSD=X** | FOREX | HOLD | $1.1510 | RSI: 58.8, Lower BB: $1.1343, Upper BB: $1.1509 | No extreme volatility or RSI signals |
-| **GBPUSD=X** | FOREX | HOLD | $1.3429 | RSI: 54.7, Lower BB: $1.3266, Upper BB: $1.3518 | No extreme volatility or RSI signals |
-| **USDMXN=X** | FOREX | HOLD | $17.3240 | RSI: 42.4, Lower BB: $17.3060, Upper BB: $17.5867 | No extreme volatility or RSI signals |
-| **USDJPY=X** | FOREX | BUY | $157.3770 | RSI: 23.8, Lower BB: $159.4683, Upper BB: $165.2816 | Oversold (RSI=23.8) at lower Bollinger Band |
+| **BTC-USD** | CRYPTO | SELL | $64,010.9219 | SMA 200: $70,807.16, MACD: -95.9805, Signal: 42.1492 | MACD cross down or bearish trend break |
+| **ETH-USD** | CRYPTO | SELL | $1,869.4301 | SMA 200: $2,080.79, MACD: 18.7124, Signal: 28.7043 | MACD cross down or bearish trend break |
+| **GLD** | COMMODITY | SELL | $375.1200 | SMA 100: $406.60, Donchian High: $383.60, Donchian Low: $366.53 | Breakout below 10-day low or bearish trend break |
+| **SLV** | COMMODITY | SELL | $54.1050 | SMA 100: $63.17, Donchian High: $55.94, Donchian Low: $51.12 | Breakout below 10-day low or bearish trend break |
+| **USO** | COMMODITY | SELL | $115.9900 | SMA 100: $126.78, Donchian High: $142.33, Donchian Low: $118.48 | Breakout below 10-day low or bearish trend break |
+| **DBA** | COMMODITY | HOLD | $27.5600 | SMA 100: $27.32, Donchian High: $28.36, Donchian Low: $27.44 | Inside Donchian Channel limits |
+| **EURUSD=X** | FOREX | HOLD | $1.1523 | RSI: 59.6, Lower BB: $1.1331, Upper BB: $1.1532 | No extreme volatility or RSI signals |
+| **GBPUSD=X** | FOREX | HOLD | $1.3453 | RSI: 56.0, Lower BB: $1.3263, Upper BB: $1.3533 | No extreme volatility or RSI signals |
+| **USDMXN=X** | FOREX | HOLD | $17.2705 | RSI: 39.4, Lower BB: $17.2775, Upper BB: $17.6020 | No extreme volatility or RSI signals |
+| **USDJPY=X** | FOREX | BUY | $157.4740 | RSI: 24.1, Lower BB: $158.5683, Upper BB: $165.7407 | Oversold (RSI=24.1) at lower Bollinger Band |

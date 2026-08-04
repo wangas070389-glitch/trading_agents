@@ -1,6 +1,6 @@
 {
-  "total_capital": 107805.44,
-  "cash_balance": -104799.88,
+  "total_capital": 110287.66,
+  "cash_balance": -78167.83,
   "holdings": [
     {
       "ticker": "META",
@@ -23,41 +23,41 @@
       "shares": 56.0,
       "buy_price": 348.53,
       "last_price": 348.53,
-      "peak_price": 359.25,
+      "peak_price": 363.0,
       "target_weight": 0.2
     },
     {
       "ticker": "AVGO",
-      "shares": 59.0,
+      "shares": 45.0,
       "buy_price": 376.194067,
-      "last_price": 376.194067,
-      "peak_price": 399.9200134277344,
-      "target_weight": 0.25
+      "last_price": 415.83,
+      "peak_price": 416.67999267578125,
+      "target_weight": 0.16666666666666666
     },
     {
       "ticker": "MSFT",
-      "shares": 50.0,
+      "shares": 38.0,
       "buy_price": 453.2268,
-      "last_price": 453.2268,
-      "peak_price": 491.6400146484375,
-      "target_weight": 0.25
+      "last_price": 496.12,
+      "peak_price": 499.4399108886719,
+      "target_weight": 0.16666666666666666
     },
     {
       "ticker": "AMZN",
-      "shares": 92.0,
+      "shares": 67.0,
       "buy_price": 270.487391,
-      "last_price": 270.487391,
+      "last_price": 278.3476,
       "peak_price": 287.1600036621094,
-      "target_weight": 0.25
+      "target_weight": 0.16666666666666666
     },
     {
       "ticker": "GOOGL",
-      "shares": 70.0,
+      "shares": 49.0,
       "buy_price": 353.071429,
-      "last_price": 353.071429,
-      "peak_price": 376.6932067871094,
-      "target_weight": 0.25
+      "last_price": 376.11,
+      "peak_price": 378.0899963378906,
+      "target_weight": 0.16666666666666666
     }
   ],
-  "last_updated": "2026-08-03 22:11:14"
+  "last_updated": "2026-08-04 16:28:59"
 }
