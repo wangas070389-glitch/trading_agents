@@ -1,6 +1,13 @@
 {
-  "total_capital": 120000.0,
+  "initial_seed_capital": 20000.0,
+  "capital_injections": 100000.0,
+  "total_funded_capital": 120000.0,
+  "nav": 122122.59,
+  "total_capital": 122122.59,
   "cash_balance": 102144.98,
+  "holdings_value": 19977.61,
+  "net_trading_profit": 2122.59,
+  "net_trading_return_pct": 1.77,
   "holdings": [
     {
       "ticker": "GRUMAB.MX",
@@ -51,7 +58,5 @@
       "zg_t": 0.0
     }
   ],
-  "last_updated": "2026-08-04 22:14:20",
-  "slippage_savings": 0.0,
-  "last_rebalance_date": "2026-06-21"
+  "last_updated": "2026-08-04 23:17:19"
 }

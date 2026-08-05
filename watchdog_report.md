@@ -1,6 +1,6 @@
-# Watchdog Report - 2026-08-04 22:15:44
+# Watchdog Report - 2026-08-04 22:52:37
 
-**CRITICAL: 7 | WARNING: 2**
+**CRITICAL: 3 | WARNING: 3**
 
 | Nivel | Estrategia | Check | Detalle |
 | :--- | :--- | :--- | :--- |
@@ -27,15 +27,12 @@
 | [ OK ] | strategy23 | - | NAV $221,515.59 | sin anomalias |
 | [ OK ] | strategy24 | - | NAV $157,291.48 | sin anomalias |
 | [ OK ] | strategy25 | - | NAV $198,259.40 | sin anomalias |
-| [WARN] | strategy27 | W2 | [INACTIVE STRATEGY] 15 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
-| [WARN] | strategy29 | W2 | [INACTIVE STRATEGY] 15 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
+| [WARN] | strategy27 | W2 | [INACTIVE STRATEGY] 24 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
+| [WARN] | strategy29 | W2 | [INACTIVE STRATEGY] 24 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
 | [ OK ] | strategy30 | - | NAV $102,106.04 | sin anomalias |
 | [ OK ] | strategy31 | - | NAV $174,733.09 | sin anomalias |
 | [CRIT] | strategy9 | W5 | DD live -8.8% excede 1.25x el MaxDD del backtest (-6.0%): fuera de distribucion validada |
 | [ OK ] | us_dcs | - | NAV $104,398.99 | sin anomalias |
-| [CRIT] | us_stocks | W4 | Cash negativo: [-78167.83] |
+| [CRIT] | us_stocks | W3 | NAV salto 130.6% en 1d con exposicion 231%: posible bug de contabilidad (tope plausible 83.0%) |
 | [CRIT] | us_stocks | W5 | DD live -133.7% excede 1.25x el MaxDD del backtest (-25.1%): fuera de distribucion validada |
-| [CRIT] | broker | W6 | Cash de Alpaca NEGATIVO: $-78,167.83 (margen no intencional; probable fill fantasma previo) |
-| [CRIT] | broker | W6 | HUERFANO en Alpaca: AAPL broker=3 vs ledgers=0 (firma de SELL fantasma: el broker aun lo tiene) |
-| [CRIT] | broker | W6 | HUERFANO en Alpaca: AMZN broker=322 vs ledgers=135.675 (firma de SELL fantasma: el broker aun lo tiene) |
-| [CRIT] | broker | W6 | HUERFANO en Alpaca: GOOGL broker=104 vs ledgers=101.073 (firma de SELL fantasma: el broker aun lo tiene) |
+| [WARN] | broker | W6 | Sin credenciales Alpaca en env; reconciliacion omitida |

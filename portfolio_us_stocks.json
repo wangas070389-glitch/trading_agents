@@ -1,6 +1,13 @@
 {
-  "total_capital": 110599.62,
-  "cash_balance": -78167.83,
+  "initial_seed_capital": 199203.11,
+  "capital_injections": 0.0,
+  "total_funded_capital": 199203.11,
+  "nav": 59846.31,
+  "total_capital": 59846.31,
+  "cash_balance": 0.0,
+  "holdings_value": 138014.14,
+  "net_trading_profit": -139356.8,
+  "net_trading_return_pct": -69.96,
   "holdings": [
     {
       "ticker": "META",
@@ -59,5 +66,5 @@
       "target_weight": 0.16666666666666666
     }
   ],
-  "last_updated": "2026-08-04 22:14:26"
+  "last_updated": "2026-08-04 23:17:19"
 }

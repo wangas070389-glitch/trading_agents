@@ -1,6 +1,13 @@
 {
-  "total_capital": 110599.62,
+  "initial_seed_capital": 99321.45,
+  "capital_injections": 2000.0,
+  "total_funded_capital": 101321.45,
+  "nav": 104398.99,
+  "total_capital": 104398.99,
   "cash_balance": 77218.59,
+  "holdings_value": 27180.4,
+  "net_trading_profit": 3077.54,
+  "net_trading_return_pct": 3.04,
   "holdings": [
     {
       "ticker": "AVGO",
@@ -11,6 +18,5 @@
       "dcs": 1.7012468407519223
     }
   ],
-  "last_updated": "2026-08-04 22:14:27",
-  "last_rebalance_date": "2026-06-23"
+  "last_updated": "2026-08-04 23:17:19"
 }

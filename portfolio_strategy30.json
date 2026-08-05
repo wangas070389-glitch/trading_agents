@@ -1,6 +1,13 @@
 {
-  "total_capital": 102106.03546704384,
+  "initial_seed_capital": 100000.16,
+  "capital_injections": 0.0,
+  "total_funded_capital": 100000.16,
+  "nav": 102106.04,
+  "total_capital": 102106.04,
   "cash_balance": 45772.29,
+  "holdings_value": 56333.75,
+  "net_trading_profit": 2105.88,
+  "net_trading_return_pct": 2.11,
   "holdings": [
     {
       "ticker": "GOOGL",
@@ -27,6 +34,5 @@
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-08-04 22:15:41",
-  "last_rebalance_date": "2026-07-15"
+  "last_updated": "2026-08-04 23:17:19"
 }

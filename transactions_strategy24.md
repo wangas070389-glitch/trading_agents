@@ -2,6 +2,7 @@
 
 | Date | Ticker | Action | Shares | Price | Net Capital Impact | Order Type | Status | Note |
 | :--- | :--- | :---: | :---: | :---: | :--- | :--- | :--- | :--- |
+| 2026-07-01 | CASH | DEPOSIT | 1.00 | $200,002.14 | $0.00 | +$200,002.14 | Initial capital funding |
 | 2026-07-14 | BONDIA | INTEREST | 1.0000 | $0.21 | $+0.21 | Market | FILLED | Yield on cash for 0.0058 days. |
 | 2026-07-14 | BONDIA | INTEREST | 1.0000 | $0.57 | $+0.57 | Market | FILLED | Yield on cash for 0.0159 days. |
 | 2026-07-14 | BONDIA | INTEREST | 1.0000 | $1.36 | $+1.36 | Market | FILLED | Yield on cash for 0.0380 days. |

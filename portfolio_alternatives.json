@@ -1,6 +1,13 @@
 {
-  "total_capital": 110599.62,
-  "cash_balance": 652516.22,
+  "initial_seed_capital": 99321.45,
+  "capital_injections": 2000.0,
+  "total_funded_capital": 101321.45,
+  "nav": 105171.66,
+  "total_capital": 105171.66,
+  "cash_balance": 0.0,
+  "holdings_value": 119726.18,
+  "net_trading_profit": 3850.21,
+  "net_trading_return_pct": 3.8,
   "holdings": [
     {
       "ticker": "EURUSD=X",
@@ -47,5 +54,5 @@
       "entry_date": "2026-07-30"
     }
   ],
-  "last_updated": "2026-08-04 22:14:29"
+  "last_updated": "2026-08-04 23:17:19"
 }
