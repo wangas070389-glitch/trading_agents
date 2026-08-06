@@ -38,4 +38,6 @@
 | 2026-08-04 | BONDIA | INTEREST | 1.00 | $0.01 | $+0.01 | Market | FILLED | Yield on cash for 0.0331 days. |
 | 2026-08-04 | BONDIA | INTEREST | 1.00 | $0.01 | $+0.01 | Market | FILLED | Yield on cash for 0.0357 days. |
 | 2026-08-04 | BONDIA | INTEREST | 1.00 | $0.00 | $+0.00 | Market | FILLED | Yield on cash for 0.0175 days. |
+| 2026-08-05 | FMTY14.MX | SELL | 1683.50 | $14.20 | $+23,836.40 | Market | FILLED | Screener liquidation |
+| 2026-08-05 | FSHOP13.MX | SELL | 2081.79 | $11.79 | $+24,473.12 | Market | FILLED | Screener liquidation |
 ---

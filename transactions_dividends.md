@@ -216,4 +216,10 @@
 | 2026-08-04 | BONDIA | INTEREST | 1.00 | $0.25 | $+0.25 | Market | FILLED | Yield on cash for 0.0332 days. |
 | 2026-08-04 | BONDIA | INTEREST | 1.00 | $0.27 | $+0.27 | Market | FILLED | Yield on cash for 0.0356 days. |
 | 2026-08-04 | BONDIA | INTEREST | 1.00 | $0.13 | $+0.13 | Market | FILLED | Yield on cash for 0.0177 days. |
+| 2026-08-05 | BONDIA | INTEREST | 1.00 | $7.31 | $+7.31 | Market | FILLED | Yield on cash for 0.9647 days. |
+| 2026-08-05 | GFNORTEO.MX | SELL | 210.78 | $198.93 | $+41,809.16 | Market | FILLED | Screener liquidation |
+| 2026-08-05 | PG | SELL | 15.48 | $2498.99 | $+38,572.94 | Market | FILLED | Screener liquidation |
+| 2026-08-05 | AC.MX | BUY | 210.60 | $193.35 | $-40,836.98 | Market | FILLED | Target weight allocation (20.0%) |
+| 2026-08-05 | FUNO11.MX | BUY | 1327.21 | $30.68 | $-40,836.98 | Market | FILLED | Target weight allocation (20.0%) |
+| 2026-08-05 | BONDIA | INTEREST | 1.00 | $0.01 | $+0.01 | Market | FILLED | Yield on cash for 0.0016 days. |
 ---

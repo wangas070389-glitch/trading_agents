@@ -324,7 +324,7 @@ def main():
         for h in list(portfolio["holdings"]):
             ticker = h["ticker"]
             target_w = full_target_weights.get(ticker, 0.0)
-            close_price = current_prices[ticker]
+            close_price = current_prices.get(ticker, h["last_price"])
             curr_val = h["shares"] * close_price
             target_val = portfolio_value * target_w
             
@@ -372,7 +372,9 @@ def main():
         for t, w in target_weights.items():
             h = holdings_dict.get(t)
             curr_shares = h["shares"] if h else 0.0
-            close_price = current_prices[t]
+            close_price = current_prices.get(t, h["last_price"] if h else 0.0)
+            if close_price <= 0:
+                continue
             curr_val = curr_shares * close_price
             target_val = portfolio_value * w
             

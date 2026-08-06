@@ -252,6 +252,13 @@
 | 2026-08-04 | JPM | SELL-REJECTED | 56 | 357.52 | +20,021.12 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-08-04 | META | SELL-REJECTED | 37 | 587.94 | +21,753.78 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-08-04 | JPM | SELL-REJECTED | 56 | 357.52 | +20,021.12 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-05 | MSFT | SELL | 38 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-05 | NVDA | SELL | 94 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-05 | AMZN | SELL | 67 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-05 | GOOGL | SELL | 49 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-05 | META | SELL | 37 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-05 | AVGO | SELL | 45 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-05 | JPM | SELL | 56 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 ---
 
 
@@ -259,7 +266,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $110,599.62 USD
-* **Total Deployed Capital**: $133,242.37 USD (222.6% invested)
-* **Unallocated Cash Reserves**: $-78,167.83 USD (-130.6% cash)
-* **Current Portfolio Market Value**: $59,846.31 USD (including cash)
+* **Initial Starting Capital**: $59,846.31 USD
+* **Total Deployed Capital**: $0.00 USD (nan% invested)
+* **Unallocated Cash Reserves**: $nan USD (nan% cash)
+* **Current Portfolio Market Value**: $nan USD (including cash)

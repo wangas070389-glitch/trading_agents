@@ -4,27 +4,16 @@
   "total_funded_capital": 202000.0,
   "nav": 203573.35,
   "total_capital": 203573.35,
-  "cash_balance": 41783.93,
+  "cash_balance": 40499.39,
   "holdings_value": 161789.42,
   "net_trading_profit": 1573.35,
   "net_trading_return_pct": 0.78,
   "holdings": [
     {
-      "ticker": "GFNORTEO.MX",
-      "shares": 210.78146756307328,
-      "buy_price": 189.77000427246094,
-      "last_price": 197.72999572753906,
-      "target_weight": 0.2,
-      "dividend_rate": 17.44,
-      "last_dividend": 10.448829,
-      "ex_dividend_date": "2026-05-28",
-      "payment_date": "N/A"
-    },
-    {
       "ticker": "BBAJIOO.MX",
       "shares": 707.5889061340172,
       "buy_price": 56.529998779296875,
-      "last_price": 56.779998779296875,
+      "last_price": 57.72999954223633,
       "target_weight": 0.2,
       "dividend_rate": 7.3,
       "last_dividend": 1.906996,
@@ -35,7 +24,7 @@
       "ticker": "KOFUBL.MX",
       "shares": 215.4592044980265,
       "buy_price": 185.64999389648438,
-      "last_price": 187.5500030517578,
+      "last_price": 187.22000122070312,
       "target_weight": 0.2,
       "dividend_rate": 7.74,
       "last_dividend": 1.935,
@@ -43,16 +32,28 @@
       "payment_date": "N/A"
     },
     {
-      "ticker": "PG",
-      "shares": 15.480284315018704,
-      "buy_price": 2583.9318701138254,
-      "last_price": 2553.2686718142068,
+      "ticker": "AC.MX",
+      "shares": 210.59683618264089,
+      "buy_price": 193.35000610351562,
+      "last_price": 193.35000610351562,
       "target_weight": 0.2,
-      "dividend_rate": 4.35,
-      "last_dividend": 1.089,
-      "ex_dividend_date": "2026-07-24",
-      "payment_date": "2026-08-17"
+      "dividend_rate": 7.78,
+      "last_dividend": 2.5,
+      "ex_dividend_date": "2026-08-04",
+      "payment_date": "N/A"
+    },
+    {
+      "ticker": "FUNO11.MX",
+      "shares": 1327.213140686486,
+      "buy_price": 30.68000030517578,
+      "last_price": 30.68000030517578,
+      "target_weight": 0.2,
+      "dividend_rate": 2.56,
+      "last_dividend": 0.639779,
+      "ex_dividend_date": "2026-08-07",
+      "payment_date": "N/A"
     }
   ],
-  "last_updated": "2026-08-04 23:17:19"
+  "last_updated": "2026-08-05 22:28:52",
+  "last_rebalance_date": "2026-08-05"
 }

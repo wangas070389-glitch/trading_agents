@@ -4,67 +4,10 @@
   "total_funded_capital": 199203.11,
   "nav": 59846.31,
   "total_capital": 59846.31,
-  "cash_balance": 0.0,
+  "cash_balance": NaN,
   "holdings_value": 138014.14,
   "net_trading_profit": -139356.8,
   "net_trading_return_pct": -69.96,
-  "holdings": [
-    {
-      "ticker": "META",
-      "shares": 37,
-      "buy_price": 666.34,
-      "last_price": 661.0399780273438,
-      "peak_price": 686.0800170898438,
-      "target_weight": 0.25
-    },
-    {
-      "ticker": "NVDA",
-      "shares": 94.0,
-      "buy_price": 207.4,
-      "last_price": 206.323334,
-      "peak_price": 214.38999938964844,
-      "target_weight": 0.2
-    },
-    {
-      "ticker": "JPM",
-      "shares": 56.0,
-      "buy_price": 348.53,
-      "last_price": 348.53,
-      "peak_price": 363.0,
-      "target_weight": 0.2
-    },
-    {
-      "ticker": "AVGO",
-      "shares": 45.0,
-      "buy_price": 376.194067,
-      "last_price": 415.83,
-      "peak_price": 422.06500244140625,
-      "target_weight": 0.16666666666666666
-    },
-    {
-      "ticker": "MSFT",
-      "shares": 38.0,
-      "buy_price": 453.2268,
-      "last_price": 496.12,
-      "peak_price": 499.4399108886719,
-      "target_weight": 0.16666666666666666
-    },
-    {
-      "ticker": "AMZN",
-      "shares": 67.0,
-      "buy_price": 270.487391,
-      "last_price": 278.3476,
-      "peak_price": 287.1600036621094,
-      "target_weight": 0.16666666666666666
-    },
-    {
-      "ticker": "GOOGL",
-      "shares": 49.0,
-      "buy_price": 353.071429,
-      "last_price": 376.11,
-      "peak_price": 380.5199890136719,
-      "target_weight": 0.16666666666666666
-    }
-  ],
-  "last_updated": "2026-08-04 23:17:19"
+  "holdings": [],
+  "last_updated": "2026-08-05 22:28:32"
 }
