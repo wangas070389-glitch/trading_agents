@@ -222,4 +222,5 @@
 | 2026-08-05 | AC.MX | BUY | 210.60 | $193.35 | $-40,836.98 | Market | FILLED | Target weight allocation (20.0%) |
 | 2026-08-05 | FUNO11.MX | BUY | 1327.21 | $30.68 | $-40,836.98 | Market | FILLED | Target weight allocation (20.0%) |
 | 2026-08-05 | BONDIA | INTEREST | 1.00 | $0.01 | $+0.01 | Market | FILLED | Yield on cash for 0.0016 days. |
+| 2026-08-06 | BONDIA | INTEREST | 1.00 | $1.92 | $+1.92 | Market | FILLED | Yield on cash for 0.2620 days. |
 ---

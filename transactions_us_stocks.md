@@ -259,6 +259,12 @@
 | 2026-08-05 | META | SELL | 37 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-08-05 | AVGO | SELL | 45 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-08-05 | JPM | SELL | 56 | nan | +nan | Market | FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-06 | MSFT | BUY-REJECTED | 36 | 487.46 | +17,548.56 | Market | FILLED | Alpaca accepted | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
+| 2026-08-06 | NVDA | BUY-REJECTED | 81 | 219.22 | +17,756.82 | Market | FILLED | Alpaca accepted | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
+| 2026-08-06 | AMZN | BUY-REJECTED | 65 | 272.65 | +17,722.25 | Market | FILLED | Alpaca accepted | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
+| 2026-08-06 | GOOGL | BUY-REJECTED | 49 | 362.43 | +17,759.07 | Market | FILLED | Alpaca accepted | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
+| 2026-08-06 | AVGO | BUY-REJECTED | 42 | 418.28 | +17,567.76 | Market | FILLED | Alpaca accepted | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
+| 2026-08-06 | JPM | BUY-REJECTED | 49 | 359.24 | +17,602.76 | Market | FILLED | Alpaca accepted | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
 ---
 
 
@@ -266,7 +272,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $59,846.31 USD
-* **Total Deployed Capital**: $0.00 USD (nan% invested)
-* **Unallocated Cash Reserves**: $nan USD (nan% cash)
-* **Current Portfolio Market Value**: $nan USD (including cash)
+* **Initial Starting Capital**: $107,256.02 USD
+* **Total Deployed Capital**: $0.00 USD (-0.0% invested)
+* **Unallocated Cash Reserves**: $-78,825.85 USD (100.0% cash)
+* **Current Portfolio Market Value**: $-78,825.85 USD (including cash)

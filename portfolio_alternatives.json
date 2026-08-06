@@ -3,8 +3,8 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 101321.45,
   "nav": 105171.66,
-  "total_capital": 100000.0,
-  "cash_balance": 0.0,
+  "total_capital": 107237.02,
+  "cash_balance": 18785.68,
   "holdings_value": 119726.18,
   "net_trading_profit": 3850.21,
   "net_trading_return_pct": 3.8,
@@ -24,7 +24,7 @@
       "ticker": "DBA",
       "shares": 733,
       "buy_price": 27.527799606323242,
-      "last_price": 27.65999984741211,
+      "last_price": 27.6299991607666,
       "peak_price": 27.527799606323242,
       "armed": false,
       "target_weight": 0.2,
@@ -35,7 +35,7 @@
       "ticker": "USO",
       "shares": 164,
       "buy_price": 122.75,
-      "last_price": 115.77999877929688,
+      "last_price": 114.87999725341797,
       "peak_price": 122.75,
       "armed": false,
       "target_weight": 0.2,
@@ -54,5 +54,5 @@
       "entry_date": "2026-07-30"
     }
   ],
-  "last_updated": "2026-08-05 22:28:42"
+  "last_updated": "2026-08-06 04:46:08"
 }
