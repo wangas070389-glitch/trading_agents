@@ -1,11 +1,12 @@
-# Watchdog Report - 2026-08-04 22:52:37
+# Watchdog Report - 2026-08-05 21:10:29
 
-**CRITICAL: 3 | WARNING: 3**
+**CRITICAL: 4 | WARNING: 3**
 
 | Nivel | Estrategia | Check | Detalle |
 | :--- | :--- | :--- | :--- |
 | [ OK ] | core | - | NAV $122,122.59 | sin anomalias |
-| [ OK ] | alternatives | - | NAV $772,242.40 | sin anomalias |
+| [CRIT] | alternatives | W3 | NAV salto 84.5% en 1d con exposicion 114%: posible bug de contabilidad (tope plausible 41.0%) |
+| [CRIT] | alternatives | W5 | DD live -84.5% excede 1.25x el MaxDD del backtest (-7.1%): fuera de distribucion validada |
 | [ OK ] | dividends | - | NAV $203,573.35 | sin anomalias |
 | [ OK ] | high_beta | - | NAV $103,093.57 | sin anomalias |
 | [ OK ] | macd | - | NAV $118,561.61 | sin anomalias |
@@ -27,12 +28,11 @@
 | [ OK ] | strategy23 | - | NAV $221,515.59 | sin anomalias |
 | [ OK ] | strategy24 | - | NAV $157,291.48 | sin anomalias |
 | [ OK ] | strategy25 | - | NAV $198,259.40 | sin anomalias |
-| [WARN] | strategy27 | W2 | [INACTIVE STRATEGY] 24 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
-| [WARN] | strategy29 | W2 | [INACTIVE STRATEGY] 24 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
+| [WARN] | strategy27 | W2 | [INACTIVE STRATEGY] 25 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
+| [WARN] | strategy29 | W2 | [INACTIVE STRATEGY] 25 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
 | [ OK ] | strategy30 | - | NAV $102,106.04 | sin anomalias |
 | [ OK ] | strategy31 | - | NAV $174,733.09 | sin anomalias |
 | [CRIT] | strategy9 | W5 | DD live -8.8% excede 1.25x el MaxDD del backtest (-6.0%): fuera de distribucion validada |
 | [ OK ] | us_dcs | - | NAV $104,398.99 | sin anomalias |
-| [CRIT] | us_stocks | W3 | NAV salto 130.6% en 1d con exposicion 231%: posible bug de contabilidad (tope plausible 83.0%) |
 | [CRIT] | us_stocks | W5 | DD live -133.7% excede 1.25x el MaxDD del backtest (-25.1%): fuera de distribucion validada |
 | [WARN] | broker | W6 | Sin credenciales Alpaca en env; reconciliacion omitida |
