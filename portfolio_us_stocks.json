@@ -3,11 +3,36 @@
   "capital_injections": 0.0,
   "total_funded_capital": 199203.11,
   "nav": 59846.31,
-  "total_capital": 107256.02,
-  "cash_balance": -78825.85,
+  "total_capital": 110200.45,
+  "cash_balance": -250666.92,
   "holdings_value": 138014.14,
   "net_trading_profit": -139356.8,
   "net_trading_return_pct": -69.96,
-  "holdings": [],
-  "last_updated": "2026-08-06 04:46:06"
+  "holdings": [
+    {
+      "ticker": "MSFT",
+      "shares": 43.0,
+      "buy_price": 502.04,
+      "last_price": 502.04,
+      "peak_price": 505.17999267578125,
+      "target_weight": 0.2
+    },
+    {
+      "ticker": "NVDA",
+      "shares": 98.0,
+      "buy_price": 224.45,
+      "last_price": 224.45,
+      "peak_price": 224.64999389648438,
+      "target_weight": 0.2
+    },
+    {
+      "ticker": "AMZN",
+      "shares": 79.0,
+      "buy_price": 278.032278,
+      "last_price": 278.032278,
+      "peak_price": 278.1600036621094,
+      "target_weight": 0.2
+    }
+  ],
+  "last_updated": "2026-08-07 15:28:25"
 }

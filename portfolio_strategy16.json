@@ -3,22 +3,11 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 202033.18,
   "nav": 197167.62,
-  "total_capital": 197210.93,
-  "cash_balance": 19721.09,
+  "total_capital": 198391.68,
+  "cash_balance": 198391.68,
   "holdings_value": 0.0,
   "net_trading_profit": -4865.56,
   "net_trading_return_pct": -2.41,
-  "holdings": [
-    {
-      "ticker": "URTY",
-      "base": "IWM",
-      "side": "long",
-      "shares": 120.37696324574253,
-      "buy_price": 1474.4501955715969,
-      "last_price": 1474.4501955715969,
-      "peak_price": 85.5199966430664,
-      "allocated": 177489.837
-    }
-  ],
-  "last_updated": "2026-08-06 04:46:53"
+  "holdings": [],
+  "last_updated": "2026-08-07 15:29:37"
 }

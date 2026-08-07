@@ -223,4 +223,6 @@
 | 2026-08-05 | FUNO11.MX | BUY | 1327.21 | $30.68 | $-40,836.98 | Market | FILLED | Target weight allocation (20.0%) |
 | 2026-08-05 | BONDIA | INTEREST | 1.00 | $0.01 | $+0.01 | Market | FILLED | Yield on cash for 0.0016 days. |
 | 2026-08-06 | BONDIA | INTEREST | 1.00 | $1.92 | $+1.92 | Market | FILLED | Yield on cash for 0.2620 days. |
+| 2026-08-07 | BONDIA | INTEREST | 1.00 | $10.62 | $+10.62 | Market | FILLED | Yield on cash for 1.4461 days. |
+| 2026-08-07 | FUNO11.MX | DIVIDEND | 1327.21 | $0.64 | $+849.12 | Market | FILLED | Reinvested dividend paid on 2026-08-07 |
 ---

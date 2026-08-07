@@ -117,4 +117,6 @@
 | 2026-08-04 | BONDIA | INTEREST | 1.0000 | $0.2444 | $0.00 | $0.24 | Accrued interest on sweep balance |
 | 2026-08-05 | BONDIA | INTEREST | 1.0000 | $3.5574 | $0.00 | $3.56 | Accrued interest on sweep balance |
 | 2026-08-05 | BONDIA | INTEREST | 1.0000 | $3.5613 | $0.00 | $3.56 | Accrued interest on sweep balance |
+| 2026-08-07 | BONDIA | INTEREST | 1.0000 | $9.8457 | $0.00 | $9.85 | Accrued interest on sweep balance |
+| 2026-08-07 | TQQQ | SETTLE_LONG_VWAP | 145.1023 | $1275.0963 | $0.00 | $185,019.43 | Reversion target met at VWAP line |
 ---
