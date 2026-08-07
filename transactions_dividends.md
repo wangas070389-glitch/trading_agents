@@ -226,4 +226,5 @@
 | 2026-08-07 | BONDIA | INTEREST | 1.00 | $10.62 | $+10.62 | Market | FILLED | Yield on cash for 1.4461 days. |
 | 2026-08-07 | FUNO11.MX | DIVIDEND | 1327.21 | $0.64 | $+849.12 | Market | FILLED | Reinvested dividend paid on 2026-08-07 |
 | 2026-08-07 | BONDIA | INTEREST | 1.00 | $0.14 | $+0.14 | Market | FILLED | Yield on cash for 0.0184 days. |
+| 2026-08-07 | BONDIA | INTEREST | 1.00 | $0.30 | $+0.30 | Market | FILLED | Yield on cash for 0.0406 days. |
 ---
