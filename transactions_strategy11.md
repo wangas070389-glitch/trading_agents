@@ -246,4 +246,6 @@
 | 2026-08-06 | BONDIA | INTEREST | 1.0000 | $9.9329 | $0.00 | $9.93 | Accrued interest on sweep balance |
 | 2026-08-07 | BONDIA | INTEREST | 1.0000 | $55.0377 | $0.00 | $55.04 | Accrued interest on sweep balance |
 | 2026-08-07 | TQQQ | BUY_TQQQ | 150.2821 | $1275.0306 | $0.00 | $-191,614.33 | Direct asset trend breakout entry |
+| 2026-08-07 | BONDIA | INTEREST | 1.0000 | $0.0693 | $0.00 | $0.07 | Accrued interest on sweep balance |
+| 2026-08-07 | TQQQ | SETTLE_LONG_CCI_ZERO | 150.2821 | $1274.4683 | $0.00 | $191,529.82 | Direct CCI returned to zero line |
 ---
