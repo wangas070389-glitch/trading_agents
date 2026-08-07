@@ -1,9 +1,9 @@
 # Strategy 8: Dividend Quality & Yield Execution Report
-**Execution Date:** 2026-08-07 20:23:52 | **Strategy Version:** Live V1
+**Execution Date:** 2026-08-07 20:39:21 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $204,922.04 MXN
-* **Total Cash Balance:** $41,362.58 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $204,922.12 MXN
+* **Total Cash Balance:** $41,362.66 MXN (Parked in Bondia Compound at 6.53% APR)
 * **Equity Exposure:** 79.8%
 * **Days Since Last Rebalance:** 2 days
 
@@ -16,7 +16,7 @@
 | **FUNO11.MX** | 1327.21 | $30.68 | $30.34 | $40,267.65 | $2.56 MXN/sh (Annual: $3,397.67 MXN) | Ex: 2026-08-07 / Pay: N/A | 20.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $0.1645 MXN over 0.0219 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $0.0807 MXN over 0.0108 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
@@ -41,12 +41,12 @@
 | **MMM** | SELL / AVOID | 1.73% | 53.6% | 53.6% | $182.90 > SMA $158.84 | Yield below 2.5% and Debt/Equity (4.38) exceeds 1.5 |
 | **O** | SELL / AVOID | 5.21% | 236.4% | 236.4% | $62.51 > SMA $60.14 | Payout Ratio (236.4%) out of bounds and FCF Payout (236.4%) exceeds limit |
 | **OMAB.MX** | SELL / AVOID | 5.07% | 85.8% | 85.8% | $236.74 > SMA $236.30 | Payout Ratio (85.8%) out of bounds and FCF Payout (85.8%) exceeds limit and Debt/Equity (1.54) exceeds 1.5 |
-| **ORBIA.MX** | SELL / AVOID | 0.00% | 0.0% | 0.0% | $23.76 > SMA $20.05 | Yield below 2.5% and Payout Ratio (0.0%) out of bounds and Non-positive EPS (-2.76) and Debt/Equity (2.18) exceeds 1.5 |
+| **ORBIA.MX** | SELL / AVOID | 0.00% | 0.0% | 0.0% | $23.76 > SMA $20.08 | Yield below 2.5% and Payout Ratio (0.0%) out of bounds and Non-positive EPS (-2.76) and Debt/Equity (2.18) exceeds 1.5 |
 | **PEP** | SELL / AVOID | 4.28% | 75.3% | 75.3% | $139.02 <= SMA $147.34 | Debt/Equity (2.39) exceeds 1.5 and Bear trend (Close <= SMA 200) |
 | **PG** | SELL / AVOID | 2.96% | 64.3% | 64.3% | $145.79 <= SMA $145.89 | Bear trend (Close <= SMA 200) |
 | **SPG** | BUY / HOLD | 3.97% | 60.2% | 60.2% | $222.91 > SMA $195.03 | Passed all quality checks. Score: 0.0000 |
 | **T** | SELL / AVOID | 4.68% | 36.6% | 36.6% | $23.79 <= SMA $24.59 | Bear trend (Close <= SMA 200) |
 | **TGT** | BUY / HOLD | 3.15% | 60.0% | 60.0% | $149.70 > SMA $114.58 | Passed all quality checks. Score: 0.0000 |
 | **VZ** | SELL / AVOID | 6.02% | 72.8% | 72.8% | $47.06 > SMA $43.55 | Debt/Equity (1.84) exceeds 1.5 |
-| **WALMEX.MX** | SELL / AVOID | 4.10% | 58.4% | 58.4% | $49.60 <= SMA $55.73 | Bear trend (Close <= SMA 200) |
+| **WALMEX.MX** | SELL / AVOID | 4.10% | 58.4% | 58.4% | $49.60 <= SMA $55.68 | Bear trend (Close <= SMA 200) |
 | **XOM** | BUY / HOLD | 2.66% | 68.0% | 68.0% | $153.04 > SMA $139.14 | Passed all quality checks. Score: 0.0000 |

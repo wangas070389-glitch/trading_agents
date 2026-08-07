@@ -1,9 +1,9 @@
 # Strategy 17: FIBRAs Dynamic Income Execution Report
-**Execution Date:** 2026-08-07 20:24:56 | **Strategy Version:** Live V1
+**Execution Date:** 2026-08-07 20:40:10 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $99,938.71 MXN
-* **Total Cash Balance:** $48,858.91 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $99,938.80 MXN
+* **Total Cash Balance:** $48,859.00 MXN (Parked in Bondia Compound at 6.53% APR)
 * **FIBRA Equity Exposure:** 51.1%
 * **Days Since Last Rebalance:** 2 days
 
@@ -14,14 +14,14 @@
 | **FUNO11.MX** | 832.50 | $30.03 | $30.34 | $25,258.07 | $2.47 MXN/sh (Annual: $2,056.28 MXN) | Ex: 2026-05-08 / Pay: N/A | 25.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $0.1955 MXN over 0.0221 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $0.0938 MXN over 0.0106 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. FIBRA Evaluation Diagnostics (Signals Checked)
 | Ticker | Signal | Yield | Debt / Equity | Close vs SMA 200 | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :--- |
 | **DANHOS13.MX** | BUY / HOLD | 5.64% | 16.9% | $28.91 > SMA $27.38 | Passed quality screens. Score: 0.0482 |
-| **FIBRAMQ12.MX** | SELL / AVOID | 1.88% | 50.4% | $43.86 > SMA $37.40 | Yield below 4.0% |
+| **FIBRAMQ12.MX** | SELL / AVOID | 1.88% | 50.4% | $43.86 > SMA $37.31 | Yield below 4.0% |
 | **FIBRAPL14.MX** | SELL / AVOID | 3.76% | 35.1% | $74.95 <= SMA $77.19 | Yield below 4.0% and Bear trend (Close <= SMA 200) |
 | **FIDE12.MX** | - | - | - | - | Data failed | 
 | **FIHO12.MX** | BUY / HOLD | 8.23% | 41.1% | $7.57 > SMA $7.53 | Passed quality screens. Score: 0.0583 |
