@@ -3,8 +3,8 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 101321.45,
   "nav": 105171.66,
-  "total_capital": 109207.77,
-  "cash_balance": 354982.21,
+  "total_capital": 109038.62,
+  "cash_balance": 375573.2,
   "holdings_value": 119726.18,
   "net_trading_profit": 3850.21,
   "net_trading_return_pct": 3.8,
@@ -46,7 +46,7 @@
       "ticker": "USDJPY=X",
       "shares": 414,
       "buy_price": 159.4499969482422,
-      "last_price": 159.31900024414062,
+      "last_price": 159.24099731445312,
       "peak_price": 159.4499969482422,
       "armed": false,
       "target_weight": 0.15,
@@ -65,5 +65,5 @@
       "entry_date": "2026-08-07"
     }
   ],
-  "last_updated": "2026-08-10 20:24:32"
+  "last_updated": "2026-08-10 21:12:20"
 }
