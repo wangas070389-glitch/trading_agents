@@ -1,5 +1,5 @@
 # Shadow Frontier — Live Track Record of the Allocation Layer
-**Generated:** 2026-08-10 15:33:51 | Inception: 2026-07-14 (27 calendar days) | Virtual capital: $100,000 USD
+**Generated:** 2026-08-10 16:00:30 | Inception: 2026-07-14 (27 calendar days) | Virtual capital: $100,000 USD
 **Weights (frozen):** efficient_frontier_report.md 2026-07-11 -- Risk Parity, hurdle-filtered (RECOMMENDED)
 
 This book paper-trades the recommended frontier allocation itself, marked
@@ -11,8 +11,8 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 ## 1. Promise vs. Realized
 | Metric | Backtest promise | Realized (live) |
 | :--- | ---: | ---: |
-| NAV | -- | $232,634.16 USD |
-| Return since inception | -- | +132.63% |
+| NAV | -- | $232,620.51 USD |
+| Return since inception | -- | +132.62% |
 | Ann. return | +14.67% | -- (<30d) |
 | Ann. volatility | 6.66% | 120.71% |
 | Sharpe (Rf 6.53%) | +1.22 | +7.09 |
@@ -22,7 +22,7 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 | Sleeve | Target w | Current w | TR since inception | Last mark | Source |
 | :--- | ---: | ---: | ---: | :--- | :--- |
 | S1 Adaptive Value (BMV) | 5.4% | 4.7% | +1.93% | 2026-08-10 | multi-strategy USD |
-| S2 MACD Systematic | 4.9% | 4.3% | -0.51% | 2026-08-09 | watchdog MXN/USD |
+| S2 MACD Systematic | 4.9% | 4.3% | -0.65% | 2026-08-10 | watchdog MXN/USD |
 | S4 US DCF Value-Growth | 4.5% | 4.0% | +1.77% | 2026-08-10 | multi-strategy USD |
 | S5 Alternatives | 25.0% | 15.6% | +269.13% | 2026-08-10 | multi-strategy USD |
 | S6 High-Beta Momentum | 13.5% | 12.0% | +1.22% | 2026-08-10 | multi-strategy USD |
@@ -70,7 +70,7 @@ Largest divergences from the backtest correlation matrix (the frontier's key inp
 *None this cycle.*
 
 ## 6. Method notes
-- USD-denominated; MXN sleeves converted at usd_mxn_rate (17.1358), so they carry FX exposure — same caveat as the frontier report.
+- USD-denominated; MXN sleeves converted at usd_mxn_rate (17.1276), so they carry FX exposure — same caveat as the frontier report.
 - S2 is marked from watchdog snapshots (it has no multi-strategy NAV column), so its marks can lag the others by one cycle.
 - A weight change is a new allocation config (KILL_CRITERIA P3): delete portfolio_shadow_frontier.json to restart the clock, and say so here.
 - This is evidence for the ALLOCATION layer only; individual strategies still graduate (or die) via graduation_report.md / KILL_CRITERIA.md.

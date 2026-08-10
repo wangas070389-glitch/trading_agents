@@ -4,7 +4,7 @@
   "total_funded_capital": 101000.0,
   "nav": 101000.0,
   "total_capital": 101000.0,
-  "cash_balance": 48883.71,
+  "cash_balance": 48883.87,
   "holdings_value": 101352.55,
   "net_trading_profit": 0.0,
   "net_trading_return_pct": 0.0,
@@ -24,7 +24,7 @@
       "ticker": "FUNO11.MX",
       "shares": 832.5008134654364,
       "buy_price": 30.030000686645508,
-      "last_price": 30.049999237060547,
+      "last_price": 30.030000686645508,
       "target_weight": 0.25,
       "dividend_rate": 2.47,
       "last_dividend": 0.62,
@@ -32,6 +32,6 @@
       "payment_date": "N/A"
     }
   ],
-  "last_updated": "2026-08-10 15:33:27",
+  "last_updated": "2026-08-10 16:00:09",
   "last_rebalance_date": "2026-08-05"
 }

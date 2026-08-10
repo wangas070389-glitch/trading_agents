@@ -60,6 +60,7 @@
 | 2026-08-08 | USO | SELL-REJECTED | 164.0000 | $117.9800 | $0.00 | $19,348.72 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-08-09 | USO | SELL-REJECTED | 164.0000 | $117.9800 | $0.00 | $19,348.72 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-08-10 | USO | SELL-REJECTED | 164.0000 | $124.4400 | $0.00 | $20,408.16 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-10 | USO | SELL-REJECTED | 164.0000 | $124.4037 | $0.00 | $20,402.21 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 ---
 
 
@@ -67,7 +68,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $110,330.48 USD
-* **Total Deployed Capital**: $142,075.51 USD (37.9% invested)
-* **Unallocated Cash Reserves**: $231,922.95 USD (61.9% cash)
-* **Current Portfolio Market Value**: $374,481.41 USD (including cash)
+* **Initial + Inflow Capital**: $111,086.03 USD
+* **Total Deployed Capital**: $142,075.51 USD (36.0% invested)
+* **Unallocated Cash Reserves**: $252,265.99 USD (63.9% cash)
+* **Current Portfolio Market Value**: $394,848.00 USD (including cash)

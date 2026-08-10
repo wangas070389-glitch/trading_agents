@@ -1,20 +1,20 @@
 # Strategy 19: Particle Filter QQQ / TQQQ / SQQQ Live Execution Report
-**Execution Timestamp:** 2026-08-10 15:33:32 | **Strategy Version:** Live V1
+**Execution Timestamp:** 2026-08-10 16:00:14 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $173,067.33 MXN
+* **Total Portfolio NAV:** $173,455.90 MXN
 * **Total Cash sweep Balance:** $0.00 MXN (Parked in Bondia compound at 6.53% APR)
 * **Equity Exposure:** 100.0%
 * **Asset Allocation Target:** QQQ
-* **USD/MXN Exchange Rate:** 17.1405
+* **USD/MXN Exchange Rate:** 17.1327
 
 ## 2. Current Holdings
 | Ticker | Shares Held | Buy Price (USD) | Last Price (USD) | Market Value (USD) | Market Value (MXN) | Target Weight |
 | :--- | :---: | :---: | :---: | ---: | ---: | :---: |
-| **QQQ** | 13.9969 | $690.79 | $721.37 | $10,096.97 | $173,067.33 | 100.0% |
+| **QQQ** | 13.9969 | $691.10 | $723.32 | $10,124.27 | $173,455.90 | 100.0% |
 
 ## 3. Sequential Monte Carlo (SMC) Estimates
-* **Latent Drift (Posterior $\hat{\mu}_t$):** +30.48% annualized\n* **Latent Volatility (Posterior $\hat{\sigma}_t$):** 26.17% annualized\n* **Probability of Bull Regime ($P(\mu_t > 0)$):** 74.0%\n* **Volatility Drag Regime:** HIGH VOLATILITY (Leverage Disabled)
+* **Latent Drift (Posterior $\hat{\mu}_t$):** +42.66% annualized\n* **Latent Volatility (Posterior $\hat{\sigma}_t$):** 26.04% annualized\n* **Probability of Bull Regime ($P(\mu_t > 0)$):** 83.8%\n* **Volatility Drag Regime:** HIGH VOLATILITY (Leverage Disabled)
 
 ## 4. Today's Execution Logs
 * Hold current position in **QQQ**; no transition trades required.
