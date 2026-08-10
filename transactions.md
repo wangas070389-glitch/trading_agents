@@ -299,4 +299,4 @@
 * **Initial Starting Capital (2026-06-03)**: 122,122.59 MXN
 * **Total Deployed Capital**: 116,011.39 MXN (95.1% invested)
 * **Unallocated Cash Reserves**: 0.00 MXN (0.0% cash)
-* **Current Portfolio Market Value**: 121,938.31 MXN (including cash)
+* **Current Portfolio Market Value**: 122,049.86 MXN (including cash)
