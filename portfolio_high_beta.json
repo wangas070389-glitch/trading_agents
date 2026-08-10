@@ -3,7 +3,7 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 103049.41,
   "nav": 103093.57,
-  "total_capital": 103584.0546328,
+  "total_capital": 103319.05198803886,
   "cash_balance": 81533.52668452448,
   "holdings_value": 21580.13,
   "net_trading_profit": 44.16,
@@ -13,7 +13,7 @@
       "ticker": "AVGO",
       "shares": 51.607344832395455,
       "buy_price": 386.8949890136719,
-      "last_price": 427.2749938964844,
+      "last_price": 422.1400146484375,
       "peak_price": 427.760009765625,
       "armed": false,
       "entry_date": "2026-07-30",
@@ -21,5 +21,5 @@
       "dcs": 1.5663546916107027
     }
   ],
-  "last_updated": "2026-08-10 15:59:19"
+  "last_updated": "2026-08-10 17:01:12"
 }
