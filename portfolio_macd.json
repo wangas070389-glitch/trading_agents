@@ -4,7 +4,7 @@
   "total_funded_capital": 120000.0,
   "nav": 118561.61,
   "total_capital": 118561.61,
-  "cash_balance": 38223.13,
+  "cash_balance": 38223.28,
   "holdings_value": 79167.96,
   "net_trading_profit": -1438.39,
   "net_trading_return_pct": -1.2,
@@ -63,7 +63,7 @@
       "ticker": "AMZN",
       "shares": 2,
       "buy_price": 4682.457812654728,
-      "last_price": 4765.628025373386,
+      "last_price": 4766.184430261841,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 4937.043650627136,
@@ -73,7 +73,7 @@
       "ticker": "GOOGL",
       "shares": 1,
       "buy_price": 6113.23715521011,
-      "last_price": 6126.819740773935,
+      "last_price": 6127.535069884034,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 6560.139816972369,
@@ -83,12 +83,12 @@
       "ticker": "NVDA",
       "shares": 3,
       "buy_price": 3656.495005308534,
-      "last_price": 3728.154213083646,
+      "last_price": 3728.5894890258787,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 3848.7081322779704,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-08-10 21:12:14"
+  "last_updated": "2026-08-10 21:43:10"
 }
