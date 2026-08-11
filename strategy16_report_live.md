@@ -1,27 +1,26 @@
 # Strategy 16: Multi-Asset HMM Swing Router Execution Report
-**Execution Date:** 2026-08-10 21:43:59 | **Strategy Version:** Router V2 (Hybrid Swing)
+**Execution Date:** 2026-08-11 15:31:20 | **Strategy Version:** Router V2 (Hybrid Swing)
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $198,373.83 MXN
-* **Total Cash Balance:** $19,850.74 MXN (Parked compounding in Bondia sweep at 6.53% APR)
-* **Equity Exposure:** 90.0%
-* **Active Target Index:** **IWM** (Regime: State 0 - LOCKED to base asset of active holding (IWM))
+* **Total Portfolio NAV:** $199,794.26 MXN
+* **Total Cash Balance:** $199,794.26 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Equity Exposure:** 0.0%
+* **Active Target Index:** **IWM** (Regime: State 2 - LOCKED to base asset of active holding (IWM))
 
 ## 2. Current Holdings
 | Ticker | Type | Side | Shares | Buy Price (MXN) | Last Price (MXN) | Market Value (MXN) |
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
-| **URTY** | LEVERAGED SWING | LONG | 121.8410 | $1,466.24 | $1,465.21 | $178,523.09 |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $0.0757 MXN sweep interest.
-* No trades or rebalancing actions triggered in this 30-minute interval.
+* **[INTEREST ACCRUED]** Cash reserves earned $2.6304 MXN sweep interest.
+* LIQUIDATED position in URTY (long) at $1,476.85 MXN. Reason: REGIME_FLIP. Net cash returned: $179,940.89 MXN.
 
 ## 4. Multi-Asset HMM Telemetry
 * Decoded Regimes:
-  * **QQQ:** State 0 (Trend Score: 0.015)
-  * **SPY:** State 0 (Trend Score: 0.061)
-  * **SOXX:** State 2 (Trend Score: -0.500)
-  * **IWM:** State 0 (Trend Score: 0.097)
+  * **QQQ:** State 2 (Trend Score: -0.500)
+  * **SPY:** State 2 (Trend Score: -0.500)
+  * **SOXX:** State 0 (Trend Score: 0.044)
+  * **IWM:** State 2 (Trend Score: -0.500)
 * Active Telemetry (IWM):
-  * Base Price: $299.98 USD | ATR (14): 0.96
-  * VWAP: $300.12 USD (Lower: $298.69 | Upper: $301.55)
+  * Base Price: $300.93 USD | ATR (14): 0.82
+  * VWAP: $301.34 USD (Lower: $300.12 | Upper: $302.57)
