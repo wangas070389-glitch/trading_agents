@@ -1,9 +1,9 @@
 # Strategy 10: Upgraded Intraday VWAP Execution Report
-**Execution Date:** 2026-08-11 15:31:10 | **Strategy Version:** Upgraded Live V3 (Defensive Circuit Breakers Active)
+**Execution Date:** 2026-08-11 16:01:13 | **Strategy Version:** Upgraded Live V3 (Defensive Circuit Breakers Active)
  
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $205,763.27 MXN
-* **Total Cash Balance:** $205,763.27 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Total Portfolio NAV:** $205,764.04 MXN
+* **Total Cash Balance:** $205,764.04 MXN (Parked compounding in Bondia sweep at 6.53% APR)
 * **Equity Exposure:** 0.0%
 * **Active Regime:** State 2 (Range-bound chop, mean-reversion detected on QQQ)
  
@@ -12,12 +12,12 @@
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $30.6420 MXN sweep interest.
+* **[INTEREST ACCRUED]** Cash reserves earned $0.7675 MXN sweep interest.
 * No trades or rebalancing actions triggered in this interval.
 
 ## 4. Upgraded Asset Telemetry
   * Decoded Regime: HMM State 0 -> **Regime 2 (Range-bound chop, mean-reversion detected on QQQ)**
-  * QQQ Close: $720.22 USD (High: $723.30, Low: $718.40)
-  * QQQ Intraday VWAP: $721.04 USD
-  * QQQ Intraday ATR (14): $2.47 USD
-  * VWAP bands (1.0 * ATR): $718.57 to $723.51 USD
+  * QQQ Close: $719.24 USD (High: $723.30, Low: $718.40)
+  * QQQ Intraday VWAP: $720.89 USD
+  * QQQ Intraday ATR (14): $2.54 USD
+  * VWAP bands (1.0 * ATR): $718.35 to $723.44 USD
