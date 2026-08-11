@@ -3,11 +3,22 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 202033.18,
   "nav": 197167.62,
-  "total_capital": 199795.01,
-  "cash_balance": 199795.01,
+  "total_capital": 199796.64,
+  "cash_balance": 19979.66,
   "holdings_value": 0.0,
   "net_trading_profit": -4865.56,
   "net_trading_return_pct": -2.41,
-  "holdings": [],
-  "last_updated": "2026-08-11 16:01:33"
+  "holdings": [
+    {
+      "ticker": "SOXL",
+      "base": "SOXX",
+      "side": "long",
+      "shares": 80.17963506432476,
+      "buy_price": 2242.676408488769,
+      "last_price": 2242.676408488769,
+      "peak_price": 131.1199951171875,
+      "allocated": 179816.97600000002
+    }
+  ],
+  "last_updated": "2026-08-11 17:07:19"
 }

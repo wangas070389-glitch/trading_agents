@@ -146,4 +146,5 @@
 | 2026-08-11 | CASH_SWEEP | INTEREST | 1.0000 | $4.1828 | $+4.18 | Market | FILLED | USD Sweep interest |
 | 2026-08-11 | GOOGL | SELL | 51.0731 | $351.0000 | $+17,924.88 | Market | FILLED | MACD crossover or Trend break exit |
 | 2026-08-11 | CASH_SWEEP | INTEREST | 1.0000 | $0.1655 | $+0.17 | Market | FILLED | USD Sweep interest |
+| 2026-08-11 | CASH_SWEEP | INTEREST | 1.0000 | $0.3577 | $+0.36 | Market | FILLED | USD Sweep interest |
 ---
