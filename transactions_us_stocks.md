@@ -325,6 +325,8 @@
 | 2026-08-11 | AVGO | BUY-REJECTED | 49 | 416.08 | +20,387.92 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 20.0% |
 | 2026-08-11 | GOOGL | BUY-REJECTED | 60 | 343.80 | +20,628.00 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 20.0% |
 | 2026-08-11 | AVGO | BUY-REJECTED | 49 | 416.08 | +20,387.92 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 20.0% |
+| 2026-08-11 | GOOGL | BUY-REJECTED | 60 | 343.80 | +20,628.00 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 20.0% |
+| 2026-08-11 | AVGO | BUY-REJECTED | 49 | 416.08 | +20,387.92 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 20.0% |
 ---
 
 
@@ -332,7 +334,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $103,601.10 USD
+* **Initial Starting Capital**: $103,359.82 USD
 * **Total Deployed Capital**: $65,548.37 USD (-35.4% invested)
 * **Unallocated Cash Reserves**: $-250,666.93 USD (135.4% cash)
 * **Current Portfolio Market Value**: $-185,118.56 USD (including cash)
