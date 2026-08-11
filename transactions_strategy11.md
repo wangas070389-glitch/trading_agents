@@ -272,4 +272,6 @@
 | 2026-08-11 | SQQQ | SETTLE_SHORT_CCI_ZERO | 295.9256 | $650.5013 | $0.00 | $192,499.95 | Direct CCI returned to zero line |
 | 2026-08-11 | BONDIA | INTEREST | 1.0000 | $1.7474 | $0.00 | $1.75 | Accrued interest on sweep balance |
 | 2026-08-11 | SQQQ | BUY_SQQQ | 294.3430 | $653.7239 | $0.00 | $-192,419.08 | Direct asset trend breakdown entry |
+| 2026-08-11 | BONDIA | INTEREST | 1.0000 | $0.2079 | $0.00 | $0.21 | Accrued interest on sweep balance |
+| 2026-08-11 | SQQQ | SETTLE_SHORT_CCI_ZERO | 294.3430 | $655.8281 | $0.00 | $193,038.45 | Direct CCI returned to zero line |
 ---

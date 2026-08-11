@@ -315,6 +315,9 @@
 | 2026-08-11 | GOOGL | BUY-REJECTED | 49 | 347.42 | +17,023.58 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
 | 2026-08-11 | AVGO | BUY-REJECTED | 41 | 418.81 | +17,171.21 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
 | 2026-08-11 | JPM | BUY-REJECTED | 47 | 362.76 | +17,049.72 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
+| 2026-08-11 | GOOGL | BUY-REJECTED | 49 | 346.59 | +16,982.89 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
+| 2026-08-11 | AVGO | BUY-REJECTED | 41 | 415.11 | +17,019.71 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
+| 2026-08-11 | JPM | BUY-REJECTED | 47 | 362.67 | +17,045.49 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
 ---
 
 
@@ -322,7 +325,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $104,048.74 USD
+* **Initial Starting Capital**: $103,614.70 USD
 * **Total Deployed Capital**: $65,548.37 USD (-35.4% invested)
 * **Unallocated Cash Reserves**: $-250,666.93 USD (135.4% cash)
 * **Current Portfolio Market Value**: $-185,118.56 USD (including cash)
