@@ -72,4 +72,5 @@
 | 2026-08-11 | BONDIA | INTEREST | 1.00 | $0.43 | $+0.43 | Market | FILLED | Yield on cash for 0.0484 days. |
 | 2026-08-12 | BONDIA | INTEREST | 1.00 | $7.08 | $+7.08 | Market | FILLED | Yield on cash for 0.7986 days. |
 | 2026-08-12 | DANHOS13.MX | DIVIDEND | 893.18 | $0.27 | $+243.91 | Market | FILLED | Reinvested distribution paid on 2026-08-12 |
+| 2026-08-12 | BONDIA | INTEREST | 1.00 | $0.53 | $+0.53 | Market | FILLED | Yield on cash for 0.0592 days. |
 ---
