@@ -34,4 +34,5 @@
 | 2026-08-07 | BONDIA | INTEREST | 1.0000 | $1.07 | $+1.07 | Market | FILLED | Yield on cash for 0.0381 days. |
 | 2026-08-07 | BONDIA | INTEREST | 1.0000 | $1.30 | $+1.30 | Market | FILLED | Yield on cash for 0.0462 days. |
 | 2026-08-07 | SQQQ | BUY | 241.4450 | $649.90 | $-157,370.72 | Market | FILLED | Purchased 241.4450 shares of SQQQ at $649.90 MXN (Fee: $455.06 MXN). |
+| 2026-08-12 | SQQQ | SELL | 241.4450 | $636.42 | $+153,214.49 | Market | FILLED | Sold all 241.4450 shares of SQQQ at $636.42 MXN (Fee: $445.61 MXN). |
 ---
