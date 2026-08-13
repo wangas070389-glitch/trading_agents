@@ -1,8 +1,8 @@
 # Strategy 25 Live Status Report
 
-**Last Run:** 2026-08-13 18:02:42
-**Total Capital:** $198,570.88 MXN
-**Cash Balance:** $198,570.88 MXN
+**Last Run:** 2026-08-13 21:50:24
+**Total Capital:** $198,576.49 MXN
+**Cash Balance:** $198,576.49 MXN
 
 ## Current Holdings
 
