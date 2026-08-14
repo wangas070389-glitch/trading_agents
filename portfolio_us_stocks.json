@@ -3,8 +3,8 @@
   "capital_injections": 0.0,
   "total_funded_capital": 199203.11,
   "nav": 59846.31,
-  "total_capital": 96511.51,
-  "cash_balance": -215305.24,
+  "total_capital": 96823.15,
+  "cash_balance": -211158.71,
   "holdings_value": 138014.14,
   "net_trading_profit": -139356.8,
   "net_trading_return_pct": -69.96,
@@ -48,7 +48,15 @@
       "last_price": 962.0,
       "peak_price": 965.2150268554688,
       "target_weight": 0.14285714285714285
+    },
+    {
+      "ticker": "AMD",
+      "shares": 31.0,
+      "buy_price": 508.66,
+      "last_price": 508.66,
+      "peak_price": 511.4717102050781,
+      "target_weight": 0.16666666666666666
     }
   ],
-  "last_updated": "2026-08-14 18:52:11"
+  "last_updated": "2026-08-14 19:47:01"
 }

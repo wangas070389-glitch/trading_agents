@@ -364,6 +364,7 @@
 | 2026-08-14 | COST | BUY | 14.0 | 962.00 | -13,468.00 | Market | FILLED | Alpaca Order 63e25911-c2cd-4c10-881c-d76c6a44b036 FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 14.3% |
 | 2026-08-14 | AMD | BUY-REJECTED | 27 | 508.48 | +13,728.96 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 14.3% |
 | 2026-08-14 | JPM | BUY-REJECTED | 37 | 363.46 | +13,448.02 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 14.3% |
+| 2026-08-14 | AMD | BUY | 31.0 | 508.66 | -15,768.46 | Market | FILLED | Alpaca Order 46c25e4e-5579-4017-bb63-811205d1450f FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
 ---
 
 
@@ -371,7 +372,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $96,511.51 USD
-* **Total Deployed Capital**: $75,489.03 USD (-53.6% invested)
-* **Unallocated Cash Reserves**: $-215,305.24 USD (153.0% cash)
-* **Current Portfolio Market Value**: $-140,744.32 USD (including cash)
+* **Initial Starting Capital**: $96,823.15 USD
+* **Total Deployed Capital**: $91,257.49 USD (-75.5% invested)
+* **Unallocated Cash Reserves**: $-211,158.71 USD (174.8% cash)
+* **Current Portfolio Market Value**: $-120,829.33 USD (including cash)
