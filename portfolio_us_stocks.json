@@ -3,8 +3,8 @@
   "capital_injections": 0.0,
   "total_funded_capital": 199203.11,
   "nav": 59846.31,
-  "total_capital": 96924.75,
-  "cash_balance": -214962.57,
+  "total_capital": 96511.51,
+  "cash_balance": -215305.24,
   "holdings_value": 138014.14,
   "net_trading_profit": -139356.8,
   "net_trading_return_pct": -69.96,
@@ -27,12 +27,28 @@
     },
     {
       "ticker": "AMZN",
-      "shares": 79.0,
+      "shares": 53.0,
       "buy_price": 278.032278,
-      "last_price": 278.032278,
+      "last_price": 263.02,
       "peak_price": 280.1400146484375,
-      "target_weight": 0.2
+      "target_weight": 0.14285714285714285
+    },
+    {
+      "ticker": "AVGO",
+      "shares": 35.0,
+      "buy_price": 390.28,
+      "last_price": 390.28,
+      "peak_price": 412.5,
+      "target_weight": 0.14285714285714285
+    },
+    {
+      "ticker": "COST",
+      "shares": 14.0,
+      "buy_price": 962.0,
+      "last_price": 962.0,
+      "peak_price": 965.2150268554688,
+      "target_weight": 0.14285714285714285
     }
   ],
-  "last_updated": "2026-08-14 16:51:01"
+  "last_updated": "2026-08-14 18:52:11"
 }
