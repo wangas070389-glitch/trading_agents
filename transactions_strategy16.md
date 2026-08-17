@@ -238,4 +238,5 @@
 | 2026-08-17 | BONDIA | INTEREST | 1.0000 | $0.0829 | $0.00 | $0.08 | Accrued interest on sweep balance |
 | 2026-08-17 | BONDIA | INTEREST | 1.0000 | $0.0834 | $0.00 | $0.08 | Accrued interest on sweep balance |
 | 2026-08-17 | BONDIA | INTEREST | 1.0000 | $0.0797 | $0.00 | $0.08 | Accrued interest on sweep balance |
+| 2026-08-17 | BONDIA | INTEREST | 1.0000 | $0.1150 | $0.00 | $0.12 | Accrued interest on sweep balance |
 ---
