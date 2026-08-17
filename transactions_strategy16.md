@@ -232,4 +232,5 @@
 | 2026-08-14 | BONDIA | INTEREST | 1.0000 | $2.7272 | $0.00 | $2.73 | Accrued interest on sweep balance |
 | 2026-08-17 | BONDIA | INTEREST | 1.0000 | $107.0150 | $0.00 | $107.02 | Accrued interest on sweep balance |
 | 2026-08-17 | UPRO | BUY_UPRO | 74.4335 | $2653.9995 | $0.00 | $-197,546.46 | Bull swing pullback entry |
+| 2026-08-17 | BONDIA | INTEREST | 1.0000 | $0.0760 | $0.00 | $0.08 | Accrued interest on sweep balance |
 ---

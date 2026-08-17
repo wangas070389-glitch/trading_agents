@@ -4,7 +4,7 @@
   "total_funded_capital": 101000.0,
   "nav": 101000.0,
   "total_capital": 101000.0,
-  "cash_balance": 49189.7,
+  "cash_balance": 49189.87,
   "holdings_value": 101352.55,
   "net_trading_profit": 0.0,
   "net_trading_return_pct": 0.0,
@@ -13,7 +13,7 @@
       "ticker": "DANHOS13.MX",
       "shares": 893.1761416374346,
       "buy_price": 27.989999771118164,
-      "last_price": 28.59000015258789,
+      "last_price": 28.459999084472656,
       "target_weight": 0.25,
       "dividend_rate": 1.8,
       "last_dividend": 0.45,
@@ -24,7 +24,7 @@
       "ticker": "FUNO11.MX",
       "shares": 832.5008134654364,
       "buy_price": 30.030000686645508,
-      "last_price": 29.209999084472656,
+      "last_price": 29.18000030517578,
       "target_weight": 0.25,
       "dividend_rate": 2.47,
       "last_dividend": 0.62,
@@ -32,6 +32,6 @@
       "payment_date": "N/A"
     }
   ],
-  "last_updated": "2026-08-17 14:57:08",
+  "last_updated": "2026-08-17 15:25:04",
   "last_rebalance_date": "2026-08-05"
 }

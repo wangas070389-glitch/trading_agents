@@ -1,5 +1,5 @@
 # Shadow Frontier — Live Track Record of the Allocation Layer
-**Generated:** 2026-08-17 14:57:38 | Inception: 2026-07-14 (34 calendar days) | Virtual capital: $100,000 USD
+**Generated:** 2026-08-17 15:25:35 | Inception: 2026-07-14 (34 calendar days) | Virtual capital: $100,000 USD
 **Weights (frozen):** efficient_frontier_report.md 2026-07-11 -- Risk Parity, hurdle-filtered (RECOMMENDED)
 
 This book paper-trades the recommended frontier allocation itself, marked
@@ -11,9 +11,9 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 ## 1. Promise vs. Realized
 | Metric | Backtest promise | Realized (live) |
 | :--- | ---: | ---: |
-| NAV | -- | $270,460.25 USD |
-| Return since inception | -- | +170.46% |
-| Ann. return | +14.67% | +1829.94% |
+| NAV | -- | $270,408.13 USD |
+| Return since inception | -- | +170.41% |
+| Ann. return | +14.67% | +1829.38% |
 | Ann. volatility | 6.66% | 111.68% |
 | Sharpe (Rf 6.53%) | +1.22 | +7.55 |
 | Max drawdown | -4.10% | -5.29% |
@@ -22,7 +22,7 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 | Sleeve | Target w | Current w | TR since inception | Last mark | Source |
 | :--- | ---: | ---: | ---: | :--- | :--- |
 | S1 Adaptive Value (BMV) | 5.4% | 3.9% | -2.23% | 2026-08-17 | multi-strategy USD |
-| S2 MACD Systematic | 4.9% | 3.6% | -2.13% | 2026-08-14 | watchdog MXN/USD |
+| S2 MACD Systematic | 4.9% | 3.6% | -2.65% | 2026-08-17 | watchdog MXN/USD |
 | S4 US DCF Value-Growth | 4.5% | 3.4% | +1.77% | 2026-08-17 | multi-strategy USD |
 | S5 Alternatives | 25.0% | 27.5% | +655.55% | 2026-08-17 | multi-strategy USD |
 | S6 High-Beta Momentum | 13.5% | 10.1% | -0.53% | 2026-08-17 | multi-strategy USD |
@@ -70,7 +70,7 @@ Largest divergences from the backtest correlation matrix (the frontier's key inp
 *None this cycle.*
 
 ## 6. Method notes
-- USD-denominated; MXN sleeves converted at usd_mxn_rate (17.0312), so they carry FX exposure — same caveat as the frontier report.
+- USD-denominated; MXN sleeves converted at usd_mxn_rate (17.0210), so they carry FX exposure — same caveat as the frontier report.
 - S2 is marked from watchdog snapshots (it has no multi-strategy NAV column), so its marks can lag the others by one cycle.
 - A weight change is a new allocation config (KILL_CRITERIA P3): delete portfolio_shadow_frontier.json to restart the clock, and say so here.
 - This is evidence for the ALLOCATION layer only; individual strategies still graduate (or die) via graduation_report.md / KILL_CRITERIA.md.
