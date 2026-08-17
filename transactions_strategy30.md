@@ -168,4 +168,5 @@
 | 2026-08-17 | AMZN | SELL | 66.6745 | $260.8750 | $+17,391.98 | Market | FILLED | MACD crossover or Trend break exit |
 | 2026-08-17 | CASH_SWEEP | INTEREST | 1.0000 | $0.1943 | $+0.19 | Market | FILLED | USD Sweep interest |
 | 2026-08-17 | CASH_SWEEP | INTEREST | 1.0000 | $0.1834 | $+0.18 | Market | FILLED | USD Sweep interest |
+| 2026-08-17 | CASH_SWEEP | INTEREST | 1.0000 | $0.2408 | $+0.24 | Market | FILLED | USD Sweep interest |
 ---
