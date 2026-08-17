@@ -3,60 +3,36 @@
   "capital_injections": 0.0,
   "total_funded_capital": 199203.11,
   "nav": 59846.31,
-  "total_capital": 97441.37,
-  "cash_balance": -211158.71,
+  "total_capital": 95843.39,
+  "cash_balance": -192265.51,
   "holdings_value": 138014.14,
   "net_trading_profit": -139356.8,
   "net_trading_return_pct": -69.96,
   "holdings": [
     {
       "ticker": "MSFT",
-      "shares": 33.0,
-      "buy_price": 502.04,
-      "last_price": 496.46,
+      "shares": 49.0,
+      "buy_price": 495.69,
+      "last_price": 482.6,
       "peak_price": 513.7260131835938,
-      "target_weight": 0.16666666666666666
+      "target_weight": 0.25
     },
     {
       "ticker": "NVDA",
-      "shares": 76.0,
-      "buy_price": 224.45,
-      "last_price": 225.13,
+      "shares": 106.0,
+      "buy_price": 224.85,
+      "last_price": 225.85,
       "peak_price": 227.49000549316406,
-      "target_weight": 0.16666666666666666
-    },
-    {
-      "ticker": "AMZN",
-      "shares": 53.0,
-      "buy_price": 278.032278,
-      "last_price": 263.02,
-      "peak_price": 280.1400146484375,
-      "target_weight": 0.14285714285714285
-    },
-    {
-      "ticker": "AVGO",
-      "shares": 35.0,
-      "buy_price": 390.28,
-      "last_price": 390.28,
-      "peak_price": 412.5,
-      "target_weight": 0.14285714285714285
-    },
-    {
-      "ticker": "COST",
-      "shares": 14.0,
-      "buy_price": 962.0,
-      "last_price": 962.0,
-      "peak_price": 965.2150268554688,
-      "target_weight": 0.14285714285714285
+      "target_weight": 0.25
     },
     {
       "ticker": "AMD",
-      "shares": 31.0,
-      "buy_price": 508.66,
-      "last_price": 508.66,
-      "peak_price": 514.6699829101562,
-      "target_weight": 0.16666666666666666
+      "shares": 46.0,
+      "buy_price": 509.8,
+      "last_price": 512.142,
+      "peak_price": 515.8681030273438,
+      "target_weight": 0.25
     }
   ],
-  "last_updated": "2026-08-14 21:27:18"
+  "last_updated": "2026-08-17 14:56:00"
 }
