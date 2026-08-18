@@ -1,17 +1,17 @@
 # Strategy 23: Calculus S&R & RSI Live Report
-**Report Generated:** 2026-08-18 15:31:34
+**Report Generated:** 2026-08-18 17:56:02
 
 ## Current Status
-* **Total Portfolio Value:** $205,304.77 MXN
-* **Cash Balance:** $205,304.77 MXN
+* **Total Portfolio Value:** $205,308.45 MXN
+* **Cash Balance:** $205,308.45 MXN
 * **Holding Asset:** CASH
 
 ## Signals & Levels Details
-* **QQQ Close Price:** $718.19 USD
+* **QQQ Close Price:** $717.62 USD
 * **Support Level (S):** $661.73 USD
 * **Resistance Level (R):** $717.74 USD
-* **SRP Index (0=S, 1=R):** 1.0080
-* **RSI (14-period):** 52.91
+* **SRP Index (0=S, 1=R):** 0.9979
+* **RSI (14-period):** 52.22
 
 ## Execution Log
 * **Action:** No trade condition triggered. Holding current asset.
