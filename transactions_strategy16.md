@@ -247,4 +247,6 @@
 | 2026-08-17 | BONDIA | INTEREST | 1.0000 | $0.0903 | $0.00 | $0.09 | Accrued interest on sweep balance |
 | 2026-08-18 | BONDIA | INTEREST | 1.0000 | $2.8766 | $0.00 | $2.88 | Accrued interest on sweep balance |
 | 2026-08-18 | UPRO | SELL_UPRO | 74.4335 | $2582.5863 | $0.00 | $192,230.92 | Exit target SPY via STOP_LOSS |
+| 2026-08-18 | BONDIA | INTEREST | 1.0000 | $0.7074 | $0.00 | $0.71 | Accrued interest on sweep balance |
+| 2026-08-18 | URTY | BUY_URTY | 131.1937 | $1469.3286 | $0.00 | $-192,766.65 | Bull swing pullback entry |
 ---
