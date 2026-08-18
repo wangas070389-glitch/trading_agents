@@ -4,20 +4,12 @@
   "total_funded_capital": 200002.23,
   "nav": 221515.59,
   "total_capital": 221575.0158308659,
-  "cash_balance": -0.0,
+  "cash_balance": 205304.09,
   "holdings_value": 221515.59,
   "net_trading_profit": 21513.36,
   "net_trading_return_pct": 10.76,
-  "holdings": [
-    {
-      "ticker": "TQQQ",
-      "shares": 166.87012901166838,
-      "buy_price": 1247.284048543952,
-      "last_price": 1301.0843552091974,
-      "peak_price": 1323.3122282555414
-    }
-  ],
-  "last_updated": "2026-08-17 21:29:21",
-  "last_rebalance_date": "2026-08-11",
-  "total_portfolio_value_mxn": 217112.11
+  "holdings": [],
+  "last_updated": "2026-08-18 15:05:03",
+  "last_rebalance_date": "2026-08-18",
+  "total_portfolio_value_mxn": 205304.09
 }
