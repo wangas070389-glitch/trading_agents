@@ -1,5 +1,5 @@
 # Shadow Frontier — Live Track Record of the Allocation Layer
-**Generated:** 2026-08-18 20:23:30 | Inception: 2026-07-14 (35 calendar days) | Virtual capital: $100,000 USD
+**Generated:** 2026-08-18 20:51:20 | Inception: 2026-07-14 (35 calendar days) | Virtual capital: $100,000 USD
 **Weights (frozen):** efficient_frontier_report.md 2026-07-11 -- Risk Parity, hurdle-filtered (RECOMMENDED)
 
 This book paper-trades the recommended frontier allocation itself, marked
