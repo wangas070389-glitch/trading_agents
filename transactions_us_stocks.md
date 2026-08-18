@@ -373,6 +373,7 @@
 | 2026-08-17 | AMD | BUY | 15.0 | 512.14 | -7,682.13 | Market | FILLED | Alpaca Order 73ea8579-a9ef-45fc-8eea-b6c29ac2c213 FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 | 2026-08-18 | COST | BUY | 23.0 | 971.00 | -22,333.00 | Market | FILLED | Alpaca Order 2e98430f-0592-474b-81c0-fecdfb24cea6 FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 | 2026-08-18 | MSFT | SELL-REJECTED | 49 | 481.83 | +23,609.67 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-18 | MSFT | SELL-REJECTED | 49 | 482.18 | +23,626.82 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 ---
 
 
@@ -380,7 +381,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $91,102.76 USD
+* **Initial Starting Capital**: $91,211.67 USD
 * **Total Deployed Capital**: $93,906.71 USD (-77.5% invested)
 * **Unallocated Cash Reserves**: $-214,599.39 USD (177.2% cash)
 * **Current Portfolio Market Value**: $-121,120.36 USD (including cash)
