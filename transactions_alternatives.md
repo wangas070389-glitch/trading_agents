@@ -86,6 +86,8 @@
 | 2026-08-19 | GLD | BUY-REJECTED | 392.0000 | $410.7247 | $0.00 | $161,004.08 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-08-19 | ETH-USD | BUY-REJECTED | 76.8779 | $2097.1299 | $0.00 | $161,222.94 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-08-19 | GLD | BUY-REJECTED | 390.0000 | $413.0850 | $0.00 | $161,103.15 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-19 | ETH-USD | BUY-REJECTED | 76.6530 | $2103.2600 | $0.00 | $161,221.19 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-19 | GLD | BUY-REJECTED | 389.0000 | $413.8300 | $0.00 | $160,979.86 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 ---
 
 
@@ -93,7 +95,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $89,408.39 USD
+* **Initial + Inflow Capital**: $89,286.72 USD
 * **Total Deployed Capital**: $127,119.29 USD (15.7% invested)
 * **Unallocated Cash Reserves**: $680,211.15 USD (84.1% cash)
-* **Current Portfolio Market Value**: $808,452.33 USD (including cash)
+* **Current Portfolio Market Value**: $808,443.21 USD (including cash)
