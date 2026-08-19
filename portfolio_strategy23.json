@@ -3,13 +3,13 @@
   "capital_injections": 0.0,
   "total_funded_capital": 200002.23,
   "nav": 221515.59,
-  "total_capital": 221584.789274991,
-  "cash_balance": 205313.86,
+  "total_capital": 221611.7244705892,
+  "cash_balance": 205340.8,
   "holdings_value": 221515.59,
   "net_trading_profit": 21513.36,
   "net_trading_return_pct": 10.76,
   "holdings": [],
-  "last_updated": "2026-08-18 21:28:24",
+  "last_updated": "2026-08-19 15:05:04",
   "last_rebalance_date": "2026-08-18",
-  "total_portfolio_value_mxn": 205313.86
+  "total_portfolio_value_mxn": 205340.8
 }
