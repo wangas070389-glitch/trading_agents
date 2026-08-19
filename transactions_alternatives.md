@@ -84,6 +84,8 @@
 | 2026-08-19 | EURUSD=X | SELL | 13154.0000 | $1.1667 | $44.51 | $15,302.59 | Exit: Overbought (RSI=70.8) at upper Bollinger Band |
 | 2026-08-19 | ETH-USD | BUY-REJECTED | 77.2843 | $2086.6001 | $0.00 | $161,261.43 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-08-19 | GLD | BUY-REJECTED | 392.0000 | $410.7247 | $0.00 | $161,004.08 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-19 | ETH-USD | BUY-REJECTED | 76.8779 | $2097.1299 | $0.00 | $161,222.94 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-19 | GLD | BUY-REJECTED | 390.0000 | $413.0850 | $0.00 | $161,103.15 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 ---
 
 
@@ -91,7 +93,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $89,290.48 USD
+* **Initial + Inflow Capital**: $89,408.39 USD
 * **Total Deployed Capital**: $127,119.29 USD (15.7% invested)
 * **Unallocated Cash Reserves**: $680,211.15 USD (84.1% cash)
-* **Current Portfolio Market Value**: $808,601.13 USD (including cash)
+* **Current Portfolio Market Value**: $808,452.33 USD (including cash)
