@@ -385,6 +385,9 @@
 | 2026-08-19 | MSFT | SELL-REJECTED | 49 | 484.08 | +23,720.16 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-08-19 | MSFT | SELL-REJECTED | 49 | 484.31 | +23,731.19 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-08-19 | MSFT | SELL-REJECTED | 49 | 484.31 | +23,731.19 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-20 | MSFT | SELL-REJECTED | 49 | 480.88 | +23,562.88 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-20 | COST | SELL-REJECTED | 23 | 940.83 | +21,639.09 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-20 | AMD | SELL-REJECTED | 46 | 462.89 | +21,292.94 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 ---
 
 
@@ -392,7 +395,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $89,722.47 USD
-* **Total Deployed Capital**: $93,906.71 USD (-77.5% invested)
-* **Unallocated Cash Reserves**: $-214,599.40 USD (177.2% cash)
-* **Current Portfolio Market Value**: $-121,120.37 USD (including cash)
+* **Initial Starting Capital**: $86,338.75 USD
+* **Total Deployed Capital**: $93,906.71 USD (-120.1% invested)
+* **Unallocated Cash Reserves**: $-171,679.95 USD (219.5% cash)
+* **Current Portfolio Market Value**: $-78,200.92 USD (including cash)

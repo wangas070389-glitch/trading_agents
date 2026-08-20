@@ -10,15 +10,15 @@
   "net_trading_return_pct": -21.36,
   "holdings": [
     {
-      "ticker": "SQQQ",
-      "shares": 246.54919923630402,
-      "buy_price": 619.8569587190868,
-      "last_price": 652.903898801771,
-      "bars_held": 31,
-      "peak_price": 653.6078466709441
+      "ticker": "TQQQ",
+      "shares": 136.2278255911313,
+      "buy_price": 1198.5674175993772,
+      "last_price": 1198.5674175993772,
+      "bars_held": 0,
+      "peak_price": 1198.5674175993772
     }
   ],
-  "last_updated": "2026-08-19 22:06:33",
-  "last_rebalance_date": "2026-08-14",
-  "total_portfolio_value_mxn": 160972.93
+  "last_updated": "2026-08-20 16:34:20",
+  "last_rebalance_date": "2026-08-20",
+  "total_portfolio_value_mxn": 163278.23
 }
