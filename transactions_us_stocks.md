@@ -394,6 +394,9 @@
 | 2026-08-20 | MSFT | SELL-REJECTED | 49 | 480.70 | +23,554.30 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-08-20 | COST | SELL-REJECTED | 23 | 934.10 | +21,484.30 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-08-20 | AMD | SELL-REJECTED | 46 | 469.45 | +21,594.70 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-20 | MSFT | SELL-REJECTED | 49 | 481.15 | +23,576.35 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-20 | COST | SELL-REJECTED | 23 | 933.51 | +21,470.73 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-20 | AMD | SELL-REJECTED | 46 | 469.45 | +21,594.93 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 ---
 
 
@@ -401,7 +404,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $85,631.02 USD
+* **Initial Starting Capital**: $86,074.81 USD
 * **Total Deployed Capital**: $93,906.71 USD (-120.1% invested)
 * **Unallocated Cash Reserves**: $-171,679.95 USD (219.5% cash)
 * **Current Portfolio Market Value**: $-78,200.92 USD (including cash)

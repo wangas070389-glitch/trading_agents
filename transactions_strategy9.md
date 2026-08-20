@@ -329,4 +329,5 @@
 | 2026-08-20 | SPY | SELL | 12.0000 | $12987.3340 | $451.96 | $155,396.05 | Regime shifted out of Bull mode |
 | 2026-08-20 | BONDIA | INTEREST | 1.0000 | $2.9175 | $0.00 | $2.92 | Accrued interest on sweep balance |
 | 2026-08-20 | BONDIA | INTEREST | 1.0000 | $1.6677 | $0.00 | $1.67 | Accrued interest on sweep balance |
+| 2026-08-20 | BONDIA | INTEREST | 1.0000 | $2.0636 | $0.00 | $2.06 | Accrued interest on sweep balance |
 ---

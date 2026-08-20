@@ -332,4 +332,5 @@
 | 2026-08-20 | SQQQ | BUY_SQQQ | 283.0735 | $672.4608 | $0.00 | $-190,355.85 | Direct asset trend breakdown entry |
 | 2026-08-20 | BONDIA | INTEREST | 1.0000 | $0.1952 | $0.00 | $0.20 | Accrued interest on sweep balance |
 | 2026-08-20 | SQQQ | EXIT_SHORT | 283.0735 | $668.0406 | $0.00 | $189,104.61 | Exit: EOD_CLOSE |
+| 2026-08-20 | BONDIA | INTEREST | 1.0000 | $2.4015 | $0.00 | $2.40 | Accrued interest on sweep balance |
 ---
