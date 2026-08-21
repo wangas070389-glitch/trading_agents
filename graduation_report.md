@@ -1,34 +1,34 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-08-21 20:00:10 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-08-21 20:25:06 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | S14 HEDGE Aggregator | **ON TRACK** | 46 | +98.5% | +781.4% | PASS | 2.42 | -4.7% | -19.0% | 10.18 | 0.53 (19.2y) |
-| S15 TRACK Tracker | **ON TRACK** | 46 | +98.5% | +781.3% | PASS | 2.42 | -4.7% | -18.4% | 10.18 | 0.53 (19.2y) |
-| S13 CARA Cross-Asset | **ON TRACK** | 46 | +74.0% | +587.5% | PASS | 2.41 | -6.5% | -31.3% | 8.64 | 0.45 (19.2y) |
+| S15 TRACK Tracker | **ON TRACK** | 46 | +98.5% | +781.4% | PASS | 2.42 | -4.7% | -18.4% | 10.18 | 0.53 (19.2y) |
+| S13 CARA Cross-Asset | **ON TRACK** | 46 | +74.0% | +587.6% | PASS | 2.41 | -6.5% | -31.3% | 8.64 | 0.45 (19.2y) |
 | S4 US DCF Value-Growth | **ON TRACK** | 59 | +2.3% | +14.1% | PASS | 1.69 | -2.0% | -15.2% | 4.56 | 1.14 (4.0y) |
-| S10 Intraday VWAP | **ON TRACK** | 50 | +2.0% | +15.0% | PASS | 3.81 | -0.8% | -4.0% | 0.52 | 3.27 (0.2y) |
-| S16 MACD-HMM Router | **ON TRACK** | 45 | +9.6% | +77.8% | PASS | 2.22 | -5.0% | -13.4% | 0.16 | 0.99 (0.2y) |
-| S11 Intraday CCI-ADX | **ON TRACK** | 50 | +3.8% | +27.9% | PASS | 4.37 | -1.6% | -8.4% | 0.06 | 0.35 (0.2y) |
-| S29 Golden Stat-Arb | **NOT READY** | 37 | -49.7% | -489.9% | FAIL | 3.89 | -0.8% | -65.2% | 25.18 | 5.04 (5.0y) |
-| S12 VTTL Trend+Vol | **NOT READY** | 46 | -0.0% | -0.1% | FAIL | 0.71 | -6.5% | -26.7% | 10.35 | 0.46 (22.5y) |
+| S10 Intraday VWAP | **ON TRACK** | 50 | +2.0% | +15.0% | PASS | 3.78 | -0.8% | -4.0% | 0.52 | 3.27 (0.2y) |
+| S16 MACD-HMM Router | **ON TRACK** | 45 | +9.6% | +77.5% | PASS | 2.22 | -5.0% | -13.4% | 0.16 | 0.99 (0.2y) |
+| S11 Intraday CCI-ADX | **ON TRACK** | 50 | +3.8% | +27.9% | PASS | 4.34 | -1.6% | -8.4% | 0.06 | 0.35 (0.2y) |
+| S29 Golden Stat-Arb | **NOT READY** | 37 | -49.7% | -489.9% | FAIL | 3.85 | -0.8% | -65.2% | 25.18 | 5.04 (5.0y) |
+| S12 VTTL Trend+Vol | **NOT READY** | 46 | -0.0% | -0.3% | FAIL | 0.70 | -6.5% | -26.7% | 10.35 | 0.46 (22.5y) |
 | S30 Golden MACD US | **NOT READY** | 37 | -50.0% | -493.0% | FAIL | -1.13 | -2.1% | -28.8% | 8.80 | 0.55 (16.0y) |
 | S2 MACD Systematic | **NOT READY** | 41 | -5.2% | -46.4% | FAIL | 2.38 | -6.3% | -11.9% | 8.78 | 1.76 (5.0y) |
-| S27 Golden Hurst | **NOT READY** | 37 | -49.7% | -489.9% | FAIL | 3.89 | -0.8% | -61.4% | 7.68 | 0.48 (16.0y) |
-| S25 Golden MACD BMV | **NOT READY** | 37 | -50.1% | -494.4% | FAIL | 2.35 | -1.6% | -12.7% | 7.20 | 0.45 (16.0y) |
+| S27 Golden Hurst | **NOT READY** | 37 | -49.7% | -489.9% | FAIL | 3.85 | -0.8% | -61.4% | 7.68 | 0.48 (16.0y) |
+| S25 Golden MACD BMV | **NOT READY** | 37 | -50.1% | -494.3% | FAIL | 2.34 | -1.6% | -12.7% | 7.20 | 0.45 (16.0y) |
 | S23 Calculus S&R | **NOT READY** | 37 | -48.6% | -479.9% | FAIL | 0.82 | -13.9% | -96.7% | 6.72 | 0.42 (16.0y) |
-| S8 Dividend Quality | **NOT READY** | 57 | +0.1% | +0.6% | FAIL | 1.17 | -2.3% | -14.2% | 5.60 | 1.12 (5.0y) |
-| S20 Hurst Exponent Dynamic | **NOT READY** | 39 | -55.5% | -519.8% | FAIL | -0.26 | -25.5% | -79.6% | 5.58 | 0.34 (16.4y) |
-| S19 Particle Filter QQQ | **NOT READY** | 39 | -60.5% | -566.2% | FAIL | -3.18 | -19.2% | -64.7% | 5.09 | 0.31 (16.4y) |
-| S22 Walk-Forward ML | **NOT READY** | 39 | -50.4% | -471.2% | FAIL | 0.50 | -22.4% | -73.3% | 4.27 | 0.26 (16.4y) |
+| S8 Dividend Quality | **NOT READY** | 57 | +0.2% | +1.5% | FAIL | 1.21 | -2.3% | -14.2% | 5.60 | 1.12 (5.0y) |
+| S20 Hurst Exponent Dynamic | **NOT READY** | 39 | -55.4% | -518.9% | FAIL | -0.24 | -25.5% | -79.6% | 5.58 | 0.34 (16.4y) |
+| S19 Particle Filter QQQ | **NOT READY** | 39 | -60.4% | -565.5% | FAIL | -3.16 | -19.2% | -64.7% | 5.09 | 0.31 (16.4y) |
+| S22 Walk-Forward ML | **NOT READY** | 39 | -50.4% | -471.2% | FAIL | 0.49 | -22.4% | -73.3% | 4.27 | 0.26 (16.4y) |
 | S6 High-Beta Momentum | **NOT READY** | 59 | -0.3% | -2.1% | FAIL | 0.20 | -1.9% | -24.4% | 4.20 | 1.05 (4.0y) |
-| S5 Alternatives | **NOT READY** | 59 | +693.5% | +4290.6% | PASS | 4.57 | -84.5% | -19.0% | 3.80 | 0.95 (4.0y) |
-| S1 Adaptive Value (BMV) | **NOT READY** | 79 | -3.1% | -14.2% | FAIL | 2.14 | -5.8% | -35.2% | 3.28 | 0.82 (4.0y) |
+| S5 Alternatives | **NOT READY** | 59 | +693.5% | +4290.4% | PASS | 4.57 | -84.5% | -19.0% | 3.80 | 0.95 (4.0y) |
+| S1 Adaptive Value (BMV) | **NOT READY** | 79 | -3.1% | -14.1% | FAIL | 2.14 | -5.8% | -35.2% | 3.28 | 0.82 (4.0y) |
 | S31 Fibonacci S&R | **NOT READY** | 37 | -47.5% | -468.7% | FAIL | 1.20 | -12.6% | -62.0% | 2.48 | 0.15 (16.5y) |
-| S9 AI Regime Stat-Arb | **NOT READY** | 41 | -8.2% | -72.8% | FAIL | -4.31 | -8.8% | -7.5% | 2.35 | 0.47 (5.0y) |
-| S21 Golden Entropy | **NOT READY** | 39 | -55.5% | -519.6% | FAIL | -0.25 | -25.5% | -87.8% | 0.49 | 0.03 (16.4y) |
-| S17 FIBRAs Dynamic | **NOT READY** | 40 | -50.3% | -459.2% | FAIL | 1.24 | -3.3% | -21.2% | 0.40 | 0.10 (4.0y) |
-| S24 ML Classifier | **NOT READY** | 37 | -59.1% | -582.8% | FAIL | -2.30 | -23.9% | -14.9% | 0.14 | 0.59 (0.2y) |
+| S9 AI Regime Stat-Arb | **NOT READY** | 41 | -8.2% | -72.8% | FAIL | -4.33 | -8.8% | -7.5% | 2.35 | 0.47 (5.0y) |
+| S21 Golden Entropy | **NOT READY** | 39 | -55.4% | -518.9% | FAIL | -0.24 | -25.5% | -87.8% | 0.49 | 0.03 (16.4y) |
+| S17 FIBRAs Dynamic | **NOT READY** | 40 | -50.4% | -460.1% | FAIL | 1.13 | -3.3% | -21.2% | 0.40 | 0.10 (4.0y) |
+| S24 ML Classifier | **NOT READY** | 37 | -59.0% | -582.0% | FAIL | -2.27 | -23.9% | -14.9% | 0.14 | 0.59 (0.2y) |
 | S3 US Stock Momentum | **BLOCKED** | 59 | -126.5% | -782.7% | FAIL | -0.34 | -192.9% | -22.7% | 5.75 | 1.15 (5.0y) |
 
 ## Verdict Detail
@@ -65,7 +65,7 @@
 
 **S12 VTTL Trend+Vol** — NOT READY
 - needs 44 more live days (C1: 46/90)
-- annualized live return -0.1% below Bondia hurdle 6.53% (C2)
+- annualized live return -0.3% below Bondia hurdle 6.53% (C2)
 
 **S30 Golden MACD US** — NOT READY
 - needs 53 more live days (C1: 37/90)
@@ -85,7 +85,7 @@
 
 **S25 Golden MACD BMV** — NOT READY
 - needs 53 more live days (C1: 37/90)
-- annualized live return -494.4% below Bondia hurdle 6.53% (C2)
+- annualized live return -494.3% below Bondia hurdle 6.53% (C2)
 - Golden MACD parameters (55 EMA, 13/34/8) on BMV Stocks
 
 **S23 Calculus S&R** — NOT READY
@@ -95,18 +95,18 @@
 
 **S8 Dividend Quality** — NOT READY
 - needs 33 more live days (C1: 57/90)
-- annualized live return +0.6% below Bondia hurdle 6.53% (C2)
+- annualized live return +1.5% below Bondia hurdle 6.53% (C2)
 
 **S20 Hurst Exponent Dynamic** — NOT READY
 - needs 51 more live days (C1: 39/90)
-- annualized live return -519.8% below Bondia hurdle 6.53% (C2)
-- live Sharpe -0.26 <= 0 (C4)
+- annualized live return -518.9% below Bondia hurdle 6.53% (C2)
+- live Sharpe -0.24 <= 0 (C4)
 - Hurst Exponent dynamic QQQ allocation
 
 **S19 Particle Filter QQQ** — NOT READY
 - needs 51 more live days (C1: 39/90)
-- annualized live return -566.2% below Bondia hurdle 6.53% (C2)
-- live Sharpe -3.18 <= 0 (C4)
+- annualized live return -565.5% below Bondia hurdle 6.53% (C2)
+- live Sharpe -3.16 <= 0 (C4)
 - Particle Filter systematic QQQ allocation
 
 **S22 Walk-Forward ML** — NOT READY
@@ -124,7 +124,7 @@
 
 **S1 Adaptive Value (BMV)** — NOT READY
 - needs 11 more live days (C1: 79/90)
-- annualized live return -14.2% below Bondia hurdle 6.53% (C2)
+- annualized live return -14.1% below Bondia hurdle 6.53% (C2)
 - BMV data quality degraded; see Known Issues
 
 **S31 Fibonacci S&R** — NOT READY
@@ -136,25 +136,25 @@
 - needs 49 more live days (C1: 41/90)
 - annualized live return -72.8% below Bondia hurdle 6.53% (C2)
 - live DD -8.8% breaches 1.25x backtest bound -7.5% (C3)
-- live Sharpe -4.31 <= 0 (C4)
+- live Sharpe -4.33 <= 0 (C4)
 - Re-tuned 2026-07-11 (consensus filter); graduation clock restarted (P3)
 
 **S21 Golden Entropy** — NOT READY
 - needs 51 more live days (C1: 39/90)
-- annualized live return -519.6% below Bondia hurdle 6.53% (C2)
-- live Sharpe -0.25 <= 0 (C4)
+- annualized live return -518.9% below Bondia hurdle 6.53% (C2)
+- live Sharpe -0.24 <= 0 (C4)
 - Shannon Entropy dynamic allocation
 
 **S17 FIBRAs Dynamic** — NOT READY
 - needs 50 more live days (C1: 40/90)
-- annualized live return -459.2% below Bondia hurdle 6.53% (C2)
+- annualized live return -460.1% below Bondia hurdle 6.53% (C2)
 - Dynamic FIBRA portfolio based on quality screens
 
 **S24 ML Classifier** — NOT READY
 - needs 53 more live days (C1: 37/90)
-- annualized live return -582.8% below Bondia hurdle 6.53% (C2)
+- annualized live return -582.0% below Bondia hurdle 6.53% (C2)
 - live DD -23.9% breaches 1.25x backtest bound -14.9% (C3)
-- live Sharpe -2.30 <= 0 (C4)
+- live Sharpe -2.27 <= 0 (C4)
 - Tuned 2026-07-15 to 35-bar Golden Ratio scale + 26-bar min hold
 
 **S3 US Stock Momentum** — BLOCKED
@@ -171,23 +171,23 @@
 | S16 MACD-HMM Router | OK | no kill triggers active |
 | S11 Intraday CCI-ADX | OK | no kill triggers active |
 | S29 Golden Stat-Arb | WATCH (K2) | below hurdle (-489.9% ann.); P1 review at day 180 (37/180) |
-| S12 VTTL Trend+Vol | WATCH (K2) | below hurdle (-0.1% ann.); P1 review at day 180 (46/180) |
+| S12 VTTL Trend+Vol | WATCH (K2) | below hurdle (-0.3% ann.); P1 review at day 180 (46/180) |
 | S30 Golden MACD US | WATCH (K2) | below hurdle (-493.0% ann.); P1 review at day 180 (37/180) |
 | S2 MACD Systematic | WATCH (K2) | below hurdle (-46.4% ann.); P1 review at day 180 (41/180) |
 | S27 Golden Hurst | WATCH (K2) | below hurdle (-489.9% ann.); P1 review at day 180 (37/180) |
-| S25 Golden MACD BMV | WATCH (K2) | below hurdle (-494.4% ann.); P1 review at day 180 (37/180) |
+| S25 Golden MACD BMV | WATCH (K2) | below hurdle (-494.3% ann.); P1 review at day 180 (37/180) |
 | S23 Calculus S&R | WATCH (K2) | below hurdle (-479.9% ann.); P1 review at day 180 (37/180) |
-| S8 Dividend Quality | WATCH (K2) | below hurdle (+0.6% ann.); P1 review at day 180 (57/180) |
-| S20 Hurst Exponent Dynamic | WATCH (K2) | below hurdle (-519.8% ann.); P1 review at day 180 (39/180) |
-| S19 Particle Filter QQQ | WATCH (K2) | below hurdle (-566.2% ann.); P1 review at day 180 (39/180) |
+| S8 Dividend Quality | WATCH (K2) | below hurdle (+1.5% ann.); P1 review at day 180 (57/180) |
+| S20 Hurst Exponent Dynamic | WATCH (K2) | below hurdle (-518.9% ann.); P1 review at day 180 (39/180) |
+| S19 Particle Filter QQQ | WATCH (K2) | below hurdle (-565.5% ann.); P1 review at day 180 (39/180) |
 | S22 Walk-Forward ML | WATCH (K2) | below hurdle (-471.2% ann.); P1 review at day 180 (39/180) |
 | S6 High-Beta Momentum | WATCH (K2) | below hurdle (-2.1% ann.); P1 review at day 180 (59/180) |
 | S5 Alternatives | **BREACH (P2/K1)** | live DD -84.5% exceeds 1.25× backtest bound -19.0% — parameters invalidated, back to research |
-| S1 Adaptive Value (BMV) | WATCH (K2) | below hurdle (-14.2% ann.); P1 review at day 180 (79/180) |
+| S1 Adaptive Value (BMV) | WATCH (K2) | below hurdle (-14.1% ann.); P1 review at day 180 (79/180) |
 | S31 Fibonacci S&R | WATCH (K2) | below hurdle (-468.7% ann.); P1 review at day 180 (37/180) |
 | S9 AI Regime Stat-Arb | **BREACH (P2/K1)** | live DD -8.8% exceeds 1.25× backtest bound -7.5% — parameters invalidated, back to research |
-| S21 Golden Entropy | WATCH (K2) | below hurdle (-519.6% ann.); P1 review at day 180 (39/180) |
-| S17 FIBRAs Dynamic | WATCH (K2) | below hurdle (-459.2% ann.); P1 review at day 180 (40/180) |
+| S21 Golden Entropy | WATCH (K2) | below hurdle (-518.9% ann.); P1 review at day 180 (39/180) |
+| S17 FIBRAs Dynamic | WATCH (K2) | below hurdle (-460.1% ann.); P1 review at day 180 (40/180) |
 | S24 ML Classifier | **BREACH (P2/K1)** | live DD -23.9% exceeds 1.25× backtest bound -14.9% — parameters invalidated, back to research |
 | S3 US Stock Momentum | **BREACH (P2/K1)** | live DD -192.9% exceeds 1.25× backtest bound -22.7% — parameters invalidated, back to research |
 

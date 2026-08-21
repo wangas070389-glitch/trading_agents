@@ -3,8 +3,8 @@
   "capital_injections": 0.0,
   "total_funded_capital": 199895.99,
   "nav": 198259.4,
-  "total_capital": 199482.53812419088,
-  "cash_balance": 162964.42,
+  "total_capital": 199526.24273573305,
+  "cash_balance": 162964.93,
   "holdings_value": 0.0,
   "net_trading_profit": -1636.59,
   "net_trading_return_pct": -0.82,
@@ -13,11 +13,11 @@
       "ticker": "GMEXICOB.MX",
       "shares": 154.2671423448652,
       "buy_price": 231.99000549316406,
-      "last_price": 236.72000122070312,
+      "last_price": 237.0,
       "peak_price": 238.00999450683594,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-08-21 20:00:01",
-  "total_portfolio_value_mxn": 199482.53812419088
+  "last_updated": "2026-08-21 20:25:00",
+  "total_portfolio_value_mxn": 199526.24273573305
 }

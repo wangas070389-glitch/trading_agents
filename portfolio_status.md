@@ -1,20 +1,20 @@
 # PORTFOLIO PERFORMANCE MONITOR
-**Status Check Time:** 2026-08-21 19:58:13
+**Status Check Time:** 2026-08-21 20:23:42
 
 ## 1. Current Holdings Value
 | Ticker | Shares Held | Buy Price (MXN) | Current Price (MXN) | Market Value (MXN) | Unrealized P/L | P/L % | DCS | HMM State | Target Weight |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| GRUMAB.MX | 1 | 291.46 | 251.81 | 251.81 | **-39.65** | **-13.60%** | 0.7733 | Bear | 2.8% |
-| ORBIA.MX | 1,538.8681574288416 | 21.20 | 21.85 | 33,624.27 | **+1,000.26** | **+3.07%** | 1.0000 | Bull | 30.0% |
-| BBAJIOO.MX | 634.6864766511843 | 54.88 | 56.57 | 35,904.21 | **+1,072.62** | **+3.08%** | 0.7305 | Bull | 30.0% |
-| CUERVO.MX | 1,650.2206447580431 | 15.45 | 14.65 | 24,175.73 | **-1,320.18** | **-5.18%** | 0.2356 | Sideways | 20.9% |
-| BIMBOA.MX | 372.2763383858221 | 61.16 | 59.96 | 22,321.69 | **-446.73** | **-1.96%** | 0.2158 | Sideways | 19.1% |
+| GRUMAB.MX | 1 | 291.46 | 251.67 | 251.67 | **-39.79** | **-13.65%** | 0.7733 | Bear | 2.8% |
+| ORBIA.MX | 1,538.8681574288416 | 21.20 | 21.89 | 33,685.82 | **+1,061.82** | **+3.25%** | 1.0000 | Bull | 30.0% |
+| BBAJIOO.MX | 634.6864766511843 | 54.88 | 56.54 | 35,885.17 | **+1,053.58** | **+3.02%** | 0.7305 | Bull | 30.0% |
+| CUERVO.MX | 1,650.2206447580431 | 15.45 | 14.68 | 24,225.24 | **-1,270.67** | **-4.98%** | 0.2356 | Sideways | 20.9% |
+| BIMBOA.MX | 372.2763383858221 | 61.16 | 59.87 | 22,288.18 | **-480.24** | **-2.11%** | 0.2158 | Sideways | 19.1% |
 
-* **Current Market Value of Shares**: 116,277.71 MXN (100.0% allocation)
+* **Current Market Value of Shares**: 116,336.09 MXN (100.0% allocation)
 * **Bondia Cash Routing Reserves (6.53% APR)**: 0.00 MXN (0.0% cash reserve)
-* **Total Portfolio Value**: **116,277.71 MXN**
-* **Total Unrealized Profit/Loss**: **-5,844.88 MXN (-4.79%)**
+* **Total Portfolio Value**: **116,336.09 MXN**
+* **Total Unrealized Profit/Loss**: **-5,786.50 MXN (-4.74%)**
 
 ## 2. Active Cash Routing & Yield Generation
-* No overnight interest accrued in this check (last checked 10.1 minutes ago)
+* No overnight interest accrued in this check (last checked 25.3 minutes ago)
 * Expected daily interest accrual at 6.53% APR: **+0.0000 MXN**
