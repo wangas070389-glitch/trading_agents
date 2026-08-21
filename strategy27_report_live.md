@@ -1,9 +1,9 @@
 # Strategy 27 Live Status Report
 
-**Last Run:** 2026-08-21 16:33:08
-**Current Regime:** Chop/Mean Reverting (Hurst: 0.2459)
-**Total Capital:** $201,352.48 MXN
-**Cash Balance:** $201,352.48 MXN
+**Last Run:** 2026-08-21 18:41:17
+**Current Regime:** Chop/Mean Reverting (Hurst: 0.2450)
+**Total Capital:** $201,355.68 MXN
+**Cash Balance:** $201,355.68 MXN
 
 ## Current Holdings
 
