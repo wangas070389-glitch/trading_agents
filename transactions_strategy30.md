@@ -200,4 +200,5 @@
 | 2026-08-20 | CASH_SWEEP | INTEREST | 1.0000 | $0.6393 | $+0.64 | Market | FILLED | USD Sweep interest |
 | 2026-08-21 | CASH_SWEEP | INTEREST | 1.0000 | $7.3368 | $+7.34 | Market | FILLED | USD Sweep interest |
 | 2026-08-21 | NVDA | SELL | 87.5207 | $215.2000 | $+18,832.56 | Market | FILLED | MACD crossover or Trend break exit |
+| 2026-08-21 | CASH_SWEEP | INTEREST | 1.0000 | $0.7399 | $+0.74 | Market | FILLED | USD Sweep interest |
 ---
