@@ -281,4 +281,5 @@
 | 2026-08-21 | BONDIA | INTEREST | 1.0000 | $0.0986 | $0.00 | $0.10 | Accrued interest on sweep balance |
 | 2026-08-24 | BONDIA | INTEREST | 1.0000 | $10.6899 | $0.00 | $10.69 | Accrued interest on sweep balance |
 | 2026-08-24 | SOXL | SELL_SOXL | 97.7635 | $1812.7607 | $0.00 | $177,221.88 | Exit target SOXX via STOP_LOSS |
+| 2026-08-24 | BONDIA | INTEREST | 1.0000 | $5.4766 | $0.00 | $5.48 | Accrued interest on sweep balance |
 ---

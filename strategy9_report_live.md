@@ -1,20 +1,20 @@
 # Strategy 9: AI-Regime Adaptive Statistical Arbitrage Execution Report
-**Execution Date:** 2026-08-24 15:12:20 | **Strategy Version:** Upgraded Live V1
+**Execution Date:** 2026-08-24 18:53:57 | **Strategy Version:** Upgraded Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $180,141.69 MXN
-* **Total Cash Balance:** $24,413.47 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Total Portfolio NAV:** $179,903.41 MXN
+* **Total Cash Balance:** $24,414.14 MXN (Parked compounding in Bondia sweep at 6.53% APR)
 * **Equity Exposure:** 86.4%
 * **Active Regime:** State 0 (Bull trend, low volatility detected on SPY (3-day HMM consensus))
 
 ## 2. Current Holdings
 | Ticker | Type | Shares/Qty Y | Shares/Qty X | Buy Price/Alloc | Last Price | Market Value (MXN) |
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
-| **SPY** | REGIME ASSET | 12.0000 | -- | $12,939.83 | $12,939.83 | $155,277.91 |
+| **SPY** | REGIME ASSET | 12.0000 | -- | $12,939.83 | $12,957.44 | $155,489.27 |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $$88.1895 MXN sweep interest.
-* BOUGHT 12 shares of SPY at $12,939.83 MXN.
+* **[INTEREST ACCRUED]** Cash reserves earned $$0.6718 MXN sweep interest.
+* No trades or rebalancing actions triggered today.
 
 ## 4. Asset Evaluation Diagnostics (Regime & Arbitrage checks)
 * **Regime Signal Classifier (HMM on SPY):**
