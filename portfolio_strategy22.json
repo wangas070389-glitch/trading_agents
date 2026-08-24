@@ -13,10 +13,10 @@
       "ticker": "TQQQ",
       "shares": 169.94119965749218,
       "buy_price": 1165.8106130957458,
-      "last_price": 1178.6859500664723
+      "last_price": 1172.18339790951
     }
   ],
-  "last_updated": "2026-08-24 18:54:31",
+  "last_updated": "2026-08-24 19:58:02",
   "last_rebalance_date": "2026-08-24",
-  "total_portfolio_value_mxn": 200307.3
+  "total_portfolio_value_mxn": 199202.25
 }

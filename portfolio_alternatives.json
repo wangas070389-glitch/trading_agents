@@ -3,7 +3,7 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 101321.45,
   "nav": 105171.66,
-  "total_capital": 87803.73,
+  "total_capital": 87673.53,
   "cash_balance": 680211.15,
   "holdings_value": 119726.18,
   "net_trading_profit": 3850.21,
@@ -24,7 +24,7 @@
       "ticker": "USO",
       "shares": 164,
       "buy_price": 122.75,
-      "last_price": 132.49000549316406,
+      "last_price": 132.17999267578125,
       "peak_price": 122.75,
       "armed": false,
       "target_weight": 0.2,
@@ -35,7 +35,7 @@
       "ticker": "USDJPY=X",
       "shares": 414,
       "buy_price": 159.4499969482422,
-      "last_price": 159.18899536132812,
+      "last_price": 159.12399291992188,
       "peak_price": 159.4499969482422,
       "armed": false,
       "target_weight": 0.15,
@@ -46,7 +46,7 @@
       "ticker": "USDMXN=X",
       "shares": 1213,
       "buy_price": 17.14600944519043,
-      "last_price": 16.956499099731445,
+      "last_price": 16.951000213623047,
       "peak_price": 17.14600944519043,
       "armed": false,
       "target_weight": 0.15,
@@ -54,5 +54,5 @@
       "entry_date": "2026-08-07"
     }
   ],
-  "last_updated": "2026-08-24 18:53:13"
+  "last_updated": "2026-08-24 19:57:02"
 }
