@@ -431,6 +431,8 @@
 | 2026-08-24 | AMD | SELL-REJECTED | 46 | 457.65 | +21,051.96 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-08-24 | MSFT | SELL-REJECTED | 49 | 487.97 | +23,910.53 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-08-24 | AMD | SELL-REJECTED | 46 | 456.40 | +20,994.40 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-24 | MSFT | SELL-REJECTED | 49 | 487.31 | +23,878.19 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-08-24 | AMD | SELL-REJECTED | 46 | 456.74 | +21,010.27 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 ---
 
 
@@ -438,7 +440,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $87,643.02 USD
+* **Initial Starting Capital**: $87,662.39 USD
 * **Total Deployed Capital**: $70,072.61 USD (-88.3% invested)
 * **Unallocated Cash Reserves**: $-148,888.54 USD (187.6% cash)
 * **Current Portfolio Market Value**: $-79,349.61 USD (including cash)
