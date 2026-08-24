@@ -111,6 +111,7 @@
 | 2026-08-21 | SLV | BUY-REJECTED | 2573.0000 | $62.7200 | $0.00 | $161,378.56 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-08-21 | GLD | BUY-REJECTED | 381.0000 | $423.3600 | $0.00 | $161,300.15 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-08-21 | SLV | BUY-REJECTED | 2573.0000 | $62.7200 | $0.00 | $161,378.56 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-24 | GLD | BUY-REJECTED | 376.0000 | $428.6650 | $0.00 | $161,178.04 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 ---
 
 
@@ -118,7 +119,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $87,013.87 USD
+* **Initial + Inflow Capital**: $88,223.77 USD
 * **Total Deployed Capital**: $127,119.29 USD (15.7% invested)
-* **Unallocated Cash Reserves**: $680,211.15 USD (84.0% cash)
-* **Current Portfolio Market Value**: $809,331.37 USD (including cash)
+* **Unallocated Cash Reserves**: $680,211.15 USD (84.1% cash)
+* **Current Portfolio Market Value**: $809,022.62 USD (including cash)
