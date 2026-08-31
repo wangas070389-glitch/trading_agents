@@ -18,10 +18,10 @@
   },
   "sleeves": {
     "core": {
-      "alloc_usd": 4339.504771431881,
-      "last_nav": 6833.8083315432805,
-      "last_date": "2026-08-24",
-      "tr_index": 0.9643343936515288
+      "alloc_usd": 4316.836623765112,
+      "last_nav": 6798.110761303093,
+      "last_date": "2026-08-31",
+      "tr_index": 0.959297027503358
     },
     "macd": {
       "alloc_usd": 4088.784917206144,
@@ -32,20 +32,20 @@
     "us_dcs": {
       "alloc_usd": 3897.0555373414645,
       "last_nav": 104320.17,
-      "last_date": "2026-08-24",
+      "last_date": "2026-08-31",
       "tr_index": 0.9992450095747345
     },
     "alternatives": {
-      "alloc_usd": 168931.85678787,
-      "last_nav": 809022.6207889557,
-      "last_date": "2026-08-24",
-      "tr_index": 6.757274271514799
+      "alloc_usd": 169212.55431303696,
+      "last_nav": 810366.8944610596,
+      "last_date": "2026-08-31",
+      "tr_index": 6.768502172521478
     },
     "high_beta": {
-      "alloc_usd": 11539.622574857192,
-      "last_nav": 101680.41528999561,
-      "last_date": "2026-08-24",
-      "tr_index": 0.9862925277655721
+      "alloc_usd": 11549.574610753372,
+      "last_nav": 101768.10681858247,
+      "last_date": "2026-08-31",
+      "tr_index": 0.98714312912422
     },
     "dividends": {
       "alloc_usd": 9549.381205359718,
@@ -378,9 +378,27 @@
         "strategy15": 1.162632,
         "strategy17": 1.016127
       }
+    },
+    {
+      "date": "2026-08-31",
+      "nav_usd": 246178.73,
+      "idx": {
+        "core": 0.959297,
+        "macd": 0.97352,
+        "us_dcs": 0.999245,
+        "alternatives": 6.768502,
+        "high_beta": 0.987143,
+        "dividends": 1.015892,
+        "strategy9": 1.00465,
+        "strategy12": 0.993907,
+        "strategy13": 0.9938,
+        "strategy14": 1.162539,
+        "strategy15": 1.162632,
+        "strategy17": 1.016127
+      }
     }
   ],
   "rebalances": [],
-  "last_updated": "2026-08-24 21:32:30",
-  "total_portfolio_value_usd": 245910.75044813025
+  "last_updated": "2026-08-31 21:33:03",
+  "total_portfolio_value_usd": 246178.7318615266
 }
