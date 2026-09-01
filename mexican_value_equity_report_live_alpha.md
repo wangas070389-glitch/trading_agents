@@ -22,29 +22,29 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Signal | Price | DCS Conviction | SMA 100 Trend | SMA 20 Trend (DCA) | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **AAPL** | SELL / AVOID | $5,523.63 | -0.810 | BULL | BULL | Low conviction (DCS=-0.810 < 0.15) |
-| **AC.MX** | SELL / AVOID | $192.62 | -0.124 | BEAR | BEAR | Low conviction (DCS=-0.124 < 0.15) and Bear trend (Close <= SMA 100) |
-| **AMXB.MX** | SELL / AVOID | $19.59 | -0.187 | BEAR | BEAR | Low conviction (DCS=-0.187 < 0.15) and Bear trend (Close <= SMA 100) |
-| **AMZN** | SELL / AVOID | $4,330.84 | -0.933 | BULL | BEAR | Low conviction (DCS=-0.933 < 0.15) |
-| **ASURB.MX** | SELL / AVOID | $426.13 | 0.028 | BEAR | BEAR | Low conviction (DCS=0.028 < 0.15) and Bear trend (Close <= SMA 100) |
-| **BBAJIOO.MX** | BUY / HOLD | $56.83 | 0.846 | BULL | BULL | Strong conviction (DCS=0.846) and bull trend (Close > SMA 100) | Eligible for active DCA |
-| **BIMBOA.MX** | BUY / HOLD | $58.27 | 0.278 | BULL | BEAR | Strong conviction (DCS=0.278) and bull trend (Close > SMA 100) | DCA restricted (Close <= SMA 20) |
-| **CEMEXCPO.MX** | SELL / AVOID | $17.81 | -0.310 | BEAR | BEAR | Low conviction (DCS=-0.310 < 0.15) and Bear trend (Close <= SMA 100) |
-| **CUERVO.MX** | SELL / AVOID | $14.44 | 0.392 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
-| **FEMSAUBD.MX** | SELL / AVOID | $203.78 | 0.174 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
-| **GAPB.MX** | SELL / AVOID | $344.30 | 0.116 | BEAR | BEAR | Low conviction (DCS=0.116 < 0.15) and Bear trend (Close <= SMA 100) |
-| **GCC.MX** | SELL / AVOID | $190.73 | -0.031 | BEAR | BEAR | Low conviction (DCS=-0.031 < 0.15) and Bear trend (Close <= SMA 100) |
-| **GENTERA.MX** | SELL / AVOID | $40.15 | -0.235 | BEAR | BULL | Low conviction (DCS=-0.235 < 0.15) and Bear trend (Close <= SMA 100) |
-| **GFNORTEO.MX** | BUY / HOLD | $192.67 | 0.173 | BULL | BULL | Strong conviction (DCS=0.173) and bull trend (Close > SMA 100) |
-| **GMEXICOB.MX** | SELL / AVOID | $223.47 | -0.654 | BULL | BEAR | Low conviction (DCS=-0.654 < 0.15) |
-| **GOOGL** | SELL / AVOID | $5,691.65 | -0.878 | BEAR | BEAR | Low conviction (DCS=-0.878 < 0.15) and Bear trend (Close <= SMA 100) |
-| **GRUMAB.MX** | SELL / AVOID | $251.44 | 0.880 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
-| **KIMBERA.MX** | SELL / AVOID | $39.31 | -0.285 | BULL | BEAR | Low conviction (DCS=-0.285 < 0.15) |
-| **MSFT** | SELL / AVOID | $8,511.83 | -0.826 | BULL | BULL | Low conviction (DCS=-0.826 < 0.15) |
-| **NVDA** | SELL / AVOID | $3,694.09 | -0.958 | BULL | BULL | Low conviction (DCS=-0.958 < 0.15) |
-| **OMAB.MX** | SELL / AVOID | $207.56 | 0.005 | BEAR | BEAR | Low conviction (DCS=0.005 < 0.15) and Bear trend (Close <= SMA 100) |
+| **AAPL** | SELL / AVOID | $5,381.45 | -0.807 | BULL | BULL | Low conviction (DCS=-0.807 < 0.15) |
+| **AC.MX** | SELL / AVOID | $192.62 | -0.128 | BEAR | BEAR | Low conviction (DCS=-0.128 < 0.15) and Bear trend (Close <= SMA 100) |
+| **AMXB.MX** | SELL / AVOID | $19.59 | -0.190 | BEAR | BEAR | Low conviction (DCS=-0.190 < 0.15) and Bear trend (Close <= SMA 100) |
+| **AMZN** | SELL / AVOID | $4,411.99 | -0.938 | BULL | BEAR | Low conviction (DCS=-0.938 < 0.15) |
+| **ASURB.MX** | SELL / AVOID | $426.13 | 0.008 | BEAR | BEAR | Low conviction (DCS=0.008 < 0.15) and Bear trend (Close <= SMA 100) |
+| **BBAJIOO.MX** | BUY / HOLD | $56.83 | 0.828 | BULL | BULL | Strong conviction (DCS=0.828) and bull trend (Close > SMA 100) | Eligible for active DCA |
+| **BIMBOA.MX** | BUY / HOLD | $58.27 | 0.257 | BULL | BEAR | Strong conviction (DCS=0.257) and bull trend (Close > SMA 100) | DCA restricted (Close <= SMA 20) |
+| **CEMEXCPO.MX** | SELL / AVOID | $17.81 | -0.333 | BEAR | BEAR | Low conviction (DCS=-0.333 < 0.15) and Bear trend (Close <= SMA 100) |
+| **CUERVO.MX** | SELL / AVOID | $14.44 | 0.379 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
+| **FEMSAUBD.MX** | SELL / AVOID | $203.78 | 0.164 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
+| **GAPB.MX** | SELL / AVOID | $344.30 | 0.094 | BEAR | BEAR | Low conviction (DCS=0.094 < 0.15) and Bear trend (Close <= SMA 100) |
+| **GCC.MX** | SELL / AVOID | $190.73 | -0.044 | BEAR | BEAR | Low conviction (DCS=-0.044 < 0.15) and Bear trend (Close <= SMA 100) |
+| **GENTERA.MX** | SELL / AVOID | $40.15 | -0.239 | BEAR | BULL | Low conviction (DCS=-0.239 < 0.15) and Bear trend (Close <= SMA 100) |
+| **GFNORTEO.MX** | BUY / HOLD | $192.67 | 0.171 | BULL | BULL | Strong conviction (DCS=0.171) and bull trend (Close > SMA 100) |
+| **GMEXICOB.MX** | SELL / AVOID | $223.47 | -0.662 | BULL | BEAR | Low conviction (DCS=-0.662 < 0.15) |
+| **GOOGL** | SELL / AVOID | $5,763.60 | -0.882 | BEAR | BEAR | Low conviction (DCS=-0.882 < 0.15) and Bear trend (Close <= SMA 100) |
+| **GRUMAB.MX** | SELL / AVOID | $251.44 | 0.891 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
+| **KIMBERA.MX** | SELL / AVOID | $39.31 | -0.294 | BULL | BEAR | Low conviction (DCS=-0.294 < 0.15) |
+| **MSFT** | SELL / AVOID | $8,615.93 | -0.830 | BULL | BULL | Low conviction (DCS=-0.830 < 0.15) |
+| **NVDA** | SELL / AVOID | $3,749.78 | -0.963 | BULL | BULL | Low conviction (DCS=-0.963 < 0.15) |
+| **OMAB.MX** | SELL / AVOID | $207.56 | -0.012 | BEAR | BEAR | Low conviction (DCS=-0.012 < 0.15) and Bear trend (Close <= SMA 100) |
 | **ORBIA.MX** | SELL / AVOID | $20.73 | 1.000 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
-| **PE&OLES.MX** | SELL / AVOID | $897.79 | -0.808 | BULL | BULL | Low conviction (DCS=-0.808 < 0.15) |
-| **PINFRA.MX** | SELL / AVOID | $261.56 | 0.262 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
+| **PE&OLES.MX** | SELL / AVOID | $897.79 | -0.803 | BULL | BULL | Low conviction (DCS=-0.803 < 0.15) |
+| **PINFRA.MX** | SELL / AVOID | $261.56 | 0.261 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
 | **VESTA.MX** | SELL / AVOID | $58.71 | 0.238 | BEAR | BULL | Bear trend (Close <= SMA 100) |
-| **WALMEX.MX** | SELL / AVOID | $46.89 | 0.202 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
+| **WALMEX.MX** | SELL / AVOID | $46.89 | 0.194 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
