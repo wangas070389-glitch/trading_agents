@@ -132,4 +132,5 @@
 | 2026-08-31 | BONDIA | INTEREST | 1.00 | $62.54 | $+62.54 | Market | FILLED | Yield on cash for 7.0003 days. |
 | 2026-09-01 | CASH | DEPOSIT | 1.00 | $1000.00 | $+1,000.00 | Market | FILLED | Monthly savings contribution |
 | 2026-09-01 | BONDIA | INTEREST | 1.00 | $7.76 | $+7.76 | Market | FILLED | Yield on cash for 0.8507 days. |
+| 2026-09-01 | BONDIA | INTEREST | 1.00 | $0.08 | $+0.08 | Market | FILLED | Yield on cash for 0.0091 days. |
 ---
