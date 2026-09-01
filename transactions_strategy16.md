@@ -289,4 +289,5 @@
 | 2026-09-01 | CASH | DEPOSIT | 1.0000 | $2000.0000 | $0.00 | $-2,000.00 | Monthly DCA savings contribution |
 | 2026-09-01 | URTY | BUY_URTY | 138.0312 | $1312.8344 | $0.00 | $-181,212.07 | Bull swing pullback entry |
 | 2026-09-01 | BONDIA | INTEREST | 1.0000 | $0.0326 | $0.00 | $0.03 | Accrued interest on sweep balance |
+| 2026-09-01 | BONDIA | INTEREST | 1.0000 | $0.4582 | $0.00 | $0.46 | Accrued interest on sweep balance |
 ---

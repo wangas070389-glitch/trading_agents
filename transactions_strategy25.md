@@ -223,4 +223,5 @@
 | 2026-09-01 | BONDIA | INTEREST | 1.0000 | $24.8310 | $+24.83 | Market | FILLED | Sweep interest |
 | 2026-09-01 | GMEXICOB.MX | SELL | 154.2671 | $222.9700 | $+34,297.19 | Market | FILLED | MACD crossover or Trend break exit |
 | 2026-09-01 | BONDIA | INTEREST | 1.0000 | $0.3180 | $+0.32 | Market | FILLED | Sweep interest |
+| 2026-09-01 | BONDIA | INTEREST | 1.0000 | $4.4970 | $+4.50 | Market | FILLED | Sweep interest |
 ---
