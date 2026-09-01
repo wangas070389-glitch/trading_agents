@@ -285,4 +285,7 @@
 | 2026-08-24 | BONDIA | INTEREST | 1.0000 | $1.5707 | $0.00 | $1.57 | Accrued interest on sweep balance |
 | 2026-08-24 | BONDIA | INTEREST | 1.0000 | $2.3279 | $0.00 | $2.33 | Accrued interest on sweep balance |
 | 2026-08-31 | BONDIA | INTEREST | 1.0000 | $249.1379 | $0.00 | $249.14 | Accrued interest on sweep balance |
+| 2026-09-01 | BONDIA | INTEREST | 1.0000 | $30.3125 | $0.00 | $30.31 | Accrued interest on sweep balance |
+| 2026-09-01 | CASH | DEPOSIT | 1.0000 | $2000.0000 | $0.00 | $-2,000.00 | Monthly DCA savings contribution |
+| 2026-09-01 | URTY | BUY_URTY | 138.0312 | $1312.8344 | $0.00 | $-181,212.07 | Bull swing pullback entry |
 ---

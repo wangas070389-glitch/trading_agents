@@ -437,6 +437,10 @@
 | 2026-08-31 | COST | SELL-REJECTED | 23 | 943.89 | +21,709.47 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-08-31 | AMD | SELL-REJECTED | 46 | 470.72 | +21,653.12 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-08-31 | AAPL | BUY-REJECTED | 69 | 316.85 | +21,862.65 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
+| 2026-09-01 | MSFT | SELL-REJECTED | 49 | 501.33 | +24,565.17 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-09-01 | COST | SELL-REJECTED | 23 | 943.09 | +21,690.98 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-09-01 | AMD | SELL-REJECTED | 46 | 455.25 | +20,941.50 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-09-01 | AAPL | BUY-REJECTED | 66 | 324.87 | +21,441.52 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 ---
 
 
@@ -444,7 +448,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $88,202.88 USD
+* **Initial Starting Capital**: $86,068.59 USD
 * **Total Deployed Capital**: $70,072.61 USD (-57.5% invested)
 * **Unallocated Cash Reserves**: $-191,450.15 USD (157.0% cash)
 * **Current Portfolio Market Value**: $-121,911.22 USD (including cash)

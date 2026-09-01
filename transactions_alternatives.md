@@ -115,6 +115,7 @@
 | 2026-08-24 | GLD | BUY-REJECTED | 379.0000 | $425.1000 | $0.00 | $161,112.90 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-08-24 | GLD | BUY-REJECTED | 378.0000 | $426.7700 | $0.00 | $161,319.06 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-08-24 | GLD | BUY-REJECTED | 378.0000 | $426.6900 | $0.00 | $161,288.82 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-01 | CASH | DEPOSIT | 1.0000 | $1000.0000 | $0.00 | $-1,000.00 | Monthly savings contribution |
 ---
 
 
@@ -122,7 +123,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $88,202.88 USD
-* **Total Deployed Capital**: $127,119.29 USD (15.7% invested)
-* **Unallocated Cash Reserves**: $680,211.15 USD (83.9% cash)
-* **Current Portfolio Market Value**: $810,366.89 USD (including cash)
+* **Initial + Inflow Capital**: $87,085.37 USD
+* **Total Deployed Capital**: $127,119.29 USD (15.6% invested)
+* **Unallocated Cash Reserves**: $681,211.15 USD (83.8% cash)
+* **Current Portfolio Market Value**: $812,742.59 USD (including cash)

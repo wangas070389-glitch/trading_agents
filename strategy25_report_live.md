@@ -1,11 +1,9 @@
 # Strategy 25 Live Status Report
 
-**Last Run:** 2026-08-31 21:32:55
-**Total Capital:** $199,297.67 MXN
-**Cash Balance:** $163,257.78 MXN
+**Last Run:** 2026-09-01 17:57:59
+**Total Capital:** $197,579.80 MXN
+**Cash Balance:** $197,579.80 MXN
 
 ## Current Holdings
 
-| Ticker | Shares | Buy Price | Current Price | Return | Peak Price |
-| :--- | ---: | ---: | ---: | ---: | ---: |
-| GMEXICOB.MX | 154.2671 | $231.99 | $233.62 | +0.70% | $239.68 |
+No active stock positions.

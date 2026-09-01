@@ -8,6 +8,7 @@
 | 2026-08-01 | CASH | DEPOSIT | 1.00 | $1000.00 | $0.00 | $-1,000.00 | Monthly savings contribution |
 | 2026-08-01 | AVGO | BUY-REJECTED | 2.00 | $389.28 | $0.00 | $778.56 | Alpaca accepted |
 | 2026-08-05 | AVGO | SELL | 65.00 | $418.16 | $78.82 | $27,101.58 | Quarterly exit (DCS suppressed) |
+| 2026-09-01 | CASH | DEPOSIT | 1.00 | $1000.00 | $0.00 | $-1,000.00 | Monthly savings contribution |
 ---
 
 
@@ -15,7 +16,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $88,202.88 USD
+* **Initial + Inflow Capital**: $87,087.22 USD
 * **Total Deployed Capital**: $0.00 USD (0.0% invested)
-* **Unallocated Cash Reserves**: $104,320.17 USD (100.0% cash)
-* **Current Portfolio Market Value**: $104,320.17 USD (including cash)
+* **Unallocated Cash Reserves**: $105,320.17 USD (100.0% cash)
+* **Current Portfolio Market Value**: $105,320.17 USD (including cash)
