@@ -3,8 +3,8 @@
   "capital_injections": 0.0,
   "total_funded_capital": 100000.16,
   "nav": 102106.04,
-  "total_capital": 100171.30038347226,
-  "cash_balance": 82161.97,
+  "total_capital": 100171.64038347226,
+  "cash_balance": 82162.31,
   "holdings_value": 56333.75,
   "net_trading_profit": 2105.88,
   "net_trading_return_pct": 2.11,
@@ -18,5 +18,5 @@
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-09-02 21:13:38"
+  "last_updated": "2026-09-02 22:01:52"
 }

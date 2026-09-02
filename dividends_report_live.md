@@ -1,9 +1,9 @@
 # Strategy 8: Dividend Quality & Yield Execution Report
-**Execution Date:** 2026-09-02 21:12:26 | **Strategy Version:** Live V1
+**Execution Date:** 2026-09-02 22:00:26 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $205,074.49 MXN
-* **Total Cash Balance:** $43,559.02 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $205,074.75 MXN
+* **Total Cash Balance:** $43,559.28 MXN (Parked in Bondia Compound at 6.53% APR)
 * **Equity Exposure:** 78.8%
 * **Days Since Last Rebalance:** 28 days
 
@@ -16,7 +16,7 @@
 | **FUNO11.MX** | 1327.21 | $30.68 | $29.19 | $38,741.35 | $2.56 MXN/sh (Annual: $3,397.67 MXN) | Ex: 2026-08-07 / Pay: N/A | 20.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $0.9119 MXN over 0.1154 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $0.2635 MXN over 0.0333 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
@@ -37,8 +37,8 @@
 | **KO** | SELL / AVOID | 2.41% | 62.5% | 62.5% | $88.24 > SMA $77.70 | Yield below 2.5% |
 | **KOFUBL.MX** | BUY / HOLD | 4.10% | 59.9% | 59.9% | $190.41 > SMA $177.81 | Passed all quality checks. Score: 0.0000 |
 | **LOW** | SELL / AVOID | 2.50% | 41.0% | 41.0% | $199.84 <= SMA $234.34 | Bear trend (Close <= SMA 200) |
-| **MCD** | SELL / AVOID | 2.85% | 59.7% | 59.7% | $260.95 <= SMA $292.25 | Bear trend (Close <= SMA 200) |
-| **MMM** | SELL / AVOID | 1.83% | 53.6% | 53.6% | $168.75 > SMA $159.45 | Yield below 2.5% and Debt/Equity (4.38) exceeds 1.5 |
+| **MCD** | SELL / AVOID | 2.85% | 59.7% | 59.7% | $260.95 <= SMA $292.43 | Bear trend (Close <= SMA 200) |
+| **MMM** | SELL / AVOID | 1.83% | 53.6% | 53.6% | $168.75 > SMA $159.42 | Yield below 2.5% and Debt/Equity (4.38) exceeds 1.5 |
 | **O** | SELL / AVOID | 5.30% | 236.4% | 236.4% | $61.50 > SMA $60.47 | Payout Ratio (236.4%) out of bounds and FCF Payout (236.4%) exceeds limit |
 | **OMAB.MX** | SELL / AVOID | 5.82% | 85.8% | 85.8% | $212.98 <= SMA $235.78 | Payout Ratio (85.8%) out of bounds and FCF Payout (85.8%) exceeds limit and Debt/Equity (1.54) exceeds 1.5 and Bear trend (Close <= SMA 200) |
 | **ORBIA.MX** | SELL / AVOID | 0.00% | 0.0% | 0.0% | $21.20 > SMA $20.48 | Yield below 2.5% and Payout Ratio (0.0%) out of bounds and Non-positive EPS (-2.72) and Debt/Equity (2.18) exceeds 1.5 |
