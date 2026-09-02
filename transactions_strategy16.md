@@ -294,4 +294,5 @@
 | 2026-09-02 | BONDIA | INTEREST | 1.0000 | $2.9896 | $0.00 | $2.99 | Accrued interest on sweep balance |
 | 2026-09-02 | URTY | SELL_URTY | 138.0312 | $1346.5694 | $0.00 | $185,868.55 | Exit target IWM via REGIME_FLIP |
 | 2026-09-02 | BONDIA | INTEREST | 1.0000 | $0.6257 | $0.00 | $0.63 | Accrued interest on sweep balance |
+| 2026-09-02 | BONDIA | INTEREST | 1.0000 | $4.2492 | $0.00 | $4.25 | Accrued interest on sweep balance |
 ---
