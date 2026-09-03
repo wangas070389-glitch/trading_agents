@@ -182,4 +182,5 @@
 | 2026-09-03 | BONDIA | INTEREST | 1.0000 | $34.3201 | $0.00 | $34.32 | Accrued interest on sweep balance |
 | 2026-09-03 | BONDIA | INTEREST | 1.0000 | $2.2774 | $0.00 | $2.28 | Accrued interest on sweep balance |
 | 2026-09-03 | TQQQ | BUY_TQQQ | 153.6511 | $1221.9490 | $0.00 | $-187,753.82 | Bull breakout entry |
+| 2026-09-03 | BONDIA | INTEREST | 1.0000 | $0.0568 | $0.00 | $0.06 | Accrued interest on sweep balance |
 ---
