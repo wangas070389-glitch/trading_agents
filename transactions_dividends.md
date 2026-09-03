@@ -320,4 +320,6 @@
 | 2026-09-02 | BONDIA | INTEREST | 1.00 | $0.14 | $+0.14 | Market | FILLED | Yield on cash for 0.0173 days. |
 | 2026-09-02 | BONDIA | INTEREST | 1.00 | $0.91 | $+0.91 | Market | FILLED | Yield on cash for 0.1154 days. |
 | 2026-09-02 | BONDIA | INTEREST | 1.00 | $0.26 | $+0.26 | Market | FILLED | Yield on cash for 0.0333 days. |
+| 2026-09-03 | BONDIA | INTEREST | 1.00 | $6.10 | $+6.10 | Market | FILLED | Yield on cash for 0.7716 days. |
+| 2026-09-03 | BBAJIOO.MX | DIVIDEND | 707.59 | $1.91 | $+1,349.37 | Market | FILLED | Reinvested dividend paid on 2026-09-03 |
 ---
