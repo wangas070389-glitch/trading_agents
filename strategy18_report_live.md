@@ -1,33 +1,33 @@
 # Strategy 18: Efficient Frontier Allocation Execution Report
-**Execution Date:** 2026-09-03 16:32:44 | **Strategy Version:** Live V1
-* **Total Portfolio NAV:** $245,790.29 USD
+**Execution Date:** 2026-09-03 18:00:39 | **Strategy Version:** Live V1
+* **Total Portfolio NAV:** $247,112.84 USD
 * **Inception Date:** 2026-08-05 (29 calendar days elapsed)
 * **Virtual Capital Base:** $100,000.00 USD
-* **USD/MXN Rate:** 16.9680
+* **USD/MXN Rate:** 16.9397
 
 ## 1. Portfolio Performance Summary
 | Metric | Realized (live) |
 | :--- | ---: |
-| Return since inception | +145.79% |
-| Sharpe (Rf 6.53%) | +9.18 |
-| Realized Volatility (Ann.) | 141.06% |
+| Return since inception | +147.11% |
+| Sharpe (Rf 6.53%) | +9.25 |
+| Realized Volatility (Ann.) | 140.79% |
 | Max drawdown | -0.29% |
 
 ## 2. Current Allocations & Sleeves
 | Sleeve | Target weight | Current weight | TR since inception | Last mark date |
 | :--- | ---: | ---: | ---: | :--- |
 | S1 Alpha Growth (S1) | 4.5% | 4.5% | -4.60% | 2026-09-03 |
-| S2 MACD Systematic (S2) | 4.2% | 4.2% | -3.04% | 2026-09-02 |
+| S2 MACD Systematic (S2) | 4.2% | 4.2% | -2.09% | 2026-09-03 |
 | S4 US DCF Value-Growth (S4) | 3.9% | 3.9% | -0.08% | 2026-09-03 |
-| S5 Alternatives (S5) | 25.0% | 25.0% | +576.32% | 2026-09-03 |
+| S5 Alternatives (S5) | 25.0% | 24.9% | +576.32% | 2026-09-03 |
 | S6 High-Beta Momentum (S6) | 11.7% | 11.7% | -1.29% | 2026-09-03 |
-| S8 Dividend Quality (S8) | 9.4% | 9.4% | +1.07% | 2026-09-02 |
-| S9 AI Regime Stat-Arb (S9) | 7.4% | 7.4% | -0.11% | 2026-09-02 |
-| S12 VTTL Trend+Vol (S12) | 4.7% | 4.7% | -0.89% | 2026-09-02 |
-| S13 CARA Cross-Asset (S13) | 5.2% | 5.1% | -0.89% | 2026-09-02 |
-| S14 HEDGE Aggregator (S14) | 6.4% | 6.4% | +16.35% | 2026-09-02 |
-| S15 TRACK Tracker (S15) | 6.6% | 6.6% | +16.36% | 2026-09-02 |
-| S17 FIBRAs Dynamic (S17) | 11.0% | 11.0% | +1.53% | 2026-09-02 |
+| S8 Dividend Quality (S8) | 9.4% | 9.5% | +2.51% | 2026-09-03 |
+| S9 AI Regime Stat-Arb (S9) | 7.4% | 7.3% | -0.34% | 2026-09-03 |
+| S12 VTTL Trend+Vol (S12) | 4.7% | 4.7% | +1.07% | 2026-09-03 |
+| S13 CARA Cross-Asset (S13) | 5.2% | 5.2% | +1.04% | 2026-09-03 |
+| S14 HEDGE Aggregator (S14) | 6.4% | 6.4% | +17.84% | 2026-09-03 |
+| S15 TRACK Tracker (S15) | 6.6% | 6.6% | +17.84% | 2026-09-03 |
+| S17 FIBRAs Dynamic (S17) | 11.0% | 11.0% | +1.73% | 2026-09-03 |
 
 ## 3. Rebalances
 | Date | NAV | Max weight drift |
