@@ -486,6 +486,11 @@
 | 2026-09-03 | AMD | SELL-REJECTED | 46 | 457.12 | +21,027.52 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-09-03 | AAPL | BUY-REJECTED | 67 | 327.24 | +21,924.92 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 | 2026-09-03 | NVDA | BUY-REJECTED | 96 | 229.96 | +22,076.16 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
+| 2026-09-03 | MSFT | SELL-REJECTED | 49 | 510.12 | +24,995.88 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-09-03 | COST | SELL-REJECTED | 23 | 925.41 | +21,284.43 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-09-03 | AMD | SELL-REJECTED | 46 | 456.16 | +20,983.36 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-09-03 | AAPL | BUY-REJECTED | 67 | 328.21 | +21,990.07 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
+| 2026-09-03 | NVDA | BUY-REJECTED | 96 | 228.45 | +21,931.20 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 ---
 
 
@@ -493,7 +498,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $88,615.43 USD
+* **Initial Starting Capital**: $88,361.60 USD
 * **Total Deployed Capital**: $70,072.61 USD (-57.5% invested)
 * **Unallocated Cash Reserves**: $-191,450.15 USD (157.0% cash)
 * **Current Portfolio Market Value**: $-121,911.22 USD (including cash)
