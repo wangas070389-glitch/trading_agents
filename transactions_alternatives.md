@@ -118,6 +118,7 @@
 | 2026-09-01 | CASH | DEPOSIT | 1.0000 | $1000.0000 | $0.00 | $-1,000.00 | Monthly savings contribution |
 | 2026-09-03 | BTC-USD | BUY-REJECTED | 1.9917 | $81156.9219 | $0.00 | $161,640.24 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-09-03 | BTC-USD | BUY-REJECTED | 1.9821 | $81580.0469 | $0.00 | $161,699.81 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-03 | BTC-USD | BUY-REJECTED | 1.9786 | $81727.1172 | $0.00 | $161,705.27 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
 ---
 
 
@@ -125,7 +126,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $88,361.60 USD
+* **Initial + Inflow Capital**: $88,507.58 USD
 * **Total Deployed Capital**: $127,119.29 USD (15.7% invested)
 * **Unallocated Cash Reserves**: $681,211.15 USD (84.0% cash)
-* **Current Portfolio Market Value**: $810,849.69 USD (including cash)
+* **Current Portfolio Market Value**: $810,866.12 USD (including cash)
