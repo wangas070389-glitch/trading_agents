@@ -370,4 +370,5 @@
 | 2026-09-03 | TQQQ | EXIT_LONG | 155.0080 | $1218.1964 | $0.00 | $188,830.18 | Exit: EOD_CLOSE |
 | 2026-09-03 | BONDIA | INTEREST | 1.0000 | $1.0748 | $0.00 | $1.07 | Accrued interest on sweep balance |
 | 2026-09-04 | BONDIA | INTEREST | 1.0000 | $27.7502 | $0.00 | $27.75 | Accrued interest on sweep balance |
+| 2026-09-04 | BONDIA | INTEREST | 1.0000 | $3.2831 | $0.00 | $3.28 | Accrued interest on sweep balance |
 ---
