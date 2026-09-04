@@ -3,8 +3,8 @@
   "capital_injections": 0.0,
   "total_funded_capital": 100000.16,
   "nav": 102106.04,
-  "total_capital": 100661.98075450008,
-  "cash_balance": 82180.77,
+  "total_capital": 100652.09926632576,
+  "cash_balance": 82180.92,
   "holdings_value": 56333.75,
   "net_trading_profit": 2105.88,
   "net_trading_return_pct": 2.11,
@@ -13,10 +13,10 @@
       "ticker": "NVDA",
       "shares": 80.25190539450564,
       "buy_price": 224.7100067138672,
-      "last_price": 230.2899932861328,
+      "last_price": 230.1649932861328,
       "peak_price": 231.76499938964844,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-09-04 17:46:17"
+  "last_updated": "2026-09-04 18:08:09"
 }
