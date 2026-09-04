@@ -384,6 +384,7 @@
 | 2026-09-04 | GOOGL | BUY | 1 | 5697.92 | -5,703.62 | Market | FILLED | Alpaca Order 620b3684-34c2-4d5f-9b38-fbed3ce1d9cb | 1D MACD systematic signal |
 | 2026-09-04 | BONDIA | INTEREST | 1 | 0.34 | +0.3352 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0873 days. |
 | 2026-09-04 | BONDIA | INTEREST | 1 | 0.06 | +0.0592 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0154 days. |
+| 2026-09-04 | BONDIA | INTEREST | 1 | 0.45 | +0.4510 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1174 days. |
 ---
 
 
@@ -393,5 +394,5 @@
 
 * **Initial Starting Capital (2026-06-03)**: 118,561.61 MXN
 * **Total Deployed Capital**: 98,945.09 MXN (86.9% invested)
-* **Unallocated Cash Reserves**: 21,172.13 MXN (18.6% cash)
-* **Current Portfolio Market Value**: 113,840.99 MXN (including cash)
+* **Unallocated Cash Reserves**: 21,172.58 MXN (18.6% cash)
+* **Current Portfolio Market Value**: 113,810.94 MXN (including cash)
