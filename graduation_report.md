@@ -1,5 +1,5 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-09-04 21:53:21 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-09-04 22:51:53 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -9,11 +9,11 @@
 | S4 US DCF Value-Growth | **ON TRACK** | 73 | +2.3% | +11.3% | PASS | 1.99 | -2.0% | -15.2% | 4.56 | 1.14 (4.0y) |
 | S10 Intraday VWAP | **ON TRACK** | 64 | +1.4% | +8.2% | PASS | 3.35 | -0.9% | -4.0% | 0.52 | 3.27 (0.2y) |
 | S11 Intraday CCI-ADX | **ON TRACK** | 64 | +2.9% | +16.7% | PASS | 3.82 | -2.8% | -8.4% | 0.06 | 0.35 (0.2y) |
-| S29 Golden Stat-Arb | **NOT READY** | 51 | -49.5% | -354.5% | FAIL | 3.72 | -0.8% | -65.2% | 25.18 | 5.04 (5.0y) |
+| S29 Golden Stat-Arb | **NOT READY** | 51 | -49.5% | -354.5% | FAIL | 3.73 | -0.8% | -65.2% | 25.18 | 5.04 (5.0y) |
 | S12 VTTL Trend+Vol | **NOT READY** | 60 | +1.1% | +6.4% | FAIL | 1.26 | -6.5% | -26.7% | 10.35 | 0.46 (22.5y) |
 | S30 Golden MACD US | **NOT READY** | 51 | -49.7% | -355.4% | FAIL | -0.48 | -2.1% | -28.8% | 8.80 | 0.55 (16.0y) |
 | S2 MACD Systematic | **NOT READY** | 55 | -4.8% | -31.8% | FAIL | 2.23 | -6.4% | -11.9% | 8.78 | 1.76 (5.0y) |
-| S27 Golden Hurst | **NOT READY** | 51 | -49.5% | -354.5% | FAIL | 3.72 | -0.8% | -61.4% | 7.68 | 0.48 (16.0y) |
+| S27 Golden Hurst | **NOT READY** | 51 | -49.5% | -354.5% | FAIL | 3.73 | -0.8% | -61.4% | 7.68 | 0.48 (16.0y) |
 | S25 Golden MACD BMV | **NOT READY** | 51 | -50.6% | -361.9% | FAIL | 0.87 | -1.6% | -12.7% | 7.20 | 0.45 (16.0y) |
 | S23 Calculus S&R | **NOT READY** | 51 | -48.5% | -347.2% | FAIL | 0.79 | -13.9% | -96.7% | 6.72 | 0.42 (16.0y) |
 | S8 Dividend Quality | **NOT READY** | 71 | +0.8% | +3.9% | FAIL | 1.67 | -2.3% | -14.2% | 5.60 | 1.12 (5.0y) |
