@@ -1,26 +1,26 @@
 # Strategy 16: Multi-Asset HMM Swing Router Execution Report
-**Execution Date:** 2026-09-04 22:51:29 | **Strategy Version:** Router V2 (Hybrid Swing)
+**Execution Date:** 2026-09-05 22:43:14 | **Strategy Version:** Router V2 (Hybrid Swing)
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $206,087.89 MXN
-* **Total Cash Balance:** $206,087.89 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Total Portfolio NAV:** $206,124.52 MXN
+* **Total Cash Balance:** $206,124.52 MXN (Parked compounding in Bondia sweep at 6.53% APR)
 * **Equity Exposure:** 0.0%
-* **Active Target Index:** **QQQ** (Regime: State 2 - All assets decoded to Chop. Reverting to default high-liquidity instrument QQQ.)
+* **Active Target Index:** **IWM** (Regime: State 0 - Strongest decoded intraday trend state on IWM (Score: 0.099))
 
 ## 2. Current Holdings
 | Ticker | Type | Side | Shares | Buy Price (MXN) | Last Price (MXN) | Market Value (MXN) |
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $1.5000 MXN sweep interest.
+* **[INTEREST ACCRUED]** Cash reserves earned $36.6331 MXN sweep interest.
 * No trades or rebalancing actions triggered in this 30-minute interval.
 
 ## 4. Multi-Asset HMM Telemetry
 * Decoded Regimes:
-  * **QQQ:** State 2 (Trend Score: -0.500)
-  * **SPY:** State 2 (Trend Score: -0.500)
-  * **SOXX:** State 2 (Trend Score: -0.500)
-  * **IWM:** State 2 (Trend Score: -0.500)
-* Active Telemetry (QQQ):
-  * Base Price: $719.06 USD | ATR (14): 2.38
-  * VWAP: $718.57 USD (Lower: $714.99 | Upper: $722.14)
+  * **QQQ:** State 0 (Trend Score: 0.031)
+  * **SPY:** State 0 (Trend Score: 0.092)
+  * **SOXX:** State 0 (Trend Score: 0.025)
+  * **IWM:** State 0 (Trend Score: 0.099)
+* Active Telemetry (IWM):
+  * Base Price: $295.95 USD | ATR (14): 0.94
+  * VWAP: $295.95 USD (Lower: $294.55 | Upper: $297.36)
