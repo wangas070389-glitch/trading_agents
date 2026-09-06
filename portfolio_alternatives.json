@@ -35,7 +35,7 @@
       "ticker": "USDJPY=X",
       "shares": 414,
       "buy_price": 159.4499969482422,
-      "last_price": 156.2209930419922,
+      "last_price": 156.25100708007812,
       "peak_price": 159.4499969482422,
       "armed": false,
       "target_weight": 0.15,
@@ -46,7 +46,7 @@
       "ticker": "USDMXN=X",
       "shares": 1213,
       "buy_price": 17.14600944519043,
-      "last_price": 16.878000259399414,
+      "last_price": 16.882999420166016,
       "peak_price": 17.14600944519043,
       "armed": false,
       "target_weight": 0.15,
@@ -54,5 +54,5 @@
       "entry_date": "2026-08-07"
     }
   ],
-  "last_updated": "2026-09-05 22:42:24"
+  "last_updated": "2026-09-06 22:45:29"
 }
