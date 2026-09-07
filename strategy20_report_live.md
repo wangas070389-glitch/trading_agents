@@ -1,17 +1,17 @@
 # Strategy 20: Hurst Exponent & FBM Live Execution Report
-**Execution Timestamp:** 2026-09-07 19:01:26 | **Strategy Version:** Live V1
+**Execution Timestamp:** 2026-09-07 22:00:00 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $181,057.39 MXN
+* **Total Portfolio NAV:** $180,766.94 MXN
 * **Total Cash sweep Balance:** $0.00 MXN (Parked in Bondia compound at 6.53% APR)
 * **Equity Exposure:** 100.0%
 * **Asset Allocation Target:** TQQQ
-* **USD/MXN Exchange Rate:** 16.9312
+* **USD/MXN Exchange Rate:** 16.9040
 
 ## 2. Current Holdings
 | Ticker | Shares Held | Buy Price (USD) | Last Price (USD) | Market Value (USD) | Market Value (MXN) | Target Weight |
 | :--- | :---: | :---: | :---: | ---: | ---: | :---: |
-| **TQQQ** | 147.7648 | $79.71 | $72.37 | $10,693.74 | $181,057.39 | 100.0% |
+| **TQQQ** | 147.7648 | $79.84 | $72.37 | $10,693.74 | $180,766.94 | 100.0% |
 
 ## 3. Hurst & FBM Regime Estimates
 * **Rolling Hurst Exponent ($H_t$):** 0.4169
