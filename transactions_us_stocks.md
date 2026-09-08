@@ -555,6 +555,10 @@
 | 2026-09-08 | COST | SELL-REJECTED | 23 | 909.99 | +20,929.88 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-09-08 | AAPL | BUY-REJECTED | 68 | 316.28 | +21,507.04 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 | 2026-09-08 | NVDA | BUY-REJECTED | 96 | 225.97 | +21,693.13 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
+| 2026-09-08 | MSFT | SELL-REJECTED | 49 | 493.95 | +24,203.55 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-09-08 | COST | SELL-REJECTED | 23 | 910.18 | +20,934.14 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-09-08 | AAPL | BUY-REJECTED | 68 | 316.22 | +21,502.96 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
+| 2026-09-08 | NVDA | BUY-REJECTED | 96 | 225.73 | +21,670.08 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 ---
 
 
@@ -562,7 +566,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $86,846.74 USD
+* **Initial Starting Capital**: $86,724.16 USD
 * **Total Deployed Capital**: $70,072.61 USD (-57.3% invested)
 * **Unallocated Cash Reserves**: $-191,788.01 USD (156.9% cash)
 * **Current Portfolio Market Value**: $-122,249.08 USD (including cash)

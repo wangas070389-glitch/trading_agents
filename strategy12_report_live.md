@@ -1,9 +1,9 @@
 # Strategy 12: VTTL Live Report
-**Execution:** 2026-09-08 18:20:03 | **Signal date:** 2026-09-04
+**Execution:** 2026-09-08 21:20:21 | **Signal date:** 2026-09-08
 
-* **NAV:** $206,782.28 MXN | **Cash (Bondia):** $101,103.29 MXN | **TQQQ:** $105,678.99 MXN
-* **Trend (QQQ>SMA200):** ON | **Vol 20d:** 12.9% | **Exposicion objetivo:** 1.50x
-* **w_TQQQ:** actual 0.511 -> objetivo 0.500
+* **NAV:** $205,979.78 MXN | **Cash (Bondia):** $101,105.55 MXN | **TQQQ:** $104,874.23 MXN
+* **Trend (QQQ>SMA200):** ON | **Vol 20d:** 12.8% | **Exposicion objetivo:** 1.50x
+* **w_TQQQ:** actual 0.509 -> objetivo 0.500
 
 ## Acciones
-* Sin cambios.
+* Dentro de banda (20%); sin operacion.
