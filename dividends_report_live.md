@@ -1,9 +1,9 @@
 # Strategy 8: Dividend Quality & Yield Execution Report
-**Execution Date:** 2026-09-08 21:19:46 | **Strategy Version:** Live V1
+**Execution Date:** 2026-09-08 22:03:14 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $205,711.76 MXN
-* **Total Cash Balance:** $44,957.13 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $205,712.01 MXN
+* **Total Cash Balance:** $44,957.38 MXN (Parked in Bondia Compound at 6.53% APR)
 * **Equity Exposure:** 78.1%
 * **Days Since Last Rebalance:** 34 days
 
@@ -16,7 +16,7 @@
 | **FUNO11.MX** | 1327.21 | $30.68 | $29.72 | $39,444.77 | $2.56 MXN/sh (Annual: $3,397.67 MXN) | Ex: 2026-08-07 / Pay: N/A | 20.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $1.0214 MXN over 0.1253 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $0.2462 MXN over 0.0302 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
@@ -35,7 +35,7 @@
 | **GRUMAB.MX** | SELL / AVOID | 2.42% | 23.0% | 23.0% | $238.57 <= SMA $295.17 | Yield below 2.5% and Bear trend (Close <= SMA 200) |
 | **JNJ** | SELL / AVOID | 1.95% | 60.8% | 60.8% | $269.12 > SMA $233.87 | Yield below 2.5% |
 | **KO** | SELL / AVOID | 2.41% | 62.5% | 62.5% | $88.36 > SMA $77.98 | Yield below 2.5% |
-| **KOFUBL.MX** | BUY / HOLD | 4.09% | 59.9% | 59.9% | $185.90 > SMA $178.29 | Passed all quality checks. Score: 0.0000 |
+| **KOFUBL.MX** | BUY / HOLD | 4.15% | 59.9% | 59.9% | $185.90 > SMA $178.29 | Passed all quality checks. Score: 0.0000 |
 | **LOW** | SELL / AVOID | 2.45% | 41.0% | 41.0% | $200.80 <= SMA $234.06 | Yield below 2.5% and Bear trend (Close <= SMA 200) |
 | **MCD** | SELL / AVOID | 2.91% | 59.7% | 59.7% | $255.81 <= SMA $291.64 | Bear trend (Close <= SMA 200) |
 | **MMM** | SELL / AVOID | 1.85% | 53.6% | 53.6% | $167.52 > SMA $159.51 | Yield below 2.5% and Debt/Equity (4.38) exceeds 1.5 |
