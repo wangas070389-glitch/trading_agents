@@ -1,9 +1,9 @@
 # Strategy 29 Live Status Report
 
-**Last Run:** 2026-09-09 18:20:36
+**Last Run:** 2026-09-09 21:05:58
 **HMM Regime State:** Bull
-**Total Capital:** $202,040.07 MXN
-**Cash Balance:** $202,040.07 MXN
+**Total Capital:** $202,044.22 MXN
+**Cash Balance:** $202,044.22 MXN
 
 ## Current Holdings
 
