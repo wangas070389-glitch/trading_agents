@@ -5,6 +5,10 @@ import datetime
 import subprocess
 import logging
 import argparse
+from zoneinfo import ZoneInfo
+
+from pipeline_lock import PipelineAlreadyRunning, PipelineLock
+from strategy_registry import STRATEGY_SCRIPTS
 
 # Set up directory paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -21,45 +25,6 @@ logging.basicConfig(
         logging.StreamHandler(sys.stdout)
     ]
 )
-
-# List of scripts to run in sequence
-STRATEGY_SCRIPTS = [
-    "monitor_portfolio.py",
-    "run_live_alpha_growth.py",
-    "ingest_live_macd.py",
-    "run_live_alpaca_us_stocks.py",   # S3 reactivada 2026-07-10 por instruccion del usuario (margen -44k pendiente de reconciliar)
-    "run_live_alpaca_us_stocks_dcf.py",
-    "run_live_alternatives.py",
-    "run_live_high_beta.py",
-    "run_live_dividends.py",
-    "run_live_strategy9.py",
-    "run_live_strategy10.py",
-    "run_live_strategy11.py",
-    "run_live_strategy12.py",
-    "run_live_strategy13.py",
-    "run_live_strategy14.py",
-    "run_live_strategy15.py",
-    "run_live_strategy16.py",
-    "run_live_strategy17.py",
-    "run_live_strategy19.py",
-    "run_live_strategy20.py",
-    "run_live_strategy21.py",
-    "run_live_strategy22.py",
-    "run_live_strategy23.py",
-    "run_live_strategy24.py",
-    "run_live_strategy25.py",
-    "run_live_strategy27.py",
-    "run_live_strategy29.py",
-    "run_live_strategy30.py",
-    "run_live_strategy31.py",
-    "run_live_multi_strategy.py",
-    "shadow_frontier.py",
-    "run_live_strategy18.py",
-    "compare_strategies.py",
-    "generate_clean_report.py",
-    "graduation_report.py",
-    "watchdog.py"
-]
 
 def run_script(script_name):
     script_path = os.path.join(BASE_DIR, script_name)
@@ -104,10 +69,15 @@ def run_all_strategies():
     logging.info("=" * 60)
     
     success_count = 0
-    for script in STRATEGY_SCRIPTS:
-        success = run_script(script)
-        if success:
-            success_count += 1
+    try:
+        with PipelineLock(BASE_DIR):
+            for script in STRATEGY_SCRIPTS:
+                success = run_script(script)
+                if success:
+                    success_count += 1
+    except PipelineAlreadyRunning as exc:
+        logging.error("Pipeline not started: %s", exc)
+        return False
             
     logging.info("=" * 60)
     logging.info(f"SEQUENCE COMPLETED: {success_count}/{len(STRATEGY_SCRIPTS)} scripts completed successfully.")
@@ -118,7 +88,7 @@ def is_market_hours(now):
     if now.weekday() > 4:
         return False
         
-    # Time check (8:30 AM to 3:00 PM Central Time)
+    # Time check (8:30 AM to 3:00 PM Mexico City time)
     start_time = datetime.time(8, 30)
     end_time = datetime.time(15, 0)
     current_time = now.time()
@@ -131,7 +101,7 @@ def main():
     args = parser.parse_args()
 
     logging.info("Trading Agents Scheduler Initialized.")
-    logging.info("Target Hours: Mon-Fri 8:30 AM - 3:00 PM (Local Time)")
+    logging.info("Target Hours: Mon-Fri 8:30 AM - 3:00 PM (America/Mexico_City)")
     logging.info(f"Scripts in pipeline: {', '.join(STRATEGY_SCRIPTS)}")
     
     if args.test:
@@ -145,7 +115,7 @@ def main():
     
     while True:
         try:
-            now = datetime.datetime.now()
+            now = datetime.datetime.now(ZoneInfo("America/Mexico_City")).replace(tzinfo=None)
             current_interval = (now.year, now.month, now.day, now.hour, now.minute // 30)
             
             # Print heartbeat to console/log every 30 minutes to show active status

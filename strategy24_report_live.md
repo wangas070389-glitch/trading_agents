@@ -1,16 +1,16 @@
 # Strategy 24: 30-Minute Random Forest Live Report
-**Report Generated:** 2026-07-23 22:08:33
+**Report Generated:** 2026-07-28 22:51:15
 
 ## Current Status
-* **Total Portfolio Value:** $201,315.52 MXN
+* **Total Portfolio Value:** $nan MXN
 * **Cash Balance:** $-0.00 MXN
 * **Holding Asset:** SQQQ
 
 ## ML Prediction Details
-* **Bear (SQQQ) Probability:** 44.18%
-* **Chop (CASH) Probability:** 22.12%
-* **Bull (TQQQ) Probability:** 33.70%
-* **Proposed Target:** SQQQ (Confidence: 44.18%)
+* **Bear (SQQQ) Probability:** 40.88%
+* **Chop (CASH) Probability:** 27.69%
+* **Bull (TQQQ) Probability:** 31.43%
+* **Proposed Target:** SQQQ (Confidence: 40.88%)
 * **Gate Triggered:** True (Threshold: 35.0%)
 
 ## Execution Log

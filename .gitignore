@@ -25,6 +25,8 @@ desktop.ini
 
 # Logs
 *.log
+.pipeline.lock
+.tmp_*.json
 
 # Credentials
 .env

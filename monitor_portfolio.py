@@ -3,6 +3,7 @@ import json
 import math
 import datetime
 import yfinance as yf
+from skills.file_io_utils import atomic_save_json
 
 def is_valid_price(p):
     """True if p is a usable price (finite float > 0). Guards against NaN
@@ -19,8 +20,7 @@ def load_portfolio(portfolio_path):
 
 def save_portfolio(portfolio_path, portfolio):
     """Save portfolio dict back to portfolio.json."""
-    with open(portfolio_path, "w", encoding="utf-8") as f:
-        json.dump(portfolio, f, indent=2)
+    atomic_save_json(portfolio_path, portfolio)
 
 def log_transaction(transactions_path, date_str, ticker, action, shares, price, note):
     """Append a transaction row to transactions.md."""

@@ -154,4 +154,6 @@
 | 2026-07-23 | BONDIA | INTEREST | 1.00 | $0.41 | $+0.41 | Market | FILLED | Yield on cash for 0.0563 days. |
 | 2026-07-23 | BONDIA | INTEREST | 1.00 | $0.04 | $+0.04 | Market | FILLED | Yield on cash for 0.0056 days. |
 | 2026-07-23 | BONDIA | INTEREST | 1.00 | $0.41 | $+0.41 | Market | FILLED | Yield on cash for 0.0575 days. |
+| 2026-07-28 | BONDIA | INTEREST | 1.00 | $36.21 | $+36.21 | Market | FILLED | Yield on cash for 5.0295 days. |
+| 2026-07-28 | PG | DIVIDEND | 15.48 | $18.99 | $+293.99 | Market | FILLED | Reinvested dividend paid on 2026-07-24 |
 ---

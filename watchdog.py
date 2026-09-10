@@ -39,6 +39,8 @@ import datetime
 
 import numpy as np
 import pandas as pd
+from skills.file_io_utils import atomic_save_json
+from strategy_registry import BY_RUNNER
 
 MAX_STALE_HOURS = 30          # > 1 dia habil sin actualizar = cron muerto
 MIN_DAYS_FOR_TRADE = 10       # dias habiles de gracia antes de exigir 1 trade
@@ -278,30 +280,14 @@ def check_broker_reconciliation(dir_path, now, active_strats=None):
     return findings
 
 def get_active_strategies(dir_path):
-    active_map = {
-        "run_live_alpha_growth.py": "core",
-        "ingest_live_macd.py": "macd",
-        "run_live_alpaca_us_stocks.py": "us_stocks",
-        "run_live_alpaca_us_stocks_dcf.py": "us_dcs",
-        "run_live_alternatives.py": "alternatives",
-        "run_live_high_beta.py": "high_beta",
-        "run_live_dividends.py": "dividends",
-        "run_live_strategy9.py": "strategy9",
-        "run_live_strategy10.py": "strategy10",
-        "run_live_strategy11.py": "strategy11",
-        "run_live_strategy12.py": "strategy12",
-        "run_live_strategy13.py": "strategy13",
-        "run_live_strategy14.py": "strategy14",
-        "run_live_strategy15.py": "strategy15",
-        "run_live_strategy16.py": "strategy16",
-        "run_live_strategy17.py": "strategy17",
-        "run_live_strategy18.py": "strategy18",
-        "run_live_strategy19.py": "strategy19",
-        "run_live_strategy20.py": "strategy20",
-        "run_live_strategy21.py": "strategy21",
-        "run_live_strategy22.py": "strategy22",
-        "shadow_frontier.py": "shadow_frontier",
-    }
+    # The registry owns runner-to-portfolio coverage.  This prevents new
+    # scheduled strategies from being silently downgraded as "inactive".
+    def watchdog_name(spec):
+        if spec.portfolio_file == "portfolio.json":
+            return "core"
+        return os.path.splitext(spec.portfolio_file)[0].replace("portfolio_", "")
+
+    active_map = {runner: watchdog_name(spec) for runner, spec in BY_RUNNER.items()}
     scheduler_path = os.path.join(dir_path, "scheduler.py")
     if not os.path.exists(scheduler_path):
         return set(active_map.values())
@@ -367,8 +353,7 @@ def main():
                     finding.msg = f"[INACTIVE STRATEGY] {finding.msg}"
         all_findings.extend(f)
 
-    with open(hist_path, "w", encoding="utf-8") as f:
-        json.dump(nav_hist, f, indent=1)
+    atomic_save_json(hist_path, nav_hist, indent=1)
 
     all_findings.extend(check_broker_reconciliation(dir_path, now, active_strats))
 

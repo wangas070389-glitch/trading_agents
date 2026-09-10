@@ -26,6 +26,10 @@ import os
 import json
 import math
 import datetime
+import numpy as np
+
+from strategy_registry import BY_PORTFOLIO_FILE
+from reconcile_strategy_navs import ledger_name
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(DIR, "graduation_report.md")
@@ -36,6 +40,7 @@ EVAL_MIN_DAYS = 30              # C2/C4 are only judged after this many days --
 BONDIA_HURDLE = 0.0653          # annual, the risk-free MXN sweep alternative
 DD_BREAKER = 1.25               # same tolerance as watchdog W5
 MIN_SAMPLES_FOR_STATS = 8       # daily NAV points needed for Sharpe/DD
+MAX_STALE_BUSINESS_DAYS = 2     # A go-live decision cannot use stale marks.
 
 # Backtest references. window = backtest years, sharpe/cagr/max_dd from the
 # strategy's own backtest. Sources: generate_clean_report.STRATEGY_KPIS,
@@ -188,6 +193,27 @@ def load_json(path):
     return None
 
 
+def portfolio_freshness_block(pf, today):
+    """Return a C5 block when a portfolio lacks a recent price/NAV update."""
+    data = load_json(os.path.join(DIR, pf))
+    if not isinstance(data, dict):
+        return "C5 operations: portfolio file is missing or unreadable"
+    stamp = str(data.get("last_updated", ""))
+    parsed = None
+    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d"):
+        try:
+            parsed = datetime.datetime.strptime(stamp, fmt).date()
+            break
+        except ValueError:
+            continue
+    if parsed is None:
+        return "C5 operations: portfolio last_updated is missing or invalid"
+    age = max(0, int(np.busday_count(parsed, today)))
+    if age > MAX_STALE_BUSINESS_DAYS:
+        return f"C5 operations: NAV/price mark is stale ({age} business days; maximum {MAX_STALE_BUSINESS_DAYS})"
+    return None
+
+
 def portfolio_nav(pf, usd_mxn_rate):
     """NAV in the strategy's local currency from its portfolio JSON.
     USD cash sleeves (S13-S15 hold cash_balance_usd) are converted to MXN."""
@@ -296,6 +322,14 @@ def main():
     usd_mxn_rate = ms.get("usd_mxn_rate", 17.5)
     if not finite(usd_mxn_rate) or usd_mxn_rate <= 0:
         usd_mxn_rate = 17.5
+    reconciliation = load_json(os.path.join(DIR, "nav_reconciliation.json")) or {}
+    reconciliation_blocks = {}
+    specs_by_ledger = {ledger_name(spec): spec for spec in BY_PORTFOLIO_FILE.values()}
+    for record in reconciliation.get("strategies", []):
+        spec = specs_by_ledger.get(record.get("ledger"))
+        if spec and record.get("status") != "MATCH":
+            detail = "ledger missing" if record.get("status") == "MISSING LEDGER" else "ledger positions do not match portfolio"
+            reconciliation_blocks[spec.portfolio_file] = f"C5 operations: {detail}; reconcile before graduation"
 
     rows = []
     for s in STRATS:
@@ -321,12 +355,13 @@ def main():
         c2 = None if (ann_ret is None or not judge) else (ann_ret > BONDIA_HURDLE)
         c3 = None if live_dd is None else (live_dd >= dd_bound)  # dd negative: inside bound
         c4 = None if (live_sharpe is None or not judge) else (live_sharpe > 0)
-        c5 = s["block"] is None
+        operational_block = s["block"] or reconciliation_blocks.get(s["pf"]) or portfolio_freshness_block(s["pf"], today)
+        c5 = operational_block is None
 
         reasons = []
         if not c5:
             verdict = "BLOCKED"
-            reasons.append(s["block"])
+            reasons.append(operational_block)
         else:
             hard_fail = (c2 is False) or (c3 is False) or (c4 is False)
             if c1 and c2 and (c3 is not False) and (c4 is not False):

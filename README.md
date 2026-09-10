@@ -1,6 +1,8 @@
-# 🇲🇽 Mexican Value Stock Evaluation Pipeline (DAG)
+# Trading Agents — Paper-Trading Research Platform
 
-A deterministic, pipeline-driven Directed Acyclic Graph (DAG) for deep-value investment analysis and portfolio tracking within the Mexican equity market (Bolsa Mexicana de Valores - BMV).
+A multi-strategy paper-trading and research platform for Mexican and US
+equities, ETFs, alternatives, and portfolio allocation. It is not an order
+execution system and must not be treated as investment advice.
 
 ---
 
@@ -9,7 +11,7 @@ A deterministic, pipeline-driven Directed Acyclic Graph (DAG) for deep-value inv
 The project separates stateless computational calculations (Skills Layer) from analytical reasoning (Agents Layer) to prevent model hallucinations:
 
 ```
-[Live Data Ingestion] (yfinance → S&P/BMV IPC)
+[Live Data Ingestion] (yfinance / broker APIs → BMV, US equities, ETFs)
           │
           ▼
 [Skills Layer (Python Compute)]
@@ -18,16 +20,16 @@ The project separates stateless computational calculations (Skills Layer) from a
   └── DCF Valuation Engine (Multi-stage FCFF)
           │
           ▼
-[Agents Layer (Deterministic DAG Orchestration)]
-  ├── 1. Fundamental Screener (Anonymized Blind Screen)
-  ├── 2. Macro Risk Analyst (Sector-based Risk Discounting)
-  └── 3. Portfolio Reconciler (De-anonymization & Position Sizing)
+[Strategy Layer]
+  ├── Fundamental, momentum, technical, statistical-arbitrage, and ML sleeves
+  ├── Independent paper portfolios and transaction ledgers
+  └── Multi-strategy and efficient-frontier aggregation
           │
           ▼
-[Execution & Monitoring]
-  ├── Execution Order Blotter
-  ├── Exit & Take-Profit Triggers
-  └── Live Portfolio Tracker
+[Monitoring & Governance]
+  ├── Paper-trading transaction blotters and portfolio snapshots
+  ├── Watchdog, broker reconciliation, graduation reports, and kill criteria
+  └── Local dashboard
 ```
 
 ---
@@ -46,13 +48,14 @@ trading_agents/
 │   └── agents.py
 ├── connectors/                # Data ingestion modules
 │   └── mock_data_connector.py
-├── pipeline_orchestrator.py   # Sequential DAG driver
+├── strategy_registry.py       # Canonical scheduled-runner registry
+├── scheduler.py               # Local scheduler with a fail-closed run lock
 ├── run.py                     # Simulated prototype entrypoint
 ├── ingest_live_bmv.py         # Live S&P/BMV IPC ingestion & evaluation
 ├── monitor_portfolio.py       # Tracks P/L and triggers sell flags
 ├── app.py                     # Dashboard backend (Flask)
 ├── index.html / .css / .js    # Glassmorphic dashboard frontend
-├── portfolio.json             # Current holdings (20K MXN paper trading)
+├── portfolio*.json            # Per-strategy paper portfolio snapshots
 ├── portfolio_status.md        # Auto-generated monitoring report
 ├── transactions.md            # Paper trading ledger
 ├── agents_config.md           # Agent system configurations
@@ -76,14 +79,14 @@ python run.py
 ```
 **Output:** `mexican_value_equity_report.md`
 
-### 2. Ingest & Analyze Live BMV Index
+### 2. Run an individual BMV strategy
 Fetches the S&P/BMV IPC components in real-time, filters, stress-tests, and outputs target shares + sell triggers:
 ```bash
 python ingest_live_bmv.py
 ```
 **Output:** `mexican_value_equity_report_live.md`
 
-### 3. Track Active Portfolio Positions
+### 3. Track the core paper portfolio
 Loads holdings from `portfolio.json`, updates prices, calculates unrealized P/L, and flags take-profit or scale-out targets:
 ```bash
 python monitor_portfolio.py
@@ -100,11 +103,13 @@ python app.py
 
 ## 4. Automated GitHub Actions Pipeline
 
-The workflow in `.github/workflows/monitor.yml` runs **Monday–Friday at 4:30 PM Mexico City time** (22:30 UTC):
+The workflow in `.github/workflows/monitor.yml` queues market-hour runs rather
+than allowing overlap. It installs dependencies, runs the full test suite, and
+then runs the paper-trading pipeline.
 
-1. **Portfolio Monitor** — updates P/L, checks exit triggers
-2. **Live BMV Screener** — re-evaluates all IPC components for new opportunities
-3. **Auto-commit** — pushes updated reports back to this repo
+1. **Portfolio and strategy runners** — update paper state and reports
+2. **Comparison, graduation, and watchdog reports** — check evidence and books
+3. **Generated-artifact commit** — only after tests pass; source changes stay human-reviewed
 
 You can also trigger it manually from the **Actions** tab.
 
@@ -122,10 +127,21 @@ You can also trigger it manually from the **Actions** tab.
 
 ---
 
-## 6. Paper Trading Portfolio
+## 6. Operating Safely
 
-Currently paper trading with **20,000 MXN**. See `portfolio.json` for live holdings and `transactions.md` for the full ledger.
+`KILL_CRITERIA.md` is the binding policy for allocations and demotions.
+`watchdog.py` is audit-only: a critical finding must be investigated and a
+human must create or clear a `HALT_<strategy>.flag` before an affected runner
+is resumed. The pipeline lock is intentionally not self-healing; if it remains
+after an interruption, inspect the previous run before removing it.
 
 ---
 
-*Built with an agentic DAG architecture — no LLM hallucinations in the math layer.*
+## 7. Current Design Limits
+
+- State remains file-backed; the JSON and Markdown artifacts are operational
+  records, not a transactional broker ledger.
+- Strategies have varied levels of out-of-sample and live-paper evidence.
+  `graduation_report.md` is the authoritative readiness view.
+- The dashboard binds locally by default. Do not expose it to a network without
+  authentication and a proper production server.

@@ -48,6 +48,7 @@ _nlp_module.NLPSentimentEngine = _StubNLPEngine
 from agents.agents import FundamentalScreener, MacroRiskAnalyst
 from ingest_live_bmv import BMV_TICKERS, US_TICKERS
 from skills.hybrid_momentum_value import _sma
+from skills.file_io_utils import atomic_save_json
 
 PORTFOLIO_FILE = "portfolio.json"
 TRANSACTIONS_FILE = "transactions.md"
@@ -73,8 +74,7 @@ def load_portfolio(dir_path):
 def save_portfolio(dir_path, portfolio):
     p_path = os.path.join(dir_path, PORTFOLIO_FILE)
     portfolio["last_updated"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with open(p_path, 'w', encoding='utf-8') as f:
-        json.dump(portfolio, f, indent=2)
+    atomic_save_json(p_path, portfolio)
 
 def log_transaction(dir_path, date_str, ticker, action, shares, price, note, fee=0.0):
     t_path = os.path.join(dir_path, TRANSACTIONS_FILE)
