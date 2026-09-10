@@ -1,5 +1,5 @@
 # Strategy 8: Dividend Quality & Yield Execution Report
-**Execution Date:** 2026-09-09 21:58:24 | **Strategy Version:** Live V1
+**Execution Date:** 2026-09-09 21:26:15 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** $205,570.75 MXN
@@ -16,7 +16,6 @@
 | **FUNO11.MX** | 1327.21 | $30.68 | $29.64 | $39,338.60 | $2.56 MXN/sh (Annual: $3,397.67 MXN) | Ex: 2026-08-07 / Pay: N/A | 20.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $0.3031 MXN over 0.0372 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
@@ -44,7 +43,7 @@
 | **ORBIA.MX** | SELL / AVOID | 0.00% | 0.0% | 0.0% | $20.48 <= SMA $20.52 | Yield below 2.5% and Payout Ratio (0.0%) out of bounds and Non-positive EPS (-2.71) and Debt/Equity (2.18) exceeds 1.5 and Bear trend (Close <= SMA 200) |
 | **PEP** | SELL / AVOID | 4.28% | 75.3% | 75.3% | $136.69 <= SMA $145.54 | Debt/Equity (2.39) exceeds 1.5 and Bear trend (Close <= SMA 200) |
 | **PG** | SELL / AVOID | 2.99% | 64.3% | 64.3% | $142.64 <= SMA $145.84 | Bear trend (Close <= SMA 200) |
-| **SPG** | BUY / HOLD | 4.20% | 62.1% | 62.1% | $204.53 > SMA $199.72 | Passed all quality checks. Score: 0.0000 |
+| **SPG** | BUY / HOLD | 4.20% | 62.1% | 62.1% | $204.53 > SMA $197.61 | Passed all quality checks. Score: 0.0000 |
 | **T** | BUY / HOLD | 4.34% | 36.6% | 36.6% | $25.15 > SMA $24.70 | Passed all quality checks. Score: 0.0000 |
 | **TGT** | BUY / HOLD | 2.85% | 47.3% | 47.3% | $157.52 > SMA $121.53 | Passed all quality checks. Score: 0.0000 |
 | **VZ** | SELL / AVOID | 5.61% | 72.8% | 72.8% | $49.74 > SMA $44.78 | Debt/Equity (1.84) exceeds 1.5 |

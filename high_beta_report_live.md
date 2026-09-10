@@ -18,7 +18,7 @@
 | Ticker | Signal | Price | Beta | DCS MOS | MACD Status | SMA 100 Status | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
 | **AAPL** | AVOID / SELL | $315.34 | 0.69 | -66.4% | MACD: 1.8431 (Sig: 1.4272) | BULL | Low DCS margin of safety (-66.4% < 15%) |
-| **AMD** | AVOID / SELL | $521.09 | 3.10 | -93.2% | MACD: -0.7581 (Sig: -6.2547) | BULL | Low DCS margin of safety (-93.2% < 15%) |
+| **AMD** | AVOID / SELL | $521.10 | 3.10 | -93.2% | MACD: -0.7577 (Sig: -6.2546) | BULL | Low DCS margin of safety (-93.2% < 15%) |
 | **AMZN** | AVOID / SELL | $252.40 | 1.42 | -73.7% | MACD: -0.4208 (Sig: 0.9067) | BEAR | Low DCS margin of safety (-73.7% < 15%) and Bear trend (Close <= SMA 100) |
 | **AVGO** | AVOID / SELL | $364.38 | 2.14 | 171.2% | MACD: -7.7645 (Sig: -7.5825) | BEAR | Bear trend (Close <= SMA 100) |
 | **COST** | AVOID / SELL | $902.60 | -0.15 | -59.7% | MACD: -9.5149 (Sig: -4.2837) | BEAR | Low DCS margin of safety (-59.7% < 15%) and Bear trend (Close <= SMA 100) |

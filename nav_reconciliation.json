@@ -3,246 +3,261 @@
     {
       "strategy": "s1",
       "ledger": "transactions.md",
-      "rows": 227,
+      "rows": 287,
       "ledger_positions": {
         "ASURB.MX": 7.0,
         "AC.MX": 19.0
       },
       "portfolio_positions": {
         "GRUMAB.MX": 1.0,
-        "ORBIA.MX": 288.36366782265185,
-        "BBAJIOO.MX": 111.39413008131325,
-        "GFNORTEO.MX": 32.26361682335487
+        "ORBIA.MX": 1538.8681574288416,
+        "BBAJIOO.MX": 634.6864766511843,
+        "CUERVO.MX": 1650.2206447580431,
+        "BIMBOA.MX": 372.2763383858221
       },
       "position_differences": {
         "AC.MX": 19.0,
         "ASURB.MX": 7.0,
-        "BBAJIOO.MX": -111.39413008,
-        "GFNORTEO.MX": -32.26361682,
+        "BBAJIOO.MX": -634.68647665,
+        "BIMBOA.MX": -372.27633839,
+        "CUERVO.MX": -1650.22064476,
         "GRUMAB.MX": -1.0,
-        "ORBIA.MX": -288.36366782
+        "ORBIA.MX": -1538.86815743
       },
-      "cash_delta": 93185.7,
+      "cash_delta": 93331.99,
       "status": "MISMATCH"
     },
     {
       "strategy": "s2",
       "ledger": "transactions_macd.md",
-      "rows": 207,
+      "rows": 399,
       "ledger_positions": {
-        "GAPB.MX": 20.0,
+        "GAPB.MX": 23.0,
         "FEMSAUBD.MX": 44.0,
-        "AMXB.MX": 524.0,
-        "CEMEXCPO.MX": 548.0,
-        "BIMBOA.MX": 208.0
+        "AMXB.MX": 582.0,
+        "CEMEXCPO.MX": 611.0,
+        "BIMBOA.MX": 189.0,
+        "AMZN": 2.0,
+        "GOOGL": 2.0,
+        "NVDA": 3.0,
+        "META": 1.0
       },
       "portfolio_positions": {
-        "GAPB.MX": 20.0,
+        "GAPB.MX": 23.0,
         "FEMSAUBD.MX": 44.0,
-        "CEMEXCPO.MX": 548.0,
-        "AMXB.MX": 524.0,
-        "BIMBOA.MX": 208.0
+        "CEMEXCPO.MX": 611.0,
+        "AMXB.MX": 582.0,
+        "BIMBOA.MX": 189.0,
+        "AMZN": 2.0,
+        "GOOGL": 2.0,
+        "NVDA": 3.0,
+        "META": 1.0
       },
       "position_differences": {},
-      "cash_delta": 45805.73,
+      "cash_delta": 1191.95,
       "status": "MATCH"
     },
     {
       "strategy": "s3",
       "ledger": "transactions_us_stocks.md",
-      "rows": 44,
+      "rows": 76,
       "ledger_positions": {
-        "JPM": 75.0
+        "JPM": 75.0,
+        "COST": 23.0,
+        "MSFT": 49.0,
+        "AMD": 46.0
       },
-      "portfolio_positions": {},
+      "portfolio_positions": {
+        "MSFT": 49.0,
+        "AMD": 46.0,
+        "COST": 23.0
+      },
       "position_differences": {
         "JPM": 75.0
       },
-      "cash_delta": -224112.57,
+      "cash_delta": -328383.5,
       "status": "MISMATCH"
     },
     {
       "strategy": "s4",
       "ledger": "transactions_us_dcs.md",
-      "rows": 2,
+      "rows": 6,
       "ledger_positions": {
         "AVGO": 65.0
       },
-      "portfolio_positions": {
+      "portfolio_positions": {},
+      "position_differences": {
         "AVGO": 65.0
       },
-      "position_differences": {},
-      "cash_delta": -25781.41,
-      "status": "MATCH"
+      "cash_delta": -25461.24,
+      "status": "MISMATCH"
     },
     {
       "strategy": "s5",
       "ledger": "transactions_alternatives.md",
-      "rows": 8,
+      "rows": 13,
       "ledger_positions": {
-        "EURUSD=X": 13154.0,
         "DBA": 733.0,
-        "USO": 164.0
+        "USO": 164.0,
+        "USDJPY=X": 414.0,
+        "USDMXN=X": 1213.0
       },
       "portfolio_positions": {
-        "EURUSD=X": 13154.0,
         "DBA": 733.0,
-        "USO": 164.0
+        "USO": 164.0,
+        "USDJPY=X": 414.0,
+        "USDMXN=X": 1213.0
       },
       "position_differences": {},
-      "cash_delta": -56467.45,
+      "cash_delta": -130227.01,
       "status": "MATCH"
     },
     {
       "strategy": "s6",
       "ledger": "transactions_high_beta.md",
-      "rows": 3,
+      "rows": 7,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": -1546.34,
+      "cash_delta": -3474.07,
       "status": "MATCH"
     },
     {
       "strategy": "s8",
       "ledger": "transactions_dividends.md",
-      "rows": 154,
+      "rows": 344,
       "ledger_positions": {
-        "GFNORTEO.MX": 210.78,
         "BBAJIOO.MX": 707.59,
         "KOFUBL.MX": 215.46,
-        "PG": 15.48
+        "AC.MX": 210.6,
+        "FUNO11.MX": 1327.21
       },
       "portfolio_positions": {
-        "GFNORTEO.MX": 210.78146756307328,
         "BBAJIOO.MX": 707.5889061340172,
         "KOFUBL.MX": 215.4592044980265,
-        "PG": 15.480284315018704
+        "AC.MX": 210.59683618264089,
+        "FUNO11.MX": 1327.213140686486
       },
       "position_differences": {},
-      "cash_delta": -159973.84,
+      "cash_delta": -155034.49,
       "status": "MATCH"
     },
     {
       "strategy": "s9",
       "ledger": "transactions_strategy9.md",
-      "rows": 173,
+      "rows": 388,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": -15093.42,
+      "cash_delta": -30797.78,
       "status": "MATCH"
     },
     {
       "strategy": "s10",
       "ledger": "transactions_strategy10.md",
-      "rows": 82,
+      "rows": 183,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": 1299.0,
+      "cash_delta": -1415.37,
       "status": "MATCH"
     },
     {
       "strategy": "s11",
       "ledger": "transactions_strategy11.md",
-      "rows": 146,
+      "rows": 331,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": 945.62,
+      "cash_delta": -1466.15,
       "status": "MATCH"
     },
     {
       "strategy": "s12",
       "ledger": "transactions_strategy12.md",
-      "rows": 135,
+      "rows": 324,
       "ledger_positions": {
-        "TQQQ": 39.4514
+        "TQQQ": 85.955
       },
       "portfolio_positions": {
-        "TQQQ": 39.45142672281983
+        "TQQQ": 85.95501874523131
       },
       "position_differences": {},
-      "cash_delta": -50027.67,
+      "cash_delta": -98875.87,
       "status": "MATCH"
     },
     {
       "strategy": "s13",
       "ledger": "transactions_strategy13.md",
-      "rows": 135,
+      "rows": 326,
       "ledger_positions": {
-        "TQQQ": 39.4557
+        "TQQQ": 85.13669999999999
       },
       "portfolio_positions": {
-        "TQQQ": 39.45570096447304
+        "TQQQ": 85.13672360963818
       },
       "position_differences": {},
-      "cash_delta": -50029.58,
+      "cash_delta": -99838.62,
       "status": "MATCH"
     },
     {
       "strategy": "s14",
       "ledger": "transactions_strategy14.md",
-      "rows": 267,
+      "rows": 638,
       "ledger_positions": {
-        "TQQQ": 28.3116
+        "TQQQ": 61.1949
       },
       "portfolio_positions": {
-        "TQQQ": 28.31159178106022
+        "TQQQ": 61.19480645609126
       },
       "position_differences": {},
-      "cash_delta": -35750.06,
+      "cash_delta": -68947.93,
       "status": "MATCH"
     },
     {
       "strategy": "s15",
       "ledger": "transactions_strategy15.md",
-      "rows": 267,
+      "rows": 638,
       "ledger_positions": {
-        "TQQQ": 28.3108
+        "TQQQ": 61.1939
       },
       "portfolio_positions": {
-        "TQQQ": 28.310775376881324
+        "TQQQ": 61.19388392655231
       },
       "position_differences": {},
-      "cash_delta": -35752.72,
+      "cash_delta": -68953.03,
       "status": "MATCH"
     },
     {
       "strategy": "s16",
       "ledger": "transactions_strategy16.md",
-      "rows": 110,
+      "rows": 295,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": 602.41,
+      "cash_delta": -2070.74,
       "status": "MATCH"
     },
     {
       "strategy": "s17",
       "ledger": "transactions_strategy17.md",
-      "rows": 5,
+      "rows": 162,
       "ledger_positions": {
-        "FMTY14.MX": 1683.5,
         "DANHOS13.MX": 893.18,
-        "FUNO11.MX": 832.5,
-        "FSHOP13.MX": 2081.79
+        "FUNO11.MX": 832.5
       },
       "portfolio_positions": {
-        "FMTY14.MX": 1683.5016402555616,
         "DANHOS13.MX": 893.1761416374346,
-        "FUNO11.MX": 832.5008134654364,
-        "FSHOP13.MX": 2081.7892844477033
+        "FUNO11.MX": 832.5008134654364
       },
       "position_differences": {},
-      "cash_delta": 0.0,
+      "cash_delta": 51952.99,
       "status": "MATCH"
     },
     {
       "strategy": "s18",
       "ledger": "transactions_strategy18.md",
-      "rows": 0,
+      "rows": 1,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
@@ -252,12 +267,12 @@
     {
       "strategy": "s19",
       "ledger": "transactions_strategy19.md",
-      "rows": 2,
+      "rows": 31,
       "ledger_positions": {
-        "QQQ": 15.6928
+        "TQQQ": 131.2368
       },
       "portfolio_positions": {
-        "QQQ": 15.6927790983143
+        "TQQQ": 131.2367893101891
       },
       "position_differences": {},
       "cash_delta": -200000.0,
@@ -266,7 +281,7 @@
     {
       "strategy": "s20",
       "ledger": "transactions_strategy20.md",
-      "rows": 2,
+      "rows": 3,
       "ledger_positions": {
         "TQQQ": 147.7648
       },
@@ -280,103 +295,95 @@
     {
       "strategy": "s21",
       "ledger": "transactions_strategy21.md",
-      "rows": 5,
+      "rows": 26,
       "ledger_positions": {
-        "TQQQ": 207.2615
+        "TQQQ": 59.4709
       },
-      "portfolio_positions": {
-        "TQQQ": 207.2615
+      "portfolio_positions": {},
+      "position_differences": {
+        "TQQQ": 59.4709
       },
-      "position_differences": {},
-      "cash_delta": -200000.0,
-      "status": "MATCH"
+      "cash_delta": -21109.24,
+      "status": "MISMATCH"
     },
     {
       "strategy": "s22",
       "ledger": "transactions_strategy22.md",
-      "rows": 1,
-      "ledger_positions": {
-        "TQQQ": 156.8574
-      },
-      "portfolio_positions": {
-        "TQQQ": 156.85744667016732
-      },
+      "rows": 109,
+      "ledger_positions": {},
+      "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": -200000.0,
+      "cash_delta": 7355.44,
       "status": "MATCH"
     },
     {
       "strategy": "s23",
       "ledger": "transactions_strategy23.md",
-      "rows": 55,
-      "ledger_positions": {
-        "TQQQ": 171.6235
-      },
-      "portfolio_positions": {
-        "TQQQ": 171.62353582003723
-      },
+      "rows": 129,
+      "ledger_positions": {},
+      "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": -200000.0,
+      "cash_delta": 6123.57,
       "status": "MATCH"
     },
     {
       "strategy": "s24",
       "ledger": "transactions_strategy24.md",
-      "rows": 9,
-      "ledger_positions": {
-        "SQQQ": 265.5946
-      },
-      "portfolio_positions": {
-        "SQQQ": 265.5945919808001
-      },
+      "rows": 68,
+      "ledger_positions": {},
+      "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": -200000.0,
+      "cash_delta": -34519.98,
       "status": "MATCH"
     },
     {
       "strategy": "s25",
       "ledger": "transactions_strategy25.md",
-      "rows": 66,
+      "rows": 252,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": -1987.72,
+      "cash_delta": -2131.5,
       "status": "MATCH"
     },
     {
       "strategy": "s27",
       "ledger": "transactions_strategy27.md",
-      "rows": 55,
+      "rows": 239,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": 501.31,
+      "cash_delta": 2045.59,
       "status": "MATCH"
     },
     {
       "strategy": "s29",
       "ledger": "transactions_strategy29.md",
-      "rows": 54,
+      "rows": 238,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": 501.3,
+      "cash_delta": 2045.57,
       "status": "MATCH"
     },
     {
       "strategy": "s30",
       "ledger": "transactions_strategy30.md",
-      "rows": 54,
-      "ledger_positions": {},
-      "portfolio_positions": {},
+      "rows": 245,
+      "ledger_positions": {
+        "NVDA": 80.2519
+      },
+      "portfolio_positions": {
+        "NVDA": 80.25190539450564
+      },
       "position_differences": {},
-      "cash_delta": 172.67,
+      "cash_delta": -17766.82,
       "status": "MATCH"
     },
     {
       "strategy": "s31",
       "ledger": "transactions_strategy31.md",
-      "rows": 8,
+      "rows": 41,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},

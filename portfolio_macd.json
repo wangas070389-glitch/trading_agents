@@ -63,7 +63,7 @@
       "ticker": "AMZN",
       "shares": 2,
       "buy_price": 4682.457812654728,
-      "last_price": 4261.420596260985,
+      "last_price": 4263.4651648455765,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 4937.043650627136,
@@ -73,7 +73,7 @@
       "ticker": "GOOGL",
       "shares": 2,
       "buy_price": 5905.58,
-      "last_price": 5582.562314648589,
+      "last_price": 5585.240748112788,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 6560.139816972369,
@@ -83,7 +83,7 @@
       "ticker": "NVDA",
       "shares": 3,
       "buy_price": 3656.495005308534,
-      "last_price": 3776.3548336443782,
+      "last_price": 3778.1666746215196,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 3913.318926165055,
@@ -93,12 +93,12 @@
       "ticker": "META",
       "shares": 1,
       "buy_price": 10424.84267993737,
-      "last_price": 11036.640678827302,
+      "last_price": 11041.935900995973,
       "target_weight": 0.1,
       "hmm_state": 1,
-      "peak_price": 11036.640678827302,
+      "peak_price": 11041.935900995973,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-09-09 21:58:16"
+  "last_updated": "2026-09-09 21:26:42"
 }

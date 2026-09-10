@@ -18,7 +18,7 @@
 | Ticker | Signal | Price | DCS Conviction | Intrinsic Value | SMA 100 Trend | SMA 20 Trend (DCA) | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
 | **AAPL** | SELL / AVOID | $315.34 | -0.664 | $106.11 | BULL | BULL | Low conviction (DCS=-0.664 < 0.15) |
-| **AMD** | SELL / AVOID | $521.09 | -0.932 | $35.41 | BULL | BULL | Low conviction (DCS=-0.932 < 0.15) |
+| **AMD** | SELL / AVOID | $521.10 | -0.932 | $35.41 | BULL | BULL | Low conviction (DCS=-0.932 < 0.15) |
 | **AMZN** | SELL / AVOID | $252.40 | -0.737 | $66.41 | BEAR | BEAR | Low conviction (DCS=-0.737 < 0.15) and Bear trend (Close <= SMA 100) |
 | **AVGO** | SELL / AVOID | $364.38 | 1.712 | $988.33 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
 | **COST** | SELL / AVOID | $902.60 | -0.597 | $363.49 | BEAR | BEAR | Low conviction (DCS=-0.597 < 0.15) and Bear trend (Close <= SMA 100) |
