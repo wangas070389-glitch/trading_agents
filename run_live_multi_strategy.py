@@ -13,11 +13,22 @@ import yfinance as yf
 
 from skills.file_io_utils import atomic_save_json, safe_load_json
 from strategy_registry import STRATEGIES
+from accounting import nav_value, valuation_price
 
 PORTFOLIO_FILE = "portfolio_multi_strategy.json"
 REPORT_FILE = "multi_strategy_report_live.md"
 CSV_FILE = "consolidated_portfolio_nav.csv"
 FALLBACK_USD_MXN = 17.43
+
+
+def get_nav(portfolio):
+    """Legacy interface: native MXN valuation, plus a separate USD cash leg."""
+    native = dict(portfolio)
+    usd = _finite(native.get("cash_balance_usd"))
+    if "cash_balance_usd" in native:
+        native["cash_balance_usd"] = 0.0
+    total, cash = nav_value(native, "MXN", 1.0)
+    return total, cash, usd
 
 
 def _finite(value, default=0.0):
@@ -57,15 +68,19 @@ def _fx_rate():
 
 def _load_rows(directory, rate):
     rows = []
+    reconciliation = safe_load_json(os.path.join(directory, "nav_reconciliation.json"), default={}) or {}
+    statuses = {r["strategy"]: r["status"] for r in reconciliation.get("strategies", [])}
     for spec in STRATEGIES:
         portfolio = safe_load_json(os.path.join(directory, spec.portfolio_file))
         if not isinstance(portfolio, dict):
             rows.append({"key": spec.key, "label": spec.label, "currency": spec.currency, "status": "missing/unreadable", "nav_usd": 0.0, "cash_usd": 0.0})
             continue
-        native_nav, native_cash = _native_nav(portfolio, spec.currency)
+        native_nav, native_cash = nav_value(portfolio, spec.currency, rate)
+        if spec.composite:
+            native_nav, native_cash = _native_nav(portfolio, spec.currency)
         multiplier = 1.0 if spec.currency == "USD" else 1.0 / rate
-        usd_cash_extra = _finite(portfolio.get("cash_balance_usd"))
-        rows.append({"key": spec.key, "label": spec.label, "currency": spec.currency, "composite": spec.composite, "status": "ok" if native_nav > 0 else "zero NAV — investigate", "nav_usd": native_nav * multiplier + usd_cash_extra, "cash_usd": native_cash * multiplier + usd_cash_extra})
+        usd_cash_extra = 0.0  # Already included by the shared valuation function.
+        rows.append({"key": spec.key, "label": spec.label, "currency": spec.currency, "composite": spec.composite, "status": statuses.get(spec.key, "UNRESOLVED") + "; marks unverified", "nav_usd": native_nav * multiplier + usd_cash_extra, "cash_usd": native_cash * multiplier + usd_cash_extra})
     return rows
 
 
@@ -90,7 +105,7 @@ def main():
     gross_research_nav = sum(r["nav_usd"] for r in rows)
     state = safe_load_json(os.path.join(directory, PORTFOLIO_FILE), default={}) or {}
     history = state.get("history", [])
-    entry = {"date": today, "nav_usd": total_nav, "cash_usd": total_cash}
+    entry = {"date": today, "nav_usd": total_nav, "cash_usd": total_cash, "accounting_version": 2, "verified": False}
     entry.update({f"{r['key']}_nav_usd": r["nav_usd"] for r in rows})
     if history and history[-1].get("date") == today:
         history[-1] = entry
@@ -98,13 +113,16 @@ def main():
         history.append(entry)
     history = history[-500:]
     state = {"total_portfolio_value_usd": total_nav, "total_cash_balance_usd": total_cash, "gross_research_nav_usd": gross_research_nav, "last_updated": dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "usd_mxn_rate": rate, "reporting_scope": "independent paper books; composite strategies excluded to avoid double-counting", "history": history, "allocations": {r["key"]: {"nav_usd": r["nav_usd"], "cash_usd": r["cash_usd"], "current_weight": r["nav_usd"] / total_nav if total_nav and not r.get("composite") else 0.0, "composite": r.get("composite", False)} for r in rows}, "performance": _performance(history)}
+    state["performance"] = {"return_pct": None, "max_drawdown_pct": None,
+                            "status": "Unavailable: historical accounting and cash flows need validation"}
+    state["valuation_status"] = "UNVERIFIED; arithmetic estimates only"
     atomic_save_json(os.path.join(directory, PORTFOLIO_FILE), state)
     lines = [f"# Consolidated Paper-Portfolio NAV — {today}", "", "The total below excludes composite strategies so it does not double-count their underlying sleeves. This remains paper-trading reporting, not a brokerage NAV.", "", f"USD/MXN: {rate:.4f}" + (" (fallback; market-data fetch failed)" if used_fallback else ""), "", "| Strategy | Currency | NAV (USD) | Cash (USD) | Weight | Status |", "| :--- | :---: | ---: | ---: | ---: | :--- |"]
     for row in rows:
         weight = row["nav_usd"] / total_nav * 100 if total_nav and not row.get("composite") else 0.0
         status = "composite — excluded from total" if row.get("composite") else row["status"]
         lines.append(f"| {row['key'].upper()} {row['label']} | {row['currency']} | ${row['nav_usd']:,.2f} | ${row['cash_usd']:,.2f} | {weight:.2f}% | {status} |")
-    lines.extend(["", f"**Independent-book NAV:** ${total_nav:,.2f}", f"**Independent-book cash:** ${total_cash:,.2f}", f"**Gross research NAV (includes composites):** ${gross_research_nav:,.2f}"])
+    lines.extend(["", "**UNVERIFIED ESTIMATES:** these balances are not ledger-certified NAV or investment profits. Historical returns are withheld pending reconstruction.", "", f"**Independent-book NAV estimate:** ${total_nav:,.2f}", f"**Independent-book cash estimate:** ${total_cash:,.2f}", f"**Gross research NAV estimate (includes composites):** ${gross_research_nav:,.2f}"])
     with open(os.path.join(directory, REPORT_FILE), "w", encoding="utf-8") as report:
         report.write("\n".join(lines) + "\n")
     pd.DataFrame(history)[["date", "nav_usd", "cash_usd"]].rename(columns={"date": "Date", "nav_usd": "NAV_USD", "cash_usd": "Cash_USD"}).to_csv(os.path.join(directory, CSV_FILE), index=False)

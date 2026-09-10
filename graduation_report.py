@@ -26,10 +26,12 @@ import os
 import json
 import math
 import datetime
+import hashlib
 import numpy as np
 
 from strategy_registry import BY_PORTFOLIO_FILE
 from reconcile_strategy_navs import ledger_name
+from accounting import nav_value
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(DIR, "graduation_report.md")
@@ -220,16 +222,13 @@ def portfolio_nav(pf, usd_mxn_rate):
     data = load_json(os.path.join(DIR, pf))
     if not data:
         return None
-    cash = float(data.get("cash_balance", 0.0)) + float(data.get("cash_balance_mxn", 0.0))
-    cash += float(data.get("cash_balance_usd", 0.0)) * usd_mxn_rate
-    hv = 0.0
-    for h in data.get("holdings", []):
-        if "shares" in h:
-            hv += float(h["shares"]) * valuation_price(h)
-    return cash + hv
+    try:
+        return nav_value(data, BY_PORTFOLIO_FILE[pf].currency, usd_mxn_rate)[0]
+    except (ValueError, TypeError, KeyError):
+        return None
 
 
-def deposits_from_ledger(ledger):
+def deposits_from_ledger(ledger, since=None):
     """Sum of DEPOSIT rows (shares * price) in a transactions_*.md ledger."""
     path = os.path.join(DIR, ledger)
     if not os.path.exists(path):
@@ -239,8 +238,12 @@ def deposits_from_ledger(ledger):
         for line in f:
             if "| DEPOSIT |" not in line:
                 continue
+            if "initial capital funding" in line.lower():
+                continue
             cells = [c.strip() for c in line.split("|")]
             try:
+                if since and cells[1] < since:
+                    continue
                 i = cells.index("DEPOSIT")
                 shares = float(cells[i + 1].replace(",", "").replace("$", ""))
                 price = float(cells[i + 2].replace(",", "").replace("$", ""))
@@ -251,20 +254,45 @@ def deposits_from_ledger(ledger):
 
 
 def daily_series(strat, ms_history, wd_history):
-    """Daily NAV series: multi-strategy USD history if tracked, else the
-    watchdog snapshots (local currency) collapsed to one point per day."""
-    if strat["ms_key"]:
-        pts = [(row["date"], row.get(strat["ms_key"]))
-               for row in ms_history if finite(row.get(strat["ms_key"]))]
-        if len(pts) >= 2:
-            return [v for _, v in pts], "multi-strategy daily USD"
+    """Native-currency return index with end-of-interval external flows removed."""
+    # Historical USD marks have no per-day FX provenance. Use native-currency
+    # snapshots only, and remove external flows with an end-of-day convention.
     snaps = wd_history.get(strat["key"], [])
     by_day = {}
     for s in snaps:
-        if finite(s.get("nav")):
+        if finite(s.get("nav")) and s["ts"][:10] >= strat["inception"]:
             by_day[s["ts"][:10]] = float(s["nav"])
-    vals = [by_day[d] for d in sorted(by_day)]
-    return vals, "watchdog snapshots (local ccy)"
+    flows = []
+    path = os.path.join(DIR, strat["ledger"])
+    if not os.path.exists(path):
+        return [], "missing funding history"
+    with open(path, encoding="utf-8") as handle:
+        for line in handle:
+            if "| DEPOSIT |" not in line and "| WITHDRAWAL |" not in line:
+                continue
+            parts = [p.strip() for p in line.split("|")]
+            try:
+                action = "DEPOSIT" if "DEPOSIT" in parts else "WITHDRAWAL"
+                index = parts.index(action)
+                amount = float(parts[index + 1].replace(",", "").replace("$", "")) * float(parts[index + 2].replace(",", "").replace("$", ""))
+                flows.append((parts[1], amount if action == "DEPOSIT" else -amount))
+            except (ValueError, IndexError):
+                return [], "unparseable funding history"
+    days = sorted(by_day)
+    adjusted = [1.0] if days else []
+    for previous, current in zip(days, days[1:]):
+        if by_day[previous] <= 0:
+            return [], "nonpositive historical NAV"
+        flow = sum(amount for date, amount in flows if previous < date <= current)
+        adjusted.append(adjusted[-1] * (by_day[current] - flow) / by_day[previous])
+    return adjusted, "native currency; external flows removed at interval end; historical marks unverified"
+
+
+def history_verified(strat, history):
+    """Only a reconstructed, versioned series can establish graduation evidence."""
+    snapshots = [s for s in history.get(strat["key"], []) if s.get("ts", "")[:10] >= strat["inception"]]
+    return bool(snapshots) and all(s.get("verified") is True and s.get("accounting_version") == 2
+                                  and s.get("currency") == strat["ccy"] for s in snapshots)
 
 
 def series_stats(vals):
@@ -323,12 +351,19 @@ def main():
     if not finite(usd_mxn_rate) or usd_mxn_rate <= 0:
         usd_mxn_rate = 17.5
     reconciliation = load_json(os.path.join(DIR, "nav_reconciliation.json")) or {}
-    reconciliation_blocks = {}
+    reconciliation_blocks = {s.portfolio_file: "C5 operations: missing verified cash/NAV reconciliation"
+                             for s in BY_PORTFOLIO_FILE.values()}
     specs_by_ledger = {ledger_name(spec): spec for spec in BY_PORTFOLIO_FILE.values()}
     for record in reconciliation.get("strategies", []):
         spec = specs_by_ledger.get(record.get("ledger"))
-        if spec and record.get("status") != "MATCH":
-            detail = "ledger missing" if record.get("status") == "MISSING LEDGER" else "ledger positions do not match portfolio"
+        portfolio_path = os.path.join(DIR, spec.portfolio_file) if spec else None
+        fresh = portfolio_path and os.path.exists(portfolio_path) and record.get("portfolio_sha256") == hashlib.sha256(open(portfolio_path, "rb").read()).hexdigest()
+        ledger_path = os.path.join(DIR, record.get("ledger", ""))
+        fresh = fresh and os.path.isfile(ledger_path) and record.get("ledger_sha256") == hashlib.sha256(open(ledger_path, "rb").read()).hexdigest()
+        if spec and record.get("status") == "VERIFIED" and fresh:
+            reconciliation_blocks.pop(spec.portfolio_file, None)
+        elif spec:
+            detail = "cash/position evidence incomplete, mismatched, or changed since audit"
             reconciliation_blocks[spec.portfolio_file] = f"C5 operations: {detail}; reconcile before graduation"
 
     rows = []
@@ -336,14 +371,19 @@ def main():
         inception = datetime.datetime.strptime(s["inception"], "%Y-%m-%d").date()
         live_days = (today - inception).days
         nav = portfolio_nav(s["pf"], usd_mxn_rate)
-        deposits = deposits_from_ledger(s["ledger"])
-        capital_base = s["initial"] + deposits
+        deposits = deposits_from_ledger(s["ledger"], s["inception"])
+        data = load_json(os.path.join(DIR, s["pf"])) or {}
+        seed = s["initial"] if "reset" in s["note"].lower() or "re-tuned" in s["note"].lower() else data.get("initial_seed_capital", s["initial"])
+        capital_base = seed + deposits
         profit = (nav - capital_base) if nav is not None else None
         roi = (profit / capital_base) if profit is not None else None
         ann_ret = roi * (365.0 / max(live_days, 1)) if roi is not None else None
 
         vals, src = daily_series(s, ms_history, wd_history)
         live_sharpe, live_dd = series_stats(vals)
+        # Legacy snapshots were generated before the accounting migration.
+        # They may be inspected, but must not approve real-money graduation.
+        historical_block = None if history_verified(s, wd_history) else "C5 operations: historical NAV marks need ledger/flow validation"
         bt_dd = backtest_max_dd(s)
         dd_bound = bt_dd * DD_BREAKER
         evidence = s["bt"]["window"] * s["bt"]["sharpe"]
@@ -355,16 +395,17 @@ def main():
         c2 = None if (ann_ret is None or not judge) else (ann_ret > BONDIA_HURDLE)
         c3 = None if live_dd is None else (live_dd >= dd_bound)  # dd negative: inside bound
         c4 = None if (live_sharpe is None or not judge) else (live_sharpe > 0)
-        operational_block = s["block"] or reconciliation_blocks.get(s["pf"]) or portfolio_freshness_block(s["pf"], today)
+        operational_block = s["block"] or reconciliation_blocks.get(s["pf"]) or portfolio_freshness_block(s["pf"], today) or historical_block
         c5 = operational_block is None
 
         reasons = []
         if not c5:
             verdict = "BLOCKED"
             reasons.append(operational_block)
+            roi = ann_ret = live_sharpe = live_dd = None
         else:
             hard_fail = (c2 is False) or (c3 is False) or (c4 is False)
-            if c1 and c2 and (c3 is not False) and (c4 is not False):
+            if c1 and c2 is True and c3 is True and c4 is True:
                 verdict = "READY"
             elif hard_fail:
                 verdict = "NOT READY"
@@ -437,7 +478,9 @@ def main():
               "| :--- | :---: | :--- |"]
     for r in rows:
         s = r["s"]
-        if r["live_dd"] is not None and r["live_dd"] < r["dd_bound"]:
+        if r["verdict"] == "BLOCKED":
+            status, detail = "BLOCKED", "Accounting evidence unresolved; risk conclusions withheld"
+        elif r["live_dd"] is not None and r["live_dd"] < r["dd_bound"]:
             status, detail = "**BREACH (P2/K1)**", (
                 f"live DD {r['live_dd']*100:.1f}% exceeds 1.25× backtest bound "
                 f"{r['dd_bound']*100:.1f}% — parameters invalidated, back to research")
@@ -466,7 +509,7 @@ def main():
         "",
         "## Caveats — read before moving money",
         "- **Evidence score = backtest Sharpe × backtest window (years).** S10/S11/S16 were re-optimized in July 2026 on the same 60 days they were backtested on; their backtests are in-sample ceilings, not forecasts. Their live record is the first true out-of-sample test.",
-        "- Live Sharpe/DD for most strategies use the multi-strategy **USD** series, so MXN strategies include USD/MXN moves; short windows make these stats noisy.",
+        "- Native-currency histories exclude external flows using an interval-end convention. Legacy marks require reconstruction before graduation; blocked strategies show no performance claims.",
         "- Annualized returns from a few weeks of data swing wildly; C2 only becomes meaningful alongside C1.",
         "- Monthly DCA deposits are subtracted from profit but still smooth the NAV series slightly.",
         "- Paper trading cannot simulate slippage or your own psychology. Graduate with a 10–20% slice first and scale only after live money matches paper.",
