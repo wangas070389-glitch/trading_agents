@@ -1,8 +1,14 @@
 {
-  "total_capital": 200501.31,
-  "cash_balance": 200501.31,
+  "initial_seed_capital": 200000.47,
+  "capital_injections": 0.0,
+  "total_funded_capital": 200000.47,
+  "nav": 200751.53,
+  "total_capital": 202045.59,
+  "cash_balance": 202045.59,
+  "holdings_value": 0.0,
+  "net_trading_profit": 751.06,
+  "net_trading_return_pct": 0.38,
   "holdings": [],
-  "last_updated": "2026-07-28 22:51:20",
-  "last_rebalance_date": "2026-07-15",
-  "total_portfolio_value_mxn": 200501.31
+  "last_updated": "2026-09-09 21:59:43",
+  "total_portfolio_value_mxn": 202045.59
 }

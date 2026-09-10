@@ -1,18 +1,19 @@
 # Isolated Alternative Assets Strategy Execution Report
-**Execution Date:** 2026-07-28 | **Strategy Version:** Alternative Assets Isolated V1
+**Execution Date:** 2026-09-09 | **Strategy Version:** Alternative Assets Isolated V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $104,107.69 USD
-* **Total Cash Balance:** $45,532.55 USD
-* **Equity Exposure:** 56.3%
-* **Active Holdings Count:** 3 of 5 positions
+* **Total Portfolio NAV:** $811,099.53 USD
+* **Total Cash Balance:** $681,211.15 USD
+* **Equity Exposure:** 16.0%
+* **Active Holdings Count:** 4 of 5 positions
 
 ## 2. Current Holdings
 | Ticker | Type | Shares Held | Avg Cost | Last Price | Market Value | Target Weight |
 | :--- | :---: | :---: | :---: | :---: | ---: | :---: |
-| **EURUSD=X** | FOREX | 13154.0000 | $1.1370 | $1.1403 | $14,998.86 | 15.0% |
-| **DBA** | COMMODITY | 733.0000 | $27.5278 | $28.2400 | $20,699.92 | 20.0% |
-| **USO** | COMMODITY | 164.0000 | $122.7500 | $139.4900 | $22,876.36 | 20.0% |
+| **DBA** | COMMODITY | 733.0000 | $27.5278 | $29.0000 | $21,257.00 | 20.0% |
+| **USO** | COMMODITY | 164.0000 | $122.7500 | $149.9700 | $24,595.08 | 20.0% |
+| **USDJPY=X** | FOREX | 414.0000 | $159.4500 | $153.5140 | $63,554.80 | 15.0% |
+| **USDMXN=X** | FOREX | 1213.0000 | $17.1460 | $16.8850 | $20,481.51 | 15.0% |
 
 ## 3. Today's Execution Logs
 * No actions required today. Positions match target indicator profiles.
@@ -20,13 +21,13 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Asset Type | Signal | Price | Indicator Diagnostics | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :--- | :--- |
-| **BTC-USD** | CRYPTO | SELL | $63,787.6406 | SMA 200: $71,859.59, MACD: 245.9034, Signal: 333.3426 | MACD cross down or bearish trend break |
-| **ETH-USD** | CRYPTO | SELL | $1,898.4700 | SMA 200: $2,127.90, MACD: 39.1098, Signal: 39.6081 | MACD cross down or bearish trend break |
-| **GLD** | - | N/A | - | Data download failed | - |
-| **SLV** | - | N/A | - | Data download failed | - |
-| **USO** | - | N/A | - | Data download failed | - |
-| **DBA** | - | N/A | - | Data download failed | - |
-| **EURUSD=X** | FOREX | HOLD | $1.1403 | RSI: 45.4, Lower BB: $1.1362, Upper BB: $1.1465 | No extreme volatility or RSI signals |
-| **GBPUSD=X** | FOREX | HOLD | $1.3298 | RSI: 44.0, Lower BB: $1.3249, Upper BB: $1.3508 | No extreme volatility or RSI signals |
-| **USDMXN=X** | FOREX | HOLD | $17.4391 | RSI: 49.7, Lower BB: $17.3417, Upper BB: $17.5909 | No extreme volatility or RSI signals |
-| **USDJPY=X** | FOREX | HOLD | $163.4150 | RSI: 63.6, Lower BB: $161.1869, Upper BB: $163.9761 | No extreme volatility or RSI signals |
+| **BTC-USD** | CRYPTO | HOLD | $78,063.4219 | SMA 200: $69,916.87, MACD: 2597.6480, Signal: 3111.7605 | No cross or trend changes |
+| **ETH-USD** | CRYPTO | HOLD | $2,459.0500 | SMA 200: $2,046.60, MACD: 99.9290, Signal: 117.9082 | No cross or trend changes |
+| **GLD** | COMMODITY | HOLD | $403.3500 | SMA 100: $400.24, Donchian High: $429.42, Donchian Low: $396.45 | Inside Donchian Channel limits |
+| **SLV** | COMMODITY | SELL | $60.7200 | SMA 100: $61.17, Donchian High: $64.31, Donchian Low: $57.85 | Breakout below 10-day low or bearish trend break |
+| **USO** | COMMODITY | BUY | $149.9700 | SMA 100: $128.79, Donchian High: $146.23, Donchian Low: $125.41 | Breakout above 20-day high in bullish trend |
+| **DBA** | COMMODITY | HOLD | $29.0000 | SMA 100: $27.68, Donchian High: $29.52, Donchian Low: $27.97 | Inside Donchian Channel limits |
+| **EURUSD=X** | FOREX | HOLD | $1.1639 | RSI: 58.0, Lower BB: $1.1525, Upper BB: $1.1715 | No extreme volatility or RSI signals |
+| **GBPUSD=X** | FOREX | HOLD | $1.3547 | RSI: 53.0, Lower BB: $1.3454, Upper BB: $1.3669 | No extreme volatility or RSI signals |
+| **USDMXN=X** | FOREX | HOLD | $16.8850 | RSI: 34.0, Lower BB: $16.8640, Upper BB: $17.0798 | No extreme volatility or RSI signals |
+| **USDJPY=X** | FOREX | BUY | $153.5140 | RSI: 24.8, Lower BB: $154.4765, Upper BB: $162.3317 | Oversold (RSI=24.8) at lower Bollinger Band |

@@ -1,12 +1,19 @@
 {
-  "total_capital": 120000.0,
-  "cash_balance": 65805.72,
+  "initial_seed_capital": 20000.0,
+  "capital_injections": 100000.0,
+  "total_funded_capital": 120000.0,
+  "nav": 118561.61,
+  "total_capital": 118561.61,
+  "cash_balance": 21191.97,
+  "holdings_value": 79167.96,
+  "net_trading_profit": -1438.39,
+  "net_trading_return_pct": -1.2,
   "holdings": [
     {
       "ticker": "GAPB.MX",
-      "shares": 20,
-      "buy_price": 416.94,
-      "last_price": 377.7300109863281,
+      "shares": 23,
+      "buy_price": 408.52,
+      "last_price": 352.82000732421875,
       "target_weight": 0.07142857142857142,
       "hmm_state": 0,
       "peak_price": 436.68,
@@ -16,7 +23,7 @@
       "ticker": "FEMSAUBD.MX",
       "shares": 44,
       "buy_price": 223.25,
-      "last_price": 222.92999267578125,
+      "last_price": 199.91000366210938,
       "target_weight": 0.08333333333333333,
       "hmm_state": 0,
       "peak_price": 233.4600067138672,
@@ -24,9 +31,9 @@
     },
     {
       "ticker": "CEMEXCPO.MX",
-      "shares": 548,
-      "buy_price": 21.79,
-      "last_price": 20.950000762939453,
+      "shares": 611,
+      "buy_price": 21.53,
+      "last_price": 18.450000762939453,
       "target_weight": 0.1,
       "hmm_state": 0,
       "peak_price": 22.979999542236328,
@@ -34,9 +41,9 @@
     },
     {
       "ticker": "AMXB.MX",
-      "shares": 524,
-      "buy_price": 22.850000381469727,
-      "last_price": 22.5,
+      "shares": 582,
+      "buy_price": 22.54,
+      "last_price": 19.520000457763672,
       "target_weight": 0.1,
       "hmm_state": 0,
       "peak_price": 23.350000381469727,
@@ -44,14 +51,54 @@
     },
     {
       "ticker": "BIMBOA.MX",
-      "shares": 208,
+      "shares": 189,
       "buy_price": 57.58000183105469,
-      "last_price": 59.900001525878906,
+      "last_price": 56.56999969482422,
       "target_weight": 0.1,
       "hmm_state": 1,
-      "peak_price": 60.33000183105469,
+      "peak_price": 62.20000076293945,
+      "trailing_armed": false
+    },
+    {
+      "ticker": "AMZN",
+      "shares": 2,
+      "buy_price": 4682.457812654728,
+      "last_price": 4261.420596260985,
+      "target_weight": 0.1,
+      "hmm_state": 1,
+      "peak_price": 4937.043650627136,
+      "trailing_armed": false
+    },
+    {
+      "ticker": "GOOGL",
+      "shares": 2,
+      "buy_price": 5905.58,
+      "last_price": 5582.562314648589,
+      "target_weight": 0.1,
+      "hmm_state": 1,
+      "peak_price": 6560.139816972369,
+      "trailing_armed": false
+    },
+    {
+      "ticker": "NVDA",
+      "shares": 3,
+      "buy_price": 3656.495005308534,
+      "last_price": 3776.3548336443782,
+      "target_weight": 0.1,
+      "hmm_state": 1,
+      "peak_price": 3913.318926165055,
+      "trailing_armed": false
+    },
+    {
+      "ticker": "META",
+      "shares": 1,
+      "buy_price": 10424.84267993737,
+      "last_price": 11036.640678827302,
+      "target_weight": 0.1,
+      "hmm_state": 1,
+      "peak_price": 11036.640678827302,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-07-28 22:49:26"
+  "last_updated": "2026-09-09 21:58:16"
 }

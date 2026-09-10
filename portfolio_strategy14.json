@@ -1,24 +1,32 @@
 {
-  "total_capital": 197151.47,
-  "cash_balance_mxn": 135955.1,
-  "cash_balance_usd": 1624.3718,
+  "initial_seed_capital": 200000.0,
+  "capital_injections": 2000.0,
+  "total_funded_capital": 202000.0,
+  "nav": 203736.04,
+  "total_capital": 237518.16,
+  "cash_balance": 166687.19,
+  "holdings_value": 37048.85,
+  "net_trading_profit": 1736.04,
+  "net_trading_return_pct": 0.86,
   "holdings": [
     {
       "ticker": "TQQQ",
       "side": "long",
-      "shares": 28.31159178106022,
+      "shares": 61.19480645609126,
       "buy_price": 1281.131044248963,
-      "last_price": 1161.407010513154
+      "last_price": 1208.0216483378608
     }
   ],
-  "last_signal_date": "2026-07-23",
+  "last_updated": "2026-09-09 21:59:16",
+  "cash_balance_mxn": 136477.62,
+  "cash_balance_usd": 1606.049,
   "expert_G": {
-    "CASH_MXN": 0.003886401247931317,
-    "QQQ_BH": -0.04961296113477247,
-    "VTTL": -0.0371175586885603,
-    "CARA": -0.0371175586885603,
-    "TSMOM": -0.0371175586885603,
-    "CASH_USD": -0.006721346492110113
+    "CASH_MXN": 0.005959148580161352,
+    "QQQ_BH": -0.04644458814545206,
+    "VTTL": -0.042957950613718016,
+    "CARA": -0.042957950613718016,
+    "TSMOM": -0.042957950613718016,
+    "CASH_USD": -0.054911225150069416
   },
-  "last_updated": "2026-07-28 22:50:41"
+  "last_signal_date": "2026-09-09"
 }

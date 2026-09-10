@@ -1,7 +1,13 @@
 {
-    "strategy_name": "S31 Fibonacci S&R Reversal",
-    "total_capital": 185718.68452491652,
-    "cash_balance": 185718.68452491652,
+    "initial_seed_capital": 200000.0,
+    "capital_injections": 0.0,
+    "total_funded_capital": 200000.0,
+    "nav": 174733.09,
+    "total_capital": 209970.88352361275,
+    "cash_balance": 209970.88352361275,
+    "holdings_value": 174733.09,
+    "net_trading_profit": -25266.91,
+    "net_trading_return_pct": -12.63,
     "holdings": [],
-    "last_updated": "2026-07-28 22:51:29"
+    "last_updated": "2026-09-09 21:59:47"
 }

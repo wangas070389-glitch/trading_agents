@@ -2,6 +2,7 @@
 
 | Date | Ticker | Action | Shares | Price (MXN) | Value (MXN) | Note |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 2026-07-01 | CASH | DEPOSIT | 1.00 | $200,000.00 | $0.00 | +$200,000.00 | Initial capital funding |
 | 2026-07-23 | TQQQ | BUY | 171.2598 | $1,164.43 | $199,420.00 | Live Reversal Signal |
 | 2026-07-23 | TQQQ | STOP_OUT | 171.2598 | $1,169.29 | $200,251.56 | Live Reversal Signal |
 | 2026-07-23 | TQQQ | BUY | 172.0926 | $1,156.89 | $199,091.79 | Live Reversal Signal |
@@ -9,4 +10,36 @@
 | 2026-07-23 | TQQQ | BUY | 169.5173 | $1,161.75 | $196,936.73 | Live Reversal Signal |
 | 2026-07-23 | TQQQ | STOP_OUT | 169.5173 | $1,161.24 | $196,851.09 | Live Reversal Signal |
 | 2026-07-23 | TQQQ | BUY | 168.5119 | $1,161.41 | $195,711.01 | Live Reversal Signal |
-| 2026-07-28 | TQQQ | STOP_OUT | 168.5119 | $1,105.32 | $186,258.84 | Live Reversal Signal |
+| 2026-07-24 | TQQQ | STOP_OUT | 168.5119 | $1,145.49 | $193,029.18 | Live Reversal Signal |
+| 2026-07-24 | TQQQ | BUY | 166.5409 | $1,152.34 | $191,911.23 | Live Reversal Signal |
+| 2026-07-24 | TQQQ | STOP_OUT | 166.5409 | $1,143.91 | $190,507.61 | Live Reversal Signal |
+| 2026-07-24 | TQQQ | BUY | 167.1033 | $1,133.46 | $189,404.26 | Live Reversal Signal |
+| 2026-07-24 | TQQQ | STOP_OUT | 167.1033 | $1,115.33 | $186,374.80 | Live Reversal Signal |
+| 2026-07-24 | TQQQ | BUY | 165.6948 | $1,118.29 | $185,295.39 | Live Reversal Signal |
+| 2026-07-24 | TQQQ | STOP_OUT | 165.6948 | $1,119.52 | $185,498.69 | Live Reversal Signal |
+| 2026-07-24 | TQQQ | BUY | 164.9002 | $1,118.40 | $184,424.36 | Live Reversal Signal |
+| 2026-07-25 | TQQQ | STOP_OUT | 164.9002 | $1,158.59 | $191,052.11 | Live Reversal Signal |
+| 2026-07-26 | TQQQ | BUY | 170.2422 | $1,115.74 | $189,945.62 | Live Reversal Signal |
+| 2026-07-27 | TQQQ | STOP_OUT | 170.2422 | $1,099.41 | $187,165.82 | Live Reversal Signal |
+| 2026-07-27 | TQQQ | BUY | 171.2655 | $1,086.51 | $186,081.83 | Live Reversal Signal |
+| 2026-07-27 | TQQQ | STOP_OUT | 171.2655 | $1,092.27 | $187,068.03 | Live Reversal Signal |
+| 2026-07-27 | TQQQ | BUY | 168.1163 | $1,106.29 | $185,984.61 | Live Reversal Signal |
+| 2026-07-27 | TQQQ | STOP_OUT | 168.1163 | $1,105.38 | $185,831.55 | Live Reversal Signal |
+| 2026-07-27 | TQQQ | BUY | 166.9591 | $1,106.59 | $184,755.29 | Live Reversal Signal |
+| 2026-07-28 | TQQQ | STOP_OUT | 166.9591 | $1,083.77 | $180,945.76 | Live Reversal Signal |
+| 2026-07-28 | TQQQ | BUY | 165.7281 | $1,085.50 | $179,897.79 | Live Reversal Signal |
+| 2026-07-28 | TQQQ | STOP_OUT | 165.7281 | $1,072.49 | $177,741.15 | Live Reversal Signal |
+| 2026-07-28 | TQQQ | BUY | 164.6011 | $1,073.58 | $176,711.74 | Live Reversal Signal |
+| 2026-07-28 | TQQQ | STOP_OUT | 164.6011 | $1,072.87 | $176,595.20 | Live Reversal Signal |
+| 2026-07-28 | TQQQ | BUY | 163.6572 | $1,072.81 | $175,572.44 | Live Reversal Signal |
+| 2026-07-28 | TQQQ | STOP_OUT | 163.6572 | $1,072.72 | $175,557.93 | Live Reversal Signal |
+| 2026-07-29 | TQQQ | BUY | 170.7166 | $1,022.40 | $174,541.17 | Live Reversal Signal |
+| 2026-07-29 | TQQQ | STOP_OUT | 170.7166 | $1,027.80 | $175,463.05 | Live Reversal Signal |
+| 2026-07-29 | TQQQ | BUY | 166.1922 | $1,049.67 | $174,446.84 | Live Reversal Signal |
+| 2026-07-29 | TQQQ | STOP_OUT | 166.1922 | $1,070.20 | $177,859.13 | Live Reversal Signal |
+| 2026-07-29 | TQQQ | BUY | 175.3508 | $1,008.43 | $176,829.04 | Live Reversal Signal |
+| 2026-07-29 | TQQQ | STOP_OUT | 175.3508 | $1,008.12 | $176,774.77 | Live Reversal Signal |
+| 2026-07-29 | TQQQ | BUY | 174.5716 | $1,006.76 | $175,750.96 | Live Reversal Signal |
+| 2026-07-29 | TQQQ | STOP_OUT | 174.5716 | $1,006.76 | $175,750.96 | Live Reversal Signal |
+| 2026-07-30 | TQQQ | BUY | 160.3147 | $1,089.94 | $174,733.09 | Live Reversal Signal |
+| 2026-08-13 | TQQQ | SELL | 160.3147 | $1,313.55 | $210,581.57 | Live Reversal Signal |

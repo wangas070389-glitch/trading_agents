@@ -1,6 +1,13 @@
 {
-  "total_capital": 100587.50951024653,
-  "cash_balance": 100587.50951024653,
+  "initial_seed_capital": 101049.41,
+  "capital_injections": 2000.0,
+  "total_funded_capital": 103049.41,
+  "nav": 103093.57,
+  "total_capital": 102780.76818697901,
+  "cash_balance": 102780.76818697901,
+  "holdings_value": 21580.13,
+  "net_trading_profit": 44.16,
+  "net_trading_return_pct": 0.04,
   "holdings": [],
-  "last_updated": "2026-07-28 22:49:33"
+  "last_updated": "2026-09-09 21:58:24"
 }

@@ -58,7 +58,10 @@ def load_portfolio(dir_path):
     p_path = os.path.join(dir_path, PORTFOLIO_FILE)
     if os.path.exists(p_path):
         with open(p_path, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            p = json.load(f)
+            if "last_rebalance_date" not in p:
+                p["last_rebalance_date"] = p.get("last_updated", datetime.date.today().isoformat())[:10]
+            return p
     else:
         return {
             "total_capital": 200000.0,
@@ -427,7 +430,7 @@ def main():
 
 ## Execution Log
 * **Action:** {action_note}
-* **Last Rebalance Date:** {portfolio["last_rebalance_date"]}
+* **Last Rebalance Date:** {portfolio.get("last_rebalance_date", "N/A")}
 """
     
     if not args.dry_run:

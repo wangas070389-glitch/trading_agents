@@ -1,6 +1,38 @@
 {
-  "total_capital": 93962.83,
-  "cash_balance": NaN,
-  "holdings": [],
-  "last_updated": "2026-07-28 22:49:28"
+  "initial_seed_capital": 199203.11,
+  "capital_injections": 0.0,
+  "total_funded_capital": 199203.11,
+  "nav": 59846.31,
+  "total_capital": 84192.18,
+  "cash_balance": -191788.01,
+  "holdings_value": 138014.14,
+  "net_trading_profit": -139356.8,
+  "net_trading_return_pct": -69.96,
+  "holdings": [
+    {
+      "ticker": "MSFT",
+      "shares": 49.0,
+      "buy_price": 495.69,
+      "last_price": 482.6,
+      "peak_price": 513.7260131835938,
+      "target_weight": 0.25
+    },
+    {
+      "ticker": "AMD",
+      "shares": 46.0,
+      "buy_price": 509.8,
+      "last_price": 512.142,
+      "peak_price": 526.7899780273438,
+      "target_weight": 0.25
+    },
+    {
+      "ticker": "COST",
+      "shares": 23.0,
+      "buy_price": 971.0,
+      "last_price": 971.0,
+      "peak_price": 978.7000122070312,
+      "target_weight": 0.25
+    }
+  ],
+  "last_updated": "2026-09-09 21:58:18"
 }

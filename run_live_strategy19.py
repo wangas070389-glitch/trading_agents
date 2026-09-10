@@ -355,9 +355,9 @@ def main():
         report_md += "| **CASH** | - | - | - | $0.00 | $0.00 | 100.0% |\n"
 
     report_md += "\n## 3. Sequential Monte Carlo (SMC) Estimates\n"
-    report_md += f"* **Latent Drift (Posterior $\hat{{\mu}}_t$):** {est_mu * 252 * 100:+.2f}% annualized\n"
-    report_md += f"* **Latent Volatility (Posterior $\hat{{\sigma}}_t$):** {est_sigma * np.sqrt(252) * 100:.2f}% annualized\n"
-    report_md += f"* **Probability of Bull Regime ($P(\mu_t > 0)$):** {prob_bull * 100:.1f}%\n"
+    report_md += rf"* **Latent Drift (Posterior $\hat{{\mu}}_t$):** {est_mu * 252 * 100:+.2f}% annualized\n"
+    report_md += rf"* **Latent Volatility (Posterior $\hat{{\sigma}}_t$):** {est_sigma * np.sqrt(252) * 100:.2f}% annualized\n"
+    report_md += rf"* **Probability of Bull Regime ($P(\mu_t > 0)$):** {prob_bull * 100:.1f}%\n"
     report_md += f"* **Volatility Drag Regime:** {'HIGH VOLATILITY (Leverage Disabled)' if est_sigma > VOL_LIMIT else 'NORMAL VOLATILITY (Leverage Enabled)'}\n"
 
     report_md += "\n## 4. Today's Execution Logs\n"

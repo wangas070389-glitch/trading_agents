@@ -208,7 +208,199 @@
 | 2026-07-23 | BONDIA | INTEREST | 1 | 0.67 | +0.6706 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0562 days. |
 | 2026-07-23 | BONDIA | INTEREST | 1 | 0.07 | +0.0652 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0055 days. |
 | 2026-07-23 | BONDIA | INTEREST | 1 | 0.68 | +0.6850 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0574 days. |
-| 2026-07-28 | BONDIA | INTEREST | 1 | 59.98 | +59.9789 | Market | FILLED | Bondia overnight yield on cash reserves for 5.0294 days. |
+| 2026-07-24 | BONDIA | INTEREST | 1 | 8.79 | +8.7940 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7374 days. |
+| 2026-07-24 | BONDIA | INTEREST | 1 | 0.07 | +0.0709 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0059 days. |
+| 2026-07-24 | BONDIA | INTEREST | 1 | 0.36 | +0.3630 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0304 days. |
+| 2026-07-24 | BONDIA | INTEREST | 1 | 0.79 | +0.7943 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0666 days. |
+| 2026-07-24 | BONDIA | INTEREST | 1 | 0.81 | +0.8109 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0680 days. |
+| 2026-07-24 | BONDIA | INTEREST | 1 | 0.46 | +0.4572 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0383 days. |
+| 2026-07-24 | BONDIA | INTEREST | 1 | 0.10 | +0.0970 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0081 days. |
+| 2026-07-24 | BONDIA | INTEREST | 1 | 0.53 | +0.5320 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0446 days. |
+| 2026-07-25 | BONDIA | INTEREST | 1 | 11.86 | +11.8596 | Market | FILLED | Bondia overnight yield on cash reserves for 0.9943 days. |
+| 2026-07-26 | BONDIA | INTEREST | 1 | 11.96 | +11.9620 | Market | FILLED | Bondia overnight yield on cash reserves for 1.0027 days. |
+| 2026-07-27 | BONDIA | INTEREST | 1 | 9.26 | +9.2593 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7760 days. |
+| 2026-07-27 | BONDIA | INTEREST | 1 | 0.14 | +0.1378 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0115 days. |
+| 2026-07-27 | BONDIA | INTEREST | 1 | 0.73 | +0.7335 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0615 days. |
+| 2026-07-27 | BONDIA | INTEREST | 1 | 0.83 | +0.8254 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0692 days. |
+| 2026-07-27 | BONDIA | INTEREST | 1 | 0.42 | +0.4163 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0349 days. |
+| 2026-07-27 | BONDIA | INTEREST | 1 | 0.36 | +0.3616 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0303 days. |
+| 2026-07-27 | BONDIA | INTEREST | 1 | 0.26 | +0.2587 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0217 days. |
+| 2026-07-28 | BONDIA | INTEREST | 1 | 9.03 | +9.0291 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7566 days. |
+| 2026-07-28 | BONDIA | INTEREST | 1 | 0.17 | +0.1717 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0144 days. |
+| 2026-07-28 | BONDIA | INTEREST | 1 | 0.77 | +0.7729 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0648 days. |
+| 2026-07-28 | BONDIA | INTEREST | 1 | 0.89 | +0.8873 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0743 days. |
+| 2026-07-28 | BONDIA | INTEREST | 1 | 0.40 | +0.3993 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0335 days. |
+| 2026-07-28 | BONDIA | INTEREST | 1 | 0.41 | +0.4060 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0340 days. |
+| 2026-07-28 | BONDIA | INTEREST | 1 | 0.23 | +0.2308 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0193 days. |
+| 2026-07-29 | BONDIA | INTEREST | 1 | 8.94 | +8.9365 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7487 days. |
+| 2026-07-29 | BONDIA | INTEREST | 1 | 0.14 | +0.1393 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0117 days. |
+| 2026-07-29 | BONDIA | INTEREST | 1 | 0.72 | +0.7162 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0600 days. |
+| 2026-07-29 | BONDIA | INTEREST | 1 | 0.72 | +0.7178 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0601 days. |
+| 2026-07-29 | BONDIA | INTEREST | 1 | 0.63 | +0.6303 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0528 days. |
+| 2026-07-29 | BONDIA | INTEREST | 1 | 0.06 | +0.0568 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0048 days. |
+| 2026-07-29 | BONDIA | INTEREST | 1 | 0.43 | +0.4348 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0364 days. |
+| 2026-07-29 | BONDIA | INTEREST | 1 | 0.28 | +0.2767 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0232 days. |
+| 2026-07-30 | BONDIA | INTEREST | 1 | 9.00 | +8.9998 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7538 days. |
+| 2026-07-30 | BONDIA | INTEREST | 1 | 0.14 | +0.1419 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0119 days. |
+| 2026-07-30 | BONDIA | INTEREST | 1 | 0.76 | +0.7552 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0632 days. |
+| 2026-07-30 | BONDIA | INTEREST | 1 | 0.76 | +0.7564 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0634 days. |
+| 2026-07-30 | BONDIA | INTEREST | 1 | 0.63 | +0.6313 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0529 days. |
+| 2026-07-30 | BONDIA | INTEREST | 1 | 0.02 | +0.0203 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0017 days. |
+| 2026-07-30 | BONDIA | INTEREST | 1 | 0.67 | +0.6721 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0563 days. |
+| 2026-07-31 | BONDIA | INTEREST | 1 | 9.05 | +9.0463 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7576 days. |
+| 2026-07-31 | AMZN | BUY | 2 | 4682.46 | -9,376.80 | Market | FILLED | Alpaca Order bc78a9aa-cbc2-4b8b-8d24-434c6f0f2249 | 1D MACD systematic signal |
+| 2026-07-31 | GOOGL | BUY | 1 | 6113.24 | -6,125.12 | Market | FILLED | Alpaca Order b3c4e27f-fab9-495a-8b41-c24bbfa0808e | 1D MACD systematic signal |
+| 2026-07-31 | BONDIA | INTEREST | 1 | 0.17 | +0.1715 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0188 days. |
+| 2026-07-31 | BONDIA | INTEREST | 1 | 0.60 | +0.6003 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0657 days. |
+| 2026-07-31 | BONDIA | INTEREST | 1 | 0.64 | +0.6419 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0703 days. |
+| 2026-07-31 | BONDIA | INTEREST | 1 | 0.29 | +0.2944 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0322 days. |
+| 2026-07-31 | BONDIA | INTEREST | 1 | 0.31 | +0.3106 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0340 days. |
+| 2026-07-31 | BONDIA | INTEREST | 1 | 0.19 | +0.1887 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0207 days. |
+| 2026-08-01 | BONDIA | INTEREST | 1 | 9.07 | +9.0720 | Market | FILLED | Bondia overnight yield on cash reserves for 0.9936 days. |
+| 2026-08-02 | BONDIA | INTEREST | 1 | 9.13 | +9.1316 | Market | FILLED | Bondia overnight yield on cash reserves for 0.9999 days. |
+| 2026-08-03 | BONDIA | INTEREST | 1 | 7.23 | +7.2253 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7910 days. |
+| 2026-08-03 | BONDIA | INTEREST | 1 | 0.07 | +0.0692 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0076 days. |
+| 2026-08-03 | BONDIA | INTEREST | 1 | 0.75 | +0.7477 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0818 days. |
+| 2026-08-03 | BONDIA | INTEREST | 1 | 0.62 | +0.6179 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0676 days. |
+| 2026-08-03 | BONDIA | INTEREST | 1 | 0.02 | +0.0225 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0025 days. |
+| 2026-08-03 | BONDIA | INTEREST | 1 | 0.53 | +0.5304 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0581 days. |
+| 2026-08-04 | BONDIA | INTEREST | 1 | 6.96 | +6.9634 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7622 days. |
+| 2026-08-04 | BONDIA | INTEREST | 1 | 0.14 | +0.1402 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0153 days. |
+| 2026-08-04 | BONDIA | INTEREST | 1 | 0.61 | +0.6068 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0664 days. |
+| 2026-08-04 | BONDIA | INTEREST | 1 | 0.65 | +0.6537 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0715 days. |
+| 2026-08-04 | NVDA | BUY | 3 | 3656.50 | -10,981.34 | Market | FILLED | Alpaca Order 3f05774d-02b0-4406-8115-d9f33f8e3794 | 1D MACD systematic signal |
+| 2026-08-04 | BONDIA | INTEREST | 1 | 0.24 | +0.2365 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0331 days. |
+| 2026-08-04 | BONDIA | INTEREST | 1 | 0.25 | +0.2541 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0356 days. |
+| 2026-08-04 | BONDIA | INTEREST | 1 | 0.13 | +0.1261 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0177 days. |
+| 2026-08-05 | BONDIA | INTEREST | 1 | 6.89 | +6.8900 | Market | FILLED | Bondia overnight yield on cash reserves for 0.9642 days. |
+| 2026-08-05 | BONDIA | INTEREST | 1 | 0.01 | +0.0104 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0015 days. |
+| 2026-08-06 | BONDIA | INTEREST | 1 | 1.86 | +1.8585 | Market | FILLED | Bondia overnight yield on cash reserves for 0.2600 days. |
+| 2026-08-07 | BONDIA | INTEREST | 1 | 10.35 | +10.3492 | Market | FILLED | Bondia overnight yield on cash reserves for 1.4480 days. |
+| 2026-08-07 | CEMEXCPO.MX | BUY | 63 | 19.22 | -1,212.08 | Market | FILLED | 1D MACD systematic signal |
+| 2026-08-07 | BONDIA | INTEREST | 1 | 0.13 | +0.1281 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0185 days. |
+| 2026-08-07 | BONDIA | INTEREST | 1 | 0.28 | +0.2806 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0405 days. |
+| 2026-08-07 | BONDIA | INTEREST | 1 | 0.27 | +0.2654 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0383 days. |
+| 2026-08-07 | BONDIA | INTEREST | 1 | 0.32 | +0.3176 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0458 days. |
+| 2026-08-07 | BONDIA | INTEREST | 1 | 0.28 | +0.2767 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0399 days. |
+| 2026-08-07 | BONDIA | INTEREST | 1 | 0.15 | +0.1513 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0218 days. |
+| 2026-08-07 | BONDIA | INTEREST | 1 | 0.07 | +0.0745 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0107 days. |
+| 2026-08-07 | BONDIA | INTEREST | 1 | 0.30 | +0.2959 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0427 days. |
+| 2026-08-08 | BONDIA | INTEREST | 1 | 6.89 | +6.8903 | Market | FILLED | Bondia overnight yield on cash reserves for 0.9943 days. |
+| 2026-08-09 | BONDIA | INTEREST | 1 | 6.94 | +6.9390 | Market | FILLED | Bondia overnight yield on cash reserves for 1.0012 days. |
+| 2026-08-10 | BONDIA | INTEREST | 1 | 5.19 | +5.1894 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7486 days. |
+| 2026-08-10 | BONDIA | INTEREST | 1 | 0.13 | +0.1283 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0185 days. |
+| 2026-08-10 | BONDIA | INTEREST | 1 | 0.30 | +0.2980 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0430 days. |
+| 2026-08-10 | BONDIA | INTEREST | 1 | 0.35 | +0.3465 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0500 days. |
+| 2026-08-10 | BONDIA | INTEREST | 1 | 0.37 | +0.3725 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0537 days. |
+| 2026-08-10 | BONDIA | INTEREST | 1 | 0.19 | +0.1950 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0281 days. |
+| 2026-08-10 | BONDIA | INTEREST | 1 | 0.06 | +0.0639 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0092 days. |
+| 2026-08-10 | BONDIA | INTEREST | 1 | 0.23 | +0.2297 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0331 days. |
+| 2026-08-10 | BONDIA | INTEREST | 1 | 0.15 | +0.1487 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0214 days. |
+| 2026-08-11 | BONDIA | INTEREST | 1 | 5.14 | +5.1387 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7412 days. |
+| 2026-08-11 | META | BUY | 1 | 10424.84 | -10,436.46 | Market | FILLED | Alpaca Execution Failed (403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders) | 1D MACD systematic signal |
+| 2026-08-11 | BIMBOA.MX | SELL | 19 | 61.68 | +1,170.71 | Market | FILLED | 1D MACD systematic signal |
+| 2026-08-11 | BONDIA | INTEREST | 1 | 0.11 | +0.1079 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0205 days. |
+| 2026-08-11 | BONDIA | INTEREST | 1 | 0.24 | +0.2413 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0459 days. |
+| 2026-08-11 | BONDIA | INTEREST | 1 | 0.29 | +0.2855 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0543 days. |
+| 2026-08-11 | BONDIA | INTEREST | 1 | 0.26 | +0.2566 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0488 days. |
+| 2026-08-11 | BONDIA | INTEREST | 1 | 0.18 | +0.1833 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0349 days. |
+| 2026-08-11 | BONDIA | INTEREST | 1 | 0.06 | +0.0585 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0111 days. |
+| 2026-08-11 | BONDIA | INTEREST | 1 | 0.25 | +0.2530 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0482 days. |
+| 2026-08-12 | BONDIA | INTEREST | 1 | 4.20 | +4.1964 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7987 days. |
+| 2026-08-12 | AMXB.MX | BUY | 58 | 19.75 | -1,146.65 | Market | FILLED | 1D MACD systematic signal |
+| 2026-08-12 | BONDIA | INTEREST | 1 | 0.30 | +0.2988 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0592 days. |
+| 2026-08-12 | BONDIA | INTEREST | 1 | 0.25 | +0.2478 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0491 days. |
+| 2026-08-12 | BONDIA | INTEREST | 1 | 0.46 | +0.4589 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0909 days. |
+| 2026-08-13 | BONDIA | INTEREST | 1 | 3.73 | +3.7272 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7385 days. |
+| 2026-08-13 | BONDIA | INTEREST | 1 | 0.09 | +0.0928 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0184 days. |
+| 2026-08-13 | BONDIA | INTEREST | 1 | 0.43 | +0.4322 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0856 days. |
+| 2026-08-13 | BONDIA | INTEREST | 1 | 0.79 | +0.7934 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1572 days. |
+| 2026-08-14 | BONDIA | INTEREST | 1 | 4.01 | +4.0061 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7937 days. |
+| 2026-08-14 | GAPB.MX | BUY | 3 | 352.35 | -1,058.20 | Market | FILLED | 1D MACD systematic signal |
+| 2026-08-14 | BONDIA | INTEREST | 1 | 0.41 | +0.4079 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0840 days. |
+| 2026-08-14 | BONDIA | INTEREST | 1 | 0.19 | +0.1852 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0381 days. |
+| 2026-08-14 | BONDIA | INTEREST | 1 | 0.34 | +0.3382 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0696 days. |
+| 2026-08-17 | BONDIA | INTEREST | 1 | 13.25 | +13.2485 | Market | FILLED | Bondia overnight yield on cash reserves for 2.7279 days. |
+| 2026-08-17 | BONDIA | INTEREST | 1 | 0.09 | +0.0940 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0193 days. |
+| 2026-08-17 | BONDIA | INTEREST | 1 | 0.09 | +0.0895 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0184 days. |
+| 2026-08-17 | BONDIA | INTEREST | 1 | 0.12 | +0.1183 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0243 days. |
+| 2026-08-17 | BONDIA | INTEREST | 1 | 0.10 | +0.1027 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0211 days. |
+| 2026-08-17 | BONDIA | INTEREST | 1 | 0.10 | +0.1006 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0207 days. |
+| 2026-08-17 | BONDIA | INTEREST | 1 | 0.10 | +0.1014 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0209 days. |
+| 2026-08-17 | BONDIA | INTEREST | 1 | 0.14 | +0.1409 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0290 days. |
+| 2026-08-17 | BONDIA | INTEREST | 1 | 0.17 | +0.1669 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0343 days. |
+| 2026-08-17 | BONDIA | INTEREST | 1 | 0.08 | +0.0834 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0172 days. |
+| 2026-08-17 | BONDIA | INTEREST | 1 | 0.03 | +0.0298 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0061 days. |
+| 2026-08-17 | BONDIA | INTEREST | 1 | 0.08 | +0.0793 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0163 days. |
+| 2026-08-17 | BONDIA | INTEREST | 1 | 0.10 | +0.1011 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0208 days. |
+| 2026-08-17 | BONDIA | INTEREST | 1 | 0.11 | +0.1123 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0231 days. |
+| 2026-08-18 | BONDIA | INTEREST | 1 | 3.56 | +3.5619 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7330 days. |
+| 2026-08-18 | BONDIA | INTEREST | 1 | 0.09 | +0.0890 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0183 days. |
+| 2026-08-18 | BONDIA | INTEREST | 1 | 0.49 | +0.4885 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1005 days. |
+| 2026-08-18 | BONDIA | INTEREST | 1 | 0.14 | +0.1385 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0285 days. |
+| 2026-08-18 | BONDIA | INTEREST | 1 | 0.17 | +0.1710 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0352 days. |
+| 2026-08-18 | BONDIA | INTEREST | 1 | 0.08 | +0.0774 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0159 days. |
+| 2026-08-18 | BONDIA | INTEREST | 1 | 0.03 | +0.0318 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0065 days. |
+| 2026-08-18 | BONDIA | INTEREST | 1 | 0.08 | +0.0766 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0158 days. |
+| 2026-08-18 | BONDIA | INTEREST | 1 | 0.09 | +0.0942 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0194 days. |
+| 2026-08-18 | BONDIA | INTEREST | 1 | 0.12 | +0.1245 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0256 days. |
+| 2026-08-19 | BONDIA | INTEREST | 1 | 3.57 | +3.5665 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7338 days. |
+| 2026-08-19 | BONDIA | INTEREST | 1 | 0.71 | +0.7065 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1453 days. |
+| 2026-08-19 | BONDIA | INTEREST | 1 | 0.17 | +0.1695 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0349 days. |
+| 2026-08-19 | BONDIA | INTEREST | 1 | 0.13 | +0.1262 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0260 days. |
+| 2026-08-19 | BONDIA | INTEREST | 1 | 0.42 | +0.4203 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0865 days. |
+| 2026-08-20 | BONDIA | INTEREST | 1 | 3.74 | +3.7396 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7693 days. |
+| 2026-08-20 | BONDIA | INTEREST | 1 | 0.44 | +0.4384 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0902 days. |
+| 2026-08-20 | BONDIA | INTEREST | 1 | 0.25 | +0.2518 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0518 days. |
+| 2026-08-20 | BONDIA | INTEREST | 1 | 0.31 | +0.3104 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0639 days. |
+| 2026-08-21 | BONDIA | INTEREST | 1 | 3.56 | +3.5647 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7332 days. |
+| 2026-08-21 | BONDIA | INTEREST | 1 | 0.29 | +0.2919 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0600 days. |
+| 2026-08-21 | BONDIA | INTEREST | 1 | 0.43 | +0.4315 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0887 days. |
+| 2026-08-21 | BONDIA | INTEREST | 1 | 0.15 | +0.1517 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0312 days. |
+| 2026-08-21 | BONDIA | INTEREST | 1 | 0.08 | +0.0785 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0161 days. |
+| 2026-08-21 | BONDIA | INTEREST | 1 | 0.03 | +0.0346 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0071 days. |
+| 2026-08-21 | BONDIA | INTEREST | 1 | 0.09 | +0.0856 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0176 days. |
+| 2026-08-21 | BONDIA | INTEREST | 1 | 0.09 | +0.0888 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0183 days. |
+| 2026-08-21 | BONDIA | INTEREST | 1 | 0.12 | +0.1223 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0252 days. |
+| 2026-08-24 | BONDIA | INTEREST | 1 | 13.32 | +13.3221 | Market | FILLED | Bondia overnight yield on cash reserves for 2.7396 days. |
+| 2026-08-24 | BONDIA | INTEREST | 1 | 0.75 | +0.7479 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1537 days. |
+| 2026-08-24 | BONDIA | INTEREST | 1 | 0.22 | +0.2154 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0443 days. |
+| 2026-08-24 | BONDIA | INTEREST | 1 | 0.32 | +0.3184 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0654 days. |
+| 2026-08-31 | BONDIA | INTEREST | 1 | 34.06 | +34.0582 | Market | FILLED | Bondia overnight yield on cash reserves for 7.0001 days. |
+| 2026-09-01 | BONDIA | INTEREST | 1 | 4.14 | +4.1438 | Market | FILLED | Bondia overnight yield on cash reserves for 0.8506 days. |
+| 2026-09-01 | BONDIA | INTEREST | 1 | 0.04 | +0.0450 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0092 days. |
+| 2026-09-01 | BONDIA | INTEREST | 1 | 0.62 | +0.6203 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1273 days. |
+| 2026-09-01 | BONDIA | INTEREST | 1 | 0.18 | +0.1775 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0364 days. |
+| 2026-09-02 | BONDIA | INTEREST | 1 | 4.04 | +4.0435 | Market | FILLED | Bondia overnight yield on cash reserves for 0.8299 days. |
+| 2026-09-02 | BONDIA | INTEREST | 1 | 0.09 | +0.0851 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0175 days. |
+| 2026-09-02 | BONDIA | INTEREST | 1 | 0.56 | +0.5622 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1154 days. |
+| 2026-09-02 | BONDIA | INTEREST | 1 | 0.16 | +0.1621 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0333 days. |
+| 2026-09-03 | BONDIA | INTEREST | 1 | 3.76 | +3.7597 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7715 days. |
+| 2026-09-03 | BONDIA | INTEREST | 1 | 0.30 | +0.2979 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0611 days. |
+| 2026-09-03 | BONDIA | INTEREST | 1 | 0.07 | +0.0742 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0152 days. |
+| 2026-09-03 | BONDIA | INTEREST | 1 | 0.58 | +0.5810 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1192 days. |
+| 2026-09-03 | BONDIA | INTEREST | 1 | 0.14 | +0.1392 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0286 days. |
+| 2026-09-04 | BONDIA | INTEREST | 1 | 3.60 | +3.6034 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7393 days. |
+| 2026-09-04 | GOOGL | BUY | 1 | 5697.92 | -5,703.62 | Market | FILLED | Alpaca Order 620b3684-34c2-4d5f-9b38-fbed3ce1d9cb | 1D MACD systematic signal |
+| 2026-09-04 | BONDIA | INTEREST | 1 | 0.34 | +0.3352 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0873 days. |
+| 2026-09-04 | BONDIA | INTEREST | 1 | 0.06 | +0.0592 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0154 days. |
+| 2026-09-04 | BONDIA | INTEREST | 1 | 0.45 | +0.4510 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1174 days. |
+| 2026-09-04 | BONDIA | INTEREST | 1 | 0.15 | +0.1481 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0386 days. |
+| 2026-09-04 | BONDIA | INTEREST | 1 | 0.16 | +0.1574 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0410 days. |
+| 2026-09-05 | BONDIA | INTEREST | 1 | 3.82 | +3.8178 | Market | FILLED | Bondia overnight yield on cash reserves for 0.9941 days. |
+| 2026-09-06 | BONDIA | INTEREST | 1 | 3.85 | +3.8493 | Market | FILLED | Bondia overnight yield on cash reserves for 1.0021 days. |
+| 2026-09-07 | BONDIA | INTEREST | 1 | 3.21 | +3.2141 | Market | FILLED | Bondia overnight yield on cash reserves for 0.8366 days. |
+| 2026-09-07 | BONDIA | INTEREST | 1 | 0.03 | +0.0267 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0069 days. |
+| 2026-09-07 | BONDIA | INTEREST | 1 | 0.48 | +0.4758 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1238 days. |
+| 2026-09-07 | BONDIA | INTEREST | 1 | 0.05 | +0.0497 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0129 days. |
+| 2026-09-08 | BONDIA | INTEREST | 1 | 3.16 | +3.1618 | Market | FILLED | Bondia overnight yield on cash reserves for 0.8228 days. |
+| 2026-09-08 | BONDIA | INTEREST | 1 | 0.05 | +0.0452 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0118 days. |
+| 2026-09-08 | BONDIA | INTEREST | 1 | 0.48 | +0.4812 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1252 days. |
+| 2026-09-08 | BONDIA | INTEREST | 1 | 0.12 | +0.1157 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0301 days. |
+| 2026-09-09 | BONDIA | INTEREST | 1 | 3.19 | +3.1862 | Market | FILLED | Bondia overnight yield on cash reserves for 0.8290 days. |
+| 2026-09-09 | BONDIA | INTEREST | 1 | 0.06 | +0.0593 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0154 days. |
+| 2026-09-09 | BONDIA | INTEREST | 1 | 0.44 | +0.4417 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1149 days. |
+| 2026-09-09 | BONDIA | INTEREST | 1 | 0.14 | +0.1425 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0371 days. |
 ---
 
 
@@ -216,7 +408,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital (2026-06-03)**: 120,000.00 MXN
-* **Total Deployed Capital**: 54,052.76 MXN (45.5% invested)
-* **Unallocated Cash Reserves**: 65,805.72 MXN (55.3% cash)
-* **Current Portfolio Market Value**: 118,899.04 MXN (including cash)
+* **Initial Starting Capital (2026-06-03)**: 118,561.61 MXN
+* **Total Deployed Capital**: 98,945.09 MXN (87.2% invested)
+* **Unallocated Cash Reserves**: 21,191.97 MXN (18.7% cash)
+* **Current Portfolio Market Value**: 113,481.86 MXN (including cash)

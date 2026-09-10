@@ -219,7 +219,7 @@ def main():
     warnings = []
 
     state = load_json(os.path.join(DIR, STATE_FILE))
-    if state is None:
+    if state is None or not isinstance(state, dict) or "sleeves" not in state or "history" not in state:
         missing = [k for k, m in marks.items() if m is None]
         if missing:
             raise SystemExit(f"[strategy18] sin marca inicial para: {missing}; no se puede inicializar")
