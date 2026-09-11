@@ -1,4 +1,4 @@
-# Consolidated Paper-Portfolio NAV — 2026-09-09
+# Consolidated Paper-Portfolio NAV — 2026-09-10
 
 The total below excludes composite strategies so it does not double-count their underlying sleeves. This remains paper-trading reporting, not a brokerage NAV.
 

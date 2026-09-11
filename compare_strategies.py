@@ -580,13 +580,20 @@ def main():
     if port_multi_strategy and "allocations" in port_multi_strategy:
         allocs = port_multi_strategy["allocations"]
         for key, val in allocs.items():
-            name = key.replace("strategy_", "").replace("_", " ").title()
-            v_usd = val["nav_usd"]
-            t_w = val["target_weight"] * 100.0
-            c_w = val["current_weight"] * 100.0
-            dev = val["deviation"] * 100.0
-            sign = "+" if dev >= 0 else ""
-            report.append(f"| {name} | ${v_usd:,.2f} | {t_w:.1f}% | {c_w:.1f}% | {sign}{dev:.1f}% |")
+            name = key.replace("strategy_", "").replace("_", " ").upper()
+            v_usd = float(val.get("nav_usd", 0.0))
+            c_w = float(val.get("current_weight", 0.0)) * 100.0
+            target_weight = val.get("target_weight")
+            deviation = val.get("deviation")
+            if target_weight is not None:
+                t_w_str = f"{float(target_weight) * 100.0:.1f}%"
+                dev_val = float(deviation) * 100.0 if deviation is not None else (c_w - float(target_weight) * 100.0)
+                sign = "+" if dev_val >= 0 else ""
+                dev_str = f"{sign}{dev_val:.1f}%"
+            else:
+                t_w_str = "-"
+                dev_str = "-"
+            report.append(f"| {name} | ${v_usd:,.2f} | {t_w_str} | {c_w:.1f}% | {dev_str} |")
 
     # Save to comparison_report.md
     with open(comparison_report_path, "w", encoding="utf-8") as f:

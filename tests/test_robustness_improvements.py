@@ -93,3 +93,9 @@ def test_graduation_blocks_stale_portfolios(tmp_path, monkeypatch):
     monkeypatch.setattr(graduation_report, "DIR", str(tmp_path))
     (tmp_path / "portfolio.json").write_text('{"last_updated": "2026-07-01"}', encoding="utf-8")
     assert "stale" in portfolio_freshness_block("portfolio.json", __import__("datetime").date(2026, 9, 9))
+
+
+def test_compare_strategies_runs_without_key_error():
+    import compare_strategies
+    compare_strategies.main()
+    assert os.path.exists("comparison_report.md")

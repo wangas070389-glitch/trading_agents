@@ -1,35 +1,35 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-09-09 23:44:40 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-09-10 23:29:50 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| S29 Golden Stat-Arb | **BLOCKED** | 56 | n/a | n/a | n/a | n/a | n/a | -65.2% | 25.18 | 5.04 (5.0y) |
-| S12 VTTL Trend+Vol | **BLOCKED** | 65 | n/a | n/a | n/a | n/a | n/a | -26.7% | 10.35 | 0.46 (22.5y) |
-| S14 HEDGE Aggregator | **BLOCKED** | 65 | n/a | n/a | n/a | n/a | n/a | -19.0% | 10.18 | 0.53 (19.2y) |
-| S15 TRACK Tracker | **BLOCKED** | 65 | n/a | n/a | n/a | n/a | n/a | -18.4% | 10.18 | 0.53 (19.2y) |
-| S30 Golden MACD US | **BLOCKED** | 56 | n/a | n/a | n/a | n/a | n/a | -28.8% | 8.80 | 0.55 (16.0y) |
-| S2 MACD Systematic | **BLOCKED** | 60 | n/a | n/a | n/a | n/a | n/a | -11.9% | 8.78 | 1.76 (5.0y) |
-| S13 CARA Cross-Asset | **BLOCKED** | 65 | n/a | n/a | n/a | n/a | n/a | -31.3% | 8.64 | 0.45 (19.2y) |
-| S27 Golden Hurst | **BLOCKED** | 56 | n/a | n/a | n/a | n/a | n/a | -61.4% | 7.68 | 0.48 (16.0y) |
-| S25 Golden MACD BMV | **BLOCKED** | 56 | n/a | n/a | n/a | n/a | n/a | -12.7% | 7.20 | 0.45 (16.0y) |
-| S23 Calculus S&R | **BLOCKED** | 56 | n/a | n/a | n/a | n/a | n/a | -96.7% | 6.72 | 0.42 (16.0y) |
-| S3 US Stock Momentum | **BLOCKED** | 78 | n/a | n/a | n/a | n/a | n/a | -22.7% | 5.75 | 1.15 (5.0y) |
-| S8 Dividend Quality | **BLOCKED** | 76 | n/a | n/a | n/a | n/a | n/a | -14.2% | 5.60 | 1.12 (5.0y) |
-| S20 Hurst Exponent Dynamic | **BLOCKED** | 58 | n/a | n/a | n/a | n/a | n/a | -79.6% | 5.58 | 0.34 (16.4y) |
-| S19 Particle Filter QQQ | **BLOCKED** | 58 | n/a | n/a | n/a | n/a | n/a | -64.7% | 5.09 | 0.31 (16.4y) |
-| S4 US DCF Value-Growth | **BLOCKED** | 78 | n/a | n/a | n/a | n/a | n/a | -15.2% | 4.56 | 1.14 (4.0y) |
-| S22 Walk-Forward ML | **BLOCKED** | 58 | n/a | n/a | n/a | n/a | n/a | -73.3% | 4.27 | 0.26 (16.4y) |
-| S6 High-Beta Momentum | **BLOCKED** | 78 | n/a | n/a | n/a | n/a | n/a | -24.4% | 4.20 | 1.05 (4.0y) |
-| S5 Alternatives | **BLOCKED** | 78 | n/a | n/a | n/a | n/a | n/a | -19.0% | 3.80 | 0.95 (4.0y) |
-| S1 Adaptive Value (BMV) | **BLOCKED** | 98 | n/a | n/a | n/a | n/a | n/a | -35.2% | 3.28 | 0.82 (4.0y) |
-| S31 Fibonacci S&R | **BLOCKED** | 56 | n/a | n/a | n/a | n/a | n/a | -62.0% | 2.48 | 0.15 (16.5y) |
-| S9 AI Regime Stat-Arb | **BLOCKED** | 60 | n/a | n/a | n/a | n/a | n/a | -7.5% | 2.35 | 0.47 (5.0y) |
-| S10 Intraday VWAP | **BLOCKED** | 69 | n/a | n/a | n/a | n/a | n/a | -4.0% | 0.52 | 3.27 (0.2y) |
-| S21 Golden Entropy | **BLOCKED** | 58 | n/a | n/a | n/a | n/a | n/a | -87.8% | 0.49 | 0.03 (16.4y) |
-| S17 FIBRAs Dynamic | **BLOCKED** | 59 | n/a | n/a | n/a | n/a | n/a | -21.2% | 0.40 | 0.10 (4.0y) |
-| S16 MACD-HMM Router | **BLOCKED** | 64 | n/a | n/a | n/a | n/a | n/a | -13.4% | 0.16 | 0.99 (0.2y) |
-| S24 ML Classifier | **BLOCKED** | 56 | n/a | n/a | n/a | n/a | n/a | -14.9% | 0.14 | 0.59 (0.2y) |
-| S11 Intraday CCI-ADX | **BLOCKED** | 69 | n/a | n/a | n/a | n/a | n/a | -8.4% | 0.06 | 0.35 (0.2y) |
+| S29 Golden Stat-Arb | **BLOCKED** | 57 | n/a | n/a | n/a | n/a | n/a | -65.2% | 25.18 | 5.04 (5.0y) |
+| S12 VTTL Trend+Vol | **BLOCKED** | 66 | n/a | n/a | n/a | n/a | n/a | -26.7% | 10.35 | 0.46 (22.5y) |
+| S14 HEDGE Aggregator | **BLOCKED** | 66 | n/a | n/a | n/a | n/a | n/a | -19.0% | 10.18 | 0.53 (19.2y) |
+| S15 TRACK Tracker | **BLOCKED** | 66 | n/a | n/a | n/a | n/a | n/a | -18.4% | 10.18 | 0.53 (19.2y) |
+| S30 Golden MACD US | **BLOCKED** | 57 | n/a | n/a | n/a | n/a | n/a | -28.8% | 8.80 | 0.55 (16.0y) |
+| S2 MACD Systematic | **BLOCKED** | 61 | n/a | n/a | n/a | n/a | n/a | -11.9% | 8.78 | 1.76 (5.0y) |
+| S13 CARA Cross-Asset | **BLOCKED** | 66 | n/a | n/a | n/a | n/a | n/a | -31.3% | 8.64 | 0.45 (19.2y) |
+| S27 Golden Hurst | **BLOCKED** | 57 | n/a | n/a | n/a | n/a | n/a | -61.4% | 7.68 | 0.48 (16.0y) |
+| S25 Golden MACD BMV | **BLOCKED** | 57 | n/a | n/a | n/a | n/a | n/a | -12.7% | 7.20 | 0.45 (16.0y) |
+| S23 Calculus S&R | **BLOCKED** | 57 | n/a | n/a | n/a | n/a | n/a | -96.7% | 6.72 | 0.42 (16.0y) |
+| S3 US Stock Momentum | **BLOCKED** | 79 | n/a | n/a | n/a | n/a | n/a | -22.7% | 5.75 | 1.15 (5.0y) |
+| S8 Dividend Quality | **BLOCKED** | 77 | n/a | n/a | n/a | n/a | n/a | -14.2% | 5.60 | 1.12 (5.0y) |
+| S20 Hurst Exponent Dynamic | **BLOCKED** | 59 | n/a | n/a | n/a | n/a | n/a | -79.6% | 5.58 | 0.34 (16.4y) |
+| S19 Particle Filter QQQ | **BLOCKED** | 59 | n/a | n/a | n/a | n/a | n/a | -64.7% | 5.09 | 0.31 (16.4y) |
+| S4 US DCF Value-Growth | **BLOCKED** | 79 | n/a | n/a | n/a | n/a | n/a | -15.2% | 4.56 | 1.14 (4.0y) |
+| S22 Walk-Forward ML | **BLOCKED** | 59 | n/a | n/a | n/a | n/a | n/a | -73.3% | 4.27 | 0.26 (16.4y) |
+| S6 High-Beta Momentum | **BLOCKED** | 79 | n/a | n/a | n/a | n/a | n/a | -24.4% | 4.20 | 1.05 (4.0y) |
+| S5 Alternatives | **BLOCKED** | 79 | n/a | n/a | n/a | n/a | n/a | -19.0% | 3.80 | 0.95 (4.0y) |
+| S1 Adaptive Value (BMV) | **BLOCKED** | 99 | n/a | n/a | n/a | n/a | n/a | -35.2% | 3.28 | 0.82 (4.0y) |
+| S31 Fibonacci S&R | **BLOCKED** | 57 | n/a | n/a | n/a | n/a | n/a | -62.0% | 2.48 | 0.15 (16.5y) |
+| S9 AI Regime Stat-Arb | **BLOCKED** | 61 | n/a | n/a | n/a | n/a | n/a | -7.5% | 2.35 | 0.47 (5.0y) |
+| S10 Intraday VWAP | **BLOCKED** | 70 | n/a | n/a | n/a | n/a | n/a | -4.0% | 0.52 | 3.27 (0.2y) |
+| S21 Golden Entropy | **BLOCKED** | 59 | n/a | n/a | n/a | n/a | n/a | -87.8% | 0.49 | 0.03 (16.4y) |
+| S17 FIBRAs Dynamic | **BLOCKED** | 60 | n/a | n/a | n/a | n/a | n/a | -21.2% | 0.40 | 0.10 (4.0y) |
+| S16 MACD-HMM Router | **BLOCKED** | 65 | n/a | n/a | n/a | n/a | n/a | -13.4% | 0.16 | 0.99 (0.2y) |
+| S24 ML Classifier | **BLOCKED** | 57 | n/a | n/a | n/a | n/a | n/a | -14.9% | 0.14 | 0.59 (0.2y) |
+| S11 Intraday CCI-ADX | **BLOCKED** | 70 | n/a | n/a | n/a | n/a | n/a | -8.4% | 0.06 | 0.35 (0.2y) |
 
 ## Verdict Detail
 
