@@ -1,5 +1,5 @@
 # Shadow Frontier — Live Track Record of the Allocation Layer
-**Generated:** 2026-09-11 05:51:27 | Inception: 2026-07-14 (59 calendar days) | Virtual capital: $100,000 USD
+**Generated:** 2026-09-11 17:53:31 | Inception: 2026-07-14 (59 calendar days) | Virtual capital: $100,000 USD
 **Weights (frozen):** efficient_frontier_report.md 2026-07-11 -- Risk Parity, hurdle-filtered (RECOMMENDED)
 
 This book paper-trades the recommended frontier allocation itself, marked
@@ -11,24 +11,24 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 ## 1. Promise vs. Realized
 | Metric | Backtest promise | Realized (live) |
 | :--- | ---: | ---: |
-| NAV | -- | $245,945.14 USD |
-| Return since inception | -- | +145.95% |
-| Ann. return | +14.67% | +902.88% |
-| Ann. volatility | 6.66% | 97.37% |
+| NAV | -- | $245,855.62 USD |
+| Return since inception | -- | +145.86% |
+| Ann. return | +14.67% | +902.33% |
+| Ann. volatility | 6.66% | 97.38% |
 | Sharpe (Rf 6.53%) | +1.22 | +5.16 |
-| Max drawdown | -4.10% | -10.65% |
+| Max drawdown | -4.10% | -10.68% |
 
 ## 2. Sleeves
 | Sleeve | Target w | Current w | TR since inception | Last mark | Source |
 | :--- | ---: | ---: | ---: | :--- | :--- |
 | S1 Adaptive Value (BMV) | 5.4% | 5.8% | -6.73% | 2026-09-11 | multi-strategy USD |
-| S2 MACD Systematic | 4.9% | 5.3% | -5.43% | 2026-09-10 | watchdog MXN/USD |
+| S2 MACD Systematic | 4.9% | 5.3% | -6.07% | 2026-09-11 | watchdog MXN/USD |
 | S4 US DCF Value-Growth | 4.5% | 5.0% | +1.77% | 2026-09-11 | multi-strategy USD |
 | S5 Alternatives | 25.0% | 27.8% | +700.42% | 2026-09-11 | multi-strategy USD |
 | S6 High-Beta Momentum | 13.5% | 15.0% | -0.39% | 2026-09-11 | multi-strategy USD |
 | S8 Dividend Quality | 11.8% | 12.9% | +2.63% | 2026-09-11 | multi-strategy USD |
 | S9 AI Regime Stat-Arb | 8.6% | 9.1% | -9.65% | 2026-09-11 | multi-strategy USD |
-| S12 VTTL Trend+Vol | 5.3% | 5.7% | -1.57% | 2026-09-11 | multi-strategy USD |
+| S12 VTTL Trend+Vol | 5.3% | 5.8% | -1.57% | 2026-09-11 | multi-strategy USD |
 | S13 CARA Cross-Asset | 6.0% | 3.7% | -2.10% | 2026-09-11 | multi-strategy USD |
 | S14 HEDGE Aggregator | 7.4% | 4.7% | +15.84% | 2026-09-11 | multi-strategy USD |
 | S15 TRACK Tracker | 7.6% | 4.8% | +15.85% | 2026-09-11 | multi-strategy USD |
@@ -59,7 +59,7 @@ Largest divergences from the backtest correlation matrix (the frontier's key inp
 | S9-S29 | 0.00 | 0.80 | 0.80 |
 | S9-S27 | 0.00 | 0.80 | 0.80 |
 | S9-S25 | 0.00 | 0.77 | 0.77 |
-| S2-S25 | 0.00 | 0.73 | 0.73 |
+| S8-S25 | 0.00 | 0.73 | 0.73 |
 
 ## 4. Rebalances
 | Date | NAV | Max weight drift |
