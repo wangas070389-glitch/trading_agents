@@ -1,5 +1,5 @@
 # Shadow Frontier — Live Track Record of the Allocation Layer
-**Generated:** 2026-09-14 19:35:31 | Inception: 2026-07-14 (62 calendar days) | Virtual capital: $100,000 USD
+**Generated:** 2026-09-14 19:46:23 | Inception: 2026-07-14 (62 calendar days) | Virtual capital: $100,000 USD
 **Weights (frozen):** efficient_frontier_report.md 2026-07-11 -- Risk Parity, hurdle-filtered (RECOMMENDED)
 
 This book paper-trades the recommended frontier allocation itself, marked
@@ -11,18 +11,18 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 ## 1. Promise vs. Realized
 | Metric | Backtest promise | Realized (live) |
 | :--- | ---: | ---: |
-| NAV | -- | $246,475.37 USD |
-| Return since inception | -- | +146.48% |
-| Ann. return | +14.67% | +862.31% |
-| Ann. volatility | 6.66% | 96.46% |
-| Sharpe (Rf 6.53%) | +1.22 | +5.11 |
+| NAV | -- | $246,648.95 USD |
+| Return since inception | -- | +146.65% |
+| Ann. return | +14.67% | +863.34% |
+| Ann. volatility | 6.66% | 96.45% |
+| Sharpe (Rf 6.53%) | +1.22 | +5.12 |
 | Max drawdown | -4.10% | -10.68% |
 
 ## 2. Sleeves
 | Sleeve | Target w | Current w | TR since inception | Last mark | Source |
 | :--- | ---: | ---: | ---: | :--- | :--- |
 | S1 Adaptive Value (BMV) | 5.4% | 5.7% | -7.48% | 2026-09-14 | multi-strategy USD |
-| S2 MACD Systematic | 4.9% | 5.3% | -6.07% | 2026-09-11 | watchdog MXN/USD |
+| S2 MACD Systematic | 4.9% | 5.3% | -4.82% | 2026-09-14 | watchdog MXN/USD |
 | S4 US DCF Value-Growth | 4.5% | 5.0% | +1.77% | 2026-09-14 | multi-strategy USD |
 | S5 Alternatives | 25.0% | 27.7% | +700.05% | 2026-09-14 | multi-strategy USD |
 | S6 High-Beta Momentum | 13.5% | 15.0% | -0.37% | 2026-09-14 | multi-strategy USD |
@@ -59,7 +59,7 @@ Largest divergences from the backtest correlation matrix (the frontier's key inp
 | S9-S29 | 0.00 | 0.80 | 0.80 |
 | S9-S27 | 0.00 | 0.80 | 0.80 |
 | S9-S25 | 0.00 | 0.77 | 0.77 |
-| S2-S25 | 0.00 | 0.72 | 0.72 |
+| S8-S25 | 0.00 | 0.72 | 0.72 |
 
 ## 4. Rebalances
 | Date | NAV | Max weight drift |
