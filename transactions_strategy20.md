@@ -8,4 +8,5 @@
 | 2026-09-14 | TQQQ | SELL | 147.7648 | $1195.33 | $+176,115.65 | Market | FILLED | Hurst switch to CASH |
 | 2026-09-14 | BONDIA | INTEREST | 1.0000 | $0.24 | $+0.24 | Market | FILLED | Yield on cash for 0.0075 days. |
 | 2026-09-14 | BONDIA | INTEREST | 1.0000 | $3.97 | $+3.97 | Market | FILLED | Yield on cash for 0.1261 days. |
+| 2026-09-14 | BONDIA | INTEREST | 1.0000 | $0.25 | $+0.25 | Market | FILLED | Yield on cash for 0.0079 days. |
 ---

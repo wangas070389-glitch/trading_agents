@@ -258,4 +258,5 @@
 | 2026-09-14 | GOOGL | BUY | 51.5883 | $348.1400 | $-17,961.74 | Market | FILLED | Golden MACD US entry |
 | 2026-09-14 | CASH_SWEEP | INTEREST | 1.0000 | $0.0760 | $+0.08 | Market | FILLED | USD Sweep interest |
 | 2026-09-14 | CASH_SWEEP | INTEREST | 1.0000 | $1.2719 | $+1.27 | Market | FILLED | USD Sweep interest |
+| 2026-09-14 | CASH_SWEEP | INTEREST | 1.0000 | $0.0790 | $+0.08 | Market | FILLED | USD Sweep interest |
 ---
