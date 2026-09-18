@@ -3,8 +3,8 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 101321.45,
   "nav": 105171.66,
-  "total_capital": 90919.92,
-  "cash_balance": 641707.77,
+  "total_capital": 90966.65,
+  "cash_balance": 662281.88,
   "holdings_value": 119726.18,
   "net_trading_profit": 3850.21,
   "net_trading_return_pct": 3.8,
@@ -46,7 +46,7 @@
       "ticker": "USDMXN=X",
       "shares": 1213,
       "buy_price": 17.14600944519043,
-      "last_price": 17.2185001373291,
+      "last_price": 17.2189998626709,
       "peak_price": 17.14600944519043,
       "armed": false,
       "target_weight": 0.15,
@@ -65,5 +65,5 @@
       "entry_date": "2026-09-18"
     }
   ],
-  "last_updated": "2026-09-18 21:08:40"
+  "last_updated": "2026-09-18 21:54:26"
 }
