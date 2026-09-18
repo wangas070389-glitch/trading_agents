@@ -262,4 +262,5 @@
 | 2026-09-18 | CASH_SWEEP | INTEREST | 1.0000 | $32.6992 | $+32.70 | Market | FILLED | USD Sweep interest |
 | 2026-09-18 | CASH_SWEEP | INTEREST | 1.0000 | $5.4839 | $+5.48 | Market | FILLED | USD Sweep interest |
 | 2026-09-18 | CASH_SWEEP | INTEREST | 1.0000 | $0.1112 | $+0.11 | Market | FILLED | USD Sweep interest |
+| 2026-09-18 | CASH_SWEEP | INTEREST | 1.0000 | $1.2808 | $+1.28 | Market | FILLED | USD Sweep interest |
 ---
