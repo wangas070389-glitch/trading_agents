@@ -122,6 +122,7 @@
 | 2026-09-18 | DBA | SELL-REJECTED | 733.0000 | $28.4200 | $0.00 | $20,831.86 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-09-18 | GBPUSD=X | BUY | 90983.0000 | $1.3370 | $352.78 | $-122,000.82 | Entry: Oversold (RSI=33.3) at lower Bollinger Band |
 | 2026-09-18 | DBA | SELL-REJECTED | 733.0000 | $28.1600 | $0.00 | $20,641.28 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-18 | DBA | SELL-REJECTED | 733.0000 | $28.1450 | $0.00 | $20,630.29 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 ---
 
 
@@ -129,7 +130,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $89,647.72 USD
-* **Total Deployed Capital**: $248,767.32 USD (29.1% invested)
-* **Unallocated Cash Reserves**: $600,563.20 USD (70.3% cash)
-* **Current Portfolio Market Value**: $854,140.61 USD (including cash)
+* **Initial + Inflow Capital**: $89,781.30 USD
+* **Total Deployed Capital**: $248,767.32 USD (28.4% invested)
+* **Unallocated Cash Reserves**: $621,133.66 USD (71.0% cash)
+* **Current Portfolio Market Value**: $874,650.42 USD (including cash)
