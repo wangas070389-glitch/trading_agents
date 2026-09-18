@@ -119,6 +119,8 @@
 | 2026-09-03 | BTC-USD | BUY-REJECTED | 1.9917 | $81156.9219 | $0.00 | $161,640.24 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-09-03 | BTC-USD | BUY-REJECTED | 1.9821 | $81580.0469 | $0.00 | $161,699.81 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-09-03 | BTC-USD | BUY-REJECTED | 1.9786 | $81727.1172 | $0.00 | $161,705.27 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-18 | DBA | SELL-REJECTED | 733.0000 | $28.4200 | $0.00 | $20,831.86 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-18 | GBPUSD=X | BUY | 90983.0000 | $1.3370 | $352.78 | $-122,000.82 | Entry: Oversold (RSI=33.3) at lower Bollinger Band |
 ---
 
 
@@ -126,7 +128,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $87,538.48 USD
-* **Total Deployed Capital**: $127,119.29 USD (15.6% invested)
-* **Unallocated Cash Reserves**: $681,211.15 USD (83.8% cash)
-* **Current Portfolio Market Value**: $812,768.91 USD (including cash)
+* **Initial + Inflow Capital**: $89,855.85 USD
+* **Total Deployed Capital**: $248,767.32 USD (29.8% invested)
+* **Unallocated Cash Reserves**: $579,981.78 USD (69.6% cash)
+* **Current Portfolio Market Value**: $833,758.31 USD (including cash)
