@@ -105,8 +105,11 @@ def main():
             portfolio["cash_balance_mxn"], portfolio["cash_balance_usd"] = cash_mxn, cash_usd
             save_portfolio(dir_path, portfolio)
             return
+        # Alinear vix3m a la cronologia de vix
+        vix3m = vix3m.reindex(vix.index).ffill().bfill()
     except Exception as e:
         print(f"CRITICAL: fallo de datos ({e}). Halt.")
+        portfolio["cash_balance_mxn"], portfolio["cash_balance_usd"] = cash_mxn, cash_usd
         save_portfolio(dir_path, portfolio)
         return
 
@@ -123,95 +126,97 @@ def main():
     qqq_c, vix_c, vix3m_c = completed(qqq), completed(vix), completed(vix3m)
     hyg_c, ief_c, fx_c = completed(hyg), completed(ief), completed(fx_s)
 
-    if len(qqq_c) < p["tsmom_lookback"] + 10:
-        print("CRITICAL: historial insuficiente. Halt.")
+    if len(qqq_c) < p["tsmom_lookback"] + 10 or len(vix3m_c) < 10 or len(vix_c) < 10:
+        print("CRITICAL: historial insuficiente para senales. Halt.")
+        portfolio["cash_balance_mxn"], portfolio["cash_balance_usd"] = cash_mxn, cash_usd
         save_portfolio(dir_path, portfolio)
         return
 
     signal_date = str(qqq_c.index[-1].date())
     already = portfolio.get("last_signal_date") == signal_date
 
-    tgt, r_experts, base, rvol = expert_targets_and_returns(qqq_c, vix_c, vix3m_c, hyg_c, ief_c, fx_c, p)
+    try:
+        tgt, r_experts, base, rvol = expert_targets_and_returns(qqq_c, vix_c, vix3m_c, hyg_c, ief_c, fx_c, p)
 
-    # actualizacion FIXED-SHARE (una sola vez por senal)
-    K = len(EXPERTS)
-    wk = np.array([portfolio.get("expert_weights", {}).get(e, 1.0 / K) for e in EXPERTS])
-    wk = wk / wk.sum()
-    G = portfolio.get("expert_G", {e: 0.0 for e in EXPERTS})
-    if not already:
-        g = np.array([np.log1p(np.clip(r_experts[e], -p["clip_daily"], p["clip_daily"])) for e in EXPERTS])
-        v = wk * np.exp(p["eta"] * (g - g.max()))
-        v = v / v.sum()
-        wk = (1.0 - p["alpha"]) * v + p["alpha"] / K
-        portfolio["expert_weights"] = {e: float(wk[i]) for i, e in enumerate(EXPERTS)}
-        for i, e in enumerate(EXPERTS):
-            G[e] = G.get(e, 0.0) + float(g[i])
-        portfolio["expert_G"] = G
-    agg = {e: float(wk[i]) for i, e in enumerate(EXPERTS)}
+        # actualizacion FIXED-SHARE (una sola vez por senal)
+        K = len(EXPERTS)
+        wk = np.array([portfolio.get("expert_weights", {}).get(e, 1.0 / K) for e in EXPERTS])
+        wk = wk / wk.sum()
+        G = portfolio.get("expert_G", {e: 0.0 for e in EXPERTS})
+        if not already:
+            g = np.array([np.log1p(np.clip(r_experts[e], -p["clip_daily"], p["clip_daily"])) for e in EXPERTS])
+            v = wk * np.exp(p["eta"] * (g - g.max()))
+            v = v / v.sum()
+            wk = (1.0 - p["alpha"]) * v + p["alpha"] / K
+            portfolio["expert_weights"] = {e: float(wk[i]) for i, e in enumerate(EXPERTS)}
+            for i, e in enumerate(EXPERTS):
+                G[e] = G.get(e, 0.0) + float(g[i])
+            portfolio["expert_G"] = G
+        agg = {e: float(wk[i]) for i, e in enumerate(EXPERTS)}
 
-    tgt_w = sum(agg[e] * tgt[e][0] for e in EXPERTS)
-    tgt_f = sum(agg[e] * tgt[e][1] for e in EXPERTS)
+        tgt_w = sum(agg[e] * tgt[e][0] for e in EXPERTS)
+        tgt_f = sum(agg[e] * tgt[e][1] for e in EXPERTS)
 
-    holdings = portfolio["holdings"]
-    pos = holdings[0] if holdings else None
-    pos_value = pos["shares"] * tqqq_mxn if pos else 0.0
-    nav = cash_mxn + cash_usd * fx_rate + pos_value
-    cur_w = pos_value / nav if nav > 0 else 0.0
+        holdings = portfolio["holdings"]
+        pos = holdings[0] if holdings else None
+        pos_value = pos["shares"] * tqqq_mxn if pos else 0.0
+        nav = cash_mxn + cash_usd * fx_rate + pos_value
+        cur_w = pos_value / nav if nav > 0 else 0.0
 
-    print(f"Senal ({signal_date}) | vol20d={rvol*100:.1f}% base={base:.2f}x | alpha=1/252")
-    print("Pesos TRACK: " + "  ".join(f"{e}={agg[e]*100:.1f}%" for e in EXPERTS))
-    print(f"Objetivo mezclado: w_TQQQ={tgt_w:.3f} f_USD={tgt_f:.3f} | actual w={cur_w:.3f}")
+        print(f"Senal ({signal_date}) | vol20d={rvol*100:.1f}% base={base:.2f}x")
+        print("Pesos TRACK (fixed-share): " + "  ".join(f"{e}={agg[e]*100:.1f}%" for e in EXPERTS))
+        print(f"Objetivo mezclado: w_TQQQ={tgt_w:.3f} f_USD={tgt_f:.3f} | actual w={cur_w:.3f}")
 
-    actions = []
-    if not already:
-        if abs(tgt_w - cur_w) > p["rebalance_band"] * max(abs(tgt_w), 0.05):
-            delta = nav * tgt_w - pos_value
-            if delta > 0 and cash_mxn > 0:
-                buy = min(delta, cash_mxn); sh = buy / tqqq_mxn
-                cash_mxn -= buy
-                if pos:
-                    pos["shares"] += sh
+        actions = []
+        if not already:
+            if abs(tgt_w - cur_w) > p["rebalance_band"] * max(abs(tgt_w), 0.05):
+                delta = nav * tgt_w - pos_value
+                if delta > 0 and cash_mxn > 0:
+                    buy = min(delta, cash_mxn); sh = buy / tqqq_mxn
+                    cash_mxn -= buy
+                    if pos:
+                        pos["shares"] += sh
+                    else:
+                        holdings.append({"ticker": "TQQQ", "side": "long", "shares": sh,
+                                         "buy_price": tqqq_mxn, "last_price": tqqq_mxn})
+                        pos = holdings[0]
+                    log_transaction(dir_path, today_str, "TQQQ", "BUY", sh, tqqq_mxn, f"TRACK mix w={tgt_w:.3f}")
+                    actions.append(f"BUY {sh:.4f} TQQQ")
+                elif delta < 0 and pos:
+                    sell = min(-delta, pos_value); sh = sell / tqqq_mxn
+                    pos["shares"] -= sh; cash_mxn += sell
+                    log_transaction(dir_path, today_str, "TQQQ", "SELL", sh, tqqq_mxn, f"TRACK mix w={tgt_w:.3f}")
+                    actions.append(f"SELL {sh:.4f} TQQQ")
+                    if pos["shares"] < 1e-6:
+                        portfolio["holdings"] = []; pos = None; pos_value = 0.0
+            total_cash = cash_mxn + cash_usd * fx_rate
+            d_usd = total_cash * tgt_f - cash_usd * fx_rate
+            if abs(d_usd) > total_cash * 0.02:
+                if d_usd > 0:
+                    mv = min(d_usd, cash_mxn); cash_mxn -= mv; cash_usd += mv / fx_rate
+                    log_transaction(dir_path, today_str, "USDMXN", "BUY_USD", mv / fx_rate, fx_rate, f"mix f={tgt_f:.2f}")
+                    actions.append(f"USD +{mv/fx_rate:,.2f}")
                 else:
-                    holdings.append({"ticker": "TQQQ", "side": "long", "shares": sh,
-                                     "buy_price": tqqq_mxn, "last_price": tqqq_mxn})
-                    pos = holdings[0]
-                log_transaction(dir_path, today_str, "TQQQ", "BUY", sh, tqqq_mxn, f"TRACK mix w={tgt_w:.3f}")
-                actions.append(f"BUY {sh:.4f} TQQQ")
-            elif delta < 0 and pos:
-                sell = min(-delta, pos_value); sh = sell / tqqq_mxn
-                pos["shares"] -= sh; cash_mxn += sell
-                log_transaction(dir_path, today_str, "TQQQ", "SELL", sh, tqqq_mxn, f"TRACK mix w={tgt_w:.3f}")
-                actions.append(f"SELL {sh:.4f} TQQQ")
-                if pos["shares"] < 1e-6:
-                    portfolio["holdings"] = []; pos = None; pos_value = 0.0
-        total_cash = cash_mxn + cash_usd * fx_rate
-        d_usd = total_cash * tgt_f - cash_usd * fx_rate
-        if abs(d_usd) > total_cash * 0.02:
-            if d_usd > 0:
-                mv = min(d_usd, cash_mxn); cash_mxn -= mv; cash_usd += mv / fx_rate
-                log_transaction(dir_path, today_str, "USDMXN", "BUY_USD", mv / fx_rate, fx_rate, f"mix f={tgt_f:.2f}")
-                actions.append(f"USD +{mv/fx_rate:,.2f}")
-            else:
-                mv = min(-d_usd, cash_usd * fx_rate); cash_usd -= mv / fx_rate; cash_mxn += mv
-                log_transaction(dir_path, today_str, "USDMXN", "SELL_USD", mv / fx_rate, fx_rate, f"mix f={tgt_f:.2f}")
-                actions.append(f"USD -{mv/fx_rate:,.2f}")
-        portfolio["last_signal_date"] = signal_date
-        if not actions:
-            actions.append("Dentro de bandas; sin operacion.")
-    else:
-        actions.append("Senal ya procesada; solo valuacion.")
+                    mv = min(-d_usd, cash_usd * fx_rate); cash_usd -= mv / fx_rate; cash_mxn += mv
+                    log_transaction(dir_path, today_str, "USDMXN", "SELL_USD", mv / fx_rate, fx_rate, f"mix f={tgt_f:.2f}")
+                    actions.append(f"USD -{mv/fx_rate:,.2f}")
+            portfolio["last_signal_date"] = signal_date
+            if not actions:
+                actions.append("Dentro de bandas; sin operacion.")
+        else:
+            actions.append("Senal ya procesada; solo valuacion.")
 
-    pos_value = pos["shares"] * tqqq_mxn if pos else 0.0
-    if pos:
-        pos["last_price"] = tqqq_mxn
-    nav = cash_mxn + cash_usd * fx_rate + pos_value
-    portfolio["cash_balance_mxn"] = round(cash_mxn, 2)
-    portfolio["cash_balance_usd"] = round(cash_usd, 4)
-    portfolio["total_capital"] = round(nav, 2)
-    save_portfolio(dir_path, portfolio)
+        pos_value = pos["shares"] * tqqq_mxn if pos else 0.0
+        if pos:
+            pos["last_price"] = tqqq_mxn
+        nav = cash_mxn + cash_usd * fx_rate + pos_value
+        portfolio["cash_balance_mxn"] = round(cash_mxn, 2)
+        portfolio["cash_balance_usd"] = round(cash_usd, 4)
+        portfolio["total_capital"] = round(nav, 2)
+        save_portfolio(dir_path, portfolio)
 
-    ranked = sorted(EXPERTS, key=lambda e: -agg[e])
-    report = f"""# Strategy 15: TRACK Live Report
+        ranked = sorted(EXPERTS, key=lambda e: -agg[e])
+        report = f"""# Strategy 15: TRACK Live Report
 **Execution:** {now_local.strftime('%Y-%m-%d %H:%M:%S')} | **Signal date:** {signal_date} | **alpha:** 1/252
 
 * **NAV:** ${nav:,.2f} MXN | Cash MXN ${cash_mxn:,.2f} | Cash USD ${cash_usd:,.2f} | TQQQ ${pos_value:,.2f}
@@ -223,10 +228,15 @@ def main():
 ## Acciones
 {chr(10).join(f'* {a}' for a in actions)}
 """
-    with open(os.path.join(dir_path, REPORT_FILE), "w", encoding="utf-8") as f:
-        f.write(report)
-    print(f"NAV: ${nav:,.2f} MXN. Reporte escrito.")
-    print("=" * 80)
+        with open(os.path.join(dir_path, REPORT_FILE), "w", encoding="utf-8") as f:
+            f.write(report)
+        print(f"NAV: ${nav:,.2f} MXN. Reporte escrito.")
+        print("=" * 80)
+    except Exception as e:
+        print(f"CRITICAL: error al ejecutar estrategia 15 ({e}). Halt.")
+        portfolio["cash_balance_mxn"], portfolio["cash_balance_usd"] = cash_mxn, cash_usd
+        save_portfolio(dir_path, portfolio)
+        return
 
 
 if __name__ == "__main__":

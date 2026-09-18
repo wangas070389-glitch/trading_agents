@@ -1,45 +1,43 @@
-# Watchdog Report - 2026-09-14 22:59:18
+# Watchdog Report - 2026-09-17 22:41:33
 
-**CRITICAL: 0 | WARNING: 14**
+**CRITICAL: 0 | WARNING: 33**
 
 | Nivel | Estrategia | Check | Detalle |
 | :--- | :--- | :--- | :--- |
-| [ OK ] | core | - | NAV $111,671.39 | sin anomalias |
+| [WARN] | core | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:57:40 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | alternatives | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:57:55 (3 dias habiles): cron muerto o script crasheando |
 | [WARN] | alternatives | W5 | [INACTIVE STRATEGY] DD live -84.5% excede 1.25x el MaxDD del backtest (-7.1%): fuera de distribucion validada |
-| [ OK ] | dividends | - | NAV $209,205.79 | sin anomalias |
-| [ OK ] | high_beta | - | NAV $102,818.76 | sin anomalias |
-| [ OK ] | macd | - | NAV $114,169.63 | sin anomalias |
+| [WARN] | dividends | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:57:57 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | high_beta | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:57:57 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | macd | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:57:48 (3 dias habiles): cron muerto o script crasheando |
 | [ OK ] | multi_strategy | - | NAV $0.00 | sin anomalias |
-| [ OK ] | shadow_frontier | - | NAV $246,648.95 | sin anomalias |
-| [ OK ] | strategy10 | - | NAV $206,955.15 | sin anomalias |
-| [ OK ] | strategy11 | - | NAV $210,334.64 | sin anomalias |
-| [ OK ] | strategy12 | - | NAV $203,207.69 | sin anomalias |
-| [ OK ] | strategy13 | - | NAV $201,266.14 | sin anomalias |
-| [ OK ] | strategy14 | - | NAV $236,758.53 | sin anomalias |
-| [ OK ] | strategy15 | - | NAV $236,728.69 | sin anomalias |
-| [ OK ] | strategy16 | - | NAV $206,456.78 | sin anomalias |
-| [ OK ] | strategy17 | - | NAV $102,000.00 | sin anomalias |
-| [ OK ] | strategy18 | - | NAV $242,533.88 | sin anomalias |
-| [ OK ] | strategy19 | - | NAV $155,747.47 | sin anomalias |
-| [ OK ] | strategy20 | - | NAV $176,120.11 | sin anomalias |
-| [ OK ] | strategy21 | - | NAV $179,052.04 | sin anomalias |
-| [ OK ] | strategy22 | - | NAV $201,017.12 | sin anomalias |
-| [ OK ] | strategy23 | - | NAV $206,309.41 | sin anomalias |
-| [ OK ] | strategy24 | - | NAV $170,711.68 | sin anomalias |
-| [ OK ] | strategy25 | - | NAV $198,046.90 | sin anomalias |
-| [WARN] | strategy27 | W2 | [INACTIVE STRATEGY] 53 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
-| [WARN] | strategy29 | W2 | [INACTIVE STRATEGY] 53 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
-| [ OK ] | strategy30 | - | NAV $99,876.70 | sin anomalias |
-| [ OK ] | strategy31 | - | NAV $209,970.88 | sin anomalias |
+| [WARN] | shadow_frontier | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:59:17 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy10 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 19:45:45 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy11 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:58:47 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy12 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:58:48 (3 dias habiles): cron muerto o script crasheando |
+| [ OK ] | strategy13 | - | NAV $202,891.37 | sin anomalias |
+| [ OK ] | strategy14 | - | NAV $238,746.24 | sin anomalias |
+| [ OK ] | strategy15 | - | NAV $238,772.40 | sin anomalias |
+| [WARN] | strategy16 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:58:56 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy17 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:58:57 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy18 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:59:17 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy19 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:59:02 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy20 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:59:03 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy21 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:59:04 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy22 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:59:06 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy23 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:59:07 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy24 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:59:09 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy25 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:59:11 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy27 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:59:12 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy27 | W2 | [INACTIVE STRATEGY] 56 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
+| [WARN] | strategy29 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:59:14 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy29 | W2 | [INACTIVE STRATEGY] 56 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
+| [WARN] | strategy30 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:59:15 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy31 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:59:16 (3 dias habiles): cron muerto o script crasheando |
+| [WARN] | strategy9 | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:58:43 (3 dias habiles): cron muerto o script crasheando |
 | [WARN] | strategy9 | W5 | [INACTIVE STRATEGY] DD live -10.5% excede 1.25x el MaxDD del backtest (-6.0%): fuera de distribucion validada |
-| [ OK ] | us_dcs | - | NAV $105,320.17 | sin anomalias |
+| [WARN] | us_dcs | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:57:53 (3 dias habiles): cron muerto o script crasheando |
 | [WARN] | us_stocks | W4 | [INACTIVE STRATEGY] Cash negativo: [-191788.01] |
+| [WARN] | us_stocks | W1 | [INACTIVE STRATEGY] Sin actualizar desde 2026-09-14 22:57:51 (3 dias habiles): cron muerto o script crasheando |
 | [WARN] | us_stocks | W5 | [INACTIVE STRATEGY] DD live -192.9% excede 1.25x el MaxDD del backtest (-25.1%): fuera de distribucion validada |
-| [WARN] | broker | W6 | [INACTIVE STRATEGY] Cash de Alpaca NEGATIVO: $-191,788.01 (margen no intencional; probable fill fantasma previo) |
-| [WARN] | broker | W6 | [INACTIVE STRATEGY] HUERFANO en Alpaca: AAPL broker=139 vs ledgers=66 (firma de SELL fantasma: el broker aun lo tiene) |
-| [WARN] | broker | W6 | [INACTIVE STRATEGY] HUERFANO en Alpaca: AMZN broker=239 vs ledgers=2 (firma de SELL fantasma: el broker aun lo tiene) |
-| [WARN] | broker | W6 | [INACTIVE STRATEGY] HUERFANO en Alpaca: AVGO broker=106 vs ledgers=0 (firma de SELL fantasma: el broker aun lo tiene) |
-| [WARN] | broker | W6 | [INACTIVE STRATEGY] HUERFANO en Alpaca: COST broker=14 vs ledgers=0 (firma de SELL fantasma: el broker aun lo tiene) |
-| [WARN] | broker | W6 | [INACTIVE STRATEGY] HUERFANO en Alpaca: GOOGL broker=196 vs ledgers=53.5883 (firma de SELL fantasma: el broker aun lo tiene) |
-| [WARN] | broker | W6 | [INACTIVE STRATEGY] HUERFANO en Alpaca: JPM broker=49 vs ledgers=0 (firma de SELL fantasma: el broker aun lo tiene) |
-| [WARN] | broker | W6 | [INACTIVE STRATEGY] HUERFANO en Alpaca: MSFT broker=41 vs ledgers=0 (firma de SELL fantasma: el broker aun lo tiene) |
+| [WARN] | broker | W6 | Alpaca respondio HTTP 401/401 (credenciales invalidas o vencidas?); reconciliacion omitida |

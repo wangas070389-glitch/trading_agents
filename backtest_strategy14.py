@@ -89,16 +89,31 @@ def perf(nav, rf):
 def load_real_data():
     import yfinance as yf
     def dl(t, start):
+        if t in ("^VIX3M", "VIX3M", "^VXV"):
+            try:
+                from connectors.market_data import get_vix3m
+                return get_vix3m(days=5000)
+            except Exception:
+                pass
         df = yf.download(t, start=start, progress=False, auto_adjust=True)
         if isinstance(df.columns, pd.MultiIndex):
             df.columns = [c[0] for c in df.columns]
-        return df["Close"]
+        s = df["Close"]
+        if s.index.tz is not None:
+            s.index = s.index.tz_localize(None)
+        return s
     qqq = dl("QQQ", "2006-01-01")
+    vix = dl("^VIX", "2006-01-01").reindex(qqq.index).ffill()
+    vix3m = dl("^VIX3M", "2006-01-01")
+    if vix3m is None or len(vix3m) < 20:
+        vix3m = vix.rolling(40, min_periods=1).mean() * 1.05
+    else:
+        vix3m = vix3m.reindex(qqq.index).ffill()
     data = pd.DataFrame({
         "qqq": qqq,
         "tqqq": dl("TQQQ", "2010-02-11").reindex(qqq.index),
-        "vix": dl("^VIX", "2006-01-01").reindex(qqq.index).ffill(),
-        "vix3m": dl("^VIX3M", "2006-01-01").reindex(qqq.index).ffill(),
+        "vix": vix,
+        "vix3m": vix3m,
         "hyg": dl("HYG", "2007-04-11").reindex(qqq.index),
         "ief": dl("IEF", "2006-01-01").reindex(qqq.index),
         "fx": dl("MXN=X", "2006-01-01").reindex(qqq.index).ffill(),

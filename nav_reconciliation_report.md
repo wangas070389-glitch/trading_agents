@@ -30,11 +30,11 @@ Audit-only: no portfolio JSON was changed. `Cash delta` is the sum recorded by e
 | ↳ cash/evidence |  |  |  | Line 30: unsupported action BUY_SQQQ; Line 32: unsupported action SETTLE_SHORT_CCI_ZERO; Line 53: unsupported action BUY_TQQQ; Line 55: unsupported action SETTLE_LONG_CCI_ZERO; Line 57: unsupported action BUY_TQQQ; cash discrepancy 11504.01 |  |
 | S12 VTTL Trend+Vol | 334 | 1 | 1 | VERIFIED | -98,784.31 MXN |
 | ↳ cash/evidence |  |  |  | ; cash discrepancy -0.01 |  |
-| S13 CARA Cross-Asset | 337 | 1 | 1 | UNRESOLVED | -49,048.20 MXN |
+| S13 CARA Cross-Asset | 339 | 1 | 1 | UNRESOLVED | -98,229.41 MXN |
 | ↳ cash/evidence |  |  |  | Currency-specific balances require an FX ledger reconciliation; cash discrepancy None |  |
-| S14 HEDGE Aggregator | 659 | 1 | 1 | UNRESOLVED | -58,634.95 MXN |
+| S14 HEDGE Aggregator | 661 | 1 | 1 | UNRESOLVED | -58,556.04 MXN |
 | ↳ cash/evidence |  |  |  | Line 7: unsupported action BUY_USD; Line 400: unsupported action BUY_USD; Line 585: unsupported action SELL_USD; Currency-specific balances require an FX ledger reconciliation; cash discrepancy None |  |
-| S15 TRACK Tracker | 659 | 1 | 1 | UNRESOLVED | -58,653.57 MXN |
+| S15 TRACK Tracker | 661 | 1 | 1 | UNRESOLVED | -58,574.65 MXN |
 | ↳ cash/evidence |  |  |  | Line 7: unsupported action BUY_USD; Line 400: unsupported action BUY_USD; Line 585: unsupported action SELL_USD; Currency-specific balances require an FX ledger reconciliation; cash discrepancy None |  |
 | S16 HMM Intraday Router | 305 | 0 | 0 | MISMATCH | -1,884.78 MXN |
 | ↳ cash/evidence |  |  |  | Line 65: unsupported action BUY_SOXL; Line 76: unsupported action SELL_SOXL; Line 78: unsupported action BUY_URTY; Line 88: unsupported action SELL_URTY; Line 112: unsupported action BUY_URTY; cash discrepancy 8308.38 |  |

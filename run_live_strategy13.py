@@ -65,6 +65,12 @@ def log_transaction(dir_path, date_str, ticker, action, shares, price, note):
 
 
 def fetch_series(ticker, period="1y"):
+    if ticker in ("^VIX3M", "VIX3M", "^VXV"):
+        try:
+            from connectors.market_data import get_vix3m
+            return get_vix3m(days=252)
+        except Exception as e:
+            print(f"[strategy13] Fallo get_vix3m ({e}), usando yfinance.")
     df = yf.download(ticker, period=period, interval="1d", progress=False, auto_adjust=True)
     if df.empty:
         return None
@@ -130,8 +136,12 @@ def main():
             portfolio["cash_balance_usd"] = cash_usd
             save_portfolio(dir_path, portfolio)
             return
+        # Alinear vix3m a la cronologia de vix
+        vix3m = vix3m.reindex(vix.index).ffill().bfill()
     except Exception as e:
         print(f"CRITICAL: fallo de datos ({e}). Halt.")
+        portfolio["cash_balance_mxn"] = cash_mxn
+        portfolio["cash_balance_usd"] = cash_usd
         save_portfolio(dir_path, portfolio)
         return
 
@@ -150,107 +160,110 @@ def main():
     qqq_c, vix_c, vix3m_c = completed(qqq), completed(vix), completed(vix3m)
     hyg_c, ief_c = completed(hyg), completed(ief)
 
-    if len(qqq_c) < PARAMS["trend_sma"] + 5 or len(hyg_c) < PARAMS["credit_sma"] + 5:
-        print("CRITICAL: historial insuficiente. Halt.")
+    if len(qqq_c) < PARAMS["trend_sma"] + 5 or len(hyg_c) < PARAMS["credit_sma"] + 5 or len(vix3m_c) < 5 or len(vix_c) < 5:
+        print("CRITICAL: historial insuficiente para senales. Halt sin tocar portafolio.")
+        portfolio["cash_balance_mxn"] = cash_mxn
+        portfolio["cash_balance_usd"] = cash_usd
         save_portfolio(dir_path, portfolio)
         return
 
     signal_date = str(qqq_c.index[-1].date())
     rebalance_allowed = portfolio.get("last_signal_date") != signal_date
 
-    # --- Score CARA (3 votos, ultimo dia completado) ---
-    v1 = int(float(vix3m_c.iloc[-1]) > float(vix_c.iloc[-1]))
-    ratio = (hyg_c / ief_c.reindex(hyg_c.index)).dropna()
-    v2 = int(float(ratio.iloc[-1]) > float(ratio.rolling(PARAMS["credit_sma"]).mean().iloc[-1]))
-    v3 = int(float(qqq_c.iloc[-1]) > float(qqq_c.rolling(PARAMS["trend_sma"]).mean().iloc[-1]))
-    score = v1 + v2 + v3
+    try:
+        # --- Score CARA (3 votos, ultimo dia completado) ---
+        v1 = int(float(vix3m_c.iloc[-1]) > float(vix_c.iloc[-1]))
+        ratio = (hyg_c / ief_c.reindex(hyg_c.index)).dropna()
+        v2 = int(float(ratio.iloc[-1]) > float(ratio.rolling(PARAMS["credit_sma"]).mean().iloc[-1]))
+        v3 = int(float(qqq_c.iloc[-1]) > float(qqq_c.rolling(PARAMS["trend_sma"]).mean().iloc[-1]))
+        score = v1 + v2 + v3
 
-    rvol = float(qqq_c.pct_change().rolling(PARAMS["vol_window"]).std(ddof=1).iloc[-1] * np.sqrt(TRADING_DAYS))
-    base = min(PARAMS["vol_target"] / rvol, PARAMS["max_exposure"]) if rvol > 0 else 0.0
-    exposure = base if score == 3 else (base * 0.5 if score == 2 else 0.0)
-    target_w = exposure / PARAMS["leverage_etf"]
+        rvol = float(qqq_c.pct_change().rolling(PARAMS["vol_window"]).std(ddof=1).iloc[-1] * np.sqrt(TRADING_DAYS))
+        base = min(PARAMS["vol_target"] / rvol, PARAMS["max_exposure"]) if rvol > 0 else 0.0
+        exposure = base if score == 3 else (base * 0.5 if score == 2 else 0.0)
+        target_w = exposure / PARAMS["leverage_etf"]
 
-    # Confirmacion de hedge: contador persistido de dias consecutivos con score<=1
-    streak = portfolio.get("low_score_streak", 0)
-    if rebalance_allowed:
-        streak = streak + 1 if score <= 1 else 0
-        portfolio["low_score_streak"] = streak
-    hedge_active = streak >= PARAMS["hedge_confirm_days"]
+        # Confirmacion de hedge: contador persistido de dias consecutivos con score<=1
+        streak = portfolio.get("low_score_streak", 0)
+        if rebalance_allowed:
+            streak = streak + 1 if score <= 1 else 0
+            portfolio["low_score_streak"] = streak
+        hedge_active = streak >= PARAMS["hedge_confirm_days"]
 
-    # --- Estado y valuacion ---
-    holdings = portfolio["holdings"]
-    pos = holdings[0] if holdings else None
-    pos_value = pos["shares"] * tqqq_mxn if pos else 0.0
-    nav = cash_mxn + cash_usd * fx_rate + pos_value
-    current_w = pos_value / nav if nav > 0 else 0.0
+        # --- Estado y valuacion ---
+        holdings = portfolio["holdings"]
+        pos = holdings[0] if holdings else None
+        pos_value = pos["shares"] * tqqq_mxn if pos else 0.0
+        nav = cash_mxn + cash_usd * fx_rate + pos_value
+        current_w = pos_value / nav if nav > 0 else 0.0
 
-    print(f"Senal ({signal_date}): VIXts={v1} Credito={v2} Trend={v3} -> SCORE {score} | "
-          f"vol20d={rvol*100:.1f}% | w objetivo={target_w:.3f} | w actual={current_w:.3f} | "
-          f"hedge={'ON' if hedge_active else 'OFF'} (streak={streak})")
+        print(f"Senal ({signal_date}): VIXts={v1} Credito={v2} Trend={v3} -> SCORE {score} | "
+              f"vol20d={rvol*100:.1f}% | w objetivo={target_w:.3f} | w actual={current_w:.3f} | "
+              f"hedge={'ON' if hedge_active else 'OFF'} (streak={streak})")
 
-    actions = []
-    if rebalance_allowed:
-        # 1) Equity con banda
-        needs = ((target_w <= 0 and current_w > 0) or (target_w > 0 and current_w <= 0)
-                 or (target_w > 0 and current_w > 0 and abs(current_w / target_w - 1) > PARAMS["rebalance_band"]))
-        if needs:
-            delta = nav * target_w - pos_value
-            if delta > 0 and cash_mxn > 0:
-                buy = min(delta, cash_mxn)
-                sh = buy / tqqq_mxn
-                cash_mxn -= buy
-                if pos:
-                    pos["shares"] += sh
+        actions = []
+        if rebalance_allowed:
+            # 1) Equity con banda
+            needs = ((target_w <= 0 and current_w > 0) or (target_w > 0 and current_w <= 0)
+                     or (target_w > 0 and current_w > 0 and abs(current_w / target_w - 1) > PARAMS["rebalance_band"]))
+            if needs:
+                delta = nav * target_w - pos_value
+                if delta > 0 and cash_mxn > 0:
+                    buy = min(delta, cash_mxn)
+                    sh = buy / tqqq_mxn
+                    cash_mxn -= buy
+                    if pos:
+                        pos["shares"] += sh
+                    else:
+                        holdings.append({"ticker": "TQQQ", "side": "long", "shares": sh,
+                                         "buy_price": tqqq_mxn, "last_price": tqqq_mxn})
+                        pos = holdings[0]
+                    log_transaction(dir_path, today_str, "TQQQ", "BUY", sh, tqqq_mxn, f"Score {score} -> w={target_w:.3f}")
+                    actions.append(f"BUY {sh:.4f} TQQQ (score {score})")
+                elif delta < 0 and pos:
+                    sell = min(-delta, pos_value)
+                    sh = sell / tqqq_mxn
+                    pos["shares"] -= sh
+                    cash_mxn += sell
+                    log_transaction(dir_path, today_str, "TQQQ", "SELL", sh, tqqq_mxn, f"Score {score} -> w={target_w:.3f}")
+                    actions.append(f"SELL {sh:.4f} TQQQ (score {score})")
+                    if pos["shares"] < 1e-6:
+                        portfolio["holdings"] = []
+                        pos = None
+                        pos_value = 0.0
+            # 2) Hedge FX sobre el cash total
+            total_cash_mxn_eq = cash_mxn + cash_usd * fx_rate
+            target_usd_mxn_eq = total_cash_mxn_eq * (PARAMS["hedge_usd_frac"] if hedge_active else 0.0)
+            delta_usd_mxn = target_usd_mxn_eq - cash_usd * fx_rate
+            if abs(delta_usd_mxn) > total_cash_mxn_eq * 0.02:  # umbral minimo 2% para operar FX
+                if delta_usd_mxn > 0:
+                    mv = min(delta_usd_mxn, cash_mxn)
+                    cash_mxn -= mv
+                    cash_usd += mv / fx_rate
+                    log_transaction(dir_path, today_str, "USDMXN", "BUY_USD", mv / fx_rate, fx_rate, "Hedge riesgo-off ON")
+                    actions.append(f"HEDGE ON: {mv/fx_rate:,.2f} USD @ {fx_rate:.4f}")
                 else:
-                    holdings.append({"ticker": "TQQQ", "side": "long", "shares": sh,
-                                     "buy_price": tqqq_mxn, "last_price": tqqq_mxn})
-                    pos = holdings[0]
-                log_transaction(dir_path, today_str, "TQQQ", "BUY", sh, tqqq_mxn, f"Score {score} -> w={target_w:.3f}")
-                actions.append(f"BUY {sh:.4f} TQQQ (score {score})")
-            elif delta < 0 and pos:
-                sell = min(-delta, pos_value)
-                sh = sell / tqqq_mxn
-                pos["shares"] -= sh
-                cash_mxn += sell
-                log_transaction(dir_path, today_str, "TQQQ", "SELL", sh, tqqq_mxn, f"Score {score} -> w={target_w:.3f}")
-                actions.append(f"SELL {sh:.4f} TQQQ (score {score})")
-                if pos["shares"] < 1e-6:
-                    portfolio["holdings"] = []
-                    pos = None
-                    pos_value = 0.0
-        # 2) Hedge FX sobre el cash total
-        total_cash_mxn_eq = cash_mxn + cash_usd * fx_rate
-        target_usd_mxn_eq = total_cash_mxn_eq * (PARAMS["hedge_usd_frac"] if hedge_active else 0.0)
-        delta_usd_mxn = target_usd_mxn_eq - cash_usd * fx_rate
-        if abs(delta_usd_mxn) > total_cash_mxn_eq * 0.02:  # umbral minimo 2% para operar FX
-            if delta_usd_mxn > 0:
-                mv = min(delta_usd_mxn, cash_mxn)
-                cash_mxn -= mv
-                cash_usd += mv / fx_rate
-                log_transaction(dir_path, today_str, "USDMXN", "BUY_USD", mv / fx_rate, fx_rate, "Hedge riesgo-off ON")
-                actions.append(f"HEDGE ON: {mv/fx_rate:,.2f} USD @ {fx_rate:.4f}")
-            else:
-                mv = min(-delta_usd_mxn, cash_usd * fx_rate)
-                cash_usd -= mv / fx_rate
-                cash_mxn += mv
-                log_transaction(dir_path, today_str, "USDMXN", "SELL_USD", mv / fx_rate, fx_rate, "Hedge riesgo-off OFF")
-                actions.append(f"HEDGE OFF: {mv/fx_rate:,.2f} USD @ {fx_rate:.4f}")
-        portfolio["last_signal_date"] = signal_date
-        if not actions:
-            actions.append("Dentro de bandas; sin operacion.")
-    else:
-        actions.append(f"Senal de {signal_date} ya procesada; solo valuacion.")
+                    mv = min(-delta_usd_mxn, cash_usd * fx_rate)
+                    cash_usd -= mv / fx_rate
+                    cash_mxn += mv
+                    log_transaction(dir_path, today_str, "USDMXN", "SELL_USD", mv / fx_rate, fx_rate, "Hedge riesgo-off OFF")
+                    actions.append(f"HEDGE OFF: {mv/fx_rate:,.2f} USD @ {fx_rate:.4f}")
+            portfolio["last_signal_date"] = signal_date
+            if not actions:
+                actions.append("Dentro de bandas; sin operacion.")
+        else:
+            actions.append(f"Senal de {signal_date} ya procesada; solo valuacion.")
 
-    pos_value = pos["shares"] * tqqq_mxn if pos else 0.0
-    if pos:
-        pos["last_price"] = tqqq_mxn
-    nav = cash_mxn + cash_usd * fx_rate + pos_value
-    portfolio["cash_balance_mxn"] = round(cash_mxn, 2)
-    portfolio["cash_balance_usd"] = round(cash_usd, 4)
-    portfolio["total_capital"] = round(nav, 2)
-    save_portfolio(dir_path, portfolio)
+        pos_value = pos["shares"] * tqqq_mxn if pos else 0.0
+        if pos:
+            pos["last_price"] = tqqq_mxn
+        nav = cash_mxn + cash_usd * fx_rate + pos_value
+        portfolio["cash_balance_mxn"] = round(cash_mxn, 2)
+        portfolio["cash_balance_usd"] = round(cash_usd, 4)
+        portfolio["total_capital"] = round(nav, 2)
+        save_portfolio(dir_path, portfolio)
 
-    report = f"""# Strategy 13: CARA Live Report
+        report = f"""# Strategy 13: CARA Live Report
 **Execution:** {now_local.strftime('%Y-%m-%d %H:%M:%S')} | **Signal date:** {signal_date}
 
 * **NAV:** ${nav:,.2f} MXN
@@ -260,11 +273,17 @@ def main():
 
 ## Acciones
 """
-    report += "".join(f"* {a}\n" for a in actions)
-    with open(os.path.join(dir_path, REPORT_FILE), "w", encoding="utf-8") as f:
-        f.write(report)
-    print(f"NAV: ${nav:,.2f} MXN. Reporte escrito.")
-    print("=" * 80)
+        report += "".join(f"* {a}\n" for a in actions)
+        with open(os.path.join(dir_path, REPORT_FILE), "w", encoding="utf-8") as f:
+            f.write(report)
+        print(f"NAV: ${nav:,.2f} MXN. Reporte escrito.")
+        print("=" * 80)
+    except Exception as e:
+        print(f"CRITICAL: error al calcular senal/ejecutar estrategia ({e}). Halt sin tocar portafolio.")
+        portfolio["cash_balance_mxn"] = cash_mxn
+        portfolio["cash_balance_usd"] = cash_usd
+        save_portfolio(dir_path, portfolio)
+        return
 
 
 if __name__ == "__main__":

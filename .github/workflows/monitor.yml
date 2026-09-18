@@ -85,114 +85,142 @@ jobs:
     # 4. Execute Portfolio Performance Scraper (accrues interest, updates prices)
     - name: Run Portfolio Monitor
       run: python monitor_portfolio.py
+      continue-on-error: true
 
     # 5. Execute Live DCF Alpha-Momentum Strategy (handles quarterly rebalancing & active DCA)
     - name: Run Live Alpha Growth Strategy
       run: python run_live_alpha_growth.py
+      continue-on-error: true
 
     # 5b. Execute Live MACD Strategy Ingestion
     - name: Run Live MACD Ingestion
       run: python ingest_live_macd.py
+      continue-on-error: true
 
     # 5c. Execute Live US Stock Momentum Strategy Ingestion (Isolated)
     - name: Run Live US Stock Momentum Strategy
       run: python run_live_alpaca_us_stocks.py
+      continue-on-error: true
 
     # 5d. Execute Live US Stock DCS Value-Growth Strategy (Isolated)
     - name: Run Live US Stock DCS Value-Growth Strategy
       run: python run_live_alpaca_us_stocks_dcf.py
+      continue-on-error: true
 
     # 5e. Execute Live Alternative Assets Strategy (Isolated)
     - name: Run Live Alternative Assets Strategy
       run: python run_live_alternatives.py
+      continue-on-error: true
 
     # 5f. Execute Live High-Beta Momentum Strategy (Isolated)
     - name: Run Live High-Beta Momentum Strategy
       run: python run_live_high_beta.py
+      continue-on-error: true
 
     # 5ff. Execute Live Dividend Quality & Yield Strategy (Isolated)
     - name: Run Live Dividend Quality & Yield Strategy
       run: python run_live_dividends.py
+      continue-on-error: true
 
     # 5fff. Execute Live AI-Regime Adaptive Stat-Arb Strategy (Isolated)
     - name: Run Live AI Regime Stat-Arb Strategy
       run: python run_live_strategy9.py
+      continue-on-error: true
 
     # 5ffff. Execute Live AI Intraday VWAP Strategy (Isolated)
     - name: Run Live AI Intraday VWAP Strategy
       run: python run_live_strategy10.py
+      continue-on-error: true
 
     # 5fffff. Execute Live AI Intraday CCI-ADX Strategy (Twin)
     - name: Run Live AI Intraday CCI-ADX Strategy
       run: python run_live_strategy11.py
+      continue-on-error: true
 
     # 5ffffff. Execute Live Strategy 12 VTTL
     - name: Run Live Strategy 12 VTTL
       run: python run_live_strategy12.py
+      continue-on-error: true
 
     # 5fffffff. Execute Live Strategy 13 CARA
     - name: Run Live Strategy 13 CARA
       run: python run_live_strategy13.py
+      continue-on-error: true
 
     # 5ffffffff. Execute Live Strategy 14 HEDGE
     - name: Run Live Strategy 14 HEDGE
       run: python run_live_strategy14.py
+      continue-on-error: true
 
     # 5fffffffff. Execute Live Strategy 15 TRACK
     - name: Run Live Strategy 15 TRACK
       run: python run_live_strategy15.py
+      continue-on-error: true
 
     # 5fffffffff-2. Execute Live Strategy 16 HMM Router
     - name: Run Live Strategy 16 HMM Router
       run: python run_live_strategy16.py
+      continue-on-error: true
 
     # 5fffffffff-3. Execute Live Strategy 17 FIBRAs
     - name: Run Live Strategy 17 FIBRAs
       run: python run_live_strategy17.py
+      continue-on-error: true
 
     # 5fffffffff-4. Execute Live Strategy 19 Particle Filter QQQ
     - name: Run Live Strategy 19 Particle Filter QQQ
       run: python run_live_strategy19.py
+      continue-on-error: true
 
     # 5fffffffff-5. Execute Live Strategy 20 Hurst Exponent Dynamic
     - name: Run Live Strategy 20 Hurst Exponent Dynamic
       run: python run_live_strategy20.py
+      continue-on-error: true
 
     # 5fffffffff-6. Execute Live Strategy 21 Golden Entropy
     - name: Run Live Strategy 21 Golden Entropy
       run: python run_live_strategy21.py
+      continue-on-error: true
 
     # 5fffffffff-7. Execute Live Strategy 22 Walk-Forward ML
     - name: Run Live Strategy 22 Walk-Forward ML
       run: python run_live_strategy22.py
+      continue-on-error: true
 
     # 5fffffffff-8. Execute Live Strategy 23 Calculus S&R
     - name: Run Live Strategy 23 Calculus S&R
       run: python run_live_strategy23.py
+      continue-on-error: true
 
     # 5fffffffff-9. Execute Live Strategy 24 ML Classifier
     - name: Run Live Strategy 24 ML Classifier
       run: python run_live_strategy24.py
+      continue-on-error: true
 
     # 5fffffffff-10. Execute Live Strategy 25 Golden MACD BMV
     - name: Run Live Strategy 25 Golden MACD BMV
       run: python run_live_strategy25.py
+      continue-on-error: true
 
     # 5fffffffff-11. Execute Live Strategy 27 Golden Hurst
     - name: Run Live Strategy 27 Golden Hurst
       run: python run_live_strategy27.py
+      continue-on-error: true
 
     # 5fffffffff-12. Execute Live Strategy 29 Golden Stat-Arb
     - name: Run Live Strategy 29 Golden Stat-Arb
       run: python run_live_strategy29.py
+      continue-on-error: true
 
     # 5fffffffff-13. Execute Live Strategy 30 Golden MACD US Stocks
     - name: Run Live Strategy 30 Golden MACD US Stocks
       run: python run_live_strategy30.py
+      continue-on-error: true
 
     # 5fffffffff-14. Execute Live Strategy 31 Fibonacci S&R
     - name: Run Live Strategy 31 Fibonacci S&R
       run: python run_live_strategy31.py
+      continue-on-error: true
 
     - name: Reconcile ledgers before reporting
       run: python reconcile_strategy_navs.py
