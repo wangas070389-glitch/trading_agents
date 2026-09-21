@@ -3,8 +3,8 @@
   "capital_injections": 0.0,
   "total_funded_capital": 100000.16,
   "nav": 102106.04,
-  "total_capital": 100269.2141899472,
-  "cash_balance": 81921.59,
+  "total_capital": 100235.12635463139,
+  "cash_balance": 81922.84,
   "holdings_value": 56333.75,
   "net_trading_profit": 2105.88,
   "net_trading_return_pct": 2.11,
@@ -13,10 +13,10 @@
       "ticker": "GOOGL",
       "shares": 51.588264618580254,
       "buy_price": 348.1400146484375,
-      "last_price": 355.6549987792969,
+      "last_price": 354.9700012207031,
       "peak_price": 356.0799865722656,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-09-21 19:54:15"
+  "last_updated": "2026-09-21 22:52:24"
 }
