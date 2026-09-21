@@ -418,6 +418,7 @@
 | 2026-09-18 | BIMBOA.MX | BUY | 21 | 54.20 | -1,139.37 | Market | FILLED | 1D MACD systematic signal |
 | 2026-09-18 | BONDIA | INTEREST | 1 | 0.12 | +0.1170 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0321 days. |
 | 2026-09-18 | BONDIA | INTEREST | 1 | 0.16 | +0.1631 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0448 days. |
+| 2026-09-21 | BONDIA | INTEREST | 1 | 10.43 | +10.4313 | Market | FILLED | Bondia overnight yield on cash reserves for 2.8629 days. |
 ---
 
 
@@ -426,6 +427,6 @@
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 118,561.61 MXN
-* **Total Deployed Capital**: 100,082.87 MXN (87.7% invested)
-* **Unallocated Cash Reserves**: 20,087.43 MXN (17.6% cash)
-* **Current Portfolio Market Value**: 114,157.48 MXN (including cash)
+* **Total Deployed Capital**: 100,082.87 MXN (85.9% invested)
+* **Unallocated Cash Reserves**: 20,097.86 MXN (17.2% cash)
+* **Current Portfolio Market Value**: 116,550.16 MXN (including cash)
