@@ -3,26 +3,26 @@
   "capital_injections": 0.0,
   "total_funded_capital": 199203.11,
   "nav": 59846.31,
-  "total_capital": 96897.45,
-  "cash_balance": -214629.01,
+  "total_capital": 94769.03,
+  "cash_balance": -224030.57,
   "holdings_value": 138014.14,
   "net_trading_profit": -139356.8,
   "net_trading_return_pct": -69.96,
   "holdings": [
     {
       "ticker": "AMD",
-      "shares": 46.0,
+      "shares": 31.0,
       "buy_price": 509.8,
-      "last_price": 512.142,
-      "peak_price": 616.6799926757812,
-      "target_weight": 0.25
+      "last_price": 620.3,
+      "peak_price": 622.0,
+      "target_weight": 0.2
     },
     {
       "ticker": "AAPL",
       "shares": 66,
       "buy_price": 315.3399963378906,
       "last_price": 315.3399963378906,
-      "peak_price": 339.6400146484375,
+      "peak_price": 345.3399963378906,
       "target_weight": 0.25
     },
     {
@@ -30,7 +30,7 @@
       "shares": 94,
       "buy_price": 223.6699981689453,
       "last_price": 223.6699981689453,
-      "peak_price": 226.17999267578125,
+      "peak_price": 229.97999572753906,
       "target_weight": 0.25
     },
     {
@@ -38,9 +38,17 @@
       "shares": 32,
       "buy_price": 653.6900024414062,
       "last_price": 653.6900024414062,
-      "peak_price": 753.0,
+      "peak_price": 757.27001953125,
       "target_weight": 0.25
+    },
+    {
+      "ticker": "GOOGL",
+      "shares": 53.0,
+      "buy_price": 352.944528,
+      "last_price": 352.944528,
+      "peak_price": 364.1700134277344,
+      "target_weight": 0.2
     }
   ],
-  "last_updated": "2026-09-21 22:51:13"
+  "last_updated": "2026-09-22 18:15:08"
 }
