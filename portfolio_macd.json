@@ -4,7 +4,7 @@
   "total_funded_capital": 120000.0,
   "nav": 118561.61,
   "total_capital": 118561.61,
-  "cash_balance": 20101.8,
+  "cash_balance": 20101.92,
   "holdings_value": 79167.96,
   "net_trading_profit": -1438.39,
   "net_trading_return_pct": -1.2,
@@ -63,7 +63,7 @@
       "ticker": "AMZN",
       "shares": 2,
       "buy_price": 4682.457812654728,
-      "last_price": 4407.951210663101,
+      "last_price": 4410.439790676639,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 4937.043650627136,
@@ -73,7 +73,7 @@
       "ticker": "GOOGL",
       "shares": 2,
       "buy_price": 5905.58,
-      "last_price": 6070.657264159934,
+      "last_price": 6074.084551717038,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 6560.139816972369,
@@ -83,7 +83,7 @@
       "ticker": "NVDA",
       "shares": 3,
       "buy_price": 3656.495005308534,
-      "last_price": 3956.5761587794404,
+      "last_price": 3958.80990772089,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 3971.09427418781,
@@ -93,12 +93,12 @@
       "ticker": "META",
       "shares": 1,
       "buy_price": 10424.84267993737,
-      "last_price": 12733.840878829826,
+      "last_price": 12741.029974260367,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 12908.555548440665,
       "trailing_armed": true
     }
   ],
-  "last_updated": "2026-09-22 21:38:06"
+  "last_updated": "2026-09-22 22:26:25"
 }
