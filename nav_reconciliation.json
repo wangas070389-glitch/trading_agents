@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-22T18:32:06.339997",
+  "generated_at": "2026-09-22T21:39:17.834996",
   "strategies": [
     {
       "strategy": "s1",
@@ -33,13 +33,13 @@
       "expected_cash": 113331.98630000002,
       "actual_cash": 0.0,
       "cash_difference": -113331.99,
-      "portfolio_sha256": "150c286f1199da86bec1e144ba9840fd671bea875d0b8fd22ec1452c48b98d9d",
-      "ledger_sha256": "99be495b7bad53ce7c6996f713c60e21fad517fe7ccbe3f54ac8d64b7e309040"
+      "portfolio_sha256": "926912d3f9c824348dbe0d63ad4ab682280d26516c861206e7febdbf37518b4e",
+      "ledger_sha256": "1adcd46fe461afdba9d1010ec5a8e5ee56af932310c1d590179d77003173ec45"
     },
     {
       "strategy": "s2",
       "ledger": "transactions_macd.md",
-      "rows": 416,
+      "rows": 417,
       "ledger_positions": {
         "GAPB.MX": 23.0,
         "FEMSAUBD.MX": 44.0,
@@ -64,7 +64,7 @@
         "META": -1.0,
         "NVDA": -3.0
       },
-      "cash_delta": 42724.66,
+      "cash_delta": 42725.13,
       "status": "MISMATCH",
       "errors": [
         "Line 251: column count does not match header",
@@ -73,11 +73,11 @@
         "Line 300: column count does not match header",
         "Line 384: column count does not match header"
       ],
-      "expected_cash": 62724.658399999986,
-      "actual_cash": 20101.33,
+      "expected_cash": 62725.132199999985,
+      "actual_cash": 20101.8,
       "cash_difference": -42623.33,
-      "portfolio_sha256": "88c0fd3a91ee55e91b74fa71bf4a0a98c94aab1dd8d37370e9d77fcdf8cfb137",
-      "ledger_sha256": "3d157a2ce1d828b5dc6c1db6bf10dc75677ff71b8533dfabcb45f51ef398f7df"
+      "portfolio_sha256": "d7a2e76d615f7bb7a4728c342c612ff515559bf9aeb1e3745c6d2dd970f22aad",
+      "ledger_sha256": "e52d82f5e9c986a214d9afa7156a5810ac971cb91143bd280ddf3a35dbcb59a0"
     },
     {
       "strategy": "s3",
@@ -715,8 +715,8 @@
       "expected_cash": -63620.29000000001,
       "actual_cash": -224030.57,
       "cash_difference": -160410.28,
-      "portfolio_sha256": "3946cde498d2794e1317200675e8ddf819ddad295772ccbf05d6bfc0bfb5f387",
-      "ledger_sha256": "ba12bdd66c02a427fcac33ad6e677ccf74d710500a2f5fa6c0d17b460bdaebaa"
+      "portfolio_sha256": "f0769d9b72e07b0ab9cdca393b885763be2ad85e9712b45bf4f4cd22624402a8",
+      "ledger_sha256": "d6cb6a705215f77613cf591f743b8500efc6f6536e448af22c71b69553b6f09e"
     },
     {
       "strategy": "s4",
@@ -739,8 +739,8 @@
       "expected_cash": 73860.20999999999,
       "actual_cash": 105320.17,
       "cash_difference": 31459.96,
-      "portfolio_sha256": "fa8db892651072a3838c27f41f29167781aafdd2c8654d227f62eb6f456d755f",
-      "ledger_sha256": "2ba2255a54ee699fa76f1094a03e7411d46d390722dff91440d75fe986c31faa"
+      "portfolio_sha256": "c04d82349e814ba08f5152be1cff592033f02aaea40a4f5b4ad7cac64157d826",
+      "ledger_sha256": "5aba76cdb4c7f8ce9b6e3fe3921f04887c8bb089a6b1695f4597fbc3d4730c77"
     },
     {
       "strategy": "s5",
@@ -776,8 +776,8 @@
       "expected_cash": -231417.46000000002,
       "actual_cash": 563533.78,
       "cash_difference": 794951.24,
-      "portfolio_sha256": "76028d59a122b353822f0ad53bada17b94bc10d85f2e8b00d521776113e24168",
-      "ledger_sha256": "e233b6de4272a4ad37317f6b12c12b15c511c733f06c67d6b774930995d8e642"
+      "portfolio_sha256": "e68eb06b2e933e77365e11fe417b9edc65d301699973f7d024b4195a7f85946e",
+      "ledger_sha256": "9619455788fe20862aa09b25bc17577513c231ce3d96ccfecb9dcf6bea5ef2af"
     },
     {
       "strategy": "s6",
@@ -796,13 +796,13 @@
       "expected_cash": 97575.34,
       "actual_cash": 102882.10750154156,
       "cash_difference": 5306.77,
-      "portfolio_sha256": "3dd8689afc206c81483c56a6b59cf76f6f8cff8905e23682e94c80098c667bfe",
+      "portfolio_sha256": "ec2c45dc251f24d97386985bb777647d37a34cd9352512a57feb6fa62b7d38e2",
       "ledger_sha256": "4b2b2483d476509fa4e30444bb25783c8414ef8c6bae0f756c38893f17c993bd"
     },
     {
       "strategy": "s8",
       "ledger": "transactions_dividends.md",
-      "rows": 365,
+      "rows": 366,
       "ledger_positions": {
         "BBAJIOO.MX": 707.59,
         "KOFUBL.MX": 215.46,
@@ -816,19 +816,19 @@
         "FUNO11.MX": 1327.213140686486
       },
       "position_differences": {},
-      "cash_delta": -154929.34,
+      "cash_delta": -154928.28,
       "status": "VERIFIED",
       "errors": [],
-      "expected_cash": 45070.659999999916,
-      "actual_cash": 45070.66,
+      "expected_cash": 45071.719999999914,
+      "actual_cash": 45071.72,
       "cash_difference": 0.0,
-      "portfolio_sha256": "5ab23a187a3139af76ae950f66a38f0a0cf21b934c9d135a78bad615e186c3d6",
-      "ledger_sha256": "e8e092c64cbe410411e654ac36e0cae1f559d1e5ac245a97b16fa3e29841a3d5"
+      "portfolio_sha256": "9f2edb6b4c7694797935037aba4d459910a18f16bc9a679e3b4e241c7c90cb95",
+      "ledger_sha256": "bbcb9cddff6f69e8a7065d91dc65d4d9d13bd92dbdee93edbbb959f77d7f39e2"
     },
     {
       "strategy": "s9",
       "ledger": "transactions_strategy9.md",
-      "rows": 412,
+      "rows": 413,
       "ledger_positions": {
         "SPY": 12.0
       },
@@ -836,17 +836,17 @@
         "SPY": 12.0
       },
       "position_differences": {},
-      "cash_delta": -189954.41,
+      "cash_delta": -189953.99,
       "status": "MISMATCH",
       "errors": [
         "Line 232: funding sign contradicts action",
         "Line 351: funding sign contradicts action"
       ],
-      "expected_cash": 7961.610000000044,
-      "actual_cash": 18045.59,
+      "expected_cash": 7962.030000000057,
+      "actual_cash": 18046.01,
       "cash_difference": 10083.98,
-      "portfolio_sha256": "8c0d3242f9fba5873bcabba66c345141c6d44a42dd798f72993a8bb9c39f659e",
-      "ledger_sha256": "443e8c1963d547b443d2b8ccbe234273a7e6b1a05bd7649dc5f7fd46628fdc84"
+      "portfolio_sha256": "d2339d201de6b47afdd28d945328f454963cf0f655210fa1e5a852721a23792d",
+      "ledger_sha256": "1465019e61c86570d671fd8162da2d12cc4a72c036e92d24d7c8ffe0118680ea"
     },
     {
       "strategy": "s10",
@@ -876,11 +876,11 @@
     {
       "strategy": "s11",
       "ledger": "transactions_strategy11.md",
-      "rows": 352,
+      "rows": 353,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": -981.86,
+      "cash_delta": -976.96,
       "status": "MISMATCH",
       "errors": [
         "Line 30: unsupported action BUY_SQQQ",
@@ -942,16 +942,16 @@
         "Line 368: unsupported action BUY_TQQQ",
         "Line 370: unsupported action EXIT_LONG"
       ],
-      "expected_cash": 199124.64,
-      "actual_cash": 210628.65,
+      "expected_cash": 199129.54,
+      "actual_cash": 210633.55,
       "cash_difference": 11504.01,
-      "portfolio_sha256": "7fc300fd9a12d5e1afc57848020307a6ed18ce6d6cb105b121a5a03ba7f1ab62",
-      "ledger_sha256": "f5541aa90a3e3dde72c63e24e21ccc6535fbef13e6d81e554905a08bf15af4ac"
+      "portfolio_sha256": "55a0fa4a5d959579b9a085dfc8f51e33c81d546cc7ac5624a1b6f4edcd27d8ba",
+      "ledger_sha256": "d99896035182d784663557df7d8e8b932837697a375ba3d9db6c550585441e61"
     },
     {
       "strategy": "s12",
       "ledger": "transactions_strategy12.md",
-      "rows": 346,
+      "rows": 347,
       "ledger_positions": {
         "TQQQ": 65.4459
       },
@@ -959,19 +959,19 @@
         "TQQQ": 65.44594575259103
       },
       "position_differences": {},
-      "cash_delta": -70776.19,
+      "cash_delta": -70773.19,
       "status": "MISMATCH",
       "errors": [],
-      "expected_cash": 129223.80843899994,
-      "actual_cash": 129223.73,
+      "expected_cash": 129226.81173899994,
+      "actual_cash": 129226.73,
       "cash_difference": -0.08,
-      "portfolio_sha256": "ebe7c350e0113a0778fc535c2bcc4e3559a6df0df1d95e91ff05e4362b7c9966",
-      "ledger_sha256": "a24c6e1786d6bdd8326cafee4d95feaecba924a77950ce8ea9664c7734536a7f"
+      "portfolio_sha256": "10106c328307907db28d9a6372cc96f2ba9babb56325f72fb84911e59ae45cdd",
+      "ledger_sha256": "d2e28573c779f68b6bca576610dd340293257f686aef612cb4241deb4539e648"
     },
     {
       "strategy": "s13",
       "ledger": "transactions_strategy13.md",
-      "rows": 351,
+      "rows": 352,
       "ledger_positions": {
         "TQQQ": 64.26569999999998
       },
@@ -979,7 +979,7 @@
         "TQQQ": 64.26564888251276
       },
       "position_differences": {},
-      "cash_delta": -73106.89,
+      "cash_delta": -73103.94,
       "status": "UNRESOLVED",
       "errors": [
         "Currency-specific balances require an FX ledger reconciliation"
@@ -987,13 +987,13 @@
       "expected_cash": null,
       "actual_cash": null,
       "cash_difference": null,
-      "portfolio_sha256": "1d17a2c92dd18e1e3e83c7c86a4039d501cf0f6c0162eb94d8ec472cf2a78e94",
-      "ledger_sha256": "29f145eaa8e4fba8ed75eee0ee5c1b3c156954ebceca9aa3116d56b656f57c56"
+      "portfolio_sha256": "f2d2916db3f461a3fc0b17b925c22edd867c5f1183a5d62a766d49930abfd115",
+      "ledger_sha256": "d93f63b9cb15ab386179ae7b0e23b8e215dac388eb06fdb0d4a256619a080f2b"
     },
     {
       "strategy": "s14",
       "ledger": "transactions_strategy14.md",
-      "rows": 683,
+      "rows": 685,
       "ledger_positions": {
         "TQQQ": 52.6104
       },
@@ -1001,7 +1001,7 @@
         "TQQQ": 52.61034400711058
       },
       "position_differences": {},
-      "cash_delta": -58428.22,
+      "cash_delta": -58424.78,
       "status": "UNRESOLVED",
       "errors": [
         "Line 7: unsupported action BUY_USD",
@@ -1012,13 +1012,13 @@
       "expected_cash": null,
       "actual_cash": null,
       "cash_difference": null,
-      "portfolio_sha256": "f8f7686b9ac54a18c7220042a124aaa805320277571656653f02c64be1e76f4f",
-      "ledger_sha256": "b4d0a4648fc16aab9e51128fc680cea9e2193e43aa14bb11ba4f0d87e0521266"
+      "portfolio_sha256": "8efac7567f55eee9138345f8cf5a3e777de33132eabeb842109287bc2c920df6",
+      "ledger_sha256": "609046d66a68da7e458db79daac16af9efc96056f2852a9175ed6c6913552aba"
     },
     {
       "strategy": "s15",
       "ledger": "transactions_strategy15.md",
-      "rows": 683,
+      "rows": 685,
       "ledger_positions": {
         "TQQQ": 52.6181
       },
@@ -1026,7 +1026,7 @@
         "TQQQ": 52.618089687094226
       },
       "position_differences": {},
-      "cash_delta": -58446.88,
+      "cash_delta": -58443.44,
       "status": "UNRESOLVED",
       "errors": [
         "Line 7: unsupported action BUY_USD",
@@ -1037,17 +1037,17 @@
       "expected_cash": null,
       "actual_cash": null,
       "cash_difference": null,
-      "portfolio_sha256": "796ab8b2076abda0aa6d636132b5aa313b2f9a78ae6f1512cce24f9df9e95959",
-      "ledger_sha256": "1e9470bacc962ca31d572c24864823420b45989c9231d6bddea6702f636814b7"
+      "portfolio_sha256": "a73e3017e8b2143dbfdaaf53c6aaffa4bc4e1e870d28fda527b6bb82a02b6d63",
+      "ledger_sha256": "7f79cfeb325f515347de588d1974fe19dae07900bfae53d461a8c63fd18d2574"
     },
     {
       "strategy": "s16",
       "ledger": "transactions_strategy16.md",
-      "rows": 316,
+      "rows": 317,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": -1596.21,
+      "cash_delta": -1591.41,
       "status": "MISMATCH",
       "errors": [
         "Line 65: unsupported action BUY_SOXL",
@@ -1077,16 +1077,16 @@
         "Line 290: unsupported action BUY_URTY",
         "Line 295: unsupported action SELL_URTY"
       ],
-      "expected_cash": 198436.97,
-      "actual_cash": 206745.35,
+      "expected_cash": 198441.77,
+      "actual_cash": 206750.15,
       "cash_difference": 8308.38,
-      "portfolio_sha256": "1e0e32d6b96f128606c2e5fc12c0e4d8eb66dd5e1d36f3fc23c75fb15032de90",
-      "ledger_sha256": "add3d8b5273b32efe29691ef912c20e59f32623fb0f618ee8098631bbbe77759"
+      "portfolio_sha256": "7afd59e9ab8e2234b76bce11b819666ff0371e97d3872fa05e1c7cb8443def14",
+      "ledger_sha256": "6466163fef7d4c3a2d6d4a342ef19250ab71f25b599c49160f441d2e84a1aa26"
     },
     {
       "strategy": "s17",
       "ledger": "transactions_strategy17.md",
-      "rows": 183,
+      "rows": 184,
       "ledger_positions": {
         "DANHOS13.MX": 893.18,
         "FUNO11.MX": 832.5
@@ -1096,14 +1096,14 @@
         "FUNO11.MX": 832.5008134654364
       },
       "position_differences": {},
-      "cash_delta": 52070.63,
+      "cash_delta": 52071.82,
       "status": "MISMATCH",
       "errors": [],
-      "expected_cash": 152070.63000000006,
-      "actual_cash": 50517.2,
+      "expected_cash": 152071.82000000007,
+      "actual_cash": 50518.39,
       "cash_difference": -101553.43,
-      "portfolio_sha256": "e7966f497f2210f48dd0d7ef298c4008d4bbab20ee48714edef4de8ddd013690",
-      "ledger_sha256": "d9032ad6fe03edf4ff6d756fb2336dd946fe1b9b690bd95ae5a3758643d7ff83"
+      "portfolio_sha256": "83fd4a4e88fc0b56e97d80608ef3d57a055ebf0698eb76abb4f6f5b9e987419e",
+      "ledger_sha256": "475655394492d9a55508f0ab39c78ee86e89a5ed88eddd4fa188cb977ea0f25b"
     },
     {
       "strategy": "s18",
@@ -1124,7 +1124,7 @@
       "expected_cash": 0.0,
       "actual_cash": 0.0,
       "cash_difference": 0.0,
-      "portfolio_sha256": "1614c11b065b2bc2d8a125eea62478137bb5da63091d8deff497c2b7681a9c0f",
+      "portfolio_sha256": "fc3010b6c21c5ae60ebed609ab7f58f19cd53d5cc978a3820000c4185c832957",
       "ledger_sha256": "1e09136a140e5c8286ac817d46c7b48a583d4eeb882d02e8e44454c08bf1e046"
     },
     {
@@ -1146,31 +1146,31 @@
       "expected_cash": -200000.0,
       "actual_cash": 0.0,
       "cash_difference": 200000.0,
-      "portfolio_sha256": "3dc7d45f778704da7804962ae36450de4f2e7e59adc387368d48ba37623793a1",
+      "portfolio_sha256": "a332f947650e150e8d7850e84f7e706f676df9a5718e97671ba1b55bfe88931e",
       "ledger_sha256": "800ec3dfb7f72ac3e33fdba7cd4fb5d13c0f9b89989f40e8e25c7a2ef214f63e"
     },
     {
       "strategy": "s20",
       "ledger": "transactions_strategy20.md",
-      "rows": 17,
+      "rows": 18,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": -23633.71,
+      "cash_delta": -23629.61,
       "status": "MISMATCH",
       "errors": [
         "Line 5: column count does not match header"
       ],
-      "expected_cash": -23633.710000000003,
-      "actual_cash": 176366.29,
+      "expected_cash": -23629.610000000004,
+      "actual_cash": 176370.39,
       "cash_difference": 200000.0,
-      "portfolio_sha256": "eb81d4d7b6266d8f6efeca7b51424dcfdaf383fc7ba11169c11e5c6e95aeee45",
-      "ledger_sha256": "93c61793c7525e16a74e8cbbaf6f4e3603b20989e65001aada943e8623a46f1a"
+      "portfolio_sha256": "7a0f9aa997ad398528a22c3ed72266b57bcc105d4d819d1cab49f1de5645bbc1",
+      "ledger_sha256": "e3e2eabc5a7a5d142c04975aeb20fc3d539e71d6edb0d56f6eb2925b63933f0a"
     },
     {
       "strategy": "s21",
       "ledger": "transactions_strategy21.md",
-      "rows": 46,
+      "rows": 47,
       "ledger_positions": {
         "TQQQ": 59.4709
       },
@@ -1178,34 +1178,34 @@
       "position_differences": {
         "TQQQ": 59.4709
       },
-      "cash_delta": -20697.69,
+      "cash_delta": -20693.52,
       "status": "MISMATCH",
       "errors": [
         "Line 5: column count does not match header"
       ],
-      "expected_cash": -20697.690000000013,
-      "actual_cash": 179302.31,
+      "expected_cash": -20693.520000000015,
+      "actual_cash": 179306.48,
       "cash_difference": 200000.0,
-      "portfolio_sha256": "bff02798f276edf971833e6a58a9bc2e609fed81f606c8cf8ee10094d26525f9",
-      "ledger_sha256": "7bff615aef2996ef1cd6d88749e2334ef7804ab5b4149ee54fab53b09f39a227"
+      "portfolio_sha256": "e5ace549b08f15f7774fbbe5779eed3ceafbcb53c42dc262b1bbf62eea932c48",
+      "ledger_sha256": "3a517efa3ca3eb7870a64f7e7798aad6ec08c53072d6269ef9575dc6728503e5"
     },
     {
       "strategy": "s22",
       "ledger": "transactions_strategy22.md",
-      "rows": 129,
+      "rows": 130,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": 7832.48,
+      "cash_delta": 7837.31,
       "status": "MISMATCH",
       "errors": [
         "Line 5: column count does not match header"
       ],
-      "expected_cash": 7832.480000000028,
-      "actual_cash": 207832.48,
+      "expected_cash": 7837.310000000028,
+      "actual_cash": 207837.31,
       "cash_difference": 200000.0,
-      "portfolio_sha256": "e2f96c9f617385fbbd159050e8669a22cf6097053153406d05248c3a10084e11",
-      "ledger_sha256": "8ed76b46fd22404359cff92701e14a3d4842c1e33847f4be83a2e53927a15af9"
+      "portfolio_sha256": "bd12ccd3892566750eb84dfad47395aac1ccf835fa17124b366d460bc1248108",
+      "ledger_sha256": "855364f0ea3806ce07e49b2e504b4b7ad5459224156b42630695d2ad3a620776"
     },
     {
       "strategy": "s23",
@@ -1226,7 +1226,7 @@
       "expected_cash": -200000.0,
       "actual_cash": -0.0,
       "cash_difference": 200000.0,
-      "portfolio_sha256": "7dda60a594e51712a72a6437f4a6d80ef6b1aa0d1a27f42afd33c5567bfbad4b",
+      "portfolio_sha256": "0fa356c955e2232e8b5fddc45f19f3d36e7208bb1bac2be2af133619993a0846",
       "ledger_sha256": "d426fdabc3f9195b50dc3aa9424f8244f559e1d216f10ef3625cc50d49da889a"
     },
     {
@@ -1248,67 +1248,67 @@
       "expected_cash": -200000.00000000003,
       "actual_cash": 0.0,
       "cash_difference": 200000.0,
-      "portfolio_sha256": "528c1a02c7544acfd64526e1d6e409dcd1060cd862d2840df72d5b77a100e25b",
+      "portfolio_sha256": "86b225b4574cbe61c841a612c2689e5cd694f3920e13101af88e7b6125befb2c",
       "ledger_sha256": "77b1349750754f573c46874051c479d664f8a6215ca798fb1db5eb04a62d069e"
     },
     {
       "strategy": "s25",
       "ledger": "transactions_strategy25.md",
-      "rows": 272,
+      "rows": 273,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": -1676.27,
+      "cash_delta": -1671.66,
       "status": "MISMATCH",
       "errors": [
         "Line 5: column count does not match header"
       ],
-      "expected_cash": -1676.2700000000116,
-      "actual_cash": 198323.73,
+      "expected_cash": -1671.6600000000117,
+      "actual_cash": 198328.34,
       "cash_difference": 200000.0,
-      "portfolio_sha256": "6bc93a8dd6d01c0816569270da609014f52c161f088f38f9fc9b6abf4db665d9",
-      "ledger_sha256": "378a9cbd5e94a6d6b222504ea1d448a5099341e560a4d5e2482a8ccfa68e0916"
+      "portfolio_sha256": "30fba406b6e8e7f4f0f895315effa30db3576267668e1f49a9c6e0a29691410c",
+      "ledger_sha256": "4bbb1f8bb5b6c7c7cbffc9daebb023acbaaa65caf661bbebcf2cb5c42a5e4128"
     },
     {
       "strategy": "s27",
       "ledger": "transactions_strategy27.md",
-      "rows": 259,
+      "rows": 260,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": 2510.4,
+      "cash_delta": 2515.11,
       "status": "MISMATCH",
       "errors": [
         "Line 5: column count does not match header"
       ],
-      "expected_cash": 2510.3999999999987,
-      "actual_cash": 202510.4,
+      "expected_cash": 2515.1099999999988,
+      "actual_cash": 202515.11,
       "cash_difference": 200000.0,
-      "portfolio_sha256": "ac771202765a53b0a528533d949d2d484140320be6fbf9abc1bc021d6bdb1f1b",
-      "ledger_sha256": "42a27900983bd86cbd4f303bd885e2f681e23c048fae78b244ddc4b1ecacf28b"
+      "portfolio_sha256": "0283f25db4b9f6c5d2c1b71c0a746a90dc5cb88a86e482aaa4401e33ad0fd90d",
+      "ledger_sha256": "7bce4fc51bf77444c65157be62bd5c9b01ea4e9c5de4000152d986a6f760b309"
     },
     {
       "strategy": "s29",
       "ledger": "transactions_strategy29.md",
-      "rows": 258,
+      "rows": 259,
       "ledger_positions": {},
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": 2510.38,
+      "cash_delta": 2515.09,
       "status": "MISMATCH",
       "errors": [
         "Line 5: column count does not match header"
       ],
-      "expected_cash": 2510.3799999999987,
-      "actual_cash": 202510.38,
+      "expected_cash": 2515.089999999999,
+      "actual_cash": 202515.09,
       "cash_difference": 200000.0,
-      "portfolio_sha256": "829cdf4b1bbfa470615707347bcf3ac1c7e311d44729ec16285eee4c53ce3d5a",
-      "ledger_sha256": "5f039d7d2be0ae00f098321ba11d310235fb0f66d8d1e4b4c9009c3a74e0ef13"
+      "portfolio_sha256": "3cdd064e355bff56f28bfa49aa93ffdf50aecf98f7509bdd1156b21963b668c9",
+      "ledger_sha256": "bbf9c436c1503c4ef1b53b410946245ee34c8db888a825bda074c811e22e6465"
     },
     {
       "strategy": "s30",
       "ledger": "transactions_strategy30.md",
-      "rows": 268,
+      "rows": 269,
       "ledger_positions": {
         "GOOGL": 51.5883,
         "NVDA": 78.7204
@@ -1318,16 +1318,16 @@
         "NVDA": 78.72040038948587
       },
       "position_differences": {},
-      "cash_delta": -36113.05,
+      "cash_delta": -36112.03,
       "status": "MISMATCH",
       "errors": [
         "Line 5: column count does not match header"
       ],
-      "expected_cash": -36113.04999999999,
-      "actual_cash": 63886.95,
+      "expected_cash": -36112.02999999999,
+      "actual_cash": 63887.97,
       "cash_difference": 100000.0,
-      "portfolio_sha256": "e20f1c59948456f1ca16d149121af482cce57476ff482af405c800fb98c922a5",
-      "ledger_sha256": "d0a730d7802f22b83e92daae0cf76617dec9e3246162b526acb9bdd2d98b9495"
+      "portfolio_sha256": "0a8ee53c18dba9b428daf6e6d255a098284251956c745a223a8ab8d36862e183",
+      "ledger_sha256": "d68ca952fe76c7ca4f68b8620d6c139563acf1861b8a8f2ed331f594ac521106"
     },
     {
       "strategy": "s31",
@@ -1384,7 +1384,7 @@
       "expected_cash": 0.0,
       "actual_cash": 209970.88352361275,
       "cash_difference": 209970.88,
-      "portfolio_sha256": "066ecccbe260e34fbeb2f2f05f825de6a8ecdfc671bcdc52d7f97316d7e8e239",
+      "portfolio_sha256": "a4063e7711fe1a0a0abb5321f89c2009a5e97ea45ab1ad275317ef86cc58a8eb",
       "ledger_sha256": "3544bc30d87799aa55e66a323446650874309c550ebcc87ccb47303b326b4161"
     }
   ]
