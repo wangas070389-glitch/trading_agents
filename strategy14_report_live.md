@@ -1,7 +1,7 @@
 # Strategy 14: HEDGE Live Report
-**Execution:** 2026-09-22 18:16:06 | **Signal date:** 2026-09-21
+**Execution:** 2026-09-22 18:31:39 | **Signal date:** 2026-09-21
 
-* **NAV:** $248,043.57 MXN | Cash MXN $146,994.44 | Cash USD $1,608.60 | TQQQ $73,239.71
+* **NAV:** $248,177.07 MXN | Cash MXN $146,994.72 | Cash USD $1,608.60 | TQQQ $73,348.77
 * **Objetivo mezclado:** w_TQQQ=0.257, f_USD=0.166
 
 ## Pesos del agregador (confianza aprendida)
