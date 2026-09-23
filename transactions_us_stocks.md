@@ -623,6 +623,8 @@
 | 2026-09-22 | META | SELL-REJECTED | 6 | 743.88 | +4,463.26 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
 | 2026-09-22 | AMD | SELL | 15.0 | 620.30 | +9,304.50 | Market | FILLED | Alpaca Order ecae5766-6f38-4497-9867-a08e8befaeed FILLED | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
 | 2026-09-22 | GOOGL | BUY | 53.0 | 352.94 | -18,706.06 | Market | FILLED | Alpaca Order 49d9ef2c-4454-46d1-928e-30f2a7ad9a37 FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 20.0% |
+| 2026-09-23 | AAPL | SELL | 14.0 | 336.93 | +4,716.98 | Market | FILLED | Alpaca Order 5d56b7f9-6da8-4c80-af68-b398858d0c0b FILLED | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
+| 2026-09-23 | META | SELL-REJECTED | 8 | 748.14 | +5,985.12 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
 ---
 
 
@@ -630,7 +632,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $94,871.69 USD
-* **Total Deployed Capital**: $97,265.36 USD (-78.9% invested)
-* **Unallocated Cash Reserves**: $-224,030.57 USD (181.6% cash)
-* **Current Portfolio Market Value**: $-123,339.71 USD (including cash)
+* **Initial Starting Capital**: $87,449.84 USD
+* **Total Deployed Capital**: $92,850.60 USD (-76.2% invested)
+* **Unallocated Cash Reserves**: $-219,313.59 USD (179.9% cash)
+* **Current Portfolio Market Value**: $-121,914.96 USD (including cash)

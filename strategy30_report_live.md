@@ -1,12 +1,11 @@
 # Strategy 30 Live Status Report
 
-**Last Run:** 2026-09-22 22:27:53
-**Total Capital:** $100,020.71 USD
-**Cash Balance:** $63,888.24 USD
+**Last Run:** 2026-09-23 18:35:46
+**Total Capital:** $99,134.09 USD
+**Cash Balance:** $81,392.09 USD
 
 ## Current Holdings
 
 | Ticker | Shares | Buy Price | Current Price | Return | Peak Price |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| GOOGL | 51.5883 | $348.14 | $351.16 | +0.87% | $356.08 |
-| NVDA | 78.7204 | $229.20 | $228.87 | -0.14% | $229.40 |
+| NVDA | 78.7204 | $229.20 | $225.38 | -1.66% | $229.40 |

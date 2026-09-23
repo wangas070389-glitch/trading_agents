@@ -18,10 +18,10 @@
   },
   "sleeves": {
     "core": {
-      "alloc_usd": 10494.341646706855,
-      "last_nav": 6354.864655348001,
-      "last_date": "2026-09-22",
-      "tr_index": 0.8967495511786779
+      "alloc_usd": 10480.38404676288,
+      "last_nav": 6346.412609327059,
+      "last_date": "2026-09-23",
+      "tr_index": 0.895556863546937
     },
     "macd": {
       "alloc_usd": 10427.762872865733,
@@ -32,19 +32,19 @@
     "us_dcs": {
       "alloc_usd": 9617.271007648436,
       "last_nav": 105320.17,
-      "last_date": "2026-09-22",
+      "last_date": "2026-09-23",
       "tr_index": 0.9992450095747345
     },
     "alternatives": {
-      "alloc_usd": 70883.52987118253,
-      "last_nav": 934482.3454625893,
-      "last_date": "2026-09-22",
-      "tr_index": 7.7955596169045664
+      "alloc_usd": 70849.85831438191,
+      "last_nav": 934038.4415623236,
+      "last_date": "2026-09-23",
+      "tr_index": 7.791856519317437
     },
     "high_beta": {
       "alloc_usd": 28883.8183453264,
       "last_nav": 102882.10750154156,
-      "last_date": "2026-09-22",
+      "last_date": "2026-09-23",
       "tr_index": 0.9882381672093058
     },
     "dividends": {
@@ -666,6 +666,24 @@
         "strategy15": 1.193635,
         "strategy17": 0.988698
       }
+    },
+    {
+      "date": "2026-09-23",
+      "nav_usd": 255139.48,
+      "idx": {
+        "core": 0.895557,
+        "macd": 0.97599,
+        "us_dcs": 0.999245,
+        "alternatives": 7.791857,
+        "high_beta": 0.988238,
+        "dividends": 1.000708,
+        "strategy9": 0.961523,
+        "strategy12": 1.052579,
+        "strategy13": 1.043415,
+        "strategy14": 1.193489,
+        "strategy15": 1.193635,
+        "strategy17": 0.988698
+      }
     }
   ],
   "rebalances": [
@@ -675,6 +693,6 @@
       "max_drift": 0.4374
     }
   ],
-  "last_updated": "2026-09-22 22:27:55",
-  "total_portfolio_value_usd": 255187.11154065965
+  "last_updated": "2026-09-23 18:35:49",
+  "total_portfolio_value_usd": 255139.48238391508
 }

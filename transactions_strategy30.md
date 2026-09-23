@@ -273,4 +273,6 @@
 | 2026-09-22 | CASH_SWEEP | INTEREST | 1.0000 | $0.0843 | $+0.08 | Market | FILLED | USD Sweep interest |
 | 2026-09-22 | CASH_SWEEP | INTEREST | 1.0000 | $1.0231 | $+1.02 | Market | FILLED | USD Sweep interest |
 | 2026-09-22 | CASH_SWEEP | INTEREST | 1.0000 | $0.2658 | $+0.27 | Market | FILLED | USD Sweep interest |
+| 2026-09-23 | CASH_SWEEP | INTEREST | 1.0000 | $6.6025 | $+6.60 | Market | FILLED | USD Sweep interest |
+| 2026-09-23 | GOOGL | SELL | 51.5883 | $339.2050 | $+17,497.25 | Market | FILLED | MACD crossover or Trend break exit |
 ---
