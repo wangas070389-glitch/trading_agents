@@ -3,7 +3,7 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 101321.45,
   "nav": 105171.66,
-  "total_capital": 87467.24,
+  "total_capital": 87669.59,
   "cash_balance": 563533.78,
   "holdings_value": 119726.18,
   "net_trading_profit": 3850.21,
@@ -13,7 +13,7 @@
       "ticker": "DBA",
       "shares": 733,
       "buy_price": 27.527799606323242,
-      "last_price": 28.575000762939453,
+      "last_price": 28.566600799560547,
       "peak_price": 27.527799606323242,
       "armed": false,
       "target_weight": 0.2,
@@ -24,7 +24,7 @@
       "ticker": "USO",
       "shares": 164,
       "buy_price": 122.75,
-      "last_price": 148.88999938964844,
+      "last_price": 148.64500427246094,
       "peak_price": 122.75,
       "armed": false,
       "target_weight": 0.2,
@@ -35,7 +35,7 @@
       "ticker": "USDJPY=X",
       "shares": 414,
       "buy_price": 159.4499969482422,
-      "last_price": 158.2740020751953,
+      "last_price": 158.29100036621094,
       "peak_price": 159.4499969482422,
       "armed": false,
       "target_weight": 0.15,
@@ -65,5 +65,5 @@
       "entry_date": "2026-09-22"
     }
   ],
-  "last_updated": "2026-09-23 18:34:26"
+  "last_updated": "2026-09-23 18:52:02"
 }
