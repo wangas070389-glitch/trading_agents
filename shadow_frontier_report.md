@@ -1,5 +1,5 @@
 # Shadow Frontier — Live Track Record of the Allocation Layer
-**Generated:** 2026-09-24 18:39:09 | Inception: 2026-07-14 (72 calendar days) | Virtual capital: $100,000 USD
+**Generated:** 2026-09-24 18:52:15 | Inception: 2026-07-14 (72 calendar days) | Virtual capital: $100,000 USD
 **Weights (frozen):** efficient_frontier_report.md 2026-07-11 -- Risk Parity, hurdle-filtered (RECOMMENDED)
 
 This book paper-trades the recommended frontier allocation itself, marked
@@ -11,10 +11,10 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 ## 1. Promise vs. Realized
 | Metric | Backtest promise | Realized (live) |
 | :--- | ---: | ---: |
-| NAV | -- | $259,613.91 USD |
-| Return since inception | -- | +159.61% |
-| Ann. return | +14.67% | +809.15% |
-| Ann. volatility | 6.66% | 92.38% |
+| NAV | -- | $259,727.72 USD |
+| Return since inception | -- | +159.73% |
+| Ann. return | +14.67% | +809.73% |
+| Ann. volatility | 6.66% | 92.37% |
 | Sharpe (Rf 6.53%) | +1.22 | +5.11 |
 | Max drawdown | -4.10% | -10.68% |
 
@@ -22,7 +22,7 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 | Sleeve | Target w | Current w | TR since inception | Last mark | Source |
 | :--- | ---: | ---: | ---: | :--- | :--- |
 | S1 Adaptive Value (BMV) | 5.4% | 5.4% | -8.81% | 2026-09-24 | multi-strategy USD |
-| S2 MACD Systematic | 4.9% | 5.2% | -2.77% | 2026-09-23 | watchdog MXN/USD |
+| S2 MACD Systematic | 4.9% | 5.2% | -1.95% | 2026-09-24 | watchdog MXN/USD |
 | S4 US DCF Value-Growth | 4.5% | 4.7% | +1.77% | 2026-09-24 | multi-strategy USD |
 | S5 Alternatives | 25.0% | 30.3% | +819.90% | 2026-09-24 | multi-strategy USD |
 | S6 High-Beta Momentum | 13.5% | 14.2% | -0.31% | 2026-09-24 | multi-strategy USD |
