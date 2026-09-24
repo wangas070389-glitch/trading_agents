@@ -17,15 +17,15 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Signal | Price | DCS Conviction | Intrinsic Value | SMA 100 Trend | SMA 20 Trend (DCA) | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **AAPL** | SELL / AVOID | $337.43 | -0.699 | $101.57 | BULL | BULL | Low conviction (DCS=-0.699 < 0.15) |
-| **AMD** | SELL / AVOID | $625.35 | -0.945 | $34.16 | BULL | BULL | Low conviction (DCS=-0.945 < 0.15) |
-| **AMZN** | SELL / AVOID | $249.90 | -0.745 | $63.66 | BEAR | BEAR | Low conviction (DCS=-0.745 < 0.15) and Bear trend (Close <= SMA 100) |
-| **AVGO** | SELL / AVOID | $349.93 | 1.745 | $960.51 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
-| **COST** | SELL / AVOID | $897.81 | -0.615 | $345.36 | BEAR | BEAR | Low conviction (DCS=-0.615 < 0.15) and Bear trend (Close <= SMA 100) |
-| **GOOGL** | SELL / AVOID | $342.35 | -0.708 | $99.90 | BEAR | BULL | Low conviction (DCS=-0.708 < 0.15) and Bear trend (Close <= SMA 100) |
-| **JPM** | SELL / AVOID | $337.27 | -0.373 | $211.44 | BULL | BEAR | Low conviction (DCS=-0.373 < 0.15) |
-| **META** | SELL / AVOID | $777.00 | -0.555 | $345.60 | BULL | BULL | Low conviction (DCS=-0.555 < 0.15) |
-| **MSFT** | SELL / AVOID | $497.50 | -0.664 | $167.15 | BULL | BEAR | Low conviction (DCS=-0.664 < 0.15) |
-| **NFLX** | SELL / AVOID | $71.84 | 3.575 | $328.67 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
-| **NVDA** | SELL / AVOID | $224.07 | -0.853 | $32.90 | BULL | BULL | Low conviction (DCS=-0.853 < 0.15) |
-| **TSLA** | SELL / AVOID | $379.71 | -0.853 | $55.93 | BULL | BULL | Low conviction (DCS=-0.853 < 0.15) |
+| **AAPL** | SELL / AVOID | $335.92 | -0.698 | $101.56 | BULL | BULL | Low conviction (DCS=-0.698 < 0.15) |
+| **AMD** | SELL / AVOID | $629.26 | -0.946 | $34.15 | BULL | BULL | Low conviction (DCS=-0.946 < 0.15) |
+| **AMZN** | SELL / AVOID | $249.38 | -0.745 | $63.64 | BEAR | BEAR | Low conviction (DCS=-0.745 < 0.15) and Bear trend (Close <= SMA 100) |
+| **AVGO** | SELL / AVOID | $350.36 | 1.740 | $959.89 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
+| **COST** | SELL / AVOID | $896.48 | -0.615 | $345.26 | BEAR | BEAR | Low conviction (DCS=-0.615 < 0.15) and Bear trend (Close <= SMA 100) |
+| **GOOGL** | SELL / AVOID | $342.36 | -0.708 | $99.88 | BEAR | BULL | Low conviction (DCS=-0.708 < 0.15) and Bear trend (Close <= SMA 100) |
+| **JPM** | SELL / AVOID | $338.56 | -0.376 | $211.31 | BULL | BEAR | Low conviction (DCS=-0.376 < 0.15) |
+| **META** | SELL / AVOID | $777.59 | -0.556 | $345.52 | BULL | BULL | Low conviction (DCS=-0.556 < 0.15) |
+| **MSFT** | SELL / AVOID | $497.93 | -0.664 | $167.10 | BULL | BEAR | Low conviction (DCS=-0.664 < 0.15) |
+| **NFLX** | SELL / AVOID | $71.72 | 3.584 | $328.75 | BEAR | BEAR | Bear trend (Close <= SMA 100) |
+| **NVDA** | SELL / AVOID | $224.58 | -0.854 | $32.89 | BULL | BULL | Low conviction (DCS=-0.854 < 0.15) |
+| **TSLA** | SELL / AVOID | $377.94 | -0.852 | $55.92 | BEAR | BULL | Low conviction (DCS=-0.852 < 0.15) and Bear trend (Close <= SMA 100) |
