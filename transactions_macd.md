@@ -429,6 +429,8 @@
 | 2026-09-23 | BONDIA | INTEREST | 1 | 0.04 | +0.0445 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0122 days. |
 | 2026-09-23 | BONDIA | INTEREST | 1 | 0.49 | +0.4887 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1340 days. |
 | 2026-09-23 | BONDIA | INTEREST | 1 | 0.06 | +0.0600 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0164 days. |
+| 2026-09-24 | BONDIA | INTEREST | 1 | 3.06 | +3.0618 | Market | FILLED | Bondia overnight yield on cash reserves for 0.8395 days. |
+| 2026-09-24 | CEMEXCPO.MX | BUY | 83 | 16.94 | -1,407.44 | Market | FILLED | 1D MACD systematic signal |
 ---
 
 
@@ -437,6 +439,6 @@
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 118,561.61 MXN
-* **Total Deployed Capital**: 100,082.87 MXN (85.9% invested)
-* **Unallocated Cash Reserves**: 20,105.57 MXN (17.2% cash)
-* **Current Portfolio Market Value**: 116,576.92 MXN (including cash)
+* **Total Deployed Capital**: 101,488.16 MXN (86.2% invested)
+* **Unallocated Cash Reserves**: 18,701.19 MXN (15.9% cash)
+* **Current Portfolio Market Value**: 117,674.72 MXN (including cash)
