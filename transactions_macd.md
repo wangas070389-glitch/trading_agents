@@ -437,6 +437,7 @@
 | 2026-09-25 | BONDIA | INTEREST | 1 | 2.84 | +2.8399 | Market | FILLED | Bondia overnight yield on cash reserves for 0.8372 days. |
 | 2026-09-25 | META | SELL | 1 | 13319.54 | +13,306.22 | Market | FILLED | Alpaca Execution Failed (403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders) | 1D MACD systematic signal |
 | 2026-09-25 | BONDIA | INTEREST | 1 | 0.07 | +0.0725 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0125 days. |
+| 2026-09-25 | BONDIA | INTEREST | 1 | 0.85 | +0.8528 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1469 days. |
 ---
 
 
@@ -446,5 +447,5 @@
 
 * **Initial Starting Capital (2026-06-03)**: 118,561.61 MXN
 * **Total Deployed Capital**: 91,063.32 MXN (77.2% invested)
-* **Unallocated Cash Reserves**: 32,010.90 MXN (27.1% cash)
-* **Current Portfolio Market Value**: 117,977.01 MXN (including cash)
+* **Unallocated Cash Reserves**: 32,011.75 MXN (27.1% cash)
+* **Current Portfolio Market Value**: 117,980.42 MXN (including cash)

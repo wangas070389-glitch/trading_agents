@@ -144,4 +144,5 @@
 | 2026-09-24 | BONDIA | INTEREST | 1.0000 | $1.19 | $+1.19 | Market | FILLED | Yield on cash for 0.0319 days. |
 | 2026-09-25 | BONDIA | INTEREST | 1.0000 | $31.11 | $+31.11 | Market | FILLED | Yield on cash for 0.8371 days. |
 | 2026-09-25 | BONDIA | INTEREST | 1.0000 | $0.47 | $+0.47 | Market | FILLED | Yield on cash for 0.0125 days. |
+| 2026-09-25 | BONDIA | INTEREST | 1.0000 | $5.47 | $+5.47 | Market | FILLED | Yield on cash for 0.1471 days. |
 ---

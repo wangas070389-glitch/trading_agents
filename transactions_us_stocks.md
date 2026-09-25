@@ -634,6 +634,7 @@
 | 2026-09-24 | META | SELL-REJECTED | 9 | 777.59 | +6,998.31 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
 | 2026-09-25 | META | SELL-REJECTED | 7 | 752.64 | +5,268.45 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
 | 2026-09-25 | META | SELL-REJECTED | 7 | 751.77 | +5,262.39 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
+| 2026-09-25 | META | SELL-REJECTED | 7 | 751.66 | +5,261.62 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
 ---
 
 
@@ -641,7 +642,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $90,548.76 USD
+* **Initial Starting Capital**: $91,052.61 USD
 * **Total Deployed Capital**: $92,850.60 USD (-76.2% invested)
 * **Unallocated Cash Reserves**: $-219,313.59 USD (179.9% cash)
 * **Current Portfolio Market Value**: $-121,914.96 USD (including cash)

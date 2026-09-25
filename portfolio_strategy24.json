@@ -3,13 +3,22 @@
   "capital_injections": 0.0,
   "total_funded_capital": 200002.14,
   "nav": 157291.48,
-  "total_capital": 157690.76256507126,
-  "cash_balance": 151090.76,
+  "total_capital": 157694.7351283287,
+  "cash_balance": -0.0,
   "holdings_value": 0.0,
   "net_trading_profit": -42710.66,
   "net_trading_return_pct": -21.36,
-  "holdings": [],
-  "last_updated": "2026-09-25 19:09:46",
-  "last_rebalance_date": "2026-09-24",
-  "total_portfolio_value_mxn": 151090.76
+  "holdings": [
+    {
+      "ticker": "SQQQ",
+      "shares": 252.5421659720778,
+      "buy_price": 596.5650200843811,
+      "last_price": 596.5650200843811,
+      "bars_held": 0,
+      "peak_price": 596.5650200843811
+    }
+  ],
+  "last_updated": "2026-09-25 22:41:32",
+  "last_rebalance_date": "2026-09-25",
+  "total_portfolio_value_mxn": 150657.82
 }
