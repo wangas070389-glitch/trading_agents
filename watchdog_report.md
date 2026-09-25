@@ -1,4 +1,4 @@
-# Watchdog Report - 2026-09-25 22:41:42
+# Watchdog Report - 2026-09-25 22:51:43
 
 **CRITICAL: 0 | WARNING: 14**
 
@@ -6,30 +6,30 @@
 | :--- | :--- | :--- | :--- |
 | [ OK ] | core | - | NAV $111,106.88 | sin anomalias |
 | [WARN] | alternatives | W5 | [INACTIVE STRATEGY] DD live -84.5% excede 1.25x el MaxDD del backtest (-7.1%): fuera de distribucion validada |
-| [ OK ] | dividends | - | NAV $209,078.84 | sin anomalias |
+| [ OK ] | dividends | - | NAV $209,078.90 | sin anomalias |
 | [ OK ] | high_beta | - | NAV $102,882.11 | sin anomalias |
-| [ OK ] | macd | - | NAV $117,980.42 | sin anomalias |
+| [ OK ] | macd | - | NAV $117,980.46 | sin anomalias |
 | [ OK ] | multi_strategy | - | NAV $0.00 | sin anomalias |
 | [ OK ] | shadow_frontier | - | NAV $260,268.88 | sin anomalias |
 | [ OK ] | strategy10 | - | NAV $207,361.51 | sin anomalias |
-| [ OK ] | strategy11 | - | NAV $210,748.17 | sin anomalias |
-| [ OK ] | strategy12 | - | NAV $221,380.14 | sin anomalias |
-| [ OK ] | strategy13 | - | NAV $217,387.63 | sin anomalias |
-| [ OK ] | strategy14 | - | NAV $249,546.11 | sin anomalias |
-| [ OK ] | strategy15 | - | NAV $249,541.51 | sin anomalias |
-| [ OK ] | strategy16 | - | NAV $206,862.65 | sin anomalias |
+| [ OK ] | strategy11 | - | NAV $210,748.43 | sin anomalias |
+| [ OK ] | strategy12 | - | NAV $221,380.30 | sin anomalias |
+| [ OK ] | strategy13 | - | NAV $217,387.79 | sin anomalias |
+| [ OK ] | strategy14 | - | NAV $249,546.31 | sin anomalias |
+| [ OK ] | strategy15 | - | NAV $249,541.71 | sin anomalias |
+| [ OK ] | strategy16 | - | NAV $206,862.91 | sin anomalias |
 | [ OK ] | strategy17 | - | NAV $102,000.00 | sin anomalias |
 | [ OK ] | strategy18 | - | NAV $255,549.89 | sin anomalias |
 | [ OK ] | strategy19 | - | NAV $184,651.43 | sin anomalias |
-| [ OK ] | strategy20 | - | NAV $176,466.37 | sin anomalias |
-| [ OK ] | strategy21 | - | NAV $179,404.05 | sin anomalias |
-| [ OK ] | strategy22 | - | NAV $201,425.16 | sin anomalias |
+| [ OK ] | strategy20 | - | NAV $176,466.59 | sin anomalias |
+| [ OK ] | strategy21 | - | NAV $179,404.27 | sin anomalias |
+| [ OK ] | strategy22 | - | NAV $201,425.42 | sin anomalias |
 | [ OK ] | strategy23 | - | NAV $212,377.78 | sin anomalias |
 | [ OK ] | strategy24 | - | NAV $150,657.82 | sin anomalias |
-| [ OK ] | strategy25 | - | NAV $198,436.28 | sin anomalias |
+| [ OK ] | strategy25 | - | NAV $198,436.53 | sin anomalias |
 | [WARN] | strategy27 | W2 | [INACTIVE STRATEGY] 62 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
 | [WARN] | strategy29 | W2 | [INACTIVE STRATEGY] 62 dias habiles vivos y CERO trades (solo interes): logica de entrada muerta? |
-| [ OK ] | strategy30 | - | NAV $99,131.46 | sin anomalias |
+| [ OK ] | strategy30 | - | NAV $99,131.53 | sin anomalias |
 | [ OK ] | strategy31 | - | NAV $209,970.88 | sin anomalias |
 | [WARN] | strategy9 | W5 | [INACTIVE STRATEGY] DD live -10.6% excede 1.25x el MaxDD del backtest (-6.0%): fuera de distribucion validada |
 | [ OK ] | us_dcs | - | NAV $105,320.17 | sin anomalias |

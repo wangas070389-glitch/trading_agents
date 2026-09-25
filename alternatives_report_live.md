@@ -22,8 +22,8 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Asset Type | Signal | Price | Indicator Diagnostics | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :--- | :--- |
-| **BTC-USD** | CRYPTO | HOLD | $84,073.5703 | SMA 200: $70,929.26, MACD: 2477.4377, Signal: 2085.8248 | No cross or trend changes |
-| **ETH-USD** | CRYPTO | HOLD | $2,692.9399 | SMA 200: $2,094.35, MACD: 95.3667, Signal: 88.2932 | No cross or trend changes |
+| **BTC-USD** | CRYPTO | HOLD | $84,053.3906 | SMA 200: $70,929.16, MACD: 2475.8279, Signal: 2085.5029 | No cross or trend changes |
+| **ETH-USD** | CRYPTO | HOLD | $2,692.1001 | SMA 200: $2,094.35, MACD: 95.2997, Signal: 88.2798 | No cross or trend changes |
 | **GLD** | COMMODITY | SELL | $393.4100 | SMA 100: $396.26, Donchian High: $424.79, Donchian Low: $388.39 | Breakout below 10-day low or bearish trend break |
 | **SLV** | COMMODITY | SELL | $58.1400 | SMA 100: $59.96, Donchian High: $64.31, Donchian Low: $56.28 | Breakout below 10-day low or bearish trend break |
 | **USO** | COMMODITY | HOLD | $148.3300 | SMA 100: $130.94, Donchian High: $163.35, Donchian Low: $142.67 | Inside Donchian Channel limits |
