@@ -1,9 +1,9 @@
 # Strategy 17: FIBRAs Dynamic Income Execution Report
-**Execution Date:** 2026-09-28 20:43:51 | **Strategy Version:** Live V1
+**Execution Date:** 2026-09-28 21:06:05 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $100,630.60 MXN
-* **Total Cash Balance:** $50,573.03 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $100,630.74 MXN
+* **Total Cash Balance:** $50,573.17 MXN (Parked in Bondia Compound at 6.53% APR)
 * **FIBRA Equity Exposure:** 49.7%
 * **Days Since Last Rebalance:** 54 days
 
@@ -14,7 +14,7 @@
 | **FUNO11.MX** | 832.50 | $30.03 | $29.67 | $24,700.30 | $2.47 MXN/sh (Annual: $2,056.28 MXN) | Ex: 2026-05-08 / Pay: N/A | 25.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $26.6937 MXN over 2.9114 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $0.1417 MXN over 0.0155 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. FIBRA Evaluation Diagnostics (Signals Checked)
