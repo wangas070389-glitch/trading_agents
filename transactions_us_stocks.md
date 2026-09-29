@@ -638,6 +638,9 @@
 | 2026-09-25 | META | SELL-REJECTED | 7 | 751.66 | +5,261.62 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 20.0% |
 | 2026-09-28 | META | SELL-REJECTED | 32 | 715.62 | +22,899.84 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-09-28 | META | SELL-REJECTED | 32 | 715.62 | +22,899.84 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-09-29 | AAPL | SELL | 52.0 | 330.19 | +17,169.88 | Market | FILLED | Alpaca Order f3d1ea5c-13d4-4d75-bb9e-41475d6e4d93 FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-09-29 | GOOGL | SELL | 53.0 | 340.61 | +18,052.42 | Market | FILLED | Alpaca Order 587214a6-d840-4e2b-89de-7d234a56040b FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-09-29 | META | SELL-REJECTED | 32 | 733.43 | +23,469.89 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 ---
 
 
@@ -645,7 +648,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $87,944.29 USD
-* **Total Deployed Capital**: $92,850.60 USD (-76.2% invested)
-* **Unallocated Cash Reserves**: $-219,313.59 USD (179.9% cash)
-* **Current Portfolio Market Value**: $-121,914.96 USD (including cash)
+* **Initial Starting Capital**: $87,137.33 USD
+* **Total Deployed Capital**: $57,746.86 USD (-47.0% invested)
+* **Unallocated Cash Reserves**: $-184,091.29 USD (149.8% cash)
+* **Current Portfolio Market Value**: $-122,918.93 USD (including cash)
