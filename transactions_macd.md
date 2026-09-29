@@ -443,6 +443,7 @@
 | 2026-09-28 | GMEXICOB.MX | BUY | 52 | 225.36 | -11,730.60 | Market | FILLED | 1D MACD systematic signal |
 | 2026-09-28 | BONDIA | INTEREST | 1 | 0.06 | +0.0570 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0155 days. |
 | 2026-09-29 | BONDIA | INTEREST | 1 | 3.45 | +3.4531 | Market | FILLED | Bondia overnight yield on cash reserves for 0.9379 days. |
+| 2026-09-29 | BONDIA | INTEREST | 1 | 0.03 | +0.0315 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0086 days. |
 ---
 
 
@@ -452,5 +453,5 @@
 
 * **Initial Starting Capital (2026-06-03)**: 118,561.61 MXN
 * **Total Deployed Capital**: 102,782.04 MXN (86.3% invested)
-* **Unallocated Cash Reserves**: 20,301.60 MXN (17.0% cash)
-* **Current Portfolio Market Value**: 119,123.37 MXN (including cash)
+* **Unallocated Cash Reserves**: 20,301.63 MXN (17.0% cash)
+* **Current Portfolio Market Value**: 119,099.51 MXN (including cash)

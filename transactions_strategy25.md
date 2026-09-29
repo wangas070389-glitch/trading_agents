@@ -293,4 +293,5 @@
 | 2026-09-28 | GMEXICOB.MX | BUY | 159.1950 | $224.3700 | $-35,822.16 | Market | FILLED | Golden MACD entry |
 | 2026-09-28 | BONDIA | INTEREST | 1.0000 | $0.4489 | $+0.45 | Market | FILLED | Sweep interest |
 | 2026-09-29 | BONDIA | INTEREST | 1.0000 | $27.2869 | $+27.29 | Market | FILLED | Sweep interest |
+| 2026-09-29 | BONDIA | INTEREST | 1.0000 | $0.2485 | $+0.25 | Market | FILLED | Sweep interest |
 ---

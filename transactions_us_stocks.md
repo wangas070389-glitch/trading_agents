@@ -641,6 +641,9 @@
 | 2026-09-29 | AAPL | SELL | 52.0 | 330.19 | +17,169.88 | Market | FILLED | Alpaca Order f3d1ea5c-13d4-4d75-bb9e-41475d6e4d93 FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-09-29 | GOOGL | SELL | 53.0 | 340.61 | +18,052.42 | Market | FILLED | Alpaca Order 587214a6-d840-4e2b-89de-7d234a56040b FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-09-29 | META | SELL-REJECTED | 32 | 733.43 | +23,469.89 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-09-29 | META | SELL-REJECTED | 32 | 735.39 | +23,532.48 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-09-29 | AMD | SELL-REJECTED | 31 | 606.23 | +18,793.13 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-09-29 | GOOGL | BUY | 63.0 | 341.66 | -21,524.62 | Market | FILLED | Alpaca Order d17cbcdd-0e1f-4026-bc1d-530a9490edf4 FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 ---
 
 
@@ -648,7 +651,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $87,137.33 USD
-* **Total Deployed Capital**: $57,746.86 USD (-47.0% invested)
-* **Unallocated Cash Reserves**: $-184,091.29 USD (149.8% cash)
+* **Initial Starting Capital**: $87,205.61 USD
+* **Total Deployed Capital**: $79,271.48 USD (-64.5% invested)
+* **Unallocated Cash Reserves**: $-205,615.91 USD (167.3% cash)
 * **Current Portfolio Market Value**: $-122,918.93 USD (including cash)
