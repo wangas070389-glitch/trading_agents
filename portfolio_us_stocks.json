@@ -3,8 +3,8 @@
   "capital_injections": 0.0,
   "total_funded_capital": 199203.11,
   "nav": 59846.31,
-  "total_capital": 87205.61,
-  "cash_balance": -205615.91,
+  "total_capital": 90578.6,
+  "cash_balance": -205616.68,
   "holdings_value": 138014.14,
   "net_trading_profit": -139356.8,
   "net_trading_return_pct": -69.96,
@@ -38,9 +38,9 @@
       "shares": 63.0,
       "buy_price": 341.660635,
       "last_price": 341.660635,
-      "peak_price": 342.8399963378906,
+      "peak_price": 352.6000061035156,
       "target_weight": 0.25
     }
   ],
-  "last_updated": "2026-09-29 19:48:13"
+  "last_updated": "2026-09-30 19:36:15"
 }
