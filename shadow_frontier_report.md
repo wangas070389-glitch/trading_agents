@@ -1,5 +1,5 @@
 # Shadow Frontier — Live Track Record of the Allocation Layer
-**Generated:** 2026-09-30 19:52:28 | Inception: 2026-07-14 (78 calendar days) | Virtual capital: $100,000 USD
+**Generated:** 2026-10-01 19:46:59 | Inception: 2026-07-14 (79 calendar days) | Virtual capital: $100,000 USD
 **Weights (frozen):** efficient_frontier_report.md 2026-07-11 -- Risk Parity, hurdle-filtered (RECOMMENDED)
 
 This book paper-trades the recommended frontier allocation itself, marked
@@ -11,39 +11,39 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 ## 1. Promise vs. Realized
 | Metric | Backtest promise | Realized (live) |
 | :--- | ---: | ---: |
-| NAV | -- | $260,477.96 USD |
+| NAV | -- | $260,481.80 USD |
 | Return since inception | -- | +160.48% |
-| Ann. return | +14.67% | +750.95% |
-| Ann. volatility | 6.66% | 89.44% |
-| Sharpe (Rf 6.53%) | +1.22 | +4.93 |
+| Ann. return | +14.67% | +741.47% |
+| Ann. volatility | 6.66% | 88.75% |
+| Sharpe (Rf 6.53%) | +1.22 | +4.89 |
 | Max drawdown | -4.10% | -10.68% |
 
 ## 2. Sleeves
 | Sleeve | Target w | Current w | TR since inception | Last mark | Source |
 | :--- | ---: | ---: | ---: | :--- | :--- |
-| S1 Adaptive Value (BMV) | 5.4% | 5.4% | -8.06% | 2026-09-30 | multi-strategy USD |
-| S2 MACD Systematic | 4.9% | 5.3% | -0.79% | 2026-09-30 | watchdog MXN/USD |
-| S4 US DCF Value-Growth | 4.5% | 4.7% | +1.77% | 2026-09-30 | multi-strategy USD |
-| S5 Alternatives | 25.0% | 30.1% | +817.91% | 2026-09-30 | multi-strategy USD |
-| S6 High-Beta Momentum | 13.5% | 14.2% | -0.28% | 2026-09-30 | multi-strategy USD |
-| S8 Dividend Quality | 11.8% | 12.3% | +3.18% | 2026-09-30 | multi-strategy USD |
-| S9 AI Regime Stat-Arb | 8.6% | 8.6% | -9.22% | 2026-09-30 | multi-strategy USD |
-| S12 VTTL Trend+Vol | 5.3% | 6.0% | +8.65% | 2026-09-30 | multi-strategy USD |
-| S13 CARA Cross-Asset | 6.0% | 3.8% | +7.13% | 2026-09-30 | multi-strategy USD |
-| S14 HEDGE Aggregator | 7.4% | 4.7% | +22.80% | 2026-09-30 | multi-strategy USD |
-| S15 TRACK Tracker | 7.6% | 4.8% | +22.79% | 2026-09-30 | multi-strategy USD |
-| S17 FIBRAs Dynamic | 0.0% | 0.0% | -1.76% | 2026-09-30 | multi-strategy USD |
-| S19 Particle Filter QQQ | 0.0% | 0.0% | -4.03% | 2026-09-30 | multi-strategy USD |
-| S20 Hurst Exponent Dynamic | 0.0% | 0.0% | -6.07% | 2026-09-30 | multi-strategy USD |
-| S21 Golden Entropy | 0.0% | 0.0% | -4.50% | 2026-09-30 | multi-strategy USD |
-| S22 Walk-Forward ML | 0.0% | 0.0% | +4.28% | 2026-09-30 | multi-strategy USD |
-| S23 Calculus S&R | 0.0% | 0.0% | +7.87% | 2026-09-30 | multi-strategy USD |
-| S24 ML Classifier | 0.0% | 0.0% | -22.73% | 2026-09-30 | multi-strategy USD |
-| S25 Golden MACD BMV | 0.0% | 0.0% | -0.60% | 2026-09-30 | multi-strategy USD |
-| S27 Golden Hurst | 0.0% | 0.0% | +1.30% | 2026-09-30 | multi-strategy USD |
-| S29 Golden Stat-Arb | 0.0% | 0.0% | +1.30% | 2026-09-30 | multi-strategy USD |
-| S30 Golden MACD US | 0.0% | 0.0% | -0.38% | 2026-09-30 | multi-strategy USD |
-| S31 Fibonacci S&R | 0.0% | 0.0% | +1204552.23% | 2026-09-30 | multi-strategy USD |
+| S1 Adaptive Value (BMV) | 5.4% | 5.4% | -9.02% | 2026-10-01 | multi-strategy USD |
+| S2 MACD Systematic | 4.9% | 4.9% | -0.79% | 2026-09-30 | watchdog MXN/USD |
+| S4 US DCF Value-Growth | 4.5% | 4.5% | +1.77% | 2026-10-01 | multi-strategy USD |
+| S5 Alternatives | 25.0% | 25.0% | +817.19% | 2026-10-01 | multi-strategy USD |
+| S6 High-Beta Momentum | 13.5% | 13.5% | -0.28% | 2026-10-01 | multi-strategy USD |
+| S8 Dividend Quality | 11.8% | 11.8% | +2.66% | 2026-10-01 | multi-strategy USD |
+| S9 AI Regime Stat-Arb | 8.6% | 8.6% | -8.57% | 2026-10-01 | multi-strategy USD |
+| S12 VTTL Trend+Vol | 5.3% | 5.3% | +9.19% | 2026-10-01 | multi-strategy USD |
+| S13 CARA Cross-Asset | 6.0% | 6.0% | +7.68% | 2026-10-01 | multi-strategy USD |
+| S14 HEDGE Aggregator | 7.4% | 7.4% | +23.20% | 2026-10-01 | multi-strategy USD |
+| S15 TRACK Tracker | 7.6% | 7.6% | +23.20% | 2026-10-01 | multi-strategy USD |
+| S17 FIBRAs Dynamic | 0.0% | 0.0% | -1.30% | 2026-10-01 | multi-strategy USD |
+| S19 Particle Filter QQQ | 0.0% | 0.0% | -2.83% | 2026-10-01 | multi-strategy USD |
+| S20 Hurst Exponent Dynamic | 0.0% | 0.0% | -6.05% | 2026-10-01 | multi-strategy USD |
+| S21 Golden Entropy | 0.0% | 0.0% | -4.48% | 2026-10-01 | multi-strategy USD |
+| S22 Walk-Forward ML | 0.0% | 0.0% | +4.30% | 2026-10-01 | multi-strategy USD |
+| S23 Calculus S&R | 0.0% | 0.0% | +9.22% | 2026-10-01 | multi-strategy USD |
+| S24 ML Classifier | 0.0% | 0.0% | -21.73% | 2026-10-01 | multi-strategy USD |
+| S25 Golden MACD BMV | 0.0% | 0.0% | -0.64% | 2026-10-01 | multi-strategy USD |
+| S27 Golden Hurst | 0.0% | 0.0% | +1.32% | 2026-10-01 | multi-strategy USD |
+| S29 Golden Stat-Arb | 0.0% | 0.0% | +1.32% | 2026-10-01 | multi-strategy USD |
+| S30 Golden MACD US | 0.0% | 0.0% | -0.27% | 2026-10-01 | multi-strategy USD |
+| S31 Fibonacci S&R | 0.0% | 0.0% | +1204552.23% | 2026-10-01 | multi-strategy USD |
 
 ## 3. Correlation check (realized vs. backtest)
 Largest divergences from the backtest correlation matrix (the frontier's key input):
@@ -56,9 +56,9 @@ Largest divergences from the backtest correlation matrix (the frontier's key inp
 | S25-S27 | 0.00 | 0.94 | 0.94 |
 | S21-S22 | 0.00 | 0.89 | 0.89 |
 | S20-S22 | 0.00 | 0.88 | 0.88 |
-| S9-S29 | 0.00 | 0.78 | 0.78 |
-| S9-S27 | 0.00 | 0.78 | 0.78 |
-| S9-S25 | 0.00 | 0.75 | 0.75 |
+| S9-S29 | 0.00 | 0.77 | 0.77 |
+| S9-S27 | 0.00 | 0.77 | 0.77 |
+| S9-S25 | 0.00 | 0.74 | 0.74 |
 | S12-S14 | 0.93 | 0.23 | 0.70 |
 
 ## 4. Rebalances
@@ -66,6 +66,7 @@ Largest divergences from the backtest correlation matrix (the frontier's key inp
 | :--- | ---: | ---: |
 | 2026-08-01 | $202,870.65 | 38.4pp |
 | 2026-09-01 | $273,466.52 | 4.0pp |
+| 2026-10-01 | $260,481.80 | 5.1pp |
 
 ## 5. Warnings
 *None this cycle.*

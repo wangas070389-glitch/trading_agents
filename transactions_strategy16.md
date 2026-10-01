@@ -362,4 +362,6 @@
 | 2026-09-29 | BONDIA | INTEREST | 1.0000 | $0.3147 | $0.00 | $0.31 | Accrued interest on sweep balance |
 | 2026-09-30 | BONDIA | INTEREST | 1.0000 | $36.7045 | $0.00 | $36.70 | Accrued interest on sweep balance |
 | 2026-09-30 | BONDIA | INTEREST | 1.0000 | $0.3792 | $0.00 | $0.38 | Accrued interest on sweep balance |
+| 2026-10-01 | BONDIA | INTEREST | 1.0000 | $36.8756 | $0.00 | $36.88 | Accrued interest on sweep balance |
+| 2026-10-01 | CASH | DEPOSIT | 1.0000 | $2000.0000 | $0.00 | $-2,000.00 | Monthly DCA savings contribution |
 ---

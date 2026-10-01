@@ -9,6 +9,7 @@
 | 2026-08-01 | CASH | DEPOSIT | 1.0000 | $1000.0000 | $0.00 | $-1,000.00 | Monthly savings contribution |
 | 2026-08-14 | AVGO | SELL | 51.6073 | $390.5500 | $58.45 | $20,096.80 | Exit: SMA 100 Trend Break |
 | 2026-09-01 | CASH | DEPOSIT | 1.0000 | $1000.0000 | $0.00 | $-1,000.00 | Monthly savings contribution |
+| 2026-10-01 | CASH | DEPOSIT | 1.0000 | $1000.0000 | $0.00 | $-1,000.00 | Monthly savings contribution |
 ---
 
 
@@ -16,7 +17,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $102,907.46 USD
+* **Initial + Inflow Capital**: $103,907.46 USD
 * **Total Deployed Capital**: $0.00 USD (0.0% invested)
-* **Unallocated Cash Reserves**: $102,907.46 USD (100.0% cash)
-* **Current Portfolio Market Value**: $102,907.46 USD (including cash)
+* **Unallocated Cash Reserves**: $103,907.46 USD (100.0% cash)
+* **Current Portfolio Market Value**: $103,907.46 USD (including cash)

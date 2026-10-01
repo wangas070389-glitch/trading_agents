@@ -648,6 +648,9 @@
 | 2026-09-30 | MSFT | BUY-REJECTED | 43 | 517.41 | +22,248.63 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 | 2026-09-30 | META | SELL-REJECTED | 32 | 729.86 | +23,355.52 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
 | 2026-09-30 | MSFT | BUY-REJECTED | 43 | 514.74 | +22,133.82 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
+| 2026-10-01 | GOOGL | SELL | 63.0 | 338.97 | +21,355.11 | Market | FILLED | Alpaca Order 5614f541-240c-4d13-acc1-d198c3c009e8 FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-10-01 | META | SELL-REJECTED | 32 | 726.75 | +23,256.00 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-10-01 | MSFT | BUY-REJECTED | 41 | 515.17 | +21,121.97 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 ---
 
 
@@ -655,7 +658,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $90,159.98 USD
-* **Total Deployed Capital**: $79,271.48 USD (-64.5% invested)
-* **Unallocated Cash Reserves**: $-205,616.68 USD (167.3% cash)
-* **Current Portfolio Market Value**: $-122,919.70 USD (including cash)
+* **Initial Starting Capital**: $85,955.92 USD
+* **Total Deployed Capital**: $57,746.86 USD (-46.9% invested)
+* **Unallocated Cash Reserves**: $-184,261.57 USD (149.7% cash)
+* **Current Portfolio Market Value**: $-123,089.21 USD (including cash)

@@ -128,6 +128,7 @@
 | 2026-09-18 | DBA | SELL-REJECTED | 733.0000 | $28.1500 | $0.00 | $20,633.95 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
 | 2026-09-22 | USDMXN=X | SELL | 1213.0000 | $17.2964 | $60.84 | $20,919.64 | Exit: Overbought (RSI=65.4) at upper Bollinger Band |
 | 2026-09-22 | EURUSD=X | BUY | 122175.0000 | $1.1446 | $405.53 | $-140,241.85 | Entry: Oversold (RSI=31.3) at lower Bollinger Band |
+| 2026-10-01 | CASH | DEPOSIT | 1.0000 | $1000.0000 | $0.00 | $-1,000.00 | Monthly savings contribution |
 ---
 
 
@@ -135,7 +136,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial + Inflow Capital**: $90,123.27 USD
-* **Total Deployed Capital**: $367,805.54 USD (39.5% invested)
-* **Unallocated Cash Reserves**: $563,533.78 USD (60.4% cash)
-* **Current Portfolio Market Value**: $932,234.98 USD (including cash)
+* **Initial + Inflow Capital**: $86,992.02 USD
+* **Total Deployed Capital**: $367,805.54 USD (39.4% invested)
+* **Unallocated Cash Reserves**: $564,533.78 USD (60.5% cash)
+* **Current Portfolio Market Value**: $932,639.82 USD (including cash)
