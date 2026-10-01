@@ -443,4 +443,5 @@
 | 2026-10-01 | BONDIA | INTEREST | 1.0000 | $4.5875 | $0.00 | $4.59 | Accrued interest on sweep balance |
 | 2026-10-01 | CASH | DEPOSIT | 1.0000 | $2000.0000 | $0.00 | $-2,000.00 | Monthly DCA savings contribution |
 | 2026-10-01 | SPY | SELL | 11.0000 | $14004.0598 | $446.73 | $153,597.93 | Regime shifted out of Bull mode |
+| 2026-10-01 | BONDIA | INTEREST | 1.0000 | $0.4853 | $0.00 | $0.49 | Accrued interest on sweep balance |
 ---
