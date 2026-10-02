@@ -1,22 +1,22 @@
 # Strategy 11: CCI-ADX Twin Strategy Execution Report
-**Execution Date:** 2026-10-01 20:08:01 | **Strategy Version:** Twin V1
+**Execution Date:** 2026-10-02 19:29:43 | **Strategy Version:** Twin V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $212,970.32 MXN
-* **Total Cash Balance:** $212,970.32 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Total Portfolio NAV:** $213,007.38 MXN
+* **Total Cash Balance:** $213,007.38 MXN (Parked compounding in Bondia sweep at 6.53% APR)
 * **Equity Exposure:** 0.0%
-* **Active Regime:** State 2 (Range-bound chop, mean-reversion detected on QQQ)
+* **Active Regime:** State 0 (Bull trend, low volatility detected on QQQ)
 
 ## 2. Current Holdings
 | Ticker | Type | Side | Shares | Buy Price (MXN) | Last Price (MXN) | Market Value (MXN) |
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $$0.5694 MXN sweep interest.
+* **[INTEREST ACCRUED]** Cash reserves earned $$37.0627 MXN sweep interest.
 * No trades or rebalancing actions triggered in this 30-minute interval.
 
 ## 4. CCI-ADX Telemetry
-  * Decoded Regime: HMM State 0 -> **Regime 2 (Range-bound chop, mean-reversion detected on QQQ)**
-  * QQQ Close: $742.04 USD
-  * TQQQ CCI (10): 51.4 | ADX (7): 45.2
-  * SQQQ CCI (10): -49.6 | ADX (7): 45.6
+  * Decoded Regime: HMM State 0 -> **Regime 0 (Bull trend, low volatility detected on QQQ)**
+  * QQQ Close: $749.11 USD
+  * TQQQ CCI (10): 38.1 | ADX (7): 59.6
+  * SQQQ CCI (10): -38.2 | ADX (7): 59.2

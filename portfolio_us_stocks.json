@@ -3,8 +3,8 @@
   "capital_injections": 0.0,
   "total_funded_capital": 199203.11,
   "nav": 59846.31,
-  "total_capital": 85605.74,
-  "cash_balance": -184261.57,
+  "total_capital": 89021.33,
+  "cash_balance": -206401.51,
   "holdings_value": 138014.14,
   "net_trading_profit": -139356.8,
   "net_trading_return_pct": -69.96,
@@ -14,7 +14,7 @@
       "shares": 31.0,
       "buy_price": 509.8,
       "last_price": 620.3,
-      "peak_price": 638.9500122070312,
+      "peak_price": 645.4598999023438,
       "target_weight": 0.2
     },
     {
@@ -22,7 +22,7 @@
       "shares": 94,
       "buy_price": 223.6699981689453,
       "last_price": 223.6699981689453,
-      "peak_price": 233.2100067138672,
+      "peak_price": 237.8699951171875,
       "target_weight": 0.25
     },
     {
@@ -32,7 +32,15 @@
       "last_price": 653.6900024414062,
       "peak_price": 779.8192138671875,
       "target_weight": 0.25
+    },
+    {
+      "ticker": "MSFT",
+      "shares": 43.0,
+      "buy_price": 514.87186,
+      "last_price": 514.87186,
+      "peak_price": 522.5,
+      "target_weight": 0.25
     }
   ],
-  "last_updated": "2026-10-01 20:07:26"
+  "last_updated": "2026-10-02 19:29:01"
 }
