@@ -1,5 +1,5 @@
 # Shadow Frontier — Live Track Record of the Allocation Layer
-**Generated:** 2026-10-02 19:30:23 | Inception: 2026-07-14 (80 calendar days) | Virtual capital: $100,000 USD
+**Generated:** 2026-10-02 19:47:24 | Inception: 2026-07-14 (80 calendar days) | Virtual capital: $100,000 USD
 **Weights (frozen):** efficient_frontier_report.md 2026-07-11 -- Risk Parity, hurdle-filtered (RECOMMENDED)
 
 This book paper-trades the recommended frontier allocation itself, marked
@@ -11,22 +11,22 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 ## 1. Promise vs. Realized
 | Metric | Backtest promise | Realized (live) |
 | :--- | ---: | ---: |
-| NAV | -- | $261,087.99 USD |
-| Return since inception | -- | +161.09% |
-| Ann. return | +14.67% | +734.96% |
+| NAV | -- | $261,174.20 USD |
+| Return since inception | -- | +161.17% |
+| Ann. return | +14.67% | +735.36% |
 | Ann. volatility | 6.66% | 88.06% |
-| Sharpe (Rf 6.53%) | +1.22 | +4.85 |
+| Sharpe (Rf 6.53%) | +1.22 | +4.86 |
 | Max drawdown | -4.10% | -10.68% |
 
 ## 2. Sleeves
 | Sleeve | Target w | Current w | TR since inception | Last mark | Source |
 | :--- | ---: | ---: | ---: | :--- | :--- |
 | S1 Adaptive Value (BMV) | 5.4% | 5.4% | -8.28% | 2026-10-02 | multi-strategy USD |
-| S2 MACD Systematic | 4.9% | 4.9% | -1.19% | 2026-10-01 | watchdog MXN/USD |
+| S2 MACD Systematic | 4.9% | 4.9% | -0.52% | 2026-10-02 | watchdog MXN/USD |
 | S4 US DCF Value-Growth | 4.5% | 4.5% | +1.77% | 2026-10-02 | multi-strategy USD |
 | S5 Alternatives | 25.0% | 24.9% | +817.28% | 2026-10-02 | multi-strategy USD |
 | S6 High-Beta Momentum | 13.5% | 13.5% | -0.28% | 2026-10-02 | multi-strategy USD |
-| S8 Dividend Quality | 11.8% | 11.9% | +3.36% | 2026-10-02 | multi-strategy USD |
+| S8 Dividend Quality | 11.8% | 11.8% | +3.36% | 2026-10-02 | multi-strategy USD |
 | S9 AI Regime Stat-Arb | 8.6% | 8.6% | -8.56% | 2026-10-02 | multi-strategy USD |
 | S12 VTTL Trend+Vol | 5.3% | 5.3% | +9.86% | 2026-10-02 | multi-strategy USD |
 | S13 CARA Cross-Asset | 6.0% | 6.0% | +8.34% | 2026-10-02 | multi-strategy USD |
