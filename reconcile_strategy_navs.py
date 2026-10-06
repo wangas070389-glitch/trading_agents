@@ -13,6 +13,7 @@ import os
 import re
 import datetime
 import hashlib
+from pathlib import Path
 
 from skills.file_io_utils import atomic_save_json, safe_load_json
 from strategy_registry import STRATEGIES
@@ -131,7 +132,7 @@ def main():
         differences = {symbol: round(ledger_positions.get(symbol, 0.0) - saved.get(symbol, 0.0), 8) for symbol in symbols if abs(ledger_positions.get(symbol, 0.0) - saved.get(symbol, 0.0)) > POSITION_TOLERANCE}
         # A quantity match alone is not a cash or NAV reconciliation.
         seed = portfolio.get("initial_seed_capital")
-        ledger_text = open(ledger_path, encoding="utf-8").read()
+        ledger_text = Path(ledger_path).read_text(encoding="utf-8")
         opening_cash = 0.0 if "initial capital funding" in ledger_text.lower() else seed
         expected_cash = actual_cash = cash_difference = None
         if "cash_balance_mxn" in portfolio or "cash_balance_usd" in portfolio:
@@ -146,8 +147,8 @@ def main():
         record = {"strategy": spec.key, "ledger": ledger, "rows": row_count, "ledger_positions": ledger_positions, "portfolio_positions": saved, "position_differences": differences, "cash_delta": round(cash_delta, 2), "status": status}
         record.update(errors=errors, expected_cash=expected_cash, actual_cash=actual_cash,
                       cash_difference=cash_difference,
-                      portfolio_sha256=hashlib.sha256(open(portfolio_path, "rb").read()).hexdigest(),
-                      ledger_sha256=hashlib.sha256(open(ledger_path, "rb").read()).hexdigest())
+                      portfolio_sha256=hashlib.sha256(Path(portfolio_path).read_bytes()).hexdigest(),
+                      ledger_sha256=hashlib.sha256(Path(ledger_path).read_bytes()).hexdigest())
         output.append(record)
         lines.append(f"| {spec.key.upper()} {spec.label} | {row_count} | {len(ledger_positions)} | {len(saved)} | {status} | {cash_delta:,.2f} {spec.currency} |")
         if differences:

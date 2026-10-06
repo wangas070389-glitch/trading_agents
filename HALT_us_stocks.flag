@@ -1,0 +1,9 @@
+W4/W6 safety hold — 2026-10-05 strategy review.
+S3's saved cash is negative: USD -206401.52 at reviewed Git revision
+fd7461011259e175777f7c21695e5abfc696f829. Its ledger also differs from
+the saved positions. This flag prevents new S3 runner execution; it neither
+cancels orders nor closes positions, and is not a broker-wide kill switch.
+Keep the hold until dated broker fills/statements, shared-account strategy
+ownership, opening balances and cash/positions have been manually reconciled.
+Do not replace this book with aggregate shared-account positions or invent
+balancing entries. Removal requires an explicit reviewed reconciliation.

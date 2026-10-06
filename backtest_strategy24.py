@@ -11,10 +11,6 @@ import sys
 import datetime
 import numpy as np
 import pandas as pd
-import yfinance as yf
-from scipy import stats
-from scipy.signal import savgol_coeffs
-from sklearn.ensemble import RandomForestClassifier
 
 TRADING_DAYS = 252
 TRADING_BARS_PER_DAY = 13  # 30-minute bars in 6.5 hour trading day
@@ -23,6 +19,7 @@ BONDIA_YIELD = 0.0653      # 6.53% MXN cash sweep compound yield
 RF_MXN = 0.095             # 9.5% Benchmark MXN Risk-Free Rate for Sharpe
 
 def calculate_savgol_rolling(prices, window_length, polyorder=3):
+    from scipy.signal import savgol_coeffs
     n = len(prices)
     smooth = np.full(n, np.nan)
     deriv1 = np.full(n, np.nan)
@@ -79,6 +76,7 @@ def compute_srp_for_window(prices, wl, po=3):
     return srp, deriv1, deriv2, smooth
 
 def load_data():
+    import yfinance as yf
     print("Downloading 30-minute QQQ historical datasets (last 60 days)...")
     qqq = yf.download("QQQ", period="60d", interval="30m", progress=False)
     tqqq = yf.download("TQQQ", period="60d", interval="30m", progress=False)
@@ -102,6 +100,7 @@ def load_data():
 
 def run_simulation(data, initial_nav=200000.0, train_window=450, retrain_freq=50, 
                    n_estimators=30, max_depth=3, thresh=0.40, min_hold_bars=26, trailing_stop_pct=None):
+    from sklearn.ensemble import RandomForestClassifier
     n_bars = len(data)
     prices = data["qqq"].values
     
@@ -292,6 +291,33 @@ def calculate_metrics(nav_series, benchmark_series):
         "n_bars": n_bars
     }
 
+def select_parameters(data, train_window=450, retrain_freq=50, initial_nav=200000.0):
+    """Tune only on a chronological prefix; the last quarter is held out.
+
+    Subsequent walk-forward retraining may use already-observed holdout data,
+    but those observations never select the hyperparameters.
+    """
+    split = int(len(data) * 0.75)
+    if split - train_window < 26 or len(data) - split < 26:
+        raise ValueError("Insufficient independent selection and holdout bars")
+    development = data.iloc[:split].copy()
+    best_params, best_sharpe = None, -np.inf
+    for depth in (3, 4):
+        for threshold in (0.35, 0.40, 0.45):
+            params = dict(n_estimators=30, max_depth=depth, thresh=threshold,
+                          min_hold_bars=26, trailing_stop_pct=None)
+            frame, _, _ = run_simulation(development, initial_nav=initial_nav,
+                                        train_window=train_window, retrain_freq=retrain_freq, **params)
+            # Include the preceding NAV so the first evaluated bar is counted.
+            selection = frame.iloc[train_window - 1:]
+            score = calculate_metrics(selection["nav"], selection["benchmark"])["sharpe"]
+            if np.isfinite(score) and score > best_sharpe:
+                best_params, best_sharpe = params, score
+    if best_params is None:
+        raise ValueError("No finite parameter-selection score; do not publish a holdout claim")
+    return best_params, split, best_sharpe
+
+
 def main():
     dir_path = os.path.dirname(os.path.abspath(__file__))
     print("=" * 80)
@@ -305,56 +331,8 @@ def main():
     retrain_freq = 50
     initial_nav = 200000.0
     
-    # Robust Grid Search over OOS period
-    GRID = {
-        "max_depth": [3, 4],
-        "thresh": [0.35, 0.40, 0.45],
-        "min_hold_bars": [26],
-        "trailing_stop_pct": [None]
-    }
-    
-    best_sharpe = -999.0
-    best_params = None
-    
-    train_data = data.copy()
-    
-    print("\nOptimizing Random Forest parameters with 35-Bar S&R Feature Scale...")
-    for md in GRID["max_depth"]:
-        for th in GRID["thresh"]:
-            for mhb in GRID["min_hold_bars"]:
-                for ts in GRID["trailing_stop_pct"]:
-                    try:
-                        df_sim, n_trades, fees = run_simulation(
-                            train_data, initial_nav=initial_nav, train_window=train_window,
-                            retrain_freq=retrain_freq, n_estimators=30, max_depth=md, thresh=th,
-                            min_hold_bars=mhb, trailing_stop_pct=ts
-                        )
-                        oos_sim = df_sim.iloc[train_window:]
-                        if oos_sim.empty:
-                            continue
-                        metrics = calculate_metrics(oos_sim["nav"], oos_sim["benchmark"])
-                        sharpe = metrics["sharpe"]
-                        
-                        if sharpe > best_sharpe:
-                            best_sharpe = sharpe
-                            best_params = {
-                                "max_depth": md,
-                                "thresh": th,
-                                "min_hold_bars": mhb,
-                                "trailing_stop_pct": ts
-                            }
-                    except Exception as e:
-                        continue
-                        
-    if best_params is None:
-        best_params = {
-            "max_depth": 3,
-            "thresh": 0.40,
-            "min_hold_bars": 26,
-            "trailing_stop_pct": None
-        }
-        
-    best_params["n_estimators"] = 30
+    best_params, validation_start, best_sharpe = select_parameters(
+        data, train_window, retrain_freq, initial_nav)
     
     print("\n" + "=" * 80)
     print("OPTIMAL HYPERPARAMETERS FOUND (S24 GOLDEN RATIO)")
@@ -372,8 +350,8 @@ def main():
     
     metrics = calculate_metrics(df_out["nav"], df_out["benchmark"])
     
-    df_train_res = df_out.iloc[:train_window]
-    df_val_res = df_out.iloc[train_window:]
+    df_train_res = df_out.iloc[train_window - 1:validation_start]
+    df_val_res = df_out.iloc[validation_start - 1:]
     
     train_metrics = calculate_metrics(df_train_res["nav"], df_train_res["benchmark"])
     val_metrics = calculate_metrics(df_val_res["nav"], df_val_res["benchmark"])
@@ -390,7 +368,7 @@ def main():
     print(f"Max Drawdown    : {metrics['max_dd']*100:.2f}% (Benchmark: {metrics['bench_max_dd']:.2f}%)")
     print(f"Total trades    : {n_trades} (Total fees paid: ${fees:,.2f} MXN)")
     print("-" * 80)
-    print("OUT-OF-SAMPLE VALIDATION METRICS (Last 15 days / ~230 bars):")
+    print(f"CHRONOLOGICAL HOLDOUT: {df_out.index[validation_start]} onward ({len(data) - validation_start} bars)")
     print(f"  OOS Return    : {val_metrics['total_return']*100:+.2f}% (Benchmark: {val_metrics['bench_return']*100:+.2f}%)")
     print(f"  OOS Sharpe    : {val_metrics['sharpe']:.2f} (Benchmark: {val_metrics['bench_sharpe']:.2f})")
     print(f"  OOS Max DD    : {val_metrics['max_dd']*100:.2f}% (Benchmark: {val_metrics['bench_max_dd']*100:.2f}%)")
@@ -401,6 +379,11 @@ def main():
 **Executed:** {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 **Asset Universe:** QQQ, TQQQ (3x Long), SQQQ (3x Short), Cash (Bondia compounding)
 **Data Window:** {df_out.index[0].strftime('%Y-%m-%d %H:%M')} to {df_out.index[-1].strftime('%Y-%m-%d %H:%M')} ({metrics['n_bars']} bars, {metrics['years']:.2f} Years equivalent)
+
+Hyperparameters use only the first {validation_start} bars. The final
+{len(data) - validation_start} bars are excluded from selection. Online retraining
+continues using past observations only. This short retrospective split is not
+prospective validation; the full-period statistics include the selection period.
 
 ## Optimal Hyperparameters
 * **Feature Scale:** Single 35-bar Savitzky-Golay and SRP
@@ -422,7 +405,7 @@ def main():
 | **Sharpe Ratio (Rf=9.5%)** | {metrics['sharpe']:.2f} | {metrics['bench_sharpe']:.2f} |
 | **Maximum Drawdown** | {metrics['max_dd']*100:.2f}% | {metrics['bench_max_dd']*100:.2f}% |
 
-## Out-Of-Sample Validation Performance (Last 15 days)
+## Chronological Holdout Performance (from {df_out.index[validation_start]})
 | Metric | Strategy 24 (Out-of-Sample) | Benchmark (Out-of-Sample) |
 | :--- | :---: | :---: |
 | **OOS Cumulative Return** | {val_metrics['total_return']*100:+.2f}% | {val_metrics['bench_return']*100:+.2f}% |

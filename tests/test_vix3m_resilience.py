@@ -1,4 +1,5 @@
 import unittest
+import io
 from unittest.mock import patch
 import pandas as pd
 import numpy as np
@@ -6,9 +7,12 @@ from connectors.market_data import get_vix3m, get_daily_closes
 
 
 class TestVIX3MResilience(unittest.TestCase):
-    def test_get_vix3m_real_cboe(self):
-        """Verify that get_vix3m fetches valid historical series from CBOE."""
-        s = get_vix3m(days=50)
+    def test_get_vix3m_parses_cboe_fixture(self):
+        """Exercise the CBOE parsing path without a live endpoint dependency."""
+        dates = pd.bdate_range("2026-01-01", periods=60)
+        fixture = pd.DataFrame({"DATE": dates.strftime("%m/%d/%Y"), "CLOSE": np.linspace(15., 25., 60)}).to_csv(index=False).encode()
+        with patch("urllib.request.urlopen", return_value=io.BytesIO(fixture)):
+            s = get_vix3m(days=50)
         self.assertIsInstance(s, pd.Series)
         self.assertEqual(len(s), 50)
         self.assertTrue((s > 0).all())
@@ -31,7 +35,10 @@ class TestVIX3MResilience(unittest.TestCase):
 
     def test_market_data_routes_vix3m(self):
         """Verify that get_daily_closes with ^VIX3M correctly routes to get_vix3m."""
-        s = get_daily_closes("^VIX3M", days=30)
+        expected = pd.Series(np.linspace(15., 25., 30), index=pd.bdate_range("2026-01-01", periods=30), name="^VIX3M")
+        with patch("connectors.market_data.get_vix3m", return_value=expected) as provider:
+            s = get_daily_closes("^VIX3M", days=30)
+        provider.assert_called_once_with(30)
         self.assertIsInstance(s, pd.Series)
         self.assertEqual(len(s), 30)
         self.assertTrue((s > 0).all())

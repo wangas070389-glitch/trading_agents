@@ -120,7 +120,7 @@ def main():
             # Buy signal
             if close_t > ma_t and crossover_bull:
                 target_alloc = portfolio["total_capital"] * 0.18 # 18% alloc limit per stock
-                if cash >= target_alloc:
+                if cash >= target_alloc * (1.0 + TRANSACTION_COST):
                     shares = target_alloc / close_t
                     fee = target_alloc * TRANSACTION_COST
                     cash = round(cash - (target_alloc + fee), 2)

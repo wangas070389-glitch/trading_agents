@@ -252,7 +252,11 @@ jobs:
 
     # 5j. Run Watchdog Auditor
     - name: Run Watchdog Audit
+      id: watchdog
       run: python watchdog.py
+      # Persist this cycle's ledgers even when the audit is critical. The final
+      # step restores the failing job status; a failure is never hidden.
+      continue-on-error: true
       env:
         APCA_API_KEY_ID: ${{ secrets.ALPACA_API_KEY }}
         APCA_API_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
@@ -273,4 +277,8 @@ jobs:
           git pull --rebase origin main
           git push origin HEAD:main
         fi
+
+    - name: Fail cycle on critical watchdog findings
+      if: steps.watchdog.outcome == 'failure'
+      run: exit 1
 

@@ -330,6 +330,10 @@ class MACDTrailingStopStrategy:
                 for pos in positions.values()
             )
             final_nav = cash + equity_val
+            # The pre-action return above excludes this session's trading fees.
+            # Link the post-flow, post-trade subperiod before resetting last_nav.
+            if nav_before > 0:
+                twr *= final_nav / nav_before
             last_nav = final_nav
             last_bench_nav = sum(bench_shares[t] * price_matrix[t].iloc[i] for t in tickers)
 

@@ -32,6 +32,7 @@ import numpy as np
 from strategy_registry import BY_PORTFOLIO_FILE
 from reconcile_strategy_navs import ledger_name
 from accounting import nav_value
+from backtest_review import backtest_block
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(DIR, "graduation_report.md")
@@ -387,21 +388,27 @@ def main():
         bt_dd = backtest_max_dd(s)
         dd_bound = bt_dd * DD_BREAKER
         evidence = s["bt"]["window"] * s["bt"]["sharpe"]
+        research_block = backtest_block(s["label"])
+        if research_block:
+            evidence = dd_bound = None
 
         # criteria -- C2/C4 are only judged after EVAL_MIN_DAYS: annualizing a
         # handful of days produces meaningless triple-digit figures
         judge = live_days >= EVAL_MIN_DAYS
         c1 = live_days >= MIN_LIVE_DAYS
         c2 = None if (ann_ret is None or not judge) else (ann_ret > BONDIA_HURDLE)
-        c3 = None if live_dd is None else (live_dd >= dd_bound)  # dd negative: inside bound
+        c3 = None if live_dd is None or dd_bound is None else (live_dd >= dd_bound)
         c4 = None if (live_sharpe is None or not judge) else (live_sharpe > 0)
         operational_block = s["block"] or reconciliation_blocks.get(s["pf"]) or portfolio_freshness_block(s["pf"], today) or historical_block
-        c5 = operational_block is None
+        c5 = operational_block is None and research_block is None
 
         reasons = []
         if not c5:
             verdict = "BLOCKED"
-            reasons.append(operational_block)
+            if operational_block:
+                reasons.append(operational_block)
+            if research_block:
+                reasons.append(f"Backtest evidence invalidated: {research_block}")
             roi = ann_ret = live_sharpe = live_dd = None
         else:
             hard_fail = (c2 is False) or (c3 is False) or (c4 is False)
@@ -432,7 +439,7 @@ def main():
                          verdict=verdict, reasons=reasons, src=src, samples=len(vals)))
 
     order = {"READY": 0, "ON TRACK": 1, "NOT READY": 2, "BLOCKED": 3}
-    rows.sort(key=lambda r: (order[r["verdict"]], -r["evidence"]))
+    rows.sort(key=lambda r: (order[r["verdict"]], -(r["evidence"] if r["evidence"] is not None else -math.inf)))
 
     def fmt_pct(x):
         return f"{x*100:+.1f}%" if x is not None else "n/a"
@@ -456,10 +463,11 @@ def main():
             hurdle = "pending"
         else:
             hurdle = "PASS" if r["ann_ret"] > BONDIA_HURDLE else "FAIL"
+        bt_label = "invalidated" if backtest_block(s["label"]) else f"{s['bt']['sharpe']:.2f} ({s['bt']['window']:.1f}y)"
         lines.append(
             f"| {s['label']} | **{r['verdict']}** | {r['live_days']} | {fmt_pct(r['roi'])} | {fmt_pct(r['ann_ret'])} | {hurdle} | "
             f"{fmt_num(r['live_sharpe'])} | {fmt_pct(r['live_dd'])} | {fmt_pct(r['dd_bound'])} | "
-            f"{r['evidence']:.2f} | {s['bt']['sharpe']:.2f} ({s['bt']['window']:.1f}y) |")
+            f"{fmt_num(r['evidence'])} | {bt_label} |")
 
     lines += ["", "## Verdict Detail", ""]
     for r in rows:
@@ -479,7 +487,7 @@ def main():
     for r in rows:
         s = r["s"]
         if r["verdict"] == "BLOCKED":
-            status, detail = "BLOCKED", "Accounting evidence unresolved; risk conclusions withheld"
+            status, detail = "BLOCKED", "Accounting or backtest evidence unresolved; risk conclusions withheld"
         elif r["live_dd"] is not None and r["live_dd"] < r["dd_bound"]:
             status, detail = "**BREACH (P2/K1)**", (
                 f"live DD {r['live_dd']*100:.1f}% exceeds 1.25× backtest bound "
@@ -505,7 +513,7 @@ def main():
         f"- **C2 Hurdle:** annualized live return (money-weighted approximation, deposits excluded from profit) > Bondia {BONDIA_HURDLE*100:.2f}% — the do-nothing alternative. Judged only after {EVAL_MIN_DAYS} live days",
         f"- **C3 Risk:** live max drawdown within {DD_BREAKER}× backtest MaxDD (watchdog W5 bound)",
         f"- **C4 Quality:** live Sharpe > 0, judged only after {EVAL_MIN_DAYS} live days and {MIN_SAMPLES_FOR_STATS} daily samples",
-        "- **C5 Operations:** no unresolved operational blocks",
+        "- **C5 Evidence/operations:** no unresolved operational or invalidated-backtest blocks",
         "",
         "## Caveats — read before moving money",
         "- **Evidence score = backtest Sharpe × backtest window (years).** S10/S11/S16 were re-optimized in July 2026 on the same 60 days they were backtested on; their backtests are in-sample ceilings, not forecasts. Their live record is the first true out-of-sample test.",
