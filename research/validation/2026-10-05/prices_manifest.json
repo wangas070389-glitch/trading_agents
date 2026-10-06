@@ -1,0 +1,41 @@
+{
+  "provider": "Yahoo Finance via yfinance",
+  "adjusted_total_return_prices": true,
+  "requested_start": "2010-02-11",
+  "requested_end_exclusive": "2026-10-06",
+  "fetched_utc": "2026-10-06T03:37:55.410620+00:00",
+  "yfinance_version": "1.7.0",
+  "datasets": {
+    "s25": {
+      "file": "s25_prices.csv",
+      "sha256": "ea7f1d922bb0d6b61fb0a79c229de596b1c64963cec3a60c7afef301d471c52c",
+      "rows": 4178,
+      "dropped_rows": 1,
+      "first": "2010-02-11",
+      "last": "2026-10-05",
+      "tickers": [
+        "AMXB.MX",
+        "WALMEX.MX",
+        "GMEXICOB.MX",
+        "FEMSAUBD.MX",
+        "CEMEXCPO.MX"
+      ]
+    },
+    "s30": {
+      "file": "s30_prices.csv",
+      "sha256": "76033fcba0137efefb6dc9574f76cb5b9613d35bddef5e6d29fa95be1e56ea1e",
+      "rows": 4187,
+      "dropped_rows": 0,
+      "first": "2010-02-11",
+      "last": "2026-10-05",
+      "tickers": [
+        "AAPL",
+        "MSFT",
+        "GOOGL",
+        "AMZN",
+        "NVDA"
+      ]
+    }
+  },
+  "failures": {}
+}

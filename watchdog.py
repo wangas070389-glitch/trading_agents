@@ -287,34 +287,9 @@ def get_active_strategies(dir_path):
             return "core"
         return os.path.splitext(spec.portfolio_file)[0].replace("portfolio_", "")
 
-    active_map = {runner: watchdog_name(spec) for runner, spec in BY_RUNNER.items()}
-    scheduler_path = os.path.join(dir_path, "scheduler.py")
-    if not os.path.exists(scheduler_path):
-        return set(active_map.values())
-    
-    active_strats = set()
-    try:
-        with open(scheduler_path, "r", encoding="utf-8") as f:
-            content = f.read()
-        
-        match = re.search(r"STRATEGY_SCRIPTS\s*=\s*\[(.*?)\]", content, re.DOTALL)
-        if match:
-            list_block = match.group(1)
-            for line in list_block.split("\n"):
-                line_strip = line.strip()
-                if not line_strip or line_strip.startswith("#"):
-                    continue
-                if "#" in line_strip:
-                    line_strip = line_strip.split("#")[0].strip()
-                m_str = re.search(r"['\"](.*?)['\"]", line_strip)
-                if m_str:
-                    script = m_str.group(1)
-                    if script in active_map:
-                        active_strats.add(active_map[script])
-    except Exception as e:
-        print(f"Error parsing active strategies from scheduler.py: {e}")
-        return set(active_map.values())
-    return active_strats
+    # scheduler.py imports the registry, so searching it for a literal list
+    # silently classified every scheduled strategy as inactive.
+    return {watchdog_name(spec) for spec in BY_RUNNER.values() if spec.active}
 
 def main():
     ap = argparse.ArgumentParser()
@@ -353,7 +328,8 @@ def main():
                     finding.msg = f"[INACTIVE STRATEGY] {finding.msg}"
         all_findings.extend(f)
 
-    atomic_save_json(hist_path, nav_hist, indent=1)
+    if not args.dry_run:
+        atomic_save_json(hist_path, nav_hist, indent=1)
 
     all_findings.extend(check_broker_reconciliation(dir_path, now, active_strats))
 
@@ -373,15 +349,17 @@ def main():
              "| Nivel | Estrategia | Check | Detalle |", "| :--- | :--- | :--- | :--- |"]
     lines += [f.row() for f in all_findings]
     report = "\n".join(lines) + "\n"
-    with open(os.path.join(dir_path, "watchdog_report.md"), "w", encoding="utf-8") as f:
-        f.write(report)
+    if not args.dry_run:
+        with open(os.path.join(dir_path, "watchdog_report.md"), "w", encoding="utf-8") as f:
+            f.write(report)
     print(report)
 
     if n_crit > 0 and not args.dry_run:
-        print(f"WATCHDOG: {n_crit} hallazgos CRITICOS -> exit 0 (CI block prevented; reporting only)")
-        sys.exit(0)
-    print("WATCHDOG: sin criticos." if n_crit == 0 else "WATCHDOG: criticos (reporting-only, exit 0).")
+        print(f"WATCHDOG: {n_crit} hallazgos CRITICOS -> exit 1 (revision requerida)")
+        return 1
+    print("WATCHDOG: sin criticos." if n_crit == 0 else "WATCHDOG: criticos (dry-run, exit 0).")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
