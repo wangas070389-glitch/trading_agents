@@ -3,8 +3,8 @@
   "capital_injections": 0.0,
   "total_funded_capital": 199203.11,
   "nav": 59846.31,
-  "total_capital": 91758.88,
-  "cash_balance": -206401.52,
+  "total_capital": 95485.59,
+  "cash_balance": -225470.57,
   "holdings_value": 138014.14,
   "net_trading_profit": -139356.8,
   "net_trading_return_pct": -69.96,
@@ -14,7 +14,7 @@
       "shares": 31.0,
       "buy_price": 509.8,
       "last_price": 620.3,
-      "peak_price": 645.4598999023438,
+      "peak_price": 658.52001953125,
       "target_weight": 0.2
     },
     {
@@ -22,7 +22,7 @@
       "shares": 94,
       "buy_price": 223.6699981689453,
       "last_price": 223.6699981689453,
-      "peak_price": 240.09829711914062,
+      "peak_price": 243.3699951171875,
       "target_weight": 0.25
     },
     {
@@ -35,12 +35,20 @@
     },
     {
       "ticker": "MSFT",
-      "shares": 43.0,
+      "shares": 31.0,
       "buy_price": 514.87186,
-      "last_price": 514.87186,
-      "peak_price": 532.3499755859375,
-      "target_weight": 0.25
+      "last_price": 529.2725,
+      "peak_price": 535.6900024414062,
+      "target_weight": 0.16666666666666666
+    },
+    {
+      "ticker": "AMZN",
+      "shares": 62.0,
+      "buy_price": 256.38,
+      "last_price": 256.38,
+      "peak_price": 256.67498779296875,
+      "target_weight": 0.16666666666666666
     }
   ],
-  "last_updated": "2026-10-05 21:50:28"
+  "last_updated": "2026-10-06 19:59:54"
 }

@@ -3,12 +3,25 @@
   "capital_injections": 0.0,
   "total_funded_capital": 200000.47,
   "nav": 200751.51,
-  "total_capital": 202986.53,
-  "cash_balance": 202986.53,
+  "total_capital": 203020.03999999998,
+  "cash_balance": 203020.04,
   "holdings_value": 0.0,
   "net_trading_profit": 751.04,
   "net_trading_return_pct": 0.38,
-  "holdings": [],
-  "last_updated": "2026-10-05 21:51:41",
-  "total_portfolio_value_mxn": 202986.53
+  "holdings": [
+    {
+      "ticker": "BTC-USD",
+      "shares": 1.1855019262034483,
+      "buy_price": 85612.0625,
+      "last_price": 85612.0625
+    },
+    {
+      "ticker": "ETH-USD",
+      "shares": -37.71343614352204,
+      "buy_price": 2691.169921875,
+      "last_price": 2691.169921875
+    }
+  ],
+  "last_updated": "2026-10-06 20:01:32",
+  "total_portfolio_value_mxn": 203020.03999999998
 }
