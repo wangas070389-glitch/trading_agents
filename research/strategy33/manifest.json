@@ -1,0 +1,12 @@
+{
+  "provider": "Yahoo Finance via yfinance",
+  "version": "1.7.0",
+  "fetched_utc": "2026-10-06T03:55:10.240601+00:00",
+  "adjusted": true,
+  "rows": 4185,
+  "dropped": 154,
+  "first": "2010-02-11",
+  "last": "2026-10-05",
+  "sha256": "dea7a90ec6b8a6b2bb6e00f21dceb7d29ecea04add249507787f1a57aade5e7e",
+  "design_sha256": "0d7493501f7fc658233277aa64fb2a6c223f3c6543f9a2530e8609f47fc7cbc3"
+}

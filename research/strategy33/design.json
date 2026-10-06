@@ -1,0 +1,18 @@
+{
+  "name": "S33 risk-scaled Nasdaq growth",
+  "status": "RESEARCH_ONLY_NOT_REGISTERED",
+  "objective": "Higher after-cost CAGR, accepting substantial drawdowns; not a promise of alpha",
+  "primary": {"trend": 200, "volatility": 20, "vol_target": 0.35, "max_exposure": 2.0, "band": 0.05},
+  "decision": "Weekly risk rebalancing plus daily risk-off exits; previous completed close signals fill at next close",
+  "allocation": "Use QQQ up to 1x exposure; above 1x mix fully funded QQQ and TQQQ. No margin, shorting, synthetic pre-inception ETF or broker runner",
+  "data": {"start": "2010-02-11", "end_exclusive": "2026-10-06", "tickers": ["QQQ", "TQQQ", "MXN=X"], "evaluation_start": "2011-03-01"},
+  "cost": {"one_way": 0.003, "stress_one_way": 0.006, "cash_apr_primary": 0.0, "cash_apr_sensitivity": 0.0653, "lag_base_sessions": 1, "lag_stress_sessions": 2},
+  "windows": {"reference": ["2011-03-01", "2018-12-31"], "evaluation": ["2019-01-01", "2025-12-31"], "recent": ["2026-01-01", "2026-10-05"]},
+  "benchmarks": ["QQQ buy/hold", "TQQQ buy/hold", "S12-style original targets with common funded next-close execution", "S12-style scaled to the challenger risk budget with common execution"],
+  "screen": "Primary evaluation CAGR exceeds both QQQ and original-risk S12-style; primary maximum drawdown better than -60%; same comparisons hold with doubled costs and two-session fills; primary recent total return positive",
+  "neighbors": [{"trend": 150}, {"trend": 250}, {"vol_target": 0.30}, {"vol_target": 0.40}, {"max_exposure": 1.5}, {"max_exposure": 2.5}],
+  "selection": "One primary hypothesis. Publish every neighbor and sensitivity; do not pick the winner or retune after results",
+  "limitations": ["All windows are retrospective; repository history and market outcomes have already been seen", "2008 is absent because actual TQQQ did not exist", "35% realized QQQ volatility sizing does not guarantee portfolio volatility, drawdown or exposure limits between trades", "Nasdaq concentration and leveraged ETF daily reset/path dependence remain", "Zero MXN cash primary; fixed cash yield is a sensitivity, never historical Bondia", "No claim to beat all repository strategies, including S14 without canonical comparable histories", "S32 rejection and all existing safety/graduation blocks remain unchanged"],
+  "motivation_sources": ["https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum", "https://www.nber.org/papers/w22208"],
+  "source_caveat": "These papers motivate testable trend/volatility hypotheses, not this parameterization, ETF implementation or expected future profitability"
+}
