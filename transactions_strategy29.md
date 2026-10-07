@@ -290,4 +290,7 @@
 | 2026-10-06 | BONDIA | INTEREST | 1.0000 | $33.5140 | $+33.51 | Market | FILLED | Sweep interest |
 | 2026-10-06 | BTC-USD | BUY | 1.1855 | $85612.0625 | $-101,787.60 | Market | FILLED | Pairs entry long spread |
 | 2026-10-06 | ETH-USD | SELL | 37.7134 | $2691.1699 | $+101,198.93 | Market | FILLED | Pairs entry short spread |
+| 2026-10-07 | BONDIA | INTEREST | 1.0000 | $36.4757 | $+36.48 | Market | FILLED | Sweep interest |
+| 2026-10-07 | BTC-USD | SELL | 1.1855 | $83466.9766 | $+98,663.31 | Market | FILLED | Exiting Chop regime liquidation |
+| 2026-10-07 | ETH-USD | SELL | -37.7134 | $2572.6699 | $+-96,742.85 | Market | FILLED | Exiting Chop regime liquidation |
 ---

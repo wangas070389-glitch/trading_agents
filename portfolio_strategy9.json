@@ -3,18 +3,11 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 199916.02,
   "nav": 182199.53,
-  "total_capital": 181520.44,
-  "cash_balance": 27059.22,
+  "total_capital": 180387.39,
+  "cash_balance": 180387.39,
   "holdings_value": 0.0,
   "net_trading_profit": -17716.49,
   "net_trading_return_pct": -8.86,
-  "holdings": [
-    {
-      "ticker": "SPY",
-      "shares": 11,
-      "buy_price": 14001.325345328078,
-      "last_price": 14001.325345328078
-    }
-  ],
-  "last_updated": "2026-10-06 20:00:48"
+  "holdings": [],
+  "last_updated": "2026-10-07 20:07:58"
 }

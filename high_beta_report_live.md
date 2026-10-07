@@ -1,9 +1,9 @@
 # Isolated High-Beta Value-Momentum Execution Report
-**Execution Date:** 2026-10-06 | **Strategy Version:** Upgraded High-Beta V1
+**Execution Date:** 2026-10-07 | **Strategy Version:** Upgraded High-Beta V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $103,945.86 USD
-* **Total Cash Balance:** $103,945.86 USD
+* **Total Portfolio NAV:** $103,958.67 USD
+* **Total Cash Balance:** $103,958.67 USD
 * **Equity Exposure:** 0.0%
 * **Number of Positions:** 0/3
 
@@ -17,15 +17,15 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Signal | Price | Beta | DCS MOS | MACD Status | SMA 100 Status | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **AAPL** | AVOID / SELL | $333.66 | 0.68 | -70.0% | MACD: 3.2635 (Sig: 4.3089) | BULL | Low DCS margin of safety (-70.0% < 15%) |
-| **AMD** | AVOID / SELL | $649.40 | 3.21 | -94.8% | MACD: 36.4876 (Sig: 32.9252) | BULL | Low DCS margin of safety (-94.8% < 15%) |
-| **AMZN** | AVOID / SELL | $256.35 | 1.44 | -75.5% | MACD: -1.3383 (Sig: -1.9437) | BULL | Low DCS margin of safety (-75.5% < 15%) |
-| **AVGO** | AVOID / SELL | $375.95 | 2.17 | 146.3% | MACD: -2.1293 (Sig: -5.1178) | BEAR | Bear trend (Close <= SMA 100) |
-| **COST** | AVOID / SELL | $936.04 | -0.10 | -63.7% | MACD: -1.0634 (Sig: -5.4541) | BEAR | Low DCS margin of safety (-63.7% < 15%) and Bear trend (Close <= SMA 100) |
-| **GOOGL** | AVOID / SELL | $347.67 | 1.35 | -71.6% | MACD: 0.1635 (Sig: -0.2207) | BEAR | Low DCS margin of safety (-71.6% < 15%) and Bear trend (Close <= SMA 100) |
-| **JPM** | AVOID / SELL | $331.56 | 0.79 | -37.0% | MACD: -5.7884 (Sig: -4.5946) | BEAR | Low DCS margin of safety (-37.0% < 15%) and Bear trend (Close <= SMA 100) |
-| **META** | AVOID / SELL | $739.13 | 1.45 | -53.8% | MACD: 32.6961 (Sig: 34.4692) | BULL | Low DCS margin of safety (-53.8% < 15%) |
-| **MSFT** | AVOID / SELL | $529.29 | 0.97 | -68.9% | MACD: 9.5718 (Sig: 8.1359) | BULL | Low DCS margin of safety (-68.9% < 15%) |
-| **NFLX** | AVOID / SELL | $68.72 | 0.32 | 378.0% | MACD: -2.5353 (Sig: -2.0486) | BEAR | Bear trend (Close <= SMA 100) |
-| **NVDA** | AVOID / SELL | $239.17 | 1.88 | -86.4% | MACD: 4.7293 (Sig: 3.3611) | BULL | Low DCS margin of safety (-86.4% < 15%) |
-| **TSLA** | AVOID / SELL | $380.73 | 2.22 | -85.5% | MACD: 3.8570 (Sig: 3.3675) | BULL | Low DCS margin of safety (-85.5% < 15%) |
+| **AAPL** | AVOID / SELL | $336.67 | 0.68 | -70.3% | MACD: 3.2824 (Sig: 4.1033) | BULL | Low DCS margin of safety (-70.3% < 15%) |
+| **AMD** | AVOID / SELL | $645.86 | 3.17 | -94.8% | MACD: 36.5514 (Sig: 33.6507) | BULL | Low DCS margin of safety (-94.8% < 15%) |
+| **AMZN** | AVOID / SELL | $259.92 | 1.44 | -75.9% | MACD: -0.5637 (Sig: -1.6684) | BULL | Low DCS margin of safety (-75.9% < 15%) |
+| **AVGO** | AVOID / SELL | $376.51 | 2.17 | 145.6% | MACD: -0.4759 (Sig: -4.1913) | BEAR | Bear trend (Close <= SMA 100) |
+| **COST** | AVOID / SELL | $942.25 | -0.10 | -64.0% | MACD: 0.9061 (Sig: -4.1867) | BEAR | Low DCS margin of safety (-64.0% < 15%) and Bear trend (Close <= SMA 100) |
+| **GOOGL** | AVOID / SELL | $350.50 | 1.35 | -71.9% | MACD: 0.6614 (Sig: -0.0442) | BEAR | Low DCS margin of safety (-71.9% < 15%) and Bear trend (Close <= SMA 100) |
+| **JPM** | AVOID / SELL | $329.50 | 0.79 | -36.6% | MACD: -5.7122 (Sig: -4.7824) | BEAR | Low DCS margin of safety (-36.6% < 15%) and Bear trend (Close <= SMA 100) |
+| **META** | AVOID / SELL | $721.31 | 1.46 | -52.7% | MACD: 30.0179 (Sig: 33.5757) | BULL | Low DCS margin of safety (-52.7% < 15%) |
+| **MSFT** | AVOID / SELL | $529.76 | 0.96 | -69.0% | MACD: 10.1838 (Sig: 8.5456) | BULL | Low DCS margin of safety (-69.0% < 15%) |
+| **NFLX** | AVOID / SELL | $69.70 | 0.31 | 368.9% | MACD: -2.3851 (Sig: -2.1164) | BEAR | Bear trend (Close <= SMA 100) |
+| **NVDA** | AVOID / SELL | $237.47 | 1.88 | -86.3% | MACD: 4.9416 (Sig: 3.6781) | BULL | Low DCS margin of safety (-86.3% < 15%) |
+| **TSLA** | AVOID / SELL | $377.81 | 2.22 | -85.4% | MACD: 4.3296 (Sig: 3.5593) | BULL | Low DCS margin of safety (-85.4% < 15%) |

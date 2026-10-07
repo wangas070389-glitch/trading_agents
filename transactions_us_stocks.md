@@ -668,6 +668,10 @@
 | 2026-10-06 | AMZN | BUY | 62.0 | 256.38 | -15,895.56 | Market | FILLED | Alpaca Order 873a9e68-6674-42a4-bb7d-4a4fed5b4372 FILLED | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
 | 2026-10-06 | GOOGL | BUY-REJECTED | 45 | 347.75 | +15,648.75 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
 | 2026-10-06 | AVGO | BUY-REJECTED | 42 | 376.07 | +15,794.94 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
+| 2026-10-07 | NVDA | SELL-REJECTED | 25 | 237.47 | +5,936.75 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Sell Rebalance to 16.7% |
+| 2026-10-07 | META | SELL-REJECTED | 32 | 721.31 | +23,081.92 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-10-07 | GOOGL | BUY-REJECTED | 46 | 350.50 | +16,123.00 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
+| 2026-10-07 | AVGO | BUY-REJECTED | 43 | 376.51 | +16,189.93 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 16.7% |
 ---
 
 
@@ -675,7 +679,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $95,485.59 USD
+* **Initial Starting Capital**: $97,747.97 USD
 * **Total Deployed Capital**: $89,603.45 USD (-67.9% invested)
-* **Unallocated Cash Reserves**: $-225,470.57 USD (170.8% cash)
-* **Current Portfolio Market Value**: $-131,995.20 USD (including cash)
+* **Unallocated Cash Reserves**: $-225,470.85 USD (170.8% cash)
+* **Current Portfolio Market Value**: $-131,995.48 USD (including cash)
