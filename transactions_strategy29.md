@@ -295,4 +295,5 @@
 | 2026-10-07 | ETH-USD | SELL | -37.7134 | $2572.6699 | $+-96,742.85 | Market | FILLED | Exiting Chop regime liquidation |
 | 2026-10-07 | BONDIA | INTEREST | 1.0000 | $0.4692 | $+0.47 | Market | FILLED | Sweep interest |
 | 2026-10-08 | BONDIA | INTEREST | 1.0000 | $36.1008 | $+36.10 | Market | FILLED | Sweep interest |
+| 2026-10-08 | BONDIA | INTEREST | 1.0000 | $0.6745 | $+0.67 | Market | FILLED | Sweep interest |
 ---
