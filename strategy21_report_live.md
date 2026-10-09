@@ -1,12 +1,12 @@
 # Strategy 21: Shannon Entropy Live Execution Report
-**Execution Timestamp:** 2026-10-08 20:31:58 | **Strategy Version:** Live V1
+**Execution Timestamp:** 2026-10-09 19:41:37 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $179,818.53 MXN
-* **Total Cash sweep Balance:** $179,818.53 MXN (Parked in Bondia compound at 6.53% APR)
+* **Total Portfolio NAV:** $179,849.55 MXN
+* **Total Cash sweep Balance:** $179,849.55 MXN (Parked in Bondia compound at 6.53% APR)
 * **Equity Exposure:** 0.0%
 * **Asset Allocation Target:** CASH
-* **USD/MXN Exchange Rate:** 18.1920
+* **USD/MXN Exchange Rate:** 18.4250
 
 ## 2. Current Holdings
 | Ticker | Shares Held | Buy Price (USD) | Last Price (USD) | Market Value (USD) | Market Value (MXN) | Target Weight |
@@ -14,10 +14,10 @@
 | **CASH** | - | - | - | $0.00 | $0.00 | 100.0% |
 
 ## 3. Shannon Entropy Regime Estimates
-* **Rolling Normalized Shannon Entropy ($H_t^{norm}$):** 0.8701
+* **Rolling Normalized Shannon Entropy ($H_t^{norm}$):** 0.8688
 * **Information Regime Mode:** DISORDERED/NOISY (Cash Safety Active)
 * **Trend Direction:** BULLISH (SMA 50 > 120)
 
 ## 4. Today's Execution Logs
-* **[INTEREST]** Cash sweep accrued yield of $0.5920 MXN.
+* **[INTEREST]** Cash sweep accrued yield of $31.0243 MXN.
 * Hold current position in **CASH**; no transition trades required.

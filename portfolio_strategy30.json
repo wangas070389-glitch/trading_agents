@@ -3,8 +3,8 @@
   "capital_injections": 0.0,
   "total_funded_capital": 100000.16,
   "nav": 102106.04,
-  "total_capital": 99773.05454865348,
-  "cash_balance": 63545.23,
+  "total_capital": 99914.5954986943,
+  "cash_balance": 63552.79,
   "holdings_value": 56333.75,
   "net_trading_profit": 2105.88,
   "net_trading_return_pct": 2.11,
@@ -13,18 +13,18 @@
       "ticker": "GOOGL",
       "shares": 51.92324373233382,
       "buy_price": 346.4700012207031,
-      "last_price": 348.2900085449219,
-      "peak_price": 350.5,
+      "last_price": 352.25,
+      "peak_price": 352.25,
       "trailing_armed": false
     },
     {
       "ticker": "NVDA",
       "shares": 78.72040038948587,
       "buy_price": 229.19500732421875,
-      "last_price": 230.47999572753906,
+      "last_price": 229.57000732421875,
       "peak_price": 239.24000549316406,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-10-08 20:32:10"
+  "last_updated": "2026-10-09 19:41:49"
 }
