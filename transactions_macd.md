@@ -460,6 +460,7 @@
 | 2026-10-08 | BONDIA | INTEREST | 1 | 0.11 | +0.1088 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0182 days. |
 | 2026-10-09 | BONDIA | INTEREST | 1 | 5.76 | +5.7617 | Market | FILLED | Bondia overnight yield on cash reserves for 0.9651 days. |
 | 2026-10-09 | AC.MX | BUY | 60 | 201.50 | -12,102.18 | Market | FILLED | 1D MACD systematic signal |
+| 2026-10-09 | BONDIA | INTEREST | 1 | 0.05 | +0.0529 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0140 days. |
 ---
 
 
@@ -469,5 +470,5 @@
 
 * **Initial Starting Capital (2026-06-03)**: 118,561.61 MXN
 * **Total Deployed Capital**: 103,902.56 MXN (85.3% invested)
-* **Unallocated Cash Reserves**: 20,815.35 MXN (17.1% cash)
-* **Current Portfolio Market Value**: 121,799.45 MXN (including cash)
+* **Unallocated Cash Reserves**: 20,815.40 MXN (17.1% cash)
+* **Current Portfolio Market Value**: 121,783.43 MXN (including cash)
