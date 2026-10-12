@@ -1,8 +1,8 @@
 {
-  "total_portfolio_value_usd": 1357824.7039039496,
-  "total_cash_balance_usd": 780945.0578812446,
-  "gross_research_nav_usd": 1615073.96187086,
-  "last_updated": "2026-10-09 20:02:09",
+  "total_portfolio_value_usd": 1356709.9229658388,
+  "total_cash_balance_usd": 802481.1338529906,
+  "gross_research_nav_usd": 1615050.3986470064,
+  "last_updated": "2026-10-12 22:15:03",
   "usd_mxn_rate": 17.43,
   "reporting_scope": "independent paper books; composite strategies excluded to avoid double-counting",
   "history": [
@@ -2357,175 +2357,210 @@
       "s29_nav_usd": 11764.20596672404,
       "s30_nav_usd": 99861.2413862682,
       "s31_nav_usd": 12046.522290511346
+    },
+    {
+      "date": "2026-10-12",
+      "nav_usd": 1356709.9229658388,
+      "cash_usd": 802481.1338529906,
+      "accounting_version": 2,
+      "verified": false,
+      "s1_nav_usd": 6681.697559621298,
+      "s2_nav_usd": 7001.136476957723,
+      "s3_nav_usd": -131299.62259399414,
+      "s4_nav_usd": 106320.17,
+      "s5_nav_usd": 932341.2275553036,
+      "s6_nav_usd": 103997.0941705687,
+      "s8_nav_usd": 12462.881998942703,
+      "s9_nav_usd": 10447.1365129553,
+      "s10_nav_usd": 12041.574297188756,
+      "s11_nav_usd": 12242.847389558232,
+      "s12_nav_usd": 13011.844672369127,
+      "s13_nav_usd": 12779.25425695561,
+      "s14_nav_usd": 14569.797482605089,
+      "s15_nav_usd": 14569.26993743452,
+      "s16_nav_usd": 12019.24727481354,
+      "s17_nav_usd": 5939.440927981534,
+      "s18_nav_usd": 258340.4756811672,
+      "s19_nav_usd": 10941.245630830015,
+      "s20_nav_usd": 10155.068846815835,
+      "s21_nav_usd": 10324.121055651176,
+      "s22_nav_usd": 11966.872633390705,
+      "s23_nav_usd": 12545.99885255307,
+      "s24_nav_usd": 8894.147468925388,
+      "s25_nav_usd": 11574.112260446022,
+      "s27_nav_usd": 11660.429718875503,
+      "s29_nav_usd": 11770.709695926564,
+      "s30_nav_usd": 99705.69659265166,
+      "s31_nav_usd": 12046.522290511346
     }
   ],
   "allocations": {
     "s1": {
-      "nav_usd": 6619.553884309203,
+      "nav_usd": 6681.697559621298,
       "cash_usd": 0.0,
-      "current_weight": 0.004875116696048461,
+      "current_weight": 0.004924927168671957,
       "composite": false
     },
     "s2": {
-      "nav_usd": 6987.0011169530235,
-      "cash_usd": 1194.2283419391854,
-      "current_weight": 0.005145731328104686,
+      "nav_usd": 7001.136476957723,
+      "cash_usd": 1194.8978772231785,
+      "current_weight": 0.005160378322915832,
       "composite": false
     },
     "s3": {
-      "nav_usd": -131299.59259399414,
-      "cash_usd": -224774.96,
-      "current_weight": -0.09669848561194101,
+      "nav_usd": -131299.62259399414,
+      "cash_usd": -224774.99,
+      "current_weight": -0.09677796290231762,
       "composite": false
     },
     "s4": {
       "nav_usd": 106320.17,
       "cash_usd": 106320.17,
-      "current_weight": 0.07830183800185221,
+      "current_weight": 0.07836617702889542,
       "composite": false
     },
     "s5": {
-      "nav_usd": 932506.1464274216,
+      "nav_usd": 932341.2275553036,
       "cash_usd": 564533.78,
-      "current_weight": 0.68676475228822,
+      "current_weight": 0.6872074949648462,
       "composite": false
     },
     "s6": {
-      "nav_usd": 103958.67002148478,
-      "cash_usd": 103958.67002148478,
-      "current_weight": 0.0765626591728579,
+      "nav_usd": 103997.0941705687,
+      "cash_usd": 103997.0941705687,
+      "current_weight": 0.07665389071764553,
       "composite": false
     },
     "s8": {
-      "nav_usd": 12299.6544364838,
-      "cash_usd": 2708.754446356856,
-      "current_weight": 0.009058352231418716,
+      "nav_usd": 12462.881998942703,
+      "cash_usd": 2734.1927710843374,
+      "current_weight": 0.009186106615700275,
       "composite": false
     },
     "s9": {
-      "nav_usd": 10467.343660355707,
-      "cash_usd": 10467.343660355707,
-      "current_weight": 0.007708906481271496,
+      "nav_usd": 10447.1365129553,
+      "cash_usd": 1483.7601835915088,
+      "current_weight": 0.007700346504518308,
       "composite": false
     },
     "s10": {
       "nav_usd": 12041.574297188756,
       "cash_usd": 12041.574297188756,
-      "current_weight": 0.008868283411376611,
+      "current_weight": 0.008875570299408768,
       "composite": false
     },
     "s11": {
-      "nav_usd": 12236.082616179003,
-      "cash_usd": 12236.082616179003,
-      "current_weight": 0.00901153335993846,
+      "nav_usd": 12242.847389558232,
+      "cash_usd": 12242.847389558232,
+      "current_weight": 0.009023924114002739,
       "composite": false
     },
     "s12": {
-      "nav_usd": 13166.446171916032,
-      "cash_usd": 7551.42398164085,
-      "current_weight": 0.009696720153979026,
+      "nav_usd": 13011.844672369127,
+      "cash_usd": 7555.598967297762,
+      "current_weight": 0.009590734505666882,
       "composite": false
     },
     "s13": {
-      "nav_usd": 12930.31748413054,
-      "cash_usd": 7417.309810671257,
-      "current_weight": 0.009522817965348502,
+      "nav_usd": 12779.25425695561,
+      "cash_usd": 7421.410212277682,
+      "current_weight": 0.009419297405166383,
       "composite": false
     },
     "s14": {
-      "nav_usd": 14675.383934692916,
-      "cash_usd": 10757.688979862307,
-      "current_weight": 0.010808010704547493,
+      "nav_usd": 14569.797482605089,
+      "cash_usd": 10763.359304761905,
+      "current_weight": 0.01073906605676971,
       "composite": false
     },
     "s15": {
-      "nav_usd": 14674.377814362186,
-      "cash_usd": 10756.078327768217,
-      "current_weight": 0.010807269725002903,
+      "nav_usd": 14569.26993743452,
+      "cash_usd": 10761.747605220884,
+      "current_weight": 0.010738677215233552,
       "composite": false
     },
     "s16": {
-      "nav_usd": 12012.606425702812,
-      "cash_usd": 12012.606425702812,
-      "current_weight": 0.008846949382467977,
+      "nav_usd": 12019.24727481354,
+      "cash_usd": 12019.24727481354,
+      "current_weight": 0.008859113559469542,
       "composite": false
     },
     "s17": {
-      "nav_usd": 5912.2553340523,
-      "cash_usd": 2964.736660929432,
-      "current_weight": 0.004354211053204202,
+      "nav_usd": 5939.440927981534,
+      "cash_usd": 2966.3993115318417,
+      "current_weight": 0.004377826702260426,
       "composite": false
     },
     "s18": {
-      "nav_usd": 257249.25796691058,
+      "nav_usd": 258340.4756811672,
       "cash_usd": 0.0,
       "current_weight": 0.0,
       "composite": true
     },
     "s19": {
-      "nav_usd": 11259.757911199424,
+      "nav_usd": 10941.245630830015,
       "cash_usd": 0.0,
-      "current_weight": 0.008292497462173086,
+      "current_weight": 0.008064543087377057,
       "composite": false
     },
     "s20": {
-      "nav_usd": 10149.4578313253,
-      "cash_usd": 10149.4578313253,
-      "current_weight": 0.007474792439807648,
+      "nav_usd": 10155.068846815835,
+      "cash_usd": 10155.068846815835,
+      "current_weight": 0.007485070076451069,
       "composite": false
     },
     "s21": {
-      "nav_usd": 10318.416523235801,
-      "cash_usd": 10318.416523235801,
-      "current_weight": 0.007599225801069024,
+      "nav_usd": 10324.121055651176,
+      "cash_usd": 10324.121055651176,
+      "current_weight": 0.007609674611269966,
       "composite": false
     },
     "s22": {
-      "nav_usd": 11960.260470453242,
-      "cash_usd": 11960.260470453242,
-      "current_weight": 0.00880839804730736,
+      "nav_usd": 11966.872633390705,
+      "cash_usd": 11966.872633390705,
+      "current_weight": 0.008820509403535943,
       "composite": false
     },
     "s23": {
-      "nav_usd": 12948.215096472766,
-      "cash_usd": 0.0,
-      "current_weight": 0.009535999057348645,
+      "nav_usd": 12545.99885255307,
+      "cash_usd": 12545.99885255307,
+      "current_weight": 0.009247370156419922,
       "composite": false
     },
     "s24": {
-      "nav_usd": 8785.159320254697,
+      "nav_usd": 8894.147468925388,
       "cash_usd": 0.0,
-      "current_weight": 0.0064700246615016265,
+      "current_weight": 0.006555673632490515,
       "composite": false
     },
     "s25": {
-      "nav_usd": 11569.489271905757,
-      "cash_usd": 9353.820424555364,
-      "current_weight": 0.008520605965292678,
+      "nav_usd": 11574.112260446022,
+      "cash_usd": 9358.99139414802,
+      "current_weight": 0.008531014673456804,
       "composite": false
     },
     "s27": {
-      "nav_usd": 11653.986804360298,
-      "cash_usd": 11653.986804360298,
-      "current_weight": 0.008582836039772541,
+      "nav_usd": 11660.429718875503,
+      "cash_usd": 11660.429718875503,
+      "current_weight": 0.00859463730712988,
       "composite": false
     },
     "s29": {
-      "nav_usd": 11764.20596672404,
-      "cash_usd": 11764.20596672404,
-      "current_weight": 0.008664009376836482,
+      "nav_usd": 11770.709695926564,
+      "cash_usd": 11770.709695926564,
+      "current_weight": 0.00867592216779485,
       "composite": false
     },
     "s30": {
-      "nav_usd": 99861.2413862682,
-      "cash_usd": 63552.9,
-      "current_weight": 0.07354501733482398,
+      "nav_usd": 99705.69659265166,
+      "cash_usd": 81391.33,
+      "current_weight": 0.07349079925256963,
       "composite": false
     },
     "s31": {
       "nav_usd": 12046.522290511346,
       "cash_usd": 12046.522290511346,
-      "current_weight": 0.008871927470369178,
+      "current_weight": 0.008879217352650461,
       "composite": false
     }
   },
