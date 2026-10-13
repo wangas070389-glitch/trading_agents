@@ -404,4 +404,5 @@
 | 2026-10-12 | BONDIA | INTEREST | 1.00 | $26.48 | $+26.48 | Market | FILLED | Yield on cash for 3.0922 days. |
 | 2026-10-12 | KOFUBL.MX | DIVIDEND | 215.46 | $1.94 | $+416.91 | Market | FILLED | Reinvested dividend paid on 2026-10-12 |
 | 2026-10-12 | BONDIA | INTEREST | 1.00 | $0.07 | $+0.07 | Market | FILLED | Yield on cash for 0.0076 days. |
+| 2026-10-13 | BONDIA | INTEREST | 1.00 | $7.90 | $+7.90 | Market | FILLED | Yield on cash for 0.9137 days. |
 ---

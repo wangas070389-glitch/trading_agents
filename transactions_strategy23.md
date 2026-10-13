@@ -151,4 +151,5 @@
 | 2026-09-21 | TQQQ | BUY | 150.9427 | $1364.53 | $-206,562.68 | Market | FILLED | Purchased 150.9427 shares of TQQQ at $1,364.53 MXN (Fee: $597.30 MXN). |
 | 2026-10-12 | TQQQ | SELL | 150.9427 | $1452.95 | $+218,676.76 | Market | FILLED | Sold all 150.9427 shares of TQQQ at $1,452.95 MXN (Fee: $636.01 MXN). |
 | 2026-10-12 | BONDIA | INTEREST | 1.0000 | $0.28 | $+0.28 | Market | FILLED | Yield on cash for 0.0072 days. |
+| 2026-10-13 | BONDIA | INTEREST | 1.0000 | $35.73 | $+35.73 | Market | FILLED | Yield on cash for 0.9139 days. |
 ---
