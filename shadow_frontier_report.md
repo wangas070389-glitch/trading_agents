@@ -1,5 +1,5 @@
 # Shadow Frontier — Live Track Record of the Allocation Layer
-**Generated:** 2026-10-13 20:21:26 | Inception: 2026-07-14 (91 calendar days) | Virtual capital: $100,000 USD
+**Generated:** 2026-10-13 20:32:26 | Inception: 2026-07-14 (91 calendar days) | Virtual capital: $100,000 USD
 **Weights (frozen):** efficient_frontier_report.md 2026-07-11 -- Risk Parity, hurdle-filtered (RECOMMENDED)
 
 This book paper-trades the recommended frontier allocation itself, marked
@@ -11,9 +11,9 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 ## 1. Promise vs. Realized
 | Metric | Backtest promise | Realized (live) |
 | :--- | ---: | ---: |
-| NAV | -- | $263,348.54 USD |
-| Return since inception | -- | +163.35% |
-| Ann. return | +14.67% | +655.19% |
+| NAV | -- | $263,418.47 USD |
+| Return since inception | -- | +163.42% |
+| Ann. return | +14.67% | +655.47% |
 | Ann. volatility | 6.66% | 83.70% |
 | Sharpe (Rf 6.53%) | +1.22 | +4.61 |
 | Max drawdown | -4.10% | -10.68% |
@@ -22,9 +22,9 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 | Sleeve | Target w | Current w | TR since inception | Last mark | Source |
 | :--- | ---: | ---: | ---: | :--- | :--- |
 | S1 Adaptive Value (BMV) | 5.4% | 5.7% | -3.71% | 2026-10-13 | multi-strategy USD |
-| S2 MACD Systematic | 4.9% | 5.0% | +1.68% | 2026-10-12 | watchdog MXN/USD |
-| S4 US DCF Value-Growth | 4.5% | 4.5% | +1.77% | 2026-10-13 | multi-strategy USD |
-| S5 Alternatives | 25.0% | 24.8% | +818.03% | 2026-10-13 | multi-strategy USD |
+| S2 MACD Systematic | 4.9% | 5.0% | +2.22% | 2026-10-13 | watchdog MXN/USD |
+| S4 US DCF Value-Growth | 4.5% | 4.4% | +1.77% | 2026-10-13 | multi-strategy USD |
+| S5 Alternatives | 25.0% | 24.7% | +818.03% | 2026-10-13 | multi-strategy USD |
 | S6 High-Beta Momentum | 13.5% | 13.4% | -0.20% | 2026-10-13 | multi-strategy USD |
 | S8 Dividend Quality | 11.8% | 12.2% | +7.28% | 2026-10-13 | multi-strategy USD |
 | S9 AI Regime Stat-Arb | 8.6% | 8.6% | -7.90% | 2026-10-13 | multi-strategy USD |
