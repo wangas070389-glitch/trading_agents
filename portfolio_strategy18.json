@@ -18,10 +18,10 @@
   },
   "sleeves": {
     "core": {
-      "alloc_usd": 12182.500100718831,
-      "last_nav": 6691.645647931336,
-      "last_date": "2026-10-13",
-      "tr_index": 0.9442734907625774
+      "alloc_usd": 12412.812754164668,
+      "last_nav": 6818.152576094909,
+      "last_date": "2026-10-14",
+      "tr_index": 0.9621251740326855
     },
     "macd": {
       "alloc_usd": 11068.653391717802,
@@ -32,19 +32,19 @@
     "us_dcs": {
       "alloc_usd": 9975.399395698638,
       "last_nav": 106320.17,
-      "last_date": "2026-10-13",
+      "last_date": "2026-10-14",
       "tr_index": 0.9992450095747345
     },
     "alternatives": {
-      "alloc_usd": 64003.18951651396,
-      "last_nav": 933490.4431650925,
-      "last_date": "2026-10-13",
-      "tr_index": 7.778935329447998
+      "alloc_usd": 63905.637354842926,
+      "last_nav": 932067.6389061499,
+      "last_date": "2026-10-14",
+      "tr_index": 7.767078858503046
     },
     "high_beta": {
       "alloc_usd": 29952.014042925934,
       "last_nav": 103997.0941705687,
-      "last_date": "2026-10-13",
+      "last_date": "2026-10-14",
       "tr_index": 0.9893343899971601
     },
     "dividends": {
@@ -936,6 +936,24 @@
         "strategy15": 1.21876,
         "strategy17": 0.988698
       }
+    },
+    {
+      "date": "2026-10-14",
+      "nav_usd": 258558.61,
+      "idx": {
+        "core": 0.962125,
+        "macd": 1.02306,
+        "us_dcs": 0.999245,
+        "alternatives": 7.767079,
+        "high_beta": 0.989334,
+        "dividends": 1.038314,
+        "strategy9": 0.969567,
+        "strategy12": 1.072294,
+        "strategy13": 1.063068,
+        "strategy14": 1.218764,
+        "strategy15": 1.21876,
+        "strategy17": 0.988698
+      }
     }
   ],
   "rebalances": [
@@ -950,6 +968,6 @@
       "max_drift": 0.0263
     }
   ],
-  "last_updated": "2026-10-13 20:32:26",
-  "total_portfolio_value_usd": 258425.84804605678
+  "last_updated": "2026-10-14 18:51:38",
+  "total_portfolio_value_usd": 258558.60853783158
 }

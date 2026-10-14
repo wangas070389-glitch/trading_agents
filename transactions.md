@@ -297,6 +297,6 @@
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 122,122.59 MXN
-* **Total Deployed Capital**: 116,011.39 MXN (99.4% invested)
+* **Total Deployed Capital**: 116,011.39 MXN (97.6% invested)
 * **Unallocated Cash Reserves**: 0.00 MXN (0.0% cash)
-* **Current Portfolio Market Value**: 116,680.06 MXN (including cash)
+* **Current Portfolio Market Value**: 118,844.12 MXN (including cash)
