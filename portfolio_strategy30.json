@@ -3,8 +3,8 @@
   "capital_injections": 0.0,
   "total_funded_capital": 100000.16,
   "nav": 102106.04,
-  "total_capital": 99576.64881019108,
-  "cash_balance": 63466.8,
+  "total_capital": 99620.17762185137,
+  "cash_balance": 63466.91,
   "holdings_value": 56333.75,
   "net_trading_profit": 2105.88,
   "net_trading_return_pct": 2.11,
@@ -13,7 +13,7 @@
       "ticker": "AAPL",
       "shares": 52.58897226371202,
       "buy_price": 341.2699890136719,
-      "last_price": 342.5299987792969,
+      "last_price": 342.6299133300781,
       "peak_price": 343.3500061035156,
       "trailing_armed": false
     },
@@ -21,10 +21,10 @@
       "ticker": "GOOGL",
       "shares": 51.92324373233382,
       "buy_price": 346.4700012207031,
-      "last_price": 348.5249938964844,
+      "last_price": 349.260009765625,
       "peak_price": 353.7799987792969,
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-10-15 18:35:27"
+  "last_updated": "2026-10-15 18:55:03"
 }
