@@ -33,4 +33,5 @@
 | 2026-08-18 | QQQ | BUY | 13.3624 | $12222.21 | $-163,793.55 | Market | FILLED | PF systematic entry |
 | 2026-08-18 | QQQ | SELL | 13.3624 | $12251.13 | $+163,230.17 | Market | FILLED | PF switch to TQQQ |
 | 2026-08-18 | TQQQ | BUY | 131.2368 | $1240.18 | $-163,230.17 | Market | FILLED | PF systematic entry |
+| 2026-10-16 | TQQQ | SELL | 131.2368 | $1267.58 | $+165,870.11 | Market | FILLED | PF switch to CASH |
 ---

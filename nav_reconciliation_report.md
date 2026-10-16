@@ -7,7 +7,7 @@ Audit-only: no portfolio JSON was changed. `Cash delta` is the sum recorded by e
 | S1 Adaptive Value | 287 | 2 | 5 | MISMATCH | 93,331.99 MXN |
 | ↳ difference |  |  |  | AC.MX: ledger 19, portfolio 0, ASURB.MX: ledger 7, portfolio 0, BBAJIOO.MX: ledger 0, portfolio 634.686, BIMBOA.MX: ledger 0, portfolio 372.276, CUERVO.MX: ledger 0, portfolio 1650.22, GRUMAB.MX: ledger 0, portfolio 1, ORBIA.MX: ledger 0, portfolio 1538.87 |  |
 | ↳ cash/evidence |  |  |  | Line 2: data before header; cash discrepancy -113331.99 |  |
-| S2 1d MACD Systematic | 464 | 7 | 9 | MISMATCH | 17,578.79 MXN |
+| S2 1d MACD Systematic | 465 | 7 | 9 | MISMATCH | 17,581.88 MXN |
 | ↳ difference |  |  |  | AMZN: ledger 0, portfolio 2, GOOGL: ledger 0, portfolio 2 |  |
 | ↳ cash/evidence |  |  |  | Line 251: column count does not match header; Line 252: column count does not match header; Line 271: column count does not match header; Line 300: column count does not match header; Line 384: column count does not match header; cash discrepancy -16740.31 |  |
 | S3 US Stock Momentum | 26 | 9 | 5 | MISMATCH | -63,620.29 USD |
@@ -21,47 +21,48 @@ Audit-only: no portfolio JSON was changed. `Cash delta` is the sum recorded by e
 | ↳ cash/evidence |  |  |  | Line 7: funding sign contradicts action; Line 8: column count does not match header; Line 10: column count does not match header; Line 11: column count does not match header; Line 12: column count does not match header; cash discrepancy 796951.24 |  |
 | S6 High-Beta Momentum | 8 | 0 | 0 | MISMATCH | -4,474.07 USD |
 | ↳ cash/evidence |  |  |  | Line 5: funding sign contradicts action; Line 9: funding sign contradicts action; Line 11: funding sign contradicts action; Line 12: funding sign contradicts action; cash discrepancy 7421.75 |  |
-| S8 Dividend Quality | 412 | 4 | 4 | VERIFIED | -152,316.90 MXN |
-| S9 AI Regime Stat-Arb | 472 | 1 | 1 | MISMATCH | -185,324.25 MXN |
+| S8 Dividend Quality | 413 | 4 | 4 | VERIFIED | -152,309.84 MXN |
+| S9 AI Regime Stat-Arb | 474 | 0 | 0 | MISMATCH | -30,557.47 MXN |
 | ↳ cash/evidence |  |  |  | Line 232: funding sign contradicts action; Line 351: funding sign contradicts action; Line 444: funding sign contradicts action; cash discrepancy 14083.98 |  |
-| S10 Intraday VWAP | 213 | 0 | 0 | MISMATCH | -2,070.05 MXN |
+| S10 Intraday VWAP | 214 | 0 | 0 | MISMATCH | -2,033.42 MXN |
 | ↳ cash/evidence |  |  |  | Line 57: unsupported action BUY_TQQQ; Line 60: unsupported action SETTLE_LONG_VWAP; Line 111: funding sign contradicts action; Line 116: unsupported action BUY_TQQQ; Line 121: unsupported action SETTLE_LONG_VWAP; cash discrepancy 12177.86 |  |
-| S11 Intraday CCI-ADX | 398 | 0 | 0 | MISMATCH | -2,102.44 MXN |
+| S11 Intraday CCI-ADX | 399 | 0 | 0 | MISMATCH | -2,071.27 MXN |
 | ↳ cash/evidence |  |  |  | Line 30: unsupported action BUY_SQQQ; Line 32: unsupported action SETTLE_SHORT_CCI_ZERO; Line 53: unsupported action BUY_TQQQ; Line 55: unsupported action SETTLE_LONG_CCI_ZERO; Line 57: unsupported action BUY_TQQQ; cash discrepancy 15504.01 |  |
-| S12 VTTL Trend+Vol | 392 | 1 | 1 | MISMATCH | -68,234.71 MXN |
-| ↳ cash/evidence |  |  |  | ; cash discrepancy -0.1 |  |
-| S13 CARA Cross-Asset | 398 | 1 | 1 | UNRESOLVED | -24,443.92 MXN |
+| S12 VTTL Trend+Vol | 393 | 1 | 1 | MISMATCH | -68,215.48 MXN |
+| ↳ cash/evidence |  |  |  | ; cash discrepancy -0.09 |  |
+| S13 CARA Cross-Asset | 399 | 1 | 1 | UNRESOLVED | -24,418.30 MXN |
 | ↳ cash/evidence |  |  |  | Currency-specific balances require an FX ledger reconciliation; cash discrepancy None |  |
-| S14 HEDGE Aggregator | 775 | 1 | 1 | UNRESOLVED | -45,834.49 MXN |
+| S14 HEDGE Aggregator | 777 | 1 | 1 | UNRESOLVED | -45,811.03 MXN |
 | ↳ cash/evidence |  |  |  | Line 7: unsupported action BUY_USD; Line 400: unsupported action BUY_USD; Line 585: unsupported action SELL_USD; Currency-specific balances require an FX ledger reconciliation; cash discrepancy None |  |
-| S15 TRACK Tracker | 775 | 1 | 1 | UNRESOLVED | -45,865.71 MXN |
+| S15 TRACK Tracker | 777 | 1 | 1 | UNRESOLVED | -45,842.26 MXN |
 | ↳ cash/evidence |  |  |  | Line 7: unsupported action BUY_USD; Line 400: unsupported action BUY_USD; Line 585: unsupported action SELL_USD; Currency-specific balances require an FX ledger reconciliation; cash discrepancy None |  |
-| S16 HMM Intraday Router | 362 | 0 | 0 | MISMATCH | -2,732.96 MXN |
-| ↳ cash/evidence |  |  |  | Line 65: unsupported action BUY_SOXL; Line 76: unsupported action SELL_SOXL; Line 78: unsupported action BUY_URTY; Line 88: unsupported action SELL_URTY; Line 112: unsupported action BUY_URTY; cash discrepancy 12308.38 |  |
-| S17 FIBRAs Dynamic | 229 | 2 | 2 | MISMATCH | 53,286.10 MXN |
+| S16 HMM Intraday Router | 363 | 0 | 1 | MISMATCH | -2,702.36 MXN |
+| ↳ difference |  |  |  | UPRO: ledger 0, portfolio 69.804 |  |
+| ↳ cash/evidence |  |  |  | Line 65: unsupported action BUY_SOXL; Line 76: unsupported action SELL_SOXL; Line 78: unsupported action BUY_URTY; Line 88: unsupported action SELL_URTY; Line 112: unsupported action BUY_URTY; cash discrepancy -176366.9 |  |
+| S17 FIBRAs Dynamic | 230 | 2 | 2 | MISMATCH | 53,293.76 MXN |
 | ↳ cash/evidence |  |  |  | ; cash discrepancy -101553.43 |  |
 | S18 Efficient Frontier | 0 | 0 | 0 | UNRESOLVED | 0.00 USD |
 | ↳ cash/evidence |  |  |  | Line 5: column count does not match header; Line 6: unsupported action REBALANCE; Line 7: unsupported action REBALANCE; Line 8: unsupported action REBALANCE; Line 9: unsupported action REBALANCE; cash discrepancy 0.0 |  |
-| S19 Particle Filter QQQ | 30 | 1 | 1 | MISMATCH | -200,000.00 MXN |
+| S19 Particle Filter QQQ | 31 | 0 | 0 | MISMATCH | -34,129.89 MXN |
 | ↳ cash/evidence |  |  |  | Line 5: column count does not match header; cash discrepancy 200000.0 |  |
-| S20 Hurst Exponent Dynamic | 62 | 0 | 0 | MISMATCH | -22,901.58 MXN |
+| S20 Hurst Exponent Dynamic | 63 | 0 | 0 | MISMATCH | -22,875.73 MXN |
 | ↳ cash/evidence |  |  |  | Line 5: column count does not match header; cash discrepancy 200000.0 |  |
-| S21 Shannon Entropy Dynamic | 91 | 1 | 0 | MISMATCH | -19,953.40 MXN |
+| S21 Shannon Entropy Dynamic | 92 | 1 | 0 | MISMATCH | -19,927.12 MXN |
 | ↳ difference |  |  |  | TQQQ: ledger 59.4709, portfolio 0 |  |
 | ↳ cash/evidence |  |  |  | Line 5: column count does not match header; cash discrepancy 200000.0 |  |
-| S22 Walk-Forward ML | 174 | 0 | 0 | MISMATCH | 8,695.22 MXN |
+| S22 Walk-Forward ML | 175 | 0 | 0 | MISMATCH | 8,725.68 MXN |
 | ↳ cash/evidence |  |  |  | Line 5: column count does not match header; cash discrepancy 200000.0 |  |
-| S23 Calculus S&R | 158 | 0 | 0 | MISMATCH | 18,794.83 MXN |
+| S23 Calculus S&R | 160 | 1 | 1 | MISMATCH | -200,000.00 MXN |
 | ↳ cash/evidence |  |  |  | Line 5: column count does not match header; cash discrepancy 200000.0 |  |
-| S24 30m Random Forest | 85 | 0 | 0 | MISMATCH | -31,261.80 MXN |
+| S24 30m Random Forest | 86 | 0 | 0 | MISMATCH | -31,237.17 MXN |
 | ↳ cash/evidence |  |  |  | Line 5: column count does not match header; cash discrepancy 200000.0 |  |
-| S25 Golden MACD BMV | 318 | 1 | 1 | MISMATCH | -36,784.68 MXN |
+| S25 Golden MACD BMV | 319 | 1 | 1 | MISMATCH | -36,760.86 MXN |
 | ↳ cash/evidence |  |  |  | Line 5: column count does not match header; cash discrepancy 200000.0 |  |
-| S27 Golden Hurst | 304 | 0 | 0 | MISMATCH | 3,351.04 MXN |
+| S27 Golden Hurst | 305 | 0 | 0 | MISMATCH | 3,380.72 MXN |
 | ↳ cash/evidence |  |  |  | Line 5: column count does not match header; cash discrepancy 200000.0 |  |
-| S29 Golden Stat-Arb | 307 | 0 | 0 | MISMATCH | 4,685.59 MXN |
+| S29 Golden Stat-Arb | 308 | 0 | 0 | MISMATCH | 4,715.55 MXN |
 | ↳ cash/evidence |  |  |  | Line 5: column count does not match header; cash discrepancy 200588.67 |  |
-| S30 Golden MACD US | 317 | 2 | 2 | MISMATCH | -36,531.85 USD |
+| S30 Golden MACD US | 319 | 1 | 1 | MISMATCH | -18,866.06 USD |
 | ↳ cash/evidence |  |  |  | Line 5: column count does not match header; cash discrepancy 100000.0 |  |
 | S31 Fibonacci S&R | 41 | 1 | 1 | UNRESOLVED | 0.00 MXN |
 | ↳ cash/evidence |  |  |  | Line 5: column count does not match header; Line 6: missing cash amount; Line 7: missing cash amount; Line 8: missing cash amount; Line 9: missing cash amount; cash discrepancy 0.0 |  |

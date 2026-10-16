@@ -3,7 +3,7 @@
     "capital_injections": 0.0,
     "total_funded_capital": 200000.0,
     "nav": 174733.09,
-    "total_capital": 208214.48037897825,
+    "total_capital": 194000.61644760243,
     "cash_balance": 0.0,
     "holdings_value": 174733.09,
     "net_trading_profit": -25266.91,
@@ -17,5 +17,5 @@
             "ccy": "MXN"
         }
     ],
-    "last_updated": "2026-10-15 22:43:32"
+    "last_updated": "2026-10-16 18:19:09"
 }

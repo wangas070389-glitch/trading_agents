@@ -1,5 +1,5 @@
 # Isolated High-Beta Value-Momentum Execution Report
-**Execution Date:** 2026-10-15 | **Strategy Version:** Upgraded High-Beta V1
+**Execution Date:** 2026-10-16 | **Strategy Version:** Upgraded High-Beta V1
 
 ## 1. Portfolio Summary
 * **Total Portfolio NAV:** $103,997.09 USD
@@ -17,15 +17,15 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Signal | Price | Beta | DCS MOS | MACD Status | SMA 100 Status | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
-| **AAPL** | AVOID / SELL | $342.00 | 0.63 | -70.0% | MACD: 4.0375 (Sig: 3.8964) | BULL | Low DCS margin of safety (-70.0% < 15%) |
-| **AMD** | AVOID / SELL | $562.23 | 3.21 | -93.9% | MACD: 14.4688 (Sig: 25.4542) | BULL | Low DCS margin of safety (-93.9% < 15%) |
-| **AMZN** | AVOID / SELL | $254.76 | 1.44 | -74.8% | MACD: 0.6608 (Sig: 0.0244) | BULL | Low DCS margin of safety (-74.8% < 15%) |
-| **AVGO** | AVOID / SELL | $344.33 | 2.12 | 182.9% | MACD: -2.8036 (Sig: -2.2250) | BEAR | Bear trend (Close <= SMA 100) |
-| **COST** | AVOID / SELL | $978.01 | -0.15 | -64.3% | MACD: 12.5987 (Sig: 5.3198) | BULL | Low DCS margin of safety (-64.3% < 15%) |
-| **GOOGL** | AVOID / SELL | $349.22 | 1.37 | -71.2% | MACD: 1.7818 (Sig: 1.2394) | BEAR | Low DCS margin of safety (-71.2% < 15%) and Bear trend (Close <= SMA 100) |
-| **JPM** | AVOID / SELL | $335.53 | 0.78 | -36.4% | MACD: -3.7302 (Sig: -4.5443) | BEAR | Low DCS margin of safety (-36.4% < 15%) and Bear trend (Close <= SMA 100) |
-| **META** | AVOID / SELL | $736.72 | 1.47 | -52.7% | MACD: 23.0763 (Sig: 27.0861) | BULL | Low DCS margin of safety (-52.7% < 15%) |
-| **MSFT** | AVOID / SELL | $539.44 | 0.99 | -68.8% | MACD: 12.1605 (Sig: 10.9120) | BULL | Low DCS margin of safety (-68.8% < 15%) |
-| **NFLX** | AVOID / SELL | $72.61 | 0.31 | 355.3% | MACD: -1.2030 (Sig: -1.7182) | BEAR | Bear trend (Close <= SMA 100) |
-| **NVDA** | AVOID / SELL | $217.23 | 1.89 | -84.8% | MACD: 0.9443 (Sig: 2.8091) | BULL | Low DCS margin of safety (-84.8% < 15%) |
-| **TSLA** | AVOID / SELL | $362.44 | 2.20 | -84.4% | MACD: 2.9329 (Sig: 4.0282) | BEAR | Low DCS margin of safety (-84.4% < 15%) and Bear trend (Close <= SMA 100) |
+| **AAPL** | AVOID / SELL | $342.41 | 0.63 | -70.1% | MACD: 4.0550 (Sig: 3.9282) | BULL | Low DCS margin of safety (-70.1% < 15%) |
+| **AMD** | AVOID / SELL | $533.70 | 3.20 | -93.6% | MACD: 8.2239 (Sig: 22.0081) | BULL | Low DCS margin of safety (-93.6% < 15%) |
+| **AMZN** | AVOID / SELL | $249.05 | 1.44 | -74.2% | MACD: 0.1099 (Sig: 0.0415) | BEAR | Low DCS margin of safety (-74.2% < 15%) and Bear trend (Close <= SMA 100) |
+| **AVGO** | AVOID / SELL | $330.62 | 2.13 | 198.2% | MACD: -4.5677 (Sig: -2.6936) | BEAR | Bear trend (Close <= SMA 100) |
+| **COST** | AVOID / SELL | $992.15 | -0.17 | -64.9% | MACD: 15.0937 (Sig: 7.2746) | BULL | Low DCS margin of safety (-64.9% < 15%) |
+| **GOOGL** | AVOID / SELL | $340.36 | 1.37 | -70.4% | MACD: 1.0040 (Sig: 1.1923) | BEAR | Low DCS margin of safety (-70.4% < 15%) and Bear trend (Close <= SMA 100) |
+| **JPM** | AVOID / SELL | $338.62 | 0.76 | -37.1% | MACD: -3.0947 (Sig: -4.2543) | BULL | Low DCS margin of safety (-37.1% < 15%) |
+| **META** | AVOID / SELL | $706.11 | 1.49 | -50.7% | MACD: 19.2192 (Sig: 25.5128) | BULL | Low DCS margin of safety (-50.7% < 15%) |
+| **MSFT** | AVOID / SELL | $527.18 | 1.00 | -68.1% | MACD: 11.1040 (Sig: 10.9504) | BULL | Low DCS margin of safety (-68.1% < 15%) |
+| **NFLX** | AVOID / SELL | $70.14 | 0.33 | 375.3% | MACD: -1.1616 (Sig: -1.6069) | BEAR | Bear trend (Close <= SMA 100) |
+| **NVDA** | AVOID / SELL | $214.85 | 1.89 | -84.6% | MACD: -0.0904 (Sig: 2.2292) | BULL | Low DCS margin of safety (-84.6% < 15%) |
+| **TSLA** | AVOID / SELL | $352.01 | 2.20 | -84.0% | MACD: 1.1985 (Sig: 3.4623) | BEAR | Low DCS margin of safety (-84.0% < 15%) and Bear trend (Close <= SMA 100) |

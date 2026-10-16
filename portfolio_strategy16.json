@@ -3,11 +3,22 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 202033.18,
   "nav": 197167.62,
-  "total_capital": 209608.6,
-  "cash_balance": 209608.6,
+  "total_capital": 209639.2,
+  "cash_balance": 20963.92,
   "holdings_value": 0.0,
   "net_trading_profit": -4865.56,
   "net_trading_return_pct": -2.41,
-  "holdings": [],
-  "last_updated": "2026-10-15 22:43:04"
+  "holdings": [
+    {
+      "ticker": "UPRO",
+      "base": "SPY",
+      "side": "long",
+      "shares": 69.80404631812006,
+      "buy_price": 2702.9275515081827,
+      "last_price": 2702.9275515081827,
+      "peak_price": 146.1199951171875,
+      "allocated": 188675.28000000003
+    }
+  ],
+  "last_updated": "2026-10-16 18:18:49"
 }
