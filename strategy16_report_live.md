@@ -1,9 +1,9 @@
 # Strategy 16: Multi-Asset HMM Swing Router Execution Report
-**Execution Date:** 2026-10-16 21:56:46 | **Strategy Version:** Router V2 (Hybrid Swing)
+**Execution Date:** 2026-10-16 22:14:36 | **Strategy Version:** Router V2 (Hybrid Swing)
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $209,832.95 MXN
-* **Total Cash Balance:** $20,964.48 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Total Portfolio NAV:** $209,833.00 MXN
+* **Total Cash Balance:** $20,964.53 MXN (Parked compounding in Bondia sweep at 6.53% APR)
 * **Equity Exposure:** 90.0%
 * **Active Target Index:** **SPY** (Regime: State 0 - LOCKED to base asset of active holding (SPY))
 
@@ -13,15 +13,15 @@
 | **UPRO** | LEVERAGED SWING | LONG | 69.8040 | $2,702.93 | $2,705.70 | $188,868.47 |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $0.5147 MXN sweep interest.
+* **[INTEREST ACCRUED]** Cash reserves earned $0.0463 MXN sweep interest.
 * No trades or rebalancing actions triggered in this 30-minute interval.
 
 ## 4. Multi-Asset HMM Telemetry
 * Decoded Regimes:
-  * **QQQ:** State 0 (Trend Score: 0.075)
+  * **QQQ:** State 0 (Trend Score: 0.074)
   * **SPY:** State 0 (Trend Score: 0.112)
   * **SOXX:** State 2 (Trend Score: -0.500)
   * **IWM:** State 0 (Trend Score: 0.019)
 * Active Telemetry (SPY):
   * Base Price: $763.31 USD | ATR (14): 3.13
-  * VWAP: $765.84 USD (Lower: $761.15 | Upper: $770.53)
+  * VWAP: $764.94 USD (Lower: $760.25 | Upper: $769.64)
