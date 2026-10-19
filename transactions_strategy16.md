@@ -393,4 +393,6 @@
 | 2026-10-16 | BONDIA | INTEREST | 1.0000 | $0.0525 | $0.00 | $0.05 | Accrued interest on sweep balance |
 | 2026-10-16 | BONDIA | INTEREST | 1.0000 | $0.5147 | $0.00 | $0.51 | Accrued interest on sweep balance |
 | 2026-10-16 | BONDIA | INTEREST | 1.0000 | $0.0463 | $0.00 | $0.05 | Accrued interest on sweep balance |
+| 2026-10-19 | BONDIA | INTEREST | 1.0000 | $10.9193 | $0.00 | $10.92 | Accrued interest on sweep balance |
+| 2026-10-19 | UPRO | SELL_UPRO | 69.8040 | $2733.6419 | $0.00 | $190,819.27 | Exit target SPY via REGIME_FLIP |
 ---

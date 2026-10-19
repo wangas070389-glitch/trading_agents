@@ -4,7 +4,7 @@
   "total_funded_capital": 202000.0,
   "nav": 203573.35,
   "total_capital": 207573.35,
-  "cash_balance": 47691.58,
+  "cash_balance": 47716.78,
   "holdings_value": 161789.42,
   "net_trading_profit": 1573.35,
   "net_trading_return_pct": 0.78,
@@ -13,7 +13,7 @@
       "ticker": "BBAJIOO.MX",
       "shares": 707.5889061340172,
       "buy_price": 56.529998779296875,
-      "last_price": 57.849998474121094,
+      "last_price": 57.560001373291016,
       "target_weight": 0.2,
       "dividend_rate": 4.71,
       "last_dividend": 1.906996,
@@ -24,7 +24,7 @@
       "ticker": "KOFUBL.MX",
       "shares": 215.4592044980265,
       "buy_price": 185.64999389648438,
-      "last_price": 219.42999267578125,
+      "last_price": 221.3300018310547,
       "target_weight": 0.2,
       "dividend_rate": 7.74,
       "last_dividend": 1.935,
@@ -35,18 +35,18 @@
       "ticker": "AC.MX",
       "shares": 210.59683618264089,
       "buy_price": 193.35000610351562,
-      "last_price": 209.66000366210938,
+      "last_price": 212.36000061035156,
       "target_weight": 0.2,
       "dividend_rate": 7.78,
-      "last_dividend": 2.5,
-      "ex_dividend_date": "2026-08-04",
+      "last_dividend": 2.0,
+      "ex_dividend_date": "2026-10-27",
       "payment_date": "N/A"
     },
     {
       "ticker": "FUNO11.MX",
       "shares": 1327.213140686486,
       "buy_price": 30.68000030517578,
-      "last_price": 32.70000076293945,
+      "last_price": 33.349998474121094,
       "target_weight": 0.2,
       "dividend_rate": 2.56,
       "last_dividend": 0.639779,
@@ -54,6 +54,6 @@
       "payment_date": "N/A"
     }
   ],
-  "last_updated": "2026-10-16 22:13:52",
+  "last_updated": "2026-10-19 20:08:59",
   "last_rebalance_date": "2026-08-05"
 }

@@ -398,4 +398,5 @@
 | 2026-10-16 | BONDIA | INTEREST | 1.0000 | $0.3304 | $0.00 | Sweep interest |
 | 2026-10-16 | BONDIA | INTEREST | 1.0000 | $3.2363 | $0.00 | Sweep interest |
 | 2026-10-16 | BONDIA | INTEREST | 1.0000 | $0.2914 | $0.00 | Sweep interest |
+| 2026-10-19 | BONDIA | INTEREST | 1.0000 | $68.6414 | $0.00 | Sweep interest |
 ---
