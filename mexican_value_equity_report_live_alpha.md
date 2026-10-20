@@ -22,29 +22,29 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Signal | Price | DCS Conviction | SMA 100 Trend | SMA 20 Trend (DCA) | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **AAPL** | SELL / AVOID | $6,313.59 | -0.483 | BULL | BULL | Low conviction (DCS=-0.483 < 0.15) |
+| **AAPL** | SELL / AVOID | $6,314.21 | -0.483 | BULL | BULL | Low conviction (DCS=-0.483 < 0.15) |
 | **AC.MX** | SELL / AVOID | $216.88 | -0.292 | BULL | BULL | Low conviction (DCS=-0.292 < 0.15) |
 | **AMXB.MX** | SELL / AVOID | $21.07 | -0.325 | BEAR | BULL | Low conviction (DCS=-0.325 < 0.15) and Bear trend (Close <= SMA 100) |
-| **AMZN** | SELL / AVOID | $4,831.76 | -0.662 | BULL | BULL | Low conviction (DCS=-0.662 < 0.15) |
+| **AMZN** | SELL / AVOID | $4,832.23 | -0.662 | BULL | BULL | Low conviction (DCS=-0.662 < 0.15) |
 | **ASURB.MX** | SELL / AVOID | $458.52 | -0.120 | BEAR | BULL | Low conviction (DCS=-0.120 < 0.15) and Bear trend (Close <= SMA 100) |
-| **BBAJIOO.MX** | BUY / HOLD | $58.00 | 0.570 | BULL | BULL | Strong conviction (DCS=0.570) and bull trend (Close > SMA 100) | Eligible for active DCA |
+| **BBAJIOO.MX** | BUY / HOLD | $58.00 | 0.569 | BULL | BULL | Strong conviction (DCS=0.569) and bull trend (Close > SMA 100) | Eligible for active DCA |
 | **BIMBOA.MX** | BUY / HOLD | $59.14 | 0.341 | BULL | BULL | Strong conviction (DCS=0.341) and bull trend (Close > SMA 100) | Eligible for active DCA |
-| **CEMEXCPO.MX** | SELL / AVOID | $19.03 | -0.589 | BEAR | BULL | Low conviction (DCS=-0.589 < 0.15) and Bear trend (Close <= SMA 100) |
+| **CEMEXCPO.MX** | SELL / AVOID | $19.03 | -0.590 | BEAR | BULL | Low conviction (DCS=-0.590 < 0.15) and Bear trend (Close <= SMA 100) |
 | **CUERVO.MX** | BUY / HOLD | $15.31 | 0.237 | BULL | BULL | Strong conviction (DCS=0.237) and bull trend (Close > SMA 100) | Eligible for active DCA |
 | **FEMSAUBD.MX** | SELL / AVOID | $237.52 | -0.050 | BULL | BULL | Low conviction (DCS=-0.050 < 0.15) |
 | **GAPB.MX** | SELL / AVOID | $401.47 | -0.030 | BULL | BULL | Low conviction (DCS=-0.030 < 0.15) |
 | **GCC.MX** | SELL / AVOID | $176.55 | -0.091 | BEAR | BEAR | Low conviction (DCS=-0.091 < 0.15) and Bear trend (Close <= SMA 100) |
-| **GENTERA.MX** | SELL / AVOID | $40.47 | -0.436 | BULL | BULL | Low conviction (DCS=-0.436 < 0.15) |
+| **GENTERA.MX** | SELL / AVOID | $40.47 | -0.437 | BULL | BULL | Low conviction (DCS=-0.437 < 0.15) |
 | **GFNORTEO.MX** | SELL / AVOID | $204.47 | -0.199 | BULL | BULL | Low conviction (DCS=-0.199 < 0.15) |
 | **GMEXICOB.MX** | SELL / AVOID | $240.68 | -1.000 | BULL | BULL | Low conviction (DCS=-1.000 < 0.15) |
-| **GOOGL** | SELL / AVOID | $6,336.42 | -0.659 | BULL | BULL | Low conviction (DCS=-0.659 < 0.15) |
+| **GOOGL** | SELL / AVOID | $6,337.04 | -0.659 | BULL | BULL | Low conviction (DCS=-0.659 < 0.15) |
 | **GRUMAB.MX** | SELL / AVOID | $244.39 | 0.822 | BEAR | BULL | Bear trend (Close <= SMA 100) |
 | **KIMBERA.MX** | SELL / AVOID | $38.81 | -0.335 | BULL | BULL | Low conviction (DCS=-0.335 < 0.15) |
-| **MSFT** | SELL / AVOID | $9,822.21 | -0.593 | BULL | BULL | Low conviction (DCS=-0.593 < 0.15) |
-| **NVDA** | SELL / AVOID | $3,996.67 | -0.721 | BULL | BEAR | Low conviction (DCS=-0.721 < 0.15) |
+| **MSFT** | SELL / AVOID | $9,823.17 | -0.593 | BULL | BULL | Low conviction (DCS=-0.593 < 0.15) |
+| **NVDA** | SELL / AVOID | $3,997.06 | -0.721 | BULL | BEAR | Low conviction (DCS=-0.721 < 0.15) |
 | **OMAB.MX** | SELL / AVOID | $219.01 | -0.124 | BEAR | BULL | Low conviction (DCS=-0.124 < 0.15) and Bear trend (Close <= SMA 100) |
-| **ORBIA.MX** | BUY / HOLD | $22.86 | 0.840 | BULL | BULL | Strong conviction (DCS=0.840) and bull trend (Close > SMA 100) | Eligible for active DCA |
+| **ORBIA.MX** | BUY / HOLD | $22.86 | 0.839 | BULL | BULL | Strong conviction (DCS=0.839) and bull trend (Close > SMA 100) | Eligible for active DCA |
 | **PE&OLES.MX** | SELL / AVOID | $879.85 | -1.000 | BULL | BEAR | Low conviction (DCS=-1.000 < 0.15) |
 | **PINFRA.MX** | SELL / AVOID | $300.87 | -0.096 | BULL | BULL | Low conviction (DCS=-0.096 < 0.15) |
 | **VESTA.MX** | SELL / AVOID | $67.66 | 0.024 | BULL | BULL | Low conviction (DCS=0.024 < 0.15) |
-| **WALMEX.MX** | BUY / HOLD | $49.81 | 0.209 | BULL | BULL | Strong conviction (DCS=0.209) and bull trend (Close > SMA 100) |
+| **WALMEX.MX** | BUY / HOLD | $49.81 | 0.210 | BULL | BULL | Strong conviction (DCS=0.210) and bull trend (Close > SMA 100) |

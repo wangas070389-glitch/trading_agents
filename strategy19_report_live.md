@@ -1,12 +1,12 @@
 # Strategy 19: Particle Filter QQQ / TQQQ / SQQQ Live Execution Report
-**Execution Timestamp:** 2026-10-20 22:09:03 | **Strategy Version:** Live V1
+**Execution Timestamp:** 2026-10-20 22:42:52 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $165,993.50 MXN
-* **Total Cash sweep Balance:** $165,993.50 MXN (Parked in Bondia compound at 6.53% APR)
+* **Total Portfolio NAV:** $165,994.20 MXN
+* **Total Cash sweep Balance:** $165,994.20 MXN (Parked in Bondia compound at 6.53% APR)
 * **Equity Exposure:** 0.0%
 * **Asset Allocation Target:** CASH
-* **USD/MXN Exchange Rate:** 18.4161
+* **USD/MXN Exchange Rate:** 18.4140
 
 ## 2. Current Holdings
 | Ticker | Shares Held | Buy Price (USD) | Last Price (USD) | Market Value (USD) | Market Value (MXN) | Target Weight |
@@ -17,5 +17,5 @@
 * **Latent Drift (Posterior $\hat{\mu}_t$):** +3.32% annualized\n* **Latent Volatility (Posterior $\hat{\sigma}_t$):** 18.24% annualized\n* **Probability of Bull Regime ($P(\mu_t > 0)$):** 52.7%\n* **Volatility Drag Regime:** NORMAL VOLATILITY (Leverage Enabled)
 
 ## 4. Today's Execution Logs
-* **[INTEREST]** Cash sweep accrued yield of $3.9648 MXN.
+* **[INTEREST]** Cash sweep accrued yield of $0.6970 MXN.
 * Hold current position in **CASH**; no transition trades required.
