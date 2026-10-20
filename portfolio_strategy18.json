@@ -18,10 +18,10 @@
   },
   "sleeves": {
     "core": {
-      "alloc_usd": 12310.417470566705,
-      "last_nav": 6761.9085417676215,
-      "last_date": "2026-10-19",
-      "tr_index": 0.9541884491337489
+      "alloc_usd": 12457.418526185555,
+      "last_nav": 6842.6537883049195,
+      "last_date": "2026-10-20",
+      "tr_index": 0.9655825963767114
     },
     "macd": {
       "alloc_usd": 11313.512304110438,
@@ -32,19 +32,19 @@
     "us_dcs": {
       "alloc_usd": 9975.399395698638,
       "last_nav": 106320.17,
-      "last_date": "2026-10-19",
+      "last_date": "2026-10-20",
       "tr_index": 0.9992450095747345
     },
     "alternatives": {
-      "alloc_usd": 64125.06040239686,
-      "last_nav": 935267.937507658,
-      "last_date": "2026-10-19",
-      "tr_index": 7.793747493450873
+      "alloc_usd": 64173.39326688998,
+      "last_nav": 935972.8752996016,
+      "last_date": "2026-10-20",
+      "tr_index": 7.7996218604944385
     },
     "high_beta": {
       "alloc_usd": 29959.39441599606,
       "last_nav": 104022.7197379208,
-      "last_date": "2026-10-19",
+      "last_date": "2026-10-20",
       "tr_index": 0.9895781684916152
     },
     "dividends": {
@@ -1008,6 +1008,24 @@
         "strategy15": 1.185768,
         "strategy17": 0.988698
       }
+    },
+    {
+      "date": "2026-10-20",
+      "nav_usd": 257916.01,
+      "idx": {
+        "core": 0.965583,
+        "macd": 1.045692,
+        "us_dcs": 0.999245,
+        "alternatives": 7.799622,
+        "high_beta": 0.989578,
+        "dividends": 1.072239,
+        "strategy9": 0.963516,
+        "strategy12": 1.027508,
+        "strategy13": 1.023927,
+        "strategy14": 1.185752,
+        "strategy15": 1.185768,
+        "strategy17": 0.988698
+      }
     }
   ],
   "rebalances": [
@@ -1022,6 +1040,6 @@
       "max_drift": 0.0263
     }
   ],
-  "last_updated": "2026-10-19 20:24:06",
-  "total_portfolio_value_usd": 257720.67133619968
+  "last_updated": "2026-10-20 18:41:07",
+  "total_portfolio_value_usd": 257916.00525631162
 }
