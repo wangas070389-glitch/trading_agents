@@ -3,7 +3,7 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 101321.45,
   "nav": 105171.66,
-  "total_capital": 89852.06,
+  "total_capital": 89995.33,
   "cash_balance": 564533.78,
   "holdings_value": 119726.18,
   "net_trading_profit": 3850.21,
@@ -35,7 +35,7 @@
       "ticker": "USDJPY=X",
       "shares": 414,
       "buy_price": 159.4499969482422,
-      "last_price": 158.1490020751953,
+      "last_price": 158.14599609375,
       "peak_price": 159.4499969482422,
       "armed": false,
       "target_weight": 0.15,
@@ -46,7 +46,7 @@
       "ticker": "GBPUSD=X",
       "shares": 90983,
       "buy_price": 1.3370413780212402,
-      "last_price": 1.3390824794769287,
+      "last_price": 1.3391362428665161,
       "peak_price": 1.3370413780212402,
       "armed": false,
       "target_weight": 0.15,
@@ -65,5 +65,5 @@
       "entry_date": "2026-09-22"
     }
   ],
-  "last_updated": "2026-10-21 22:36:54"
+  "last_updated": "2026-10-21 22:48:04"
 }
