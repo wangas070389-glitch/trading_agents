@@ -45,4 +45,5 @@
 | 2026-10-20 | BONDIA | INTEREST | 1.0000 | $0.70 | $+0.70 | Market | FILLED | Yield on cash for 0.0235 days. |
 | 2026-10-21 | BONDIA | INTEREST | 1.0000 | $24.92 | $+24.92 | Market | FILLED | Yield on cash for 0.8398 days. |
 | 2026-10-21 | TQQQ | BUY | 121.8327 | $1358.73 | $-166,019.12 | Market | FILLED | PF systematic entry |
+| 2026-10-22 | TQQQ | SELL | 121.8327 | $1242.92 | $+150,988.84 | Market | FILLED | PF switch to CASH |
 ---

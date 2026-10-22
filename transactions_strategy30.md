@@ -339,4 +339,5 @@
 | 2026-10-22 | CASH_SWEEP | INTEREST | 1.0000 | $10.1448 | $+10.14 | Market | FILLED | USD Sweep interest |
 | 2026-10-22 | AAPL | BUY | 51.5229 | $346.1250 | $-17,835.14 | Market | FILLED | Golden MACD US entry |
 | 2026-10-22 | CASH_SWEEP | INTEREST | 1.0000 | $0.1306 | $+0.13 | Market | FILLED | USD Sweep interest |
+| 2026-10-22 | CASH_SWEEP | INTEREST | 1.0000 | $1.4847 | $+1.48 | Market | FILLED | USD Sweep interest |
 ---
