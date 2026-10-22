@@ -4,7 +4,7 @@
   "total_funded_capital": 120000.0,
   "nav": 118561.61,
   "total_capital": 118561.61,
-  "cash_balance": 20864.94,
+  "cash_balance": 20864.97,
   "holdings_value": 79167.96,
   "net_trading_profit": -1438.39,
   "net_trading_return_pct": -1.2,
@@ -63,7 +63,7 @@
       "ticker": "AMZN",
       "shares": 2,
       "buy_price": 4682.457812654728,
-      "last_price": 4685.110624623718,
+      "last_price": 4686.011784042232,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 4937.043650627136,
@@ -73,7 +73,7 @@
       "ticker": "GOOGL",
       "shares": 2,
       "buy_price": 5905.58,
-      "last_price": 6066.804628211365,
+      "last_price": 6067.9715500983875,
       "target_weight": 0.1,
       "hmm_state": 1,
       "peak_price": 6560.139816972369,
@@ -100,5 +100,5 @@
       "trailing_armed": false
     }
   ],
-  "last_updated": "2026-10-22 22:37:32"
+  "last_updated": "2026-10-22 22:47:47"
 }

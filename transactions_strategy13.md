@@ -426,4 +426,5 @@
 | 2026-10-22 | BONDIA | INTEREST | 1.0000 | $0.3954 | MXN sweep |
 | 2026-10-22 | BONDIA | INTEREST | 1.0000 | $4.5086 | MXN sweep |
 | 2026-10-22 | TQQQ | SELL | 33.5407 | $1243.0104 | Score 1 -> w=0.000 |
+| 2026-10-22 | BONDIA | INTEREST | 1.0000 | $0.2725 | MXN sweep |
 ---

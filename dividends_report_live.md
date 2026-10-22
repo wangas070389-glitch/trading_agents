@@ -1,9 +1,9 @@
 # Strategy 8: Dividend Quality & Yield Execution Report
-**Execution Date:** 2026-10-22 22:37:40 | **Strategy Version:** Live V1
+**Execution Date:** 2026-10-22 22:47:55 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $225,850.23 MXN
-* **Total Cash Balance:** $47,743.64 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $225,850.29 MXN
+* **Total Cash Balance:** $47,743.70 MXN (Parked in Bondia Compound at 6.53% APR)
 * **Equity Exposure:** 78.9%
 * **Days Since Last Rebalance:** 78 days
 
@@ -16,7 +16,7 @@
 | **FUNO11.MX** | 1327.21 | $30.68 | $32.33 | $42,908.80 | $2.56 MXN/sh (Annual: $3,397.67 MXN) | Ex: 2026-08-07 / Pay: N/A | 20.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $1.2854 MXN over 0.1484 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $0.0617 MXN over 0.0071 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
@@ -41,7 +41,7 @@
 | **MMM** | SELL / AVOID | 1.79% | 45.8% | 45.8% | $175.56 > SMA $159.86 | Yield below 2.5% and Debt/Equity (3.04) exceeds 1.5 |
 | **O** | SELL / AVOID | 5.89% | 234.7% | 234.7% | $57.06 <= SMA $60.47 | Payout Ratio (234.7%) out of bounds and FCF Payout (234.7%) exceeds limit and Bear trend (Close <= SMA 200) |
 | **OMAB.MX** | SELL / AVOID | 5.22% | 85.8% | 85.8% | $230.40 <= SMA $232.41 | Payout Ratio (85.8%) out of bounds and FCF Payout (85.8%) exceeds limit and Debt/Equity (1.54) exceeds 1.5 and Bear trend (Close <= SMA 200) |
-| **ORBIA.MX** | SELL / AVOID | 0.00% | 93.1% | 93.1% | $23.09 > SMA $21.21 | Yield below 2.5% and Payout Ratio (93.1%) out of bounds and FCF Payout (93.1%) exceeds limit and Non-positive EPS (-2.70) and Debt/Equity (2.18) exceeds 1.5 |
+| **ORBIA.MX** | SELL / AVOID | 0.00% | 93.1% | 93.1% | $23.09 > SMA $21.21 | Yield below 2.5% and Payout Ratio (93.1%) out of bounds and FCF Payout (93.1%) exceeds limit and Non-positive EPS (-2.72) and Debt/Equity (2.18) exceeds 1.5 |
 | **PEP** | SELL / AVOID | 4.40% | 73.0% | 73.0% | $138.83 <= SMA $143.78 | Debt/Equity (2.31) exceeds 1.5 and Bear trend (Close <= SMA 200) |
 | **PG** | BUY / HOLD | 2.78% | 64.3% | 64.3% | $165.59 > SMA $147.18 | Passed all quality checks. Score: 0.0000 |
 | **SPG** | BUY / HOLD | 4.33% | 62.1% | 62.1% | $212.04 > SMA $201.65 | Passed all quality checks. Score: 0.0000 |
