@@ -2,9 +2,9 @@
 **Execution Date:** 2026-10-23 | **Strategy Version:** Alternative Assets Isolated V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $997,366.32 USD
-* **Total Cash Balance:** $625,634.22 USD
-* **Equity Exposure:** 37.3%
+* **Total Portfolio NAV:** $1,017,735.79 USD
+* **Total Cash Balance:** $646,003.69 USD
+* **Equity Exposure:** 36.5%
 * **Active Holdings Count:** 5 of 5 positions
 
 ## 2. Current Holdings
@@ -22,8 +22,8 @@
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
 | Ticker | Asset Type | Signal | Price | Indicator Diagnostics | Evaluation Reason |
 | :--- | :---: | :---: | :---: | :--- | :--- |
-| **BTC-USD** | CRYPTO | HOLD | $81,229.6719 | SMA 200: $72,857.37, MACD: -56.9442, Signal: 182.1121 | No cross or trend changes |
-| **ETH-USD** | CRYPTO | HOLD | $2,395.2200 | SMA 200: $2,156.10, MACD: -47.0952, Signal: -38.4724 | No cross or trend changes |
+| **BTC-USD** | CRYPTO | HOLD | $81,027.2891 | SMA 200: $72,856.35, MACD: -73.0887, Signal: 178.8832 | No cross or trend changes |
+| **ETH-USD** | CRYPTO | HOLD | $2,381.3799 | SMA 200: $2,156.03, MACD: -48.1993, Signal: -38.6932 | No cross or trend changes |
 | **GLD** | COMMODITY | SELL | $366.6100 | SMA 100: $387.97, Donchian High: $394.22, Donchian Low: $368.35 | Breakout below 10-day low or bearish trend break |
 | **SLV** | COMMODITY | SELL | $48.7200 | SMA 100: $56.44, Donchian High: $58.52, Donchian Low: $49.20 | Breakout below 10-day low or bearish trend break |
 | **USO** | COMMODITY | BUY | $169.5300 | SMA 100: $133.55, Donchian High: $163.77, Donchian Low: $146.74 | Breakout above 20-day high in bullish trend |
