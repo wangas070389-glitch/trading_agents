@@ -897,6 +897,14 @@
 | 2026-10-22 | AAPL | BUY-REJECTED | 58 | 348.22 | +20,196.76 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 | 2026-10-22 | COST | BUY-REJECTED | 20 | 1018.21 | +20,364.20 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 | 2026-10-22 | JPM | BUY-REJECTED | 61 | 336.54 | +20,528.94 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
+| 2026-10-23 | MSFT | SELL-REJECTED | 31 | 524.03 | +16,244.78 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-10-23 | NVDA | SELL-REJECTED | 94 | 211.59 | +19,889.46 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-10-23 | AMZN | SELL | 87.0 | 248.22 | +21,595.44 | Market | FILLED | Alpaca Order fbd81973-3865-4800-a3b3-ccd4a2f07036 FILLED | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-10-23 | META | SELL-REJECTED | 32 | 644.17 | +20,613.44 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-10-23 | AMD | SELL-REJECTED | 31 | 517.50 | +16,042.50 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Exit/Bearish Signal |
+| 2026-10-23 | AAPL | BUY-REJECTED | 57 | 346.52 | +19,751.78 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
+| 2026-10-23 | COST | BUY-REJECTED | 19 | 1003.97 | +19,075.52 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
+| 2026-10-23 | JPM | BUY-REJECTED | 60 | 331.87 | +19,912.44 | Market | FILLED | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders | Isolated US Stock Momentum strategy: Buy Rebalance to 25.0% |
 ---
 
 
@@ -904,7 +912,7 @@
 
 ## Portfolio Capital Reconciliation
 
-* **Initial Starting Capital**: $82,115.99 USD
-* **Total Deployed Capital**: $96,172.16 USD (-84.1% invested)
-* **Unallocated Cash Reserves**: $-214,806.18 USD (187.8% cash)
-* **Current Portfolio Market Value**: $-114,367.99 USD (including cash)
+* **Initial Starting Capital**: $79,796.74 USD
+* **Total Deployed Capital**: $73,707.89 USD (-63.7% invested)
+* **Unallocated Cash Reserves**: $-193,210.74 USD (167.1% cash)
+* **Current Portfolio Market Value**: $-115,630.93 USD (including cash)
