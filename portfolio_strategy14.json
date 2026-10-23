@@ -3,7 +3,7 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 202000.0,
   "nav": 203736.04,
-  "total_capital": 246101.44,
+  "total_capital": 245906.74,
   "cash_balance": 166687.19,
   "holdings_value": 37048.85,
   "net_trading_profit": 1736.04,
@@ -14,19 +14,19 @@
       "side": "long",
       "shares": 34.72791149627583,
       "buy_price": 1281.131044248963,
-      "last_price": 1241.249677988846
+      "last_price": 1236.1759846134955
     }
   ],
-  "last_updated": "2026-10-23 18:55:04",
-  "cash_balance_mxn": 170837.49,
-  "cash_balance_usd": 1723.2513,
+  "last_updated": "2026-10-23 21:52:17",
+  "cash_balance_mxn": 170841.25,
+  "cash_balance_usd": 1723.2774,
   "expert_G": {
-    "CASH_MXN": 0.013472857659495229,
-    "QQQ_BH": 0.012656511299843833,
-    "VTTL": 0.040701537324837896,
-    "CARA": 0.027746015031596093,
-    "TSMOM": 0.040701537324837896,
-    "CASH_USD": 0.10110424439340934
+    "CASH_MXN": 0.013731951076023983,
+    "QQQ_BH": 0.01205071637383473,
+    "VTTL": 0.04001968790946078,
+    "CARA": 0.028005108448124847,
+    "TSMOM": 0.04001968790946078,
+    "CASH_USD": 0.09963792996149874
   },
-  "last_signal_date": "2026-10-22"
+  "last_signal_date": "2026-10-23"
 }
