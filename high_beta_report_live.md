@@ -23,7 +23,7 @@
 | **AVGO** | AVOID / SELL | $329.17 | 2.18 | 204.3% | MACD: -9.0076 (Sig: -6.5289) | BEAR | Bear trend (Close <= SMA 100) |
 | **COST** | AVOID / SELL | $1,005.16 | -0.18 | -64.8% | MACD: 22.3193 (Sig: 17.3044) | BULL | Low DCS margin of safety (-64.8% < 15%) |
 | **GOOGL** | AVOID / SELL | $316.80 | 1.38 | -67.8% | MACD: -5.1745 (Sig: -1.6392) | BEAR | Low DCS margin of safety (-67.8% < 15%) and Bear trend (Close <= SMA 100) |
-| **JPM** | AVOID / SELL | $334.14 | 0.74 | -35.2% | MACD: -2.1083 (Sig: -2.8148) | BEAR | Low DCS margin of safety (-35.2% < 15%) and Bear trend (Close <= SMA 100) |
+| **JPM** | AVOID / SELL | $334.04 | 0.74 | -35.2% | MACD: -2.1159 (Sig: -2.8164) | BEAR | Low DCS margin of safety (-35.2% < 15%) and Bear trend (Close <= SMA 100) |
 | **META** | AVOID / SELL | $630.56 | 1.51 | -43.9% | MACD: -7.0572 (Sig: 8.4889) | BULL | Low DCS margin of safety (-43.9% < 15%) |
 | **MSFT** | AVOID / SELL | $532.60 | 1.01 | -67.9% | MACD: 6.9809 (Sig: 8.9863) | BULL | Low DCS margin of safety (-67.9% < 15%) |
 | **NFLX** | AVOID / SELL | $63.90 | 0.21 | 444.0% | MACD: -1.9830 (Sig: -1.6231) | BEAR | Bear trend (Close <= SMA 100) |
