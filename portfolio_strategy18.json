@@ -18,10 +18,10 @@
   },
   "sleeves": {
     "core": {
-      "alloc_usd": 12899.380462025538,
-      "last_nav": 7085.416163848872,
-      "last_date": "2026-10-26",
-      "tr_index": 0.9998393529118649
+      "alloc_usd": 12747.824449796055,
+      "last_nav": 7002.168955043727,
+      "last_date": "2026-10-27",
+      "tr_index": 0.9880921480252797
     },
     "macd": {
       "alloc_usd": 11383.89778649442,
@@ -32,19 +32,19 @@
     "us_dcs": {
       "alloc_usd": 9975.399395698638,
       "last_nav": 106320.17,
-      "last_date": "2026-10-26",
+      "last_date": "2026-10-27",
       "tr_index": 0.9992450095747345
     },
     "alternatives": {
-      "alloc_usd": 71094.22193646933,
-      "last_nav": 1036913.5857647944,
-      "last_date": "2026-10-26",
-      "tr_index": 8.64077804432738
+      "alloc_usd": 73766.0455973117,
+      "last_nav": 1075882.2976689911,
+      "last_date": "2026-10-27",
+      "tr_index": 8.965510977582515
     },
     "high_beta": {
       "alloc_usd": 29966.776607638603,
       "last_nav": 104048.35161958107,
-      "last_date": "2026-10-26",
+      "last_date": "2026-10-27",
       "tr_index": 0.9898220070546931
     },
     "dividends": {
@@ -1098,6 +1098,24 @@
         "strategy15": 1.179218,
         "strategy17": 0.988698
       }
+    },
+    {
+      "date": "2026-10-27",
+      "nav_usd": 267120.05,
+      "idx": {
+        "core": 0.988092,
+        "macd": 1.052197,
+        "us_dcs": 0.999245,
+        "alternatives": 8.965511,
+        "high_beta": 0.989822,
+        "dividends": 1.073278,
+        "strategy9": 0.945495,
+        "strategy12": 1.018605,
+        "strategy13": 1.01225,
+        "strategy14": 1.179318,
+        "strategy15": 1.179218,
+        "strategy17": 0.988698
+      }
     }
   ],
   "rebalances": [
@@ -1112,6 +1130,6 @@
       "max_drift": 0.0263
     }
   ],
-  "last_updated": "2026-10-26 20:20:36",
-  "total_portfolio_value_usd": 264599.77822741703
+  "last_updated": "2026-10-27 19:37:16",
+  "total_portfolio_value_usd": 267120.0458760299
 }

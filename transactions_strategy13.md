@@ -435,4 +435,6 @@
 | 2026-10-26 | USDMXN | BUY_USD | 3993.7081 | $18.5637 | Hedge riesgo-off ON |
 | 2026-10-26 | BONDIA | INTEREST | 1.0000 | $0.2374 | MXN sweep |
 | 2026-10-26 | USD-MMF | INTEREST | 1.0000 | $0.0047 | USD sweep |
+| 2026-10-27 | BONDIA | INTEREST | 1.0000 | $23.8742 | MXN sweep |
+| 2026-10-27 | USD-MMF | INTEREST | 1.0000 | $0.4772 | USD sweep |
 ---

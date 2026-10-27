@@ -438,4 +438,6 @@
 | 2026-10-23 | BONDIA | INTEREST | 1.00 | $0.29 | $+0.29 | Market | FILLED | Yield on cash for 0.0339 days. |
 | 2026-10-26 | BONDIA | INTEREST | 1.00 | $25.05 | $+25.05 | Market | FILLED | Yield on cash for 2.8923 days. |
 | 2026-10-26 | BONDIA | INTEREST | 1.00 | $0.08 | $+0.08 | Market | FILLED | Yield on cash for 0.0097 days. |
+| 2026-10-27 | BONDIA | INTEREST | 1.00 | $8.40 | $+8.40 | Market | FILLED | Yield on cash for 0.9698 days. |
+| 2026-10-27 | AC.MX | DIVIDEND | 210.60 | $2.00 | $+421.19 | Market | FILLED | Reinvested dividend paid on 2026-10-27 |
 ---
