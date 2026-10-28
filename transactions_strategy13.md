@@ -439,4 +439,8 @@
 | 2026-10-27 | USD-MMF | INTEREST | 1.0000 | $0.4772 | USD sweep |
 | 2026-10-27 | BONDIA | INTEREST | 1.0000 | $0.2460 | MXN sweep |
 | 2026-10-27 | USD-MMF | INTEREST | 1.0000 | $0.0049 | USD sweep |
+| 2026-10-28 | BONDIA | INTEREST | 1.0000 | $24.5825 | MXN sweep |
+| 2026-10-28 | USD-MMF | INTEREST | 1.0000 | $0.4913 | USD sweep |
+| 2026-10-28 | TQQQ | BUY | 27.2107 | $1339.8125 | Score 2 -> w=0.172 |
+| 2026-10-28 | USDMXN | SELL_USD | 3994.6862 | $18.6305 | Hedge riesgo-off OFF |
 ---
