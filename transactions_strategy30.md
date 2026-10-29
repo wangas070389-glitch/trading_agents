@@ -352,4 +352,6 @@
 | 2026-10-28 | CASH_SWEEP | INTEREST | 1.0000 | $10.0014 | $+10.00 | Market | FILLED | USD Sweep interest |
 | 2026-10-28 | AAPL | SELL | 51.5229 | $344.4800 | $+17,746.83 | Market | FILLED | MACD crossover or Trend break exit |
 | 2026-10-28 | CASH_SWEEP | INTEREST | 1.0000 | $0.1504 | $+0.15 | Market | FILLED | USD Sweep interest |
+| 2026-10-29 | CASH_SWEEP | INTEREST | 1.0000 | $12.0505 | $+12.05 | Market | FILLED | USD Sweep interest |
+| 2026-10-29 | AAPL | BUY | 51.0295 | $349.4100 | $-17,831.99 | Market | FILLED | Golden MACD US entry |
 ---
