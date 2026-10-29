@@ -445,4 +445,6 @@
 | 2026-10-28 | USDMXN | SELL_USD | 3994.6862 | $18.6305 | Hedge riesgo-off OFF |
 | 2026-10-28 | BONDIA | INTEREST | 1.0000 | $0.3846 | MXN sweep |
 | 2026-10-29 | BONDIA | INTEREST | 1.0000 | $31.0197 | MXN sweep |
+| 2026-10-29 | BONDIA | INTEREST | 1.0000 | $0.3751 | MXN sweep |
+| 2026-10-29 | TQQQ | SELL | 27.2107 | $1305.8973 | Score 1 -> w=0.000 |
 ---

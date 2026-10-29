@@ -194,4 +194,5 @@
 | 2026-10-28 | TQQQ | SELL | 174.8906 | $1341.27 | $+233,896.11 | Market | FILLED | Sold all 174.8906 shares of TQQQ at $1,341.27 MXN (Fee: $680.27 MXN). |
 | 2026-10-28 | BONDIA | INTEREST | 1.0000 | $0.51 | $+0.51 | Market | FILLED | Yield on cash for 0.0123 days. |
 | 2026-10-29 | BONDIA | INTEREST | 1.0000 | $41.29 | $+41.29 | Market | FILLED | Yield on cash for 0.9874 days. |
+| 2026-10-29 | BONDIA | INTEREST | 1.0000 | $0.50 | $+0.50 | Market | FILLED | Yield on cash for 0.0120 days. |
 ---
