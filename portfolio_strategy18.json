@@ -18,10 +18,10 @@
   },
   "sleeves": {
     "core": {
-      "alloc_usd": 11999.06249846447,
-      "last_nav": 6590.886409462713,
-      "last_date": "2026-10-29",
-      "tr_index": 0.9300551231380516
+      "alloc_usd": 12172.187033920858,
+      "last_nav": 6685.980851051802,
+      "last_date": "2026-10-30",
+      "tr_index": 0.9434741182606051
     },
     "macd": {
       "alloc_usd": 11446.842677969154,
@@ -32,19 +32,19 @@
     "us_dcs": {
       "alloc_usd": 9975.399395698638,
       "last_nav": 106320.17,
-      "last_date": "2026-10-29",
+      "last_date": "2026-10-30",
       "tr_index": 0.9992450095747345
     },
     "alternatives": {
-      "alloc_usd": 79310.46816004007,
-      "last_nav": 1156748.0406776331,
-      "last_date": "2026-10-29",
-      "tr_index": 9.639379028228147
+      "alloc_usd": 82031.30451796645,
+      "last_nav": 1196431.6057737921,
+      "last_date": "2026-10-30",
+      "tr_index": 9.970068955249035
     },
     "high_beta": {
       "alloc_usd": 29966.776607638603,
       "last_nav": 104048.35161958107,
-      "last_date": "2026-10-29",
+      "last_date": "2026-10-30",
       "tr_index": 0.9898220070546931
     },
     "dividends": {
@@ -1152,6 +1152,24 @@
         "strategy15": 1.186472,
         "strategy17": 0.988698
       }
+    },
+    {
+      "date": "2026-10-30",
+      "nav_usd": 275022.35,
+      "idx": {
+        "core": 0.943474,
+        "macd": 1.058015,
+        "us_dcs": 0.999245,
+        "alternatives": 9.970069,
+        "high_beta": 0.989822,
+        "dividends": 1.06927,
+        "strategy9": 0.946,
+        "strategy12": 1.026701,
+        "strategy13": 1.008116,
+        "strategy14": 1.186406,
+        "strategy15": 1.186472,
+        "strategy17": 0.988698
+      }
     }
   ],
   "rebalances": [
@@ -1166,6 +1184,6 @@
       "max_drift": 0.0263
     }
   ],
-  "last_updated": "2026-10-29 20:06:29",
-  "total_portfolio_value_usd": 272128.3923178498
+  "last_updated": "2026-10-30 19:39:35",
+  "total_portfolio_value_usd": 275022.3532112326
 }
