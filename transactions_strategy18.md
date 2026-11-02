@@ -8,4 +8,5 @@
 | 2026-08-05 | PORTFOLIO | REBALANCE | 1.00 | $100,000.00 | $100,000.00 | Rebalance | FILLED | Max drift: 0.00pp |
 | 2026-09-01 | PORTFOLIO | REBALANCE | 1.00 | $246,596.69 | $246,596.69 | Rebalance | FILLED | Max drift: 43.74pp |
 | 2026-10-01 | PORTFOLIO | REBALANCE | 1.00 | $255,779.47 | $255,779.47 | Rebalance | FILLED | Max drift: 2.63pp |
+| 2026-11-02 | PORTFOLIO | REBALANCE | 1.00 | $276,696.60 | $276,696.60 | Rebalance | FILLED | Max drift: 5.58pp |
 ---
