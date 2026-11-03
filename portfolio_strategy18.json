@@ -18,10 +18,10 @@
   },
   "sleeves": {
     "core": {
-      "alloc_usd": 12451.34708436003,
-      "last_nav": 6711.675877399247,
-      "last_date": "2026-11-02",
-      "tr_index": 0.9471000024602322
+      "alloc_usd": 12418.233509900498,
+      "last_nav": 6693.826597525452,
+      "last_date": "2026-11-03",
+      "tr_index": 0.9445812495703153
     },
     "macd": {
       "alloc_usd": 11645.8080205035,
@@ -32,19 +32,19 @@
     "us_dcs": {
       "alloc_usd": 10791.167473112026,
       "last_nav": 107320.17,
-      "last_date": "2026-11-02",
+      "last_date": "2026-11-03",
       "tr_index": 0.9992450095747345
     },
     "alternatives": {
-      "alloc_usd": 69174.15046866683,
-      "last_nav": 1235030.7238695668,
-      "last_date": "2026-11-02",
-      "tr_index": 10.283388829333253
+      "alloc_usd": 71388.55466483992,
+      "last_nav": 1274566.5504581165,
+      "last_date": "2026-11-03",
+      "tr_index": 10.612580864512196
     },
     "high_beta": {
       "alloc_usd": 32373.50241933608,
       "last_nav": 105086.80891586756,
-      "last_date": "2026-11-02",
+      "last_date": "2026-11-03",
       "tr_index": 0.9901878550244463
     },
     "dividends": {
@@ -1188,6 +1188,24 @@
         "strategy15": 1.153225,
         "strategy17": 0.988698
       }
+    },
+    {
+      "date": "2026-11-03",
+      "nav_usd": 278516.38,
+      "idx": {
+        "core": 0.944581,
+        "macd": 1.060649,
+        "us_dcs": 0.999245,
+        "alternatives": 10.612581,
+        "high_beta": 0.990188,
+        "dividends": 1.081258,
+        "strategy9": 0.943916,
+        "strategy12": 0.967942,
+        "strategy13": 1.010331,
+        "strategy14": 1.153282,
+        "strategy15": 1.153225,
+        "strategy17": 0.988698
+      }
     }
   ],
   "rebalances": [
@@ -1207,6 +1225,6 @@
       "max_drift": 0.0558
     }
   ],
-  "last_updated": "2026-11-02 23:01:42",
-  "total_portfolio_value_usd": 276335.08758920897
+  "last_updated": "2026-11-03 20:38:14",
+  "total_portfolio_value_usd": 278516.3782109226
 }

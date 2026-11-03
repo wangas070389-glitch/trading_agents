@@ -297,6 +297,10 @@
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 122,122.59 MXN
-* **Total Deployed Capital**: 116,011.39 MXN (99.2% invested)
+* **Total Deployed Capital**: 116,011.39 MXN (99.1% invested)
 * **Unallocated Cash Reserves**: 0.00 MXN (0.0% cash)
-* **Current Portfolio Market Value**: 116,984.51 MXN (including cash)
+* **Current Portfolio Market Value**: 117,025.98 MXN (including cash)
+| 2026-11-03 | BBAJIOO.MX | SELL | 634.69 | $55.42 | $102.01 | $35,072.32 | Quarterly Rebalance (Target weight: 0.0%) |
+| 2026-11-03 | CUERVO.MX | SELL | 1650.22 | $13.01 | $62.26 | $21,407.11 | Quarterly Rebalance (Target weight: 0.0%) |
+| 2026-11-03 | BIMBOA.MX | SELL | 372.28 | $68.37 | $73.81 | $25,378.72 | Quarterly Rebalance (Target weight: 0.0%) |
+| 2026-11-03 | WALMEX.MX | BUY | 696.03 | $50.44 | $101.81 | $-35,209.61 | Quarterly Rebalance (Target weight: 30.0%) |

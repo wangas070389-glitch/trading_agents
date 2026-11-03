@@ -450,4 +450,8 @@
 | 2026-11-02 | CASH | DEPOSIT | 1.00 | $2000.00 | $+2,000.00 | Market | FILLED | Monthly savings contribution |
 | 2026-11-02 | BONDIA | INTEREST | 1.00 | $28.48 | $+28.48 | Market | FILLED | Yield on cash for 3.1253 days. |
 | 2026-11-02 | BONDIA | INTEREST | 1.00 | $0.05 | $+0.05 | Market | FILLED | Yield on cash for 0.0056 days. |
+| 2026-11-03 | BONDIA | INTEREST | 1.00 | $8.21 | $+8.21 | Market | FILLED | Yield on cash for 0.9002 days. |
+| 2026-11-03 | KOFUBL.MX | SELL | 215.46 | $219.06 | $+47,061.62 | Market | FILLED | Screener liquidation |
+| 2026-11-03 | BBAJIOO.MX | BUY | 125.42 | $55.41 | $-6,969.56 | Market | FILLED | Target weight allocation (20.0%) |
+| 2026-11-03 | SPG | BUY | 11.05 | $4178.81 | $-46,290.76 | Market | FILLED | Target weight allocation (20.0%) |
 ---

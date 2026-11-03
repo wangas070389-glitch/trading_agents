@@ -266,4 +266,9 @@
 | 2026-11-02 | CASH | DEPOSIT | 1.00 | $1000.00 | $+1,000.00 | Market | FILLED | Monthly savings contribution |
 | 2026-11-02 | BONDIA | INTEREST | 1.00 | $29.97 | $+29.97 | Market | FILLED | Yield on cash for 3.1252 days. |
 | 2026-11-02 | BONDIA | INTEREST | 1.00 | $0.05 | $+0.05 | Market | FILLED | Yield on cash for 0.0055 days. |
+| 2026-11-03 | BONDIA | INTEREST | 1.00 | $8.64 | $+8.64 | Market | FILLED | Yield on cash for 0.9004 days. |
+| 2026-11-03 | FIHO12.MX | BUY | 3521.35 | $7.68 | $-27,122.43 | Market | FILLED | Target weight allocation (25.0%) |
+| 2026-11-03 | DANHOS13.MX | BUY | 43.57 | $28.87 | $-1,261.65 | Market | FILLED | Target weight allocation (25.0%) |
+| 2026-11-03 | FMTY14.MX | BUY | 1587.03 | $15.41 | $-24,527.06 | Market | FILLED | Target weight allocation (25.0%) |
+| 2026-11-03 | FUNO11.MX | SELL | 68.76 | $35.41 | $+2,427.80 | Market | FILLED | Trimmed to target weight (25.0%) |
 ---
