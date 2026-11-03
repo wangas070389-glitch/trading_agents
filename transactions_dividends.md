@@ -454,4 +454,5 @@
 | 2026-11-03 | KOFUBL.MX | SELL | 215.46 | $219.06 | $+47,061.62 | Market | FILLED | Screener liquidation |
 | 2026-11-03 | BBAJIOO.MX | BUY | 125.42 | $55.41 | $-6,969.56 | Market | FILLED | Target weight allocation (20.0%) |
 | 2026-11-03 | SPG | BUY | 11.05 | $4178.81 | $-46,290.76 | Market | FILLED | Target weight allocation (20.0%) |
+| 2026-11-03 | BONDIA | INTEREST | 1.00 | $0.06 | $+0.06 | Market | FILLED | Yield on cash for 0.0076 days. |
 ---

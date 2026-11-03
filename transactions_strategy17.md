@@ -271,4 +271,5 @@
 | 2026-11-03 | DANHOS13.MX | BUY | 43.57 | $28.87 | $-1,261.65 | Market | FILLED | Target weight allocation (25.0%) |
 | 2026-11-03 | FMTY14.MX | BUY | 1587.03 | $15.41 | $-24,527.06 | Market | FILLED | Target weight allocation (25.0%) |
 | 2026-11-03 | FUNO11.MX | SELL | 68.76 | $35.41 | $+2,427.80 | Market | FILLED | Trimmed to target weight (25.0%) |
+| 2026-11-03 | BONDIA | INTEREST | 1.00 | $0.00 | $+0.00 | Market | FILLED | Yield on cash for 0.0073 days. |
 ---

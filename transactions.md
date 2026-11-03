@@ -292,15 +292,12 @@
 | 2026-08-04 | BONDIA | INTEREST | 1 | 0.6573 | +0.6573 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0355 days. |
 | 2026-08-04 | BONDIA | INTEREST | 1 | 0.3267 | +0.3267 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0176 days. |
 | 2026-08-05 | BONDIA | INTEREST | 1 | 17.8583 | +17.8583 | Market | FILLED | Bondia overnight yield on cash reserves for 0.9639 days. |
+| 2026-11-03 | BONDIA | INTEREST | 1 | 0.0636 | +0.0636 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0075 days. |
 ---
 
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 122,122.59 MXN
-* **Total Deployed Capital**: 116,011.39 MXN (99.1% invested)
-* **Unallocated Cash Reserves**: 0.00 MXN (0.0% cash)
-* **Current Portfolio Market Value**: 117,025.98 MXN (including cash)
-| 2026-11-03 | BBAJIOO.MX | SELL | 634.69 | $55.42 | $102.01 | $35,072.32 | Quarterly Rebalance (Target weight: 0.0%) |
-| 2026-11-03 | CUERVO.MX | SELL | 1650.22 | $13.01 | $62.26 | $21,407.11 | Quarterly Rebalance (Target weight: 0.0%) |
-| 2026-11-03 | BIMBOA.MX | SELL | 372.28 | $68.37 | $73.81 | $25,378.72 | Quarterly Rebalance (Target weight: 0.0%) |
-| 2026-11-03 | WALMEX.MX | BUY | 696.03 | $50.44 | $101.81 | $-35,209.61 | Quarterly Rebalance (Target weight: 30.0%) |
+* **Total Deployed Capital**: 68,023.26 MXN (58.3% invested)
+* **Unallocated Cash Reserves**: 46,648.61 MXN (40.0% cash)
+* **Current Portfolio Market Value**: 116,589.19 MXN (including cash)
