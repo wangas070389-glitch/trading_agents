@@ -273,4 +273,5 @@
 | 2026-11-03 | FUNO11.MX | SELL | 68.76 | $35.41 | $+2,427.80 | Market | FILLED | Trimmed to target weight (25.0%) |
 | 2026-11-03 | BONDIA | INTEREST | 1.00 | $0.00 | $+0.00 | Market | FILLED | Yield on cash for 0.0073 days. |
 | 2026-11-04 | BONDIA | INTEREST | 1.00 | $0.44 | $+0.44 | Market | FILLED | Yield on cash for 1.0049 days. |
+| 2026-11-04 | BONDIA | INTEREST | 1.00 | $0.00 | $+0.00 | Market | FILLED | Yield on cash for 0.0070 days. |
 ---
