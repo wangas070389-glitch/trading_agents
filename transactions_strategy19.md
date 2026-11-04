@@ -60,4 +60,6 @@
 | 2026-11-02 | BONDIA | INTEREST | 1.0000 | $0.13 | $+0.13 | Market | FILLED | Yield on cash for 0.0055 days. |
 | 2026-11-03 | BONDIA | INTEREST | 1.0000 | $21.83 | $+21.83 | Market | FILLED | Yield on cash for 0.9004 days. |
 | 2026-11-03 | BONDIA | INTEREST | 1.0000 | $0.18 | $+0.18 | Market | FILLED | Yield on cash for 0.0073 days. |
+| 2026-11-04 | BONDIA | INTEREST | 1.0000 | $24.37 | $+24.37 | Market | FILLED | Yield on cash for 1.0049 days. |
+| 2026-11-04 | SQQQ | BUY | 174.5015 | $775.16 | $-135,659.56 | Market | FILLED | PF systematic entry |
 ---
