@@ -521,4 +521,7 @@
 | 2026-11-04 | BONDIA | INTEREST | 1.0000 | $32.3171 | $0.00 | $32.32 | Accrued interest on sweep balance |
 | 2026-11-04 | BONDIA | INTEREST | 1.0000 | $0.2250 | $0.00 | $0.23 | Accrued interest on sweep balance |
 | 2026-11-04 | SPY | BUY | 11.0000 | $14251.1631 | $454.61 | $-157,217.41 | Bull regime allocation |
+| 2026-11-05 | BONDIA | INTEREST | 1.0000 | $4.0767 | $0.00 | $4.08 | Accrued interest on sweep balance |
+| 2026-11-05 | SPY | SELL | 11.0000 | $13753.1435 | $438.73 | $150,845.85 | Regime shifted out of Bull mode |
+| 2026-11-05 | GLD | BUY | 22.0000 | $7044.7551 | $449.46 | $-155,434.07 | Bear regime allocation |
 ---

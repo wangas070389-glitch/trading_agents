@@ -1,4 +1,4 @@
-# Consolidated Paper-Portfolio NAV — 2026-11-04
+# Consolidated Paper-Portfolio NAV — 2026-11-05
 
 The total below excludes composite strategies so it does not double-count their underlying sleeves. This remains paper-trading reporting, not a brokerage NAV.
 
@@ -6,37 +6,37 @@ USD/MXN: 17.4300 (fallback; market-data fetch failed)
 
 | Strategy | Currency | NAV (USD) | Cash (USD) | Weight | Status |
 | :--- | :---: | ---: | ---: | ---: | :--- |
-| S1 Adaptive Value | MXN | $6,749.14 | $2,676.83 | 0.37% | MISMATCH; marks unverified |
-| S2 1d MACD Systematic | MXN | $7,441.61 | $2,090.84 | 0.41% | MISMATCH; marks unverified |
-| S3 US Stock Momentum | USD | $-115,631.39 | $-193,211.20 | -6.38% | MISMATCH; marks unverified |
-| S4 US DCF Value-Growth | USD | $107,320.17 | $107,320.17 | 5.92% | MISMATCH; marks unverified |
-| S5 Alternative Assets | USD | $1,378,869.79 | $1,010,201.09 | 76.03% | MISMATCH; marks unverified |
-| S6 High-Beta Momentum | USD | $105,099.76 | $105,099.76 | 5.80% | MISMATCH; marks unverified |
-| S8 Dividend Quality | MXN | $13,359.11 | $2,528.95 | 0.74% | VERIFIED; marks unverified |
-| S9 AI Regime Stat-Arb | MXN | $10,295.85 | $1,302.00 | 0.57% | MISMATCH; marks unverified |
+| S1 Adaptive Value | MXN | $6,769.48 | $2,677.32 | 0.37% | MISMATCH; marks unverified |
+| S2 1d MACD Systematic | MXN | $7,412.90 | $2,003.19 | 0.41% | MISMATCH; marks unverified |
+| S3 US Stock Momentum | USD | $-115,631.39 | $-193,211.20 | -6.35% | MISMATCH; marks unverified |
+| S4 US DCF Value-Growth | USD | $107,320.17 | $107,320.17 | 5.89% | MISMATCH; marks unverified |
+| S5 Alternative Assets | USD | $1,397,540.69 | $1,029,324.42 | 76.69% | MISMATCH; marks unverified |
+| S6 High-Beta Momentum | USD | $105,112.70 | $105,112.70 | 5.77% | MISMATCH; marks unverified |
+| S8 Dividend Quality | MXN | $13,464.65 | $2,529.41 | 0.74% | VERIFIED; marks unverified |
+| S9 AI Regime Stat-Arb | MXN | $9,930.83 | $1,039.00 | 0.54% | MISMATCH; marks unverified |
 | S10 Intraday VWAP | MXN | $12,212.54 | $12,212.54 | 0.67% | MISMATCH; marks unverified |
-| S11 Intraday CCI-ADX | MXN | $12,407.96 | $12,407.96 | 0.68% | MISMATCH; marks unverified |
-| S12 VTTL Trend+Vol | MXN | $12,042.55 | $8,455.26 | 0.66% | MISMATCH; marks unverified |
-| S13 CARA Cross-Asset | MXN | $11,980.59 | $11,980.59 | 0.66% | UNRESOLVED; marks unverified |
-| S14 HEDGE Aggregator | MXN | $13,920.36 | $11,615.48 | 0.77% | UNRESOLVED; marks unverified |
-| S15 TRACK Tracker | MXN | $13,919.87 | $11,615.10 | 0.77% | UNRESOLVED; marks unverified |
-| S16 HMM Intraday Router | MXN | $12,300.83 | $12,300.83 | 0.68% | MISMATCH; marks unverified |
-| S17 FIBRAs Dynamic | MXN | $6,266.85 | $139.31 | 0.35% | MISMATCH; marks unverified |
-| S18 Efficient Frontier | USD | $282,776.63 | $0.00 | 0.00% | composite — excluded from total |
-| S19 Particle Filter QQQ | MXN | $7,713.10 | $7,713.10 | 0.43% | MISMATCH; marks unverified |
-| S20 Hurst Exponent Dynamic | MXN | $10,196.82 | $10,196.82 | 0.56% | MISMATCH; marks unverified |
-| S21 Shannon Entropy Dynamic | MXN | $9,161.02 | $0.00 | 0.51% | MISMATCH; marks unverified |
-| S22 Walk-Forward ML | MXN | $13,515.27 | $0.00 | 0.75% | MISMATCH; marks unverified |
-| S23 Calculus S&R | MXN | $11,434.20 | $0.00 | 0.63% | MISMATCH; marks unverified |
-| S24 30m Random Forest | MXN | $8,399.03 | $0.00 | 0.46% | MISMATCH; marks unverified |
-| S25 Golden MACD BMV | MXN | $11,512.21 | $11,512.21 | 0.63% | MISMATCH; marks unverified |
-| S27 Golden Hurst | MXN | $11,708.37 | $11,708.37 | 0.65% | MISMATCH; marks unverified |
-| S29 Golden Stat-Arb | MXN | $11,819.10 | $11,819.10 | 0.65% | MISMATCH; marks unverified |
-| S30 Golden MACD US | USD | $98,827.56 | $81,046.52 | 5.45% | MISMATCH; marks unverified |
-| S31 Fibonacci S&R | MXN | $10,717.70 | $10,717.70 | 0.59% | MISMATCH; marks unverified |
+| S11 Intraday CCI-ADX | MXN | $12,410.19 | $12,410.19 | 0.68% | MISMATCH; marks unverified |
+| S12 VTTL Trend+Vol | MXN | $11,392.92 | $11,392.92 | 0.63% | MISMATCH; marks unverified |
+| S13 CARA Cross-Asset | MXN | $11,982.51 | $11,982.51 | 0.66% | UNRESOLVED; marks unverified |
+| S14 HEDGE Aggregator | MXN | $13,504.10 | $12,261.72 | 0.74% | UNRESOLVED; marks unverified |
+| S15 TRACK Tracker | MXN | $13,503.71 | $12,261.29 | 0.74% | UNRESOLVED; marks unverified |
+| S16 HMM Intraday Router | MXN | $12,303.04 | $12,303.04 | 0.68% | MISMATCH; marks unverified |
+| S17 FIBRAs Dynamic | MXN | $6,283.64 | $139.34 | 0.34% | MISMATCH; marks unverified |
+| S18 Efficient Frontier | USD | $283,123.67 | $0.00 | 0.00% | composite — excluded from total |
+| S19 Particle Filter QQQ | MXN | $7,714.49 | $7,714.49 | 0.42% | MISMATCH; marks unverified |
+| S20 Hurst Exponent Dynamic | MXN | $10,198.65 | $10,198.65 | 0.56% | MISMATCH; marks unverified |
+| S21 Shannon Entropy Dynamic | MXN | $7,496.42 | $0.00 | 0.41% | MISMATCH; marks unverified |
+| S22 Walk-Forward ML | MXN | $11,061.11 | $0.00 | 0.61% | MISMATCH; marks unverified |
+| S23 Calculus S&R | MXN | $9,356.66 | $0.00 | 0.51% | MISMATCH; marks unverified |
+| S24 30m Random Forest | MXN | $6,872.60 | $0.00 | 0.38% | MISMATCH; marks unverified |
+| S25 Golden MACD BMV | MXN | $11,514.28 | $11,514.28 | 0.63% | MISMATCH; marks unverified |
+| S27 Golden Hurst | MXN | $11,710.47 | $11,710.47 | 0.64% | MISMATCH; marks unverified |
+| S29 Golden Stat-Arb | MXN | $11,821.22 | $11,821.22 | 0.65% | MISMATCH; marks unverified |
+| S30 Golden MACD US | USD | $98,448.58 | $81,056.55 | 5.40% | MISMATCH; marks unverified |
+| S31 Fibonacci S&R | MXN | $10,686.62 | $0.00 | 0.59% | UNRESOLVED; marks unverified |
 
 **UNVERIFIED ESTIMATES:** these balances are not ledger-certified NAV or investment profits. Historical returns are withheld pending reconstruction.
 
-**Independent-book NAV estimate:** $1,813,559.96
-**Independent-book cash estimate:** $1,263,449.32
-**Gross research NAV estimate (includes composites):** $2,096,336.59
+**Independent-book NAV estimate:** $1,822,393.79
+**Independent-book cash estimate:** $1,275,774.23
+**Gross research NAV estimate (includes composites):** $2,105,517.46
