@@ -64,4 +64,5 @@
 | 2026-11-04 | SQQQ | BUY | 174.5015 | $775.16 | $-135,659.56 | Market | FILLED | PF systematic entry |
 | 2026-11-04 | SQQQ | SELL | 174.5015 | $772.66 | $+134,439.36 | Market | FILLED | PF switch to CASH |
 | 2026-11-05 | BONDIA | INTEREST | 1.0000 | $24.15 | $+24.15 | Market | FILLED | Yield on cash for 1.0048 days. |
+| 2026-11-05 | BONDIA | INTEREST | 1.0000 | $0.16 | $+0.16 | Market | FILLED | Yield on cash for 0.0067 days. |
 ---

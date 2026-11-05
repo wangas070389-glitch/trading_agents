@@ -366,4 +366,5 @@
 | 2026-11-04 | AMZN | BUY | 66.8385 | $266.1400 | $-17,790.17 | Market | FILLED | Golden MACD US entry |
 | 2026-11-04 | CASH_SWEEP | INTEREST | 1.0000 | $0.0701 | $+0.07 | Market | FILLED | USD Sweep interest |
 | 2026-11-05 | CASH_SWEEP | INTEREST | 1.0000 | $10.0327 | $+10.03 | Market | FILLED | USD Sweep interest |
+| 2026-11-05 | CASH_SWEEP | INTEREST | 1.0000 | $0.0670 | $+0.07 | Market | FILLED | USD Sweep interest |
 ---

@@ -13,7 +13,7 @@
       "ticker": "DANHOS13.MX",
       "shares": 936.7508355717631,
       "buy_price": 27.989999771118164,
-      "last_price": 29.489999771118164,
+      "last_price": 29.559999465942383,
       "target_weight": 0.25,
       "dividend_rate": 1.8,
       "last_dividend": 0.45,
@@ -24,7 +24,7 @@
       "ticker": "FUNO11.MX",
       "shares": 763.7389868863797,
       "buy_price": 30.030000686645508,
-      "last_price": 36.529998779296875,
+      "last_price": 36.459999084472656,
       "target_weight": 0.25,
       "dividend_rate": 2.47,
       "last_dividend": 0.62,
@@ -46,7 +46,7 @@
       "ticker": "FMTY14.MX",
       "shares": 1587.030333827092,
       "buy_price": 15.40999984741211,
-      "last_price": 15.609999656677246,
+      "last_price": 15.600000381469727,
       "target_weight": 0.25,
       "dividend_rate": 1.14,
       "last_dividend": 0.070812,
@@ -54,6 +54,6 @@
       "payment_date": "N/A"
     }
   ],
-  "last_updated": "2026-11-05 21:12:22",
+  "last_updated": "2026-11-05 21:22:02",
   "last_rebalance_date": "2026-11-03"
 }

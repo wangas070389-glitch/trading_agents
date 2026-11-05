@@ -1,5 +1,5 @@
 # Shadow Frontier — Live Track Record of the Allocation Layer
-**Generated:** 2026-11-05 21:12:43 | Inception: 2026-07-14 (114 calendar days) | Virtual capital: $100,000 USD
+**Generated:** 2026-11-05 21:22:22 | Inception: 2026-07-14 (114 calendar days) | Virtual capital: $100,000 USD
 **Weights (frozen):** efficient_frontier_report.md 2026-07-11 -- Risk Parity, hurdle-filtered (RECOMMENDED)
 
 This book paper-trades the recommended frontier allocation itself, marked
@@ -11,9 +11,9 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 ## 1. Promise vs. Realized
 | Metric | Backtest promise | Realized (live) |
 | :--- | ---: | ---: |
-| NAV | -- | $288,946.44 USD |
-| Return since inception | -- | +188.95% |
-| Ann. return | +14.67% | +604.96% |
+| NAV | -- | $288,908.61 USD |
+| Return since inception | -- | +188.91% |
+| Ann. return | +14.67% | +604.84% |
 | Ann. volatility | 6.66% | 75.16% |
 | Sharpe (Rf 6.53%) | +1.22 | +4.46 |
 | Max drawdown | -4.10% | -10.68% |
@@ -22,7 +22,7 @@ than corrupt it; rebalanced to targets on the first mark of each month.
 | Sleeve | Target w | Current w | TR since inception | Last mark | Source |
 | :--- | ---: | ---: | ---: | :--- | :--- |
 | S1 Adaptive Value (BMV) | 5.4% | 5.3% | -2.59% | 2026-11-05 | multi-strategy USD |
-| S2 MACD Systematic | 4.9% | 4.9% | +7.95% | 2026-11-04 | watchdog MXN/USD |
+| S2 MACD Systematic | 4.9% | 4.9% | +7.66% | 2026-11-05 | watchdog MXN/USD |
 | S4 US DCF Value-Growth | 4.5% | 4.4% | +1.77% | 2026-11-05 | multi-strategy USD |
 | S5 Alternatives | 25.0% | 27.5% | +1273.28% | 2026-11-05 | multi-strategy USD |
 | S6 High-Beta Momentum | 13.5% | 13.1% | -0.09% | 2026-11-05 | multi-strategy USD |
@@ -70,10 +70,7 @@ Largest divergences from the backtest correlation matrix (the frontier's key inp
 | 2026-11-02 | $281,224.64 | 5.6pp |
 
 ## 5. Warnings
-- S21 Golden Entropy: movimiento de -17.9% en una sola marca (2026-11-04 -> 2026-11-05); revisar fuente de datos
-- S22 Walk-Forward ML: movimiento de -17.9% en una sola marca (2026-11-04 -> 2026-11-05); revisar fuente de datos
-- S23 Calculus S&R: movimiento de -17.9% en una sola marca (2026-11-04 -> 2026-11-05); revisar fuente de datos
-- S24 ML Classifier: movimiento de -17.9% en una sola marca (2026-11-04 -> 2026-11-05); revisar fuente de datos
+*None this cycle.*
 
 ## 6. Method notes
 - USD-denominated; MXN sleeves converted at usd_mxn_rate (17.4300), so they carry FX exposure — same caveat as the frontier report.

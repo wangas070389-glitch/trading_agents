@@ -3,7 +3,7 @@
   "capital_injections": 0.0,
   "total_funded_capital": 199421.27,
   "nav": 190754.3,
-  "total_capital": 130662.55018415663,
+  "total_capital": 130648.61687059076,
   "cash_balance": 0.0,
   "holdings_value": 190754.3,
   "net_trading_profit": -8666.97,
@@ -13,9 +13,9 @@
       "ticker": "TQQQ",
       "shares": 137.9934782071873,
       "buy_price": 1301.8690716982237,
-      "last_price": 946.87482250412,
+      "last_price": 946.7738516919708,
       "target_weight": 1.0
     }
   ],
-  "last_updated": "2026-11-05 21:12:29"
+  "last_updated": "2026-11-05 21:22:09"
 }
