@@ -65,4 +65,5 @@
 | 2026-11-04 | SQQQ | SELL | 174.5015 | $772.66 | $+134,439.36 | Market | FILLED | PF switch to CASH |
 | 2026-11-05 | BONDIA | INTEREST | 1.0000 | $24.15 | $+24.15 | Market | FILLED | Yield on cash for 1.0048 days. |
 | 2026-11-05 | BONDIA | INTEREST | 1.0000 | $0.16 | $+0.16 | Market | FILLED | Yield on cash for 0.0067 days. |
+| 2026-11-06 | BONDIA | INTEREST | 1.0000 | $23.21 | $+23.21 | Market | FILLED | Yield on cash for 0.9655 days. |
 ---

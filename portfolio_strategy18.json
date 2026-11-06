@@ -18,10 +18,10 @@
   },
   "sleeves": {
     "core": {
-      "alloc_usd": 12558.574889743511,
-      "last_nav": 6769.475107466711,
-      "last_date": "2026-11-05",
-      "tr_index": 0.955256184602971
+      "alloc_usd": 12675.593741270417,
+      "last_nav": 6832.5520257851,
+      "last_date": "2026-11-06",
+      "tr_index": 0.9641571134597561
     },
     "macd": {
       "alloc_usd": 11830.487066378271,
@@ -32,19 +32,19 @@
     "us_dcs": {
       "alloc_usd": 10791.167473112026,
       "last_nav": 107320.17,
-      "last_date": "2026-11-05",
+      "last_date": "2026-11-06",
       "tr_index": 0.9992450095747345
     },
     "alternatives": {
-      "alloc_usd": 78276.34441068029,
-      "last_nav": 1397540.6946728658,
-      "last_date": "2026-11-05",
-      "tr_index": 11.63651566748826
+      "alloc_usd": 80333.18955827225,
+      "last_nav": 1434263.4723912382,
+      "last_date": "2026-11-06",
+      "tr_index": 11.942285066477787
     },
     "high_beta": {
       "alloc_usd": 32381.47995445236,
       "last_nav": 105112.7045912111,
-      "last_date": "2026-11-05",
+      "last_date": "2026-11-06",
       "tr_index": 0.9904318588484025
     },
     "dividends": {
@@ -1242,6 +1242,24 @@
         "strategy15": 1.130127,
         "strategy17": 0.988698
       }
+    },
+    {
+      "date": "2026-11-06",
+      "nav_usd": 286685.73,
+      "idx": {
+        "core": 0.964157,
+        "macd": 1.077469,
+        "us_dcs": 0.999245,
+        "alternatives": 11.942285,
+        "high_beta": 0.990432,
+        "dividends": 1.108063,
+        "strategy9": 0.910822,
+        "strategy12": 0.930999,
+        "strategy13": 1.014048,
+        "strategy14": 1.130163,
+        "strategy15": 1.130127,
+        "strategy17": 0.988698
+      }
     }
   ],
   "rebalances": [
@@ -1261,6 +1279,6 @@
       "max_drift": 0.0558
     }
   ],
-  "last_updated": "2026-11-05 21:22:22",
-  "total_portfolio_value_usd": 284511.8673909096
+  "last_updated": "2026-11-06 20:32:39",
+  "total_portfolio_value_usd": 286685.7313900285
 }
