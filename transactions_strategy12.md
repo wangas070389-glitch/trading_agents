@@ -438,4 +438,5 @@
 | 2026-11-05 | TQQQ | SELL | 54.0396 | $947.0262 | $0.00 | Rebalanceo a w=0.000 |
 | 2026-11-05 | BONDIA | INTEREST | 1.0000 | $0.2381 | $0.00 | Sweep interest |
 | 2026-11-06 | BONDIA | INTEREST | 1.0000 | $34.2743 | $0.00 | Sweep interest |
+| 2026-11-06 | BONDIA | INTEREST | 1.0000 | $0.2796 | $0.00 | Sweep interest |
 ---

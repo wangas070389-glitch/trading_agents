@@ -526,4 +526,5 @@
 | 2026-11-05 | GLD | BUY | 22.0000 | $7044.7551 | $449.46 | $-155,434.07 | Bear regime allocation |
 | 2026-11-05 | BONDIA | INTEREST | 1.0000 | $0.0217 | $0.00 | $0.02 | Accrued interest on sweep balance |
 | 2026-11-06 | BONDIA | INTEREST | 1.0000 | $3.1257 | $0.00 | $3.13 | Accrued interest on sweep balance |
+| 2026-11-06 | BONDIA | INTEREST | 1.0000 | $0.0254 | $0.00 | $0.03 | Accrued interest on sweep balance |
 ---

@@ -4,7 +4,7 @@
   "total_funded_capital": 202000.0,
   "nav": 203573.35,
   "total_capital": 209573.35,
-  "cash_balance": 44997.87,
+  "cash_balance": 44997.93,
   "holdings_value": 161789.42,
   "net_trading_profit": 1573.35,
   "net_trading_return_pct": 0.78,
@@ -13,7 +13,7 @@
       "ticker": "BBAJIOO.MX",
       "shares": 833.0067411176648,
       "buy_price": 56.529998779296875,
-      "last_price": 55.84000015258789,
+      "last_price": 55.88999938964844,
       "target_weight": 0.2,
       "dividend_rate": 4.71,
       "last_dividend": 1.906996,
@@ -24,7 +24,7 @@
       "ticker": "AC.MX",
       "shares": 210.59683618264089,
       "buy_price": 193.35000610351562,
-      "last_price": 234.6699981689453,
+      "last_price": 234.6999969482422,
       "target_weight": 0.2,
       "dividend_rate": 9.78,
       "last_dividend": 2.0,
@@ -35,7 +35,7 @@
       "ticker": "FUNO11.MX",
       "shares": 1327.213140686486,
       "buy_price": 30.68000030517578,
-      "last_price": 36.27000045776367,
+      "last_price": 36.349998474121094,
       "target_weight": 0.2,
       "dividend_rate": 2.53,
       "last_dividend": 0.68,
@@ -46,7 +46,7 @@
       "ticker": "SPG",
       "shares": 11.045459878265088,
       "buy_price": 4178.812281872408,
-      "last_price": 4244.73999786604,
+      "last_price": 4251.450811142335,
       "target_weight": 0.2,
       "dividend_rate": 8.9,
       "last_dividend": 2.25,
@@ -54,6 +54,6 @@
       "payment_date": "2026-09-30"
     }
   ],
-  "last_updated": "2026-11-06 20:31:25",
+  "last_updated": "2026-11-06 20:42:45",
   "last_rebalance_date": "2026-11-03"
 }
