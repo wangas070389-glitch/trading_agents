@@ -3,18 +3,11 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 199916.02,
   "nav": 182199.53,
-  "total_capital": 170730.08,
-  "cash_balance": 18112.98,
+  "total_capital": 169075.7,
+  "cash_balance": 169075.7,
   "holdings_value": 0.0,
   "net_trading_profit": -17716.49,
   "net_trading_return_pct": -8.86,
-  "holdings": [
-    {
-      "ticker": "GLD",
-      "shares": 22,
-      "buy_price": 7044.755079846189,
-      "last_price": 6937.140930228517
-    }
-  ],
-  "last_updated": "2026-11-06 20:43:17"
+  "holdings": [],
+  "last_updated": "2026-11-10 20:59:44"
 }

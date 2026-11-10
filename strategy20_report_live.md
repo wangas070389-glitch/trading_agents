@@ -1,12 +1,12 @@
 # Strategy 20: Hurst Exponent & FBM Live Execution Report
-**Execution Timestamp:** 2026-11-06 20:43:44 | **Strategy Version:** Live V1
+**Execution Timestamp:** 2026-11-10 21:00:11 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $177,793.61 MXN
-* **Total Cash sweep Balance:** $177,793.61 MXN (Parked in Bondia compound at 6.53% APR)
+* **Total Portfolio NAV:** $177,921.12 MXN
+* **Total Cash sweep Balance:** $177,921.12 MXN (Parked in Bondia compound at 6.53% APR)
 * **Equity Exposure:** 0.0%
 * **Asset Allocation Target:** CASH
-* **USD/MXN Exchange Rate:** 18.6260
+* **USD/MXN Exchange Rate:** 18.6238
 
 ## 2. Current Holdings
 | Ticker | Shares Held | Buy Price (USD) | Last Price (USD) | Market Value (USD) | Market Value (MXN) | Target Weight |
@@ -14,10 +14,10 @@
 | **CASH** | - | - | - | $0.00 | $0.00 | 100.0% |
 
 ## 3. Hurst & FBM Regime Estimates
-* **Rolling Hurst Exponent ($H_t$):** 0.3538
+* **Rolling Hurst Exponent ($H_t$):** 0.3703
 * **Regret Regime Mode:** CHOP/MEAN-REVERTING (Cash Sweep Active)
 * **Trend Direction:** BULLISH (SMA 50 > 120)
 
 ## 4. Today's Execution Logs
-* **[INTEREST]** Cash sweep accrued yield of $0.2500 MXN.
+* **[INTEREST]** Cash sweep accrued yield of $127.5083 MXN.
 * Hold current position in **CASH**; no transition trades required.

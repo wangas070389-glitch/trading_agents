@@ -1,22 +1,26 @@
 # Strategy 9: AI-Regime Adaptive Statistical Arbitrage Execution Report
-**Execution Date:** 2026-11-06 20:43:16 | **Strategy Version:** Upgraded Live V1
+**Execution Date:** 2026-11-10 20:59:44 | **Strategy Version:** Upgraded Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $170,730.08 MXN
-* **Total Cash Balance:** $18,112.98 MXN (Parked compounding in Bondia sweep at 6.53% APR)
-* **Equity Exposure:** 89.4%
-* **Active Regime:** State 1 (High volatility, downward pressure detected on SPY (3-day HMM consensus))
+* **Total Portfolio NAV:** $169,075.70 MXN
+* **Total Cash Balance:** $169,075.70 MXN (Parked compounding in Bondia sweep at 6.53% APR)
+* **Equity Exposure:** 0.0%
+* **Active Regime:** State 2 (Range-bound chop, mean-reversion detected on SPY (3-day HMM consensus))
 
 ## 2. Current Holdings
 | Ticker | Type | Shares/Qty Y | Shares/Qty X | Buy Price/Alloc | Last Price | Market Value (MXN) |
 | :--- | :---: | :---: | :---: | :---: | :---: | ---: |
-| **GLD** | REGIME ASSET | 22.0000 | -- | $7,044.76 | $6,937.14 | $152,617.10 |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash reserves earned $$0.0254 MXN sweep interest.
-* No trades or rebalancing actions triggered today.
+* **[INTEREST ACCRUED]** Cash reserves earned $$12.9901 MXN sweep interest.
+* SOLD 22.0000 shares of GLD due to regime rotation.
 
 ## 4. Asset Evaluation Diagnostics (Regime & Arbitrage checks)
 * **Regime Signal Classifier (HMM on SPY):**
-  * Current Decoded Regime: HMM State 0 -> **Regime 1 (High volatility, downward pressure detected on SPY (3-day HMM consensus))**
+  * Current Decoded Regime: HMM State 0 -> **Regime 2 (Range-bound chop, mean-reversion detected on SPY (3-day HMM consensus))**
 
+### Statistical Arbitrage Pairs Cointegration Telemetry:
+| Pair | Cointegrated? | Current Z-Score | Hedge Ratio (Beta) | Decision |
+| :--- | :---: | :---: | :---: | :--- |
+| BTC-USD/ETH-USD | NO | 0.000 | 1.000 | No signal |
+| EURUSD=X/GBPUSD=X | NO | 0.000 | 1.000 | No signal |
