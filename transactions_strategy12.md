@@ -443,4 +443,5 @@
 | 2026-11-10 | BONDIA | INTEREST | 1.0000 | $0.3360 | $0.00 | Sweep interest |
 | 2026-11-11 | BONDIA | INTEREST | 1.0000 | $35.9940 | $0.00 | Sweep interest |
 | 2026-11-11 | TQQQ | BUY | 32.5695 | $1124.6790 | $0.00 | Rebalanceo a w=0.184 |
+| 2026-11-11 | BONDIA | INTEREST | 1.0000 | $0.2779 | $0.00 | Sweep interest |
 ---
