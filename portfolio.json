@@ -4,7 +4,7 @@
   "total_funded_capital": 120000.0,
   "nav": 122122.59,
   "total_capital": 122122.59,
-  "cash_balance": 46708.0,
+  "cash_balance": 46716.58,
   "holdings_value": 19977.61,
   "net_trading_profit": 2122.59,
   "net_trading_return_pct": 1.77,
@@ -13,7 +13,7 @@
       "ticker": "GRUMAB.MX",
       "shares": 1,
       "buy_price": 291.46,
-      "last_price": 268.8599853515625,
+      "last_price": 269.6000061035156,
       "target_weight": 0.027853008203029602,
       "dcs": 0.8761688450741951,
       "garch_vol": 0.01745086216269034,
@@ -25,7 +25,7 @@
       "ticker": "ORBIA.MX",
       "shares": 1538.8681574288416,
       "buy_price": 21.200000762939453,
-      "last_price": 22.059999465942383,
+      "last_price": 22.139999389648438,
       "target_weight": 0.3,
       "dcs": 0.8984070010341624,
       "garch_vol": 0.024751543605839216,
@@ -37,7 +37,7 @@
       "ticker": "WALMEX.MX",
       "shares": 696.030837920285,
       "buy_price": 50.439998626708984,
-      "last_price": 54.459999084472656,
+      "last_price": 53.599998474121094,
       "target_weight": 0.3,
       "dcs": 0.22989284472443644,
       "garch_vol": 0.016856506987418855,
@@ -46,6 +46,6 @@
       "zg_t": 0.0
     }
   ],
-  "last_updated": "2026-11-10 21:12:45",
+  "last_updated": "2026-11-11 21:31:07",
   "last_rebalance_date": "2026-11-03"
 }
