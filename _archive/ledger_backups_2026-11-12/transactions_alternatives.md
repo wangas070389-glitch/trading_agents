@@ -1,0 +1,175 @@
+# Transaction Log (Alternative Assets Strategy)
+
+| Date | Ticker | Action | Shares | Price | Fee | Net Amount | Note |
+| :--- | :--- | :--- | ---: | ---: | ---: | ---: | :--- |
+| 2026-06-23 | EURUSD=X | BUY | 13154.0000 | $1.1370 | $43.37 | $-14,999.60 | Entry: Oversold (RSI=25.6) at lower Bollinger Band |
+| 2026-06-24 | GBPUSD=X | BUY | 11354.0000 | $1.3165 | $43.35 | $-14,990.49 | Entry: Oversold (RSI=32.5) at lower Bollinger Band |
+| 2026-07-01 | CASH | DEPOSIT | 1.0000 | $1000.0000 | $0.00 | $-1,000.00 | Monthly savings contribution |
+| 2026-07-06 | DBA | BUY | 733.0000 | $27.5278 | $58.52 | $-20,236.39 | Alpaca Order filled | Entry: Breakout above 20-day high in bullish trend |
+| 2026-07-15 | GBPUSD=X | SELL | 11354.0000 | $1.3544 | $44.60 | $15,333.77 | Exit: Overbought (RSI=65.0) at upper Bollinger Band |
+| 2026-07-17 | USO | BUY | 164.0000 | $123.2000 | $58.59 | $-20,263.39 | Alpaca Order FILLED (7f999b03-7bcc-4c67-b5ca-efae1ecc4c22) | Entry: Breakout above 20-day high in bullish trend |
+| 2026-07-17 | USO | SELL | 164.0000 | $121.5600 | $57.81 | $19,878.03 | Alpaca Order FILLED (af022206-3fdf-44bb-87d3-65c6ed8255dd) | Exit: Breakout below 10-day low or bearish trend break |
+| 2026-07-17 | USO | BUY | 164.0000 | $122.7500 | $58.38 | $-20,189.38 | Alpaca Order FILLED (e67af73c-5f34-4f64-977c-0c3ab02078fe) | Entry: Breakout above 20-day high in bullish trend |
+| 2026-07-27 | USO | SELL-REJECTED | 164.0000 | $124.7300 | $0.00 | $20,455.72 | Alpaca accepted |
+| 2026-07-27 | USO | SELL-REJECTED | 164.0000 | $124.7600 | $0.00 | $20,460.64 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-27 | USO | SELL-REJECTED | 164.0000 | $124.7600 | $0.00 | $20,460.64 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-27 | USO | SELL-REJECTED | 164.0000 | $124.7600 | $0.00 | $20,460.64 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-28 | USO | SELL-REJECTED | 164.0000 | $118.9400 | $0.00 | $19,506.16 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-28 | USO | SELL-REJECTED | 164.0000 | $118.6200 | $0.00 | $19,453.68 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-28 | USO | SELL-REJECTED | 164.0000 | $120.1500 | $0.00 | $19,704.60 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-28 | USO | SELL-REJECTED | 164.0000 | $120.4800 | $0.00 | $19,758.72 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-28 | USO | SELL-REJECTED | 164.0000 | $120.4900 | $0.00 | $19,760.36 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-28 | USO | SELL-REJECTED | 164.0000 | $120.4900 | $0.00 | $19,760.36 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-28 | USO | SELL-REJECTED | 164.0000 | $120.4900 | $0.00 | $19,760.36 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-29 | DBA | SELL-REJECTED | 733.0000 | $27.5400 | $0.00 | $20,186.82 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-29 | DBA | SELL-REJECTED | 733.0000 | $27.5297 | $0.00 | $20,179.27 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-29 | DBA | SELL-REJECTED | 733.0000 | $27.4900 | $0.00 | $20,150.17 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-29 | DBA | SELL-REJECTED | 733.0000 | $27.4900 | $0.00 | $20,150.17 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-29 | DBA | SELL-REJECTED | 733.0000 | $27.4900 | $0.00 | $20,150.17 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-29 | DBA | SELL-REJECTED | 733.0000 | $27.4900 | $0.00 | $20,150.17 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-30 | USDJPY=X | BUY | 414.0000 | $159.4500 | $191.44 | $-66,203.73 | Entry: Oversold (RSI=32.0) at lower Bollinger Band |
+| 2026-07-30 | DBA | SELL-REJECTED | 733.0000 | $27.4800 | $0.00 | $20,142.84 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-30 | DBA | SELL-REJECTED | 733.0000 | $27.4800 | $0.00 | $20,142.84 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-30 | DBA | SELL-REJECTED | 733.0000 | $27.4800 | $0.00 | $20,142.84 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-07-30 | DBA | SELL-REJECTED | 733.0000 | $27.4800 | $0.00 | $20,142.84 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-01 | CASH | DEPOSIT | 1.0000 | $1000.0000 | $0.00 | $-1,000.00 | Monthly savings contribution |
+| 2026-08-03 | USO | SELL-REJECTED | 164.0000 | $121.2200 | $0.00 | $19,880.08 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-03 | USO | SELL-REJECTED | 164.0000 | $121.8200 | $0.00 | $19,978.48 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-03 | USO | SELL-REJECTED | 164.0000 | $122.4750 | $0.00 | $20,085.90 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-03 | USO | SELL-REJECTED | 164.0000 | $122.1200 | $0.00 | $20,027.68 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-03 | USO | SELL-REJECTED | 164.0000 | $122.1200 | $0.00 | $20,027.68 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-03 | USO | SELL-REJECTED | 164.0000 | $122.1200 | $0.00 | $20,027.68 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-04 | USO | SELL-REJECTED | 164.0000 | $115.9900 | $0.00 | $19,022.36 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-04 | USO | SELL-REJECTED | 164.0000 | $116.4700 | $0.00 | $19,101.08 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-04 | USO | SELL-REJECTED | 164.0000 | $115.6387 | $0.00 | $18,964.75 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-04 | USO | SELL-REJECTED | 164.0000 | $115.7500 | $0.00 | $18,983.00 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-04 | USO | SELL-REJECTED | 164.0000 | $115.7800 | $0.00 | $18,987.92 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-04 | USO | SELL-REJECTED | 164.0000 | $115.7800 | $0.00 | $18,987.92 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-04 | USO | SELL-REJECTED | 164.0000 | $115.7800 | $0.00 | $18,987.92 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-06 | USO | SELL-REJECTED | 164.0000 | $114.8800 | $0.00 | $18,840.32 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-07 | USO | SELL-REJECTED | 164.0000 | $119.7000 | $0.00 | $19,630.80 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-07 | USDMXN=X | BUY | 1213.0000 | $17.1460 | $60.31 | $-20,858.42 | Entry: Oversold (RSI=33.4) at lower Bollinger Band |
+| 2026-08-07 | USO | SELL-REJECTED | 164.0000 | $119.7900 | $0.00 | $19,645.56 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-07 | USO | SELL-REJECTED | 164.0000 | $119.7600 | $0.00 | $19,640.64 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-07 | USO | SELL-REJECTED | 164.0000 | $119.6200 | $0.00 | $19,617.68 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-07 | USO | SELL-REJECTED | 164.0000 | $119.8400 | $0.00 | $19,653.76 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-07 | USO | SELL-REJECTED | 164.0000 | $117.9027 | $0.00 | $19,336.04 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-07 | USO | SELL-REJECTED | 164.0000 | $117.9800 | $0.00 | $19,348.72 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-07 | USO | SELL-REJECTED | 164.0000 | $117.9800 | $0.00 | $19,348.72 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-07 | USO | SELL-REJECTED | 164.0000 | $117.9800 | $0.00 | $19,348.72 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-08 | USO | SELL-REJECTED | 164.0000 | $117.9800 | $0.00 | $19,348.72 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-09 | USO | SELL-REJECTED | 164.0000 | $117.9800 | $0.00 | $19,348.72 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-10 | USO | SELL-REJECTED | 164.0000 | $124.4400 | $0.00 | $20,408.16 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-10 | USO | SELL-REJECTED | 164.0000 | $124.4037 | $0.00 | $20,402.21 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-10 | USO | SELL-REJECTED | 164.0000 | $125.0400 | $0.00 | $20,506.56 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-10 | USO | SELL-REJECTED | 164.0000 | $125.5300 | $0.00 | $20,586.92 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-10 | USO | SELL-REJECTED | 164.0000 | $125.7200 | $0.00 | $20,618.08 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-10 | USO | SELL-REJECTED | 164.0000 | $125.9300 | $0.00 | $20,652.52 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-10 | USO | SELL-REJECTED | 164.0000 | $125.9200 | $0.00 | $20,650.88 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-10 | USO | SELL-REJECTED | 164.0000 | $125.9200 | $0.00 | $20,650.88 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-10 | USO | SELL-REJECTED | 164.0000 | $125.9200 | $0.00 | $20,650.88 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-11 | USO | SELL-REJECTED | 164.0000 | $126.4400 | $0.00 | $20,736.16 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-12 | USO | SELL-REJECTED | 164.0000 | $126.7600 | $0.00 | $20,788.64 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-13 | USO | SELL-REJECTED | 164.0000 | $126.5900 | $0.00 | $20,760.76 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-13 | USO | SELL-REJECTED | 164.0000 | $126.6900 | $0.00 | $20,777.16 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-13 | USO | SELL-REJECTED | 164.0000 | $125.3900 | $0.00 | $20,563.96 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-13 | USO | SELL-REJECTED | 164.0000 | $125.0300 | $0.00 | $20,504.92 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-14 | USO | SELL-REJECTED | 164.0000 | $125.9700 | $0.00 | $20,659.08 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-14 | USO | SELL-REJECTED | 164.0000 | $126.6300 | $0.00 | $20,767.32 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-14 | USO | SELL-REJECTED | 164.0000 | $126.4801 | $0.00 | $20,742.74 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-14 | USO | SELL-REJECTED | 164.0000 | $126.6000 | $0.00 | $20,762.40 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-17 | USO | SELL-REJECTED | 164.0000 | $126.5150 | $0.00 | $20,748.46 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-17 | USO | SELL-REJECTED | 164.0000 | $127.2761 | $0.00 | $20,873.28 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-17 | USO | SELL-REJECTED | 164.0000 | $127.0800 | $0.00 | $20,841.12 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-19 | EURUSD=X | SELL | 13154.0000 | $1.1667 | $44.51 | $15,302.59 | Exit: Overbought (RSI=70.8) at upper Bollinger Band |
+| 2026-08-19 | ETH-USD | BUY-REJECTED | 77.2843 | $2086.6001 | $0.00 | $161,261.43 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-19 | GLD | BUY-REJECTED | 392.0000 | $410.7247 | $0.00 | $161,004.08 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-19 | ETH-USD | BUY-REJECTED | 76.8779 | $2097.1299 | $0.00 | $161,222.94 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-19 | GLD | BUY-REJECTED | 390.0000 | $413.0850 | $0.00 | $161,103.15 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-19 | ETH-USD | BUY-REJECTED | 76.6530 | $2103.2600 | $0.00 | $161,221.19 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-19 | GLD | BUY-REJECTED | 389.0000 | $413.8300 | $0.00 | $160,979.86 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-19 | ETH-USD | BUY-REJECTED | 71.1110 | $2267.0300 | $0.00 | $161,210.77 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-19 | GLD | BUY-REJECTED | 389.0000 | $413.8400 | $0.00 | $160,983.76 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-20 | GLD | BUY-REJECTED | 389.0000 | $414.6400 | $0.00 | $161,294.97 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-20 | GLD | BUY-REJECTED | 388.0000 | $415.2500 | $0.00 | $161,117.00 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-20 | GLD | BUY-REJECTED | 388.0000 | $415.2600 | $0.00 | $161,120.88 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | GLD | BUY-REJECTED | 383.0000 | $421.2800 | $0.00 | $161,350.24 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | SLV | BUY-REJECTED | 2583.0000 | $62.4550 | $0.00 | $161,321.27 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | GLD | BUY-REJECTED | 381.0000 | $423.0800 | $0.00 | $161,193.47 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | SLV | BUY-REJECTED | 2567.0000 | $62.8650 | $0.00 | $161,374.46 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | GLD | BUY-REJECTED | 380.0000 | $423.7400 | $0.00 | $161,021.20 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | SLV | BUY-REJECTED | 2569.0000 | $62.8250 | $0.00 | $161,397.43 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | GLD | BUY-REJECTED | 380.0000 | $423.9800 | $0.00 | $161,112.40 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | SLV | BUY-REJECTED | 2569.0000 | $62.8300 | $0.00 | $161,410.27 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | GLD | BUY-REJECTED | 380.0000 | $423.9300 | $0.00 | $161,093.40 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | SLV | BUY-REJECTED | 2575.0000 | $62.6850 | $0.00 | $161,413.88 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | GLD | BUY-REJECTED | 381.0000 | $423.6100 | $0.00 | $161,395.40 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | SLV | BUY-REJECTED | 2573.0000 | $62.7250 | $0.00 | $161,391.42 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | GLD | BUY-REJECTED | 381.0000 | $423.3600 | $0.00 | $161,300.15 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | SLV | BUY-REJECTED | 2573.0000 | $62.7200 | $0.00 | $161,378.56 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | GLD | BUY-REJECTED | 381.0000 | $423.3600 | $0.00 | $161,300.15 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | SLV | BUY-REJECTED | 2573.0000 | $62.7200 | $0.00 | $161,378.56 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | GLD | BUY-REJECTED | 381.0000 | $423.3600 | $0.00 | $161,300.15 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-21 | SLV | BUY-REJECTED | 2573.0000 | $62.7200 | $0.00 | $161,378.56 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-24 | GLD | BUY-REJECTED | 376.0000 | $428.6650 | $0.00 | $161,178.04 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-24 | GLD | BUY-REJECTED | 379.0000 | $425.1000 | $0.00 | $161,112.90 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-24 | GLD | BUY-REJECTED | 378.0000 | $426.7700 | $0.00 | $161,319.06 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-08-24 | GLD | BUY-REJECTED | 378.0000 | $426.6900 | $0.00 | $161,288.82 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-01 | CASH | DEPOSIT | 1.0000 | $1000.0000 | $0.00 | $-1,000.00 | Monthly savings contribution |
+| 2026-09-03 | BTC-USD | BUY-REJECTED | 1.9917 | $81156.9219 | $0.00 | $161,640.24 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-03 | BTC-USD | BUY-REJECTED | 1.9821 | $81580.0469 | $0.00 | $161,699.81 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-03 | BTC-USD | BUY-REJECTED | 1.9786 | $81727.1172 | $0.00 | $161,705.27 | Alpaca submit_error: 422 Client Error: Unprocessable Entity for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-18 | DBA | SELL-REJECTED | 733.0000 | $28.4200 | $0.00 | $20,831.86 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-18 | GBPUSD=X | BUY | 90983.0000 | $1.3370 | $352.78 | $-122,000.82 | Entry: Oversold (RSI=33.3) at lower Bollinger Band |
+| 2026-09-18 | DBA | SELL-REJECTED | 733.0000 | $28.1600 | $0.00 | $20,641.28 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-18 | DBA | SELL-REJECTED | 733.0000 | $28.1450 | $0.00 | $20,630.29 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-18 | DBA | SELL-REJECTED | 733.0000 | $28.1500 | $0.00 | $20,633.95 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-18 | DBA | SELL-REJECTED | 733.0000 | $28.1500 | $0.00 | $20,633.95 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-18 | DBA | SELL-REJECTED | 733.0000 | $28.1500 | $0.00 | $20,633.95 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-09-22 | USDMXN=X | SELL | 1213.0000 | $17.2964 | $60.84 | $20,919.64 | Exit: Overbought (RSI=65.4) at upper Bollinger Band |
+| 2026-09-22 | EURUSD=X | BUY | 122175.0000 | $1.1446 | $405.53 | $-140,241.85 | Entry: Oversold (RSI=31.3) at lower Bollinger Band |
+| 2026-10-01 | CASH | DEPOSIT | 1.0000 | $1000.0000 | $0.00 | $-1,000.00 | Monthly savings contribution |
+| 2026-10-23 | DBA | SELL-REJECTED | 733.0000 | $27.8601 | $0.00 | $20,421.45 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-10-23 | DBA | SELL-REJECTED | 733.0000 | $27.8690 | $0.00 | $20,427.98 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-10-23 | DBA | SELL-REJECTED | 733.0000 | $27.8700 | $0.00 | $20,428.71 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-10-23 | DBA | SELL-REJECTED | 733.0000 | $27.8700 | $0.00 | $20,428.71 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-10-26 | DBA | SELL-REJECTED | 733.0000 | $27.6150 | $0.00 | $20,241.79 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-10-26 | DBA | SELL-REJECTED | 733.0000 | $27.6000 | $0.00 | $20,230.80 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-10-27 | DBA | SELL-REJECTED | 733.0000 | $27.3900 | $0.00 | $20,076.87 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-10-27 | DBA | SELL-REJECTED | 733.0000 | $27.3950 | $0.00 | $20,080.54 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-10-28 | DBA | SELL-REJECTED | 733.0000 | $27.1100 | $0.00 | $19,871.63 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-10-28 | DBA | SELL-REJECTED | 733.0000 | $27.1150 | $0.00 | $19,875.29 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-10-29 | DBA | SELL-REJECTED | 733.0000 | $27.1590 | $0.00 | $19,907.55 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-10-29 | DBA | SELL-REJECTED | 733.0000 | $27.1650 | $0.00 | $19,911.95 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-10-30 | DBA | SELL-REJECTED | 733.0000 | $26.8905 | $0.00 | $19,710.74 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-10-30 | DBA | SELL-REJECTED | 733.0000 | $26.8700 | $0.00 | $19,695.71 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-02 | CASH | DEPOSIT | 1.0000 | $1000.0000 | $0.00 | $-1,000.00 | Monthly savings contribution |
+| 2026-11-02 | DBA | SELL-REJECTED | 733.0000 | $26.8000 | $0.00 | $19,644.40 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-02 | DBA | SELL-REJECTED | 733.0000 | $26.8000 | $0.00 | $19,644.40 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-03 | DBA | SELL-REJECTED | 733.0000 | $26.5201 | $0.00 | $19,439.23 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-03 | DBA | SELL-REJECTED | 733.0000 | $26.5200 | $0.00 | $19,439.16 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-04 | DBA | SELL-REJECTED | 733.0000 | $26.4550 | $0.00 | $19,391.51 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-04 | USO | SELL-REJECTED | 164.0000 | $145.4300 | $0.00 | $23,850.52 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-04 | DBA | SELL-REJECTED | 733.0000 | $26.4500 | $0.00 | $19,387.85 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-04 | USO | SELL-REJECTED | 164.0000 | $145.4500 | $0.00 | $23,853.80 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-05 | DBA | SELL-REJECTED | 733.0000 | $26.1650 | $0.00 | $19,178.95 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-05 | DBA | SELL-REJECTED | 733.0000 | $26.1600 | $0.00 | $19,175.28 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-06 | DBA | SELL-REJECTED | 733.0000 | $26.1350 | $0.00 | $19,156.96 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-06 | DBA | SELL-REJECTED | 733.0000 | $26.1350 | $0.00 | $19,156.96 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-10 | DBA | SELL-REJECTED | 733.0000 | $26.2700 | $0.00 | $19,255.91 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-10 | DBA | SELL-REJECTED | 733.0000 | $26.2750 | $0.00 | $19,259.57 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-11 | DBA | SELL-REJECTED | 733.0000 | $26.3600 | $0.00 | $19,321.88 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-11 | DBA | SELL-REJECTED | 733.0000 | $26.3600 | $0.00 | $19,321.88 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-12 | DBA | SELL-REJECTED | 733.0000 | $26.3000 | $0.00 | $19,277.90 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+| 2026-11-12 | DBA | SELL-REJECTED | 733.0000 | $26.3000 | $0.00 | $19,277.90 | Alpaca submit_error: 403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders |
+---
+
+
+---
+
+## Portfolio Capital Reconciliation
+
+* **Initial + Inflow Capital**: $86,707.85 USD
+* **Total Deployed Capital**: $367,805.54 USD (23.5% invested)
+* **Unallocated Cash Reserves**: $1,202,026.36 USD (76.7% cash)
+* **Current Portfolio Market Value**: $1,566,960.83 USD (including cash)
