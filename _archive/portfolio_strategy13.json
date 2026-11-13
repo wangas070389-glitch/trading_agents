@@ -1,0 +1,17 @@
+{
+  "initial_seed_capital": 200000.0,
+  "capital_injections": 2000.0,
+  "total_funded_capital": 202000.0,
+  "nav": 202981.78,
+  "total_capital": 213764.82,
+  "cash_balance": 151577.09,
+  "holdings_value": 51404.69,
+  "net_trading_profit": 981.78,
+  "net_trading_return_pct": 0.49,
+  "holdings": [],
+  "last_updated": "2026-11-12 21:44:38",
+  "cash_balance_mxn": 138970.81,
+  "cash_balance_usd": 4022.9137,
+  "low_score_streak": 9,
+  "last_signal_date": "2026-11-12"
+}

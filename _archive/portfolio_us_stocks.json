@@ -1,0 +1,46 @@
+{
+  "initial_seed_capital": 199203.11,
+  "capital_injections": 0.0,
+  "total_funded_capital": 199203.11,
+  "nav": 59846.31,
+  "total_capital": 86707.47,
+  "cash_balance": -193211.2,
+  "holdings_value": 138014.14,
+  "net_trading_profit": -139356.8,
+  "net_trading_return_pct": -69.96,
+  "holdings": [
+    {
+      "ticker": "AMD",
+      "shares": 31.0,
+      "buy_price": 509.8,
+      "last_price": 620.3,
+      "peak_price": 658.52001953125,
+      "target_weight": 0.2
+    },
+    {
+      "ticker": "NVDA",
+      "shares": 94,
+      "buy_price": 223.6699981689453,
+      "last_price": 223.6699981689453,
+      "peak_price": 243.3699951171875,
+      "target_weight": 0.25
+    },
+    {
+      "ticker": "META",
+      "shares": 32,
+      "buy_price": 653.6900024414062,
+      "last_price": 653.6900024414062,
+      "peak_price": 779.8192138671875,
+      "target_weight": 0.25
+    },
+    {
+      "ticker": "MSFT",
+      "shares": 31.0,
+      "buy_price": 514.87186,
+      "last_price": 529.2725,
+      "peak_price": 551.1500244140625,
+      "target_weight": 0.16666666666666666
+    }
+  ],
+  "last_updated": "2026-11-12 21:44:02"
+}

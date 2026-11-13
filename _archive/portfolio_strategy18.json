@@ -1,0 +1,1338 @@
+{
+  "inception": "2026-08-05",
+  "initial_capital_usd": 100000.0,
+  "weights_version": "Risk Parity, S17-inclusive (S18 Core)",
+  "weights": {
+    "core": 0.045,
+    "macd": 0.042,
+    "us_dcs": 0.039,
+    "alternatives": 0.25,
+    "high_beta": 0.117,
+    "dividends": 0.094,
+    "strategy9": 0.074,
+    "strategy12": 0.047,
+    "strategy13": 0.052,
+    "strategy14": 0.064,
+    "strategy15": 0.066,
+    "strategy17": 0.11
+  },
+  "sleeves": {
+    "core": {
+      "alloc_usd": 12681.891944071655,
+      "last_nav": 6835.946959323266,
+      "last_date": "2026-11-12",
+      "tr_index": 0.9646361803308452
+    },
+    "macd": {
+      "alloc_usd": 11956.522970062339,
+      "last_nav": 7491.871970554337,
+      "last_date": "2026-11-12",
+      "tr_index": 1.0889479910459752
+    },
+    "us_dcs": {
+      "alloc_usd": 10791.167473112026,
+      "last_nav": 107320.17,
+      "last_date": "2026-11-12",
+      "tr_index": 0.9992450095747345
+    },
+    "alternatives": {
+      "alloc_usd": 86687.4971797977,
+      "last_nav": 1547712.861915107,
+      "last_date": "2026-11-12",
+      "tr_index": 12.886912728265122
+    },
+    "high_beta": {
+      "alloc_usd": 32401.429444118618,
+      "last_nav": 105177.4621259805,
+      "last_date": "2026-11-12",
+      "tr_index": 0.9910420412786379
+    },
+    "dividends": {
+      "alloc_usd": 27308.08120138583,
+      "last_nav": 13781.139057387929,
+      "last_date": "2026-11-12",
+      "tr_index": 1.134107582619915
+    },
+    "strategy9": {
+      "alloc_usd": 19105.01293018246,
+      "last_nav": 9622.327022375215,
+      "last_date": "2026-11-12",
+      "tr_index": 0.8802416915163648
+    },
+    "strategy12": {
+      "alloc_usd": 12339.325341975524,
+      "last_nav": 11386.558806655192,
+      "last_date": "2026-11-12",
+      "tr_index": 0.9304796847272592
+    },
+    "strategy13": {
+      "alloc_usd": 14421.89068236993,
+      "last_nav": 12266.252438324727,
+      "last_date": "2026-11-12",
+      "tr_index": 1.0121280030338933
+    },
+    "strategy14": {
+      "alloc_usd": 17474.115960894207,
+      "last_nav": 13891.31554790591,
+      "last_date": "2026-11-12",
+      "tr_index": 1.146380098206994
+    },
+    "strategy15": {
+      "alloc_usd": 18019.790187315684,
+      "last_nav": 13890.830177854275,
+      "last_date": "2026-11-12",
+      "tr_index": 1.1463287658434882
+    },
+    "strategy17": {
+      "alloc_usd": 30436.626206213405,
+      "last_nav": 5966.724039013196,
+      "last_date": "2026-11-12",
+      "tr_index": 0.9886976363531687
+    }
+  },
+  "history": [
+    {
+      "date": "2026-08-05",
+      "nav_usd": 100000.0,
+      "idx": {
+        "core": 1.0,
+        "macd": 1.0,
+        "us_dcs": 1.0,
+        "alternatives": 1.0,
+        "high_beta": 1.0,
+        "dividends": 1.0,
+        "strategy9": 1.0,
+        "strategy12": 1.0,
+        "strategy13": 1.0,
+        "strategy14": 1.0,
+        "strategy15": 1.0,
+        "strategy17": 1.0
+      }
+    },
+    {
+      "date": "2026-08-06",
+      "nav_usd": 103875.98,
+      "idx": {
+        "core": 0.996621,
+        "macd": 1.0,
+        "us_dcs": 0.999245,
+        "alternatives": 1.155737,
+        "high_beta": 1.00006,
+        "dividends": 1.0,
+        "strategy9": 1.0,
+        "strategy12": 1.0,
+        "strategy13": 1.0,
+        "strategy14": 1.0,
+        "strategy15": 1.0,
+        "strategy17": 1.0
+      }
+    },
+    {
+      "date": "2026-08-07",
+      "nav_usd": 110663.32,
+      "idx": {
+        "core": 1.008364,
+        "macd": 0.996875,
+        "us_dcs": 0.999245,
+        "alternatives": 1.325263,
+        "high_beta": 1.003624,
+        "dividends": 1.009412,
+        "strategy9": 1.015019,
+        "strategy12": 1.002755,
+        "strategy13": 1.002722,
+        "strategy14": 1.167819,
+        "strategy15": 1.167759,
+        "strategy17": 1.005438
+      }
+    },
+    {
+      "date": "2026-08-08",
+      "nav_usd": 147122.97,
+      "idx": {
+        "core": 1.010757,
+        "macd": 0.996875,
+        "us_dcs": 0.999245,
+        "alternatives": 2.782619,
+        "high_beta": 1.004903,
+        "dividends": 1.009412,
+        "strategy9": 1.015019,
+        "strategy12": 1.002755,
+        "strategy13": 1.002722,
+        "strategy14": 1.167819,
+        "strategy15": 1.167759,
+        "strategy17": 1.005438
+      }
+    },
+    {
+      "date": "2026-08-09",
+      "nav_usd": 151200.67,
+      "idx": {
+        "core": 1.009931,
+        "macd": 0.995792,
+        "us_dcs": 0.999245,
+        "alternatives": 2.94379,
+        "high_beta": 1.005,
+        "dividends": 1.012717,
+        "strategy9": 1.015827,
+        "strategy12": 1.0034,
+        "strategy13": 1.003367,
+        "strategy14": 1.16825,
+        "strategy15": 1.16822,
+        "strategy17": 1.006013
+      }
+    },
+    {
+      "date": "2026-08-10",
+      "nav_usd": 155640.89,
+      "idx": {
+        "core": 0.999593,
+        "macd": 0.994332,
+        "us_dcs": 0.999245,
+        "alternatives": 3.127816,
+        "high_beta": 1.003392,
+        "dividends": 1.008083,
+        "strategy9": 1.011758,
+        "strategy12": 1.002346,
+        "strategy13": 1.002294,
+        "strategy14": 1.167707,
+        "strategy15": 1.167792,
+        "strategy17": 1.006154
+      }
+    },
+    {
+      "date": "2026-08-11",
+      "nav_usd": 194222.53,
+      "idx": {
+        "core": 1.003024,
+        "macd": 0.98676,
+        "us_dcs": 0.999245,
+        "alternatives": 4.674728,
+        "high_beta": 1.001431,
+        "dividends": 1.001803,
+        "strategy9": 1.012835,
+        "strategy12": 1.001794,
+        "strategy13": 1.001849,
+        "strategy14": 1.167274,
+        "strategy15": 1.167351,
+        "strategy17": 1.007045
+      }
+    },
+    {
+      "date": "2026-08-12",
+      "nav_usd": 198700.85,
+      "idx": {
+        "core": 0.988714,
+        "macd": 0.980189,
+        "us_dcs": 0.999245,
+        "alternatives": 4.849039,
+        "high_beta": 1.000826,
+        "dividends": 1.00088,
+        "strategy9": 1.016308,
+        "strategy12": 1.009468,
+        "strategy13": 1.009434,
+        "strategy14": 1.174354,
+        "strategy15": 1.174303,
+        "strategy17": 1.010307
+      }
+    },
+    {
+      "date": "2026-08-13",
+      "nav_usd": 203125.11,
+      "idx": {
+        "core": 0.975823,
+        "macd": 0.980251,
+        "us_dcs": 0.999245,
+        "alternatives": 5.020974,
+        "high_beta": 1.002763,
+        "dividends": 1.002289,
+        "strategy9": 1.017034,
+        "strategy12": 1.016246,
+        "strategy13": 1.016059,
+        "strategy14": 1.180258,
+        "strategy15": 1.18013,
+        "strategy17": 1.01029
+      }
+    },
+    {
+      "date": "2026-08-14",
+      "nav_usd": 220017.82,
+      "idx": {
+        "core": 0.973936,
+        "macd": 0.979496,
+        "us_dcs": 0.999245,
+        "alternatives": 5.707525,
+        "high_beta": 0.98784,
+        "dividends": 0.995511,
+        "strategy9": 1.014599,
+        "strategy12": 1.014857,
+        "strategy13": 1.014872,
+        "strategy14": 1.179415,
+        "strategy15": 1.179328,
+        "strategy17": 1.012134
+      }
+    },
+    {
+      "date": "2026-08-17",
+      "nav_usd": 237358.19,
+      "idx": {
+        "core": 0.958726,
+        "macd": 0.97427,
+        "us_dcs": 0.999245,
+        "alternatives": 6.40213,
+        "high_beta": 0.98605,
+        "dividends": 0.992385,
+        "strategy9": 1.01545,
+        "strategy12": 1.019801,
+        "strategy13": 1.01973,
+        "strategy14": 1.183836,
+        "strategy15": 1.183777,
+        "strategy17": 1.012455
+      }
+    },
+    {
+      "date": "2026-08-18",
+      "nav_usd": 245706.62,
+      "idx": {
+        "core": 0.95619,
+        "macd": 0.96738,
+        "us_dcs": 0.999245,
+        "alternatives": 6.756379,
+        "high_beta": 0.98605,
+        "dividends": 0.991306,
+        "strategy9": 1.013124,
+        "strategy12": 1.0006,
+        "strategy13": 1.000515,
+        "strategy14": 1.166719,
+        "strategy15": 1.166678,
+        "strategy17": 1.009954
+      }
+    },
+    {
+      "date": "2026-08-19",
+      "nav_usd": 246058.5,
+      "idx": {
+        "core": 0.959034,
+        "macd": 0.968575,
+        "us_dcs": 0.999245,
+        "alternatives": 6.756187,
+        "high_beta": 0.98605,
+        "dividends": 0.999479,
+        "strategy9": 1.01969,
+        "strategy12": 1.006477,
+        "strategy13": 1.00654,
+        "strategy14": 1.173121,
+        "strategy15": 1.173273,
+        "strategy17": 1.016317
+      }
+    },
+    {
+      "date": "2026-08-20",
+      "nav_usd": 246001.59,
+      "idx": {
+        "core": 0.960536,
+        "macd": 0.964265,
+        "us_dcs": 0.999245,
+        "alternatives": 6.761495,
+        "high_beta": 0.98605,
+        "dividends": 1.004515,
+        "strategy9": 1.007714,
+        "strategy12": 1.000017,
+        "strategy13": 0.999968,
+        "strategy14": 1.167595,
+        "strategy15": 1.167665,
+        "strategy17": 1.016312
+      }
+    },
+    {
+      "date": "2026-08-21",
+      "nav_usd": 246271.13,
+      "idx": {
+        "core": 0.973189,
+        "macd": 0.971194,
+        "us_dcs": 0.999245,
+        "alternatives": 6.759033,
+        "high_beta": 0.98605,
+        "dividends": 1.015068,
+        "strategy9": 1.01121,
+        "strategy12": 1.003551,
+        "strategy13": 1.003575,
+        "strategy14": 1.171313,
+        "strategy15": 1.171286,
+        "strategy17": 1.019668
+      }
+    },
+    {
+      "date": "2026-08-24",
+      "nav_usd": 245910.75,
+      "idx": {
+        "core": 0.964334,
+        "macd": 0.97352,
+        "us_dcs": 0.999245,
+        "alternatives": 6.757274,
+        "high_beta": 0.986293,
+        "dividends": 1.015892,
+        "strategy9": 1.00465,
+        "strategy12": 0.993907,
+        "strategy13": 0.9938,
+        "strategy14": 1.162539,
+        "strategy15": 1.162632,
+        "strategy17": 1.016127
+      }
+    },
+    {
+      "date": "2026-08-31",
+      "nav_usd": 246178.73,
+      "idx": {
+        "core": 0.959297,
+        "macd": 0.97352,
+        "us_dcs": 0.999245,
+        "alternatives": 6.768502,
+        "high_beta": 0.987143,
+        "dividends": 1.015892,
+        "strategy9": 1.00465,
+        "strategy12": 0.993907,
+        "strategy13": 0.9938,
+        "strategy14": 1.162539,
+        "strategy15": 1.162632,
+        "strategy17": 1.016127
+      }
+    },
+    {
+      "date": "2026-09-01",
+      "nav_usd": 245545.25,
+      "idx": {
+        "core": 0.948234,
+        "macd": 0.964219,
+        "us_dcs": 0.999245,
+        "alternatives": 6.779993,
+        "high_beta": 0.987143,
+        "dividends": 1.006266,
+        "strategy9": 0.997343,
+        "strategy12": 0.989058,
+        "strategy13": 0.989027,
+        "strategy14": 1.161594,
+        "strategy15": 1.161568,
+        "strategy17": 1.013839
+      }
+    },
+    {
+      "date": "2026-09-02",
+      "nav_usd": 245929.65,
+      "idx": {
+        "core": 0.955907,
+        "macd": 0.969602,
+        "us_dcs": 0.999245,
+        "alternatives": 6.776012,
+        "high_beta": 0.987143,
+        "dividends": 1.010725,
+        "strategy9": 0.998918,
+        "strategy12": 0.9911,
+        "strategy13": 0.99114,
+        "strategy14": 1.163498,
+        "strategy15": 1.163615,
+        "strategy17": 1.015259
+      }
+    },
+    {
+      "date": "2026-09-03",
+      "nav_usd": 247112.84,
+      "idx": {
+        "core": 0.953966,
+        "macd": 0.979082,
+        "us_dcs": 0.999245,
+        "alternatives": 6.763184,
+        "high_beta": 0.987143,
+        "dividends": 1.02515,
+        "strategy9": 0.996636,
+        "strategy12": 1.010656,
+        "strategy13": 1.010437,
+        "strategy14": 1.178381,
+        "strategy15": 1.17838,
+        "strategy17": 1.017316
+      }
+    },
+    {
+      "date": "2026-09-04",
+      "nav_usd": 247231.53,
+      "idx": {
+        "core": 0.947669,
+        "macd": 0.980912,
+        "us_dcs": 0.999245,
+        "alternatives": 6.762945,
+        "high_beta": 0.987143,
+        "dividends": 1.023918,
+        "strategy9": 0.999799,
+        "strategy12": 1.011741,
+        "strategy13": 1.011572,
+        "strategy14": 1.179868,
+        "strategy15": 1.179623,
+        "strategy17": 1.020368
+      }
+    },
+    {
+      "date": "2026-09-05",
+      "nav_usd": 247182.42,
+      "idx": {
+        "core": 0.942895,
+        "macd": 0.980912,
+        "us_dcs": 0.999245,
+        "alternatives": 6.763688,
+        "high_beta": 0.987143,
+        "dividends": 1.023918,
+        "strategy9": 0.999799,
+        "strategy12": 1.011741,
+        "strategy13": 1.011572,
+        "strategy14": 1.179868,
+        "strategy15": 1.179623,
+        "strategy17": 1.020368
+      }
+    },
+    {
+      "date": "2026-09-06",
+      "nav_usd": 247220.54,
+      "idx": {
+        "core": 0.942498,
+        "macd": 0.979677,
+        "us_dcs": 0.999245,
+        "alternatives": 6.763843,
+        "high_beta": 0.987265,
+        "dividends": 1.021058,
+        "strategy9": 0.994984,
+        "strategy12": 1.015905,
+        "strategy13": 1.015873,
+        "strategy14": 1.183219,
+        "strategy15": 1.183193,
+        "strategy17": 1.020604
+      }
+    },
+    {
+      "date": "2026-09-07",
+      "nav_usd": 246746.75,
+      "idx": {
+        "core": 0.934745,
+        "macd": 0.977827,
+        "us_dcs": 0.999245,
+        "alternatives": 6.757692,
+        "high_beta": 0.987265,
+        "dividends": 1.016329,
+        "strategy9": 0.990279,
+        "strategy12": 1.015112,
+        "strategy13": 1.015144,
+        "strategy14": 1.182088,
+        "strategy15": 1.182061,
+        "strategy17": 1.018198
+      }
+    },
+    {
+      "date": "2026-09-08",
+      "nav_usd": 246927.1,
+      "idx": {
+        "core": 0.943038,
+        "macd": 0.973738,
+        "us_dcs": 0.999245,
+        "alternatives": 6.760886,
+        "high_beta": 0.987265,
+        "dividends": 1.015998,
+        "strategy9": 0.991127,
+        "strategy12": 1.016889,
+        "strategy13": 1.015786,
+        "strategy14": 1.183677,
+        "strategy15": 1.183611,
+        "strategy17": 1.018894
+      }
+    },
+    {
+      "date": "2026-09-09",
+      "nav_usd": 246854.0,
+      "idx": {
+        "core": 0.948834,
+        "macd": 0.975224,
+        "us_dcs": 0.999245,
+        "alternatives": 6.764911,
+        "high_beta": 0.987265,
+        "dividends": 1.022075,
+        "strategy9": 0.981634,
+        "strategy12": 1.011405,
+        "strategy13": 1.01153,
+        "strategy14": 1.180419,
+        "strategy15": 1.18036,
+        "strategy17": 1.02061
+      }
+    },
+    {
+      "date": "2026-09-10",
+      "nav_usd": 242270.03,
+      "idx": {
+        "core": 0.922972,
+        "macd": 0.946505,
+        "us_dcs": 0.999245,
+        "alternatives": 6.766084,
+        "high_beta": 0.987265,
+        "dividends": 0.988613,
+        "strategy9": 0.950969,
+        "strategy12": 0.979097,
+        "strategy13": 0.979172,
+        "strategy14": 1.143072,
+        "strategy15": 1.142819,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-09-11",
+      "nav_usd": 241783.84,
+      "idx": {
+        "core": 0.914598,
+        "macd": 0.94003,
+        "us_dcs": 0.999245,
+        "alternatives": 6.782363,
+        "high_beta": 0.987386,
+        "dividends": 0.993307,
+        "strategy9": 0.951198,
+        "strategy12": 0.965395,
+        "strategy13": 0.965365,
+        "strategy14": 1.133883,
+        "strategy15": 1.133855,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-09-14",
+      "nav_usd": 242533.88,
+      "idx": {
+        "core": 0.907312,
+        "macd": 0.952587,
+        "us_dcs": 0.999245,
+        "alternatives": 6.779243,
+        "high_beta": 0.98763,
+        "dividends": 1.005328,
+        "strategy9": 0.951806,
+        "strategy12": 0.97447,
+        "strategy13": 0.974439,
+        "strategy14": 1.141746,
+        "strategy15": 1.14175,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-09-18",
+      "nav_usd": 244285.25,
+      "idx": {
+        "core": 0.888734,
+        "macd": 0.953286,
+        "us_dcs": 0.999245,
+        "alternatives": 6.955308,
+        "high_beta": 0.987995,
+        "dividends": 1.003743,
+        "strategy9": 0.952381,
+        "strategy12": 0.985937,
+        "strategy13": 0.978398,
+        "strategy14": 1.148791,
+        "strategy15": 1.148813,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-09-21",
+      "nav_usd": 254850.3,
+      "idx": {
+        "core": 0.902363,
+        "macd": 0.971924,
+        "us_dcs": 0.999245,
+        "alternatives": 7.806679,
+        "high_beta": 0.988238,
+        "dividends": 0.998641,
+        "strategy9": 0.961362,
+        "strategy12": 1.044237,
+        "strategy13": 1.035426,
+        "strategy14": 1.185793,
+        "strategy15": 1.185842,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-09-22",
+      "nav_usd": 255187.11,
+      "idx": {
+        "core": 0.89675,
+        "macd": 0.97599,
+        "us_dcs": 0.999245,
+        "alternatives": 7.79556,
+        "high_beta": 0.988238,
+        "dividends": 1.000708,
+        "strategy9": 0.961523,
+        "strategy12": 1.052579,
+        "strategy13": 1.043415,
+        "strategy14": 1.193489,
+        "strategy15": 1.193635,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-09-23",
+      "nav_usd": 254940.64,
+      "idx": {
+        "core": 0.895557,
+        "macd": 0.973068,
+        "us_dcs": 0.999245,
+        "alternatives": 7.791857,
+        "high_beta": 0.988238,
+        "dividends": 1.001662,
+        "strategy9": 0.962849,
+        "strategy12": 1.046946,
+        "strategy13": 1.037815,
+        "strategy14": 1.190803,
+        "strategy15": 1.190685,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-09-24",
+      "nav_usd": 255031.97,
+      "idx": {
+        "core": 0.894296,
+        "macd": 0.981302,
+        "us_dcs": 0.999245,
+        "alternatives": 7.794795,
+        "high_beta": 0.988238,
+        "dividends": 0.994754,
+        "strategy9": 0.961373,
+        "strategy12": 1.04988,
+        "strategy13": 1.040744,
+        "strategy14": 1.194754,
+        "strategy15": 1.194442,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-09-25",
+      "nav_usd": 255549.89,
+      "idx": {
+        "core": 0.8973,
+        "macd": 0.983787,
+        "us_dcs": 0.999245,
+        "alternatives": 7.788997,
+        "high_beta": 0.988238,
+        "dividends": 1.002588,
+        "strategy9": 0.959013,
+        "strategy12": 1.057835,
+        "strategy13": 1.048681,
+        "strategy14": 1.201222,
+        "strategy15": 1.201075,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-09-28",
+      "nav_usd": 255447.9,
+      "idx": {
+        "core": 0.900183,
+        "macd": 0.990302,
+        "us_dcs": 0.999245,
+        "alternatives": 7.78793,
+        "high_beta": 0.988482,
+        "dividends": 1.005337,
+        "strategy9": 0.959541,
+        "strategy12": 1.050619,
+        "strategy13": 1.041379,
+        "strategy14": 1.197648,
+        "strategy15": 1.197414,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-09-29",
+      "nav_usd": 255637.7,
+      "idx": {
+        "core": 0.90344,
+        "macd": 0.993382,
+        "us_dcs": 0.999245,
+        "alternatives": 7.773433,
+        "high_beta": 0.988482,
+        "dividends": 1.005723,
+        "strategy9": 0.95794,
+        "strategy12": 1.055914,
+        "strategy13": 1.046788,
+        "strategy14": 1.202769,
+        "strategy15": 1.202585,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-09-30",
+      "nav_usd": 255944.75,
+      "idx": {
+        "core": 0.90159,
+        "macd": 0.992936,
+        "us_dcs": 0.999245,
+        "alternatives": 7.777878,
+        "high_beta": 0.988482,
+        "dividends": 0.998619,
+        "strategy9": 0.958112,
+        "strategy12": 1.065618,
+        "strategy13": 1.056424,
+        "strategy14": 1.210765,
+        "strategy15": 1.210532,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-01",
+      "nav_usd": 255991.69,
+      "idx": {
+        "core": 0.892153,
+        "macd": 0.988942,
+        "us_dcs": 0.999245,
+        "alternatives": 7.771847,
+        "high_beta": 0.988482,
+        "dividends": 0.993628,
+        "strategy9": 0.962537,
+        "strategy12": 1.070931,
+        "strategy13": 1.061835,
+        "strategy14": 1.216502,
+        "strategy15": 1.216449,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-02",
+      "nav_usd": 256577.15,
+      "idx": {
+        "core": 0.899491,
+        "macd": 0.995649,
+        "us_dcs": 0.999245,
+        "alternatives": 7.772594,
+        "high_beta": 0.988482,
+        "dividends": 1.000323,
+        "strategy9": 0.962708,
+        "strategy12": 1.077463,
+        "strategy13": 1.068271,
+        "strategy14": 1.219906,
+        "strategy15": 1.219803,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-05",
+      "nav_usd": 257027.41,
+      "idx": {
+        "core": 0.897006,
+        "macd": 1.004638,
+        "us_dcs": 0.999245,
+        "alternatives": 7.764528,
+        "high_beta": 0.988847,
+        "dividends": 1.000709,
+        "strategy9": 0.963239,
+        "strategy12": 1.087628,
+        "strategy13": 1.078243,
+        "strategy14": 1.226446,
+        "strategy15": 1.226396,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-06",
+      "nav_usd": 257399.32,
+      "idx": {
+        "core": 0.917525,
+        "macd": 1.004638,
+        "us_dcs": 0.999245,
+        "alternatives": 7.777556,
+        "high_beta": 0.988847,
+        "dividends": 1.000709,
+        "strategy9": 0.963239,
+        "strategy12": 1.087628,
+        "strategy13": 1.078243,
+        "strategy14": 1.226446,
+        "strategy15": 1.226396,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-07",
+      "nav_usd": 257412.13,
+      "idx": {
+        "core": 0.92744,
+        "macd": 1.002004,
+        "us_dcs": 0.999245,
+        "alternatives": 7.762112,
+        "high_beta": 0.988969,
+        "dividends": 1.005149,
+        "strategy9": 0.957386,
+        "strategy12": 1.088981,
+        "strategy13": 1.079576,
+        "strategy14": 1.226935,
+        "strategy15": 1.226885,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-08",
+      "nav_usd": 257181.49,
+      "idx": {
+        "core": 0.930024,
+        "macd": 1.002387,
+        "us_dcs": 0.999245,
+        "alternatives": 7.769162,
+        "high_beta": 0.988969,
+        "dividends": 1.013436,
+        "strategy9": 0.957557,
+        "strategy12": 1.075563,
+        "strategy13": 1.066144,
+        "strategy14": 1.219345,
+        "strategy15": 1.219292,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-09",
+      "nav_usd": 258340.48,
+      "idx": {
+        "core": 0.934591,
+        "macd": 1.015698,
+        "us_dcs": 0.999245,
+        "alternatives": 7.770237,
+        "high_beta": 0.988969,
+        "dividends": 1.0223,
+        "strategy9": 0.968309,
+        "strategy12": 1.086493,
+        "strategy13": 1.077118,
+        "strategy14": 1.228846,
+        "strategy15": 1.228718,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-12",
+      "nav_usd": 258196.84,
+      "idx": {
+        "core": 0.94287,
+        "macd": 1.017619,
+        "us_dcs": 0.999245,
+        "alternatives": 7.769359,
+        "high_beta": 0.989334,
+        "dividends": 1.034659,
+        "strategy9": 0.968846,
+        "strategy12": 1.073695,
+        "strategy13": 1.064432,
+        "strategy14": 1.218646,
+        "strategy15": 1.21859,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-13",
+      "nav_usd": 258425.85,
+      "idx": {
+        "core": 0.944273,
+        "macd": 1.02306,
+        "us_dcs": 0.999245,
+        "alternatives": 7.778935,
+        "high_beta": 0.989334,
+        "dividends": 1.038314,
+        "strategy9": 0.969567,
+        "strategy12": 1.072294,
+        "strategy13": 1.063068,
+        "strategy14": 1.218764,
+        "strategy15": 1.21876,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-14",
+      "nav_usd": 257770.35,
+      "idx": {
+        "core": 0.962125,
+        "macd": 1.018126,
+        "us_dcs": 0.999245,
+        "alternatives": 7.767079,
+        "high_beta": 0.989334,
+        "dividends": 1.051043,
+        "strategy9": 0.96973,
+        "strategy12": 1.047408,
+        "strategy13": 1.038461,
+        "strategy14": 1.202255,
+        "strategy15": 1.202209,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-15",
+      "nav_usd": 257717.78,
+      "idx": {
+        "core": 0.959314,
+        "macd": 1.029422,
+        "us_dcs": 0.999245,
+        "alternatives": 7.786875,
+        "high_beta": 0.989334,
+        "dividends": 1.05454,
+        "strategy9": 0.969901,
+        "strategy12": 1.037236,
+        "strategy13": 1.034018,
+        "strategy14": 1.194316,
+        "strategy15": 1.194255,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-16",
+      "nav_usd": 257210.89,
+      "idx": {
+        "core": 0.959437,
+        "macd": 1.038671,
+        "us_dcs": 0.999245,
+        "alternatives": 7.796123,
+        "high_beta": 0.989334,
+        "dividends": 1.061498,
+        "strategy9": 0.962986,
+        "strategy12": 1.016866,
+        "strategy13": 1.024505,
+        "strategy14": 1.181013,
+        "strategy15": 1.180908,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-19",
+      "nav_usd": 257720.67,
+      "idx": {
+        "core": 0.954188,
+        "macd": 1.045692,
+        "us_dcs": 0.999245,
+        "alternatives": 7.793747,
+        "high_beta": 0.989578,
+        "dividends": 1.072239,
+        "strategy9": 0.963516,
+        "strategy12": 1.027508,
+        "strategy13": 1.023927,
+        "strategy14": 1.185752,
+        "strategy15": 1.185768,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-20",
+      "nav_usd": 257882.09,
+      "idx": {
+        "core": 0.965583,
+        "macd": 1.05248,
+        "us_dcs": 0.999245,
+        "alternatives": 7.799622,
+        "high_beta": 0.989578,
+        "dividends": 1.070982,
+        "strategy9": 0.960226,
+        "strategy12": 1.026988,
+        "strategy13": 1.024099,
+        "strategy14": 1.1855,
+        "strategy15": 1.18541,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-21",
+      "nav_usd": 258768.93,
+      "idx": {
+        "core": 0.972562,
+        "macd": 1.066544,
+        "us_dcs": 0.999245,
+        "alternatives": 7.799184,
+        "high_beta": 0.989578,
+        "dividends": 1.070955,
+        "strategy9": 0.960399,
+        "strategy12": 1.045292,
+        "strategy13": 1.029887,
+        "strategy14": 1.19885,
+        "strategy15": 1.198719,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-22",
+      "nav_usd": 257289.87,
+      "idx": {
+        "core": 0.986624,
+        "macd": 1.057572,
+        "us_dcs": 0.999245,
+        "alternatives": 7.79703,
+        "high_beta": 0.989578,
+        "dividends": 1.074801,
+        "strategy9": 0.94481,
+        "strategy12": 1.008118,
+        "strategy13": 1.010688,
+        "strategy14": 1.174465,
+        "strategy15": 1.174374,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-23",
+      "nav_usd": 259129.47,
+      "idx": {
+        "core": 1.001913,
+        "macd": 1.061279,
+        "us_dcs": 0.999245,
+        "alternatives": 7.969857,
+        "high_beta": 0.989578,
+        "dividends": 1.08077,
+        "strategy9": 0.944978,
+        "strategy12": 1.009039,
+        "strategy13": 1.011697,
+        "strategy14": 1.174841,
+        "strategy15": 1.174735,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-26",
+      "nav_usd": 264599.78,
+      "idx": {
+        "core": 0.999839,
+        "macd": 1.052197,
+        "us_dcs": 0.999245,
+        "alternatives": 8.640778,
+        "high_beta": 0.989822,
+        "dividends": 1.073278,
+        "strategy9": 0.945495,
+        "strategy12": 1.018605,
+        "strategy13": 1.01225,
+        "strategy14": 1.179318,
+        "strategy15": 1.179218,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-27",
+      "nav_usd": 267646.18,
+      "idx": {
+        "core": 0.988092,
+        "macd": 1.066314,
+        "us_dcs": 0.999245,
+        "alternatives": 8.965511,
+        "high_beta": 0.989822,
+        "dividends": 1.064639,
+        "strategy9": 0.945661,
+        "strategy12": 1.038224,
+        "strategy13": 1.014437,
+        "strategy14": 1.191334,
+        "strategy15": 1.191179,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-28",
+      "nav_usd": 270110.46,
+      "idx": {
+        "core": 0.965093,
+        "macd": 1.060425,
+        "us_dcs": 0.999245,
+        "alternatives": 9.304359,
+        "high_beta": 0.989822,
+        "dividends": 1.064361,
+        "strategy9": 0.945831,
+        "strategy12": 1.040506,
+        "strategy13": 1.013846,
+        "strategy14": 1.192102,
+        "strategy15": 1.191995,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-29",
+      "nav_usd": 272128.39,
+      "idx": {
+        "core": 0.930055,
+        "macd": 1.058015,
+        "us_dcs": 0.999245,
+        "alternatives": 9.639379,
+        "high_beta": 0.989822,
+        "dividends": 1.06927,
+        "strategy9": 0.946,
+        "strategy12": 1.026701,
+        "strategy13": 1.008116,
+        "strategy14": 1.186406,
+        "strategy15": 1.186472,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-10-30",
+      "nav_usd": 274060.83,
+      "idx": {
+        "core": 0.943474,
+        "macd": 1.058413,
+        "us_dcs": 0.999245,
+        "alternatives": 9.970069,
+        "high_beta": 0.989822,
+        "dividends": 1.080177,
+        "strategy9": 0.943388,
+        "strategy12": 0.980657,
+        "strategy13": 1.009765,
+        "strategy14": 1.161762,
+        "strategy15": 1.161735,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-11-02",
+      "nav_usd": 276335.09,
+      "idx": {
+        "core": 0.9471,
+        "macd": 1.060649,
+        "us_dcs": 0.999245,
+        "alternatives": 10.283389,
+        "high_beta": 0.990188,
+        "dividends": 1.081258,
+        "strategy9": 0.943916,
+        "strategy12": 0.967942,
+        "strategy13": 1.010331,
+        "strategy14": 1.153282,
+        "strategy15": 1.153225,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-11-03",
+      "nav_usd": 279254.94,
+      "idx": {
+        "core": 0.944581,
+        "macd": 1.07356,
+        "us_dcs": 0.999245,
+        "alternatives": 10.612581,
+        "high_beta": 0.990188,
+        "dividends": 1.088255,
+        "strategy9": 0.944069,
+        "strategy12": 0.978732,
+        "strategy13": 1.010495,
+        "strategy14": 1.162281,
+        "strategy15": 1.162286,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-11-04",
+      "nav_usd": 283123.67,
+      "idx": {
+        "core": 0.951485,
+        "macd": 1.080375,
+        "us_dcs": 0.999245,
+        "alternatives": 11.122028,
+        "high_beta": 0.99031,
+        "dividends": 1.09778,
+        "strategy9": 0.94424,
+        "strategy12": 0.982779,
+        "strategy13": 1.010678,
+        "strategy14": 1.161783,
+        "strategy15": 1.161679,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-11-05",
+      "nav_usd": 284511.87,
+      "idx": {
+        "core": 0.955256,
+        "macd": 1.077469,
+        "us_dcs": 0.999245,
+        "alternatives": 11.636516,
+        "high_beta": 0.990432,
+        "dividends": 1.108063,
+        "strategy9": 0.910822,
+        "strategy12": 0.930999,
+        "strategy13": 1.014048,
+        "strategy14": 1.130163,
+        "strategy15": 1.130127,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-11-06",
+      "nav_usd": 286582.78,
+      "idx": {
+        "core": 0.964157,
+        "macd": 1.079194,
+        "us_dcs": 0.999245,
+        "alternatives": 11.942285,
+        "high_beta": 0.990432,
+        "dividends": 1.114049,
+        "strategy9": 0.896455,
+        "strategy12": 0.931161,
+        "strategy13": 1.011624,
+        "strategy14": 1.132687,
+        "strategy15": 1.132654,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-11-10",
+      "nav_usd": 289093.13,
+      "idx": {
+        "core": 0.963182,
+        "macd": 1.089232,
+        "us_dcs": 0.999245,
+        "alternatives": 12.255303,
+        "high_beta": 0.99092,
+        "dividends": 1.123048,
+        "strategy9": 0.887372,
+        "strategy12": 0.93183,
+        "strategy13": 1.012221,
+        "strategy14": 1.140939,
+        "strategy15": 1.140841,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-11-11",
+      "nav_usd": 291472.96,
+      "idx": {
+        "core": 0.958268,
+        "macd": 1.08985,
+        "us_dcs": 0.999245,
+        "alternatives": 12.566896,
+        "high_beta": 0.991042,
+        "dividends": 1.128364,
+        "strategy9": 0.887534,
+        "strategy12": 0.932,
+        "strategy13": 1.012024,
+        "strategy14": 1.14759,
+        "strategy15": 1.147539,
+        "strategy17": 0.988698
+      }
+    },
+    {
+      "date": "2026-11-12",
+      "nav_usd": 293623.35,
+      "idx": {
+        "core": 0.964636,
+        "macd": 1.088948,
+        "us_dcs": 0.999245,
+        "alternatives": 12.886913,
+        "high_beta": 0.991042,
+        "dividends": 1.134108,
+        "strategy9": 0.880242,
+        "strategy12": 0.93048,
+        "strategy13": 1.012128,
+        "strategy14": 1.14638,
+        "strategy15": 1.146329,
+        "strategy17": 0.988698
+      }
+    }
+  ],
+  "rebalances": [
+    {
+      "date": "2026-09-01",
+      "nav_usd": 246596.69,
+      "max_drift": 0.4374
+    },
+    {
+      "date": "2026-10-01",
+      "nav_usd": 255779.47,
+      "max_drift": 0.0263
+    },
+    {
+      "date": "2026-11-02",
+      "nav_usd": 276696.6,
+      "max_drift": 0.0558
+    }
+  ],
+  "last_updated": "2026-11-12 21:45:00",
+  "total_portfolio_value_usd": 293623.35152149934
+}
