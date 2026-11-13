@@ -1,7 +1,7 @@
 # Strategy 18: Efficient Frontier Allocation Execution Report
-**Execution Date:** 2026-11-12 21:45:00 | **Strategy Version:** Live V1
+**Execution Date:** 2026-11-13 21:00:13 | **Strategy Version:** Live V1
 * **Total Portfolio NAV:** $293,623.35 USD
-* **Inception Date:** 2026-08-05 (99 calendar days elapsed)
+* **Inception Date:** 2026-08-05 (100 calendar days elapsed)
 * **Virtual Capital Base:** $100,000.00 USD
 * **USD/MXN Rate:** 17.4300
 
@@ -9,8 +9,8 @@
 | Metric | Realized (live) |
 | :--- | ---: |
 | Return since inception | +193.62% |
-| Sharpe (Rf 6.53%) | +5.24 |
-| Realized Volatility (Ann.) | 82.11% |
+| Sharpe (Rf 6.53%) | +5.20 |
+| Realized Volatility (Ann.) | 81.56% |
 | Max drawdown | -2.20% |
 
 ## 2. Current Allocations & Sleeves
@@ -18,7 +18,7 @@
 | :--- | ---: | ---: | ---: | :--- |
 | S1 Alpha Growth (S1) | 4.5% | 4.3% | -3.54% | 2026-11-12 |
 | S2 MACD Systematic (S2) | 4.2% | 4.1% | +8.89% | 2026-11-12 |
-| S4 US DCF Value-Growth (S4) | 3.9% | 3.7% | -0.08% | 2026-11-12 |
+| S4 US DCF Value-Growth (S4) | 3.9% | 3.7% | -0.08% | 2026-11-13 |
 | S5 Alternatives (S5) | 25.0% | 29.5% | +1188.69% | 2026-11-12 |
 | S6 High-Beta Momentum (S6) | 11.7% | 11.0% | -0.90% | 2026-11-12 |
 | S8 Dividend Quality (S8) | 9.4% | 9.3% | +13.41% | 2026-11-12 |
