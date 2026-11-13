@@ -28,9 +28,9 @@ def test_initial_funding_not_counted_as_contribution(tmp_path, monkeypatch):
 def test_malformed_and_unknown_ledger_rows_cannot_verify(tmp_path):
     path = tmp_path / "ledger.md"
     path.write_text("| Date | Ticker | Action | Qty | Price | Note |\n"
-                    "| 2026-01-01 | USD | BUY_USD | 2 | 20 | FX |\n"
+                    "| 2026-01-01 | USD | SPLIT | 2 | 20 | FX |\n"
                     "| 2026-01-01 | CASH | DEPOSIT | 1 |\n")
-    positions, cash, rows, errors = parse_ledger(path)
+    positions, cash, rows, errors, warnings = parse_ledger(path)
     assert len(errors) == 2
 
 

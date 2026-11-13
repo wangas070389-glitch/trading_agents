@@ -248,8 +248,8 @@
 | 2026-07-30 | BONDIA | INTEREST | 1 | 0.02 | +0.0203 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0017 days. |
 | 2026-07-30 | BONDIA | INTEREST | 1 | 0.67 | +0.6721 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0563 days. |
 | 2026-07-31 | BONDIA | INTEREST | 1 | 9.05 | +9.0463 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7576 days. |
-| 2026-07-31 | AMZN | BUY | 2 | 4682.46 | -9,376.80 | Market | FILLED | Alpaca Order bc78a9aa-cbc2-4b8b-8d24-434c6f0f2249 | 1D MACD systematic signal |
-| 2026-07-31 | GOOGL | BUY | 1 | 6113.24 | -6,125.12 | Market | FILLED | Alpaca Order b3c4e27f-fab9-495a-8b41-c24bbfa0808e | 1D MACD systematic signal |
+| 2026-07-31 | AMZN | BUY | 2 | 4682.46 | -9,376.80 | Market | FILLED | Alpaca Order bc78a9aa-cbc2-4b8b-8d24-434c6f0f2249 / 1D MACD systematic signal |
+| 2026-07-31 | GOOGL | BUY | 1 | 6113.24 | -6,125.12 | Market | FILLED | Alpaca Order b3c4e27f-fab9-495a-8b41-c24bbfa0808e / 1D MACD systematic signal |
 | 2026-07-31 | BONDIA | INTEREST | 1 | 0.17 | +0.1715 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0188 days. |
 | 2026-07-31 | BONDIA | INTEREST | 1 | 0.60 | +0.6003 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0657 days. |
 | 2026-07-31 | BONDIA | INTEREST | 1 | 0.64 | +0.6419 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0703 days. |
@@ -268,7 +268,7 @@
 | 2026-08-04 | BONDIA | INTEREST | 1 | 0.14 | +0.1402 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0153 days. |
 | 2026-08-04 | BONDIA | INTEREST | 1 | 0.61 | +0.6068 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0664 days. |
 | 2026-08-04 | BONDIA | INTEREST | 1 | 0.65 | +0.6537 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0715 days. |
-| 2026-08-04 | NVDA | BUY | 3 | 3656.50 | -10,981.34 | Market | FILLED | Alpaca Order 3f05774d-02b0-4406-8115-d9f33f8e3794 | 1D MACD systematic signal |
+| 2026-08-04 | NVDA | BUY | 3 | 3656.50 | -10,981.34 | Market | FILLED | Alpaca Order 3f05774d-02b0-4406-8115-d9f33f8e3794 / 1D MACD systematic signal |
 | 2026-08-04 | BONDIA | INTEREST | 1 | 0.24 | +0.2365 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0331 days. |
 | 2026-08-04 | BONDIA | INTEREST | 1 | 0.25 | +0.2541 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0356 days. |
 | 2026-08-04 | BONDIA | INTEREST | 1 | 0.13 | +0.1261 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0177 days. |
@@ -297,7 +297,7 @@
 | 2026-08-10 | BONDIA | INTEREST | 1 | 0.23 | +0.2297 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0331 days. |
 | 2026-08-10 | BONDIA | INTEREST | 1 | 0.15 | +0.1487 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0214 days. |
 | 2026-08-11 | BONDIA | INTEREST | 1 | 5.14 | +5.1387 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7412 days. |
-| 2026-08-11 | META | BUY | 1 | 10424.84 | -10,436.46 | Market | FILLED | Alpaca Execution Failed (403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders) | 1D MACD systematic signal |
+| 2026-08-11 | META | BUY | 1 | 10424.84 | -10,436.46 | Market | FILLED | Alpaca Execution Failed (403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders) / 1D MACD systematic signal |
 | 2026-08-11 | BIMBOA.MX | SELL | 19 | 61.68 | +1,170.71 | Market | FILLED | 1D MACD systematic signal |
 | 2026-08-11 | BONDIA | INTEREST | 1 | 0.11 | +0.1079 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0205 days. |
 | 2026-08-11 | BONDIA | INTEREST | 1 | 0.24 | +0.2413 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0459 days. |
@@ -381,7 +381,7 @@
 | 2026-09-03 | BONDIA | INTEREST | 1 | 0.58 | +0.5810 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1192 days. |
 | 2026-09-03 | BONDIA | INTEREST | 1 | 0.14 | +0.1392 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0286 days. |
 | 2026-09-04 | BONDIA | INTEREST | 1 | 3.60 | +3.6034 | Market | FILLED | Bondia overnight yield on cash reserves for 0.7393 days. |
-| 2026-09-04 | GOOGL | BUY | 1 | 5697.92 | -5,703.62 | Market | FILLED | Alpaca Order 620b3684-34c2-4d5f-9b38-fbed3ce1d9cb | 1D MACD systematic signal |
+| 2026-09-04 | GOOGL | BUY | 1 | 5697.92 | -5,703.62 | Market | FILLED | Alpaca Order 620b3684-34c2-4d5f-9b38-fbed3ce1d9cb / 1D MACD systematic signal |
 | 2026-09-04 | BONDIA | INTEREST | 1 | 0.34 | +0.3352 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0873 days. |
 | 2026-09-04 | BONDIA | INTEREST | 1 | 0.06 | +0.0592 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0154 days. |
 | 2026-09-04 | BONDIA | INTEREST | 1 | 0.45 | +0.4510 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1174 days. |
@@ -435,7 +435,7 @@
 | 2026-09-24 | BONDIA | INTEREST | 1 | 0.44 | +0.4439 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1309 days. |
 | 2026-09-24 | BONDIA | INTEREST | 1 | 0.11 | +0.1079 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0318 days. |
 | 2026-09-25 | BONDIA | INTEREST | 1 | 2.84 | +2.8399 | Market | FILLED | Bondia overnight yield on cash reserves for 0.8372 days. |
-| 2026-09-25 | META | SELL | 1 | 13319.54 | +13,306.22 | Market | FILLED | Alpaca Execution Failed (403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders) | 1D MACD systematic signal |
+| 2026-09-25 | META | SELL | 1 | 13319.54 | +13,306.22 | Market | FILLED | Alpaca Execution Failed (403 Client Error: Forbidden for url: https://paper-api.alpaca.markets/v2/orders) / 1D MACD systematic signal |
 | 2026-09-25 | BONDIA | INTEREST | 1 | 0.07 | +0.0725 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0125 days. |
 | 2026-09-25 | BONDIA | INTEREST | 1 | 0.85 | +0.8528 | Market | FILLED | Bondia overnight yield on cash reserves for 0.1469 days. |
 | 2026-09-25 | BONDIA | INTEREST | 1 | 0.04 | +0.0415 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0071 days. |
@@ -456,7 +456,7 @@
 | 2026-10-07 | BONDIA | INTEREST | 1 | 3.71 | +3.7057 | Market | FILLED | Bondia overnight yield on cash reserves for 1.0050 days. |
 | 2026-10-07 | BONDIA | INTEREST | 1 | 0.05 | +0.0480 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0130 days. |
 | 2026-10-08 | BONDIA | INTEREST | 1 | 3.63 | +3.6326 | Market | FILLED | Bondia overnight yield on cash reserves for 0.9850 days. |
-| 2026-10-08 | NVDA | SELL | 3 | 4196.47 | +12,576.82 | Market | FILLED | Alpaca Order 30502f88-8312-4d9d-a527-0483ed86806f | 1D MACD systematic signal |
+| 2026-10-08 | NVDA | SELL | 3 | 4196.47 | +12,576.82 | Market | FILLED | Alpaca Order 30502f88-8312-4d9d-a527-0483ed86806f / 1D MACD systematic signal |
 | 2026-10-08 | BONDIA | INTEREST | 1 | 0.11 | +0.1088 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0182 days. |
 | 2026-10-09 | BONDIA | INTEREST | 1 | 5.76 | +5.7617 | Market | FILLED | Bondia overnight yield on cash reserves for 0.9651 days. |
 | 2026-10-09 | AC.MX | BUY | 60 | 201.50 | -12,102.18 | Market | FILLED | 1D MACD systematic signal |
