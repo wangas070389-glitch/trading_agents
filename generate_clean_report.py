@@ -2,8 +2,8 @@ import os
 import json
 import math
 import datetime
-import yfinance as yf
 import pandas as pd
+from backtest_review import backtest_block
 
 # Historical Backtest KPIs
 STRATEGY_KPIS = {
@@ -370,127 +370,60 @@ def load_json(path):
             pass
     return None
 
-def main():
-    dir_path = os.path.dirname(os.path.abspath(__file__))
-    today_str = datetime.date.today().strftime("%Y-%m-%d")
-    
-    # Get exchange rate
-    usd_mxn_rate = 17.43
-    try:
-        fx = yf.download("USDMXN=X", period="5d", progress=False)
-        rate = float(fx["Close"].dropna().iloc[-1])
-        if math.isfinite(rate) and rate > 0:
-            usd_mxn_rate = rate
-    except Exception:
-        pass
-        
-    # Ingest JSON portfolio tracking files
-    s1_data = load_json(os.path.join(dir_path, "portfolio.json"))
-    s2_data = load_json(os.path.join(dir_path, "portfolio_macd.json"))
-    s3_data = load_json(os.path.join(dir_path, "portfolio_us_stocks.json"))
-    s4_data = load_json(os.path.join(dir_path, "portfolio_us_dcs.json"))
-    s5_data = load_json(os.path.join(dir_path, "portfolio_alternatives.json"))
-    s6_data = load_json(os.path.join(dir_path, "portfolio_high_beta.json"))
-    s8_data = load_json(os.path.join(dir_path, "portfolio_dividends.json"))
-    s9_data = load_json(os.path.join(dir_path, "portfolio_strategy9.json"))
-    s10_data = load_json(os.path.join(dir_path, "portfolio_strategy10.json"))
-    s11_data = load_json(os.path.join(dir_path, "portfolio_strategy11.json"))
-    s12_data = load_json(os.path.join(dir_path, "portfolio_strategy12.json"))
-    s13_data = load_json(os.path.join(dir_path, "portfolio_strategy13.json"))
-    s14_data = load_json(os.path.join(dir_path, "portfolio_strategy14.json"))
-    s15_data = load_json(os.path.join(dir_path, "portfolio_strategy15.json"))
-    s16_data = load_json(os.path.join(dir_path, "portfolio_strategy16.json"))
-    s17_data = load_json(os.path.join(dir_path, "portfolio_strategy17.json"))
-    s18_data = load_json(os.path.join(dir_path, "portfolio_strategy18.json"))
-    s19_data = load_json(os.path.join(dir_path, "portfolio_strategy19.json"))
-    s20_data = load_json(os.path.join(dir_path, "portfolio_strategy20.json"))
-    s21_data = load_json(os.path.join(dir_path, "portfolio_strategy21.json"))
-    s22_data = load_json(os.path.join(dir_path, "portfolio_strategy22.json"))
-    s7_data = load_json(os.path.join(dir_path, "portfolio_multi_strategy.json"))
-
-    # Map strategies to their data
-    strat_data = {
-        "S1: Adaptive Value": (s1_data, "MXN"),
-        "S2: 1d MACD Systematic": (s2_data, "MXN"),
-        "S3: US Stock Momentum": (s3_data, "USD"),
-        "S4: US DCS Value-Growth": (s4_data, "USD"),
-        "S5: Alternative Assets": (s5_data, "USD"),
-        "S6: High-Beta Momentum": (s6_data, "USD"),
-        "S8: Dividend Quality": (s8_data, "MXN"),
-        "S9: AI Regime Stat-Arb": (s9_data, "MXN"),
-        "S10: AI Intraday VWAP": (s10_data, "MXN"),
-        "S11: AI Intraday CCI-ADX": (s11_data, "MXN"),
-        "S12: Vol-Targeted Trend (VTTL)": (s12_data, "MXN"),
-        "S13: Risk Appetite (CARA)": (s13_data, "MXN"),
-        "S14: Aggregator (HEDGE)": (s14_data, "MXN"),
-        "S15: Tracker (TRACK)": (s15_data, "MXN"),
-        "S16: HMM Intraday Router": (s16_data, "MXN"),
-        "S17: FIBRAs Dynamic": (s17_data, "MXN"),
-        "S18: Efficient Frontier": (s18_data, "USD"),
-        "S19: Particle Filter QQQ/TQQQ/SQQQ": (s19_data, "MXN"),
-        "S20: Hurst Exponent Dynamic": (s20_data, "MXN"),
-        "S21: Shannon Entropy Dynamic": (s21_data, "MXN"),
-        "S22: Walk-Forward ML Classifier": (s22_data, "MXN"),
-        "S7: Core Hybrid Portfolio": (s7_data, "USD")
-    }
-
-    # Generate the Comprehensive KPI Report (using Evidence ranking)
-    evidence_ranking = []
+def build_kpi_report(today_str):
+    """Report archival research without presenting invalid results as forecasts."""
+    candidates, blocked = [], []
     for name, kpi in STRATEGY_KPIS.items():
+        reason = backtest_block(name)
+        if reason:
+            blocked.append((name, reason))
+        else:
+            candidates.append((name, kpi))
+    candidates.sort(key=lambda item: item[1]["window"] * item[1]["sharpe"], reverse=True)
+    lines = [
+        "# Strategy Research Evidence Review",
+        f"**Report compiled:** {today_str}",
+        "",
+        "These are archival backtest references, not current live returns or verified forecasts.",
+        "Code repairs invalidate old results; they do not certify replacement performance.",
+        "The score is a research-prioritization heuristic, not statistical confidence.",
+        "No strategy is approved for deployment by this report.",
+        "",
+        "## Research references not invalidated by this review",
+        "",
+        "| Strategy | Nominal Sharpe × years | Years | Archived Sharpe | Archived CAGR | Archived MaxDD |",
+        "|---|---:|---:|---:|---:|---:|",
+    ]
+    for name, kpi in candidates:
         score = kpi["window"] * kpi["sharpe"]
-        evidence_ranking.append({
-            "name": name,
-            "cagr": kpi["cagr"],
-            "window": kpi["window"],
-            "sharpe": kpi["sharpe"],
-            "max_dd": kpi["max_dd"],
-            "score": score,
-            "currency": kpi["currency"],
-            "asset": kpi["asset"]
-        })
-        
-    evidence_ranking.sort(key=lambda x: x["score"], reverse=True)
-    
-    proj_lines = []
-    proj_lines.append("# Comprehensive Strategy KPI & Compounding Report")
-    proj_lines.append(f"**Report Compiled on:** {today_str} | **Evidence-Quality Ranked**\n")
-    proj_lines.append("## 1. Evidence Quality Rank & 5-Year Projection Grid")
-    proj_lines.append("This table ranks strategies by **Evidence Quality Score** (`Sharpe * Backtest Window (Years)`), ensuring that 60-day in-sample strategies are properly contextualized behind long-window, walk-forward verified strategies.\n")
-    proj_lines.append("| Rank & Strategy | Evidence Score | Window (Years) | Sharpe | CAGR % | Max Drawdown % | Year 5 (MXN) | Total Profit (MXN) | ROI % |")
-    proj_lines.append("| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
+        lines.append(f"| {name} | {score:.2f} | {kpi['window']:.2f} | {kpi['sharpe']:.2f} | {kpi['cagr']:.2%} | {kpi['max_dd']:.2%} |")
+    lines += [
+        "",
+        "S12–S15 still need synthetic-leverage, timing, carry, and accounting validation.",
+        "S14/S15 are near-duplicate return streams, not independent diversification.",
+        "Being listed here does not establish out-of-sample success or an investable edge.",
+        "",
+        "## Invalidated or insufficient evidence — excluded from ranking",
+        "",
+        "| Strategy | Required repair or validation |",
+        "|---|---|",
+    ]
+    lines.extend(f"| {name} | {reason} |" for name, reason in blocked)
+    lines += [
+        "",
+        "Five-year compounding projections have been withdrawn: disputed or short-sample",
+        "backtest CAGRs must not be presented as expected future investment outcomes.",
+        "See STRATEGY_EVALUATION_2026-10-05.md and ACCOUNTING_REVIEW_FOLLOWUP.md.",
+    ]
+    return "\n".join(lines) + "\n"
 
-    initial_mxn = 100000.0
-    monthly_contribution = 3000.0
-    months = 60
-    total_contributions = initial_mxn + monthly_contribution * months
 
-    for i, strat in enumerate(evidence_ranking, 1):
-        cagr = strat["cagr"]
-        r_m = (1.0 + cagr) ** (1.0 / 12.0) - 1.0
-        val = initial_mxn
-        
-        for m in range(1, months + 1):
-            val = val * (1.0 + r_m) + monthly_contribution
-            
-        profit = val - total_contributions
-        roi = (profit / total_contributions) * 100.0
-        
-        proj_lines.append(
-            f"| **{i}. {strat['name']}** | **{strat['score']:.2f}** | {strat['window']:.2f} | {strat['sharpe']:.2f} | {cagr*100:.2f}% | {strat['max_dd']*100:.2f}% | **${val:,.2f}** | ${profit:,.2f} | {roi:+.1f}% |"
-        )
-        
-    proj_lines.append("\n---")
-    proj_lines.append("\n## 2. Methodology & Evidence Score Philosophy")
-    proj_lines.append("* **Evidence Quality Score (`Sharpe * Window`)**: Raw CAGR is a deceptive metric if calculated over short or in-sample periods. S11 and S10 are evaluated over only 60 days (0.16 years) of intraday data, giving them high raw CAGR but very low evidence scores (0.31 and 0.25).")
-    proj_lines.append("* **Out-of-Sample Podiums**: S12, S14, and S15 (VTTL, HEDGE, TRACK) represent 19-22 year honest backtest windows spanning multiple market cycles (including 2008). They occupy the top ranks because their performance has high mathematical evidence support.")
-    proj_lines.append("* **HEDGE Aggregate Regret**: The HEDGE MWU strategy limits historical drawdown to **-15.19%** over 19.2 years compared to VTTL's **-21.34%**, capturing the diversification benefit of the expert mixture.")
+def main():
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "comprehensive_strategy_kpis.md")
+    with open(path, "w", encoding="utf-8") as report:
+        report.write(build_kpi_report(datetime.date.today().isoformat()))
+    print(f"Research evidence review written to {path}")
 
-    # Write to local file AND brain artifact path
-    kpi_file_path = os.path.join(dir_path, "comprehensive_strategy_kpis.md")
-    with open(kpi_file_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(proj_lines))
-        
-    print(f"Successfully generated comprehensive KPI reports.")
 
 if __name__ == "__main__":
     main()

@@ -10,7 +10,7 @@ import os
 import datetime
 import numpy as np
 import pandas as pd
-import yfinance as yf
+from skills.golden_macd_backtest import simulate
 
 TRADING_DAYS = 252
 TRANSACTION_COST = 0.0029
@@ -18,11 +18,9 @@ BONDIA_YIELD = 0.0653
 RF_MXN = 0.095
 
 def download_data(tickers, start_date, end_date):
+    import yfinance as yf
     print(f"Downloading daily data for {tickers}...")
     warmup_start = (datetime.datetime.strptime(start_date, "%Y-%m-%d") - datetime.timedelta(days=365)).strftime("%Y-%m-%d")
-    
-    fx = yf.download("MXN=X", start=warmup_start, end=end_date, progress=False)
-    fx_close = fx["Close"].ffill().bfill()
     
     if len(tickers) == 1:
         df = yf.download(tickers[0], start=warmup_start, end=end_date, progress=False)
@@ -32,7 +30,6 @@ def download_data(tickers, start_date, end_date):
             df.columns = [c[0].lower() for c in df.columns]
         else:
             df.columns = [c.lower() for c in df.columns]
-        df["fx"] = fx_close.reindex(df.index).ffill().bfill()
         return {tickers[0]: df}
     else:
         data = yf.download(tickers, start=warmup_start, end=end_date, group_by='ticker', progress=False)
@@ -46,71 +43,15 @@ def download_data(tickers, start_date, end_date):
                             df.columns = [c[0].lower() for c in df.columns]
                         else:
                             df.columns = [c.lower() for c in df.columns]
-                        df["fx"] = fx_close.reindex(df.index).ffill().bfill()
                         universe_data[ticker] = df
             except Exception:
                 continue
         return universe_data
 
 def run_single_asset_simulation(df, ticker, initial_capital=40000.0):
-    prices = df["close"].values
-    highs = df["high"].values
-    lows = df["low"].values
-    n = len(df)
-    
-    # 55 EMA long-term trend filter
-    ma_long = df["close"].ewm(span=55, adjust=False).mean().values
-    
-    # Golden MACD (13, 34, 8)
-    ema_fast = df["close"].ewm(span=13, adjust=False).mean()
-    ema_slow = df["close"].ewm(span=34, adjust=False).mean()
-    macd_line = ema_fast - ema_slow
-    signal_line = macd_line.ewm(span=8, adjust=False).mean()
-    
-    macd_vals = macd_line.values
-    sig_vals = signal_line.values
-    
-    r_asset_mxn = ((df["close"].pct_change().fillna(0.0) + 1.0) * (df["fx"].pct_change().fillna(0.0) + 1.0) - 1.0).values
-    daily_cash_sweep = BONDIA_YIELD / TRADING_DAYS
-    
-    nav = np.zeros(n)
-    nav[0] = initial_capital
-    position = 0 # 0=Cash, 1=Long Asset
-    peak_price = 0.0
-    trailing_armed = False
-    
-    for t in range(1, n):
-        close_t = prices[t-1]
-        ma_t = ma_long[t-1]
-        
-        crossover_bull = macd_vals[t-1] > sig_vals[t-1] and macd_vals[t-2] <= sig_vals[t-2]
-        crossover_bear = macd_vals[t-1] < sig_vals[t-1] and macd_vals[t-2] >= sig_vals[t-2]
-        
-        target_pos = position
-        if position == 0:
-            if not np.isnan(ma_t) and close_t > ma_t and crossover_bull:
-                target_pos = 1
-                peak_price = close_t
-                trailing_armed = False
-        else:
-            peak_price = max(peak_price, close_t)
-            perf_from_peak = close_t / peak_price - 1.0
-            
-            if not trailing_armed and (close_t / prices[t-1] - 1.0) >= 0.15:
-                trailing_armed = True
-                
-            if trailing_armed and perf_from_peak < -0.02:
-                target_pos = 0
-            elif crossover_bear or (not np.isnan(ma_t) and close_t < ma_t):
-                target_pos = 0
-                
-        ret = r_asset_mxn[t] if position == 1 else daily_cash_sweep
-        fee = nav[t-1] * TRANSACTION_COST if target_pos != position else 0.0
-        
-        nav[t] = nav[t-1] * (1.0 + ret) - fee
-        position = target_pos
-        
-    return nav
+    if not ticker.upper().endswith(".MX"):
+        raise ValueError("S25 requires native-MXN BMV prices (.MX ticker)")
+    return simulate(df["close"], initial_capital, BONDIA_YIELD, TRANSACTION_COST)
 
 def main():
     dir_path = os.path.dirname(os.path.abspath(__file__))

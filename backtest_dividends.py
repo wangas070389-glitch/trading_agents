@@ -5,7 +5,7 @@ import datetime
 import warnings
 import numpy as np
 import pandas as pd
-import yfinance as yf
+from skills.backtest_accounting import flow_adjusted_return
 
 warnings.filterwarnings("ignore")
 
@@ -21,6 +21,7 @@ MIN_HISTORY_DAYS = 252           # 1 year warmup
 TRANSACTION_COST = 0.0029        # 0.29% broker commission per trade side
 INITIAL_CAPITAL = 200000.0       # Starting capital in MXN
 MONTHLY_CONTRIBUTION = 2000.0    # Monthly savings in MXN
+CASH_APR = 0.0653                # Fixed sensitivity, not a historical rate series
 MIN_YIELD = 0.025                # 2.5% yield screen
 MAX_PAYOUT_RATIO = 0.80          # 80% payout screen
 MAX_DEBT_EQUITY = 1.5            # 1.5 Debt/Equity screen
@@ -37,24 +38,23 @@ def _strip_tz(df: pd.DataFrame) -> pd.DataFrame:
 def get_static_fundamentals() -> dict:
     """
     Fetches the current baseline payout ratios, EPS, and debt/equity metrics.
-    Uses yfinance info, with fallbacks to avoid network issues or missing values.
+    Missing quality data excludes an asset; it must never invent a passing screen.
     """
-    print("Caching static fundamentals for universe quality filters...")
+    import yfinance as yf
+    print("Caching current fundamentals (not point-in-time historical evidence)...")
     fundamentals = {}
     for ticker_symbol in ALL_TICKERS:
         try:
             ticker = yf.Ticker(ticker_symbol)
             info = ticker.info
-            payout = info.get("payoutRatio", 0.50)
-            eps = info.get("trailingEps", 1.0)
-            debt_eq = info.get("debtToEquity", 0.80)
-            
-            if debt_eq is not None and debt_eq > 5.0:
-                debt_eq = debt_eq / 100.0
-                
-            payout = payout if payout is not None else 0.50
-            eps = eps if eps is not None else 1.0
-            debt_eq = debt_eq if debt_eq is not None else 0.80
+            payout = info.get("payoutRatio")
+            eps = info.get("trailingEps")
+            debt_eq = info.get("debtToEquity")
+            if any(v is None or not np.isfinite(float(v)) for v in (payout, eps, debt_eq)):
+                print(f"  {ticker_symbol}: excluded (missing quality data)")
+                continue
+            # Yahoo debtToEquity is expressed in percentage points.
+            debt_eq = float(debt_eq) / 100.0
             
             fundamentals[ticker_symbol] = {
                 "payout_ratio": payout,
@@ -62,14 +62,8 @@ def get_static_fundamentals() -> dict:
                 "debt_to_equity": debt_eq
             }
             print(f"  {ticker_symbol}: Payout: {payout:.1%}, Debt/Equity: {debt_eq:.2f}")
-        except Exception:
-            # Safe conservative fallbacks for quality dividend payers
-            fundamentals[ticker_symbol] = {
-                "payout_ratio": 0.50,
-                "eps": 5.0,
-                "debt_to_equity": 0.80
-            }
-            print(f"  {ticker_symbol}: [Using Default Fallbacks]")
+        except Exception as exc:
+            print(f"  {ticker_symbol}: excluded (quality data unavailable: {exc})")
     return fundamentals
 
 def download_backtest_data() -> tuple[dict, dict, pd.Series]:
@@ -77,6 +71,7 @@ def download_backtest_data() -> tuple[dict, dict, pd.Series]:
     Downloads historical close prices, volume, and dividend payments.
     Converts all US asset prices and dividends to MXN base currency.
     """
+    import yfinance as yf
     print("Downloading FX and Market data...")
     usdmxn = _strip_tz(yf.Ticker("MXN=X").history(period=LOOKBACK_PERIOD))
     if usdmxn.empty:
@@ -91,7 +86,9 @@ def download_backtest_data() -> tuple[dict, dict, pd.Series]:
         print(f"Downloading data for {ticker_symbol}...", end=" ", flush=True)
         try:
             ticker = yf.Ticker(ticker_symbol)
-            hist = _strip_tz(ticker.history(period=LOOKBACK_PERIOD))
+            # Dividends are credited explicitly below; adjusted total-return
+            # prices would count distributions twice.
+            hist = _strip_tz(ticker.history(period=LOOKBACK_PERIOD, auto_adjust=False))
             divs = _strip_tz(ticker.dividends.to_frame())
             
             if hist.empty or len(hist) < MIN_HISTORY_DAYS:
@@ -145,11 +142,14 @@ def run_dividend_backtest():
     # Timing helpers
     last_rebalance_idx = -REBALANCE_FREQ_DAYS
     last_savings_month = None
+    previous_nav = INITIAL_CAPITAL
     
     for t_idx, current_date in enumerate(trading_dates):
+        external_flow = 0.0
         # 1. Monthly Savings Contribution (DCA Inflow)
         if last_savings_month is None or current_date.month != last_savings_month:
             cash += MONTHLY_CONTRIBUTION
+            external_flow = MONTHLY_CONTRIBUTION
             last_savings_month = current_date.month
             trades_log.append({
                 "date": current_date.strftime("%Y-%m-%d"),
@@ -161,9 +161,8 @@ def run_dividend_backtest():
                 "note": "Monthly DCA Savings Contribution"
             })
             
-        # 2. Accrue Bondia Yield (11% APR, daily compound on cash)
-        # Interest is earned daily on the parked cash balance
-        daily_yield = 0.0653 / 360.0 # 6.53% APR conservative overnight yield
+        # 2. Fixed-rate research cash sensitivity, accrued per observation.
+        daily_yield = CASH_APR / 360.0
         interest = cash * daily_yield
         cash += interest
         
@@ -234,7 +233,9 @@ def run_dividend_backtest():
                     continue
                     
                 # Extract quality filters (static proxy)
-                fund = fundamentals.get(ticker, {"payout_ratio": 0.50, "eps": 1.0, "debt_to_equity": 0.80})
+                fund = fundamentals.get(ticker)
+                if fund is None:
+                    continue
                 payout = fund["payout_ratio"]
                 eps = fund["eps"]
                 debt_eq = fund["debt_to_equity"]
@@ -290,6 +291,7 @@ def run_dividend_backtest():
                         "shares": shares,
                         "price": price,
                         "cost": gross - fee,
+                        "fee": fee,
                         "note": "Rebalancing Liquidation"
                     })
                     
@@ -318,6 +320,7 @@ def run_dividend_backtest():
                                 "shares": shares_to_buy,
                                 "price": price,
                                 "cost": gross + fee,
+                                "fee": fee,
                                 "note": f"Reallocating target weight ({info['weight']*100:.1f}%)"
                             })
                     else:
@@ -334,34 +337,37 @@ def run_dividend_backtest():
                             "shares": shares_to_sell,
                             "price": price,
                             "cost": gross - fee,
+                            "fee": fee,
                             "note": f"Trimming to target weight ({info['weight']*100:.1f}%)"
                         })
                         
-        # 5. Log Daily NAV (GIPS Time-Weighted Return metrics)
+        # 5. Log daily NAV, external flows, and net investment return.
         assets_value = sum(shares * float(prices_dict[ticker].loc[:current_date]["Close"].iloc[-1]) for ticker, shares in holdings.items() if shares > 0)
         portfolio_value = cash + assets_value
+        daily_return = flow_adjusted_return(previous_nav, portfolio_value, external_flow)
         portfolio_history.append({
             "date": current_date,
             "nav": portfolio_value,
             "cash": cash,
-            "equities": assets_value
+            "equities": assets_value,
+            "external_flow": external_flow,
+            "daily_ret": daily_return,
         })
+        previous_nav = portfolio_value
         
     # Write Backtest Report
     df_nav = pd.DataFrame(portfolio_history).set_index("date")
     
-    # Calculate GIPS-compliant stats
-    # Time-weighted return calculator
-    df_nav["daily_ret"] = df_nav["nav"].pct_change()
-    
-    # Clean returns of cash injection effects
-    # Since cash contributions are on the first day of each month, TWR strips out additions
-    # for cleaner performance representation
-    twr_nav = (1.0 + df_nav["daily_ret"].fillna(0.0)).cumprod()
+    # Contributions occur before the modeled daily return; fees and dividend
+    # income remain in returns. This is not a claim of GIPS certification.
+    twr_nav = (1.0 + df_nav["daily_ret"]).cumprod()
+    df_nav["twr"] = twr_nav
     final_return = twr_nav.iloc[-1] - 1.0
     
     # Annualized CAGR
     years = (df_nav.index[-1] - df_nav.index[0]).days / 365.25
+    if years <= 0:
+        raise ValueError("At least two distinct evaluation dates are required")
     cagr = (twr_nav.iloc[-1]) ** (1.0 / years) - 1.0
     
     # Sharpe ratio
@@ -370,8 +376,8 @@ def run_dividend_backtest():
     sharpe = (cagr - 0.095) / ann_std if ann_std > 0 else 0.0 # Using 9.5% risk free rate baseline
     
     # Drawdowns
-    peaks = df_nav["nav"].cummax()
-    drawdowns = (df_nav["nav"] - peaks) / peaks
+    peaks = twr_nav.cummax().clip(lower=1.0)
+    drawdowns = twr_nav / peaks - 1.0
     max_dd = drawdowns.min()
     
     # Save CSV
@@ -383,6 +389,10 @@ def run_dividend_backtest():
     report_markdown = f"""# Strategy 8: Dividend Quality & Yield Backtest Report
 **Simulation Period:** {df_nav.index[0].strftime('%Y-%m-%d')} to {df_nav.index[-1].strftime('%Y-%m-%d')} ({years:.2f} Years)
 **Risk-Free Rate Baseline:** 9.50% (Mbonos 10Y Yield)
+
+Research approximation only: current fundamentals are reused historically,
+cash yield is fixed, and taxes/payment-date timing are not modeled. Historical
+point-in-time fundamentals and execution validation are required before promotion.
 
 ## 1. Executive Performance Metrics
 * **Final Portfolio NAV**: ${df_nav['nav'].iloc[-1]:,.2f} MXN
@@ -435,32 +445,40 @@ def run_dividends_backtest_for_api():
             "action": t["action"],
             "shares": float(t["shares"]),
             "price": float(t["price"]),
-            "pnl": float(t["cost"]),
+            "pnl": None,  # Cash movement is not realized trading P&L.
             "note": t["note"]
         })
         
-    # Generate benchmark (compounding cash at 11% APR)
-    initial_nav = float(df_nav["nav"].iloc[0])
-    bench_values = [initial_nav]
-    for i in range(1, len(df_nav)):
-        bench_values.append(bench_values[-1] * (1.0 + 0.11 / 252.0))
+    # Same deposits and cash accrual convention as the simulated strategy.
+    # This is a fixed-rate sensitivity, not historical Bondia performance.
+    bench_nav, bench_twr = INITIAL_CAPITAL, 1.0
+    bench_values = []
+    for flow in df_nav["external_flow"]:
+        bench_nav = (bench_nav + flow) * (1.0 + CASH_APR / 360.0)
+        bench_twr *= 1.0 + CASH_APR / 360.0
+        bench_values.append(bench_nav)
+    years = (df_nav.index[-1] - df_nav.index[0]).days / 365.25
+    benchmark_return = (bench_twr - 1.0) * 100
         
     return {
         "dates": [str(d.date()) if hasattr(d, "date") else str(d)[:10] for d in df_nav.index],
         "strategy": [float(x) for x in df_nav["nav"].values],
         "benchmark": [float(x) for x in bench_values],
+        "cash": [float(x) for x in bench_values],
+        "benchmark_label": "Fixed-rate cash sensitivity with matching external flows",
         "trade_log": ui_trade_log,
         "metrics": {
-            "strategy_return": float((df_nav["nav"].iloc[-1] / initial_nav - 1.0) * 100),
+            "strategy_return": float((df_nav["twr"].iloc[-1] - 1.0) * 100),
             "strategy_cagr": float(results["cagr"] * 100),
-            "benchmark_return": float((bench_values[-1] / initial_nav - 1.0) * 100),
-            "benchmark_cagr": 11.0,
+            "benchmark_return": benchmark_return,
+            "cash_return": benchmark_return,
+            "benchmark_cagr": float((bench_twr ** (1.0 / years) - 1) * 100),
             "sharpe": float(results["sharpe"]),
             "drawdown": float(results["max_dd"] * 100),
-            "n_trades": len(trades_log),
-            "win_rate": 100.0,
+            "n_trades": sum(t["action"] in ("BUY", "SELL") for t in trades_log),
+            "win_rate": None,  # Requires a cost-basis/closed-lot reconstruction.
             "total_fees": float(sum(t.get("fee", 0.0) for t in trades_log)),
-            "total_pnl": float(df_nav["nav"].iloc[-1] - initial_nav)
+            "total_pnl": float(df_nav["nav"].iloc[-1] - INITIAL_CAPITAL - df_nav["external_flow"].sum())
         }
     }
 

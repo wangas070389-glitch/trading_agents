@@ -33,8 +33,12 @@ def test_atomic_save_json_and_safe_load(tmp_path):
     non_existent = os.path.join(tmp_path, "does_not_exist.json")
     assert safe_load_json(non_existent, default={"default": True}) == {"default": True}
 
-def test_yield_series_caching():
-    cache_dir = _get_cache_dir()
+def test_yield_series_caching(tmp_path, monkeypatch):
+    import agents.agents as agent_module
+    monkeypatch.setattr(agent_module, "_get_cache_dir", lambda: str(tmp_path))
+    monkeypatch.setattr(agent_module, "_mbono_cache", None)
+    monkeypatch.setattr(agent_module, "_us_yield_cache", None)
+    cache_dir = agent_module._get_cache_dir()
     assert os.path.exists(cache_dir)
     
     # Test Mbono yield returns non-empty pandas Series and float yield
@@ -95,7 +99,9 @@ def test_graduation_blocks_stale_portfolios(tmp_path, monkeypatch):
     assert "stale" in portfolio_freshness_block("portfolio.json", __import__("datetime").date(2026, 9, 9))
 
 
-def test_compare_strategies_runs_without_key_error():
+def test_compare_strategies_runs_without_key_error(tmp_path, monkeypatch):
     import compare_strategies
+    monkeypatch.setattr(compare_strategies, "__file__", str(tmp_path / "compare_strategies.py"))
+    (tmp_path / "portfolio.json").write_text(json.dumps({"cash_balance": 1000, "holdings": []}), encoding="utf-8")
     compare_strategies.main()
-    assert os.path.exists("comparison_report.md")
+    assert (tmp_path / "comparison_report.md").exists()

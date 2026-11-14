@@ -127,15 +127,17 @@ def get_rebalance_dates(asset_data: dict) -> list[pd.Timestamp]:
     return all_dates[start_idx::REBALANCE_FREQ_DAYS]
 
 
-def compute_metrics(nav_series: pd.Series, label: str) -> dict:
+def compute_metrics(nav_series: pd.Series, label: str, initial_value=None) -> dict:
     returns = nav_series.pct_change().dropna()
-    total_return = nav_series.iloc[-1] / nav_series.iloc[0] - 1
+    if initial_value is not None:
+        returns = pd.concat([pd.Series([nav_series.iloc[0] / initial_value - 1], index=nav_series.index[:1]), returns])
+    total_return = nav_series.iloc[-1] / (nav_series.iloc[0] if initial_value is None else initial_value) - 1
     days = (nav_series.index[-1] - nav_series.index[0]).days
     years = max(days / 365.25, 0.01)
     cagr = (1 + total_return) ** (1 / years) - 1
     sharpe = (returns.mean() / returns.std() * np.sqrt(252)) if returns.std() > 0 else 0.0
     cumulative = (1 + returns).cumprod()
-    drawdown = (cumulative / cumulative.cummax() - 1).min()
+    drawdown = (cumulative / cumulative.cummax().clip(lower=1.0) - 1).min()
     return {
         "label": label,
         "total_return": total_return,
@@ -444,6 +446,9 @@ def main():
         # --- 5. Record daily NAV ---
         equity_val = sum(shares_held[t] * price_matrix[t].iloc[i] for t in tickers if shares_held[t] > 0)
         final_nav = cash + equity_val
+        # Link the trading subperiod too: otherwise fees disappear from TWR.
+        if nav_before > 0:
+            twr *= final_nav / nav_before
         last_nav = final_nav
         last_bench_nav = sum(bench_shares[t] * price_matrix[t].iloc[i] for t in tickers)
 
@@ -458,8 +463,8 @@ def main():
     strategy_twr_pd = pd.Series(twr_history, index=dates, name="strategy_twr")
     benchmark_twr_pd = pd.Series(bench_twr_history, index=dates, name="benchmark_twr")
 
-    strategy_metrics = compute_metrics(strategy_twr_pd, "Alpha Strategy")
-    benchmark_metrics = compute_metrics(benchmark_twr_pd, "Equal-weight buy-and-hold")
+    strategy_metrics = compute_metrics(strategy_twr_pd, "Alpha Strategy", initial_value=1.0)
+    benchmark_metrics = compute_metrics(benchmark_twr_pd, "Equal-weight buy-and-hold", initial_value=1.0)
 
     # Save CSV
     base_dir = os.path.dirname(os.path.abspath(__file__))
