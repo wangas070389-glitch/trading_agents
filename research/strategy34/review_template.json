@@ -1,0 +1,17 @@
+{
+  "dataset_sha256": "REPLACE_WITH_EXACT_LOWERCASE_SHA256_OF_BUNDLE",
+  "reviewer": "",
+  "reviewed_at": null,
+  "coverage_notes": "",
+  "checks": {
+    "license_allows_local_research": false,
+    "stable_identifiers_and_links_verified": false,
+    "historical_universe_includes_delisted": false,
+    "announcement_and_availability_times_verified": false,
+    "original_actuals_not_restatements": false,
+    "preannouncement_consensus_vintages_verified": false,
+    "forward_revision_same_period_and_basis_verified": false,
+    "price_and_delisting_returns_verified": false,
+    "market_calendar_and_missing_data_reviewed": false
+  }
+}

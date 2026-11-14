@@ -35,4 +35,7 @@ desktop.ini
 # Cache
 .cache/
 
+# Licensed point-in-time research inputs and derived data stay local.
+research/strategy34/private/
+
 

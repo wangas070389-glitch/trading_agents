@@ -1,0 +1,15 @@
+{
+  "name": "S34 point-in-time earnings and price momentum",
+  "status": "RESEARCH_ONLY_DATA_REQUIRED",
+  "hypothesis": "Positive earnings surprises and upward forward EPS revisions add net predictive information beyond simple price momentum and Nasdaq exposure",
+  "currency": "USD",
+  "params": {"momentum_sessions": 126, "skip_sessions": 5, "risk_sessions": 20, "revision_sessions": 21, "event_max_days": 45, "estimate_max_days": 45, "eps_floor": 0.25, "min_surprise": 0.05, "min_price": 5.0, "min_adv": 5000000.0, "max_names": 20, "name_weight": 0.05, "sector_cap": 0.25, "vol_target": 0.20, "max_participation": 0.01},
+  "execution": {"rebalance": "First observed session of each calendar week, decision after close", "lag_sessions": 1, "one_way_cost": 0.003, "cash_return": 0.0, "margin": false, "shorting": false, "starting_capital": 100000.0},
+  "models": ["combined", "earnings_only", "momentum_only", "momentum_covered", "qqq_vol"],
+  "scenarios": ["base", "double_cost", "two_session_fill"],
+  "windows": {"reference": ["2000-01-01", "2018-12-31"], "retrospective_evaluation": ["2019-01-01", "2025-12-31"], "recent_descriptive": ["2026-01-01", "2026-12-31"]},
+  "selection": "One fixed primary specification, no parameter search or post-result winner selection. All models use the same funded execution and trailing risk ceiling. No leverage until stock-selection evidence is established",
+  "evidence_gate": "No performance output without reviewed point-in-time inputs, stable identifiers, historical universe membership, terminal/delisting coverage, timestamped original actuals and historical consensus/forward estimates",
+  "qualification": "Historical comparisons are research screens, never proof of future alpha or automatic graduation. No currently unseen holdout is claimed; require a subsequent frozen prospective paper record",
+  "sources": ["https://www.nber.org/papers/w5375", "https://www.nber.org/papers/w11683", "https://www.sec.gov/search-filings/edgar-application-programming-interfaces", "https://wrds-www.wharton.upenn.edu/demo/crsp/form/"]
+}
