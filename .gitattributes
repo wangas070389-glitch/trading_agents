@@ -1,3 +1,4 @@
 # Byte fingerprints of frozen research inputs must survive Windows checkouts.
 research/validation/** text eol=lf
 research/strategy33/** text eol=lf
+research/strategy34/** text eol=lf

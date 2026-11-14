@@ -1,0 +1,13 @@
+{
+  "status": "BLOCKED_DATA_REQUIRED",
+  "performance_available": false,
+  "deployment_approved": false,
+  "dataset_sha256": null,
+  "counts": {},
+  "errors": [
+    "DATA_MISSING: supply the point-in-time bundle described in DATA_REQUIREMENTS.md",
+    "REVIEW_REQUIRED: explicit human provenance review tied to the dataset SHA256"
+  ],
+  "warnings": [],
+  "note": "Metadata assertions and reviewer attestation are not independent proof of data quality or a trading edge"
+}
