@@ -1,20 +1,20 @@
 # Strategy 21: Shannon Entropy Live Execution Report
-**Execution Timestamp:** 2026-11-13 21:13:10 | **Strategy Version:** Live V1
+**Execution Timestamp:** 2026-11-17 22:36:43 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $147,433.15 MXN
+* **Total Portfolio NAV:** $131,635.54 MXN
 * **Total Cash sweep Balance:** $0.00 MXN (Parked in Bondia compound at 6.53% APR)
 * **Equity Exposure:** 100.0%
 * **Asset Allocation Target:** TQQQ
-* **USD/MXN Exchange Rate:** 18.5230
+* **USD/MXN Exchange Rate:** 18.4120
 
 ## 2. Current Holdings
 | Ticker | Shares Held | Buy Price (USD) | Last Price (USD) | Market Value (USD) | Market Value (MXN) | Target Weight |
 | :--- | :---: | :---: | :---: | ---: | ---: | :---: |
-| **TQQQ** | 137.9935 | $70.28 | $57.68 | $7,959.46 | $147,433.15 | 100.0% |
+| **TQQQ** | 137.9935 | $70.71 | $51.81 | $7,149.44 | $131,635.54 | 100.0% |
 
 ## 3. Shannon Entropy Regime Estimates
-* **Rolling Normalized Shannon Entropy ($H_t^{norm}$):** 0.6883
+* **Rolling Normalized Shannon Entropy ($H_t^{norm}$):** 0.6855
 * **Information Regime Mode:** ORDERED (Trend Capture Active)
 * **Trend Direction:** BULLISH (SMA 50 > 120)
 

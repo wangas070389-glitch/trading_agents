@@ -3,12 +3,12 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 202000.0,
   "nav": 204945.96,
-  "total_capital": 197020.7,
-  "cash_balance": 197020.7,
+  "total_capital": 197163.64,
+  "cash_balance": 197163.64,
   "holdings_value": 51902.41,
   "net_trading_profit": 2945.96,
   "net_trading_return_pct": 1.46,
   "holdings": [],
-  "last_updated": "2026-11-13 21:12:49",
-  "last_signal_date": "2026-11-13"
+  "last_updated": "2026-11-17 22:36:24",
+  "last_signal_date": "2026-11-17"
 }
