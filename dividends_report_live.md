@@ -1,9 +1,9 @@
 # Strategy 8: Dividend Quality & Yield Execution Report
-**Execution Date:** 2026-11-18 22:16:13 | **Strategy Version:** Live V1
+**Execution Date:** 2026-11-18 22:29:53 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $237,766.75 MXN
-* **Total Cash Balance:** $45,096.48 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $237,747.67 MXN
+* **Total Cash Balance:** $45,096.56 MXN (Parked in Bondia Compound at 6.53% APR)
 * **Equity Exposure:** 81.0%
 * **Days Since Last Rebalance:** 15 days
 
@@ -13,10 +13,10 @@
 | **BBAJIOO.MX** | 833.01 | $56.53 | $55.28 | $46,048.61 | $4.71 MXN/sh (Annual: $3,923.46 MXN) | Ex: 2026-09-03 / Pay: N/A | 20.0% |
 | **AC.MX** | 210.60 | $193.35 | $235.53 | $49,601.87 | $9.78 MXN/sh (Annual: $2,059.64 MXN) | Ex: 2026-10-27 / Pay: N/A | 20.0% |
 | **FUNO11.MX** | 1327.21 | $30.68 | $36.74 | $48,761.81 | $2.61 MXN/sh (Annual: $3,464.03 MXN) | Ex: 2026-11-06 / Pay: N/A | 20.0% |
-| **SPG** | 11.05 | $4178.81 | $4369.03 | $48,257.98 | $9.20 USD/sh (Annual: $1,918.81 MXN) | Ex: 2026-12-10 / Pay: 2026-12-31 | 20.0% |
+| **SPG** | 11.05 | $4178.81 | $4367.30 | $48,238.81 | $9.20 USD/sh (Annual: $1,918.04 MXN) | Ex: 2026-12-10 / Pay: 2026-12-31 | 20.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $8.0008 MXN over 0.9783 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $0.0777 MXN over 0.0095 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
@@ -41,7 +41,7 @@
 | **MMM** | SELL / AVOID | 1.72% | 45.8% | 45.8% | $181.05 > SMA $161.30 | Yield below 2.5% and Debt/Equity (3.04) exceeds 1.5 |
 | **O** | SELL / AVOID | 5.67% | 222.3% | 222.3% | $58.28 <= SMA $60.22 | Payout Ratio (222.3%) out of bounds and FCF Payout (222.3%) exceeds limit and Bear trend (Close <= SMA 200) |
 | **OMAB.MX** | SELL / AVOID | 5.05% | 85.1% | 85.1% | $245.24 > SMA $232.85 | Payout Ratio (85.1%) out of bounds and FCF Payout (85.1%) exceeds limit |
-| **ORBIA.MX** | SELL / AVOID | 0.00% | 69.8% | 69.8% | $21.12 <= SMA $21.59 | Yield below 2.5% and Non-positive EPS (-1.27) and Debt/Equity (2.13) exceeds 1.5 and Bear trend (Close <= SMA 200) |
+| **ORBIA.MX** | SELL / AVOID | 0.00% | 69.8% | 69.8% | $21.12 <= SMA $21.59 | Yield below 2.5% and Non-positive EPS (-1.28) and Debt/Equity (2.13) exceeds 1.5 and Bear trend (Close <= SMA 200) |
 | **PEP** | SELL / AVOID | 4.17% | 73.0% | 73.0% | $141.87 <= SMA $143.56 | Debt/Equity (2.31) exceeds 1.5 and Bear trend (Close <= SMA 200) |
 | **PG** | BUY / HOLD | 2.54% | 64.6% | 64.6% | $170.29 > SMA $148.32 | Passed all quality checks. Score: 0.0000 |
 | **SPG** | BUY / HOLD | 4.00% | 64.3% | 64.3% | $231.38 > SMA $205.93 | Passed all quality checks. Score: 0.0000 |
