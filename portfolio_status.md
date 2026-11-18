@@ -1,18 +1,18 @@
 # PORTFOLIO PERFORMANCE MONITOR
-**Status Check Time:** 2026-11-17 22:47:10
+**Status Check Time:** 2026-11-18 22:15:51
 
 ## 1. Current Holdings Value
 | Ticker | Shares Held | Buy Price (MXN) | Current Price (MXN) | Market Value (MXN) | Unrealized P/L | P/L % | DCS | HMM State | Target Weight |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| GRUMAB.MX | 1 | 291.46 | 278.19 | 278.19 | **-13.27** | **-4.55%** | 0.8762 | Bear | 2.8% |
-| ORBIA.MX | 1,538.8681574288416 | 21.20 | 21.91 | 33,716.60 | **+1,092.60** | **+3.35%** | 0.8984 | Bull | 30.0% |
-| WALMEX.MX | 696.030837920285 | 50.44 | 55.08 | 38,337.38 | **+3,229.58** | **+9.20%** | 0.2299 | Sideways | 30.0% |
+| GRUMAB.MX | 1 | 291.46 | 278.23 | 278.23 | **-13.23** | **-4.54%** | 0.8762 | Bear | 2.8% |
+| ORBIA.MX | 1,538.8681574288416 | 21.20 | 21.12 | 32,500.90 | **-123.11** | **-0.38%** | 0.8984 | Bull | 30.0% |
+| WALMEX.MX | 696.030837920285 | 50.44 | 54.60 | 38,003.28 | **+2,895.49** | **+8.25%** | 0.2299 | Sideways | 30.0% |
 
-* **Current Market Value of Shares**: 72,332.17 MXN (60.7% allocation)
-* **Bondia Cash Routing Reserves (6.53% APR)**: 46,767.89 MXN (39.3% cash reserve)
-* **Total Portfolio Value**: **119,100.06 MXN**
-* **Total Unrealized Profit/Loss**: **-3,022.53 MXN (-2.47%)**
+* **Current Market Value of Shares**: 70,782.41 MXN (60.2% allocation)
+* **Bondia Cash Routing Reserves (6.53% APR)**: 46,776.19 MXN (39.8% cash reserve)
+* **Total Portfolio Value**: **117,558.60 MXN**
+* **Total Unrealized Profit/Loss**: **-4,563.99 MXN (-3.74%)**
 
 ## 2. Active Cash Routing & Yield Generation
-* Overnight interest accrued in this step: **+0.0689 MXN** (for 0.0081 days elapsed)
-* Expected daily interest accrual at 6.53% APR: **+8.4832 MXN**
+* Overnight interest accrued in this step: **+8.2978 MXN** (for 0.9782 days elapsed)
+* Expected daily interest accrual at 6.53% APR: **+8.4847 MXN**
