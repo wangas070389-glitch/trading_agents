@@ -1,14 +1,14 @@
 # Strategy Graduation Report — Paper to Live Money
-**Generated:** 2026-11-18 22:31:14 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
+**Generated:** 2026-11-19 22:25:31 | Hurdle: Bondia **6.53%** | Min live history: **90 days** | DD bound: **1.25× backtest MaxDD**
 
 | Strategy | Verdict | Live days | ROI to date | Ann. return | vs 6.53% hurdle | Live Sharpe | Live MaxDD | DD bound (1.25×BT) | Evidence score | BT Sharpe (window) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| S12 VTTL Trend+Vol | **BLOCKED** | 135 | n/a | n/a | n/a | n/a | n/a | -26.7% | 10.35 | 0.46 (22.5y) |
-| S14 HEDGE Aggregator | **BLOCKED** | 135 | n/a | n/a | n/a | n/a | n/a | -19.0% | 10.18 | 0.53 (19.2y) |
-| S15 TRACK Tracker | **BLOCKED** | 135 | n/a | n/a | n/a | n/a | n/a | -18.4% | 10.18 | 0.53 (19.2y) |
-| S2 MACD Systematic | **BLOCKED** | 130 | n/a | n/a | n/a | n/a | n/a | -11.9% | 8.78 | 1.76 (5.0y) |
-| S8 Dividend Quality | **BLOCKED** | 146 | n/a | n/a | n/a | n/a | n/a | -14.2% | 5.60 | 1.12 (5.0y) |
-| S4 US DCF Value-Growth | **BLOCKED** | 148 | n/a | n/a | n/a | n/a | n/a | -15.2% | 4.56 | 1.14 (4.0y) |
+| S12 VTTL Trend+Vol | **BLOCKED** | 136 | n/a | n/a | n/a | n/a | n/a | -26.7% | 10.35 | 0.46 (22.5y) |
+| S14 HEDGE Aggregator | **BLOCKED** | 136 | n/a | n/a | n/a | n/a | n/a | -19.0% | 10.18 | 0.53 (19.2y) |
+| S15 TRACK Tracker | **BLOCKED** | 136 | n/a | n/a | n/a | n/a | n/a | -18.4% | 10.18 | 0.53 (19.2y) |
+| S2 MACD Systematic | **BLOCKED** | 131 | n/a | n/a | n/a | n/a | n/a | -11.9% | 8.78 | 1.76 (5.0y) |
+| S8 Dividend Quality | **BLOCKED** | 147 | n/a | n/a | n/a | n/a | n/a | -14.2% | 5.60 | 1.12 (5.0y) |
+| S4 US DCF Value-Growth | **BLOCKED** | 149 | n/a | n/a | n/a | n/a | n/a | -15.2% | 4.56 | 1.14 (4.0y) |
 
 ## Verdict Detail
 

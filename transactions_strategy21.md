@@ -100,4 +100,6 @@
 | 2026-10-16 | BONDIA | INTEREST | 1.0000 | $0.40 | $+0.40 | Market | FILLED | Yield on cash for 0.0124 days. |
 | 2026-10-19 | BONDIA | INTEREST | 1.0000 | $93.79 | $+93.79 | Market | FILLED | Yield on cash for 2.9133 days. |
 | 2026-10-19 | TQQQ | BUY | 137.9935 | $1301.87 | $-180,171.94 | Market | FILLED | Entropy systematic entry |
+| 2026-11-19 | TQQQ | SELL | 137.9935 | $934.28 | $+128,550.33 | Market | FILLED | Entropy switch to SQQQ |
+| 2026-11-19 | SQQQ | BUY | 136.0561 | $942.09 | $-128,550.33 | Market | FILLED | Entropy systematic entry |
 ---

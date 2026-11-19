@@ -1,41 +1,41 @@
 {
-  "generated_at": "2026-11-18T22:31:12.345470",
+  "generated_at": "2026-11-19T22:25:29.401195",
   "strategies": [
     {
       "strategy": "s2",
       "ledger": "transactions_macd.md",
-      "rows": 531,
+      "rows": 534,
       "ledger_positions": {
         "GAPB.MX": 23.0,
         "FEMSAUBD.MX": 44.0,
         "AMXB.MX": 582.0,
-        "CEMEXCPO.MX": 622.0,
+        "CEMEXCPO.MX": 700.0,
         "AMZN": 2.0,
         "GOOGL": 2.0,
-        "GMEXICOB.MX": 59.0
+        "GMEXICOB.MX": 65.0
       },
       "portfolio_positions": {
         "GAPB.MX": 23.0,
         "FEMSAUBD.MX": 44.0,
-        "CEMEXCPO.MX": 622.0,
+        "CEMEXCPO.MX": 700.0,
         "AMXB.MX": 582.0,
         "AMZN": 2.0,
         "GOOGL": 2.0,
-        "GMEXICOB.MX": 59.0
+        "GMEXICOB.MX": 65.0
       },
       "position_differences": {},
-      "cash_delta": 29160.15,
+      "cash_delta": 26609.23,
       "status": "VERIFIED",
       "errors": [],
       "warnings": [
         "Line 300: FILLED row carries an 'execution failed' note (META BUY); counted as executed",
         "Line 438: FILLED row carries an 'execution failed' note (META SELL); counted as executed"
       ],
-      "expected_cash": 49160.15270000002,
-      "actual_cash": 49160.15,
-      "cash_difference": -0.0,
-      "portfolio_sha256": "c5042e7840bfbc4024ddcf2d51f7aef3ead86718ff002df088c59218daff264b",
-      "ledger_sha256": "f6197f1ec0f83dd3cade210ce6f0eceacb773235bf6680ade1748dc819b873dc"
+      "expected_cash": 46609.225500000015,
+      "actual_cash": 46609.21,
+      "cash_difference": -0.02,
+      "portfolio_sha256": "06233bf52a80093cb07f8efca1608b1d83b03a52e0c92282fa9828d9e168d28a",
+      "ledger_sha256": "9d956b9f68bf498c748b1757412d91a4ef8dc96e34b043890e0474b8611b8b93"
     },
     {
       "strategy": "s4",
@@ -55,13 +55,13 @@
       "expected_cash": 81860.20999999999,
       "actual_cash": 107320.17,
       "cash_difference": 25459.96,
-      "portfolio_sha256": "d542d42242a4cfe8848b183a7dc3fce4fa9bc6b26fc6caaa4b0b0e47ab1b2687",
-      "ledger_sha256": "24381a86093db268cdf4ba827dbf4cb8feaf24713a3efddb173d546f5b4d4649"
+      "portfolio_sha256": "9d937343494f16e688b18ece519aef8cd0432fdf154b0b294b00e489a2fd6f37",
+      "ledger_sha256": "afc20e8440fdbc1e3cd4adc715af783b058c2894c02d9cf957cc0928b4fdbfd4"
     },
     {
       "strategy": "s8",
       "ledger": "transactions_dividends.md",
-      "rows": 472,
+      "rows": 473,
       "ledger_positions": {
         "BBAJIOO.MX": 833.01,
         "AC.MX": 210.6,
@@ -75,39 +75,39 @@
         "SPG": 11.045459878265088
       },
       "position_differences": {},
-      "cash_delta": -154903.44,
+      "cash_delta": -154895.29,
       "status": "VERIFIED",
       "errors": [],
       "warnings": [],
-      "expected_cash": 45096.55999999985,
-      "actual_cash": 45096.56,
+      "expected_cash": 45104.709999999846,
+      "actual_cash": 45104.71,
       "cash_difference": 0.0,
-      "portfolio_sha256": "d706de0e10caad43ec65c92937520009b9fc096011fc755f8368cf4689413ccc",
-      "ledger_sha256": "c5b98b76b38f9b07e825f93f28cba32ee07700d2c23fd2810a56105828628361"
+      "portfolio_sha256": "076e5a4121c3dece719de801a3cc078d1410e3c4cea67d4835acfc08aa2c946a",
+      "ledger_sha256": "6267228d5dd03b839b384246a2aeb8e1943ce25002a65f8e8677af5458f411b3"
     },
     {
       "strategy": "s12",
       "ledger": "transactions_strategy12.md",
-      "rows": 451,
+      "rows": 452,
       "ledger_positions": {
         "TQQQ": -0.00010000000000331966
       },
       "portfolio_positions": {},
       "position_differences": {},
-      "cash_delta": -2801.12,
+      "cash_delta": -2766.0,
       "status": "VERIFIED",
       "errors": [],
       "warnings": [],
-      "expected_cash": 197198.88066197993,
-      "actual_cash": 197198.75,
+      "expected_cash": 197233.99906197994,
+      "actual_cash": 197233.87,
       "cash_difference": -0.13,
-      "portfolio_sha256": "7d58f41eb116efddaec3e37c3974e8a1ffbbc15256c4dc5264236ea8d2f57fe5",
-      "ledger_sha256": "7bcbfa484acd84b2365cd086001317e5b8cefbc6fffd937b5cf57492cde18c83"
+      "portfolio_sha256": "2f13e96f70e8e4b2ebdfd5c9145894168f4394e845ca3dc23171a3203668c2ec",
+      "ledger_sha256": "8df452d25321ceb5739d30b3bb1a2bfa0a2db173a767c350dcc85213f437a221"
     },
     {
       "strategy": "s14",
       "ledger": "transactions_strategy14.md",
-      "rows": 900,
+      "rows": 902,
       "ledger_positions": {
         "TQQQ": 19.576899999999995
       },
@@ -115,7 +115,7 @@
         "TQQQ": 19.576737677590597
       },
       "position_differences": {},
-      "cash_delta": -87461.23,
+      "cash_delta": -87429.96,
       "status": "VERIFIED",
       "errors": [],
       "warnings": [
@@ -124,13 +124,13 @@
       "expected_cash": null,
       "actual_cash": null,
       "cash_difference": null,
-      "portfolio_sha256": "e602ed654a62a262e5796a1aebcb9a8e2e94bb167484d2369e2d8fa4eb004a62",
-      "ledger_sha256": "582bf9314b838851b872a0a3ead94d4ceade75b8cc84275aab0c2849fe2ad70c"
+      "portfolio_sha256": "547d5f1fe46192342e15bf509aea60ced9f9959290eadc215a9641ae6ce36206",
+      "ledger_sha256": "ff4b6e1c6fb7ba146dae9557950919679a22e98c5678f346fdd86b6826e397e2"
     },
     {
       "strategy": "s15",
       "ledger": "transactions_strategy15.md",
-      "rows": 900,
+      "rows": 902,
       "ledger_positions": {
         "TQQQ": 19.575800000000008
       },
@@ -138,7 +138,7 @@
         "TQQQ": 19.575778872964577
       },
       "position_differences": {},
-      "cash_delta": -87466.06,
+      "cash_delta": -87434.79,
       "status": "VERIFIED",
       "errors": [],
       "warnings": [
@@ -147,8 +147,8 @@
       "expected_cash": null,
       "actual_cash": null,
       "cash_difference": null,
-      "portfolio_sha256": "8a35ca4cc0feaf60a7c64b4e4929291e916646bad8b1621304ae5e736098a921",
-      "ledger_sha256": "3239b173f10ecda5e63fbc218c636d3c0c394dd73d3bbd8f412dc99d60f9f8f6"
+      "portfolio_sha256": "52f62fdf4726278716b70d7024bc86f6b2cc52baefb7baa2c82fbcd10337dcc6",
+      "ledger_sha256": "0b108db42bf30fd29a4fffc753b15b605ab7e474e7522901009d80fd6e13815e"
     }
   ]
 }
