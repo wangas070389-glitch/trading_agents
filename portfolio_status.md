@@ -1,5 +1,5 @@
 # PORTFOLIO PERFORMANCE MONITOR
-**Status Check Time:** 2026-11-20 21:56:24
+**Status Check Time:** 2026-11-20 22:07:52
 
 ## 1. Current Holdings Value
 | Ticker | Shares Held | Buy Price (MXN) | Current Price (MXN) | Market Value (MXN) | Unrealized P/L | P/L % | DCS | HMM State | Target Weight |
@@ -9,10 +9,10 @@
 | WALMEX.MX | 696.030837920285 | 50.44 | 54.48 | 37,919.76 | **+2,811.97** | **+8.01%** | 0.2299 | Sideways | 30.0% |
 
 * **Current Market Value of Shares**: 70,140.18 MXN (60.0% allocation)
-* **Bondia Cash Routing Reserves (6.53% APR)**: 46,793.04 MXN (40.0% cash reserve)
-* **Total Portfolio Value**: **116,933.22 MXN**
-* **Total Unrealized Profit/Loss**: **-5,189.37 MXN (-4.25%)**
+* **Bondia Cash Routing Reserves (6.53% APR)**: 46,793.11 MXN (40.0% cash reserve)
+* **Total Portfolio Value**: **116,933.29 MXN**
+* **Total Unrealized Profit/Loss**: **-5,189.30 MXN (-4.25%)**
 
 ## 2. Active Cash Routing & Yield Generation
-* Overnight interest accrued in this step: **+8.2588 MXN** (for 0.9732 days elapsed)
-* Expected daily interest accrual at 6.53% APR: **+8.4877 MXN**
+* Overnight interest accrued in this step: **+0.0671 MXN** (for 0.0079 days elapsed)
+* Expected daily interest accrual at 6.53% APR: **+8.4878 MXN**

@@ -909,4 +909,6 @@
 | 2026-11-20 | BONDIA | INTEREST | 1.0000 | $30.2495 | MXN sweep |
 | 2026-11-20 | USD-MMF | INTEREST | 1.0000 | $0.2992 | USD sweep |
 | 2026-11-20 | TQQQ | BUY | 5.4282 | $788.5325 | w_tgt=0.083 |
+| 2026-11-20 | BONDIA | INTEREST | 1.0000 | $0.2474 | MXN sweep |
+| 2026-11-20 | USD-MMF | INTEREST | 1.0000 | $0.0025 | USD sweep |
 ---

@@ -1,9 +1,9 @@
 # Strategy 8: Dividend Quality & Yield Execution Report
-**Execution Date:** 2026-11-20 21:56:39 | **Strategy Version:** Live V1
+**Execution Date:** 2026-11-20 22:08:15 | **Strategy Version:** Live V1
 
 ## 1. Portfolio Summary
-* **Total Portfolio NAV:** $237,589.92 MXN
-* **Total Cash Balance:** $45,112.73 MXN (Parked in Bondia Compound at 6.53% APR)
+* **Total Portfolio NAV:** $237,646.71 MXN
+* **Total Cash Balance:** $45,112.80 MXN (Parked in Bondia Compound at 6.53% APR)
 * **Equity Exposure:** 81.0%
 * **Days Since Last Rebalance:** 17 days
 
@@ -13,10 +13,10 @@
 | **BBAJIOO.MX** | 833.01 | $56.53 | $54.20 | $45,148.97 | $4.71 MXN/sh (Annual: $3,923.46 MXN) | Ex: 2026-09-03 / Pay: N/A | 20.0% |
 | **AC.MX** | 210.60 | $193.35 | $245.01 | $51,598.33 | $9.78 MXN/sh (Annual: $2,059.64 MXN) | Ex: 2026-10-27 / Pay: N/A | 20.0% |
 | **FUNO11.MX** | 1327.21 | $30.68 | $36.39 | $48,297.29 | $2.61 MXN/sh (Annual: $3,464.03 MXN) | Ex: 2026-11-06 / Pay: N/A | 20.0% |
-| **SPG** | 11.05 | $4178.81 | $4294.31 | $47,432.61 | $9.20 USD/sh (Annual: $1,945.09 MXN) | Ex: 2026-12-10 / Pay: 2026-12-31 | 20.0% |
+| **SPG** | 11.05 | $4178.81 | $4299.44 | $47,489.33 | $9.20 USD/sh (Annual: $1,947.41 MXN) | Ex: 2026-12-10 / Pay: 2026-12-31 | 20.0% |
 
 ## 3. Today's Execution Logs
-* **[INTEREST ACCRUED]** Cash accrued interest of $7.9623 MXN over 0.9732 days.
+* **[INTEREST ACCRUED]** Cash accrued interest of $0.0659 MXN over 0.0081 days.
 * No actions required today. Portfolio matches target weights and cash remains compounding.
 
 ## 4. Asset Evaluation Diagnostics (Signals Checked)
