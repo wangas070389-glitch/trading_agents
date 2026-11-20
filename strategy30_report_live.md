@@ -1,11 +1,9 @@
 # Strategy 30 Live Status Report
 
-**Last Run:** 2026-11-19 22:36:29
-**Total Capital:** $98,055.63 USD
-**Cash Balance:** $80,853.42 USD
+**Last Run:** 2026-11-20 21:57:26
+**Total Capital:** $97,358.53 USD
+**Cash Balance:** $97,358.53 USD
 
 ## Current Holdings
 
-| Ticker | Shares | Buy Price | Current Price | Return | Peak Price |
-| :--- | ---: | ---: | ---: | ---: | ---: |
-| AMZN | 66.8385 | $266.14 | $257.37 | -3.30% | $270.87 |
+No active US stock positions.

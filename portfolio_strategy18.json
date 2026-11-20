@@ -32,7 +32,7 @@
     "us_dcs": {
       "alloc_usd": 10791.167473112026,
       "last_nav": 107320.17,
-      "last_date": "2026-11-19",
+      "last_date": "2026-11-20",
       "tr_index": 0.9992450095747345
     },
     "alternatives": {
@@ -1386,6 +1386,24 @@
         "strategy15": 1.135285,
         "strategy17": 0.988698
       }
+    },
+    {
+      "date": "2026-11-20",
+      "nav_usd": 292362.61,
+      "idx": {
+        "core": 0.964636,
+        "macd": 1.053421,
+        "us_dcs": 0.999245,
+        "alternatives": 12.886913,
+        "high_beta": 0.991042,
+        "dividends": 1.121157,
+        "strategy9": 0.8672,
+        "strategy12": 0.924695,
+        "strategy13": 1.022182,
+        "strategy14": 1.135312,
+        "strategy15": 1.135285,
+        "strategy17": 0.988698
+      }
     }
   ],
   "rebalances": [
@@ -1405,6 +1423,6 @@
       "max_drift": 0.0558
     }
   ],
-  "last_updated": "2026-11-19 22:36:31",
+  "last_updated": "2026-11-20 21:57:27",
   "total_portfolio_value_usd": 292362.6137208346
 }

@@ -3,20 +3,11 @@
   "capital_injections": 0.0,
   "total_funded_capital": 100000.16,
   "nav": 102106.04,
-  "total_capital": 98055.63381102082,
-  "cash_balance": 80853.42,
+  "total_capital": 97358.53,
+  "cash_balance": 97358.53,
   "holdings_value": 56333.75,
   "net_trading_profit": 2105.88,
   "net_trading_return_pct": 2.11,
-  "holdings": [
-    {
-      "ticker": "AMZN",
-      "shares": 66.8384587845533,
-      "buy_price": 266.1400146484375,
-      "last_price": 257.3699951171875,
-      "peak_price": 270.8699951171875,
-      "trailing_armed": false
-    }
-  ],
-  "last_updated": "2026-11-19 22:36:29"
+  "holdings": [],
+  "last_updated": "2026-11-20 21:57:26"
 }

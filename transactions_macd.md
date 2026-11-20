@@ -537,6 +537,8 @@
 | 2026-11-19 | GMEXICOB.MX | BUY | 6 | 191.66 | -1,151.28 | Market | FILLED | 1D MACD systematic signal |
 | 2026-11-19 | CEMEXCPO.MX | BUY | 78 | 18.04 | -1,408.53 | Market | FILLED | 1D MACD systematic signal |
 | 2026-11-19 | BONDIA | INTEREST | 1 | 0.06 | +0.0633 | Market | FILLED | Bondia overnight yield on cash reserves for 0.0075 days. |
+| 2026-11-20 | BONDIA | INTEREST | 1 | 8.23 | +8.2278 | Market | FILLED | Bondia overnight yield on cash reserves for 0.9732 days. |
+| 2026-11-20 | AMXB.MX | SELL | 56 | 23.87 | +1,335.38 | Market | FILLED | 1D MACD systematic signal |
 ---
 
 
@@ -545,6 +547,6 @@
 ## Portfolio Capital Reconciliation
 
 * **Initial Starting Capital (2026-06-03)**: 118,561.61 MXN
-* **Total Deployed Capital**: 82,369.72 MXN (65.2% invested)
-* **Unallocated Cash Reserves**: 46,609.27 MXN (36.9% cash)
-* **Current Portfolio Market Value**: 126,325.36 MXN (including cash)
+* **Total Deployed Capital**: 81,107.48 MXN (64.6% invested)
+* **Unallocated Cash Reserves**: 47,952.88 MXN (38.2% cash)
+* **Current Portfolio Market Value**: 125,551.87 MXN (including cash)

@@ -3,18 +3,18 @@
   "capital_injections": 2000.0,
   "total_funded_capital": 199916.02,
   "nav": 182199.53,
-  "total_capital": 164851.99,
-  "cash_balance": 28331.43,
+  "total_capital": 159974.37,
+  "cash_balance": 17437.81,
   "holdings_value": 0.0,
   "net_trading_profit": -17716.49,
   "net_trading_return_pct": -8.86,
   "holdings": [
     {
-      "ticker": "SPY",
-      "shares": 10,
-      "buy_price": 13650.50319884275,
-      "last_price": 13652.055674170144
+      "ticker": "GLD",
+      "shares": 23,
+      "buy_price": 6179.321369600017,
+      "last_price": 6179.321369600017
     }
   ],
-  "last_updated": "2026-11-19 22:35:52"
+  "last_updated": "2026-11-20 21:57:02"
 }

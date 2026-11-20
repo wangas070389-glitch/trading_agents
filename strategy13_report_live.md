@@ -1,10 +1,10 @@
 # Strategy 13: CARA Live Report
-**Execution:** 2026-11-19 22:35:57 | **Signal date:** 2026-11-19
+**Execution:** 2026-11-20 21:57:06 | **Signal date:** 2026-11-20
 
-* **NAV:** $215,868.77 MXN
-* **Cash MXN (Bondia):** $139,145.69 | **Cash USD:** $4,026.40 ($76,723.08 MXN) | **TQQQ:** $0.00 MXN
-* **Score CARA:** 0/3 (VIXts=0, Credito=0, Trend=0) | **Vol 20d:** 35.2%
-* **w_TQQQ:** actual 0.000 -> objetivo 0.000 | **Hedge USD:** ACTIVO (streak 13/3)
+* **NAV:** $216,238.46 MXN
+* **Cash MXN (Bondia):** $139,169.90 | **Cash USD:** $4,026.88 ($77,068.56 MXN) | **TQQQ:** $0.00 MXN
+* **Score CARA:** 0/3 (VIXts=0, Credito=0, Trend=0) | **Vol 20d:** 39.8%
+* **w_TQQQ:** actual 0.000 -> objetivo 0.000 | **Hedge USD:** ACTIVO (streak 14/3)
 
 ## Acciones
-* Senal de 2026-11-19 ya procesada; solo valuacion.
+* Dentro de bandas; sin operacion.
